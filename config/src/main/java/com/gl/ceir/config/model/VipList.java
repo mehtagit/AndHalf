@@ -8,20 +8,18 @@ import javax.persistence.Id;
 public class VipList {
 	@Id
 	@GeneratedValue
-	private Long iD;
+	private Long id;
 	private Long imei;
 	private Long msisdn;
 	private String requestedBy;
 	private String approvedBy;
-	
-	public VipList(){}
 
-	public Long getiD() {
-		return iD;
+	public Long getId() {
+		return id;
 	}
 
-	public void setiD(Long iD) {
-		this.iD = iD;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getImei() {
@@ -56,5 +54,4 @@ public class VipList {
 		this.approvedBy = approvedBy;
 	}
 
-		
 }

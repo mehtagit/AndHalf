@@ -3,7 +3,6 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -15,6 +14,7 @@ public class PendingActions {
 	private TransactionState transactionState;
 	private long msisdn;
 	private long imei;
+	private long imsi;
 	@OneToOne
 	private MobileOperator mobileOperator;
 	@OneToOne
@@ -24,6 +24,7 @@ public class PendingActions {
 	private Action action;
 	private Date modifiedOn;
 	private Date endDateforUserAction;
+	private String filename;
 
 	public String getTicketId() {
 		return ticketId;
@@ -103,6 +104,22 @@ public class PendingActions {
 
 	public void setEndDateforUserAction(Date endDateforUserAction) {
 		this.endDateforUserAction = endDateforUserAction;
+	}
+
+	public long getImsi() {
+		return imsi;
+	}
+
+	public void setImsi(long imsi) {
+		this.imsi = imsi;
+	}
+
+	public String getFilename() {
+		return filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 }

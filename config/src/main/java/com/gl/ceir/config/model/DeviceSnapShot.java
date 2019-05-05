@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,11 +12,9 @@ import javax.persistence.OneToOne;
 
 @Entity
 public class DeviceSnapShot {
-	@Id
-	@GeneratedValue
-	private long id;
-	private long msisnd;
-	private long imei;
+	@EmbeddedId
+	private ImeiMsisdnIdentity imeiMsisdnIdentity;
+	private Long imsi;
 	@OneToOne
 	private MobileOperator mobileOperator;
 	private ImeiStatus imeiStatus;
@@ -38,28 +37,12 @@ public class DeviceSnapShot {
 	public DeviceSnapShot() {
 	}
 
-	public long getId() {
-		return id;
+	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
+		return imeiMsisdnIdentity;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getMsisnd() {
-		return msisnd;
-	}
-
-	public void setMsisnd(long msisnd) {
-		this.msisnd = msisnd;
-	}
-
-	public long getImei() {
-		return imei;
-	}
-
-	public void setImei(long imei) {
-		this.imei = imei;
+	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
 	}
 
 	public MobileOperator getMobileOperator() {
@@ -180,6 +163,14 @@ public class DeviceSnapShot {
 
 	public void setDuplicateImeiMsisdn(List<DuplicateImeiMsisdn> duplicateImeiMsisdn) {
 		this.duplicateImeiMsisdn = duplicateImeiMsisdn;
+	}
+
+	public Long getImsi() {
+		return imsi;
+	}
+
+	public void setImsi(Long imsi) {
+		this.imsi = imsi;
 	}
 
 }

@@ -6,15 +6,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 @Entity
 public class RegularizedImei {
 
 	@Id
 	@GeneratedValue
-	private Long iD;
+	private Long id;
 	private Long imei;
+	private Long imsi;
+
 	@ManyToOne
 	private MobileOperator mobileOperator;
 	private Long msisdn;
@@ -25,15 +26,16 @@ public class RegularizedImei {
 	private Rules failedRule;
 	private String remarks;
 	private Date modefiedOn;
-	
-	public RegularizedImei(){}
 
-	public Long getiD() {
-		return iD;
+	public RegularizedImei() {
 	}
 
-	public void setiD(Long iD) {
-		this.iD = iD;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Long getImei() {
@@ -107,6 +109,13 @@ public class RegularizedImei {
 	public void setModefiedOn(Date modefiedOn) {
 		this.modefiedOn = modefiedOn;
 	}
-	
-	
+
+	public Long getImsi() {
+		return imsi;
+	}
+
+	public void setImsi(Long imsi) {
+		this.imsi = imsi;
+	}
+
 }

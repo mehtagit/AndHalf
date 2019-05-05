@@ -11,18 +11,19 @@ import org.springframework.stereotype.Component;
 public class MobileOperator {
 	@Id
 	@GeneratedValue
-	private Integer iD;
+	private Long id;
 	@NotNull
 	private String name;
-	
-	public MobileOperator(){}
 
-	public Integer getiD() {
-		return iD;
+	public MobileOperator() {
 	}
 
-	public void setiD(Integer iD) {
-		this.iD = iD;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -35,8 +36,7 @@ public class MobileOperator {
 
 	@Override
 	public String toString() {
-		return "MobileOperator [iD=" + iD + ", name=" + name + "]";
+		return "MobileOperator [iD=" + id + ", name=" + name + "]";
 	}
-	
-	
+
 }

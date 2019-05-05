@@ -9,31 +9,29 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class SystemPolicyMapping {
-	
+
 	@Id
 	@GeneratedValue
-	private Integer iD;
+	private Long id;
 	private Period period;
 	@ManyToOne
 	private Rules rule;
 	@ManyToOne
 	private Action action;
-	
+
 	private Integer priority;
 	private Date createdOn;
 	private Date modifiedOn;
-	
+
 	private String createdBy;
 	private String modifiedBy;
-	
-	public SystemPolicyMapping(){}
 
-	public Integer getiD() {
-		return iD;
+	public Long getId() {
+		return id;
 	}
 
-	public void setiD(Integer iD) {
-		this.iD = iD;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Period getPeriod() {
@@ -99,7 +97,5 @@ public class SystemPolicyMapping {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-	
-	
-	
+
 }

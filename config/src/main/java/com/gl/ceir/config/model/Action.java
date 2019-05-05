@@ -8,23 +8,23 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Action 
-{
+public class Action {
 	@Id
 	@GeneratedValue
-	private Integer iD;
+	private Long id;
 	private ActionNames name;
 	@OneToMany
 	private Set<ActionParameters> actionParameters;
-	 
-	public Action(){}
 
-	public Integer getiD() {
-		return iD;
+	public Action() {
 	}
 
-	public void setiD(Integer iD) {
-		this.iD = iD;
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public ActionNames getName() {
@@ -42,6 +42,5 @@ public class Action
 	public void setActionParameters(Set<ActionParameters> actionParameters) {
 		this.actionParameters = actionParameters;
 	}
-	
-}
 
+}

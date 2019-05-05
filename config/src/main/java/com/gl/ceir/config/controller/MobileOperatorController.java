@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.MobileOperator;
@@ -21,42 +23,38 @@ public class MobileOperatorController {
 
 	@Autowired
 	MobileOperatorService mobileOperatorService;
-	
-	@GetMapping(path="/CEIR/MobileOperators/")
-	public MappingJacksonValue getAllOperators()
-	{
+
+	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.GET)
+	public MappingJacksonValue getAll() {
 		List<MobileOperator> allOperators = mobileOperatorService.getAll();
-		MappingJacksonValue mapping  = new MappingJacksonValue(allOperators);
+		MappingJacksonValue mapping = new MappingJacksonValue(allOperators);
 		return mapping;
 	}
-	
-	@GetMapping(path="/CEIR/MobileOperators/{id}/")
-	public MappingJacksonValue getOperator(@PathVariable(value="id") Integer id)
-	{
-		MobileOperator operators = mobileOperatorService.findById(id);
-		MappingJacksonValue mapping  = new MappingJacksonValue(operators);
+
+	@RequestMapping(path = "/MobileOperators/{id}", method = RequestMethod.GET)
+	public MappingJacksonValue get(@PathVariable(value = "id") Long id) {
+		MobileOperator operators = mobileOperatorService.get(id);
+		MappingJacksonValue mapping = new MappingJacksonValue(operators);
 		return mapping;
 	}
-	
-	@PostMapping(path="/CEIR/MobileOperators/")
-	public MappingJacksonValue saveOperator(@RequestBody MobileOperator mobileOperator)
-	{
+
+	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.POST)
+	public MappingJacksonValue save(@RequestBody MobileOperator mobileOperator) {
 		MobileOperator savedOperators = mobileOperatorService.save(mobileOperator);
-		MappingJacksonValue mapping  = new MappingJacksonValue(savedOperators);
+		MappingJacksonValue mapping = new MappingJacksonValue(savedOperators);
 		return mapping;
 	}
-	
-	@DeleteMapping(path="/CEIR/MobileOperators/")
-	public void dalateOperator(@PathVariable(value="id") Integer id)
-	{
+
+	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.DELETE)
+	public void dalate(@PathVariable(value = "id") Long id) {
 		mobileOperatorService.delete(id);
 	}
-	
-	@PutMapping(path="/CEIR/MobileOperators/{id}/")
-	public MappingJacksonValue getOperator(@PathVariable(value="id") Integer id , @RequestBody MobileOperator mobileOperator)
-	{
-		MobileOperator operators = mobileOperatorService.update(id, mobileOperator);
-		MappingJacksonValue mapping  = new MappingJacksonValue(operators);
+
+	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.PUT)
+	public MappingJacksonValue update(@PathVariable(value = "id") Integer id,
+			@RequestBody MobileOperator mobileOperator) {
+		MobileOperator operators = mobileOperatorService.update(mobileOperator);
+		MappingJacksonValue mapping = new MappingJacksonValue(operators);
 		return mapping;
 	}
 }

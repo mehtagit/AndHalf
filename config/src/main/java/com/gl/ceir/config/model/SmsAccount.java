@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class SmsAccount {
 	@Id
 	@GeneratedValue
-	private int iD;
+	private Long id;
 	private String ip;
 	private int port;
 	private String userName;
@@ -16,15 +16,13 @@ public class SmsAccount {
 	private String url;
 	private int tps;
 	private boolean status;
-	
-	public SmsAccount(){}
 
-	public int getiD() {
-		return iD;
+	public Long getId() {
+		return id;
 	}
 
-	public void setiD(int iD) {
-		this.iD = iD;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getIp() {
@@ -85,13 +83,12 @@ public class SmsAccount {
 
 	@Override
 	public String toString() {
-		return "SmsAccount [iD=" + iD + ", ip=" + ip + ", port=" + port + ", userName=" + userName + ", passWord="
-				+ passWord + ", url=" + url + ", tps=" + tps + ", status=" + status + ", getiD()=" + getiD()
+		return "SmsAccount [iD=" + id + ", ip=" + ip + ", port=" + port + ", userName=" + userName + ", passWord="
+				+ passWord + ", url=" + url + ", tps=" + tps + ", status=" + status + ", getiD()=" + getId()
 				+ ", getIp()=" + getIp() + ", getPort()=" + getPort() + ", getUserName()=" + getUserName()
 				+ ", getPassWord()=" + getPassWord() + ", getUrl()=" + getUrl() + ", getTps()=" + getTps()
 				+ ", isStatus()=" + isStatus() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
 				+ ", toString()=" + super.toString() + "]";
 	}
-	
-	
+
 }

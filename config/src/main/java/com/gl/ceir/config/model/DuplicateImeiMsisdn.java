@@ -2,44 +2,29 @@ package com.gl.ceir.config.model;
 
 import java.util.Date;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class DuplicateImeiMsisdn {
-	@Id
-	private int id;
-	private long imei;
-	private long msisdn;
+	@EmbeddedId
+	private ImeiMsisdnIdentity imeiMsisdnIdentity;
+
+	private long imsi;
 	private String fileName;
 	@OneToOne
 	private MobileOperator mobileOperator;
 	private Date createdOn;
-	private boolean regulized;
+	private boolean regulizedByUser;
+	private ImeiStatus imeiStatus;
 
-	public int getId() {
-		return id;
+	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
+		return imeiMsisdnIdentity;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public long getImei() {
-		return imei;
-	}
-
-	public void setImei(long imei) {
-		this.imei = imei;
-	}
-
-	public long getMsisdn() {
-		return msisdn;
-	}
-
-	public void setMsisdn(long msisdn) {
-		this.msisdn = msisdn;
+	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
 	}
 
 	public String getFileName() {
@@ -66,12 +51,28 @@ public class DuplicateImeiMsisdn {
 		this.createdOn = createdOn;
 	}
 
-	public boolean isRegulized() {
-		return regulized;
+	public long getImsi() {
+		return imsi;
 	}
 
-	public void setRegulized(boolean regulized) {
-		this.regulized = regulized;
+	public void setImsi(long imsi) {
+		this.imsi = imsi;
+	}
+
+	public boolean isRegulizedByUser() {
+		return regulizedByUser;
+	}
+
+	public void setRegulizedByUser(boolean regulizedByUser) {
+		this.regulizedByUser = regulizedByUser;
+	}
+
+	public ImeiStatus getImeiStatus() {
+		return imeiStatus;
+	}
+
+	public void setImeiStatus(ImeiStatus imeiStatus) {
+		this.imeiStatus = imeiStatus;
 	}
 
 }

@@ -9,28 +9,32 @@ public class ActionParameters {
 
 	@Id
 	@GeneratedValue
-	private Integer iD;
+	private Long id;
 	private ActionParametersName name;
 	private String value;
-	public Integer getiD() {
-		return iD;
+
+	public Long getId() {
+		return id;
 	}
-	public void setiD(Integer iD) {
-		this.iD = iD;
+
+	public void setId(Long id) {
+		this.id = id;
 	}
+
 	public ActionParametersName getName() {
 		return name;
 	}
+
 	public void setName(ActionParametersName name) {
 		this.name = name;
 	}
+
 	public String getValue() {
 		return value;
 	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
-}
 
+}

@@ -9,22 +9,20 @@ public class SmsScript {
 
 	@Id
 	@GeneratedValue
-	private int iD;
+	private Long id;
 	private String type;
 	private String template;
-	
-	public SmsScript(){}
-
-	public int getiD() {
-		return iD;
-	}
-
-	public void setiD(int iD) {
-		this.iD = iD;
-	}
 
 	public String getType() {
 		return type;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public void setType(String type) {
@@ -38,5 +36,5 @@ public class SmsScript {
 	public void setTemplate(String template) {
 		this.template = template;
 	}
-	
+
 }

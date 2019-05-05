@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import com.gl.ceir.config.model.MobileOperator;
 
 @Repository
-public interface MobileOperatorRepository extends JpaRepository<MobileOperator, Integer>{
+public interface MobileOperatorRepository extends JpaRepository<MobileOperator, Long> {
 }

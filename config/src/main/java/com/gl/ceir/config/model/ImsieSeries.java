@@ -7,20 +7,17 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ImsieSeries {
 	@Id
-	private int id;
+	private Long id;
 	@ManyToOne
 	private MobileOperator mobileOperator;
 	long startRange;
 	long endRange;
 
-	public ImsieSeries() {
-	}
-
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
