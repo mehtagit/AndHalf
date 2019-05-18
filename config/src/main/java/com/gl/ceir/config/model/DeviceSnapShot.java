@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -17,11 +19,13 @@ public class DeviceSnapShot {
 	private Long imsi;
 	@OneToOne
 	private MobileOperator mobileOperator;
+
+	@Enumerated(EnumType.STRING)
 	private ImeiStatus imeiStatus;
 	private int lastpPolicyBreached;
 	private Date lastpPolicyBreachedDate;
-	@OneToMany
-	private List<Rules> breachedRules;
+	private String failedRuleId;
+	private String failedRuleName;
 	private Period period;
 	private Date createdOn;
 	private String remarks;
@@ -31,8 +35,8 @@ public class DeviceSnapShot {
 	private boolean globalBlacklist;
 	private boolean greyList;
 	private boolean validImport;
-	@OneToMany
-	private List<DuplicateImeiMsisdn> duplicateImeiMsisdn;
+
+	private String action;
 
 	public DeviceSnapShot() {
 	}
@@ -75,14 +79,6 @@ public class DeviceSnapShot {
 
 	public void setLastpPolicyBreachedDate(Date lastpPolicyBreachedDate) {
 		this.lastpPolicyBreachedDate = lastpPolicyBreachedDate;
-	}
-
-	public List<Rules> getBreachedRules() {
-		return breachedRules;
-	}
-
-	public void setBreachedRules(List<Rules> breachedRules) {
-		this.breachedRules = breachedRules;
 	}
 
 	public Period getPeriod() {
@@ -157,20 +153,36 @@ public class DeviceSnapShot {
 		this.validImport = validImport;
 	}
 
-	public List<DuplicateImeiMsisdn> getDuplicateImeiMsisdn() {
-		return duplicateImeiMsisdn;
-	}
-
-	public void setDuplicateImeiMsisdn(List<DuplicateImeiMsisdn> duplicateImeiMsisdn) {
-		this.duplicateImeiMsisdn = duplicateImeiMsisdn;
-	}
-
 	public Long getImsi() {
 		return imsi;
 	}
 
 	public void setImsi(Long imsi) {
 		this.imsi = imsi;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public String getFailedRuleId() {
+		return failedRuleId;
+	}
+
+	public void setFailedRuleId(String failedRuleId) {
+		this.failedRuleId = failedRuleId;
+	}
+
+	public String getFailedRuleName() {
+		return failedRuleName;
+	}
+
+	public void setFailedRuleName(String failedRuleName) {
+		this.failedRuleName = failedRuleName;
 	}
 
 }

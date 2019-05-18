@@ -3,6 +3,8 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -11,6 +13,8 @@ import javax.persistence.OneToOne;
 public class PendingActions {
 	@Id
 	private String ticketId;
+	
+	@Enumerated(EnumType.STRING)
 	private TransactionState transactionState;
 	private long msisdn;
 	private long imei;

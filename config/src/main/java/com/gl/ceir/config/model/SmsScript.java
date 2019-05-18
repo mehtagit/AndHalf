@@ -2,16 +2,21 @@ package com.gl.ceir.config.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class SmsScript {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String type;
 	private String template;
+
+	@ManyToOne
+	private Action action;
 
 	public String getType() {
 		return type;
@@ -35,6 +40,14 @@ public class SmsScript {
 
 	public void setTemplate(String template) {
 		this.template = template;
+	}
+
+	public Action getAction() {
+		return action;
+	}
+
+	public void setAction(Action action) {
+		this.action = action;
 	}
 
 }

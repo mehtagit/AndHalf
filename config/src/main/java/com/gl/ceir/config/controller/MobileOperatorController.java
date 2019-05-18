@@ -3,13 +3,8 @@ package com.gl.ceir.config.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,12 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.MobileOperatorService;
 
+import io.swagger.annotations.ApiResponse;
+
 @RestController
 public class MobileOperatorController {
 
 	@Autowired
-	MobileOperatorService mobileOperatorService;
+	private MobileOperatorService mobileOperatorService;
 
+	@ApiResponse(response = MobileOperator.class, code = 0, message = " To get All Existing Mobile Operators", responseContainer = "List")
 	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.GET)
 	public MappingJacksonValue getAll() {
 		List<MobileOperator> allOperators = mobileOperatorService.getAll();
@@ -46,13 +44,12 @@ public class MobileOperatorController {
 	}
 
 	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.DELETE)
-	public void dalate(@PathVariable(value = "id") Long id) {
+	public void delete(@PathVariable(value = "id") Long id) {
 		mobileOperatorService.delete(id);
 	}
 
 	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.PUT)
-	public MappingJacksonValue update(@PathVariable(value = "id") Integer id,
-			@RequestBody MobileOperator mobileOperator) {
+	public MappingJacksonValue update(@PathVariable(value = "id") Long id, @RequestBody MobileOperator mobileOperator) {
 		MobileOperator operators = mobileOperatorService.update(mobileOperator);
 		MappingJacksonValue mapping = new MappingJacksonValue(operators);
 		return mapping;

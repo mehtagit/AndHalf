@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.DeviceSnapShot;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.repository.DeviceSnapShotRepository;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 
@@ -17,32 +19,38 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 
 	@Override
 	public List<DeviceSnapShot> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return deviceSnapShotRepository.findAll();
 	}
 
 	@Override
-	public DeviceSnapShot save(DeviceSnapShot t) {
-		// TODO Auto-generated method stub
-		return null;
+	public DeviceSnapShot save(DeviceSnapShot deviceSnapShot) {
+		return deviceSnapShotRepository.save(deviceSnapShot);
 	}
 
 	@Override
 	public DeviceSnapShot get(Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public DeviceSnapShot update(DeviceSnapShot t) {
-		// TODO Auto-generated method stub
-		return null;
+	public DeviceSnapShot update(DeviceSnapShot deviceSnapShot) {
+		return deviceSnapShotRepository.save(deviceSnapShot);
 	}
 
 	@Override
 	public void delete(Long t) {
-		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public DeviceSnapShot get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(imeiMsisdnIdentity).orElseThrow(
+				() -> new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity", imeiMsisdnIdentity));
+		return deviceSnapShot;
+	}
+
+	@Override
+	public void delete(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		deviceSnapShotRepository.deleteById(imeiMsisdnIdentity);
 	}
 
 }

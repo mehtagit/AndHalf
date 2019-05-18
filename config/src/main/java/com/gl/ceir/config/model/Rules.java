@@ -3,14 +3,17 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Rules {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String description;
@@ -20,6 +23,8 @@ public class Rules {
 	private String approvedBy;
 	private Date createdOn;
 	private Date modifiedOn;
+	@Enumerated(EnumType.STRING)
+	private RuleType ruleType;
 
 	public Long getId() {
 		return id;

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.Action;
 import com.gl.ceir.config.repository.ActionRepository;
 import com.gl.ceir.config.service.ActionService;
@@ -17,32 +18,29 @@ public class ActionServiceImpl implements ActionService {
 
 	@Override
 	public List<Action> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return actionRepository.findAll();
 	}
 
 	@Override
-	public Action save(Action t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Action save(Action action) {
+		return actionRepository.save(action);
 	}
 
 	@Override
 	public Action get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Action action = actionRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Action", "id", id));
+		return action;
 	}
 
 	@Override
-	public Action update(Action t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Action update(Action action) {
+		return actionRepository.save(action);
 	}
 
 	@Override
-	public void delete(Long t) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Long id) {
+		actionRepository.deleteById(id);
 	}
 
 }

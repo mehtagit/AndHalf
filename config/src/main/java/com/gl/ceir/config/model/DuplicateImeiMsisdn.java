@@ -4,6 +4,8 @@ import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -17,6 +19,7 @@ public class DuplicateImeiMsisdn {
 	private MobileOperator mobileOperator;
 	private Date createdOn;
 	private boolean regulizedByUser;
+	@Enumerated(EnumType.STRING)
 	private ImeiStatus imeiStatus;
 
 	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
