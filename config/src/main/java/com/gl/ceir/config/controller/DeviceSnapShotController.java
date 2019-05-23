@@ -33,26 +33,26 @@ public class DeviceSnapShotController {
 		return mapping;
 	}
 
-	@RequestMapping(path = "/DeviceSnapShot/{id}", method = RequestMethod.POST)
+	@RequestMapping(path = "/DeviceSnapShot/get/", method = RequestMethod.POST)
 	public MappingJacksonValue get(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(imeiMsisdnIdentity);
 		MappingJacksonValue mapping = new MappingJacksonValue(deviceSnapShot);
 		return mapping;
 	}
 
-	@RequestMapping(path = "/DeviceSnapShot/", method = RequestMethod.POST)
+	//@RequestMapping(path = "/DeviceSnapShot/", method = RequestMethod.POST)
 	public MappingJacksonValue save(@RequestBody DeviceSnapShot deviceSnapShot) {
 		DeviceSnapShot savedDeviceSnapShot = deviceSnapShotService.save(deviceSnapShot);
 		MappingJacksonValue mapping = new MappingJacksonValue(savedDeviceSnapShot);
 		return mapping;
 	}
 
-	@RequestMapping(path = "/DeviceSnapShot/", method = RequestMethod.DELETE)
-	public void delete(@PathVariable(value = "imeiMsisdnIdentity") ImeiMsisdnIdentity imeiMsisdnIdentity) {
+	//@RequestMapping(path = "/DeviceSnapShot/", method = RequestMethod.DELETE)
+	public void delete(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		deviceSnapShotService.delete(imeiMsisdnIdentity);
 	}
 
-	@RequestMapping(path = "/DeviceSnapShot/", method = RequestMethod.PUT)
+	@RequestMapping(path = "/DeviceSnapShot/{id}", method = RequestMethod.PUT)
 	public MappingJacksonValue update(@PathVariable(value = "id") Long id, @RequestBody DeviceSnapShot deviceSnapShot) {
 		DeviceSnapShot updatedDeviceSnapShot = deviceSnapShotService.update(deviceSnapShot);
 		MappingJacksonValue mapping = new MappingJacksonValue(updatedDeviceSnapShot);

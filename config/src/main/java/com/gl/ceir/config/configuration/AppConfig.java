@@ -24,8 +24,9 @@ public class AppConfig {
 	}
 
 	private ApiInfo apiEndPointsInfo() {
-		return new ApiInfoBuilder().title("Spring Boot REST API").description("Employee Management REST API")
-				.license("Apache 2.0").licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html").version("1.0.0")
-				.build();
+		return new ApiInfoBuilder().title("CEIR Configuration APIs Document")
+				.description("Configuration Management REST APIs").license("Apache 2.0")
+				.licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html").version("1.0.0").build();
 	}
+
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.model.SmsAccount;
 import com.gl.ceir.config.model.SmsScript;
 import com.gl.ceir.config.repository.SmsScriptRepository;
 import com.gl.ceir.config.service.SmsScriptService;
@@ -17,31 +19,29 @@ public class SmsScriptServiceImpl implements SmsScriptService {
 
 	@Override
 	public List<SmsScript> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return smsScriptRepository.findAll();
 	}
 
 	@Override
-	public SmsScript save(SmsScript t) {
-		// TODO Auto-generated method stub
-		return null;
+	public SmsScript save(SmsScript smsScript) {
+		return smsScriptRepository.save(smsScript);
 	}
 
 	@Override
 	public SmsScript get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		SmsScript smsScript = smsScriptRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Sms Script", "id", id));
+		return smsScript;
 	}
 
 	@Override
-	public SmsScript update(SmsScript t) {
-		// TODO Auto-generated method stub
-		return null;
+	public SmsScript update(SmsScript smsScript) {
+		return smsScriptRepository.save(smsScript);
 	}
 
 	@Override
-	public void delete(Long t) {
-		// TODO Auto-generated method stub
+	public void delete(Long id) {
+		smsScriptRepository.deleteById(id);
 
 	}
 

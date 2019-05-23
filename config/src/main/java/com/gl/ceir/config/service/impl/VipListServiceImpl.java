@@ -21,9 +21,8 @@ public class VipListServiceImpl implements VipListService {
 	}
 
 	@Override
-	public VipList save(VipList t) {
-		// TODO Auto-generated method stub
-		return null;
+	public VipList save(VipList vipList) {
+		return vipListRepository.save(vipList);
 	}
 
 	@Override
@@ -33,15 +32,28 @@ public class VipListServiceImpl implements VipListService {
 	}
 
 	@Override
-	public VipList update(VipList t) {
-		// TODO Auto-generated method stub
-		return null;
+	public VipList update(VipList vipList) {
+		return vipListRepository.save(vipList);
 	}
 
 	@Override
-	public void delete(Long t) {
-		// TODO Auto-generated method stub
+	public void delete(Long id) {
+		vipListRepository.deleteById(id);
+	}
 
+	@Override
+	public VipList getByMsisdn(Long msisdn) {
+		return vipListRepository.findByMsisdn(msisdn);
+	}
+
+	@Override
+	public VipList getByImei(Long imei) {
+		return vipListRepository.findByImei(imei);
+	}
+
+	@Override
+	public VipList getByMsisdnAndImei(Long msisdn, Long imei) {
+		return vipListRepository.findByMsisdnAndImei(msisdn, imei);
 	}
 
 }

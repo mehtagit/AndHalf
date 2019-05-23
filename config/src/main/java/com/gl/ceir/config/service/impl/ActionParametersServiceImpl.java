@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.model.Action;
 import com.gl.ceir.config.model.ActionParameters;
 import com.gl.ceir.config.repository.ActionParametersRepository;
+import com.gl.ceir.config.repository.ActionRepository;
 import com.gl.ceir.config.service.ActionParametersService;
 
 @Service
@@ -15,6 +17,9 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 
 	@Autowired
 	ActionParametersRepository actionParametersRepository;
+
+	@Autowired
+	ActionRepository actionRepository;
 
 	@Override
 	public List<ActionParameters> getAll() {
@@ -42,6 +47,13 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 	@Override
 	public void delete(Long id) {
 		actionParametersRepository.deleteById(id);
+	}
+
+	@Override
+	public List<ActionParameters> findByAction(Long action_id) {
+		Action action = actionRepository.findById(action_id)
+				.orElseThrow(() -> new ResourceNotFoundException("Action", "action_id", action_id));
+		return actionParametersRepository.findByAction(action);
 	}
 
 }

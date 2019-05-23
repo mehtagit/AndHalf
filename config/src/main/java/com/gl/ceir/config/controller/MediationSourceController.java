@@ -40,12 +40,12 @@ public class MediationSourceController {
 		return mapping;
 	}
 
-	@RequestMapping(path = "/MediationSource/", method = RequestMethod.DELETE)
+	@RequestMapping(path = "/MediationSource/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(value = "id") Long id) {
 		mediationSourceService.delete(id);
 	}
 
-	@RequestMapping(path = "/MediationSource/", method = RequestMethod.PUT)
+	@RequestMapping(path = "/MediationSource/{id}", method = RequestMethod.PUT)
 	public MappingJacksonValue update(@PathVariable(value = "id") Long id,
 			@RequestBody MediationSource mediationSource) {
 		MediationSource updatedMediationSource = mediationSourceService.update(mediationSource);

@@ -1,9 +1,16 @@
 package com.gl.ceir.config.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.gl.ceir.config.model.Action;
 import com.gl.ceir.config.model.ActionParameters;
 
 public interface ActionParametersRepository extends JpaRepository<ActionParameters, Long> {
 
+	// @Query("SELECT ap FROM ActionParameters ap WHERE ap.action_id = :")
+	public List<ActionParameters> findByAction(Action action);
 }

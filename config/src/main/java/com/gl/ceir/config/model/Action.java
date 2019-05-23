@@ -6,10 +6,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Action {
@@ -19,7 +21,8 @@ public class Action {
 	@Enumerated(EnumType.STRING)
 	private ActionNames name;
 
-	@OneToMany(mappedBy = "action")
+	@Transient
+	@OneToMany(mappedBy = "action", cascade = CascadeType.ALL)
 	private Set<ActionParameters> actionParameters;
 
 	public Action() {

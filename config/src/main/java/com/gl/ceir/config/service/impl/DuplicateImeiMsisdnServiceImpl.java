@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.repository.DuplicateImeiMsisdnRepository;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 
@@ -17,14 +20,12 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 
 	@Override
 	public List<DuplicateImeiMsisdn> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return duplicateImeiMsisdnRepository.findAll();
 	}
 
 	@Override
-	public DuplicateImeiMsisdn save(DuplicateImeiMsisdn t) {
-		// TODO Auto-generated method stub
-		return null;
+	public DuplicateImeiMsisdn save(DuplicateImeiMsisdn duplicateImeiMsisdn) {
+		return duplicateImeiMsisdnRepository.save(duplicateImeiMsisdn);
 	}
 
 	@Override
@@ -34,15 +35,27 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 	}
 
 	@Override
-	public DuplicateImeiMsisdn update(DuplicateImeiMsisdn t) {
-		// TODO Auto-generated method stub
-		return null;
+	public DuplicateImeiMsisdn update(DuplicateImeiMsisdn duplicateImeiMsisdn) {
+		return duplicateImeiMsisdnRepository.save(duplicateImeiMsisdn);
 	}
 
 	@Override
 	public void delete(Long t) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public DuplicateImeiMsisdn get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository.findById(imeiMsisdnIdentity)
+				.orElseThrow(() -> new ResourceNotFoundException("Duplicate Imei Msisdn", "imeiMsisdnIdentity",
+						imeiMsisdnIdentity));
+		return duplicateImeiMsisdn;
+	}
+
+	@Override
+	public void delete(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		duplicateImeiMsisdnRepository.deleteById(imeiMsisdnIdentity);
 	}
 
 }

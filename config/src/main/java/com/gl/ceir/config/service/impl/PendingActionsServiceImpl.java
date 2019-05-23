@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.model.MediationSource;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.repository.PendingActionsRepositoy;
 import com.gl.ceir.config.service.PendingActionsService;
@@ -17,20 +19,12 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 
 	@Override
 	public List<PendingActions> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return pendingActionsRepositoy.findAll();
 	}
 
 	@Override
-	public PendingActions save(PendingActions t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PendingActions get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public PendingActions save(PendingActions pendingActions) {
+		return pendingActionsRepositoy.save(pendingActions);
 	}
 
 	@Override
@@ -42,6 +36,24 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	@Override
 	public void delete(Long t) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public PendingActions get(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PendingActions get(String ticketId) {
+		PendingActions pendingActions = pendingActionsRepositoy.findById(ticketId)
+				.orElseThrow(() -> new ResourceNotFoundException("Pending Actions ", "ticketId", ticketId));
+		return pendingActions;
+	}
+
+	@Override
+	public void delete(String ticketId) {
 
 	}
 

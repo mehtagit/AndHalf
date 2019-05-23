@@ -22,9 +22,9 @@ public class MobileOperatorServiceImpl implements MobileOperatorService {
 	}
 
 	@Override
-	public MobileOperator save(MobileOperator t) {
+	public MobileOperator save(MobileOperator mobileOperator) {
 		// TODO Auto-generated method stub
-		return mobileOperatorRepository.save(t);
+		return mobileOperatorRepository.save(mobileOperator);
 	}
 
 	@Override

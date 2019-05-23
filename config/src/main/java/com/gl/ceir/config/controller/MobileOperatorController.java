@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.MobileOperatorService;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class MobileOperatorController {
@@ -21,7 +23,8 @@ public class MobileOperatorController {
 	@Autowired
 	private MobileOperatorService mobileOperatorService;
 
-	@ApiResponse(response = MobileOperator.class, code = 0, message = " To get All Existing Mobile Operators", responseContainer = "List")
+	@ApiOperation(value = "View All available Mobile Operators", response = MobileOperator.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfull retrieved list") })
 	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.GET)
 	public MappingJacksonValue getAll() {
 		List<MobileOperator> allOperators = mobileOperatorService.getAll();
@@ -43,12 +46,12 @@ public class MobileOperatorController {
 		return mapping;
 	}
 
-	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.DELETE)
+	@RequestMapping(path = "/MobileOperators/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(value = "id") Long id) {
 		mobileOperatorService.delete(id);
 	}
 
-	@RequestMapping(path = "/MobileOperators/", method = RequestMethod.PUT)
+	@RequestMapping(path = "/MobileOperators/{id}", method = RequestMethod.PUT)
 	public MappingJacksonValue update(@PathVariable(value = "id") Long id, @RequestBody MobileOperator mobileOperator) {
 		MobileOperator operators = mobileOperatorService.update(mobileOperator);
 		MappingJacksonValue mapping = new MappingJacksonValue(operators);

@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.repository.RulesRepository;
 import com.gl.ceir.config.service.RulesService;
@@ -17,32 +19,28 @@ public class RulesServiceImpl implements RulesService {
 
 	@Override
 	public List<Rules> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return rulesRepository.findAll();
 	}
 
 	@Override
-	public Rules save(Rules t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Rules save(Rules rules) {
+		return rulesRepository.save(rules);
 	}
 
 	@Override
 	public Rules get(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Rules rules = rulesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Rules", "id", id));
+		return rules;
 	}
 
 	@Override
-	public Rules update(Rules t) {
-		// TODO Auto-generated method stub
-		return null;
+	public Rules update(Rules rules) {
+		return rulesRepository.save(rules);
 	}
 
 	@Override
-	public void delete(Long t) {
-		// TODO Auto-generated method stub
-
+	public void delete(Long rules) {
+		rulesRepository.deleteById(rules);
 	}
 
 }

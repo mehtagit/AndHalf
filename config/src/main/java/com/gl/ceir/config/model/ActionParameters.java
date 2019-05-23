@@ -1,13 +1,16 @@
 package com.gl.ceir.config.model;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 
 @Entity
 public class ActionParameters {
@@ -21,6 +24,7 @@ public class ActionParameters {
 	private String value;
 
 	@ManyToOne
+	@JoinColumn
 	private Action action;
 
 	public Long getId() {
