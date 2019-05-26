@@ -10,4 +10,6 @@ public interface WhiteListRepository extends JpaRepository<WhiteList, Long> {
 	public WhiteList findByImei(Long imei);
 
 	public WhiteList findByMsisdnAndImei(Long msisdn, Long imei);
+
+	public void deleteByMsisdnAndImei(Long msisdn, Long imei);
 }

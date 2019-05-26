@@ -9,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
 public class PendingActions {
 	@Id

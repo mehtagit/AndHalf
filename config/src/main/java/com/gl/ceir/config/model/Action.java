@@ -13,17 +13,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
-public class Action {
+public class Action extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Enumerated(EnumType.STRING)
 	private ActionNames name;
-
-	@Transient
-	@OneToMany(mappedBy = "action", cascade = CascadeType.ALL)
-	private Set<ActionParameters> actionParameters;
 
 	public Action() {
 	}
@@ -42,14 +43,6 @@ public class Action {
 
 	public void setName(ActionNames name) {
 		this.name = name;
-	}
-
-	public Set<ActionParameters> getActionParameters() {
-		return actionParameters;
-	}
-
-	public void setActionParameters(Set<ActionParameters> actionParameters) {
-		this.actionParameters = actionParameters;
 	}
 
 }

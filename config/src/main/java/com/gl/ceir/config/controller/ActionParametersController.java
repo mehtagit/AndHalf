@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.ActionParameters;
+import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.ActionParametersService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class ActionParametersController {
@@ -19,23 +22,32 @@ public class ActionParametersController {
 	@Autowired
 	private ActionParametersService actionParametersService;
 
-	// based on action get getall
+	@ApiOperation(value = "View All available Action Parameters", response = ActionParameters.class, responseContainer = "list")
 
-	// @RequestMapping(path = "/ActionParameters/", method = RequestMethod.GET)
+	@RequestMapping(path = "/ActionParameters/", method = RequestMethod.GET)
 	public MappingJacksonValue getAll() {
 		List<ActionParameters> actionParameters = actionParametersService.getAll();
 		MappingJacksonValue mapping = new MappingJacksonValue(actionParameters);
 		return mapping;
 	}
 
-	@RequestMapping(path = "/ActionParameters/{action_id}", method = RequestMethod.GET)
+	// @RequestMapping(path = "/ActionParameters/{action_id}", method =
+	// RequestMethod.GET)
 	public MappingJacksonValue get(@PathVariable(value = "action_id") Long action_id) {
 		List<ActionParameters> actionParameters = actionParametersService.findByAction(action_id);
 		MappingJacksonValue mapping = new MappingJacksonValue(actionParameters);
 		return mapping;
 	}
 
-	@RequestMapping(path = "/ActionParameters/", method = RequestMethod.POST)
+	@ApiOperation(value = "View All available Action Parameters of particular Action", response = ActionParameters.class, responseContainer = "list")
+	@RequestMapping(path = "/ActionParameters/{action}", method = RequestMethod.GET)
+	public MappingJacksonValue get(@PathVariable(value = "action") String action) {
+		List<ActionParameters> actionParameters = actionParametersService.findByAction(action);
+		MappingJacksonValue mapping = new MappingJacksonValue(actionParameters);
+		return mapping;
+	}
+
+	// @RequestMapping(path = "/ActionParameters/", method = RequestMethod.POST)
 	public MappingJacksonValue save(@RequestBody ActionParameters actionParameters) {
 		ActionParameters savedActionParameters = actionParametersService.save(actionParameters);
 		MappingJacksonValue mapping = new MappingJacksonValue(savedActionParameters);

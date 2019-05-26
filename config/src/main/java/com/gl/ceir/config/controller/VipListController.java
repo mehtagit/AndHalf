@@ -2,70 +2,59 @@ package com.gl.ceir.config.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
-import com.gl.ceir.config.model.BlackList;
-import com.gl.ceir.config.model.MobileOperator;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.VipList;
-import com.gl.ceir.config.repository.VipListRepository;
-import com.gl.ceir.config.service.BlackListService;
 import com.gl.ceir.config.service.VipListService;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class VipListController {
 
+	private static final Logger logger = LogManager.getLogger(VipListController.class);
+
 	@Autowired
 	private VipListService vipListService;
 
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successfull retrieved list") })
+	@ApiOperation(value = "View available VIP List Device ", response = VipList.class)
 	@RequestMapping(path = "/VipList/", method = RequestMethod.GET)
-	public MappingJacksonValue getAll() {
-		List<VipList> allVipList = vipListService.getAll();
-		MappingJacksonValue mapping = new MappingJacksonValue(allVipList);
-		return mapping;
+	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
+			@RequestParam(required = false) Long imei) {
+		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
+		imeiMsisdnIdentity.setMsisdn(msisdn);
+		imeiMsisdnIdentity.setImei(imei);
+		return getByMsisdnAndImei(imeiMsisdnIdentity);
 	}
 
-	@RequestMapping(path = "/VipList/Msisdn/{msisdn}", method = RequestMethod.GET)
-	public MappingJacksonValue getByMsisdn(@PathVariable(value = "msisdn") Long msisdn) {
-		VipList vipList = vipListService.getByMsisdn(msisdn);
+	public MappingJacksonValue getByMsisdnAndImei(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {
 
+		if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
+			List<VipList> allWhiteList = vipListService.getAll();
+			MappingJacksonValue mapping = new MappingJacksonValue(allWhiteList);
+			return mapping;
+		}
+
+		VipList vipList = vipListService.getByMsisdnAndImei(imeiMsisdnIdentity);
 		if (vipList == null)
-			throw new ResourceNotFoundException("VIP List", "msisdn", msisdn);
-		else
-			return new MappingJacksonValue(vipList);
-
-	}
-
-	@RequestMapping(path = "/VipList/Imei/{imei}", method = RequestMethod.GET)
-	public MappingJacksonValue getByImei(@PathVariable(value = "imei") Long imei) {
-		VipList vipList = vipListService.getByImei(imei);
-		if (vipList == null)
-			throw new ResourceNotFoundException("VIP List", "imei", imei);
-		else
-			return new MappingJacksonValue(vipList);
-	}
-
-	@RequestMapping(path = "/VipList/MsisdnAndImei/{msisdn}/{imei}", method = RequestMethod.GET)
-	public MappingJacksonValue getByMsisdnAndImei(@PathVariable(value = "msisdn") Long msisdn,
-			@PathVariable(value = "imei") Long imei) {
-		VipList vipList = vipListService.getByMsisdnAndImei(msisdn, imei);
-		if (vipList == null)
-			throw new ResourceNotFoundException("VIP List", "msisdn and imei", msisdn + " and " + imei);
+			throw new ResourceNotFoundException("VIP List", "msisdn and imei",
+					imeiMsisdnIdentity.getMsisdn() + " and " + imeiMsisdnIdentity.getImei());
 		else
 			return new MappingJacksonValue(vipList);
 	}
 
+	@ApiOperation(value = "Save new Device in VIP List ", response = VipList.class)
 	@RequestMapping(path = "/VipList/", method = RequestMethod.POST)
 	public MappingJacksonValue save(@RequestBody VipList vipList) {
 		VipList savedVipList = vipListService.save(vipList);
@@ -73,18 +62,10 @@ public class VipListController {
 		return mapping;
 	}
 
-	@RequestMapping(path = "/VipList/MsisdnAndImei/{msisdn}/{imei}", method = RequestMethod.DELETE)
-	public MappingJacksonValue deleteByMsisdnAndImei(@PathVariable(value = "msisdn") Long msisdn,
-			@PathVariable(value = "imei") Long imei) {
-		VipList vipList = vipListService.getByMsisdnAndImei(msisdn, imei);
-		MappingJacksonValue mapping = new MappingJacksonValue(vipList);
-		return mapping;
+	@ApiOperation(value = "Delete a Device from VIP List ")
+	@RequestMapping(path = "/VipList/", method = RequestMethod.DELETE)
+	public void deleteByMsisdnAndImei(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		vipListService.deleteByMsisdnAndImei(imeiMsisdnIdentity);
 	}
 
-	@RequestMapping(path = "/VipList/", method = RequestMethod.PUT)
-	public MappingJacksonValue update(@RequestBody VipList vipList) {
-		VipList updatedVipList = vipListService.update(vipList);
-		MappingJacksonValue mapping = new MappingJacksonValue(updatedVipList);
-		return mapping;
-	}
 }

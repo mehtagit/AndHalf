@@ -15,6 +15,8 @@ import com.gl.ceir.config.model.MediationSource;
 import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.ActionService;
 import com.gl.ceir.config.service.MediationSourceService;
+
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 
 @RestController
@@ -23,6 +25,7 @@ public class ActionController {
 	@Autowired
 	private ActionService actionService;
 
+	@ApiOperation(value = "View All available Action ", response = Action.class, responseContainer = "list")
 	@RequestMapping(path = "/Action/", method = RequestMethod.GET)
 	public MappingJacksonValue getAll() {
 		List<Action> allActions = actionService.getAll();
@@ -30,26 +33,26 @@ public class ActionController {
 		return mapping;
 	}
 
-	//@RequestMapping(path = "/Action/{id}", method = RequestMethod.GET)
+	// @RequestMapping(path = "/Action/{id}", method = RequestMethod.GET)
 	public MappingJacksonValue get(@PathVariable(value = "id") Long id) {
 		Action action = actionService.get(id);
 		MappingJacksonValue mapping = new MappingJacksonValue(action);
 		return mapping;
 	}
 
-	//@RequestMapping(path = "/Action/", method = RequestMethod.POST)
+	// @RequestMapping(path = "/Action/", method = RequestMethod.POST)
 	public MappingJacksonValue save(@RequestBody Action action) {
 		Action savedAction = actionService.save(action);
 		MappingJacksonValue mapping = new MappingJacksonValue(savedAction);
 		return mapping;
 	}
 
-	//@RequestMapping(path = "/Action/{id}", method = RequestMethod.DELETE)
+	// @RequestMapping(path = "/Action/{id}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(value = "id") Long id) {
 		actionService.delete(id);
 	}
 
-	//@RequestMapping(path = "/Action/{id}", method = RequestMethod.PUT)
+	// @RequestMapping(path = "/Action/{id}", method = RequestMethod.PUT)
 	public MappingJacksonValue update(@PathVariable(value = "id") Long id, @RequestBody Action action) {
 		Action updatedAction = actionService.update(action);
 		MappingJacksonValue mapping = new MappingJacksonValue(updatedAction);

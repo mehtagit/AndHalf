@@ -2,9 +2,13 @@ package com.gl.ceir.config.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.repository.VipListRepository;
 import com.gl.ceir.config.service.VipListService;
@@ -12,17 +16,31 @@ import com.gl.ceir.config.service.VipListService;
 @Service
 public class VipListServiceImpl implements VipListService {
 
+	private static final Logger logger = LogManager.getLogger(VipListServiceImpl.class);
+
 	@Autowired
 	private VipListRepository vipListRepository;
 
 	@Override
 	public List<VipList> getAll() {
-		return vipListRepository.findAll();
+
+		try {
+			return vipListRepository.findAll();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public VipList save(VipList vipList) {
-		return vipListRepository.save(vipList);
+
+		try {
+			return vipListRepository.save(vipList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
@@ -33,27 +51,80 @@ public class VipListServiceImpl implements VipListService {
 
 	@Override
 	public VipList update(VipList vipList) {
-		return vipListRepository.save(vipList);
+
+		try {
+			return vipListRepository.save(vipList);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public void delete(Long id) {
-		vipListRepository.deleteById(id);
+
+		try {
+			vipListRepository.deleteById(id);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public VipList getByMsisdn(Long msisdn) {
-		return vipListRepository.findByMsisdn(msisdn);
+
+		try {
+			return vipListRepository.findByMsisdn(msisdn);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public VipList getByImei(Long imei) {
-		return vipListRepository.findByImei(imei);
+
+		try {
+			return vipListRepository.findByImei(imei);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
-	public VipList getByMsisdnAndImei(Long msisdn, Long imei) {
-		return vipListRepository.findByMsisdnAndImei(msisdn, imei);
+	public VipList getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		logger.info("Going to get Vip Devices by " + imeiMsisdnIdentity);
+		try {
+			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
+				return null;
+			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
+				return vipListRepository.findByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(),
+						imeiMsisdnIdentity.getImei());
+			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
+				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
+			} else {
+				return getByImei(imeiMsisdnIdentity.getImei());
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@Override
+	public void deleteByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		logger.info("Going to delete VIP List Device by " + imeiMsisdnIdentity);
+		if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
+			vipListRepository.deleteByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(), imeiMsisdnIdentity.getImei());
+		} else {
+			logger.info("Not Deleted " + imeiMsisdnIdentity);
+			return;
+		}
 	}
 
 }

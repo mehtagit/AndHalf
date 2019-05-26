@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
 public class DeviceSnapShot {
 	@EmbeddedId
@@ -33,7 +36,6 @@ public class DeviceSnapShot {
 	private boolean taxPaid;
 	private boolean foreginRule;
 	private boolean globalBlacklist;
-	private boolean greyList;
 	private boolean validImport;
 
 	private String action;
@@ -135,14 +137,6 @@ public class DeviceSnapShot {
 
 	public void setGlobalBlacklist(boolean globalBlacklist) {
 		this.globalBlacklist = globalBlacklist;
-	}
-
-	public boolean isGreyList() {
-		return greyList;
-	}
-
-	public void setGreyList(boolean greyList) {
-		this.greyList = greyList;
 	}
 
 	public boolean isValidImport() {

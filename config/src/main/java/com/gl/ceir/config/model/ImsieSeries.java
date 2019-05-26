@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
 public class ImsieSeries {
 	@Id

@@ -12,4 +12,12 @@ public enum ActionNames {
 		return name;
 	}
 
+	public static ActionNames getActionNames(String name) {
+		for (ActionNames names : ActionNames.values()) {
+			if (name.equals(names.toString()))
+				return names;
+		}
+
+		return null;
+	}
 }

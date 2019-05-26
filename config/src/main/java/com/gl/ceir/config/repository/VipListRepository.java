@@ -10,4 +10,6 @@ public interface VipListRepository extends JpaRepository<VipList, Long> {
 	public VipList findByImei(Long imei);
 
 	public VipList findByMsisdnAndImei(Long msisdn, Long imei);
+	
+	public void deleteByMsisdnAndImei(Long msisdn, Long imei);
 }

@@ -2,10 +2,13 @@ package com.gl.ceir.config.service.impl;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.model.SmsAccount;
 import com.gl.ceir.config.repository.SmsAccountRepository;
@@ -14,34 +17,67 @@ import com.gl.ceir.config.service.SmsAccountService;
 @Service
 public class SmsAccountServiceImpl implements SmsAccountService {
 
+	private static final Logger logger = LogManager.getLogger(SmsAccountServiceImpl.class);
+
 	@Autowired
 	private SmsAccountRepository smsAccountRepository;
 
 	@Override
 	public List<SmsAccount> getAll() {
-		return smsAccountRepository.findAll();
+		try {
+			return smsAccountRepository.findAll();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
 	}
 
 	@Override
 	public SmsAccount save(SmsAccount smsAccount) {
-		return smsAccountRepository.save(smsAccount);
+
+		try {
+			return smsAccountRepository.save(smsAccount);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public SmsAccount get(Long id) {
-		SmsAccount smsAccount = smsAccountRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Sms Account", "id", id));
-		return smsAccount;
+
+		try {
+			SmsAccount smsAccount = smsAccountRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Sms Account", "id", id));
+			return smsAccount;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public SmsAccount update(SmsAccount smsAccount) {
-		return smsAccountRepository.save(smsAccount);
+
+		try {
+			return smsAccountRepository.save(smsAccount);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	@Override
 	public void delete(Long id) {
-		smsAccountRepository.deleteById(id);
+
+		try {
+			smsAccountRepository.deleteById(id);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 }

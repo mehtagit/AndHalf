@@ -10,4 +10,6 @@ public interface BlackListRepository extends JpaRepository<BlackList, Long> {
 	public BlackList findByImei(Long imei);
 
 	public BlackList findByMsisdnAndImei(Long msisdn, Long imei);
+
+	public void deleteByMsisdnAndImei(Long msisdn, Long imei);
 }

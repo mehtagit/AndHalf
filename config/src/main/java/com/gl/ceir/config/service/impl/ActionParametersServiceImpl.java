@@ -1,12 +1,16 @@
 package com.gl.ceir.config.service.impl;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.Action;
+import com.gl.ceir.config.model.ActionNames;
 import com.gl.ceir.config.model.ActionParameters;
 import com.gl.ceir.config.repository.ActionParametersRepository;
 import com.gl.ceir.config.repository.ActionRepository;
@@ -15,6 +19,7 @@ import com.gl.ceir.config.service.ActionParametersService;
 @Service
 public class ActionParametersServiceImpl implements ActionParametersService {
 
+	private static final Logger logger = LogManager.getLogger(ActionParametersServiceImpl.class);
 	@Autowired
 	ActionParametersRepository actionParametersRepository;
 
@@ -23,37 +28,88 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 
 	@Override
 	public List<ActionParameters> getAll() {
-		return actionParametersRepository.findAll();
+		try {
+			return actionParametersRepository.findAll();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
 	}
 
 	@Override
 	public ActionParameters save(ActionParameters actionParameters) {
+		try {
+			return actionParametersRepository.save(actionParameters);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
 
-		return actionParametersRepository.save(actionParameters);
 	}
 
 	@Override
 	public ActionParameters get(Long id) throws ResourceNotFoundException {
-		ActionParameters actionParameters = actionParametersRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Action Parameters", "id", id));
-		return actionParameters;
+		try {
+			ActionParameters actionParameters = actionParametersRepository.findById(id)
+					.orElseThrow(() -> new ResourceNotFoundException("Action Parameters", "id", id));
+			return actionParameters;
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
 	}
 
 	@Override
 	public ActionParameters update(ActionParameters actionParameters) {
-		return actionParametersRepository.save(actionParameters);
+		try {
+			return actionParametersRepository.save(actionParameters);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
+
 	}
 
 	@Override
 	public void delete(Long id) {
-		actionParametersRepository.deleteById(id);
+		try {
+			actionParametersRepository.deleteById(id);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
+
 	}
 
 	@Override
 	public List<ActionParameters> findByAction(Long action_id) {
-		Action action = actionRepository.findById(action_id)
-				.orElseThrow(() -> new ResourceNotFoundException("Action", "action_id", action_id));
-		return actionParametersRepository.findByAction(action);
+		try {
+			Action action = actionRepository.findById(action_id)
+					.orElseThrow(() -> new ResourceNotFoundException("Action", "action_id", action_id));
+			return actionParametersRepository.findByAction(action);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
+
+	}
+
+	@Override
+	public List<ActionParameters> findByAction(String name) {
+		try {
+
+			ActionNames actionNames = ActionNames.getActionNames(name);
+
+			if (actionNames == null)
+				throw new ResourceNotFoundException("Action", "actionName", name);
+
+			Action action = actionRepository.findByName(actionNames);
+
+			return actionParametersRepository.findByAction(action);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
 	}
 
 }

@@ -8,6 +8,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel
 @Entity
 public class DuplicateImeiMsisdn {
 	@EmbeddedId

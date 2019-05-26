@@ -4,7 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-// CR(imei,msisdn)UD 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.annotations.ApiModel;
+@ApiModel
 @Entity
 public class BlackList {
 	@Id
@@ -12,7 +16,10 @@ public class BlackList {
 	private Long id;
 	private Long imei;
 	private Long msisdn;
+	
+	@JsonIgnore
 	private String requestedBy;
+	@JsonIgnore
 	private String approvedBy;
 
 	public Long getId() {

@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 // CR(imei,msisdn)UD 
 @Entity
 public class WhiteList {
@@ -12,7 +14,9 @@ public class WhiteList {
 	private Long id;
 	private Long imei;
 	private Long msisdn;
+	@JsonIgnore
 	private String requestedBy;
+	@JsonIgnore
 	private String approvedBy;
 
 	public Long getId() {

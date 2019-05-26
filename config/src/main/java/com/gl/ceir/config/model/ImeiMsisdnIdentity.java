@@ -52,4 +52,10 @@ public class ImeiMsisdnIdentity implements Serializable {
 		result = 31 * result + msisdn.hashCode();
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "ImeiMsisdnIdentity [imei=" + imei + ", msisdn=" + msisdn + "]";
+	}
+
 }
