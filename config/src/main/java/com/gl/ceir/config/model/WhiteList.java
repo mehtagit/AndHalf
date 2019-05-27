@@ -1,46 +1,28 @@
 package com.gl.ceir.config.model;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // CR(imei,msisdn)UD 
 @Entity
 public class WhiteList {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private Long imei;
-	private Long msisdn;
+
+	@EmbeddedId
+	private ImeiMsisdnIdentity imeiMsisdnIdentity;
+
 	@JsonIgnore
 	private String requestedBy;
 	@JsonIgnore
 	private String approvedBy;
 
-	public Long getId() {
-		return id;
+	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
+		return imeiMsisdnIdentity;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getImei() {
-		return imei;
-	}
-
-	public void setImei(Long imei) {
-		this.imei = imei;
-	}
-
-	public Long getMsisdn() {
-		return msisdn;
-	}
-
-	public void setMsisdn(Long msisdn) {
-		this.msisdn = msisdn;
+	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
 	}
 
 	public String getRequestedBy() {

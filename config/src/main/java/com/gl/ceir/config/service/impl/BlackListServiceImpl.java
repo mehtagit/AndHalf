@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.BlackList;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
@@ -53,7 +54,7 @@ public class BlackListServiceImpl implements BlackListService {
 	@Override
 	public void delete(Long id) {
 		try {
-			blackListRepository.deleteById(id);
+			// blackListRepository.deleteById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -76,7 +77,7 @@ public class BlackListServiceImpl implements BlackListService {
 	public BlackList getByMsisdn(Long msisdn) {
 
 		try {
-			return blackListRepository.findByMsisdn(msisdn);
+			return blackListRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -87,7 +88,7 @@ public class BlackListServiceImpl implements BlackListService {
 	public BlackList getByImei(Long imei) {
 
 		try {
-			return blackListRepository.findByImei(imei);
+			return blackListRepository.findByImeiMsisdnIdentityImei(imei);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -101,8 +102,8 @@ public class BlackListServiceImpl implements BlackListService {
 			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
 				return null;
 			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-				return blackListRepository.findByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(),
-						imeiMsisdnIdentity.getImei());
+				return blackListRepository.findById(imeiMsisdnIdentity).orElseThrow(
+						() -> new ResourceNotFoundException("Black Device", "imeiMsisdnIdentity", imeiMsisdnIdentity));
 			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
 				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
 			} else {
@@ -119,7 +120,7 @@ public class BlackListServiceImpl implements BlackListService {
 	public void deleteByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		logger.info("Going to delete Black List Device by " + imeiMsisdnIdentity);
 		if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-			blackListRepository.deleteByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(), imeiMsisdnIdentity.getImei());
+			blackListRepository.deleteById(imeiMsisdnIdentity);
 		} else {
 			logger.info("Not Deleted " + imeiMsisdnIdentity);
 			return;

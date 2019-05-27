@@ -12,22 +12,18 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class UserNotification {
+public class UserNotificationDeliveryReport {
 
 	private Long msisdn;
 	private Long imei;
-	private Long imsi;
 
-	private Long smsScriptId;
-	private Long rulesId;
 	@Id
 	private String ticketId;
 
 	private Date createdOn;
 
-	private String submitStatus;
-	private String message;
-	private Date sentDate;
+	private String deliveryStatus;
+	private Date deliveryDate;
 	private Integer channelId;
 
 	@Enumerated(EnumType.STRING)
@@ -49,30 +45,6 @@ public class UserNotification {
 		this.imei = imei;
 	}
 
-	public Long getImsi() {
-		return imsi;
-	}
-
-	public void setImsi(Long imsi) {
-		this.imsi = imsi;
-	}
-
-	public Long getSmsScriptId() {
-		return smsScriptId;
-	}
-
-	public void setSmsScriptId(Long smsScriptId) {
-		this.smsScriptId = smsScriptId;
-	}
-
-	public Long getRulesId() {
-		return rulesId;
-	}
-
-	public void setRulesId(Long rulesId) {
-		this.rulesId = rulesId;
-	}
-
 	public String getTicketId() {
 		return ticketId;
 	}
@@ -89,36 +61,20 @@ public class UserNotification {
 		this.createdOn = createdOn;
 	}
 
-	public String getSubmitStatus() {
-		return submitStatus;
+	public String getDeliveryStatus() {
+		return deliveryStatus;
 	}
 
-	public void setSubmitStatus(String submitStatus) {
-		this.submitStatus = submitStatus;
+	public void setDeliveryStatus(String deliveryStatus) {
+		this.deliveryStatus = deliveryStatus;
 	}
 
-	public String getMessage() {
-		return message;
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public MessageType getMessageType() {
-		return messageType;
-	}
-
-	public void setMessageType(MessageType messageType) {
-		this.messageType = messageType;
-	}
-
-	public Date getSentDate() {
-		return sentDate;
-	}
-
-	public void setSentDate(Date sentDate) {
-		this.sentDate = sentDate;
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 
 	public Integer getChannelId() {
@@ -127,6 +83,14 @@ public class UserNotification {
 
 	public void setChannelId(Integer channelId) {
 		this.channelId = channelId;
+	}
+
+	public MessageType getMessageType() {
+		return messageType;
+	}
+
+	public void setMessageType(MessageType messageType) {
+		this.messageType = messageType;
 	}
 
 }

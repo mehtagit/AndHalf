@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.VipList;
@@ -64,7 +65,7 @@ public class VipListServiceImpl implements VipListService {
 	public void delete(Long id) {
 
 		try {
-			vipListRepository.deleteById(id);
+			//vipListRepository.deleteById(id);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -76,7 +77,7 @@ public class VipListServiceImpl implements VipListService {
 	public VipList getByMsisdn(Long msisdn) {
 
 		try {
-			return vipListRepository.findByMsisdn(msisdn);
+			return vipListRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -88,7 +89,7 @@ public class VipListServiceImpl implements VipListService {
 	public VipList getByImei(Long imei) {
 
 		try {
-			return vipListRepository.findByImei(imei);
+			return vipListRepository.findByImeiMsisdnIdentityImei(imei);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -102,8 +103,8 @@ public class VipListServiceImpl implements VipListService {
 			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
 				return null;
 			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-				return vipListRepository.findByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(),
-						imeiMsisdnIdentity.getImei());
+				return vipListRepository.findById(imeiMsisdnIdentity).orElseThrow(
+						() -> new ResourceNotFoundException("Vip Device", "imeiMsisdnIdentity", imeiMsisdnIdentity));
 			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
 				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
 			} else {
@@ -120,7 +121,7 @@ public class VipListServiceImpl implements VipListService {
 	public void deleteByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		logger.info("Going to delete VIP List Device by " + imeiMsisdnIdentity);
 		if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-			vipListRepository.deleteByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(), imeiMsisdnIdentity.getImei());
+			vipListRepository.deleteById(imeiMsisdnIdentity);
 		} else {
 			logger.info("Not Deleted " + imeiMsisdnIdentity);
 			return;

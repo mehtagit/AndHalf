@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.WhiteList;
@@ -53,7 +54,7 @@ public class WhiteListServiceImpl implements WhiteListService {
 	public void delete(Long id) {
 
 		try {
-			whiteListRepository.deleteById(id);
+			// whiteListRepository.deleteById(id);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -73,7 +74,7 @@ public class WhiteListServiceImpl implements WhiteListService {
 	@Override
 	public WhiteList getByMsisdn(Long msisdn) {
 		try {
-			return whiteListRepository.findByMsisdn(msisdn);
+			return whiteListRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -84,7 +85,7 @@ public class WhiteListServiceImpl implements WhiteListService {
 	@Override
 	public WhiteList getByImei(Long imei) {
 		try {
-			return whiteListRepository.findByImei(imei);
+			return whiteListRepository.findByImeiMsisdnIdentityImei(imei);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -98,8 +99,8 @@ public class WhiteListServiceImpl implements WhiteListService {
 			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
 				return null;
 			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-				return whiteListRepository.findByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(),
-						imeiMsisdnIdentity.getImei());
+				return whiteListRepository.findById(imeiMsisdnIdentity).orElseThrow(
+						() -> new ResourceNotFoundException("White Device", "imeiMsisdnIdentity", imeiMsisdnIdentity));
 			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
 				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
 			} else {
@@ -116,7 +117,7 @@ public class WhiteListServiceImpl implements WhiteListService {
 	public void deleteByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		logger.info("Going to delete White List Device by " + imeiMsisdnIdentity);
 		if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-			whiteListRepository.deleteByMsisdnAndImei(imeiMsisdnIdentity.getMsisdn(), imeiMsisdnIdentity.getImei());
+			whiteListRepository.deleteById(imeiMsisdnIdentity);
 		} else {
 			logger.info("Not Deleted " + imeiMsisdnIdentity);
 			return;

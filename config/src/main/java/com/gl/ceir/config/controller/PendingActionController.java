@@ -29,9 +29,7 @@ public class PendingActionController {
 	@Autowired
 	private PendingActionsService pendingActionsService;
 
-	@ApiOperation(value = "View PendingActions by Ticket ID ", response = PendingActions.class)
-	@RequestMapping(path = "/PendingActions/{ticketId}", method = RequestMethod.GET)
-	public MappingJacksonValue get(@PathVariable(value = "ticketId") String ticketId) {
+	public MappingJacksonValue get(String ticketId) {
 		PendingActions pendingActions = pendingActionsService.get(ticketId);
 		MappingJacksonValue mapping = new MappingJacksonValue(pendingActions);
 		return mapping;
@@ -40,11 +38,15 @@ public class PendingActionController {
 	@ApiOperation(value = "View PendingActions by Msisdn or/and IMEI ", response = PendingActions.class)
 	@RequestMapping(path = "/PendingActions/", method = RequestMethod.GET)
 	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
-			@RequestParam(required = false) Long imei) {
-		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
-		imeiMsisdnIdentity.setMsisdn(msisdn);
-		imeiMsisdnIdentity.setImei(imei);
-		return getByMsisdnAndImei(imeiMsisdnIdentity);
+			@RequestParam(required = false) Long imei, @RequestParam(required = false) String ticketId) {
+		if (ticketId == null || "".equals(ticketId)) {
+			ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
+			imeiMsisdnIdentity.setMsisdn(msisdn);
+			imeiMsisdnIdentity.setImei(imei);
+			return getByMsisdnAndImei(imeiMsisdnIdentity);
+		} else {
+			return get(ticketId);
+		}
 	}
 
 	public MappingJacksonValue getByMsisdnAndImei(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {

@@ -3,13 +3,11 @@ package com.gl.ceir.config.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gl.ceir.config.model.BlackList;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
+import com.gl.ceir.config.model.VipList;
 
-public interface BlackListRepository extends JpaRepository<BlackList, Long> {
-	public BlackList findByMsisdn(Long msisdn);
+public interface BlackListRepository extends JpaRepository<BlackList, ImeiMsisdnIdentity> {
+	public BlackList findByImeiMsisdnIdentityMsisdn(Long msisdn);
 
-	public BlackList findByImei(Long imei);
-
-	public BlackList findByMsisdnAndImei(Long msisdn, Long imei);
-
-	public void deleteByMsisdnAndImei(Long msisdn, Long imei);
+	public BlackList findByImeiMsisdnIdentityImei(Long imei);
 }
