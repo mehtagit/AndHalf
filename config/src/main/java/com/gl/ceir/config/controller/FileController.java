@@ -26,9 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.gl.ceir.config.model.Action;
 import com.gl.ceir.config.model.DocumentType;
+import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
 import com.gl.ceir.config.service.impl.FileStorageService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class FileController {
@@ -38,31 +42,24 @@ public class FileController {
 	@Autowired
 	private FileStorageService fileStorageService;
 
+	@ApiOperation(value = "View All Types of document can upload ", response = String.class, responseContainer = "list")
 	@GetMapping("/document/types")
 	public ResponseEntity<List<String>> getAllDocumentTypes() {
 		return new ResponseEntity<>(DocumentType.getDocumentTypes(), HttpStatus.OK);
 	}
 
-	// @RequestMapping(path = "/document/upload", consumes = { "image/jpeg" },
-	// method = RequestMethod.POST)
-	// public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile
-	// file, String ticketId,
-	// DocumentType documentType, @RequestHeader(value = "Accept") String
-	// fileExtension,
-	// @RequestHeader(value = "Content-Type") String contentType) {
+	@ApiOperation(value = "Upload file Ticket ID and Document Type must be there ", response = UploadFileResponse.class)
 	@RequestMapping(path = "/document/upload", method = RequestMethod.POST)
 	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file, String ticketId,
 			DocumentType documentType) {
 
-		// logger.info("fileExtension:" + fileExtension + ", conte-ntType:" +
-		// contentType);
-		String newFileName = ticketId + "_" + documentType.toString() + "." + file.getContentType().split("/")[1];
-		String fileName = fileStorageService.storeFile(file, newFileName);
+		UploadFileRequest uploadFileRequest = new UploadFileRequest();
+		uploadFileRequest.setDocumentType(documentType);
+		uploadFileRequest.setTicketId(ticketId);
 
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/document/download/")
-				.path(fileName).toUriString();
+		UploadFileResponse uploadFileResponse = fileStorageService.storeFile(file, uploadFileRequest);
 
-		return new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
+		return uploadFileResponse;
 	}
 
 	@GetMapping("/document/download/{fileName:.+}")
