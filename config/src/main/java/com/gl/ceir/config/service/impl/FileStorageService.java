@@ -73,13 +73,11 @@ public class FileStorageService {
 			documents.setDocumentType(uploadFileRequest.getDocumentType());
 			documents.setFileDownloadUri(fileDownloadUri);
 			documents.setFilename(newFileName);
-			documents.setFileType(file.getContentType());
-			documents.setSize(file.getSize());
 			documents.setStatus(DocumentStatus.PENDING);
 
 			Documents savedDocument = documentsService.save(documents);
 			logger.info("Document Saved Successfully" + savedDocument);
-			
+
 			return new UploadFileResponse(newFileName, fileDownloadUri, file.getContentType(), file.getSize());
 
 		} catch (IOException ex) {

@@ -14,14 +14,11 @@ public class AllExceptions {
 
 	@ExceptionHandler(value = ResourceNotFoundException.class)
 	public ResponseEntity<Object> exception(ResourceNotFoundException exception) {
-		ApiResponse apiResponse = new ApiResponse(HttpStatus.NOT_FOUND.value(), exception.getMessage());
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(value = ResourceServicesException.class)
 	public ResponseEntity<Object> exception(ResourceServicesException exception) {
-		ApiResponse apiResponse = new ApiResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-				"Please Try after some time");
-		return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+		return new ResponseEntity<>(exception, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

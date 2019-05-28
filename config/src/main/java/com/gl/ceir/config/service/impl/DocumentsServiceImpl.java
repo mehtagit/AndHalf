@@ -6,12 +6,14 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.Documents;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.repository.DocumentsRepository;
 import com.gl.ceir.config.service.DocumentsService;
 
+@Service
 public class DocumentsServiceImpl implements DocumentsService {
 
 	private static final Logger logger = LogManager.getLogger(DocumentsService.class);

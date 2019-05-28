@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import io.swagger.annotations.ApiModel;
 
@@ -23,11 +25,7 @@ public class Documents {
 
 	private String fileDownloadUri;
 
-	private String fileType;
-
 	private DocumentType documentType;
-
-	private long size;
 
 	private DocumentStatus status;
 
@@ -69,28 +67,12 @@ public class Documents {
 		this.fileDownloadUri = fileDownloadUri;
 	}
 
-	public String getFileType() {
-		return fileType;
-	}
-
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
-	}
-
 	public DocumentType getDocumentType() {
 		return documentType;
 	}
 
 	public void setDocumentType(DocumentType documentType) {
 		this.documentType = documentType;
-	}
-
-	public long getSize() {
-		return size;
-	}
-
-	public void setSize(long size) {
-		this.size = size;
 	}
 
 	public DocumentStatus getStatus() {
@@ -123,20 +105,6 @@ public class Documents {
 
 	public void setRejectedReason(String rejectedReason) {
 		this.rejectedReason = rejectedReason;
-	}
-
-	@Override
-	public String toString() {
-		return "Documents [" + (id != null ? "id=" + id + ", " : "")
-				+ (filename != null ? "filename=" + filename + ", " : "")
-				+ (filepath != null ? "filepath=" + filepath + ", " : "")
-				+ (fileDownloadUri != null ? "fileDownloadUri=" + fileDownloadUri + ", " : "")
-				+ (fileType != null ? "fileType=" + fileType + ", " : "")
-				+ (documentType != null ? "documentType=" + documentType + ", " : "") + "size=" + size + ", "
-				+ (status != null ? "status=" + status + ", " : "")
-				+ (approvedBy != null ? "approvedBy=" + approvedBy + ", " : "")
-				+ (approvalDate != null ? "approvalDate=" + approvalDate + ", " : "")
-				+ (rejectedReason != null ? "rejectedReason=" + rejectedReason : "") + "]";
 	}
 
 }

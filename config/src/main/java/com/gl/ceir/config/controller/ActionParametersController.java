@@ -39,9 +39,9 @@ public class ActionParametersController {
 		return mapping;
 	}
 
-	@ApiOperation(value = "View All available Action Parameters of particular Action", response = ActionParameters.class, responseContainer = "list")
-	@RequestMapping(path = "/ActionParameters/{action}", method = RequestMethod.GET)
-	public MappingJacksonValue get(@PathVariable(value = "action") String action) {
+	@ApiOperation(value = "View All available Action Parameters of particular Action Name (USER_REGULARIZED / SYSTEM_REGULARIZED)", response = ActionParameters.class, responseContainer = "list")
+	@RequestMapping(path = "/ActionParameters/{action_name}", method = RequestMethod.GET)
+	public MappingJacksonValue get(@PathVariable(value = "action_name") String action) {
 		List<ActionParameters> actionParameters = actionParametersService.findByAction(action);
 		MappingJacksonValue mapping = new MappingJacksonValue(actionParameters);
 		return mapping;
