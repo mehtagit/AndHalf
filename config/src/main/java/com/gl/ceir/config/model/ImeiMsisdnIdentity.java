@@ -13,6 +13,15 @@ public class ImeiMsisdnIdentity implements Serializable {
 	@NotNull
 	private Long msisdn;
 
+	public ImeiMsisdnIdentity() {
+
+	}
+
+	public ImeiMsisdnIdentity(Long imei, Long msisdn) {
+		this.imei = imei;
+		this.msisdn = msisdn;
+	}
+
 	public Long getImei() {
 		return imei;
 	}

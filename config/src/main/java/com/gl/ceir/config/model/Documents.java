@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -47,12 +48,10 @@ public class Documents {
 
 	private String rejectedReason;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JsonIgnore
-	@JoinColumns({ @JoinColumn(name = "imei", referencedColumnName = "imei"),
-			@JoinColumn(name = "msisdn", referencedColumnName = "msisdn") })
-	private DuplicateImeiMsisdn duplicateImeiMsisdn;
+	@NotNull
+	private Long imei;
+	@NotNull
+	private Long msisdn;
 
 	public Long getId() {
 		return id;
@@ -142,12 +141,20 @@ public class Documents {
 		this.rejectedReason = rejectedReason;
 	}
 
-	public DuplicateImeiMsisdn getDuplicateImeiMsisdn() {
-		return duplicateImeiMsisdn;
+	public Long getImei() {
+		return imei;
 	}
 
-	public void setDuplicateImeiMsisdn(DuplicateImeiMsisdn duplicateImeiMsisdn) {
-		this.duplicateImeiMsisdn = duplicateImeiMsisdn;
+	public void setImei(Long imei) {
+		this.imei = imei;
+	}
+
+	public Long getMsisdn() {
+		return msisdn;
+	}
+
+	public void setMsisdn(Long msisdn) {
+		this.msisdn = msisdn;
 	}
 
 	@Override
@@ -161,7 +168,8 @@ public class Documents {
 				+ (status != null ? "status=" + status + ", " : "")
 				+ (approvedBy != null ? "approvedBy=" + approvedBy + ", " : "")
 				+ (approvalDate != null ? "approvalDate=" + approvalDate + ", " : "")
-				+ (rejectedReason != null ? "rejectedReason=" + rejectedReason : "") + "]";
+				+ (rejectedReason != null ? "rejectedReason=" + rejectedReason + ", " : "")
+				+ (imei != null ? "imei=" + imei + ", " : "") + (msisdn != null ? "msisdn=" + msisdn : "") + "]";
 	}
 
 }

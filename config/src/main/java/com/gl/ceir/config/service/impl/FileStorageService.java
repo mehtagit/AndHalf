@@ -24,9 +24,12 @@ import com.gl.ceir.config.exceptions.FileStorageException;
 import com.gl.ceir.config.exceptions.MyFileNotFoundException;
 import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
+import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
 import com.gl.ceir.config.service.DocumentsService;
+import com.gl.ceir.config.service.PendingActionsService;
 
 @Service
 public class FileStorageService {
@@ -36,6 +39,9 @@ public class FileStorageService {
 
 	@Autowired
 	private DocumentsService documentsService;
+
+	@Autowired
+	private PendingActionsService pendingActionsService;
 
 	@Autowired
 	public FileStorageService(FileStorageProperties fileStorageProperties) {
@@ -68,12 +74,16 @@ public class FileStorageService {
 			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/document/download/")
 					.path(newFileName).toUriString();
 
+			PendingActions pendingActions = pendingActionsService.get(uploadFileRequest.getTicketId());
+
 			Documents documents = new Documents();
 			documents.setApprovalDate(new Date());
 			documents.setDocumentType(uploadFileRequest.getDocumentType());
 			documents.setFileDownloadUri(fileDownloadUri);
 			documents.setFilename(newFileName);
 			documents.setStatus(DocumentStatus.PENDING);
+			documents.setMsisdn(pendingActions.getMsisdn());
+			documents.setImei(pendingActions.getImei());
 
 			Documents savedDocument = documentsService.save(documents);
 			logger.info("Document Saved Successfully" + savedDocument);
