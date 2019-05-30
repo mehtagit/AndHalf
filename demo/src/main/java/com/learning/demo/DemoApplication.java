@@ -1,29 +1,23 @@
 package com.learning.demo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
-
-import com.learning.demo.services.EmployeeService;
-
-@SpringBootApplication
-@Component
-@EnableAutoConfiguration
-@EnableCaching
+import org.dmfs.rfc5545.DateTime;
+import org.dmfs.rfc5545.recur.InvalidRecurrenceRuleException;
+import org.dmfs.rfc5545.recur.RecurrenceRule;
+//
+//@SpringBootApplication
+//@Component
+//@EnableAutoConfiguration
+//@EnableCaching
 public class DemoApplication {
 
 	
-	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(DemoApplication.class, args);
-		//context.getBean(EmployeeService.class).save();
-		/*
-		 * System.out.println(context.getBean(Employee.class).getId());
-		 * System.out.println(context.getBean(Employee2.class).getId());
-		 */
+	public static void main(String[] args) throws InvalidRecurrenceRuleException {
+	//	ApplicationContext context = SpringApplication.run(DemoApplication.class, args);
 		
+		
+		RecurrenceRule rule = new RecurrenceRule("FREQ=WEEKLY;BYDAY=MO;UNTIL=20190531T000000Z");
+		DateTime dateTime = rule.getUntil();
+		System.out.println(dateTime);
 	}
 
 }

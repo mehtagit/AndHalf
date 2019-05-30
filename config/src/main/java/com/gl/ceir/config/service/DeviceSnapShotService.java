@@ -7,13 +7,9 @@ import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 
 public interface DeviceSnapShotService extends RestServices<DeviceSnapShot> {
 
-	public List<DeviceSnapShot> get(ImeiMsisdnIdentity imeiMsisdnIdentity);
-
 	public List<DeviceSnapShot> getByMsisdn(Long msisdn);
 
-	public List<DeviceSnapShot> getByImei(Long imei);
-
-	public void delete(ImeiMsisdnIdentity imeiMsisdnIdentity);
+	public void delete(Long imei);
 
 	public DeviceSnapShot update(DeviceSnapShot DeviceSnapShot);
 

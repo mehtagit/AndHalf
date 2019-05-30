@@ -1,7 +1,6 @@
 package com.gl.ceir.config.model;
 
 import java.util.Date;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

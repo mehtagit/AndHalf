@@ -2,6 +2,7 @@ package com.gl.ceir.config.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,8 +48,13 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	}
 
 	@Override
-	public DeviceSnapShot get(Long id) {
-		return null;
+	public DeviceSnapShot get(Long imei) {
+		logger.info("Get Device Snap Shot by Imei:" + imei);
+		Optional<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findById(imei);
+		if (deviceSnapShot.isPresent())
+			return deviceSnapShot.get();
+		else
+			throw new ResourceNotFoundException("DeviceSnapShot ", "imei", imei);
 	}
 
 	@Override
@@ -66,65 +72,40 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	public void delete(Long t) {
 	}
 
-	@Override
-	public List<DeviceSnapShot> get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		logger.info("Going to get Black List Devices by " + imeiMsisdnIdentity);
-		try {
-			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
-				throw new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity cannot be null",
-						imeiMsisdnIdentity);
-			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-				DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(imeiMsisdnIdentity)
-						.orElseThrow(() -> new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity",
-								imeiMsisdnIdentity));
-				List<DeviceSnapShot> list = new ArrayList<>();
-				list.add(deviceSnapShot);
-				return list;
-			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
-				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
-			} else {
-				return getByImei(imeiMsisdnIdentity.getImei());
-			}
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-
-	}
-
-	@Override
-	public void delete(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		try {
-			deviceSnapShotRepository.deleteById(imeiMsisdnIdentity);
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-
-	}
+//	public List<DeviceSnapShot> get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+//		logger.info("Going to get Black List Devices by " + imeiMsisdnIdentity);
+//		try {
+//			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
+//				throw new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity cannot be null",
+//						imeiMsisdnIdentity);
+//			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
+//				DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(imeiMsisdnIdentity.getImei())
+//						.orElseThrow(() -> new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity",
+//								imeiMsisdnIdentity));
+//				List<DeviceSnapShot> list = new ArrayList<>();
+//				list.add(deviceSnapShot);
+//				return list;
+//			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
+//				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
+//			} else {
+//				return getByImei(imeiMsisdnIdentity.getImei());
+//			}
+//
+//		} catch (Exception e) {
+//			logger.error(e.getMessage(), e);
+//			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+//		}
+//
+//	}
 
 	@Override
 	public List<DeviceSnapShot> getByMsisdn(Long msisdn) {
 		try {
-			List<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
+			List<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findByMsisdn(msisdn);
 			return deviceSnapShot;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	@Override
-	public List<DeviceSnapShot> getByImei(Long imei) {
-		try {
-			logger.info("Get Device Snap Shot by Imei:"+imei);
-			List<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findByImeiMsisdnIdentityImei(imei);
-			return deviceSnapShot;
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-			return null;
 		}
 	}
 

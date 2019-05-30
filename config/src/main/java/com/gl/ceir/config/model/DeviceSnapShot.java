@@ -17,8 +17,11 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 @Entity
 public class DeviceSnapShot {
-	@EmbeddedId
-	private ImeiMsisdnIdentity imeiMsisdnIdentity;
+
+	@Id
+	private Long imei;
+
+	private Long msisdn;
 	private Long imsi;
 	@OneToOne
 	private MobileOperator mobileOperator;
@@ -43,12 +46,20 @@ public class DeviceSnapShot {
 	public DeviceSnapShot() {
 	}
 
-	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
-		return imeiMsisdnIdentity;
+	public Long getImei() {
+		return imei;
 	}
 
-	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
+	public void setImei(Long imei) {
+		this.imei = imei;
+	}
+
+	public Long getMsisdn() {
+		return msisdn;
+	}
+
+	public void setMsisdn(Long msisdn) {
+		this.msisdn = msisdn;
 	}
 
 	public MobileOperator getMobileOperator() {

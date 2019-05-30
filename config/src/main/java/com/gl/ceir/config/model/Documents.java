@@ -3,11 +3,19 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModel;
 
@@ -25,7 +33,11 @@ public class Documents {
 
 	private String fileDownloadUri;
 
+	private String fileType;
+
 	private DocumentType documentType;
+
+	private long size;
 
 	private DocumentStatus status;
 
@@ -34,6 +46,13 @@ public class Documents {
 	private Date approvalDate;
 
 	private String rejectedReason;
+
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JsonIgnore
+	@JoinColumns({ @JoinColumn(name = "imei", referencedColumnName = "imei"),
+			@JoinColumn(name = "msisdn", referencedColumnName = "msisdn") })
+	private DuplicateImeiMsisdn duplicateImeiMsisdn;
 
 	public Long getId() {
 		return id;
@@ -67,12 +86,28 @@ public class Documents {
 		this.fileDownloadUri = fileDownloadUri;
 	}
 
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
 	public DocumentType getDocumentType() {
 		return documentType;
 	}
 
 	public void setDocumentType(DocumentType documentType) {
 		this.documentType = documentType;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
 	}
 
 	public DocumentStatus getStatus() {
@@ -105,6 +140,28 @@ public class Documents {
 
 	public void setRejectedReason(String rejectedReason) {
 		this.rejectedReason = rejectedReason;
+	}
+
+	public DuplicateImeiMsisdn getDuplicateImeiMsisdn() {
+		return duplicateImeiMsisdn;
+	}
+
+	public void setDuplicateImeiMsisdn(DuplicateImeiMsisdn duplicateImeiMsisdn) {
+		this.duplicateImeiMsisdn = duplicateImeiMsisdn;
+	}
+
+	@Override
+	public String toString() {
+		return "Documents [" + (id != null ? "id=" + id + ", " : "")
+				+ (filename != null ? "filename=" + filename + ", " : "")
+				+ (filepath != null ? "filepath=" + filepath + ", " : "")
+				+ (fileDownloadUri != null ? "fileDownloadUri=" + fileDownloadUri + ", " : "")
+				+ (fileType != null ? "fileType=" + fileType + ", " : "")
+				+ (documentType != null ? "documentType=" + documentType + ", " : "") + "size=" + size + ", "
+				+ (status != null ? "status=" + status + ", " : "")
+				+ (approvedBy != null ? "approvedBy=" + approvedBy + ", " : "")
+				+ (approvalDate != null ? "approvalDate=" + approvalDate + ", " : "")
+				+ (rejectedReason != null ? "rejectedReason=" + rejectedReason : "") + "]";
 	}
 
 }
