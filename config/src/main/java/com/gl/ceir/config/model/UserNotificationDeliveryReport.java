@@ -8,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.gl.ceir.config.model.constants.MessageType;
+
 import io.swagger.annotations.ApiModel;
 
 @ApiModel

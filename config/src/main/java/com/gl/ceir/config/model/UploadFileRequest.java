@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import com.gl.ceir.config.model.constants.DocumentType;
+
 public class UploadFileRequest {
 	private String ticketId;
 	private DocumentType documentType;

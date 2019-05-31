@@ -17,6 +17,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gl.ceir.config.model.constants.DocumentType;
 
 import io.swagger.annotations.ApiModel;
 
@@ -50,6 +51,7 @@ public class Documents {
 
 	@NotNull
 	private Long imei;
+
 	@NotNull
 	private Long msisdn;
 

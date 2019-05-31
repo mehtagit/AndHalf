@@ -1,4 +1,4 @@
-package com.gl.ceir.config.model;
+package com.gl.ceir.config.model.constants;
 
 import java.util.ArrayList;
 import java.util.List;

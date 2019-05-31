@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gl.ceir.config.model.constants.ActionNames;
 
 import io.swagger.annotations.ApiModel;
 

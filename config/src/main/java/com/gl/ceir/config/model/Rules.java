@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.gl.ceir.config.model.constants.RuleType;
+
 import io.swagger.annotations.ApiModel;
 
 @ApiModel

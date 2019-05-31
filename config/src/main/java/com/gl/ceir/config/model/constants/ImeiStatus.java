@@ -1,4 +1,4 @@
-package com.gl.ceir.config.model;
+package com.gl.ceir.config.model.constants;
 
 public enum ImeiStatus {
 	OK("OK"), NOT_OK("NOT_OK");

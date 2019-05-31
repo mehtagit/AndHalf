@@ -1,4 +1,4 @@
-package com.gl.ceir.config.model;
+package com.gl.ceir.config.model.constants;
 
 public enum ActionNames {
 	USER_REGULARIZED("USER_REGULARIZED"), SYSTEM_REGULARIZED("SYSTEM_REGULARIZED");

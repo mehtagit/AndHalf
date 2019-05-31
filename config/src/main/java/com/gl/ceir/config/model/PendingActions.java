@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.gl.ceir.config.model.constants.TransactionState;
+
 import io.swagger.annotations.ApiModel;
 
 @ApiModel

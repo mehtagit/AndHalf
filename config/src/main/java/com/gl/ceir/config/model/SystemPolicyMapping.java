@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.gl.ceir.config.model.constants.Period;
+
 import io.swagger.annotations.ApiModel;
 
 @ApiModel

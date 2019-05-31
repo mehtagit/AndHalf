@@ -27,9 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.gl.ceir.config.model.Action;
-import com.gl.ceir.config.model.DocumentType;
 import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
+import com.gl.ceir.config.model.constants.DocumentType;
 import com.gl.ceir.config.service.impl.FileStorageService;
 
 import io.swagger.annotations.ApiOperation;
