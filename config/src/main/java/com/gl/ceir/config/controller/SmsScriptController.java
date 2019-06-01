@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.MobileOperator;
-import com.gl.ceir.config.model.RegularizedImei;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.SmsAccount;
 import com.gl.ceir.config.model.SmsScript;

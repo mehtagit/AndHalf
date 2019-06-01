@@ -1,6 +1,5 @@
 package com.gl.ceir.config.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +12,6 @@ import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.BlackList;
 import com.gl.ceir.config.model.DeviceSnapShot;
-import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.repository.DeviceSnapShotRepository;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 
@@ -71,32 +69,6 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	@Override
 	public void delete(Long t) {
 	}
-
-//	public List<DeviceSnapShot> get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-//		logger.info("Going to get Black List Devices by " + imeiMsisdnIdentity);
-//		try {
-//			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {
-//				throw new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity cannot be null",
-//						imeiMsisdnIdentity);
-//			} else if (imeiMsisdnIdentity.getMsisdn() != null && imeiMsisdnIdentity.getImei() != null) {
-//				DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(imeiMsisdnIdentity.getImei())
-//						.orElseThrow(() -> new ResourceNotFoundException("Device SnapShot", "imeiMsisdnIdentity",
-//								imeiMsisdnIdentity));
-//				List<DeviceSnapShot> list = new ArrayList<>();
-//				list.add(deviceSnapShot);
-//				return list;
-//			} else if (imeiMsisdnIdentity.getMsisdn() != null) {
-//				return getByMsisdn(imeiMsisdnIdentity.getMsisdn());
-//			} else {
-//				return getByImei(imeiMsisdnIdentity.getImei());
-//			}
-//
-//		} catch (Exception e) {
-//			logger.error(e.getMessage(), e);
-//			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-//		}
-//
-//	}
 
 	@Override
 	public List<DeviceSnapShot> getByMsisdn(Long msisdn) {

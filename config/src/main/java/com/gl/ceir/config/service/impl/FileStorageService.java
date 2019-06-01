@@ -88,6 +88,15 @@ public class FileStorageService {
 					msisdn = uploadFileRequest.getMsisdn();
 				}
 			}
+		} else {
+			if (uploadFileRequest.getMsisdn() == null || uploadFileRequest.getImei() == null)
+				throw new ResourceNotFoundException("To Upload file IMEI and MSISDN both required ", "IMEI / MSISDN",
+						imei + "/" + msisdn);
+			else {
+				// TODO Need to validate imei and msisdn
+				imei = uploadFileRequest.getImei();
+				msisdn = uploadFileRequest.getMsisdn();
+			}
 		}
 
 		String fileType = file.getContentType().split("/")[1];
@@ -115,6 +124,7 @@ public class FileStorageService {
 			documents.setMsisdn(msisdn);
 			documents.setImei(imei);
 
+			logger.info(documents);
 			Documents savedDocument = documentsService.save(documents);
 			logger.info("Document Saved Successfully" + savedDocument);
 
