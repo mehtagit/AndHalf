@@ -69,6 +69,8 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 			PendingActions pendingActions = pendingActionsRepositoy.findById(ticketId)
 					.orElseThrow(() -> new ResourceNotFoundException("Pending Actions ", "ticketId", ticketId));
 			return pendingActions;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -87,6 +89,8 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 			if (pendingActions == null)
 				new ResourceNotFoundException("Pending Actions ", "msisdn", msisdn);
 			return pendingActions;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -100,6 +104,8 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 			if (pendingActions == null)
 				new ResourceNotFoundException("Pending Actions ", "imei", imei);
 			return pendingActions;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -120,6 +126,8 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 				return getByImei(imeiMsisdnIdentity.getImei());
 			}
 
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

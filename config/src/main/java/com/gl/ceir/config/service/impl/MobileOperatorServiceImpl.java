@@ -50,6 +50,8 @@ public class MobileOperatorServiceImpl implements MobileOperatorService {
 			MobileOperator mobileOperator = mobileOperatorRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Mobile Operator", "id", id));
 			return mobileOperator;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

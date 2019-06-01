@@ -65,7 +65,7 @@ public class VipListServiceImpl implements VipListService {
 	public void delete(Long id) {
 
 		try {
-			//vipListRepository.deleteById(id);
+			// vipListRepository.deleteById(id);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -111,6 +111,8 @@ public class VipListServiceImpl implements VipListService {
 				return getByImei(imeiMsisdnIdentity.getImei());
 			}
 
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

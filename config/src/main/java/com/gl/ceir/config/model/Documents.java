@@ -33,7 +33,7 @@ public class Documents {
 
 	private String filepath;
 
-	private String fileDownloadUri;
+	private String fileUri;
 
 	private String fileType;
 
@@ -79,12 +79,12 @@ public class Documents {
 		this.filepath = filepath;
 	}
 
-	public String getFileDownloadUri() {
-		return fileDownloadUri;
+	public String getFileUri() {
+		return fileUri;
 	}
 
-	public void setFileDownloadUri(String fileDownloadUri) {
-		this.fileDownloadUri = fileDownloadUri;
+	public void setFileUri(String fileUri) {
+		this.fileUri = fileUri;
 	}
 
 	public String getFileType() {
@@ -164,7 +164,7 @@ public class Documents {
 		return "Documents [" + (id != null ? "id=" + id + ", " : "")
 				+ (filename != null ? "filename=" + filename + ", " : "")
 				+ (filepath != null ? "filepath=" + filepath + ", " : "")
-				+ (fileDownloadUri != null ? "fileDownloadUri=" + fileDownloadUri + ", " : "")
+				+ (fileUri != null ? "fileDownloadUri=" + fileUri + ", " : "")
 				+ (fileType != null ? "fileType=" + fileType + ", " : "")
 				+ (documentType != null ? "documentType=" + documentType + ", " : "") + "size=" + size + ", "
 				+ (status != null ? "status=" + status + ", " : "")

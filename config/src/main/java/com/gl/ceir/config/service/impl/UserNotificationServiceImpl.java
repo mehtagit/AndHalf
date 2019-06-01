@@ -36,6 +36,8 @@ public class UserNotificationServiceImpl implements UserNotificationService {
 				return userNotificationRepositoy.findByImei(imeiMsisdnIdentity.getImei());
 			}
 
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -50,6 +52,8 @@ public class UserNotificationServiceImpl implements UserNotificationService {
 						.orElseThrow(() -> new ResourceNotFoundException("UserNotification ", "ticketId", ticketId));
 			}
 			return null;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
+import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.repository.DocumentsRepository;
@@ -23,11 +25,8 @@ public class DocumentsServiceImpl implements DocumentsService {
 
 	@Override
 	public Documents get(Long id) {
-		Optional<Documents> documentOptional = documentsRepository.findById(id);
-		if (documentOptional.isPresent())
-			return documentOptional.get();
-		else
-			return null;
+		return documentsRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No document found for this ID", "id", id));
 	}
 
 	@Override
@@ -36,20 +35,22 @@ public class DocumentsServiceImpl implements DocumentsService {
 	}
 
 	@Override
-	public Documents updateStatus(Documents documents) {
+	public Documents updateStatus(DocumentStatus documentStatus, Long id) {
+		Documents documents = documentsRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("No document found for this ID", "id", id));
+		documents.setStatus(documentStatus);
+
 		return documentsRepository.save(documents);
 	}
 
 	@Override
-	public List<Documents> getByTicketId(String ticketId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public List<Documents> getByMsisdnAndImei(Long imei, Long msisdn) {
+		if (imei == null && msisdn == null) {
+			throw new ResourceNotFoundException("To Get Document need Imei Or msisdn", "imei / msisdn",
+					imei + "/" + msisdn);
+		}
 
-	@Override
-	public List<Documents> getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		// TODO Auto-generated method stub
-		return null;
+		return documentsRepository.findByImeiOrMsisdn(imei, msisdn);
 	}
 
 }

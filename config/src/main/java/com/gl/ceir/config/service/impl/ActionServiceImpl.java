@@ -50,6 +50,8 @@ public class ActionServiceImpl implements ActionService {
 			Action action = actionRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Action", "id", id));
 			return action;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("ActionServiceImpl", e.getMessage());

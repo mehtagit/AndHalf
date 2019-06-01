@@ -30,7 +30,7 @@ public class DuplicateImeiMsisdn {
 		return imeiMsisdnIdentity;
 	}
 
-	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity 	imeiMsisdnIdentity) {
 		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
 	}
 
