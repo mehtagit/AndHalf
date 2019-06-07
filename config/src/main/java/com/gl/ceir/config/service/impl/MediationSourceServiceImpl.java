@@ -50,6 +50,8 @@ public class MediationSourceServiceImpl implements MediationSourceService {
 			MediationSource mediationSource = mediationSourceRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Mediation Source", "id", id));
 			return mediationSource;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

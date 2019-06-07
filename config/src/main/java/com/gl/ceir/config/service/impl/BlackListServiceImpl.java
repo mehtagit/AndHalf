@@ -110,6 +110,8 @@ public class BlackListServiceImpl implements BlackListService {
 				return getByImei(imeiMsisdnIdentity.getImei());
 			}
 
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

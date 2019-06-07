@@ -9,8 +9,11 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.ManyToAny;
 
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.Period;
@@ -26,15 +29,16 @@ public class DeviceSnapShot {
 
 	private Long msisdn;
 	private Long imsi;
-	@OneToOne
-	private MobileOperator mobileOperator;
 
-	@Enumerated(EnumType.STRING)
+	// @ManyToOne
+	private Long mobileOperatorId;
+
 	private ImeiStatus imeiStatus;
 	private int lastpPolicyBreached;
 	private Date lastpPolicyBreachedDate;
 	private String failedRuleId;
 	private String failedRuleName;
+
 	private Period period;
 	private Date createdOn;
 	private String remarks;
@@ -45,9 +49,6 @@ public class DeviceSnapShot {
 	private boolean validImport;
 
 	private String action;
-
-	public DeviceSnapShot() {
-	}
 
 	public Long getImei() {
 		return imei;
@@ -65,12 +66,20 @@ public class DeviceSnapShot {
 		this.msisdn = msisdn;
 	}
 
-	public MobileOperator getMobileOperator() {
-		return mobileOperator;
+	public Long getImsi() {
+		return imsi;
 	}
 
-	public void setMobileOperator(MobileOperator mobileOperator) {
-		this.mobileOperator = mobileOperator;
+	public void setImsi(Long imsi) {
+		this.imsi = imsi;
+	}
+
+	public Long getMobileOperatorId() {
+		return mobileOperatorId;
+	}
+
+	public void setMobileOperatorId(Long mobileOperatorId) {
+		this.mobileOperatorId = mobileOperatorId;
 	}
 
 	public ImeiStatus getImeiStatus() {
@@ -95,6 +104,22 @@ public class DeviceSnapShot {
 
 	public void setLastpPolicyBreachedDate(Date lastpPolicyBreachedDate) {
 		this.lastpPolicyBreachedDate = lastpPolicyBreachedDate;
+	}
+
+	public String getFailedRuleId() {
+		return failedRuleId;
+	}
+
+	public void setFailedRuleId(String failedRuleId) {
+		this.failedRuleId = failedRuleId;
+	}
+
+	public String getFailedRuleName() {
+		return failedRuleName;
+	}
+
+	public void setFailedRuleName(String failedRuleName) {
+		this.failedRuleName = failedRuleName;
 	}
 
 	public Period getPeriod() {
@@ -161,36 +186,12 @@ public class DeviceSnapShot {
 		this.validImport = validImport;
 	}
 
-	public Long getImsi() {
-		return imsi;
-	}
-
-	public void setImsi(Long imsi) {
-		this.imsi = imsi;
-	}
-
 	public String getAction() {
 		return action;
 	}
 
 	public void setAction(String action) {
 		this.action = action;
-	}
-
-	public String getFailedRuleId() {
-		return failedRuleId;
-	}
-
-	public void setFailedRuleId(String failedRuleId) {
-		this.failedRuleId = failedRuleId;
-	}
-
-	public String getFailedRuleName() {
-		return failedRuleName;
-	}
-
-	public void setFailedRuleName(String failedRuleName) {
-		this.failedRuleName = failedRuleName;
 	}
 
 }

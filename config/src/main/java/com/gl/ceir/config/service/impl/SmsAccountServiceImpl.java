@@ -52,6 +52,8 @@ public class SmsAccountServiceImpl implements SmsAccountService {
 			SmsAccount smsAccount = smsAccountRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Sms Account", "id", id));
 			return smsAccount;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

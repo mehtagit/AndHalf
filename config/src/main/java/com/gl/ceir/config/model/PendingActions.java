@@ -18,12 +18,12 @@ import io.swagger.annotations.ApiModel;
 public class PendingActions {
 	@Id
 	private String ticketId;
-	
+
 	@Enumerated(EnumType.STRING)
 	private TransactionState transactionState;
-	private long msisdn;
-	private long imei;
-	private long imsi;
+	private Long msisdn;
+	private Long imei;
+	private Long imsi;
 	@OneToOne
 	private MobileOperator mobileOperator;
 	@OneToOne
@@ -49,22 +49,6 @@ public class PendingActions {
 
 	public void setTransactionState(TransactionState transactionState) {
 		this.transactionState = transactionState;
-	}
-
-	public long getMsisdn() {
-		return msisdn;
-	}
-
-	public void setMsisdn(long msisdn) {
-		this.msisdn = msisdn;
-	}
-
-	public long getImei() {
-		return imei;
-	}
-
-	public void setImei(long imei) {
-		this.imei = imei;
 	}
 
 	public MobileOperator getMobileOperator() {
@@ -115,20 +99,36 @@ public class PendingActions {
 		this.endDateforUserAction = endDateforUserAction;
 	}
 
-	public long getImsi() {
-		return imsi;
-	}
-
-	public void setImsi(long imsi) {
-		this.imsi = imsi;
-	}
-
 	public String getFilename() {
 		return filename;
 	}
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public Long getMsisdn() {
+		return msisdn;
+	}
+
+	public void setMsisdn(Long msisdn) {
+		this.msisdn = msisdn;
+	}
+
+	public Long getImei() {
+		return imei;
+	}
+
+	public void setImei(Long imei) {
+		this.imei = imei;
+	}
+
+	public Long getImsi() {
+		return imsi;
+	}
+
+	public void setImsi(Long imsi) {
+		this.imsi = imsi;
 	}
 
 }

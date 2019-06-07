@@ -53,6 +53,8 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 			ActionParameters actionParameters = actionParametersRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Action Parameters", "id", id));
 			return actionParameters;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("ActionParametersService", e.getMessage());
@@ -87,6 +89,8 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 			Action action = actionRepository.findById(action_id)
 					.orElseThrow(() -> new ResourceNotFoundException("Action", "action_id", action_id));
 			return actionParametersRepository.findByAction(action);
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("ActionParametersService", e.getMessage());
@@ -106,6 +110,8 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 			Action action = actionRepository.findByName(actionNames);
 
 			return actionParametersRepository.findByAction(action);
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("ActionParametersService", e.getMessage());

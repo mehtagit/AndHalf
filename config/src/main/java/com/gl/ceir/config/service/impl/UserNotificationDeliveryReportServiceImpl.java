@@ -50,6 +50,8 @@ public class UserNotificationDeliveryReportServiceImpl implements UserNotificati
 						.orElseThrow(() -> new ResourceNotFoundException("UserNotification ", "ticketId", ticketId));
 			}
 			return null;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

@@ -51,6 +51,8 @@ public class RulesServiceImpl implements RulesService {
 			Rules rules = rulesRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Rules", "id", id));
 			return rules;
+		} catch (ResourceNotFoundException e) {
+			throw e;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,14 +32,14 @@ public class DeviceSnapShotController {
 
 	@ApiOperation(value = "View available DeviceSnapShot ", response = BlackList.class)
 	@RequestMapping(path = "/DeviceSnapShot/{imei}", method = RequestMethod.GET)
-	public MappingJacksonValue getByMsisdnAndImei(@PathParam("imei") Long imei) {
+	public MappingJacksonValue getByMsisdnAndImei(@PathVariable("imei") Long imei) {
 		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 		imeiMsisdnIdentity.setMsisdn(0L);
 		imeiMsisdnIdentity.setImei(imei);
 		return getByMsisdnAndImei(imeiMsisdnIdentity);
 	}
 
-	public MappingJacksonValue getByMsisdnAndImei(@RequestBody ImeiMsisdnIdentity imeiMsisdnIdentity) {
+	public MappingJacksonValue getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		logger.info("get BlackList Method Calling " + imeiMsisdnIdentity);
 
 		DeviceSnapShot deviceSnapShots = deviceSnapShotService.get(imeiMsisdnIdentity.getImei());

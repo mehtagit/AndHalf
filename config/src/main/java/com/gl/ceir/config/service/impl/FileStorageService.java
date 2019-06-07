@@ -22,6 +22,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.controller.FileController;
 import com.gl.ceir.config.exceptions.FileStorageException;
 import com.gl.ceir.config.exceptions.MyFileNotFoundException;
+import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
@@ -34,6 +35,8 @@ import com.gl.ceir.config.service.PendingActionsService;
 @Service
 public class FileStorageService {
 	private static final Logger logger = LogManager.getLogger(FileStorageService.class);
+
+	public static final String downloadContext = "/document/download/";
 
 	private final Path fileStorageLocation;
 
@@ -58,9 +61,46 @@ public class FileStorageService {
 	public UploadFileResponse storeFile(MultipartFile file, UploadFileRequest uploadFileRequest) {
 		// Normalize file name
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		String newFileName = uploadFileRequest.getTicketId() + "_" + uploadFileRequest.getDocumentType().toString()
-				+ "." + file.getContentType().split("/")[1];
 
+		Long imei = null;
+		Long msisdn = null;
+
+		if (uploadFileRequest.getTicketId() != null) {
+			try {
+				PendingActions pendingActions = pendingActionsService.get(uploadFileRequest.getTicketId());
+
+				if (pendingActions.getImei() == null)
+					throw new ResourceNotFoundException("In Pending Action Imei is Null ", "ticketId",
+							uploadFileRequest.getTicketId());
+
+				imei = pendingActions.getImei();
+				msisdn = pendingActions.getMsisdn();
+			} catch (ResourceNotFoundException e) {
+
+				if (uploadFileRequest.getMsisdn() == null && uploadFileRequest.getImei() == null)
+					throw e;
+				else if (uploadFileRequest.getMsisdn() == null || uploadFileRequest.getImei() == null)
+					throw new ResourceNotFoundException("To Upload file IMEI and MSISDN both required ",
+							"IMEI / MSISDN", imei + "/" + msisdn);
+				else {
+					// TODO Need to validate imei and msisdn
+					imei = uploadFileRequest.getImei();
+					msisdn = uploadFileRequest.getMsisdn();
+				}
+			}
+		} else {
+			if (uploadFileRequest.getMsisdn() == null || uploadFileRequest.getImei() == null)
+				throw new ResourceNotFoundException("To Upload file IMEI and MSISDN both required ", "IMEI / MSISDN",
+						imei + "/" + msisdn);
+			else {
+				// TODO Need to validate imei and msisdn
+				imei = uploadFileRequest.getImei();
+				msisdn = uploadFileRequest.getMsisdn();
+			}
+		}
+
+		String fileType = file.getContentType().split("/")[1];
+		String newFileName = imei + "_" + msisdn + uploadFileRequest.getDocumentType().toString() + "." + fileType;
 		try {
 			// Check if the file's name contains invalid characters
 			if (fileName.contains("..")) {
@@ -71,20 +111,20 @@ public class FileStorageService {
 			Path targetLocation = this.fileStorageLocation.resolve(newFileName);
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/document/download/")
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path(downloadContext)
 					.path(newFileName).toUriString();
-
-			PendingActions pendingActions = pendingActionsService.get(uploadFileRequest.getTicketId());
 
 			Documents documents = new Documents();
 			documents.setApprovalDate(new Date());
 			documents.setDocumentType(uploadFileRequest.getDocumentType());
-			documents.setFileDownloadUri(fileDownloadUri);
+			documents.setFileUri(fileDownloadUri);
 			documents.setFilename(newFileName);
+			documents.setFileType(fileType);
 			documents.setStatus(DocumentStatus.PENDING);
-			documents.setMsisdn(pendingActions.getMsisdn());
-			documents.setImei(pendingActions.getImei());
+			documents.setMsisdn(msisdn);
+			documents.setImei(imei);
 
+			logger.info(documents);
 			Documents savedDocument = documentsService.save(documents);
 			logger.info("Document Saved Successfully" + savedDocument);
 

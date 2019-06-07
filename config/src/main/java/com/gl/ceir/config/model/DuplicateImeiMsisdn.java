@@ -5,6 +5,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.gl.ceir.config.model.constants.ImeiStatus;
@@ -19,7 +20,7 @@ public class DuplicateImeiMsisdn {
 
 	private long imsi;
 	private String fileName;
-	@OneToOne
+	@ManyToOne
 	private MobileOperator mobileOperator;
 	private Date createdOn;
 	private boolean regulizedByUser;
