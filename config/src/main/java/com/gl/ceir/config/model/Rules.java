@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.gl.ceir.config.model.constants.RuleOperator;
+import com.gl.ceir.config.model.constants.RuleParameters;
 import com.gl.ceir.config.model.constants.RuleType;
 
 import io.swagger.annotations.ApiModel;
@@ -28,6 +30,42 @@ public class Rules {
 	private String approvedBy;
 	private Date createdOn;
 	private Date modifiedOn;
+	private RuleOperator operator;
+	private RuleParameters parameters;
+	private RuleValue values;
+
+	public RuleOperator getOperator() {
+		return operator;
+	}
+
+	public void setOperator(RuleOperator operator) {
+		this.operator = operator;
+	}
+
+	public RuleParameters getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(RuleParameters parameters) {
+		this.parameters = parameters;
+	}
+
+	public RuleValue getValues() {
+		return values;
+	}
+
+	public void setValues(RuleValue values) {
+		this.values = values;
+	}
+
+	public RuleType getRuleType() {
+		return ruleType;
+	}
+
+	public void setRuleType(RuleType ruleType) {
+		this.ruleType = ruleType;
+	}
+
 	@Enumerated(EnumType.STRING)
 	private RuleType ruleType;
 
