@@ -108,4 +108,12 @@ public class Request {
 		this.actionNames = actionNames;
 	}
 
+	@Override
+	public String toString() {
+		return "Request [imei=" + imei + ", msisdn=" + msisdn + ", filename=" + filename + ", systemEntry="
+				+ systemEntry + ", imsi=" + imsi + ", failRule=" + failRule + ", ticketId=" + ticketId + ", status="
+				+ status + ", state=" + state + ", nextRetryTime=" + nextRetryTime + ", actionNames=" + actionNames
+				+ "]";
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.SystemPolicyMapping;
 import com.gl.ceir.config.repository.SystemPolicyMappingRepository;
 import com.gl.ceir.config.service.SystemPolicyMappingService;
@@ -43,6 +44,11 @@ public class SystemPolicyMappingServiceImpl implements SystemPolicyMappingServic
 	public void delete(Long t) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public List<SystemPolicyMapping> getSystemPolicies(Rules rule) {
+		return systemPolicyMappingRepository.findByRules(rule);
 	}
 
 }

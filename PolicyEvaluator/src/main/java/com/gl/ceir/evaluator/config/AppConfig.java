@@ -1,6 +1,5 @@
 package com.gl.ceir.evaluator.config;
 
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -11,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.gl.ceir.config.model.PendingActions;
+import com.gl.ceir.config.model.constants.Period;
 import com.gl.ceir.evaluator.services.Chain;
 import com.gl.ceir.evaluator.services.impl.ResultWritter;
 import com.gl.ceir.evaluator.services.impl.RuleSolver;
@@ -26,7 +25,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @Configuration
-@ConfigurationProperties(prefix = "file")
+@ConfigurationProperties(prefix = "POLICY_EVAL")
 public class AppConfig {
 
 	@NotBlank
@@ -35,7 +34,9 @@ public class AppConfig {
 
 	@NotBlank
 	@NotNull
-	private String completedDitectory;
+	private String completedDirectory;
+
+	private Period period;
 
 	public String getInputRepositoryDirectory() {
 		return inputRepositoryDirectory;
@@ -45,12 +46,20 @@ public class AppConfig {
 		this.inputRepositoryDirectory = inputRepositoryDirectory;
 	}
 
-	public String getCompletedDitectory() {
-		return completedDitectory;
+	public String getCompletedDirectory() {
+		return completedDirectory;
 	}
 
-	public void setCompletedDitectory(String completedDitectory) {
-		this.completedDitectory = completedDitectory;
+	public void setCompletedDirectory(String completedDirectory) {
+		this.completedDirectory = completedDirectory;
+	}
+
+	public Period getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(Period period) {
+		this.period = period;
 	}
 
 	@Bean

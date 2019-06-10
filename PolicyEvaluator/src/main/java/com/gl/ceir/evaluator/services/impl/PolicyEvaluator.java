@@ -1,6 +1,7 @@
 package com.gl.ceir.evaluator.services.impl;
 
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,8 +33,14 @@ public class PolicyEvaluator {
 	@Autowired
 	private Chain startPolicyEvaluator;
 
+	public CountDownLatch fileCountDownLatch;
+
 	@Autowired
 	public PolicyEvaluator() {
+	}
+
+	public CountDownLatch getFileCountDownLatch() {
+		return fileCountDownLatch;
 	}
 
 	private boolean start;
@@ -52,11 +59,14 @@ public class PolicyEvaluator {
 						continue;
 					} else {
 						start = false;
+						fileCountDownLatch = new CountDownLatch(requests.size());
 						for (Request request : requests) {
 							executor.execute(() -> {
 								startPolicyEvaluator.process(request);
 							});
 						}
+
+						fileCountDownLatch.countDown();
 					}
 				}
 			} catch (Exception e) {
