@@ -1,5 +1,6 @@
 package com.gl.ceir.evaluator.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -10,14 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.gl.ceir.config.controller.BlackListController;
-import com.gl.ceir.config.model.Rules;
-import com.gl.ceir.config.model.constants.ActionNames;
+import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.system.request.Request;
 import com.gl.ceir.evaluator.services.Chain;
 import com.gl.ceir.evaluator.services.InputRepository;
-import com.gl.ceir.evaluator.services.OutpuWriter;
-import com.gl.ceir.evaluator.services.RuleSolverService;
 
 @Component
 @Scope("PROTOTYPE")
@@ -34,6 +31,8 @@ public class PolicyEvaluator {
 	private Chain startPolicyEvaluator;
 
 	public CountDownLatch fileCountDownLatch;
+
+	public static List<PendingActions> batchInsertData = new ArrayList<PendingActions>();
 
 	@Autowired
 	public PolicyEvaluator() {

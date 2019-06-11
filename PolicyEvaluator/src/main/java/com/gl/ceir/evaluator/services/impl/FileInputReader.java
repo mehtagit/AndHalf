@@ -33,7 +33,7 @@ public class FileInputReader implements InputRepository {
 					logger.info("File " + file.getName());
 					requests = getRequests(file.getName());
 
-					String destinationPath = appConfig.getCompletedDitectory() + file.getName();
+					String destinationPath = appConfig.getCompletedDirectory() + file.getName();
 					file.renameTo(new File(destinationPath));
 					logger.info("File " + file.getName() + ", Moved to " + destinationPath);
 					break;

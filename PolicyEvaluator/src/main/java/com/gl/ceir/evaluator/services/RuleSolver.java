@@ -21,35 +21,3 @@ public interface RuleSolver {
 
 	public boolean solve(Rules rule, Request request);
 }
-
-class InRuleSolver implements RuleSolver {
-
-	private static final Logger logger = LogManager.getLogger(InRuleSolver.class);
-
-	@Autowired
-	private BlackListService blackListService;
-
-	@Autowired
-	private VipListService vipListService;
-
-	@Override
-	public boolean solve(Rules rule, Request request) {
-		try {
-			if (rule.getName().contains("BLACK")) {
-				BlackList blackList = blackListService
-						.getByMsisdnAndImei(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn()));
-				return blackList == null ? false : true;
-			} else if (rule.getName().contains("VIP")) {
-				VipList vipList = vipListService
-						.getByMsisdnAndImei(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn()));
-				return vipList == null ? false : true;
-			} else {
-				return false;
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			return false;
-		}
-	}
-
-}
