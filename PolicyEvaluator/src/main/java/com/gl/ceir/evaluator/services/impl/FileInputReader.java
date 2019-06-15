@@ -10,18 +10,22 @@ import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
 
-import com.gl.ceir.config.controller.BlackListController;
 import com.gl.ceir.config.system.request.Request;
-import com.gl.ceir.evaluator.config.AppConfig;
+import com.gl.ceir.evaluator.config.PolicyEvaluatorConfig;
 import com.gl.ceir.evaluator.services.InputRepository;
 
+@Service
 public class FileInputReader implements InputRepository {
 
-	private static final Logger logger = LogManager.getLogger(BlackListController.class);
-	private AppConfig appConfig;
+	private Logger logger = LogManager.getLogger(this.getClass());
+	private PolicyEvaluatorConfig appConfig;
 
-	@Override
+	public FileInputReader() {
+		System.out.println("I am registered FileInputReader");
+	}
+	/*@Override
 	public List<Request> read() {
 		List<Request> requests = null;
 		try {
@@ -46,8 +50,17 @@ public class FileInputReader implements InputRepository {
 		}
 
 		return requests;
-	}
+	}*/
 
+	@Override
+	public List<Request> read() {
+		List<Request> list = new ArrayList<>();
+		list.add(stringToRequest("882192121,132313123123,FILE_1"));
+		list.add(stringToRequest("882192122,132313123124,FILE_1"));
+		list.add(stringToRequest("882192123,132313123125,FILE_1"));
+		list.add(stringToRequest("882192124,132313123126,FILE_1"));
+		return list;
+	}
 	private List<Request> getRequests(String fileName) {
 		List<Request> requests = new ArrayList<>();
 		try {
@@ -62,6 +75,10 @@ public class FileInputReader implements InputRepository {
 
 	private Request stringToRequest(String record) {
 		Request request = new Request();
+		String[] data = record.split(",");
+		request.setMsisdn(Long.parseLong(data[0]));
+		request.setImei(Long.parseLong(data[1]));
+		request.setFilename(data[2]);
 		return request;
 	}
 

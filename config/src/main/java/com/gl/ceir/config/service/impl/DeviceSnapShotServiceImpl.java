@@ -81,4 +81,9 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 		}
 	}
 
+	@Override
+	public List<DeviceSnapShot> saveAll(List<DeviceSnapShot> deviceSnapShots) {
+		return deviceSnapShotRepository.saveAll(deviceSnapShots);
+	}
+
 }

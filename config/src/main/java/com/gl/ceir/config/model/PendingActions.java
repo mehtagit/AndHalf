@@ -24,8 +24,8 @@ public class PendingActions {
 	private Long msisdn;
 	private Long imei;
 	private Long imsi;
-	@OneToOne
-	private MobileOperator mobileOperator;
+	// @OneToOne
+	private Long mobileOperatorId;
 	@OneToOne
 	private Rules failedRule;
 	private Date createdOn;
@@ -51,12 +51,12 @@ public class PendingActions {
 		this.transactionState = transactionState;
 	}
 
-	public MobileOperator getMobileOperator() {
-		return mobileOperator;
+	public Long getMobileOperatorId() {
+		return mobileOperatorId;
 	}
 
-	public void setMobileOperator(MobileOperator mobileOperator) {
-		this.mobileOperator = mobileOperator;
+	public void setMobileOperatorId(Long mobileOperatorId) {
+		this.mobileOperatorId = mobileOperatorId;
 	}
 
 	public Rules getFailedRule() {

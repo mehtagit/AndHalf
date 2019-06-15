@@ -134,4 +134,9 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 		}
 	}
 
+	@Override
+	public List<PendingActions> saveAll(List<PendingActions> pendingActions) {
+		return pendingActionsRepositoy.saveAll(pendingActions);
+	}
+
 }

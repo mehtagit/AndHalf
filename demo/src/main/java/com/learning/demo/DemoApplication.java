@@ -5,10 +5,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
 
-import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Weekday;
 import org.dmfs.rfc5545.recur.Freq;
 import org.dmfs.rfc5545.recur.InvalidRecurrenceRuleException;
@@ -23,15 +25,58 @@ import org.dmfs.rfc5545.recur.RecurrenceRule.WeekdayNum;
 //@EnableCaching
 public class DemoApplication {
 
+	public static int getSubstring(String a) {
+		int small = 0;
+		Set<Character> set = new HashSet<>();
+
+		for (char s : a.toCharArray()) {
+			if ((int) s >= 97 && (int) s < 123)
+				set.add(s);
+			else
+				return -1;
+		}
+
+		for (int i = 0; i < a.length() - set.size(); i++) {
+			int j = 0;
+			while (true) {
+				String m = a.substring(i, set.size() + j);
+				boolean conatainsAll = true;
+				for (char s : set) {
+					if (m.contains(s + "")) {
+					} else {
+						conatainsAll = false;
+						break;
+					}
+				}
+
+				if (conatainsAll) {
+					if (small == 0)
+						small = m.length();
+					if (small > m.length())
+						small = m.length();
+					break;
+				}
+				j++;
+				if ((set.size() + j) > a.length())
+					break;
+			}
+		}
+		return small;
+	}
+
 	public static void main(String[] args) throws InvalidRecurrenceRuleException {
 		// ApplicationContext context = SpringApplication.run(DemoApplication.class,
 		// args);
 
-		System.out.println(LocalDateTime.now().plusMinutes(720));
-		System.out.println(
-				new DemoApplication().recurranceRuleFreq("FREQ=MONTHLY;BYMONTHDAY=31;INTERVAL=2;UNTIL=20190630T000000Z",
-						new Date(), LocalDate.now().plusDays(20)));
+		System.out.println(getSubstring("aa"));
+		System.out.println(getSubstring("namdnfmanfds"));
 
+		/*
+		 * System.out.println(LocalDateTime.now().plusMinutes(720)); System.out.println(
+		 * new DemoApplication().recurranceRuleFreq(
+		 * "FREQ=MONTHLY;BYMONTHDAY=31;INTERVAL=2;UNTIL=20190630T000000Z", new Date(),
+		 * LocalDate.now().plusDays(20)));
+		 */
 	}
 
 	public List<Date> recurranceRuleFreq(String recurrenceRule, Date startDate, LocalDate tillDate) {
@@ -271,10 +316,11 @@ public class DemoApplication {
 					if ((rule.getFreq().equals(Freq.MONTHLY) && interval == 1)
 							|| (rule.getFreq().equals(Freq.YEARLY) && interval < 3)
 							|| (rule.getFreq().equals(Freq.DAILY) || rule.getFreq().equals(Freq.WEEKLY))) {
-//						System.out.println(cal1.get(Calendar.DATE) + " ,,, "+cal.get(Calendar.DATE));
-//						System.out.println(cal1.get(Calendar.MONTH) + " ,,, "+cal.get(Calendar.MONTH));
-//						System.out.println(cal1.get(Calendar.YEAR) + " ,,, "+cal.get(Calendar.YEAR));
-//						
+						// System.out.println(cal1.get(Calendar.DATE) + " ,,, "+cal.get(Calendar.DATE));
+						// System.out.println(cal1.get(Calendar.MONTH) + " ,,,
+						// "+cal.get(Calendar.MONTH));
+						// System.out.println(cal1.get(Calendar.YEAR) + " ,,, "+cal.get(Calendar.YEAR));
+						//
 						if (cal1.getTime().compareTo(cal.getTime()) >= 0) {
 							if (cal1.get(Calendar.MONTH) > cal.get(Calendar.MONTH)) {
 								System.out.println(cal.getActualMaximum(Calendar.DAY_OF_MONTH) + " date@@@@ " + date

@@ -1,13 +1,12 @@
 package com.gl.ceir.config.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.SystemPolicyMapping;
+import com.gl.ceir.config.model.constants.Period;
 
 public interface SystemPolicyMappingRepository extends JpaRepository<SystemPolicyMapping, Long> {
 
-	public List<SystemPolicyMapping> findByRules(Rules rules);
+	public SystemPolicyMapping findByRuleAndPeriod(Rules rule, Period period);
 }

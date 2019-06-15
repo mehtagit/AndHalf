@@ -1,24 +1,24 @@
 package com.gl.ceir.evaluator.services.impl;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.SystemPolicyMapping;
+import com.gl.ceir.config.model.constants.ActionNames;
+import com.gl.ceir.config.model.constants.Period;
 import com.gl.ceir.config.service.SystemPolicyMappingService;
 import com.gl.ceir.config.system.request.Request;
-import com.gl.ceir.evaluator.config.AppConfig;
-import com.gl.ceir.evaluator.services.Chain;
+import com.gl.ceir.evaluator.config.PolicyEvaluatorConfig;
+import com.gl.ceir.evaluator.services.Step;
 import com.gl.ceir.evaluator.services.OutpuWriter;
 
-public class ResultWritter implements Chain {
+@Service("resultWritter")
+public class ResultWritter implements Step {
 
-	private static final Logger logger = LogManager.getLogger(ResultWritter.class);
+	private Logger logger = LogManager.getLogger(this.getClass());
 
-	@Autowired
-	private PolicyEvaluator policyEvaluator;
 	@Autowired
 	private OutpuWriter outpuWriter;
 
@@ -26,25 +26,20 @@ public class ResultWritter implements Chain {
 	private SystemPolicyMappingService systemPolicyMappingService;
 
 	@Autowired
-	private AppConfig appConfig;
-
-	private Chain nextInChain;
-
-	@Override
-	public void setNext(Chain nextInChain) {
-		this.nextInChain = nextInChain;
-	}
+	private PolicyEvaluatorConfig policyEvaluatorConfig;
 
 	@Override
 	public void process(Request request) {
 		logger.info("ResultWritter " + request);
-		policyEvaluator.getFileCountDownLatch().countDown();
-		List<SystemPolicyMapping> policyList = systemPolicyMappingService.getSystemPolicies(request.getFailRule());
 
-		for (SystemPolicyMapping systemPolicyMapping : policyList) {
-			if (systemPolicyMapping.getPeriod() == appConfig.getPeriod()) {
-				outpuWriter.write(request, systemPolicyMapping.getAction().getName());
-			}
+		if (request.getFailRule() == null) {
+			request.setActionNames(ActionNames.AUTO_REGULARIZED);
+			outpuWriter.write(request);
+		} else {
+			SystemPolicyMapping systemPolicyMapping = systemPolicyMappingService
+					.getSystemPolicies(request.getFailRule(), Period.getPeriod(policyEvaluatorConfig.getPeriod()));
+			request.setActionNames(systemPolicyMapping.getAction().getName());
+			outpuWriter.write(request);
 		}
 
 	}

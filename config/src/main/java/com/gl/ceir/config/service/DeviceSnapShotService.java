@@ -12,4 +12,5 @@ public interface DeviceSnapShotService extends RestServices<DeviceSnapShot> {
 
 	public DeviceSnapShot update(DeviceSnapShot deviceSnapShot);
 
+	public List<DeviceSnapShot> saveAll(List<DeviceSnapShot> deviceSnapShots);
 }

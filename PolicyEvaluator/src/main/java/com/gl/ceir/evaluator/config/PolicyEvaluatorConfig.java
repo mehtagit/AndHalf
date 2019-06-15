@@ -10,8 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.gl.ceir.config.model.constants.Period;
-import com.gl.ceir.evaluator.services.Chain;
+import com.gl.ceir.evaluator.services.Step;
 import com.gl.ceir.evaluator.services.impl.ResultWritter;
 import com.gl.ceir.evaluator.services.impl.RuleSolver;
 
@@ -25,8 +24,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2
 @Configuration
-@ConfigurationProperties(prefix = "POLICY_EVAL")
-public class AppConfig {
+@ConfigurationProperties(prefix = "policy")
+public class PolicyEvaluatorConfig {
 
 	@NotBlank
 	@NotNull
@@ -36,7 +35,7 @@ public class AppConfig {
 	@NotNull
 	private String completedDirectory;
 
-	private Period period;
+	private String period;
 
 	public String getInputRepositoryDirectory() {
 		return inputRepositoryDirectory;
@@ -54,15 +53,15 @@ public class AppConfig {
 		this.completedDirectory = completedDirectory;
 	}
 
-	public Period getPeriod() {
+	public String getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(Period period) {
+	public void setPeriod(String period) {
 		this.period = period;
 	}
 
-	@Bean
+	// @Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.gl.ceir.config.controller"))
@@ -78,14 +77,6 @@ public class AppConfig {
 	@Bean
 	public Executor executor() {
 		return Executors.newFixedThreadPool(5);
-	}
-
-	@Bean("startPolicyEvaluator")
-	public Chain startPolicyEvaluator() {
-		Chain first = new RuleSolver();
-		Chain second = new ResultWritter();
-		first.setNext(second);
-		return first;
 	}
 
 }

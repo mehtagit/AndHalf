@@ -17,7 +17,7 @@ import com.gl.ceir.evaluator.services.RuleSolver;
 @Service
 public class InRuleSolver implements RuleSolver {
 
-	private static final Logger logger = LogManager.getLogger(InRuleSolver.class);
+	private Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
 	private BlackListService blackListService;
@@ -28,7 +28,9 @@ public class InRuleSolver implements RuleSolver {
 	@Override
 	public boolean solve(Rules rule, Request request) {
 		try {
+			logger.info("RuleSolver going to solve " + rule.getName());
 			if (rule.getName().contains("BLACK")) {
+
 				BlackList blackList = blackListService
 						.getByMsisdnAndImei(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn()));
 				return blackList == null ? false : true;

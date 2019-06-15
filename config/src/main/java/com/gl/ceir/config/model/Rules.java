@@ -30,9 +30,12 @@ public class Rules {
 	private String approvedBy;
 	private Date createdOn;
 	private Date modifiedOn;
+	@Enumerated(EnumType.STRING)
 	private RuleOperator operator;
+	@Enumerated(EnumType.STRING)
 	private RuleParameters parameters;
-	private RuleValue values;
+	private String min;
+	private String max;
 
 	public RuleOperator getOperator() {
 		return operator;
@@ -48,14 +51,6 @@ public class Rules {
 
 	public void setParameters(RuleParameters parameters) {
 		this.parameters = parameters;
-	}
-
-	public RuleValue getValues() {
-		return values;
-	}
-
-	public void setValues(RuleValue values) {
-		this.values = values;
 	}
 
 	public RuleType getRuleType() {
@@ -139,6 +134,28 @@ public class Rules {
 
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
+	}
+
+	public String getMin() {
+		return min;
+	}
+
+	public void setMin(String min) {
+		this.min = min;
+	}
+
+	public String getMax() {
+		return max;
+	}
+
+	public void setMax(String max) {
+		this.max = max;
+	}
+
+	@Override
+	public String toString() {
+		return "Rules [id=" + id + ", name=" + name + ", operator=" + operator + ", parameters=" + parameters + ", min="
+				+ min + ", max=" + max + ", ruleType=" + ruleType + "]";
 	}
 
 }

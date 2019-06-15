@@ -3,32 +3,33 @@ package com.gl.ceir.evaluator.services.impl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.system.request.Request;
-import com.gl.ceir.evaluator.services.Chain;
+import com.gl.ceir.evaluator.services.Step;
 import com.gl.ceir.evaluator.services.RuleSolverService;
 
-public class RuleSolver implements Chain {
+@Service("ruleSolverStep")
+public class RuleSolver implements Step {
 
-	private static final Logger logger = LogManager.getLogger(RuleSolver.class);
+	private Logger logger = LogManager.getLogger(this.getClass());
 
-	private Chain nextInChain;
+	@Qualifier("resultWritter")
+	@Autowired
+	private Step resultWritter;
 
 	@Autowired
 	private RuleSolverService ruleSolverService;
 
 	@Override
-	public void setNext(Chain nextInChain) {
-		this.nextInChain = nextInChain;
-	}
-
-	@Override
 	public void process(Request request) {
+		logger.info("Rule solver Started solved for " + request);
 		Rules rule = ruleSolverService.checkFailedRule(request);
 		request.setFailRule(rule);
 		logger.info("Rule solver solved for " + request);
-		nextInChain.process(request);
+		resultWritter.process(request);
 	}
 
 }

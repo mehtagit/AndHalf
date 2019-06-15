@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.SystemPolicyMapping;
+import com.gl.ceir.config.model.constants.Period;
 import com.gl.ceir.config.repository.SystemPolicyMappingRepository;
 import com.gl.ceir.config.service.SystemPolicyMappingService;
 
@@ -47,8 +48,8 @@ public class SystemPolicyMappingServiceImpl implements SystemPolicyMappingServic
 	}
 
 	@Override
-	public List<SystemPolicyMapping> getSystemPolicies(Rules rule) {
-		return systemPolicyMappingRepository.findByRules(rule);
+	public SystemPolicyMapping getSystemPolicies(Rules rule, Period period) {
+		return systemPolicyMappingRepository.findByRuleAndPeriod(rule, period);
 	}
 
 }
