@@ -1,6 +1,5 @@
 package com.gl.ceir.evaluator.services.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -25,32 +24,23 @@ public class FileInputReader implements InputRepository {
 	public FileInputReader() {
 		System.out.println("I am registered FileInputReader");
 	}
-	/*@Override
-	public List<Request> read() {
-		List<Request> requests = null;
-		try {
-			File folder = new File(appConfig.getInputRepositoryDirectory());
-			File[] listOfFiles = folder.listFiles();
-
-			for (File file : listOfFiles) {
-				if (file.isFile()) {
-					logger.info("File " + file.getName());
-					requests = getRequests(file.getName());
-
-					String destinationPath = appConfig.getCompletedDirectory() + file.getName();
-					file.renameTo(new File(destinationPath));
-					logger.info("File " + file.getName() + ", Moved to " + destinationPath);
-					break;
-				} else if (file.isDirectory()) {
-					logger.info("Directory " + file.getName());
-				}
-			}
-		} catch (Exception e) {
-			logger.error("Exception while reading files" + e.getMessage(), e);
-		}
-
-		return requests;
-	}*/
+	/*
+	 * @Override public List<Request> read() { List<Request> requests = null; try {
+	 * File folder = new File(appConfig.getInputRepositoryDirectory()); File[]
+	 * listOfFiles = folder.listFiles();
+	 * 
+	 * for (File file : listOfFiles) { if (file.isFile()) { logger.info("File " +
+	 * file.getName()); requests = getRequests(file.getName());
+	 * 
+	 * String destinationPath = appConfig.getCompletedDirectory() + file.getName();
+	 * file.renameTo(new File(destinationPath)); logger.info("File " +
+	 * file.getName() + ", Moved to " + destinationPath); break; } else if
+	 * (file.isDirectory()) { logger.info("Directory " + file.getName()); } } }
+	 * catch (Exception e) { logger.error("Exception while reading files" +
+	 * e.getMessage(), e); }
+	 * 
+	 * return requests; }
+	 */
 
 	@Override
 	public List<Request> read() {
@@ -61,6 +51,7 @@ public class FileInputReader implements InputRepository {
 		list.add(stringToRequest("882192124,132313123126,FILE_1"));
 		return list;
 	}
+
 	private List<Request> getRequests(String fileName) {
 		List<Request> requests = new ArrayList<>();
 		try {

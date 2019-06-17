@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.constants.ActionNames;
+import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.service.TicketIdGenerator;
 import com.gl.ceir.config.system.request.Request;
 import com.gl.ceir.evaluator.pojo.Result;
@@ -26,6 +27,9 @@ public class OutputWriterImpl implements OutpuWriter {
 	@Autowired
 	private TicketIdGenerator ticketIdGenerator;
 
+	@Autowired
+	private DeviceSnapShotService deviceSnapShotService;
+
 	@Override
 	public boolean write(Request request) {
 		return write(request, request.getActionNames());
@@ -33,33 +37,47 @@ public class OutputWriterImpl implements OutpuWriter {
 
 	@Override
 	public boolean write(Request request, ActionNames actionNames) {
-		PendingActions pendingActions = new PendingActions();
-		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
-		deviceSnapShot.setMobileOperatorId(1L);
-		deviceSnapShot.setImei(request.getImei());
-		deviceSnapShot.setMsisdn(request.getMsisdn());
-		pendingActions.setTicketId(ticketIdGenerator.getTicketId());
-		pendingActions.setImei(request.getImei());
-		pendingActions.setMsisdn(request.getMsisdn());
-		pendingActions.setFailedRule(request.getFailRule());
 
 		switch (actionNames) {
 		case AUTO_REGULARIZED:
 			break;
 		case SYSTEM_REGULARIZED:
-			result.getPendingBatch().add(pendingActions);
+			result.getPendingBatch().add(convertRequestToPendingActions(request));
 			break;
 		case USER_REGULARIZED:
-			result.getPendingBatch().add(pendingActions);
+			result.getPendingBatch().add(convertRequestToPendingActions(request));
 			break;
 		default:
 			break;
-
 		}
-		result.getDeviceSnapshotBatch().add(deviceSnapShot);
+
+		if (deviceSnapShotService.get(request.getImei()) == null) {
+			result.getDeviceSnapshotBatch().add(convertRequestToDeviceSnapShot(request));
+		} else {
+			logger.error("Not Added to Device Snap Shot, Already Exist " + request);
+		}
+
 		logger.info("Added to batch " + request);
 		policyEvaluator.getFileCountDownLatch().countDown();
 		return false;
+	}
+
+	private PendingActions convertRequestToPendingActions(Request request) {
+		PendingActions pendingActions = new PendingActions();
+		pendingActions.setTicketId(ticketIdGenerator.getTicketId());
+		pendingActions.setImei(request.getImei());
+		pendingActions.setMsisdn(request.getMsisdn());
+		pendingActions.setFailedRule(request.getFailRule());
+		return pendingActions;
+
+	}
+
+	private DeviceSnapShot convertRequestToDeviceSnapShot(Request request) {
+		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
+		deviceSnapShot.setMobileOperatorId(1L);
+		deviceSnapShot.setImei(request.getImei());
+		deviceSnapShot.setMsisdn(request.getMsisdn());
+		return deviceSnapShot;
 	}
 
 }

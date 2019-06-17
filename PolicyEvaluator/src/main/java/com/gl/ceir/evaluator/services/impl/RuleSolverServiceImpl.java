@@ -38,7 +38,7 @@ public class RuleSolverServiceImpl implements RuleSolverService {
 
 			RuleSolver ruleSolver = RuleSolverFactory.getRuleSolver(rule.getOperator());
 
-			if (ruleSolver.solve(rule, request)) {
+			if (!ruleSolver.solve(rule, request)) {
 				logger.info(rule.getName() + " Resolved and True");
 				continue;
 			} else {
