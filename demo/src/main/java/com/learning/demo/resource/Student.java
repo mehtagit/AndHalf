@@ -4,6 +4,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Student {
@@ -14,6 +16,10 @@ public class Student {
 
 	@Enumerated(EnumType.STRING)
 	private ClassNames className;
+
+	@ManyToOne
+	@JoinColumn(name = "college_id")
+	private College college;
 
 	public StudentIdentity getStudentIdentity() {
 		return studentIdentity;
@@ -37,6 +43,14 @@ public class Student {
 
 	public void setClassName(ClassNames className) {
 		this.className = className;
+	}
+
+	public College getCollege() {
+		return college;
+	}
+
+	public void setCollege(College college) {
+		this.college = college;
 	}
 
 	@Override
