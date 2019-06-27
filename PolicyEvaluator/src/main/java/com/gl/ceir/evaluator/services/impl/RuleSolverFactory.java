@@ -35,8 +35,8 @@ public class RuleSolverFactory {
 		case LESS_THEN_EQUALS_TO:
 			logger.warn("LESS_THEN_EQUALS_TO, RuleSolver is not available");
 			break;
-		case NOT_EQUALS:
-			logger.warn("NOT_EQUALS, RuleSolver is not available");
+		case NOT_EQUAL_TO:
+			ruleSolver = Container.context.getBean(EqualsToRuleSolver.class);
 			break;
 		case NOT_IN:
 			logger.warn("NOT_IN, RuleSolver is not available");

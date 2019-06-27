@@ -39,7 +39,9 @@ public class ResultWritter implements Step {
 			SystemPolicyMapping systemPolicyMapping = systemPolicyMappingService
 					.getSystemPolicies(request.getFailRule(), Period.getPeriod(policyEvaluatorConfig.getPeriod()));
 			request.setActionNames(systemPolicyMapping.getAction().getName());
+			request.setAction(systemPolicyMapping.getAction());
 			outpuWriter.write(request);
+
 		}
 
 	}

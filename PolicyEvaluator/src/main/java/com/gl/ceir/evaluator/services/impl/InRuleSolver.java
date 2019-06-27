@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.BlackList;
-import com.gl.ceir.config.model.DeviceSnapShot;
+import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
+import com.gl.ceir.config.model.NullMsisdnRegularized;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.service.BlackListService;
 import com.gl.ceir.config.service.DeviceSnapShotService;
+import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
+import com.gl.ceir.config.service.NullMsisdnRegularizedService;
 import com.gl.ceir.config.service.PendingActionsService;
 import com.gl.ceir.config.service.VipListService;
 import com.gl.ceir.config.system.request.Request;
@@ -34,7 +37,10 @@ public class InRuleSolver implements RuleSolver {
 	private PendingActionsService pendingActionsService;
 
 	@Autowired
-	private DeviceSnapShotService deviceSnapShotService;
+	private DuplicateImeiMsisdnService duplicateImeiMsisdnService;
+
+	@Autowired
+	private NullMsisdnRegularizedService nullMsisdnRegularizedService;
 
 	@Override
 	public boolean solve(Rules rule, Request request) {
@@ -72,17 +78,47 @@ public class InRuleSolver implements RuleSolver {
 
 				break;
 			case IMEI_STATUS:
-				DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(request.getImei());
-				if (deviceSnapShot == null)
-					result = false;
-				else {
-					for (String status : rule.getMin().split(",")) {
-						if (deviceSnapShot.getImeiStatus() == ImeiStatus.getImeiStatus(status)) {
-							result = true;
-							break;
+
+				if (request.getImei().equals(Long.valueOf(0))) {
+					try {
+						NullMsisdnRegularized nullMsisdnRegularized = nullMsisdnRegularizedService
+								.get(request.getMsisdn());
+
+						if (nullMsisdnRegularized == null) {
+							logger.info("Not Found in NullMsisdnRegularized, MSISDN ....");
+							return false;
+						} else {
+							logger.info("Found in NullMsisdnRegularized, MSISDN ....");
+							return true;
 						}
+
+					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
+						return false;
+					}
+
+				} else {
+					try {
+						DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnService
+								.get(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn()));
+
+						if (duplicateImeiMsisdn == null) {
+							logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN ....");
+							return false;
+						} else {
+							logger.info("Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
+							result = checkImeiStatus(rule, duplicateImeiMsisdn.getImeiStatus());
+						}
+
+					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
+						logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
+						return false;
 					}
 				}
+
+				break;
+			case IMEI_TAX:
+				break;
+			default:
 				break;
 			}
 
@@ -91,6 +127,19 @@ public class InRuleSolver implements RuleSolver {
 			logger.error(e.getMessage(), e);
 			return false;
 		}
+	}
+
+	private boolean checkImeiStatus(Rules rule, ImeiStatus imeiStatus) {
+		boolean retVal = false;
+		for (String status : rule.getMin().split(",")) {
+			logger.info("status:" + status + ", imeiStatus:" + imeiStatus);
+			if (imeiStatus == ImeiStatus.getImeiStatus(status)) {
+				retVal = true;
+				logger.info("Checked status for status:" + status);
+				break;
+			}
+		}
+		return retVal;
 	}
 
 }

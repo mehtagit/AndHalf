@@ -1,5 +1,6 @@
 package com.gl.ceir.evaluator.services.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,6 +10,7 @@ import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.system.request.Request;
@@ -19,44 +21,66 @@ import com.gl.ceir.evaluator.services.InputRepository;
 public class FileInputReader implements InputRepository {
 
 	private Logger logger = LogManager.getLogger(this.getClass());
+	@Autowired
 	private PolicyEvaluatorConfig appConfig;
+
+	private File file;
 
 	public FileInputReader() {
 		System.out.println("I am registered FileInputReader");
 	}
-	/*
-	 * @Override public List<Request> read() { List<Request> requests = null; try {
-	 * File folder = new File(appConfig.getInputRepositoryDirectory()); File[]
-	 * listOfFiles = folder.listFiles();
-	 * 
-	 * for (File file : listOfFiles) { if (file.isFile()) { logger.info("File " +
-	 * file.getName()); requests = getRequests(file.getName());
-	 * 
-	 * String destinationPath = appConfig.getCompletedDirectory() + file.getName();
-	 * file.renameTo(new File(destinationPath)); logger.info("File " +
-	 * file.getName() + ", Moved to " + destinationPath); break; } else if
-	 * (file.isDirectory()) { logger.info("Directory " + file.getName()); } } }
-	 * catch (Exception e) { logger.error("Exception while reading files" +
-	 * e.getMessage(), e); }
-	 * 
-	 * return requests; }
-	 */
 
 	@Override
 	public List<Request> read() {
-		List<Request> list = new ArrayList<>();
-		list.add(stringToRequest("882192121,132313123123,FILE_1"));
-		list.add(stringToRequest("882192122,132313123124,FILE_1"));
-		list.add(stringToRequest("882192123,132313123125,FILE_1"));
-		list.add(stringToRequest("882192124,132313123126,FILE_1"));
-		return list;
+		List<Request> requests = null;
+		try {
+			File folder = new File(appConfig.getInputRepositoryDirectory());
+			File[] listOfFiles = folder.listFiles();
+			if (listOfFiles.length > 0) {
+				this.file = listOfFiles[0];
+				logger.info("Start Reading File :" + file.getName());
+				if (file.isFile()) {
+					logger.info("File " + file.getName());
+					requests = getRequests();
+
+				} else if (file.isDirectory()) {
+					logger.info("Directory " + file.getName());
+				}
+			}
+
+		} catch (Exception e) {
+			logger.error("Exception while reading files" + e.getMessage(), e);
+		}
+
+		return requests;
 	}
 
-	private List<Request> getRequests(String fileName) {
+	public void moveFile() {
+		String destinationPath = appConfig.getCompletedDirectory() + "/" + file.getName();
+		if (file.renameTo(new File(destinationPath))) {
+			logger.info("File " + file.getName() + ", Moved to " + destinationPath);
+		} else {
+			file.renameTo(new File(destinationPath + "_error"));
+		}
+
+	}
+
+	/*
+	 * @Override public List<Request> read() { List<Request> list = new
+	 * ArrayList<>();
+	 * list.add(stringToRequest("8821921361,213231312312335,FILE_1"));
+	 * list.add(stringToRequest("8821921362,213231312312335,FILE_1"));
+	 * list.add(stringToRequest("8821921367,213231312312335,FILE_1"));
+	 * list.add(stringToRequest("8821921368,213231312312335,FILE_1"));
+	 * list.add(stringToRequest("8821921369,213231312312335,FILE_1")); return list;
+	 * }
+	 */
+
+	private List<Request> getRequests() {
 		List<Request> requests = new ArrayList<>();
 		try {
-			Stream<String> lines = Files.lines(Paths.get(fileName));
-			lines.forEach(line -> requests.add(stringToRequest(line)));
+			Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()));
+			lines.forEach(line -> requests.add(stringToRequest(line, file.getName())));
 			lines.close();
 		} catch (IOException io) {
 			io.printStackTrace();
@@ -64,12 +88,12 @@ public class FileInputReader implements InputRepository {
 		return requests;
 	}
 
-	private Request stringToRequest(String record) {
+	private Request stringToRequest(String record, String filename) {
 		Request request = new Request();
 		String[] data = record.split(",");
 		request.setMsisdn(Long.parseLong(data[0]));
 		request.setImei(Long.parseLong(data[1]));
-		request.setFilename(data[2]);
+		request.setFilename(filename);
 		return request;
 	}
 

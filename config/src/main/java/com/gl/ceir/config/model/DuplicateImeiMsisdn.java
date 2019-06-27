@@ -1,12 +1,12 @@
 package com.gl.ceir.config.model;
 
 import java.util.Date;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.gl.ceir.config.model.constants.ImeiStatus;
 
@@ -18,14 +18,18 @@ public class DuplicateImeiMsisdn {
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 
-	private long imsi;
+	private Long imsi;
 	private String fileName;
 	@ManyToOne
 	private MobileOperator mobileOperator;
 	private Date createdOn;
 	private boolean regulizedByUser;
-	@Enumerated(EnumType.STRING)
+
 	private ImeiStatus imeiStatus;
+
+	@ManyToOne
+	@JoinColumn(name = "deviceSnapShotImei")
+	private DeviceSnapShot deviceSnapShot;
 
 	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
 		return imeiMsisdnIdentity;
@@ -59,11 +63,11 @@ public class DuplicateImeiMsisdn {
 		this.createdOn = createdOn;
 	}
 
-	public long getImsi() {
+	public Long getImsi() {
 		return imsi;
 	}
 
-	public void setImsi(long imsi) {
+	public void setImsi(Long imsi) {
 		this.imsi = imsi;
 	}
 
@@ -81,6 +85,14 @@ public class DuplicateImeiMsisdn {
 
 	public void setImeiStatus(ImeiStatus imeiStatus) {
 		this.imeiStatus = imeiStatus;
+	}
+
+	public DeviceSnapShot getDeviceSnapShot() {
+		return deviceSnapShot;
+	}
+
+	public void setDeviceSnapShot(DeviceSnapShot deviceSnapShot) {
+		this.deviceSnapShot = deviceSnapShot;
 	}
 
 }

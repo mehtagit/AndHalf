@@ -9,4 +9,6 @@ public interface InputRepository {
 	public List<Request> read();
 
 	public List<Request> read(int count);
+
+	public void moveFile();
 }

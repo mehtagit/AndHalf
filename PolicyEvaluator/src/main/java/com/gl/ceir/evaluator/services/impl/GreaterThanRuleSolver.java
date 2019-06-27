@@ -23,7 +23,7 @@ public class GreaterThanRuleSolver implements RuleSolver {
 	public boolean solve(Rules rule, Request request) {
 		boolean result = false;
 		try {
-			logger.info("RuleSolver going to solve " + rule.getName());
+			logger.info("RuleSolver going to solve " + rule.getName() + ", Rule Parameter:" + rule.getParameters());
 			switch (rule.getParameters()) {
 			case IMEI:
 				logger.warn("IMEI, EqualToRuleSolver not available");
@@ -39,8 +39,12 @@ public class GreaterThanRuleSolver implements RuleSolver {
 				break;
 			case IMEI_COUNT:
 				DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(request.getImei());
-				if (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateCount())
+				logger.info("Integer.parseInt(rule.getMin()):" + Integer.parseInt(rule.getMin())
+						+ ", deviceSnapShot.getDuplicateImeiMsisdns():" + deviceSnapShot.getDuplicateImeiMsisdns().size() + ", "
+						+ (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateCount()));
+				if (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateImeiMsisdns().size()) {
 					result = true;
+				}
 				break;
 			default:
 				break;

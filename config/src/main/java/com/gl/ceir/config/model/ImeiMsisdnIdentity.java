@@ -62,9 +62,4 @@ public class ImeiMsisdnIdentity implements Serializable {
 		return result;
 	}
 
-	@Override
-	public String toString() {
-		return "ImeiMsisdnIdentity [imei=" + imei + ", msisdn=" + msisdn + "]";
-	}
-
 }

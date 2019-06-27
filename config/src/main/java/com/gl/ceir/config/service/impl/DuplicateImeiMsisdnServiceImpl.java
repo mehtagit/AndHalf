@@ -95,4 +95,9 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 
 	}
 
+	@Override
+	public List<DuplicateImeiMsisdn> saveAll(List<DuplicateImeiMsisdn> duplicateImeiMsisdns) {
+		return duplicateImeiMsisdnRepository.saveAll(duplicateImeiMsisdns);
+	}
+
 }

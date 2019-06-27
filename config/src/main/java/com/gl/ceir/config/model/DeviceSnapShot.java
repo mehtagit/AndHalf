@@ -3,17 +3,11 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.ManyToAny;
 
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.Period;
@@ -49,6 +43,9 @@ public class DeviceSnapShot {
 	private boolean validImport;
 
 	private String action;
+
+	@OneToMany(mappedBy = "deviceSnapShot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<DuplicateImeiMsisdn> duplicateImeiMsisdns;
 
 	public Long getImei() {
 		return imei;
@@ -192,6 +189,14 @@ public class DeviceSnapShot {
 
 	public void setAction(String action) {
 		this.action = action;
+	}
+
+	public List<DuplicateImeiMsisdn> getDuplicateImeiMsisdns() {
+		return duplicateImeiMsisdns;
+	}
+
+	public void setDuplicateImeiMsisdns(List<DuplicateImeiMsisdn> duplicateImeiMsisdns) {
+		this.duplicateImeiMsisdns = duplicateImeiMsisdns;
 	}
 
 }

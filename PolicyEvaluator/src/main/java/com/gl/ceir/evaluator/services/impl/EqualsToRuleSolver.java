@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.constants.ImeiStatus;
+import com.gl.ceir.config.model.constants.RuleOperator;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.system.request.Request;
 import com.gl.ceir.evaluator.services.RuleSolver;
@@ -26,12 +27,16 @@ public class EqualsToRuleSolver implements RuleSolver {
 			logger.info("RuleSolver going to solve " + rule.getName());
 			switch (rule.getParameters()) {
 			case IMEI:
+
 				if (request.getImei() == null || request.getImei().longValue() == Integer.valueOf(rule.getMin()))
 					result = true;
+
 				break;
 			case IMEI_LENGTH:
+
 				if (String.valueOf(request.getImei().longValue()).length() == Integer.valueOf(rule.getMin()))
 					result = true;
+
 				break;
 			case IMEI_MSISDN:
 				logger.warn("IMEI_MSISDN, EqualToRuleSolver not available");
@@ -47,13 +52,14 @@ public class EqualsToRuleSolver implements RuleSolver {
 				logger.warn("IMEI_STATUS, EqualToRuleSolver not available");
 				break;
 			case IMEI_TAX:
-				DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(request.getImei());
+				DeviceSnapShot deviceSnapShot = deviceSnapShotService.getByImeiAndMsisdn(request.getImei(),
+						request.getMsisdn());
 				if (Boolean.valueOf(rule.getMin()) == deviceSnapShot.isTaxPaid())
 					result = true;
-				break;
-			default:
+
 				break;
 			}
+			result = (rule.getOperator() == RuleOperator.EQUAL_TO ? result : !result);
 			return result;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

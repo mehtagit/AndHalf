@@ -86,4 +86,9 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 		return deviceSnapShotRepository.saveAll(deviceSnapShots);
 	}
 
+	@Override
+	public DeviceSnapShot getByImeiAndMsisdn(Long imei, Long msisdn) {
+		return deviceSnapShotRepository.findByImeiAndMsisdn(imei, msisdn);
+	}
+
 }

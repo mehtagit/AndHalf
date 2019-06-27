@@ -49,7 +49,12 @@ public class SystemPolicyMappingServiceImpl implements SystemPolicyMappingServic
 
 	@Override
 	public SystemPolicyMapping getSystemPolicies(Rules rule, Period period) {
-		return systemPolicyMappingRepository.findByRuleAndPeriod(rule, period);
+		return systemPolicyMappingRepository.findByRuleAndPeriodOrderByPriority(rule, period);
+	}
+
+	@Override
+	public List<SystemPolicyMapping> getSystemPoliciesByPeriod(Period period) {
+		return systemPolicyMappingRepository.findByPeriodOrderByPriority(period);
 	}
 
 }
