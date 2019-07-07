@@ -31,8 +31,6 @@ public class ConfigApplication {
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(ConfigApplication.class, args);
-		SystemPolicyMappingService f = context.getBean(SystemPolicyMappingServiceImpl.class);
-		System.out.println(context.getBean(DeviceSnapShotService.class).get(213231312312334L));
 	}
 
 	@Autowired

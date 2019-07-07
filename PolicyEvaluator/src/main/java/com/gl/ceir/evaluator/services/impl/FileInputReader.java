@@ -50,6 +50,7 @@ public class FileInputReader implements InputRepository {
 
 		} catch (Exception e) {
 			logger.error("Exception while reading files" + e.getMessage(), e);
+			e.printStackTrace();
 		}
 
 		return requests;
@@ -80,7 +81,11 @@ public class FileInputReader implements InputRepository {
 		List<Request> requests = new ArrayList<>();
 		try {
 			Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()));
-			lines.forEach(line -> requests.add(stringToRequest(line, file.getName())));
+			lines.forEach(line -> {
+				Request request = stringToRequest(line, file.getName());
+				if (request.getImei() != null && request.getMsisdn() != null)
+					requests.add(request);
+			});
 			lines.close();
 		} catch (IOException io) {
 			io.printStackTrace();
@@ -91,9 +96,14 @@ public class FileInputReader implements InputRepository {
 	private Request stringToRequest(String record, String filename) {
 		Request request = new Request();
 		String[] data = record.split(",");
-		request.setMsisdn(Long.parseLong(data[0]));
-		request.setImei(Long.parseLong(data[1]));
-		request.setFilename(filename);
+		try {
+			request.setMsisdn(Long.parseLong(data[1]));
+			request.setImei(Long.parseLong(data[0]));
+			request.setFilename(filename);
+		} catch (Exception e) {
+			logger.warn(
+					"Excluded Number FileName(" + filename + ") , Record(" + record + ") Exception:" + e.getMessage());
+		}
 		return request;
 	}
 

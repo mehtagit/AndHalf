@@ -40,4 +40,9 @@ public class NullMsisdnRegularizedServiceImpl implements NullMsisdnRegularizedSe
 		return repo.saveAll(nullMsisdnRegularizeds);
 	}
 
+	@Override
+	public NullMsisdnRegularized save(NullMsisdnRegularized nullMsisdnRegularized) {
+		return repo.save(nullMsisdnRegularized);
+	}
+
 }

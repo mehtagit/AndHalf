@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
+import com.gl.ceir.config.model.constants.TransactionState;
 
 public interface PendingActionsService extends RestServices<PendingActions> {
 	public PendingActions get(String ticketId);
@@ -17,4 +18,6 @@ public interface PendingActionsService extends RestServices<PendingActions> {
 	public void delete(String ticketId);
 
 	public List<PendingActions> saveAll(List<PendingActions> pendingActions);
+
+	public List<PendingActions> getByTransactionState(TransactionState transactionState);
 }

@@ -6,6 +6,8 @@ import com.gl.ceir.config.model.NullMsisdnRegularized;
 
 public interface NullMsisdnRegularizedService {
 	public NullMsisdnRegularized get(Long msisdn);
+	
+	public NullMsisdnRegularized save(NullMsisdnRegularized nullMsisdnRegularized);
 
 	public List<NullMsisdnRegularized> saveAll(List<NullMsisdnRegularized> nullMsisdnRegularizeds);
 }

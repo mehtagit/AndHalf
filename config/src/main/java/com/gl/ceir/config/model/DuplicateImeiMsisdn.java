@@ -20,8 +20,10 @@ public class DuplicateImeiMsisdn {
 
 	private Long imsi;
 	private String fileName;
+	
 	@ManyToOne
 	private MobileOperator mobileOperator;
+	
 	private Date createdOn;
 	private boolean regulizedByUser;
 

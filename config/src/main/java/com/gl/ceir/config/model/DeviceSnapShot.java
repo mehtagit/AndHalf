@@ -41,6 +41,7 @@ public class DeviceSnapShot {
 	private boolean foreginRule;
 	private boolean globalBlacklist;
 	private boolean validImport;
+	private boolean pending;
 
 	private String action;
 
@@ -197,6 +198,14 @@ public class DeviceSnapShot {
 
 	public void setDuplicateImeiMsisdns(List<DuplicateImeiMsisdn> duplicateImeiMsisdns) {
 		this.duplicateImeiMsisdns = duplicateImeiMsisdns;
+	}
+
+	public boolean isPending() {
+		return pending;
+	}
+
+	public void setPending(boolean pending) {
+		this.pending = pending;
 	}
 
 }

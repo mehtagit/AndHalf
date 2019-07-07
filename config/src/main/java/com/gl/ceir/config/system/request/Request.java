@@ -21,6 +21,7 @@ public class Request {
 	private LocalDateTime nextRetryTime;
 	private ActionNames actionNames;
 	private Action action;
+	private Long mobileOperatorId;
 
 	public Action getAction() {
 		return action;
@@ -116,6 +117,14 @@ public class Request {
 
 	public void setActionNames(ActionNames actionNames) {
 		this.actionNames = actionNames;
+	}
+
+	public Long getMobileOperatorId() {
+		return mobileOperatorId;
+	}
+
+	public void setMobileOperatorId(Long mobileOperatorId) {
+		this.mobileOperatorId = mobileOperatorId;
 	}
 
 	@Override

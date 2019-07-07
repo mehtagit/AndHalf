@@ -62,7 +62,7 @@ public class EqualsToRuleSolver implements RuleSolver {
 			result = (rule.getOperator() == RuleOperator.EQUAL_TO ? result : !result);
 			return result;
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
+			logger.error(e.getMessage());
 			return false;
 		}
 	}

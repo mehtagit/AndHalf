@@ -12,6 +12,7 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.MediationSource;
 import com.gl.ceir.config.model.PendingActions;
+import com.gl.ceir.config.model.constants.TransactionState;
 import com.gl.ceir.config.repository.PendingActionsRepositoy;
 import com.gl.ceir.config.service.PendingActionsService;
 
@@ -137,6 +138,11 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	@Override
 	public List<PendingActions> saveAll(List<PendingActions> pendingActions) {
 		return pendingActionsRepositoy.saveAll(pendingActions);
+	}
+
+	@Override
+	public List<PendingActions> getByTransactionState(TransactionState transactionState) {
+		return pendingActionsRepositoy.findByTransactionState(transactionState);
 	}
 
 }

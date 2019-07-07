@@ -70,6 +70,7 @@ public class PolicyEvaluator {
 				List<Request> requests = inputRepository.read();
 
 				if (requests == null) {
+					Thread.sleep(1000);
 					continue;
 				} else {
 					fileCountDownLatch = new CountDownLatch(requests.size());
@@ -80,8 +81,10 @@ public class PolicyEvaluator {
 					}
 
 					fileCountDownLatch.await();
-					if (save(result))
-						inputRepository.moveFile();
+					//if (save(result))
+					inputRepository.moveFile();
+					//logger.info("total file count = "+requests.size());
+					//logger.info("query insert in snapshor = "+result.getDeviceSnapshotBatch().size());
 					Thread.sleep(1000);
 				}
 
