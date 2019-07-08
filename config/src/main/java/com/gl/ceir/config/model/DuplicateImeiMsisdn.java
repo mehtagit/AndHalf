@@ -1,5 +1,6 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.EmbeddedId;
@@ -14,16 +15,21 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class DuplicateImeiMsisdn {
+public class DuplicateImeiMsisdn implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 
 	private Long imsi;
 	private String fileName;
-	
+
 	@ManyToOne
 	private MobileOperator mobileOperator;
-	
+
 	private Date createdOn;
 	private boolean regulizedByUser;
 
@@ -89,9 +95,9 @@ public class DuplicateImeiMsisdn {
 		this.imeiStatus = imeiStatus;
 	}
 
-	public DeviceSnapShot getDeviceSnapShot() {
-		return deviceSnapShot;
-	}
+	// public DeviceSnapShot getDeviceSnapShot() {
+	// return deviceSnapShot;
+	// }
 
 	public void setDeviceSnapShot(DeviceSnapShot deviceSnapShot) {
 		this.deviceSnapShot = deviceSnapShot;

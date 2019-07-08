@@ -41,6 +41,9 @@ public class RuleSolverFactory {
 		case NOT_IN:
 			logger.warn("NOT_IN, RuleSolver is not available");
 			break;
+		case LUHN:
+			ruleSolver = Container.context.getBean(LuhnRuleSolver.class);
+			break;
 		default:
 			break;
 

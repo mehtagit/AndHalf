@@ -6,11 +6,13 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.BlackList;
 import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.repository.DeviceSnapShotRepository;
 import com.gl.ceir.config.service.DeviceSnapShotService;
@@ -35,6 +37,8 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	}
 
 	@Override
+
+	@Caching(put = { @CachePut(value = "deviceSnapShots", key = "#deviceSnapShot.imei") })
 	public DeviceSnapShot save(DeviceSnapShot deviceSnapShot) {
 		try {
 			return deviceSnapShotRepository.save(deviceSnapShot);
@@ -46,6 +50,7 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	}
 
 	@Override
+	@Cacheable(value = "deviceSnapShots", key = "#imei")
 	public DeviceSnapShot get(Long imei) {
 		logger.info("Get Device Snap Shot by Imei:" + imei);
 		Optional<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findById(imei);

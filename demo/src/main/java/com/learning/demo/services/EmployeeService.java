@@ -22,7 +22,7 @@ public class EmployeeService {
 
 	// @Cacheable(value="book", condition="#name.length < 50")
 
-//	@Cacheable(value = "employees", key = "#id", condition = "#id  > 100")
+	@Cacheable(value = "employees", key = "#id", condition = "#id  > 100")
 	public Employee find(Long id) {
 		System.out.println("Going to get data from database id:" + id);
 		Employee employee = repo.findById(id).orElse(new Employee());
@@ -30,13 +30,13 @@ public class EmployeeService {
 		return employee;
 	}
 
-	//@Cacheable("myAllCache")
+	@Cacheable("myAllCache")
 	public List<Employee> findAll() {
 		System.out.println("Fetching all employees");
 		return repo.findAll();
 	}
 
-	//@CachePut(value = "employees", key = "#id")
+	@CachePut(value = "employees", key = "#id")
 	public Employee update(Employee employee, Long id) {
 		System.out.println("Going to update : " + employee);
 		employee = repo.save(employee);

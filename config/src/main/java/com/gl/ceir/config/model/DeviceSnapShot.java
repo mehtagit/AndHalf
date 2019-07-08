@@ -1,5 +1,6 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,12 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class DeviceSnapShot {
+public class DeviceSnapShot implements Serializable {
+
+	/**
+		 * 
+		 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private Long imei;
@@ -206,6 +212,25 @@ public class DeviceSnapShot {
 
 	public void setPending(boolean pending) {
 		this.pending = pending;
+	}
+
+	@Override
+	public String toString() {
+		return "DeviceSnapShot [" + (imei != null ? "imei=" + imei + ", " : "")
+				+ (msisdn != null ? "msisdn=" + msisdn + ", " : "") + (imsi != null ? "imsi=" + imsi + ", " : "")
+				+ (mobileOperatorId != null ? "mobileOperatorId=" + mobileOperatorId + ", " : "")
+				+ (imeiStatus != null ? "imeiStatus=" + imeiStatus + ", " : "") + "lastpPolicyBreached="
+				+ lastpPolicyBreached + ", "
+				+ (lastpPolicyBreachedDate != null ? "lastpPolicyBreachedDate=" + lastpPolicyBreachedDate + ", " : "")
+				+ (failedRuleId != null ? "failedRuleId=" + failedRuleId + ", " : "")
+				+ (failedRuleName != null ? "failedRuleName=" + failedRuleName + ", " : "")
+				+ (period != null ? "period=" + period + ", " : "")
+				+ (createdOn != null ? "createdOn=" + createdOn + ", " : "")
+				+ (remarks != null ? "remarks=" + remarks + ", " : "") + "duplicateCount=" + duplicateCount
+				+ ", taxPaid=" + taxPaid + ", foreginRule=" + foreginRule + ", globalBlacklist=" + globalBlacklist
+				+ ", validImport=" + validImport + ", pending=" + pending + ", "
+				+ (action != null ? "action=" + action + ", " : "")
+				+ (duplicateImeiMsisdns != null ? "duplicateImeiMsisdns=" + duplicateImeiMsisdns : "") + "]";
 	}
 
 }
