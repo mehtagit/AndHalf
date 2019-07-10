@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
@@ -35,6 +37,7 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	}
 
 	@Override
+	@Caching(put = { @CachePut(value = "pendingActions", key = "#pendingActions.ticketId") })
 	public PendingActions save(PendingActions pendingActions) {
 
 		try {
@@ -64,6 +67,7 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	}
 
 	@Override
+	@Cacheable(value = "pendingActions", key = "#ticketId")
 	public PendingActions get(String ticketId) {
 
 		try {
@@ -114,6 +118,7 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	}
 
 	@Override
+	@Cacheable(value = "pendingActionsByMsisdnAndImei", key = "#imeiMsisdnIdentity")
 	public PendingActions getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 		try {
 			if (imeiMsisdnIdentity.getMsisdn() == null && imeiMsisdnIdentity.getImei() == null) {

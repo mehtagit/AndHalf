@@ -43,9 +43,6 @@ public class OutputWriterImpl implements OutpuWriter {
 	private DeviceSnapShotService deviceSnapShotService;
 
 	@Autowired
-	private DuplicateImeiMsisdnService duplicateImeiMsisdnService;
-
-	@Autowired
 	private PolicyEvaluatorConfig policyEvaluatorConfig;
 
 	@Override

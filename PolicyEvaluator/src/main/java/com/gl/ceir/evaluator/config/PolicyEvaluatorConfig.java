@@ -10,10 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.gl.ceir.evaluator.services.Step;
-import com.gl.ceir.evaluator.services.impl.ResultWritter;
-import com.gl.ceir.evaluator.services.impl.RuleSolver;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;

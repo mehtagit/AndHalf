@@ -46,6 +46,8 @@ public class FileInputReader implements InputRepository {
 				} else if (file.isDirectory()) {
 					logger.info("Directory " + file.getName());
 				}
+				logger.info("Completed Reading File :" + file.getName() + ", Size:"
+						+ (requests == null ? 0 : requests.size()));
 			}
 
 		} catch (Exception e) {
@@ -66,24 +68,13 @@ public class FileInputReader implements InputRepository {
 
 	}
 
-	/*
-	 * @Override public List<Request> read() { List<Request> list = new
-	 * ArrayList<>();
-	 * list.add(stringToRequest("8821921361,213231312312335,FILE_1"));
-	 * list.add(stringToRequest("8821921362,213231312312335,FILE_1"));
-	 * list.add(stringToRequest("8821921367,213231312312335,FILE_1"));
-	 * list.add(stringToRequest("8821921368,213231312312335,FILE_1"));
-	 * list.add(stringToRequest("8821921369,213231312312335,FILE_1")); return list;
-	 * }
-	 */
-
 	private List<Request> getRequests() {
 		List<Request> requests = new ArrayList<>();
 		try {
 			Stream<String> lines = Files.lines(Paths.get(file.getAbsolutePath()));
 			lines.forEach(line -> {
 				Request request = stringToRequest(line, file.getName());
-				if (request.getImei() != null && request.getMsisdn() != null)
+				if (request.getMsisdn() != null)
 					requests.add(request);
 			});
 			lines.close();
@@ -97,13 +88,23 @@ public class FileInputReader implements InputRepository {
 		Request request = new Request();
 		String[] data = record.split(",");
 		try {
-			request.setMsisdn(Long.parseLong(data[1]));
 			request.setImei(Long.parseLong(data[0]));
-			request.setFilename(filename);
 		} catch (Exception e) {
+			request.setImei(0L);
+		}
+		try {
+			request.setMsisdn(Long.parseLong(data[2]));
+		} catch (Exception e) {
+			request.setMsisdn(null);
 			logger.warn(
 					"Excluded Number FileName(" + filename + ") , Record(" + record + ") Exception:" + e.getMessage());
 		}
+		try {
+			request.setImsi(Long.parseLong(data[1]));
+		} catch (Exception e) {
+			request.setImsi(0L);
+		}
+		request.setFilename(data[3]);
 		return request;
 	}
 
@@ -113,41 +114,4 @@ public class FileInputReader implements InputRepository {
 		return null;
 	}
 
-	// private static void fileStreamUsingFiles(String fileName) {
-	// try {
-	// Stream<String> lines = Files.lines(Paths.get(fileName));
-	// System.out.println("<!-----Read all lines as a Stream-----!>");
-	// lines.forEach(System.out::println);
-	// lines.close();
-	// } catch (IOException io) {
-	// io.printStackTrace();
-	// }
-	// }
-	//
-	// // Method #2
-	// private static void filterFileData(String fileName) {
-	// try {
-	// Stream<String> lines = Files.lines(Paths.get(fileName)).filter(line ->
-	// line.startsWith("s"));
-	// System.out.println("<!-----Filtering the file data using Java8
-	// filtering-----!>");
-	// lines.forEach(System.out::println);
-	// lines.close();
-	// } catch (IOException io) {
-	// io.printStackTrace();
-	// }
-	// }
-	//
-	// // Method #3
-	// private static void fileStreamUsingBufferedReader(String fileName) {
-	// try {
-	// BufferedReader br = Files.newBufferedReader(Paths.get(fileName));
-	// Stream<String> lines = br.lines().map(str -> str.toUpperCase());
-	// System.out.println("<!-----Read all lines by using BufferedReader-----!>");
-	// lines.forEach(System.out::println);
-	// lines.close();
-	// } catch (IOException io) {
-	// io.printStackTrace();
-	// }
-	// }
 }

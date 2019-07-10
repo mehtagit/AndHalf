@@ -132,7 +132,7 @@ public class Request {
 		return "Request [imei=" + imei + ", msisdn=" + msisdn + ", filename=" + filename + ", systemEntry="
 				+ systemEntry + ", imsi=" + imsi + ", failRule=" + failRule + ", ticketId=" + ticketId + ", status="
 				+ status + ", state=" + state + ", nextRetryTime=" + nextRetryTime + ", actionNames=" + actionNames
-				+ "]";
+				+ ", action=" + action + ", mobileOperatorId=" + mobileOperatorId + "]";
 	}
 
 }

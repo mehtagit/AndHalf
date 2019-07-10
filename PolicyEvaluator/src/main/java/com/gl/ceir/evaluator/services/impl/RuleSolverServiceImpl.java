@@ -55,10 +55,10 @@ public class RuleSolverServiceImpl implements RuleSolverService {
 			RuleSolver ruleSolver = RuleSolverFactory.getRuleSolver(rule.getOperator());
 
 			if (!ruleSolver.solve(rule, request)) {
-				logger.info(rule.getName() + " Resolved and True");
+				logger.info("RuleSolver " + rule.getName() + ":Continue, " + request);
 				continue;
 			} else {
-				logger.info(rule.getName() + " Resolved and Failed");
+				logger.info("RuleSolver " + rule.getName() + ":Break, " + request);
 				failedRule = rule;
 				break;
 			}

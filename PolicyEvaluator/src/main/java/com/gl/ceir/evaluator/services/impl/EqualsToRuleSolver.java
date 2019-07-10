@@ -24,7 +24,7 @@ public class EqualsToRuleSolver implements RuleSolver {
 	public boolean solve(Rules rule, Request request) {
 		boolean result = false;
 		try {
-			logger.info("RuleSolver going to solve " + rule.getName());
+			logger.debug("RuleSolver " + rule + ", " + request);
 			switch (rule.getParameters()) {
 			case IMEI:
 
@@ -54,6 +54,7 @@ public class EqualsToRuleSolver implements RuleSolver {
 			case IMEI_TAX:
 				DeviceSnapShot deviceSnapShot = deviceSnapShotService.getByImeiAndMsisdn(request.getImei(),
 						request.getMsisdn());
+
 				if (Boolean.valueOf(rule.getMin()) == deviceSnapShot.isTaxPaid())
 					result = true;
 

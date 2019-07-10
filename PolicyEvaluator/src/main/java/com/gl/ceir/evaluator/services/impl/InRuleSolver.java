@@ -11,13 +11,14 @@ import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.NullMsisdnRegularized;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.Rules;
+import com.gl.ceir.config.model.Tac;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.service.BlackListService;
-import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 import com.gl.ceir.config.service.NullMsisdnRegularizedService;
 import com.gl.ceir.config.service.PendingActionsService;
+import com.gl.ceir.config.service.TacService;
 import com.gl.ceir.config.service.VipListService;
 import com.gl.ceir.config.system.request.Request;
 import com.gl.ceir.evaluator.services.RuleSolver;
@@ -42,12 +43,14 @@ public class InRuleSolver implements RuleSolver {
 	@Autowired
 	private NullMsisdnRegularizedService nullMsisdnRegularizedService;
 
+	@Autowired
+	private TacService tacService;
+
 	@Override
 	public boolean solve(Rules rule, Request request) {
 		boolean result = false;
 		try {
-			logger.info("RuleSolver going to solve " + rule.getName());
-
+			logger.debug("RuleSolver " + rule + ", " + request);
 			switch (rule.getParameters()) {
 			case IMEI:
 				logger.warn("IMEI, InRuleSolver not available");
@@ -86,14 +89,14 @@ public class InRuleSolver implements RuleSolver {
 
 						if (nullMsisdnRegularized == null) {
 							logger.info("Not Found in NullMsisdnRegularized, MSISDN ....");
-							return false;
+							result = false;
 						} else {
 							logger.info("Found in NullMsisdnRegularized, MSISDN ....");
-							return true;
+							result = true;
 						}
 
 					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
-						return false;
+						result = false;
 					}
 
 				} else {
@@ -103,7 +106,7 @@ public class InRuleSolver implements RuleSolver {
 
 						if (duplicateImeiMsisdn == null) {
 							logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN ....");
-							return false;
+							result = false;
 						} else {
 							logger.info("Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
 							result = checkImeiStatus(rule, duplicateImeiMsisdn.getImeiStatus());
@@ -111,12 +114,24 @@ public class InRuleSolver implements RuleSolver {
 
 					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
 						logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
-						return false;
+						result = false;
 					}
 				}
 
 				break;
 			case IMEI_TAX:
+				break;
+			case TAC:
+				if ("TAC_LIST".equals(rule.getMin())) {
+					String imeiTac = request.getImei().toString().substring(0, 7);
+					try {
+						Tac tac = tacService.get(imeiTac);
+						result = false;
+					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
+						logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
+						result = true;
+					}
+				}
 				break;
 			default:
 				break;

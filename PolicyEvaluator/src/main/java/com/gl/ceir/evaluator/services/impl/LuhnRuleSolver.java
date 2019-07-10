@@ -27,26 +27,11 @@ public class LuhnRuleSolver implements RuleSolver {
 
 	private Logger logger = LogManager.getLogger(this.getClass());
 
-	@Autowired
-	private BlackListService blackListService;
-
-	@Autowired
-	private VipListService vipListService;
-
-	@Autowired
-	private PendingActionsService pendingActionsService;
-
-	@Autowired
-	private DuplicateImeiMsisdnService duplicateImeiMsisdnService;
-
-	@Autowired
-	private NullMsisdnRegularizedService nullMsisdnRegularizedService;
-
 	@Override
 	public boolean solve(Rules rule, Request request) {
 		boolean result = false;
 		try {
-			logger.info("RuleSolver going to solve " + rule.getName());
+			logger.debug("RuleSolver " + rule + ", " + request);
 
 			switch (rule.getParameters()) {
 			case IMEI:

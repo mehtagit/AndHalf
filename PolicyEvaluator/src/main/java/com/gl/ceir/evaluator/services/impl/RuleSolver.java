@@ -25,7 +25,7 @@ public class RuleSolver implements Step {
 
 	@Override
 	public void process(Request request) {
-		logger.info("Rule solver Started solved for " + request);
+		logger.info("New " + request);
 		Rules rule = ruleSolverService.checkFailedRule(request);
 		request.setFailRule(rule);
 		logger.info("Rule solver solved for " + request);
