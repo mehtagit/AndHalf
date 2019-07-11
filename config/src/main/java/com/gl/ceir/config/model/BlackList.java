@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,11 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class BlackList {
+public class BlackList implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 

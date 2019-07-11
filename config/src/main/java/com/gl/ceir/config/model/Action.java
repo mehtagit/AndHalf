@@ -1,5 +1,6 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,12 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class Action extends BaseEntity {
+public class Action extends BaseEntity implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

@@ -1,8 +1,15 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
+
 import com.gl.ceir.config.model.constants.DocumentType;
 
-public class UploadFileRequest {
+public class UploadFileRequest implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String ticketId;
 	private DocumentType documentType;
 	private Long imei;

@@ -8,6 +8,10 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class ImeiMsisdnIdentity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@NotNull
 	private Long imei;
 	@NotNull

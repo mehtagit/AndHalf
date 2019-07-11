@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // CR(imei,msisdn)UD 
 @Entity
-public class VipList {
+public class VipList implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;

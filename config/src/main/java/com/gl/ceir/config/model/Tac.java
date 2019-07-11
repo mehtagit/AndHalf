@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -7,7 +9,11 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class Tac {
+public class Tac implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	private String id;

@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gl.ceir.config.model.Tac;
+import com.gl.ceir.config.model.UploadFileRequest;
+import com.gl.ceir.config.model.UploadFileResponse;
+import com.gl.ceir.config.model.constants.DocumentType;
 import com.gl.ceir.config.service.TacService;
 
 import io.swagger.annotations.ApiOperation;
@@ -53,5 +58,14 @@ public class TacController {
 		Tac updatedTac = tacService.update(tac);
 		MappingJacksonValue mapping = new MappingJacksonValue(updatedTac);
 		return mapping;
+	}
+
+	@ApiOperation(value = "Upload Tac file", response = UploadFileResponse.class)
+	@RequestMapping(path = "/Tac/upload", method = RequestMethod.POST)
+	public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+
+		UploadFileResponse uploadFileResponse = tacService.upload(file);
+
+		return uploadFileResponse;
 	}
 }

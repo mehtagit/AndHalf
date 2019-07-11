@@ -1,5 +1,6 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -15,7 +16,12 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class PendingActions {
+public class PendingActions implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String ticketId;
 

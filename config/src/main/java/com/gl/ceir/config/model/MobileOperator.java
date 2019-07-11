@@ -13,6 +13,10 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 @Entity
 public class MobileOperator extends BaseEntity implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

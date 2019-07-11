@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -7,7 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // CR(imei,msisdn)UD 
 @Entity
-public class WhiteList {
+public class WhiteList implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId
 	private ImeiMsisdnIdentity imeiMsisdnIdentity;

@@ -1,5 +1,6 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -14,7 +15,11 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class UserNotification {
+public class UserNotification implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Long msisdn;
 	private Long imei;
