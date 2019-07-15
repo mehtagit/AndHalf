@@ -2,7 +2,7 @@ package com.learning.demo;
 
 public class Luhn {
 	public static void main(String[] args) {
-		System.out.println(check(223456123456123L));
+		System.out.println(check(357906049159340L));
 	}
 
 	public static boolean check(Long number) {

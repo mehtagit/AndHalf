@@ -35,7 +35,11 @@ public class LuhnRuleSolver implements RuleSolver {
 
 			switch (rule.getParameters()) {
 			case IMEI:
-				result = check(request.getImei());
+				int imeiLength = String.valueOf(request.getImei().longValue()).length();
+				if (imeiLength == 16)
+					result = false;
+				else
+					result = check(request.getImei());
 				break;
 			case IMEI_LENGTH:
 				logger.warn("IMEI_LENGTH, InRuleSolver not available");

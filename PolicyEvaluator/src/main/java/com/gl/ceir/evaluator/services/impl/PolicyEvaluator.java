@@ -1,6 +1,7 @@
 package com.gl.ceir.evaluator.services.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
@@ -37,8 +38,6 @@ public class PolicyEvaluator {
 	@Qualifier("ruleSolverStep")
 	private Step ruleSolverStep;
 
-	public CountDownLatch fileCountDownLatch;
-
 	@Autowired
 	private DeviceSnapShotService deviceSnapShotService;
 
@@ -59,32 +58,29 @@ public class PolicyEvaluator {
 		System.out.println("I am registered PolicyEvaluator");
 	}
 
-	public CountDownLatch getFileCountDownLatch() {
-		return fileCountDownLatch;
-	}
-
 	public void run() {
 		while (true) {
 			try {
 				result.reset();
-				List<Request> requests = inputRepository.read();
+				Map<Long, List<Request>> requests = inputRepository.readMap();
 
 				if (requests == null) {
 					Thread.sleep(1000);
 					continue;
 				} else {
-					fileCountDownLatch = new CountDownLatch(requests.size());
-					for (Request request : requests) {
+					for (Long imei : requests.keySet()) {
+						Request request = requests.get(imei).get(0);
 						executor.execute(() -> {
 							ruleSolverStep.process(request);
 						});
 					}
 
-					fileCountDownLatch.await();
-					//if (save(result))
+					inputRepository.getFileCountDownLatch().await();
+					// if (save(result))
 					inputRepository.moveFile();
-					//logger.info("total file count = "+requests.size());
-					//logger.info("query insert in snapshor = "+result.getDeviceSnapshotBatch().size());
+					// logger.info("total file count = "+requests.size());
+					// logger.info("query insert in snapshor =
+					// "+result.getDeviceSnapshotBatch().size());
 					Thread.sleep(1000);
 				}
 

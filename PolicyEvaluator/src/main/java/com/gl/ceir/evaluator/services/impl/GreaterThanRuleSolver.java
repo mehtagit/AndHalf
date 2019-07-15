@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.DeviceSnapShot;
+import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.Rules;
+import com.gl.ceir.config.repository.DeviceSnapShotRepository;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.system.request.Request;
 import com.gl.ceir.evaluator.services.RuleSolver;
@@ -18,6 +20,9 @@ public class GreaterThanRuleSolver implements RuleSolver {
 
 	@Autowired
 	private DeviceSnapShotService deviceSnapShotService;
+
+	@Autowired
+	private DeviceSnapShotRepository deviceSnapShotRepository;
 
 	@Override
 	public boolean solve(Rules rule, Request request) {
@@ -38,13 +43,30 @@ public class GreaterThanRuleSolver implements RuleSolver {
 				logger.warn("MSISDN, EqualToRuleSolver not available");
 				break;
 			case IMEI_COUNT:
-				DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(request.getImei());
-				logger.info("Integer.parseInt(rule.getMin()):" + Integer.parseInt(rule.getMin())
-						+ ", deviceSnapShot.getDuplicateImeiMsisdns():"
-						+ deviceSnapShot.getDuplicateImeiMsisdns().size() + ", "
-						+ (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateCount()));
-				if (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateImeiMsisdns().size()) {
-					result = true;
+				try {
+					DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(request.getImei());
+					logger.info("Integer.parseInt(rule.getMin()):" + Integer.parseInt(rule.getMin())
+							+ ", deviceSnapShot.getDuplicateImeiMsisdns():"
+							+ deviceSnapShot.getDuplicateImeiMsisdns().size() + ", "
+							+ (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateCount()));
+					if (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateImeiMsisdns().size()) {
+						result = true;
+					}
+				} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
+					result = false;
+				} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+					DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(request.getImei()).orElse(null);
+					if (deviceSnapShot == null) {
+						result = false;
+					} else {
+						logger.info("Integer.parseInt(rule.getMin()):" + Integer.parseInt(rule.getMin())
+								+ ", deviceSnapShot.getDuplicateImeiMsisdns():"
+								+ deviceSnapShot.getDuplicateImeiMsisdns().size() + ", "
+								+ (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateCount()));
+						if (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateImeiMsisdns().size()) {
+							result = true;
+						}
+					}
 				}
 				break;
 			default:

@@ -8,7 +8,7 @@ import com.gl.ceir.config.service.TicketIdGenerator;
 public class TicketIdGeneratorImpl implements TicketIdGenerator {
 
 	@Override
-	public String getTicketId() {
+	public synchronized String getTicketId() {
 		return "" + System.currentTimeMillis();
 	}
 

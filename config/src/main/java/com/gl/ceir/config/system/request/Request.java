@@ -21,7 +21,7 @@ public class Request {
 	private LocalDateTime nextRetryTime;
 	private ActionNames actionNames;
 	private Action action;
-	private Long mobileOperatorId;
+	private String mobileOperator;
 
 	public Action getAction() {
 		return action;
@@ -119,12 +119,12 @@ public class Request {
 		this.actionNames = actionNames;
 	}
 
-	public Long getMobileOperatorId() {
-		return mobileOperatorId;
+	public String getMobileOperator() {
+		return mobileOperator;
 	}
 
-	public void setMobileOperatorId(Long mobileOperatorId) {
-		this.mobileOperatorId = mobileOperatorId;
+	public void setMobileOperator(String mobileOperator) {
+		this.mobileOperator = mobileOperator;
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class Request {
 		return "Request [imei=" + imei + ", msisdn=" + msisdn + ", filename=" + filename + ", systemEntry="
 				+ systemEntry + ", imsi=" + imsi + ", failRule=" + failRule + ", ticketId=" + ticketId + ", status="
 				+ status + ", state=" + state + ", nextRetryTime=" + nextRetryTime + ", actionNames=" + actionNames
-				+ ", action=" + action + ", mobileOperatorId=" + mobileOperatorId + "]";
+				+ ", action=" + action + ", mobileOperator=" + mobileOperator + "]";
 	}
 
 }

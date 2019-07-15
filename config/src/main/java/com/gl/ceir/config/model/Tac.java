@@ -119,4 +119,12 @@ public class Tac implements Serializable {
 		this.deviceType = deviceType;
 	}
 
+	@Override
+	public String toString() {
+		return "Tac [id=" + id + ", marketingName=" + marketingName + ", manufacturerOrApplicant="
+				+ manufacturerOrApplicant + ", band=" + band + ", bandName=" + bandName + ", modelName=" + modelName
+				+ ", operatingSystem=" + operatingSystem + ", nfc=" + nfc + ", bluetooth=" + bluetooth + ", wlan="
+				+ wlan + ", deviceType=" + deviceType + "]";
+	}
+
 }

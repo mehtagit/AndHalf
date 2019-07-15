@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.BlackList;
+import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.NullMsisdnRegularized;
@@ -14,6 +15,7 @@ import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.Tac;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.constants.ImeiStatus;
+import com.gl.ceir.config.repository.DuplicateImeiMsisdnRepository;
 import com.gl.ceir.config.service.BlackListService;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 import com.gl.ceir.config.service.NullMsisdnRegularizedService;
@@ -42,6 +44,9 @@ public class InRuleSolver implements RuleSolver {
 
 	@Autowired
 	private NullMsisdnRegularizedService nullMsisdnRegularizedService;
+
+	@Autowired
+	private DuplicateImeiMsisdnRepository duplicateImeiMsisdnRepository;
 
 	@Autowired
 	private TacService tacService;
@@ -105,16 +110,23 @@ public class InRuleSolver implements RuleSolver {
 								.get(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn()));
 
 						if (duplicateImeiMsisdn == null) {
-							logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN ....");
 							result = false;
 						} else {
-							logger.info("Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
 							result = checkImeiStatus(rule, duplicateImeiMsisdn.getImeiStatus());
 						}
 
 					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
 						logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
 						result = false;
+					} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+						DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository
+								.findById(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn())).orElse(null);
+
+						if (duplicateImeiMsisdn == null) {
+							result = false;
+						} else {
+							result = checkImeiStatus(rule, duplicateImeiMsisdn.getImeiStatus());
+						}
 					}
 				}
 

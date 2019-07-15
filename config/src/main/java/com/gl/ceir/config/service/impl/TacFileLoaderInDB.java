@@ -55,19 +55,24 @@ public class TacFileLoaderInDB implements TacFileLoader {
 	}
 
 	private Tac parseTac(String content) {
-		String data[] = content.split("|");
+
+		String data[] = content.split("\\|");
 		Tac tac = new Tac();
-		tac.setId(data[0]);
-		tac.setMarketingName(data[1]);
-		tac.setManufacturerOrApplicant(data[2]);
-		tac.setBand(data[3]);
-		tac.setBandName(data[4]);
-		tac.setModelName(data[5]);
-		tac.setOperatingSystem(data[6]);
-		tac.setNfc(data[7]);
-		tac.setBluetooth(data[8]);
-		tac.setWlan(data[9]);
-		tac.setDeviceType(data[10]);
+		try {
+			tac.setId(data[0]);
+			tac.setMarketingName(data[1]);
+			tac.setManufacturerOrApplicant(data[2]);
+			tac.setBand(data[3]);
+			tac.setBandName(data[4]);
+			tac.setModelName(data[5]);
+			tac.setOperatingSystem(data[6]);
+			tac.setNfc(data[7]);
+			tac.setBluetooth(data[8]);
+			tac.setWlan(data[9]);
+			tac.setDeviceType(data[10]);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 		return tac;
 	}
 

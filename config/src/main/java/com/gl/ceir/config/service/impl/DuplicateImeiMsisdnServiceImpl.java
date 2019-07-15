@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.repository.DuplicateImeiMsisdnRepository;
@@ -35,6 +35,7 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 	}
 
 	@Override
+	@Cacheable(value = "duplicateImeiMsisdn", key = "#duplicateImeiMsisdn.imeiMsisdnIdentity")
 	public DuplicateImeiMsisdn save(DuplicateImeiMsisdn duplicateImeiMsisdn) {
 
 		try {
@@ -69,6 +70,7 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 	}
 
 	@Override
+	@Cacheable(value = "pendingActionsByMsisdnAndImei", key = "#imeiMsisdnIdentity")
 	public DuplicateImeiMsisdn get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 
 		try {

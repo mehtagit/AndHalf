@@ -76,24 +76,8 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	}
 
 	@Override
-	public List<DeviceSnapShot> getByMsisdn(Long msisdn) {
-		try {
-			List<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findByMsisdn(msisdn);
-			return deviceSnapShot;
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-
-	@Override
 	public List<DeviceSnapShot> saveAll(List<DeviceSnapShot> deviceSnapShots) {
 		return deviceSnapShotRepository.saveAll(deviceSnapShots);
-	}
-
-	@Override
-	public DeviceSnapShot getByImeiAndMsisdn(Long imei, Long msisdn) {
-		return deviceSnapShotRepository.findByImeiAndMsisdn(imei, msisdn);
 	}
 
 }

@@ -7,6 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.gl.ceir.evaluator.config.Container;
+import com.gl.ceir.evaluator.services.impl.DuplicateImeiProcessor;
 import com.gl.ceir.evaluator.services.impl.PolicyEvaluator;
 
 @SpringBootApplication
@@ -22,8 +23,12 @@ public class PolicyEvaluatorApplication {
 	public static void main(String[] args) {
 		Container.context = SpringApplication.run(PolicyEvaluatorApplication.class, args);
 
+		DuplicateImeiProcessor duplicateImeiProcessor = Container.context.getBean(DuplicateImeiProcessor.class);
+		new Thread(duplicateImeiProcessor).start();
+
 		PolicyEvaluator policyEvaluator = Container.context.getBean(PolicyEvaluator.class);
 		policyEvaluator.run();
+
 	}
 
 }

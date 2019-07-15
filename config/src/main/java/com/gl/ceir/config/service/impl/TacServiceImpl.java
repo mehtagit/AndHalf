@@ -25,7 +25,6 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.Tac;
 import com.gl.ceir.config.model.UploadFileResponse;
 import com.gl.ceir.config.repository.TacRepository;
-import com.gl.ceir.config.service.TacFileLoader;
 import com.gl.ceir.config.service.TacService;
 
 @Service

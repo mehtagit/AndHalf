@@ -80,13 +80,12 @@ public class Result {
 	}
 
 	public void insertDeviceSnapShot(DeviceSnapShot deviceSnapShot) {
-		logger.info("Insert into DeviceSnapShot: IMEI:" + deviceSnapShot.getImei() + ", Msisdn:"
-				+ deviceSnapShot.getMsisdn());
+		logger.info("Insert into DeviceSnapShot: IMEI:" + deviceSnapShot.getImei());
 		try {
 			deviceSnapShotService.save(deviceSnapShot);
 		} catch (Exception e) {
-			logger.error("Insert into DeviceSnapShot: IMEI:" + deviceSnapShot.getImei() + ", Msisdn:"
-					+ deviceSnapShot.getMsisdn() + ", Exception(" + e.getMessage() + ")");
+			logger.error("Insert into DeviceSnapShot: IMEI:" + deviceSnapShot.getImei() + ", Exception("
+					+ e.getMessage() + ")");
 		}
 	}
 

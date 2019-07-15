@@ -25,8 +25,6 @@ import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 import com.gl.ceir.config.service.SystemPolicyMappingService;
-import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
-import com.gl.ceir.config.service.impl.ImsieSeriesServiceImpl;
 import com.gl.ceir.config.service.impl.SystemPolicyMappingServiceImpl;
 import com.gl.ceir.config.system.request.Request;
 
@@ -36,16 +34,17 @@ import com.gl.ceir.config.system.request.Request;
 @EnableAutoConfiguration
 @EnableCaching
 public class ConfigApplication {
-	private static final Logger logger = LogManager.getLogger(ImsieSeriesServiceImpl.class);
 
 	public static void main(String[] args) {
 		ApplicationContext context = SpringApplication.run(ConfigApplication.class, args);
-//		DeviceSnapShot deviceSnapShot = context.getBean(DeviceSnapShotServiceImpl.class).get(13329001992380L);
-//		logger.info("FIRST: " + deviceSnapShot.toString());
-//
-//		deviceSnapShot = context.getBean(DeviceSnapShotServiceImpl.class).get(13329001992380L);
-//		logger.info("SECOND: "+deviceSnapShot.toString());
-
+		// DeviceSnapShot deviceSnapShot =
+		// context.getBean(DeviceSnapShotServiceImpl.class).get(13329001992380L);
+		// logger.info("FIRST: " + deviceSnapShot.toString());
+		//
+		// deviceSnapShot =
+		// context.getBean(DeviceSnapShotServiceImpl.class).get(13329001992380L);
+		// logger.info("SECOND: "+deviceSnapShot.toString());
+		// context.getBean(DeviceSnapShotServiceImpl.class).save(convertRequestToDeviceSnapShot());
 	}
 
 	@Autowired
@@ -53,16 +52,12 @@ public class ConfigApplication {
 
 	private static DeviceSnapShot convertRequestToDeviceSnapShot() {
 		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
-		deviceSnapShot.setAction(ActionNames.AUTO_REGULARIZED.toString());
-		deviceSnapShot.setMobileOperatorId(1L);
 		deviceSnapShot.setImei(898989L);
-		deviceSnapShot.setMsisdn(9090909L);
-
-		deviceSnapShot.setImeiStatus(ImeiStatus.AUTO_REGULARIZED);
 		// deviceSnapShot.setFailedRuleId(request.getFailRule().getId().toString());
 		// deviceSnapShot.setFailedRuleName(request.getFailRule().getName());
 		deviceSnapShot.setDuplicateImeiMsisdns(new ArrayList<>());
 		deviceSnapShot.getDuplicateImeiMsisdns().add(convertToDuplicateImeiMsisdn());
+		deviceSnapShot.getDuplicateImeiMsisdns().get(0).setDeviceSnapShot(deviceSnapShot);
 		return deviceSnapShot;
 	}
 

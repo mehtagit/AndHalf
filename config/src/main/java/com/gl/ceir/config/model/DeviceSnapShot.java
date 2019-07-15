@@ -27,18 +27,11 @@ public class DeviceSnapShot implements Serializable {
 	@Id
 	private Long imei;
 
-	private Long msisdn;
-	private Long imsi;
-
 	// @ManyToOne
-	private Long mobileOperatorId;
+	private String mobileOperator;
 
-	private ImeiStatus imeiStatus;
 	private int lastpPolicyBreached;
 	private Date lastpPolicyBreachedDate;
-	private String failedRuleId;
-	private String failedRuleName;
-
 	private Period period;
 	private Date createdOn;
 	private String remarks;
@@ -48,8 +41,6 @@ public class DeviceSnapShot implements Serializable {
 	private boolean globalBlacklist;
 	private boolean validImport;
 	private boolean pending;
-
-	private String action;
 
 	@OneToMany(mappedBy = "deviceSnapShot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<DuplicateImeiMsisdn> duplicateImeiMsisdns;
@@ -62,36 +53,12 @@ public class DeviceSnapShot implements Serializable {
 		this.imei = imei;
 	}
 
-	public Long getMsisdn() {
-		return msisdn;
+	public String getMobileOperator() {
+		return mobileOperator;
 	}
 
-	public void setMsisdn(Long msisdn) {
-		this.msisdn = msisdn;
-	}
-
-	public Long getImsi() {
-		return imsi;
-	}
-
-	public void setImsi(Long imsi) {
-		this.imsi = imsi;
-	}
-
-	public Long getMobileOperatorId() {
-		return mobileOperatorId;
-	}
-
-	public void setMobileOperatorId(Long mobileOperatorId) {
-		this.mobileOperatorId = mobileOperatorId;
-	}
-
-	public ImeiStatus getImeiStatus() {
-		return imeiStatus;
-	}
-
-	public void setImeiStatus(ImeiStatus imeiStatus) {
-		this.imeiStatus = imeiStatus;
+	public void setMobileOperator(String mobileOperator) {
+		this.mobileOperator = mobileOperator;
 	}
 
 	public int getLastpPolicyBreached() {
@@ -108,22 +75,6 @@ public class DeviceSnapShot implements Serializable {
 
 	public void setLastpPolicyBreachedDate(Date lastpPolicyBreachedDate) {
 		this.lastpPolicyBreachedDate = lastpPolicyBreachedDate;
-	}
-
-	public String getFailedRuleId() {
-		return failedRuleId;
-	}
-
-	public void setFailedRuleId(String failedRuleId) {
-		this.failedRuleId = failedRuleId;
-	}
-
-	public String getFailedRuleName() {
-		return failedRuleName;
-	}
-
-	public void setFailedRuleName(String failedRuleName) {
-		this.failedRuleName = failedRuleName;
 	}
 
 	public Period getPeriod() {
@@ -190,14 +141,6 @@ public class DeviceSnapShot implements Serializable {
 		this.validImport = validImport;
 	}
 
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
 	public List<DuplicateImeiMsisdn> getDuplicateImeiMsisdns() {
 		return duplicateImeiMsisdns;
 	}
@@ -212,25 +155,6 @@ public class DeviceSnapShot implements Serializable {
 
 	public void setPending(boolean pending) {
 		this.pending = pending;
-	}
-
-	@Override
-	public String toString() {
-		return "DeviceSnapShot [" + (imei != null ? "imei=" + imei + ", " : "")
-				+ (msisdn != null ? "msisdn=" + msisdn + ", " : "") + (imsi != null ? "imsi=" + imsi + ", " : "")
-				+ (mobileOperatorId != null ? "mobileOperatorId=" + mobileOperatorId + ", " : "")
-				+ (imeiStatus != null ? "imeiStatus=" + imeiStatus + ", " : "") + "lastpPolicyBreached="
-				+ lastpPolicyBreached + ", "
-				+ (lastpPolicyBreachedDate != null ? "lastpPolicyBreachedDate=" + lastpPolicyBreachedDate + ", " : "")
-				+ (failedRuleId != null ? "failedRuleId=" + failedRuleId + ", " : "")
-				+ (failedRuleName != null ? "failedRuleName=" + failedRuleName + ", " : "")
-				+ (period != null ? "period=" + period + ", " : "")
-				+ (createdOn != null ? "createdOn=" + createdOn + ", " : "")
-				+ (remarks != null ? "remarks=" + remarks + ", " : "") + "duplicateCount=" + duplicateCount
-				+ ", taxPaid=" + taxPaid + ", foreginRule=" + foreginRule + ", globalBlacklist=" + globalBlacklist
-				+ ", validImport=" + validImport + ", pending=" + pending + ", "
-				+ (action != null ? "action=" + action + ", " : "")
-				+ (duplicateImeiMsisdns != null ? "duplicateImeiMsisdns=" + duplicateImeiMsisdns : "") + "]";
 	}
 
 }

@@ -21,7 +21,7 @@ public class PendingActions implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	private String ticketId;
 
@@ -30,11 +30,15 @@ public class PendingActions implements Serializable {
 	private Long msisdn;
 	private Long imei;
 	private Long imsi;
-	// @OneToOne
-	private Long mobileOperatorId;
-	@OneToOne
-	private Rules failedRule;
+
+	private String mobileOperator;
+
+	private Long failedRuleId;
+
+	private String failedRuleName;
+
 	private Date createdOn;
+
 	@ManyToOne
 	private Action action;
 	private Date modifiedOn;
@@ -57,20 +61,12 @@ public class PendingActions implements Serializable {
 		this.transactionState = transactionState;
 	}
 
-	public Long getMobileOperatorId() {
-		return mobileOperatorId;
+	public String getMobileOperator() {
+		return mobileOperator;
 	}
 
-	public void setMobileOperatorId(Long mobileOperatorId) {
-		this.mobileOperatorId = mobileOperatorId;
-	}
-
-	public Rules getFailedRule() {
-		return failedRule;
-	}
-
-	public void setFailedRule(Rules failedRule) {
-		this.failedRule = failedRule;
+	public void setMobileOperator(String mobileOperator) {
+		this.mobileOperator = mobileOperator;
 	}
 
 	public Date getCreatedOn() {
@@ -135,6 +131,22 @@ public class PendingActions implements Serializable {
 
 	public void setImsi(Long imsi) {
 		this.imsi = imsi;
+	}
+
+	public Long getFailedRuleId() {
+		return failedRuleId;
+	}
+
+	public void setFailedRuleId(Long failedRuleId) {
+		this.failedRuleId = failedRuleId;
+	}
+
+	public String getFailedRuleName() {
+		return failedRuleName;
+	}
+
+	public void setFailedRuleName(String failedRuleName) {
+		this.failedRuleName = failedRuleName;
 	}
 
 }

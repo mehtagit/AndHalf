@@ -15,7 +15,7 @@ public class RuleSolverFactory {
 		RuleSolver ruleSolver = null;
 		switch (ruleOperator) {
 		case BETWEEN:
-			logger.warn("BETWEEN, RuleSolver is not available");
+			ruleSolver = Container.context.getBean(BetweenRuleSolver.class);
 			break;
 		case EQUAL_TO:
 			ruleSolver = Container.context.getBean(EqualsToRuleSolver.class);

@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -27,8 +26,11 @@ public class DuplicateImeiMsisdn implements Serializable {
 	private Long imsi;
 	private String fileName;
 
-	@ManyToOne
-	private MobileOperator mobileOperator;
+	private Long failedRuleId;
+
+	private String failedRuleName;
+
+	private String mobileOperator;
 
 	private Date createdOn;
 	private boolean regulizedByUser;
@@ -55,11 +57,11 @@ public class DuplicateImeiMsisdn implements Serializable {
 		this.fileName = fileName;
 	}
 
-	public MobileOperator getMobileOperator() {
+	public String getMobileOperator() {
 		return mobileOperator;
 	}
 
-	public void setMobileOperator(MobileOperator mobileOperator) {
+	public void setMobileOperator(String mobileOperator) {
 		this.mobileOperator = mobileOperator;
 	}
 
@@ -101,6 +103,22 @@ public class DuplicateImeiMsisdn implements Serializable {
 
 	public void setDeviceSnapShot(DeviceSnapShot deviceSnapShot) {
 		this.deviceSnapShot = deviceSnapShot;
+	}
+
+	public Long getFailedRuleId() {
+		return failedRuleId;
+	}
+
+	public void setFailedRuleId(Long failedRuleId) {
+		this.failedRuleId = failedRuleId;
+	}
+
+	public String getFailedRuleName() {
+		return failedRuleName;
+	}
+
+	public void setFailedRuleName(String failedRuleName) {
+		this.failedRuleName = failedRuleName;
 	}
 
 }

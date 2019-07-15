@@ -6,9 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.DeviceSnapShot;
+import com.gl.ceir.config.model.DuplicateImeiMsisdn;
+import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.RuleOperator;
+import com.gl.ceir.config.repository.DeviceSnapShotRepository;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.system.request.Request;
 import com.gl.ceir.evaluator.services.RuleSolver;
@@ -17,8 +20,12 @@ import com.gl.ceir.evaluator.services.RuleSolver;
 public class EqualsToRuleSolver implements RuleSolver {
 
 	private Logger logger = LogManager.getLogger(this.getClass());
+
 	@Autowired
 	private DeviceSnapShotService deviceSnapShotService;
+
+	@Autowired
+	private DeviceSnapShotRepository deviceSnapShotRepository;
 
 	@Override
 	public boolean solve(Rules rule, Request request) {
@@ -33,11 +40,7 @@ public class EqualsToRuleSolver implements RuleSolver {
 
 				break;
 			case IMEI_LENGTH:
-
-				if (String.valueOf(request.getImei().longValue()).length() == Integer.valueOf(rule.getMin()))
-					result = true;
-
-				break;
+				logger.warn("IMEI_LENGTH, EqualToRuleSolver not available");
 			case IMEI_MSISDN:
 				logger.warn("IMEI_MSISDN, EqualToRuleSolver not available");
 				break;
@@ -52,11 +55,21 @@ public class EqualsToRuleSolver implements RuleSolver {
 				logger.warn("IMEI_STATUS, EqualToRuleSolver not available");
 				break;
 			case IMEI_TAX:
-				DeviceSnapShot deviceSnapShot = deviceSnapShotService.getByImeiAndMsisdn(request.getImei(),
-						request.getMsisdn());
+				try {
+					DeviceSnapShot deviceSnapShot = deviceSnapShotService.get(request.getImei());
 
-				if (Boolean.valueOf(rule.getMin()) == deviceSnapShot.isTaxPaid())
-					result = true;
+					if (Boolean.valueOf(rule.getMin()) == deviceSnapShot.isTaxPaid())
+						result = true;
+				} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
+					result = false;
+				} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+					DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(request.getImei()).orElse(null);
+					if (deviceSnapShot == null)
+						return false;
+					
+					if (Boolean.valueOf(rule.getMin()) == deviceSnapShot.isTaxPaid())
+						result = true;
+				}
 
 				break;
 			}
