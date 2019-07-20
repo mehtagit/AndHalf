@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -148,6 +149,31 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	@Override
 	public List<PendingActions> getByTransactionState(TransactionState transactionState) {
 		return pendingActionsRepositoy.findByTransactionState(transactionState);
+	}
+
+	@Override
+	public List<PendingActions> getReadyToBlocked() {
+		return pendingActionsRepositoy
+				.findByTransactionStateAndEndDateforUserAction(TransactionState.WAITING_FOR_USER_ACTION, new Date());
+	}
+
+	@Override
+	public List<PendingActions> getReminderList() {
+		return pendingActionsRepositoy.findByTransactionStateAndReminderDate(TransactionState.WAITING_FOR_USER_ACTION,
+				new Date());
+	}
+
+	@Override
+	public int updateTransactionState(TransactionState transactionState, String ticketId) {
+		int result = -1;
+		try {
+			result = pendingActionsRepositoy.updateTransactionStateByTicketID(transactionState, ticketId);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+		logger.info("PendingActions updateTransactionState " + transactionState + ", ticketId:" + ticketId + ", Result:"
+				+ result);
+		return result;
 	}
 
 }

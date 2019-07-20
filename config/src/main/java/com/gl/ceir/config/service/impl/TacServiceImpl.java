@@ -29,7 +29,7 @@ import com.gl.ceir.config.service.TacService;
 
 @Service
 public class TacServiceImpl implements TacService {
-	private final Logger logger = LogManager.getLogger(SmsScriptServiceImpl.class);
+	private final Logger logger = LogManager.getLogger(ScriptServiceImpl.class);
 
 	@Autowired
 	private TacRepository tacRepository;

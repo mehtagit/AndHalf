@@ -1,5 +1,7 @@
 package com.gl.ceir.evaluator.services.impl;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +17,7 @@ import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.NullMsisdnRegularized;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.constants.ActionNames;
+import com.gl.ceir.config.model.constants.ActionParametersName;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.Period;
 import com.gl.ceir.config.model.constants.TransactionState;
@@ -52,6 +55,9 @@ public class OutputWriterImpl implements OutpuWriter {
 
 	@Autowired
 	private InputRepository inputRepository;
+
+	@Autowired
+	private InMemoryLoader inMemoryLoader;
 
 	@Override
 	public boolean write(Request request) {
@@ -166,6 +172,15 @@ public class OutputWriterImpl implements OutpuWriter {
 		// pendingActions.setMobileOperatorId(request.getMobileOperatorId());
 		pendingActions.setModifiedOn(new Date());
 		pendingActions.setMobileOperator(request.getMobileOperator());
+		pendingActions.setScriptId(request.getScriptId());
+
+		if (request.getActionNames() == ActionNames.USER_REGULARIZED) {
+			String value = inMemoryLoader.getValueOfActionAndActionparameter(request.getActionNames(),
+					ActionParametersName.USER_REGULARISATION_TIME_LIMIT);
+			LocalDateTime localDateTime = LocalDateTime.now().plusDays(Integer.valueOf(value));
+			Date date = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+			pendingActions.setEndDateforUserAction(date);
+		}
 		return pendingActions;
 
 	}

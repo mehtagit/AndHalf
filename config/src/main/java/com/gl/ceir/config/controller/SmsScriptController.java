@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.SmsAccount;
-import com.gl.ceir.config.model.SmsScript;
+import com.gl.ceir.config.model.Script;
 import com.gl.ceir.config.service.RulesService;
 import com.gl.ceir.config.service.SmsAccountService;
-import com.gl.ceir.config.service.SmsScriptService;
+import com.gl.ceir.config.service.ScriptService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -26,25 +26,25 @@ import io.swagger.annotations.ApiResponses;
 public class SmsScriptController {
 
 	@Autowired
-	private SmsScriptService smsScriptService;
+	private ScriptService smsScriptService;
 
 	@RequestMapping(path = "/SmsScript/", method = RequestMethod.GET)
 	public MappingJacksonValue getAll() {
-		List<SmsScript> allRules = smsScriptService.getAll();
+		List<Script> allRules = smsScriptService.getAll();
 		MappingJacksonValue mapping = new MappingJacksonValue(allRules);
 		return mapping;
 	}
 
 	@RequestMapping(path = "/SmsScript/{id}", method = RequestMethod.GET)
 	public MappingJacksonValue get(@PathVariable(value = "id") Long id) {
-		SmsScript smsScript = smsScriptService.get(id);
+		Script smsScript = smsScriptService.get(id);
 		MappingJacksonValue mapping = new MappingJacksonValue(smsScript);
 		return mapping;
 	}
 
 	@RequestMapping(path = "/SmsScript/", method = RequestMethod.POST)
-	public MappingJacksonValue save(@RequestBody SmsScript smsScript) {
-		SmsScript savedSmsScript = smsScriptService.save(smsScript);
+	public MappingJacksonValue save(@RequestBody Script smsScript) {
+		Script savedSmsScript = smsScriptService.save(smsScript);
 		MappingJacksonValue mapping = new MappingJacksonValue(savedSmsScript);
 		return mapping;
 	}
@@ -55,8 +55,8 @@ public class SmsScriptController {
 	}
 
 	@RequestMapping(path = "/SmsScript/{id}", method = RequestMethod.PUT)
-	public MappingJacksonValue update(@PathVariable(value = "id") Long id, @RequestBody SmsScript smsScript) {
-		SmsScript updateSmsScript = smsScriptService.update(smsScript);
+	public MappingJacksonValue update(@PathVariable(value = "id") Long id, @RequestBody Script smsScript) {
+		Script updateSmsScript = smsScriptService.update(smsScript);
 		MappingJacksonValue mapping = new MappingJacksonValue(updateSmsScript);
 		return mapping;
 	}

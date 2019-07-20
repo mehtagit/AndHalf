@@ -1,9 +1,11 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.Action;
 import com.gl.ceir.config.model.ActionParameters;
 import com.gl.ceir.config.model.constants.ActionNames;
+import com.gl.ceir.config.model.constants.ActionParametersName;
 import com.gl.ceir.config.repository.ActionParametersRepository;
 import com.gl.ceir.config.repository.ActionRepository;
 import com.gl.ceir.config.service.ActionParametersService;
@@ -116,6 +119,30 @@ public class ActionParametersServiceImpl implements ActionParametersService {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("ActionParametersService", e.getMessage());
 		}
+	}
+
+	@Override
+	public Map<ActionNames, Map<ActionParametersName, String>> findAllWithMap() {
+		HashMap<ActionNames, Map<ActionParametersName, String>> mapOfActionsAndActionParameters = new HashMap<ActionNames, Map<ActionParametersName, String>>();
+		try {
+			List<ActionParameters> list = actionParametersRepository.findAll();
+			for (ActionParameters actionParameters : list) {
+				Map<ActionParametersName, String> value = mapOfActionsAndActionParameters
+						.get(actionParameters.getAction().getName());
+
+				if (value == null) {
+					value = new HashMap<ActionParametersName, String>();
+					mapOfActionsAndActionParameters.put(actionParameters.getAction().getName(), value);
+				}
+				value.put(actionParameters.getName(), actionParameters.getValue());
+			}
+			logger.info("mapOfActionsAndActionParameters : " + mapOfActionsAndActionParameters);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("ActionParametersService", e.getMessage());
+		}
+		return mapOfActionsAndActionParameters;
 	}
 
 }

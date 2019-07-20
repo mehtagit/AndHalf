@@ -1,4 +1,4 @@
-package com.gl.ceir.executor.services.impl;
+package com.gl.ceir.executor.services.state;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ import com.gl.ceir.executor.services.State;
 
 @Service
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class InitState extends State {
+public class BlockedUserActionState extends State {
 
 	private Logger logger = LogManager.getLogger(this.getClass());
 
@@ -23,17 +23,8 @@ public class InitState extends State {
 
 	@Override
 	public State execute(PendingActions pendingActions) {
-
-		if (sendToCommunicationModule(pendingActions)) {
-			pendingActions.setTransactionState(TransactionState.SEND_TO_COMM);
-			pendingActionsService.save(pendingActions);
-		}
+		pendingActionsService.updateTransactionState(TransactionState.SEND_TO_BLOCK, pendingActions.getTicketId());
 		return null;
-	}
-
-	private boolean sendToCommunicationModule(PendingActions pendingActions) {
-		logger.info("Pending Action IMEI:" + pendingActions.getImei());
-		return true;
 	}
 
 }

@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.SmsAccount;
-import com.gl.ceir.config.model.SmsScript;
+import com.gl.ceir.config.model.Script;
 import com.gl.ceir.config.repository.SmsScriptRepository;
-import com.gl.ceir.config.service.SmsScriptService;
+import com.gl.ceir.config.service.ScriptService;
 
 @Service
-public class SmsScriptServiceImpl implements SmsScriptService {
+public class ScriptServiceImpl implements ScriptService {
 
-	private static final Logger logger = LogManager.getLogger(SmsScriptServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(ScriptServiceImpl.class);
 
 	@Autowired
 	private SmsScriptRepository smsScriptRepository;
 
 	@Override
-	public List<SmsScript> getAll() {
+	public List<Script> getAll() {
 
 		try {
 			return smsScriptRepository.findAll();
@@ -34,7 +34,7 @@ public class SmsScriptServiceImpl implements SmsScriptService {
 	}
 
 	@Override
-	public SmsScript save(SmsScript smsScript) {
+	public Script save(Script smsScript) {
 
 		try {
 			return smsScriptRepository.save(smsScript);
@@ -45,10 +45,10 @@ public class SmsScriptServiceImpl implements SmsScriptService {
 	}
 
 	@Override
-	public SmsScript get(Long id) {
+	public Script get(Long id) {
 
 		try {
-			SmsScript smsScript = smsScriptRepository.findById(id)
+			Script smsScript = smsScriptRepository.findById(id)
 					.orElseThrow(() -> new ResourceNotFoundException("Sms Script", "id", id));
 			return smsScript;
 		} catch (ResourceNotFoundException e) {
@@ -60,7 +60,7 @@ public class SmsScriptServiceImpl implements SmsScriptService {
 	}
 
 	@Override
-	public SmsScript update(SmsScript smsScript) {
+	public Script update(Script smsScript) {
 
 		try {
 			return smsScriptRepository.save(smsScript);

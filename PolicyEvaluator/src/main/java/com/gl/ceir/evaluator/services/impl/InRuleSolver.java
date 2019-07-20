@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.BlackList;
-import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.NullMsisdnRegularized;
@@ -16,6 +15,7 @@ import com.gl.ceir.config.model.Tac;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.repository.DuplicateImeiMsisdnRepository;
+import com.gl.ceir.config.repository.TacRepository;
 import com.gl.ceir.config.service.BlackListService;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 import com.gl.ceir.config.service.NullMsisdnRegularizedService;
@@ -50,6 +50,9 @@ public class InRuleSolver implements RuleSolver {
 
 	@Autowired
 	private TacService tacService;
+
+	@Autowired
+	private TacRepository tacRepository;
 
 	@Override
 	public boolean solve(Rules rule, Request request) {
@@ -135,13 +138,25 @@ public class InRuleSolver implements RuleSolver {
 				break;
 			case TAC:
 				if ("TAC_LIST".equals(rule.getMin())) {
-					String imeiTac = request.getImei().toString().substring(0, 7);
+					String imeiTac = request.getImei().toString().substring(0, 8);
+					logger.info("imeiTac from Imei : " + imeiTac);
 					try {
 						Tac tac = tacService.get(imeiTac);
-						result = false;
+						if (tac == null)
+							result = true;
+						else
+							result = false;
 					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
-						logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
+						logger.info("Not Found in Tac, for imeiTac:" + imeiTac);
 						result = true;
+					} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+						Tac tac = tacRepository.findById(imeiTac).orElse(null);
+						if (tac == null) {
+							result = true;
+						} else {
+							result = false;
+							logger.info("Found Imei Tac  : " + tac.getId());
+						}
 					}
 				}
 				break;

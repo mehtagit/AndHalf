@@ -22,6 +22,7 @@ public class Request {
 	private ActionNames actionNames;
 	private Action action;
 	private String mobileOperator;
+	private Long scriptId;
 
 	public Action getAction() {
 		return action;
@@ -125,6 +126,14 @@ public class Request {
 
 	public void setMobileOperator(String mobileOperator) {
 		this.mobileOperator = mobileOperator;
+	}
+
+	public Long getScriptId() {
+		return scriptId;
+	}
+
+	public void setScriptId(Long scriptId) {
+		this.scriptId = scriptId;
 	}
 
 	@Override

@@ -43,7 +43,11 @@ public class PendingActions implements Serializable {
 	private Action action;
 	private Date modifiedOn;
 	private Date endDateforUserAction;
+
+	private Date reminderDate;
+
 	private String filename;
+	private Long scriptId;
 
 	public String getTicketId() {
 		return ticketId;
@@ -147,6 +151,22 @@ public class PendingActions implements Serializable {
 
 	public void setFailedRuleName(String failedRuleName) {
 		this.failedRuleName = failedRuleName;
+	}
+
+	public Date getReminderDate() {
+		return reminderDate;
+	}
+
+	public void setReminderDate(Date reminderDate) {
+		this.reminderDate = reminderDate;
+	}
+
+	public Long getScriptId() {
+		return scriptId;
+	}
+
+	public void setScriptId(Long scriptId) {
+		this.scriptId = scriptId;
 	}
 
 }

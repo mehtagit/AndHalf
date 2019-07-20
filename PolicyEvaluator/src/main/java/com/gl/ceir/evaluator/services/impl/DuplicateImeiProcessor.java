@@ -1,11 +1,6 @@
 package com.gl.ceir.evaluator.services.impl;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,9 +16,6 @@ import com.gl.ceir.evaluator.services.Step;
 public class DuplicateImeiProcessor implements Runnable {
 
 	private Logger logger = LogManager.getLogger(this.getClass());
-
-	@Autowired
-	private Executor executor;
 
 	private BlockingQueue<Request> queue = new LinkedBlockingQueue<>();
 

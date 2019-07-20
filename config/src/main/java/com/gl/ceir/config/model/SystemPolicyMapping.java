@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.gl.ceir.config.model.constants.Period;
 
@@ -39,6 +40,9 @@ public class SystemPolicyMapping implements Serializable {
 
 	private String createdBy;
 	private String modifiedBy;
+
+	@OneToOne
+	private Script script;
 
 	public Long getId() {
 		return id;
@@ -110,6 +114,18 @@ public class SystemPolicyMapping implements Serializable {
 
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
+	}
+
+	public Script getScript() {
+		return script;
+	}
+
+	public void setScript(Script script) {
+		this.script = script;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }

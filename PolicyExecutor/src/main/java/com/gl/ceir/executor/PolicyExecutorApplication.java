@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.gl.ceir.executor.config.Container;
 import com.gl.ceir.executor.services.impl.PolicyExecutor;
+import com.gl.ceir.executor.services.impl.PolicyExecutorBlocking;
+import com.gl.ceir.executor.services.impl.PolicyExecutorReminder;
 
 @SpringBootApplication
 // @EnableJpaAuditing
@@ -22,7 +24,13 @@ public class PolicyExecutorApplication {
 		Container.context = SpringApplication.run(PolicyExecutorApplication.class, args);
 
 		PolicyExecutor policyEvaluator = Container.context.getBean(PolicyExecutor.class);
-		policyEvaluator.run();
+		new Thread(policyEvaluator::run).start();
+
+		PolicyExecutorBlocking policyExecutorBlocking = Container.context.getBean(PolicyExecutorBlocking.class);
+		new Thread(policyExecutorBlocking::run).start();
+
+		PolicyExecutorReminder policyExecutorReminder = Container.context.getBean(PolicyExecutorReminder.class);
+		new Thread(policyExecutorReminder::run).start();
 	}
 
 }
