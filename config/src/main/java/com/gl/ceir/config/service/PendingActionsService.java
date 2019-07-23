@@ -27,6 +27,10 @@ public interface PendingActionsService extends RestServices<PendingActions> {
 
 	public List<PendingActions> getReminderList();
 
+	public List<PendingActions> getApprovedList();
+
 	public int updateTransactionState(TransactionState transactionState, String ticketId);
+
+	public boolean regularizedTicket(String ticketID);
 
 }

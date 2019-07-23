@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
+import com.gl.ceir.config.model.constants.TransactionState;
+import com.gl.ceir.config.repository.PendingActionsRepositoy;
 import com.gl.ceir.config.service.DocumentsService;
 import com.gl.ceir.config.service.PendingActionsService;
 
@@ -47,8 +51,11 @@ public class FileStorageService {
 	private PendingActionsService pendingActionsService;
 
 	@Autowired
+	private PendingActionsRepositoy pendingActionsRepositoy;
+
+	@Autowired
 	public FileStorageService(FileStorageProperties fileStorageProperties) {
-		System.out.println("fileStorageProperties "+fileStorageProperties.getUploadDir());
+		System.out.println("fileStorageProperties " + fileStorageProperties.getUploadDir());
 		this.fileStorageLocation = Paths.get(fileStorageProperties.getUploadDir()).toAbsolutePath().normalize();
 
 		try {
@@ -59,6 +66,7 @@ public class FileStorageService {
 		}
 	}
 
+	@Transactional
 	public UploadFileResponse storeFile(MultipartFile file, UploadFileRequest uploadFileRequest) {
 		// Normalize file name
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -69,10 +77,6 @@ public class FileStorageService {
 		if (uploadFileRequest.getTicketId() != null) {
 			try {
 				PendingActions pendingActions = pendingActionsService.get(uploadFileRequest.getTicketId());
-
-				if (pendingActions.getImei() == null)
-					throw new ResourceNotFoundException("In Pending Action Imei is Null ", "ticketId",
-							uploadFileRequest.getTicketId());
 
 				imei = pendingActions.getImei();
 				msisdn = pendingActions.getMsisdn();
@@ -87,6 +91,23 @@ public class FileStorageService {
 					// TODO Need to validate imei and msisdn
 					imei = uploadFileRequest.getImei();
 					msisdn = uploadFileRequest.getMsisdn();
+				}
+			} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+				PendingActions pendingActions = pendingActionsRepositoy.findById(uploadFileRequest.getTicketId())
+						.orElse(null);
+				if (pendingActions == null) {
+					if (uploadFileRequest.getMsisdn() == null || uploadFileRequest.getImei() == null) {
+						throw new ResourceNotFoundException("To Upload file IMEI and MSISDN both required ",
+								"IMEI / MSISDN", imei + "/" + msisdn);
+					} else {
+						// TODO Need to validate imei and msisdn
+						imei = uploadFileRequest.getImei();
+						msisdn = uploadFileRequest.getMsisdn();
+					}
+				} else {
+
+					imei = pendingActions.getImei();
+					msisdn = pendingActions.getMsisdn();
 				}
 			}
 		} else {
@@ -124,9 +145,13 @@ public class FileStorageService {
 			documents.setStatus(DocumentStatus.PENDING);
 			documents.setMsisdn(msisdn);
 			documents.setImei(imei);
+			documents.setTicketId(uploadFileRequest.getTicketId());
 
 			logger.info(documents);
 			Documents savedDocument = documentsService.save(documents);
+			if (uploadFileRequest.getTicketId() != null)
+				pendingActionsService.updateTransactionState(TransactionState.WAIT_FOR_DOCUMENT_APPROVAL,
+						uploadFileRequest.getTicketId());
 			logger.info("Document Saved Successfully" + savedDocument);
 
 			return new UploadFileResponse(newFileName, fileDownloadUri, file.getContentType(), file.getSize());

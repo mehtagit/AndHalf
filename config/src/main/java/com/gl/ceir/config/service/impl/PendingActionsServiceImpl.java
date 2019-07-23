@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.DeviceSnapShot;
+import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.constants.TransactionState;
 import com.gl.ceir.config.repository.PendingActionsRepositoy;
+import com.gl.ceir.config.service.DeviceSnapShotService;
+import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 import com.gl.ceir.config.service.PendingActionsService;
 
 @Service
@@ -25,6 +29,9 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 
 	@Autowired
 	private PendingActionsRepositoy pendingActionsRepositoy;
+
+	@Autowired
+	private DuplicateImeiMsisdnService duplicateImeiMsisdnService;
 
 	@Override
 	public List<PendingActions> getAll() {
@@ -85,7 +92,7 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 
 	@Override
 	public void delete(String ticketId) {
-
+		pendingActionsRepositoy.deleteById(ticketId);
 	}
 
 	@Override
@@ -174,6 +181,31 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 		logger.info("PendingActions updateTransactionState " + transactionState + ", ticketId:" + ticketId + ", Result:"
 				+ result);
 		return result;
+	}
+
+	@Override
+	public boolean regularizedTicket(String ticketId) {
+		PendingActions pendingActions = pendingActionsRepositoy.findById(ticketId).orElse(null);
+		if (pendingActions == null) {
+			logger.info("regularizedTicket PendingActions Not found for TicketID:" + ticketId);
+			return false;
+		} else {
+			try {
+				DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnService
+						.get(new ImeiMsisdnIdentity(pendingActions.getImei(), pendingActions.getMsisdn()));
+
+				duplicateImeiMsisdn.setRegulizedByUser(true);
+				duplicateImeiMsisdnService.save(duplicateImeiMsisdn);
+				return true;
+			} catch (ResourceNotFoundException e) {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	public List<PendingActions> getApprovedList() {
+		return pendingActionsRepositoy.findByTransactionState(TransactionState.DOCUMENT_APPROVED);
 	}
 
 }

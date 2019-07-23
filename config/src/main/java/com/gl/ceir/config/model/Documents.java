@@ -60,6 +60,8 @@ public class Documents implements Serializable {
 	@NotNull
 	private Long msisdn;
 
+	private String ticketId;
+
 	public Long getId() {
 		return id;
 	}
@@ -162,6 +164,15 @@ public class Documents implements Serializable {
 
 	public void setMsisdn(Long msisdn) {
 		this.msisdn = msisdn;
+	}
+
+	
+	public String getTicketId() {
+		return ticketId;
+	}
+
+	public void setTicketId(String ticketId) {
+		this.ticketId = ticketId;
 	}
 
 	@Override

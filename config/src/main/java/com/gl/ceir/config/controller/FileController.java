@@ -30,7 +30,9 @@ import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
 import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.constants.DocumentType;
+import com.gl.ceir.config.model.constants.TransactionState;
 import com.gl.ceir.config.service.DocumentsService;
+import com.gl.ceir.config.service.PendingActionsService;
 import com.gl.ceir.config.service.impl.FileStorageService;
 
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +48,9 @@ public class FileController {
 	@Autowired
 	private DocumentsService documentService;
 
+	@Autowired
+	private PendingActionsService pendingActionsService;
+
 	@ApiOperation(value = "Upload file Ticket ID and Document Type must be there ", response = UploadFileResponse.class)
 	@RequestMapping(path = "/document/updateStatus", method = RequestMethod.PATCH)
 	public MappingJacksonValue partialUpdateName(@RequestParam String documentStatus, @RequestParam Long documentId) {
@@ -55,6 +60,14 @@ public class FileController {
 			throw new ResourceNotFoundException("Status can be APPROVED / REJECTED", "id", documentId);
 		} else {
 			Documents documents = documentService.updateStatus(documentStatusEnum, documentId);
+
+			if (documentStatusEnum == DocumentStatus.APPROVED) {
+				pendingActionsService.updateTransactionState(TransactionState.DOCUMENT_APPROVED,
+						documents.getTicketId());
+			} else if (documentStatusEnum == DocumentStatus.REJECTED) {
+				pendingActionsService.updateTransactionState(TransactionState.DOCUMENT_REJECTED,
+						documents.getTicketId());
+			}
 			MappingJacksonValue mapping = new MappingJacksonValue(documents);
 			return mapping;
 		}
