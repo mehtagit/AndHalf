@@ -13,6 +13,7 @@ import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.service.PendingActionsService;
 import com.gl.ceir.executor.config.Container;
 import com.gl.ceir.executor.services.State;
+import com.gl.ceir.executor.services.state.DocumentApprovedState;
 import com.gl.ceir.executor.services.state.SendReminderState;
 
 @Service
@@ -38,7 +39,7 @@ public class PolicyExecutorApproved {
 				if (pendingActionsList != null) {
 					for (PendingActions pendingActions : pendingActionsList) {
 						State state = null;
-						state = Container.context.getBean(SendReminderState.class);
+						state = Container.context.getBean(DocumentApprovedState.class);
 						state.setPendingActions(pendingActions);
 						executor.execute(state);
 					}

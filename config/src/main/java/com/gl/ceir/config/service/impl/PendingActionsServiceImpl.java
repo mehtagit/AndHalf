@@ -18,6 +18,7 @@ import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.constants.TransactionState;
+import com.gl.ceir.config.repository.DuplicateImeiMsisdnRepository;
 import com.gl.ceir.config.repository.PendingActionsRepositoy;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
@@ -32,6 +33,9 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 
 	@Autowired
 	private DuplicateImeiMsisdnService duplicateImeiMsisdnService;
+
+	@Autowired
+	private DuplicateImeiMsisdnRepository duplicateImeiMsisdnRepository;
 
 	@Override
 	public List<PendingActions> getAll() {
@@ -199,6 +203,21 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 				return true;
 			} catch (ResourceNotFoundException e) {
 				return false;
+			} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+				DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository
+						.findById(new ImeiMsisdnIdentity(pendingActions.getImei(), pendingActions.getMsisdn()))
+						.orElse(null);
+
+				if (duplicateImeiMsisdn == null)
+					return false;
+				duplicateImeiMsisdn.setRegulizedByUser(Boolean.TRUE);
+				logger.info("duplicateImeiMsisdnRepository going to updated");
+				duplicateImeiMsisdnRepository.save(duplicateImeiMsisdn);
+				logger.info("duplicateImeiMsisdnRepository is updated Ticket ID:" + pendingActions.getTicketId());
+
+				pendingActionsRepositoy.deleteById(pendingActions.getTicketId());
+				logger.info("Pending Actions is deleted Ticket ID:" + pendingActions.getTicketId());
+				return true;
 			}
 		}
 	}
