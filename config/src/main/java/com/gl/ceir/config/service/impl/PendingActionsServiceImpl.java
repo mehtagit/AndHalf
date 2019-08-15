@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.exceptions.OperationNotAllowedException;
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.DeviceSnapShot;
@@ -20,9 +21,11 @@ import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.constants.TransactionState;
 import com.gl.ceir.config.repository.DuplicateImeiMsisdnRepository;
 import com.gl.ceir.config.repository.PendingActionsRepositoy;
+import com.gl.ceir.config.repository.PendingActionsStatesRepositoy;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 import com.gl.ceir.config.service.DuplicateImeiMsisdnService;
 import com.gl.ceir.config.service.PendingActionsService;
+import com.gl.ceir.config.service.PendingActionsStatesService;
 
 @Service
 public class PendingActionsServiceImpl implements PendingActionsService {
@@ -37,6 +40,9 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	@Autowired
 	private DuplicateImeiMsisdnRepository duplicateImeiMsisdnRepository;
 
+	@Autowired
+	private PendingActionsStatesService pendingActionsStatesService;
+
 	@Override
 	public List<PendingActions> getAll() {
 
@@ -49,7 +55,6 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	}
 
 	@Override
-	@Caching(put = { @CachePut(value = "pendingActions", key = "#pendingActions.ticketId") })
 	public PendingActions save(PendingActions pendingActions) {
 
 		try {
@@ -79,7 +84,6 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	}
 
 	@Override
-	@Cacheable(value = "pendingActions", key = "#ticketId")
 	public PendingActions get(String ticketId) {
 
 		try {
@@ -174,8 +178,7 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 				new Date());
 	}
 
-	@Override
-	public int updateTransactionState(TransactionState transactionState, String ticketId) {
+	private int updateTransactionState(TransactionState transactionState, String ticketId) {
 		int result = -1;
 		try {
 			result = pendingActionsRepositoy.updateTransactionStateByTicketID(transactionState, ticketId);
@@ -198,18 +201,6 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 				DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnService
 						.get(new ImeiMsisdnIdentity(pendingActions.getImei(), pendingActions.getMsisdn()));
 
-				duplicateImeiMsisdn.setRegulizedByUser(true);
-				duplicateImeiMsisdnService.save(duplicateImeiMsisdn);
-				return true;
-			} catch (ResourceNotFoundException e) {
-				return false;
-			} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-				DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository
-						.findById(new ImeiMsisdnIdentity(pendingActions.getImei(), pendingActions.getMsisdn()))
-						.orElse(null);
-
-				if (duplicateImeiMsisdn == null)
-					return false;
 				duplicateImeiMsisdn.setRegulizedByUser(Boolean.TRUE);
 				logger.info("duplicateImeiMsisdnRepository going to updated");
 				duplicateImeiMsisdnRepository.save(duplicateImeiMsisdn);
@@ -218,6 +209,8 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 				pendingActionsRepositoy.deleteById(pendingActions.getTicketId());
 				logger.info("Pending Actions is deleted Ticket ID:" + pendingActions.getTicketId());
 				return true;
+			} catch (ResourceNotFoundException e) {
+				return false;
 			}
 		}
 	}
@@ -225,6 +218,18 @@ public class PendingActionsServiceImpl implements PendingActionsService {
 	@Override
 	public List<PendingActions> getApprovedList() {
 		return pendingActionsRepositoy.findByTransactionState(TransactionState.DOCUMENT_APPROVED);
+	}
+
+	@Override
+	public void changeTransactionState(String ticketId, TransactionState nextState)
+			throws OperationNotAllowedException {
+		PendingActions pendingActions = get(ticketId);
+		TransactionState currentState = pendingActions.getTransactionState();
+		if (pendingActionsStatesService.isStateChangeAllowed(currentState, nextState, pendingActions.getAction())) {
+			updateTransactionState(nextState, ticketId);
+		} else {
+			throw new OperationNotAllowedException(nextState.name(), "PendingActions");
+		}
 	}
 
 }

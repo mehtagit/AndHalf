@@ -37,9 +37,18 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	}
 
 	@Override
+	public DeviceSnapShot save(DeviceSnapShot deviceSnapShot) {
+		try {
+			return saveRedis(deviceSnapShot);
+		} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+			logger.warn("Device:" + deviceSnapShot.getImei() + " Not saved in Cache for DeviceSnapShot");
+			return get(deviceSnapShot.getImei());
+		}
+
+	}
 
 	@Caching(put = { @CachePut(value = "deviceSnapShots", key = "#deviceSnapShot.imei") })
-	public DeviceSnapShot save(DeviceSnapShot deviceSnapShot) {
+	private DeviceSnapShot saveRedis(DeviceSnapShot deviceSnapShot) {
 		try {
 			return deviceSnapShotRepository.save(deviceSnapShot);
 		} catch (Exception e) {
@@ -50,8 +59,20 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 	}
 
 	@Override
-	@Cacheable(value = "deviceSnapShots", key = "#imei")
 	public DeviceSnapShot get(Long imei) {
+		try {
+			return getRedis(imei);
+		} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+			Optional<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findById(imei);
+			if (deviceSnapShot.isPresent())
+				return deviceSnapShot.get();
+			else
+				throw new ResourceNotFoundException("DeviceSnapShot ", "imei", imei);
+		}
+	}
+
+	@Cacheable(value = "deviceSnapShots", key = "#imei")
+	private DeviceSnapShot getRedis(Long imei) {
 		logger.info("Get Device Snap Shot by Imei:" + imei);
 		Optional<DeviceSnapShot> deviceSnapShot = deviceSnapShotRepository.findById(imei);
 		if (deviceSnapShot.isPresent())

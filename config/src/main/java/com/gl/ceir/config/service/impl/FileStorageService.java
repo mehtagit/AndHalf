@@ -92,23 +92,6 @@ public class FileStorageService {
 					imei = uploadFileRequest.getImei();
 					msisdn = uploadFileRequest.getMsisdn();
 				}
-			} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-				PendingActions pendingActions = pendingActionsRepositoy.findById(uploadFileRequest.getTicketId())
-						.orElse(null);
-				if (pendingActions == null) {
-					if (uploadFileRequest.getMsisdn() == null || uploadFileRequest.getImei() == null) {
-						throw new ResourceNotFoundException("To Upload file IMEI and MSISDN both required ",
-								"IMEI / MSISDN", imei + "/" + msisdn);
-					} else {
-						// TODO Need to validate imei and msisdn
-						imei = uploadFileRequest.getImei();
-						msisdn = uploadFileRequest.getMsisdn();
-					}
-				} else {
-
-					imei = pendingActions.getImei();
-					msisdn = pendingActions.getMsisdn();
-				}
 			}
 		} else {
 			if (uploadFileRequest.getMsisdn() == null || uploadFileRequest.getImei() == null)
@@ -150,8 +133,8 @@ public class FileStorageService {
 			logger.info(documents);
 			Documents savedDocument = documentsService.save(documents);
 			if (uploadFileRequest.getTicketId() != null)
-				pendingActionsService.updateTransactionState(TransactionState.WAIT_FOR_DOCUMENT_APPROVAL,
-						uploadFileRequest.getTicketId());
+				pendingActionsService.changeTransactionState(uploadFileRequest.getTicketId(),
+						TransactionState.WAIT_FOR_DOCUMENT_APPROVAL);
 			logger.info("Document Saved Successfully" + savedDocument);
 
 			return new UploadFileResponse(newFileName, fileDownloadUri, file.getContentType(), file.getSize());

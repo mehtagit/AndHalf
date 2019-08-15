@@ -138,19 +138,6 @@ public class OutputWriterImpl implements OutpuWriter {
 			result.insertDeviceSnapShot(convertRequestToDeviceSnapShot(request, pending));
 			// result.getDeviceSnapshotBatch().add(convertRequestToDeviceSnapShot(request,
 			// pending));
-		} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-			deviceSnapShot = deviceSnapShotRepository.findById(request.getImei()).orElse(null);
-			if (deviceSnapShot == null) {
-				result.insertDeviceSnapShot(convertRequestToDeviceSnapShot(request, pending));
-				// result.getDeviceSnapshotBatch().add(convertRequestToDeviceSnapShot(request,
-				// pending));
-			} else {
-				DuplicateImeiMsisdn duplicateImeiMsisdn = convertToDuplicateImeiMsisdn(request);
-				duplicateImeiMsisdn.setDeviceSnapShot(deviceSnapShot);
-				deviceSnapShot.getDuplicateImeiMsisdns().add(duplicateImeiMsisdn);
-				result.insertDeviceSnapShot(deviceSnapShot);
-				// result.getDeviceSnapshotBatch().add(deviceSnapShot);
-			}
 		}
 	}
 
@@ -161,7 +148,7 @@ public class OutputWriterImpl implements OutpuWriter {
 		pendingActions.setMsisdn(request.getMsisdn());
 		if (request.getFailRule() != null) {
 			pendingActions.setFailedRuleId(request.getFailRule().getId());
-			pendingActions.setFailedRuleName(request.getFailRule().getName());
+			pendingActions.setFailedRuleName(request.getFailRule().getName().name());
 		}
 		pendingActions.setAction(request.getAction());
 		pendingActions.setTransactionState(TransactionState.INIT);
@@ -221,7 +208,7 @@ public class OutputWriterImpl implements OutpuWriter {
 
 		if (request.getFailRule() != null) {
 			duplicateImeiMsisdn.setFailedRuleId(request.getFailRule().getId());
-			duplicateImeiMsisdn.setFailedRuleName(request.getFailRule().getName());
+			duplicateImeiMsisdn.setFailedRuleName(request.getFailRule().getName().name());
 		}
 		duplicateImeiMsisdn.setMobileOperator(request.getMobileOperator());
 

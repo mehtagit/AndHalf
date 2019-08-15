@@ -1,6 +1,6 @@
 package com.gl.ceir.evaluator.services.impl;
 
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +16,7 @@ import com.gl.ceir.config.model.SystemPolicyMapping;
 import com.gl.ceir.config.model.constants.ActionNames;
 import com.gl.ceir.config.model.constants.ActionParametersName;
 import com.gl.ceir.config.model.constants.Period;
+import com.gl.ceir.config.model.constants.RulesNames;
 import com.gl.ceir.config.service.ActionParametersService;
 import com.gl.ceir.config.service.RulesService;
 import com.gl.ceir.config.service.SystemPolicyMappingService;
@@ -44,14 +45,26 @@ public class InMemoryLoader {
 
 	private List<Rules> ruleList;
 
+	private Map<RulesNames, Rules> ruleByName;
+
+	private Map<Long, Rules> ruleById;
+
 	@PostConstruct
 	public void readRules() {
+		ruleByName = new HashMap<>();
+		ruleById = new HashMap<>();
+
 		ruleList = rulesService.getAll();
 		logger.info(ruleList);
 
 		policyMappingList = systemPolicyMappingService
 				.getSystemPoliciesByPeriod(Period.getPeriod(policyEvaluatorConfig.getPeriod()));
 		logger.info(policyMappingList);
+
+		for (SystemPolicyMapping systemPolicyMapping : getPolicyMappingList()) {
+			ruleByName.put(systemPolicyMapping.getRule().getName(), systemPolicyMapping.getRule());
+			ruleById.put(systemPolicyMapping.getRule().getId(), systemPolicyMapping.getRule());
+		}
 
 		mapOfActionParameters = actionParametersService.findAllWithMap();
 		logger.info(mapOfActionParameters);
@@ -76,5 +89,13 @@ public class InMemoryLoader {
 		}
 
 		return mapOfActionParameters.get(actionNames).get(actionParametersName);
+	}
+
+	public Rules getRuleById(Long id) {
+		return ruleById.get(id);
+	}
+
+	public Rules getRuleByName(RulesNames rulesNames) {
+		return ruleByName.get(rulesNames);
 	}
 }

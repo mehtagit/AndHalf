@@ -62,11 +62,11 @@ public class FileController {
 			Documents documents = documentService.updateStatus(documentStatusEnum, documentId);
 
 			if (documentStatusEnum == DocumentStatus.APPROVED) {
-				pendingActionsService.updateTransactionState(TransactionState.DOCUMENT_APPROVED,
-						documents.getTicketId());
+				pendingActionsService.changeTransactionState(documents.getTicketId(),
+						TransactionState.DOCUMENT_APPROVED);
 			} else if (documentStatusEnum == DocumentStatus.REJECTED) {
-				pendingActionsService.updateTransactionState(TransactionState.DOCUMENT_REJECTED,
-						documents.getTicketId());
+				pendingActionsService.changeTransactionState(documents.getTicketId(),
+						TransactionState.DOCUMENT_REJECTED);
 			}
 			MappingJacksonValue mapping = new MappingJacksonValue(documents);
 			return mapping;

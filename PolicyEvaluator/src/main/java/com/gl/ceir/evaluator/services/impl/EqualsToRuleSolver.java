@@ -24,9 +24,6 @@ public class EqualsToRuleSolver implements RuleSolver {
 	@Autowired
 	private DeviceSnapShotService deviceSnapShotService;
 
-	@Autowired
-	private DeviceSnapShotRepository deviceSnapShotRepository;
-
 	@Override
 	public boolean solve(Rules rule, Request request) {
 		boolean result = false;
@@ -62,15 +59,12 @@ public class EqualsToRuleSolver implements RuleSolver {
 						result = true;
 				} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
 					result = false;
-				} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-					DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(request.getImei()).orElse(null);
-					if (deviceSnapShot == null)
-						return false;
-					
-					if (Boolean.valueOf(rule.getMin()) == deviceSnapShot.isTaxPaid())
-						result = true;
 				}
 
+				break;
+			case TAC:
+				break;
+			default:
 				break;
 			}
 			result = (rule.getOperator() == RuleOperator.EQUAL_TO ? result : !result);

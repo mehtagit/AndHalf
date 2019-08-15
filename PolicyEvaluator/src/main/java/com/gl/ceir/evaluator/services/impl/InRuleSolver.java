@@ -46,13 +46,7 @@ public class InRuleSolver implements RuleSolver {
 	private NullMsisdnRegularizedService nullMsisdnRegularizedService;
 
 	@Autowired
-	private DuplicateImeiMsisdnRepository duplicateImeiMsisdnRepository;
-
-	@Autowired
 	private TacService tacService;
-
-	@Autowired
-	private TacRepository tacRepository;
 
 	@Override
 	public boolean solve(Rules rule, Request request) {
@@ -121,15 +115,6 @@ public class InRuleSolver implements RuleSolver {
 					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
 						logger.info("Not Found in DuplicateImeiMsisdn, By IMEI and MSISDN");
 						result = false;
-					} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-						DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository
-								.findById(new ImeiMsisdnIdentity(request.getImei(), request.getMsisdn())).orElse(null);
-
-						if (duplicateImeiMsisdn == null) {
-							result = false;
-						} else {
-							result = checkImeiStatus(rule, duplicateImeiMsisdn.getImeiStatus());
-						}
 					}
 				}
 
@@ -149,14 +134,6 @@ public class InRuleSolver implements RuleSolver {
 					} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
 						logger.info("Not Found in Tac, for imeiTac:" + imeiTac);
 						result = true;
-					} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-						Tac tac = tacRepository.findById(imeiTac).orElse(null);
-						if (tac == null) {
-							result = true;
-						} else {
-							result = false;
-							logger.info("Found Imei Tac  : " + tac.getId());
-						}
 					}
 				}
 				break;

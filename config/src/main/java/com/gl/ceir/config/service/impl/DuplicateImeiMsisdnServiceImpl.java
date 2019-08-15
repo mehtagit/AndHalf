@@ -35,8 +35,22 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 	}
 
 	@Override
-	@Cacheable(value = "duplicateImeiMsisdn", key = "#duplicateImeiMsisdn.imeiMsisdnIdentity")
 	public DuplicateImeiMsisdn save(DuplicateImeiMsisdn duplicateImeiMsisdn) {
+
+		try {
+			return saveRedis(duplicateImeiMsisdn);
+		} catch (org.springframework.data.redis.RedisConnectionFailureException redisException) {
+			logger.warn("Device:" + duplicateImeiMsisdn.getImeiMsisdnIdentity()
+					+ " Not saved in Cache for DuplicateImeiMsisdn");
+			return get(duplicateImeiMsisdn.getImeiMsisdnIdentity());
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@Cacheable(value = "duplicateImeiMsisdn", key = "#duplicateImeiMsisdn.imeiMsisdnIdentity")
+	private DuplicateImeiMsisdn saveRedis(DuplicateImeiMsisdn duplicateImeiMsisdn) {
 
 		try {
 			return duplicateImeiMsisdnRepository.save(duplicateImeiMsisdn);
@@ -70,8 +84,29 @@ public class DuplicateImeiMsisdnServiceImpl implements DuplicateImeiMsisdnServic
 	}
 
 	@Override
-	@Cacheable(value = "pendingActionsByMsisdnAndImei", key = "#imeiMsisdnIdentity")
 	public DuplicateImeiMsisdn get(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+
+		try {
+			return getRedis(imeiMsisdnIdentity);
+		} catch (ResourceNotFoundException e) {
+			throw e;
+		} catch (org.springframework.data.redis.RedisConnectionFailureException redisException) {
+			try {
+				DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository.findById(imeiMsisdnIdentity)
+						.orElseThrow(() -> new ResourceNotFoundException("Duplicate Imei Msisdn", "imeiMsisdnIdentity",
+								imeiMsisdnIdentity));
+				return duplicateImeiMsisdn;
+			} catch (ResourceNotFoundException e) {
+				throw e;
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@Cacheable(value = "pendingActionsByMsisdnAndImei", key = "#imeiMsisdnIdentity")
+	private DuplicateImeiMsisdn getRedis(ImeiMsisdnIdentity imeiMsisdnIdentity) {
 
 		try {
 			DuplicateImeiMsisdn duplicateImeiMsisdn = duplicateImeiMsisdnRepository.findById(imeiMsisdnIdentity)

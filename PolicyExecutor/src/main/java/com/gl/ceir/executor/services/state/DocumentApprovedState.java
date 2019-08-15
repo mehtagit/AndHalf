@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.PendingActions;
-import com.gl.ceir.config.model.constants.TransactionState;
 import com.gl.ceir.config.service.PendingActionsService;
 import com.gl.ceir.executor.services.State;
 

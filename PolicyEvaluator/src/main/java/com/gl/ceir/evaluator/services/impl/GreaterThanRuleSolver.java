@@ -21,9 +21,6 @@ public class GreaterThanRuleSolver implements RuleSolver {
 	@Autowired
 	private DeviceSnapShotService deviceSnapShotService;
 
-	@Autowired
-	private DeviceSnapShotRepository deviceSnapShotRepository;
-
 	@Override
 	public boolean solve(Rules rule, Request request) {
 		boolean result = false;
@@ -54,19 +51,6 @@ public class GreaterThanRuleSolver implements RuleSolver {
 					}
 				} catch (com.gl.ceir.config.exceptions.ResourceNotFoundException e) {
 					result = false;
-				} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
-					DeviceSnapShot deviceSnapShot = deviceSnapShotRepository.findById(request.getImei()).orElse(null);
-					if (deviceSnapShot == null) {
-						result = false;
-					} else {
-						logger.info("Integer.parseInt(rule.getMin()):" + Integer.parseInt(rule.getMin())
-								+ ", deviceSnapShot.getDuplicateImeiMsisdns():"
-								+ deviceSnapShot.getDuplicateImeiMsisdns().size() + ", "
-								+ (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateCount()));
-						if (Integer.parseInt(rule.getMin()) < deviceSnapShot.getDuplicateImeiMsisdns().size()) {
-							result = true;
-						}
-					}
 				}
 				break;
 			default:

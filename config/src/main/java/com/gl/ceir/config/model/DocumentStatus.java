@@ -3,7 +3,6 @@ package com.gl.ceir.config.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gl.ceir.config.model.constants.ActionNames;
 
 public enum DocumentStatus {
 	PENDING("PENDING"), APPROVED("APPROVED"), REJECTED("REJECTED");

@@ -23,7 +23,7 @@ public class BlockedUserActionState extends State {
 
 	@Override
 	public State execute(PendingActions pendingActions) {
-		pendingActionsService.updateTransactionState(TransactionState.SEND_TO_BLOCK, pendingActions.getTicketId());
+		pendingActionsService.changeTransactionState(pendingActions.getTicketId(), TransactionState.SEND_TO_BLOCK);
 		return null;
 	}
 

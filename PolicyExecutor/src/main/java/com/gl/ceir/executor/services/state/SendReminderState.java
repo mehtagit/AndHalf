@@ -26,7 +26,7 @@ public class SendReminderState extends State {
 
 		if (sendToCommunicationModule(pendingActions)) {
 			// Update reminder date time
-			pendingActionsService.updateTransactionState(TransactionState.SEND_TO_COMM, pendingActions.getTicketId());
+			pendingActionsService.changeTransactionState(pendingActions.getTicketId(), TransactionState.SEND_TO_COMM);
 		}
 		return null;
 	}

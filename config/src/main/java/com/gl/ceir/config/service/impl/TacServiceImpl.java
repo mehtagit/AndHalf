@@ -63,8 +63,17 @@ public class TacServiceImpl implements TacService {
 	}
 
 	@Override
-	@Caching(put = { @CachePut(value = "tac", key = "#tac.id") })
 	public Tac save(Tac tac) {
+		try {
+			return saveRedis(tac);
+		} catch (org.springframework.data.redis.RedisConnectionFailureException e) {
+			logger.warn("Tac id:" + tac.getId() + " Not saved in Cache for Tac");
+			return get(tac.getId());
+		}
+	}
+
+	@Caching(put = { @CachePut(value = "tac", key = "#tac.id") })
+	private Tac saveRedis(Tac tac) {
 		try {
 			return tacRepository.save(tac);
 		} catch (Exception e) {
@@ -95,8 +104,24 @@ public class TacServiceImpl implements TacService {
 	}
 
 	@Override
-	@Cacheable(value = "tac", key = "#id")
 	public Tac get(String id) {
+		try {
+			return getRedis(id);
+		} catch (org.springframework.data.redis.RedisConnectionFailureException redisException) {
+			try {
+				Tac tac = tacRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tac ", "id", id));
+				return tac;
+			} catch (ResourceNotFoundException e) {
+				throw e;
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			}
+		}
+	}
+
+	@Cacheable(value = "tac", key = "#id")
+	private Tac getRedis(String id) {
 		try {
 			Tac tac = tacRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Tac ", "id", id));
 			return tac;
@@ -127,9 +152,9 @@ public class TacServiceImpl implements TacService {
 			logger.info("Tac file Saved Successfully");
 
 			tacFileLoader.setPath(targetLocation);
-			
+
 			new Thread(tacFileLoader).start();
-			
+
 			return new UploadFileResponse(fileName, null, file.getContentType(), file.getSize());
 
 		} catch (IOException ex) {

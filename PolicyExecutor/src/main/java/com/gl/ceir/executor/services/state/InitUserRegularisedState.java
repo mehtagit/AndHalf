@@ -25,7 +25,7 @@ public class InitUserRegularisedState extends State {
 	public State execute(PendingActions pendingActions) {
 
 		if (sendToCommunicationModule(pendingActions)) {
-			pendingActionsService.updateTransactionState(TransactionState.SEND_TO_COMM, pendingActions.getTicketId());
+			pendingActionsService.changeTransactionState(pendingActions.getTicketId(), TransactionState.SEND_TO_COMM);
 		}
 		return null;
 	}

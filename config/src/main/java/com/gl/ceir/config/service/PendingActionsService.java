@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 
+import com.gl.ceir.config.exceptions.OperationNotAllowedException;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.constants.TransactionState;
@@ -29,8 +30,8 @@ public interface PendingActionsService extends RestServices<PendingActions> {
 
 	public List<PendingActions> getApprovedList();
 
-	public int updateTransactionState(TransactionState transactionState, String ticketId);
-
 	public boolean regularizedTicket(String ticketID);
+
+	public void changeTransactionState(String ticketId, TransactionState nextState) throws OperationNotAllowedException;
 
 }

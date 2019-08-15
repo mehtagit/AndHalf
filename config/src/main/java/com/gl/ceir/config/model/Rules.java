@@ -9,10 +9,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.gl.ceir.config.model.constants.RuleOperator;
 import com.gl.ceir.config.model.constants.RuleParameters;
 import com.gl.ceir.config.model.constants.RuleType;
+import com.gl.ceir.config.model.constants.RulesNames;
 
 import io.swagger.annotations.ApiModel;
 
@@ -27,7 +29,10 @@ public class Rules implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String name;
+
+	@Enumerated(EnumType.STRING)
+	private RulesNames name;
+
 	private String description;
 	private boolean guiDisplay;
 	private boolean enabled;
@@ -35,8 +40,11 @@ public class Rules implements Serializable {
 	private String approvedBy;
 	private Date createdOn;
 	private Date modifiedOn;
+
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	private RuleOperator operator;
+	
 	@Enumerated(EnumType.STRING)
 	private RuleParameters parameters;
 	private String min;
@@ -77,11 +85,11 @@ public class Rules implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
+	public RulesNames getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(RulesNames name) {
 		this.name = name;
 	}
 
