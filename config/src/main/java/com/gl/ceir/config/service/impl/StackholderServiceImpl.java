@@ -3,6 +3,9 @@ package com.gl.ceir.config.service.impl;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,29 +48,23 @@ public class StackholderServiceImpl {
 	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
 
-	public GenricResponse saveData(MultipartFile file ,DistributerManagement stackholderRequest) {
+	public GenricResponse saveData(String  filePath ,DistributerManagement stackholderRequest) {
 
 		try {
-			String fileName=file.getOriginalFilename();
 			String txnId=getTxnId();
 
 			String serverPath=fileStorageProperties.getStokeUploadDir();
 			serverPath = serverPath.replace("txnId", txnId);
 
 			File dir = new File(serverPath);
+
 			if (!dir.exists()) {
 				boolean status=	dir.mkdirs();
 			}
 
-			File serverFile = new File(serverPath+file.getOriginalFilename());
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			stream.write(file.getBytes());
-			stream.flush();
+			Path temp = Files.move(Paths.get(filePath),Paths.get(serverPath+"/"+stackholderRequest.getFileName()));
 
-			stackholderRequest.setFileName(fileName);
 			stackholderRequest.setTxnId(txnId);
-
-
 			distributerManagementRepository.save(stackholderRequest);
 
 			return new GenricResponse(200,"Upload Successfully");
@@ -132,12 +129,11 @@ public class StackholderServiceImpl {
 
 			DistributerManagement txnRecord	=	distributerManagementRepository.findByModuleTypeAndTxnId(moduleName, txnId);
 
-			List<StokeDetails> stokeDetails =stokeDetailsRepository.findByTxnIdAndSourceType(txnId,moduleName);
+			List<StokeDetails> stokeDetails =   stokeDetailsRepository.findByTxnIdAndSourceType(txnId,moduleName);
 
 			distributerManagementRepository.deleteByTxnId(txnId);
 
 			stokeDetailsRepository.deleteByTxnId(txnId);
-
 
 			for(StokeDetails detials: stokeDetails) {			
 
@@ -170,7 +166,7 @@ public class StackholderServiceImpl {
 		}
 	}
 
-	public GenricResponse updateStockInfo(MultipartFile file,DistributerManagement distributerManagement) {
+	public GenricResponse updateStockInfo(String filePath,DistributerManagement distributerManagement) {
 
 		DistributerManagement stackHolderInfo=	distributerManagementRepository.findByModuleTypeAndTxnId(distributerManagement.getModuleType(), distributerManagement.getTxnId());
 
@@ -179,44 +175,42 @@ public class StackholderServiceImpl {
 			return new GenricResponse(1000, "No record found against this transactionId.");
 
 		}else {
-			if(file == null) {
+			if(filePath == null || filePath.isEmpty()) {
 
-				distributerManagementRepository.updateUser(distributerManagement.getImporterId(), distributerManagement.getUserName(), distributerManagement.getInvoiceNumber(), new Date(), distributerManagement.getTxnId());
+				distributerManagementRepository.updateUser(distributerManagement.getImporterId(), distributerManagement.getUserName(), distributerManagement.getInvoiceNumber(), new Date(), distributerManagement.getQuantity(),distributerManagement.getTxnId());
 
 				return new GenricResponse(200, "Update SuccessFully");
 
 			}else {
 
+				distributerManagementRepository.updateUserFileStatus(distributerManagement.getImporterId(), distributerManagement.getUserName(), distributerManagement.getInvoiceNumber(), new Date(), distributerManagement.getQuantity(),"INIT",distributerManagement.getFileName(),distributerManagement.getTxnId());
+
 				List<StokeDetails> stokeDetails =stokeDetailsRepository.findByTxnIdAndSourceType(distributerManagement.getTxnId(),distributerManagement.getModuleType());
 
-				for(StokeDetails detials: stokeDetails) {			
+				if(stokeDetails != null) {
+					for(StokeDetails detials: stokeDetails) {			
 
-					StockDetailsOperation stockOperation = new StockDetailsOperation();
-					stockOperation.setDeviceNumber(detials.getDeviceNumber());
-					stockOperation.setDeviceType(detials.getDeviceType());
-					stockOperation.setFileName(stackHolderInfo.getFileName());
-					stockOperation.setImei(detials.getImei());
-					stockOperation.setFileStatus(stackHolderInfo.getFileStatus());
-					stockOperation.setImeiAction(detials.getImeiAction());
-					stockOperation.setOperation("Update");
-					stockOperation.setSourceType(distributerManagement.getModuleType());
-					stockOperation.setTxnId(distributerManagement.getTxnId());
-					stockOperation.setUserId(stackHolderInfo.getImporterId());
-					stockOperation.setUserName(stackHolderInfo.getUserName());
-					stockOperation.setCreatedOn(new Date());
-					stockOperation.setUpdatedOn(new Date());
-					stockOperation.setImporterId(stackHolderInfo.getImporterId());
-					stockOperation.setInvoiceNumber(stockOperation.getInvoiceNumber());
+						StockDetailsOperation stockOperation = new StockDetailsOperation();
+						stockOperation.setDeviceNumber(detials.getDeviceNumber());
+						stockOperation.setDeviceType(detials.getDeviceType());
+						stockOperation.setFileName(stackHolderInfo.getFileName());
+						stockOperation.setImei(detials.getImei());
+						stockOperation.setFileStatus(stackHolderInfo.getFileStatus());
+						stockOperation.setImeiAction(detials.getImeiAction());
+						stockOperation.setOperation("Update");
+						stockOperation.setSourceType(distributerManagement.getModuleType());
+						stockOperation.setTxnId(distributerManagement.getTxnId());
+						stockOperation.setUserId(stackHolderInfo.getImporterId());
+						stockOperation.setUserName(stackHolderInfo.getUserName());
+						stockOperation.setCreatedOn(new Date());
+						stockOperation.setUpdatedOn(new Date());
+						stockOperation.setImporterId(stackHolderInfo.getImporterId());
+						stockOperation.setInvoiceNumber(stockOperation.getInvoiceNumber());
 
-					stockDetailsOperationRepository.save(stockOperation);
+						stockDetailsOperationRepository.save(stockOperation);
+					}
 				}
 				stokeDetailsRepository.deleteByTxnId(distributerManagement.getTxnId());
-
-				distributerManagement.setFileStatus("INIT");
-				distributerManagement.setFileName(file.getOriginalFilename());
-				distributerManagement.setCreatedOn(stackHolderInfo.getCreatedOn());
-
-				distributerManagementRepository.save(distributerManagement);
 
 				return new GenricResponse(200, "Update SuccessFully");
 			}

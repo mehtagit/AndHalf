@@ -1,6 +1,5 @@
 package com.gl.ceir.config.service.impl;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.xml.soap.Text;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -146,7 +146,8 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(1001,"Consignment Does Not exist.");
 			}
 
-			if(fileName == null) {
+			if(path == null || path.equalsIgnoreCase(" ") || path.isEmpty()) {
+
 				consignmentFileRequest.setFileName(consignmentInfo.getFileName());
 				consignmentFileRequest.setFileStatus(consignmentInfo.getFileStatus());
 				consignmentFileRequest.setCreatedOn(consignmentInfo.getCreatedOn());
@@ -154,8 +155,8 @@ public class ConsignmentServiceImpl {
 				consignmentFileRequest.setConsignmentStatus(consignmentInfo.getConsignmentStatus());
 
 				consignmentRepository.updateConsignment(consignmentFileRequest.getConsignmentNumber(), consignmentFileRequest.getImporterName(), consignmentFileRequest.getSupplierId(), consignmentFileRequest.getSupplierName(),
-						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(), consignmentFileRequest.getTxnId());
-				logger.info("FIle Null save succfully");
+						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(),consignmentFileRequest.getQuantity(),consignmentFileRequest.getTxnId());
+				logger.info("FIle Null save succfully");	
 
 				return new GenricResponse(200,"Update Successfully.");
 			}else {
@@ -167,8 +168,8 @@ public class ConsignmentServiceImpl {
 
 				consignmentRepository.updateConsignmentFileStatus(consignmentFileRequest.getConsignmentNumber(), consignmentFileRequest.getImporterName(), consignmentFileRequest.getSupplierId(), consignmentFileRequest.getSupplierName(),
 						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(), 
-						"Uploading",fileName,"INIT",consignmentFileRequest.getTxnId());
-				logger.info("FIle Null save succfully");
+						"Uploading",fileName,"INIT",consignmentFileRequest.getQuantity(),consignmentFileRequest.getTxnId());
+				//logger.info("FIle Null save succfully");
 				//Consignment consignment = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
 
 				List<StokeDetails> stokrDetails = stokeDetailsRepository.findByTxnIdAndSourceType(consignmentFileRequest.getTxnId(), "Importer");
@@ -209,6 +210,11 @@ public class ConsignmentServiceImpl {
 				}
 
 				Path temp = Files.move(Paths.get(path),Paths.get(serverPath+"/"+fileName));
+
+				consignmentRepository.updateConsignmentFileStatus(consignmentFileRequest.getConsignmentNumber(), consignmentFileRequest.getImporterName(), consignmentFileRequest.getSupplierId(), consignmentFileRequest.getSupplierName(),
+						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(),
+						"Uploading",consignmentFileRequest.getFileName(),"INIT",consignmentFileRequest.getQuantity(),consignmentFileRequest.getTxnId());
+
 
 
 				return new GenricResponse(200,"Update Successfully.");
@@ -265,8 +271,8 @@ public class ConsignmentServiceImpl {
 				stockDetailsOperationRepository.save(stockOperation);
 
 			}
-			stokeDetailsRepository.deleteByTxnId(txnId);
-			consignmentRepository.deleteByTxnId(txnId);
+			stokeDetailsRepository.withdrawStatus("WithdrawnByImporter",txnId);
+			consignmentRepository.withdrawStatus("Withdrawn",txnId);
 
 
 			return new GenricResponse(200, "Delete succssfully");

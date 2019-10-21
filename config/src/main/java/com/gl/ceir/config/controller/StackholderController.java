@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 public class StackholderController {
 
 
-	private static final Logger logger = LogManager.getLogger(DeviceSnapShotServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(StackholderController.class);
 
 	@Autowired
 	StackholderServiceImpl stackholderServiceImpl;
@@ -34,45 +34,47 @@ public class StackholderController {
 	@ApiOperation(value = "Add Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/stackholderStock/upload", method = RequestMethod.POST)
 
-	public GenricResponse addStackHolderInfo( Long  impoterId, Long userId ,@RequestParam("file") MultipartFile file
-			, String userName, String invoiceNumber,String moduleType){
+	public GenricResponse addStackHolderInfo( Long  supplierId, Long userRoleId , String fileName,String filePath
+			, String userName, String invoiceNumber,String roleType,int quantity){
 
 		DistributerManagement stackholderRequest = new DistributerManagement();
 
-		stackholderRequest.setImporterId(impoterId);
-		stackholderRequest.setUserId(userId);
-		stackholderRequest.setFileName(file.getOriginalFilename());
+		stackholderRequest.setImporterId(supplierId);
+		stackholderRequest.setUserId(userRoleId);
+		stackholderRequest.setFileName(fileName);
 		stackholderRequest.setUserName(userName);
 		stackholderRequest.setInvoiceNumber(invoiceNumber);
-		stackholderRequest.setModuleType(moduleType);
+		stackholderRequest.setModuleType(roleType);
 		stackholderRequest.setCreatedOn(new Date());
 		stackholderRequest.setUpdatedOn(new Date());
 		stackholderRequest.setFileStatus("INIT");
-
-		GenricResponse genricResponse =	stackholderServiceImpl.saveData(file, stackholderRequest);
+		stackholderRequest.setQuantity(quantity);
+		GenricResponse genricResponse =	stackholderServiceImpl.saveData(filePath, stackholderRequest);
 
 		return genricResponse;
 
 	}
 
+	
+	
 	@ApiOperation(value = "Update Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/stackholderStock/update", method = RequestMethod.POST)
 
-	public GenricResponse addStackHolderInfo( Long  impoterId, Long userId ,@RequestParam(value ="file", required = false) MultipartFile file
-			, String userName, String invoiceNumber,String moduleType,String txnId){
+	public GenricResponse updateStackHolderInfo( Long  supplierId, Long userRoleId , String fileName,String filePath
+			, String userName, String invoiceNumber,String roleType,int quantity,String txnId){
 
 		DistributerManagement stackholderRequest = new DistributerManagement();
 
-		stackholderRequest.setImporterId(impoterId);
-		stackholderRequest.setUserId(userId);
+		stackholderRequest.setImporterId(supplierId);
+		stackholderRequest.setUserId(userRoleId);
 		stackholderRequest.setUserName(userName);
 		stackholderRequest.setInvoiceNumber(invoiceNumber);
-		stackholderRequest.setModuleType(moduleType);
+		stackholderRequest.setModuleType(roleType);
 		stackholderRequest.setUpdatedOn(new Date());
 		stackholderRequest.setTxnId(txnId);
+		stackholderRequest.setFileName(fileName);
 
-
-		GenricResponse genricResponse =	stackholderServiceImpl.updateStockInfo(file, stackholderRequest);
+		GenricResponse genricResponse =	stackholderServiceImpl.updateStockInfo(filePath, stackholderRequest);
 
 		return genricResponse;
 
@@ -112,8 +114,7 @@ public class StackholderController {
 
 
 	@ApiOperation(value = "Delete Retailer And Distributer Record of TxnId.", response = GenricResponse.class)
-	@RequestMapping(path = "/stackholder/view/record", method = RequestMethod.DELETE)
-
+	@RequestMapping(path = "/stackholder/delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteStachHolderData(String txnId,String moduleName) {
 
 		logger.info("Delete request TxnId="+txnId+"ModuleName="+moduleName);

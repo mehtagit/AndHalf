@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class ConsignmentController {
 
-	private static final Logger logger = LogManager.getLogger(DeviceSnapShotServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(ConsignmentController.class);
 
 	@Autowired
 	ConsignmentServiceImpl consignmentServiceImpl;
@@ -106,6 +108,8 @@ public class ConsignmentController {
 		
 		logger.info("Upload File Request="+consignmentUploadRequest.toString());
 
+		logger.info("FIle Path ="+path);
+		
 		GenricResponse genricResponse =	consignmentServiceImpl.updatestoreFile(fileName,path,consignmentUploadRequest);
 		return genricResponse;
 
@@ -189,17 +193,16 @@ public class ConsignmentController {
 
 	}
 
-	@ApiOperation(value = "View all the filtered list of consignment", response = Consignment.class)
+	/*@ApiOperation(value = "View all the filtered list of consignment", response = Consignment.class)
 	@RequestMapping(path = "/consignment/filterDetails", method = RequestMethod.POST)
 
-	public MappingJacksonValue getbyfilter(@RequestBody FilterRequest filterRequest) {
+	public ResponseEntity getbyfilter(@RequestBody FilterRequest filterRequest,Pageable pageable) {
 
 
-		List<Consignment> consignmentInfo =	consignmentServiceImpl.getFilterDetails(filterRequest);
+	return	consignmentServiceImpl.getFilterDetails(filterRequest);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(consignmentInfo);
-		return mapping;
-	}
+		
+	}*/
 
 
 

@@ -26,8 +26,9 @@ public class DistributerManagement {
 	private String fileStatus;
 	private Long userId;
 	private String moduleType;
-	
-	
+	private int  quantity;
+
+
 	public Long getId() {
 		return id;
 	}
@@ -94,7 +95,21 @@ public class DistributerManagement {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	
+	@Override
+	public String toString() {
+		return "DistributerManagement [id=" + id + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn
+				+ ", userName=" + userName + ", importerId=" + importerId + ", invoiceNumber=" + invoiceNumber
+				+ ", txnId=" + txnId + ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", userId=" + userId
+				+ ", moduleType=" + moduleType + ", quantity=" + quantity + "]";
+	}
+
 
 
 
