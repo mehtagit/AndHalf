@@ -86,7 +86,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                 <div class="col col s4 m4 l4">
                    <!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
                     <p style="width: 180px;text-align: center;color: #fff;font-size: 20px;   margin-top: 2px;">
-                    welcome ${username}</p>
+                    welcome sharad</p>
                 </div>
              
             </div>
@@ -95,7 +95,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
            <ul >
             <li class="bold"><a href="./Home" target="mainArea" class="waves-effect waves-cyan"><i class="fa fa-tachometer"></i> Dashboard</a>
             </li>
-           <li><a  href="./importerConsignment/1" target="mainArea"><i class="fa fa-file-text-o"></i>Consignment </a>
+           <li><a  href="./Consignment/viewConsignment" target="mainArea"><i class="fa fa-file-text-o"></i>Consignment </a>
             </li>
             <li><a  href="./assignDistributor" target="mainArea"><i class="fa fa-file-text-o"></i>Upload Stock</a>
             </li>

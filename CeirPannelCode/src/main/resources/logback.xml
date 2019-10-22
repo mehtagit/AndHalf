@@ -9,7 +9,7 @@
 		<encoder>
 			<pattern>%date %level [%file:%line] %msg%n</pattern>
 		</encoder>
-		 <file>/home/ubuntu/log.log</file> 
+		 <file>/home/ubuntu/CeirContent/log.log</file> 
 	<!--	<file>/home/ubuntu/parveen/api-meeto.log</file>-->
 		
 		

@@ -95,9 +95,9 @@
 .container-fluid {
 	background-color: #529dba;
 	height: 50px;
-	margin: 0 -20px;
+	/* margin: 0 -20px; */
 	padding: 10px;
-	border-radius: 5px 0;
+	/* border-radius: 5px 0; */
 }
 
 /* #deletemodal.modal-backdrop {
@@ -146,69 +146,63 @@
 <body>
 
 
-  <section id="content">
+ <!-- START CONTENT -->
+            <section id="content">
                 <!--start container-->
                 <div class="container">
                     <div class="section">
                         <div class="row">
                             <div class="col s12 m12 l12">
-                  <form  action="${context}/updateConsignmentDetail/${consignmentdetails.txnId}" enctype="multipart/form-data" method="POST" id="registerConsignment">
                                 <div class="row card-panel">
                                     <div class="container-fluid pageHeader">
-                                        <p class="PageHeading">View Consignment </p>
+                                        <p class="PageHeading">View Consignment</p>
                                         <!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
-                      data-target="modal1">Register Consignment</button> -->
+                                        data-target="modal1">Register Consignment</button> -->
                                     </div>
+                                    <form action="">
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierId" value="${consignmentdetails.supplierId}" readonly="readonly" maxlength="10"  id="supplierId" />
-                                            <label for="Name" class="center-align">Supplier/Manufacturer ID *</label>
+                                            <input type="text" name="name" id="name" disabled />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" value="${consignmentdetails.supplierName}" readonly="readonly" id="SupplierName" maxlength="100" />
-                                            <label for="Name" class="center-align">Supplier/Manufacturer Name *</label>
+                                            <input type="text" name="name" id="name" disabled />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer Name</label>
                                         </div>
-                                    </div>
-                                    <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" value="${consignmentdetails.consignmentNumber}" readonly="readonly" maxlength="12" id="consignmentNumber" />
-                                            <label for="Name" class="center-align">Consignment Number *</label>
+                                            <input type="text" name="name" id="name" disabled />
+                                            <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
-                                        <div class="input-field col s12 m6">
+                                        <div class="input-field col s12 m6" style="color: #c4c4c4;">
                                             <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
-                                                Dispatche Date *</p>
+                                                Arival Date</p>
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input type="date" name="expectedDispatcheDate" value="${consignmentdetails.expectedDispatcheDate}" disabled="disabled" onchange="dispatchDateValidation()" id="expectedDispatcheDate">
+                                            <input type="date" disabled>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
-                                    </div>
-
-                                    <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select id="country" data-attribute="${consignmentdetails.organisationCountry}" disabled="disabled" name="organisationcountry" class="browser-default" class="mySelect"></select>
+                                            <select id="country" class="browser-default" class="mySelect"
+                                                disabled></select>
                                             <label for="country" class="center-align"></label>
                                         </div>
 
 
                                         <div class="input-field col s12 m6">
-                                            <p class="input-text-date">Expected Arrival Date *</p>
+                                            <p class="input-text-date" style="color: #c4c4c4;">Expected Dispatch Date
+                                            </p>
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input type="date" name="expectedArrivalDate" onchange="arrivalDateValidation()"  readonly="readonly" value="${consignmentdetails.expectedArrivaldate}" id="expectedArrivalDate">
+                                            <input type="date" disabled>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
-                                    </div>
-
-                                    <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
-                                            <select class="browser-default" name="expectedArrivalPort" disabled="disabled" id="expectedArrivalPort">
-                                                <option value="${consignmentdetails.expectedArrivalPort}"  selected>${consignmentdetails.expectedArrivalPort} *</option>
-                                                
+                                            <select class="browser-default" disabled>
+                                                <option value="" disabled selected>Expected Arrival Port</option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
                                                 <option value="Water">Water</option>
@@ -216,46 +210,31 @@
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="quantity" value="${consignmentdetails.quantity}" readonly="readonly" id="quantity" maxlength="7" />
-                                            <label for="Quantity" class="center-align">Quantity *</label>
+                                            <input type="text" name="Quantity" id="Quantity" disabled />
+                                            <label for="Quantity" class="center-align">Quantity</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                                <input type="text" name="TransactionId" id="TransactionId" disabled maxlength="15" />
+                                                <label for="TransactionId" class="center-align">Transaction ID</label>
+                                            </div>
+                                    </div>
+
+                                    <div class="row" style="padding: 20px 0 100px 0;">
+                                        <div class="input-field col s12 center">
+                                            <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel" name="add_user"
+                                                id="add_user">Cancel</a>
                                         </div>
                                     </div>
 
-
-                                    <div class="row myRow">
-                                        <h6 class="file-upload-heading">Upload Bulk Devices Information *</h6>
-                                        <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
-                                            <div class="btn">
-                                                <span>Select File</span>
-                                                <input type="file" name="file" disabled="disabled" readonly="readonly"  id="consignmentFile" accept=".csv">
-                                            </div>
-                                            <div class="file-path-wrapper">
-                                                <input class="file-path validate responsive-file-div" readonly="readonly" type="text" value="${consignmentdetails.fileName}">
-                                            </div>
-                                        </div><br><br>
-                                      <%--   <p><a href="${context}/sampleFileDownload/stoke">Download Sample Format</a></p> --%>
-                                        <p>Required fields are marked with *</p>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="input-field col s12 center">
-                                            <button class=" btn" data-target="updateConsignment" onclick="registerConsignment()" type="button">Update</button>
-                                            <a href="${context}/closeEditPage" class="btn" type="cancel">Cancel</a>
-									    </div>
-                                    </div>
-                                </div>
                                 </form>
+                                </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
-        <div id="snackbar"><p id="errorMessage"></p></div>
-    <!--end container-->
-    </section>
-    <!-- END CONTENT -->
+                <!--end container-->
+            </section>
 
 
 

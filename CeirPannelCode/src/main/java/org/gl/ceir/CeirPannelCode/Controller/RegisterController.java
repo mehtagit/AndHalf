@@ -42,23 +42,16 @@ public class RegisterController {
 	 * @Autowired private UserValidator userValidator;
 	 */
 
-	
-	@GetMapping({ "/", "/register" })
-	public ModelAndView register(HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		if(session.getAttribute("username")!=null)
-		{
-			mv.setViewName("redirect:/Dashboard");
-			System.out.println("000000"+session.getAttribute("username"));
-		}
-		else
-		{
-		System.out.println("inside method");
-		mv.setViewName("StartingPage");
-		}
-
-		return mv;
-	}  
+	/*
+	 * @GetMapping({ "/", "/register" }) public ModelAndView register(HttpSession
+	 * session) { ModelAndView mv = new ModelAndView();
+	 * if(session.getAttribute("username")!=null) {
+	 * mv.setViewName("redirect:/Dashboard");
+	 * System.out.println("000000"+session.getAttribute("username")); } else {
+	 * System.out.println("inside method"); mv.setViewName("StartingPage"); }
+	 * 
+	 * return mv; }
+	 */  
 
 
 	@GetMapping({ "/openUserRegisterPage" })
@@ -291,19 +284,22 @@ System.out.println("validation sucessfulll");
 	
 	//************************************************ Open consignment record  page********************************************************************************/
 	
-	@RequestMapping(value= {"/openViewConsignmentRecord/{txnid}"},method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public ModelAndView openconsignmentRecordPage(@PathVariable("txnid") String  txnid) {
-		System.out.println("inside view consignment page open method"+txnid);
-		ModelAndView mv = new ModelAndView(); 
-		
-
-		ConsignmentPojo  consignmentdetails=feignImpl.fetchConsignmentByTxnId(txnid);
-		mv.addObject("consignmentdetails", consignmentdetails);
-		System.out.println("consignemnt pojo details=**"  +consignmentdetails);
-		mv.setViewName("viewConsignmentRecord"); 
-		return mv;
-
-	}
+	/*
+	 * @RequestMapping(value=
+	 * {"/openViewConsignmentRecord/{txnid}"},method={org.springframework.web.bind.
+	 * annotation.RequestMethod.GET}) public ModelAndView
+	 * openconsignmentRecordPage(@PathVariable("txnid") String txnid) {
+	 * System.out.println("inside view consignment page open method"+txnid);
+	 * ModelAndView mv = new ModelAndView();
+	 * 
+	 * 
+	 * ConsignmentPojo consignmentdetails=feignImpl.fetchConsignmentByTxnId(txnid);
+	 * mv.addObject("consignmentdetails", consignmentdetails);
+	 * System.out.println("consignemnt pojo details=**" +consignmentdetails);
+	 * mv.setViewName("viewConsignmentRecord"); return mv;
+	 * 
+	 * }
+	 */
 
 	
 	//feignImpl
