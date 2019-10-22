@@ -28,6 +28,7 @@ public class RegistrationController {
 		return mv;   
 	} 
 
+	
 	@RequestMapping(value = "/verifyOtp",method = RequestMethod.GET)
 	public ModelAndView verifyOtp(){
 		log.info("inside verifyOtp controller ");
@@ -52,14 +53,12 @@ public class RegistrationController {
 		return mv;   
 	}
 
-	@GetMapping({"/importerDashboard" })
-	public ModelAndView openUserRegisterPage() {
-		ModelAndView mv = new ModelAndView();
-		log.info("importer dashboard entry point..");
-		mv.setViewName("dashboard");
-		log.info("importer dashboard exit point..");
-		return mv;
-	}
+	/*
+	 * @GetMapping({"/importerDashboard" }) public ModelAndView
+	 * openUserRegisterPage() { ModelAndView mv = new ModelAndView();
+	 * log.info("importer dashboard entry point.."); mv.setViewName("dashboard");
+	 * log.info("importer dashboard exit point.."); return mv; }
+	 */
 
 	@GetMapping("/editProfile")
 	public ModelAndView editProfile() {

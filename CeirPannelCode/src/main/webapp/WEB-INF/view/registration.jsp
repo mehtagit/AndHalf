@@ -32,7 +32,7 @@
 	content="images/favicon/mstile-144x144.png">
 <!-- For Windows Phone -->
 <link rel="stylesheet"
-	href="font/font-awesome/${context}/resources/css/font-awesome.min.css">
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
@@ -50,11 +50,11 @@
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resources/js/plugins/chartist-${context}/resources/js/chartist.min.css"
+	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- Country -->
-<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+
 
 <style>
 input[type="checkbox"] {
@@ -461,11 +461,16 @@ footer {
 	<!-- ================================================
     Scripts
     ================================================ -->
-
+<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+		<!--materialize js-->
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
 	<script>
-        $(document).ready(function () {
+        /* $(document).ready(function () {
             $('.modal').modal();
-        });
+        }); */
 
         $('.dropdown-trigger').dropdown();
 
@@ -476,8 +481,7 @@ footer {
 
 	<script>
         populateCountries(
-            "country",
-        );
+            "country"  );
     </script>
 
 	<script>
@@ -494,11 +498,8 @@ footer {
 
 
 	<!-- jQuery Library -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	<!--materialize js-->
-	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
+	
+	
 	<!--prism
     <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -506,11 +507,11 @@ footer {
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/chartist-${context}/resources/js/chartist.min.js"></script>
+		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 
 	<!-- data-tables -->
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/${context}/resources/js/jquery.dataTables.min.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 

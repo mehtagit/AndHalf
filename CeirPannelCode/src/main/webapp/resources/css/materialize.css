@@ -7059,7 +7059,7 @@ input[type=range]+.thumb {
 }
 
 .section {
-  padding-top: 1rem;
+  /*padding-top: 1rem;*/
   padding-bottom: 1rem;
 }
 
@@ -10154,7 +10154,7 @@ input[type=checkbox]:not(:disabled)~.lever:active:after {
   font-size: 1rem;
   margin: 0 0 15px 0;
   padding: 0;
-  display: block;
+  display: none;
 }
 
 @media only screen and (max-width: 768px) {
@@ -10176,6 +10176,7 @@ input[type=checkbox]:not(:disabled)~.lever:active:after {
 }
 
 .select-wrapper span.caret {
+	display:none;
   color: initial;
   position: absolute;
   right: 0;
@@ -10194,7 +10195,7 @@ input[type=checkbox]:not(:disabled)~.lever:active:after {
 }
 
 select {
-  display: none;
+  display: block;
 }
 
 select.browser-default {

@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<html>
-<head> 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +34,7 @@
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->
-    <link href="css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -175,3 +176,4 @@
 </body>
 
 </html>
+

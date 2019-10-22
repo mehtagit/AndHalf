@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
     <!-- Datepicker -->
-    <link href="${context}/resources/js/jquery.datepicker2.css" rel="stylesheet">
+    <link href="${context}/resources/jquery.datepicker2.css" rel="stylesheet">
 
     <!-- new file -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -82,85 +82,16 @@
 </head>
 
 <body>
-    <!-- START HEADER -->
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR - Importer
-                                    Portal</a> <span class="logo-text">Materialize</span></h1>
-                        </li>
-                    </ul>
-                    <ul id="chat-out" class="right hide-on-med-and-down" style="overflow: inherit !important;">
-                        <li>
-                            <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
-                                data-activates="profile-dropdown" style="height: 64px;"><i
-                                    class="mdi-action-account-circle" style="color: #fff; font-size: 40px;"></i></a>
-                            <ul id="profile-dropdown" class="dropdown-content">
-                                <li><a href="editInfo.html" id=""><i class="fa fa-pencil dropdownColor"
-                                            style="float: left"></i><span style="float: left" class="dropdownColor">Edit
-                                            Info</span></a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="#changePassword" class="modal-trigger" id=""><i
-                                            class="mdi-action-settings dropdownColor" style="float: left"></i><span
-                                            style="float: left" class="dropdownColor">Change Password</span></a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="login.html" id=""><i class="mdi-hardware-keyboard-tab dropdownColor"></i>
-                                        <span class="dropdownColor"> Logout</span></a></li>
-                                <li class="divider"></li>
-                                <li><a href="#manageAccount" class="modal-trigger">
-                                        <span class="dropdownColor"> Activate/Deactivate Account</span></a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-    <!-- END HEADER -->
+    
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
     <!-- START MAIN -->
-    <div id="main">
+    <div>
         <!-- START WRAPPER -->
         <div class="wrapper">
 
-            <!-- START LEFT SIDEBAR NAV-->
-            <aside id="left-sidebar-nav">
-                <ul id="slide-out" class="side-nav fixed leftside-navigation">
-                    <li class="user-details cyan darken-2">
-                        <div class="row">
-                            <div class="col col s8 m8 l8" style="margin-left:32px;">
-                                <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
-                                    href="#" data-activates="profile-dropdown" style="padding-bottom: 50px;">Welcome
-                                    Importer</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="${context}/dashboard"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                    <li><a href="consignment.html" class="waves-effect waves-cyan"><i class="fa fa-list-alt"
-                                aria-hidden="true"></i>
-                            Consignment</a></li>
-                    <li><a href="distributor.html" class="waves-effect waves-cyan"><i class="fa fa-th-list"
-                                aria-hidden="true"></i>
-                            Stock Management</a></li>
-                    <li><a href="stolenRecovery.html" class="waves-effect waves-cyan"><i class="fa fa-hand-o-right"
-                                aria-hidden="true"></i> Stolen/Recovery</a></li>
-                    <li><a href="grievance.html" class="waves-effect waves-cyan"><i class="fa fa-file-text-o"
-                                aria-hidden="true"></i>
-                            Grievance Management</a></li>
-                </ul>
-                <a href="#" data-activates="slide-out"
-                    class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
-                        class="mdi-navigation-menu"></i></a>
-            </aside>
+       
             <!-- END LEFT SIDEBAR NAV-->
 
             <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -407,7 +338,7 @@
                                         <!-- <a href="index.html" class="btn" id="btnSave"> Submit</a> -->
                                         <a href="#updateInformation" class="modal-trigger btn" type="button"
                                             id="btnUpdate">Update</a>
-                                        <a href="dashboard.html" class="btn">Cancel</a>
+                                        <a href="${context}/Home" class="btn">Cancel</a>
                                     </div>
                                 </div>
 
@@ -421,15 +352,7 @@
 
             <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-            <!-- START FOOTER -->
-            <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%; margin-left: -240px;">
-                <div class="footer-copyright">
-                    <div class="container">
-                        <span class="right">Copyright © 2018 Sterlite Technologies Ltd, All rights reserved.</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- END FOOTER -->
+           
 
 
             <!-- Modal 1 start   -->
@@ -474,7 +397,7 @@
                         <h6>Your request has been successfully updated</h6>
                     </div>
                     <div class="center">
-                        <a href="dashboard.html" class="btn">ok</a>
+                        <a href="${context}/Home" class="btn">ok</a>
                     </div>
                 </div>
             </div>
@@ -614,13 +537,14 @@
                     </div>
                 </div>
             </div>
-
+</div>
+</div>
             <!-- Modal End -->
 
             <!-- ================================================
     Scripts
     ================================================ -->
-
+ <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
             <script>
                 $(document).ready(function () {
                     $('.modal').modal();
@@ -629,9 +553,9 @@
 
             <script>
                 $('#data-table-simple').dataTable({
-                    "lengthChange": false
+                    "lengthChange": false,
                 });
-            </script>
+                  </script>
 
             <script>
                 populateCountries(
@@ -675,7 +599,7 @@
             <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 
             <!-- jQuery Library -->
-            <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+           
             <!--materialize js-->
             <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
             <!--prism
@@ -694,12 +618,11 @@
             <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script>
 
             <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-            <script type="text/javascript" src="js/plugins.js"></script>
+            <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
             <!--custom-script.js - Add your own theme custom JS-->
-            <script type="text/javascript" src="js/custom-script.js"></script>
+            <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 
 
-</body>
 
 </html>
 
