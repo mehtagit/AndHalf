@@ -16,35 +16,35 @@
 <meta content="" name="author" />
 
 <script type="text/javascript"
-	src="${context}/resourcesCss/js/plugins/jquery-1.11.2.min.js"></script>
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
 <!-- CORE CSS-->
-<link href="${context}/resourcesCss/css/materialize.css" type="text/css"
+<link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<link href="${context}/resourcesCss/css/style.css" type="text/css"
+<link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="${context}/resourcesCss/css/custom/custom.css"
+<link href="${context}/resources/css/custom/custom.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resourcesCss/font/font-awesome/css/font-awesome.min.css"
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-<link href="${context}/resourcesCss/js/plugins/prism/prism.css"
+<link href="${context}/resources/js/plugins/prism/prism.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
+	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
 <script type="text/javascript"
-	src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 <link
-	href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.min.css"
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.css"
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <style>
@@ -240,27 +240,27 @@
 
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/materialize.js"></script>
+		src="${context}/resources/js/materialize.js"></script>
 	<!--prism
-    <script type="text/javascript" src="${context}/resourcesCss/resourcesCss/js/prism/prism.js"></script>-->
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
-	<%-- <script type="text/javascript" src="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.js"></script> --%>
+	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins.js"></script>
+		src="${context}/resources/js/plugins.js"></script>
 	<!--custom-script.js - Add your own theme custom JS-->
 
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/countries.js"></script>
+		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.js"></script>
-		 <script type="text/javascript" src="${context}/resourcesCss/js/Validator.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+		 <script type="text/javascript" src="${context}/resources/js/Validator.js"></script>
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 

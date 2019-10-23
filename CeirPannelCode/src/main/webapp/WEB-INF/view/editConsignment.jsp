@@ -16,35 +16,35 @@
 <meta content="" name="author" />
 
 <script type="text/javascript"
-	src="${context}/resourcesCss/js/plugins/jquery-1.11.2.min.js"></script>
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
 
 <!-- CORE CSS-->
-<link href="${context}/resourcesCss/css/materialize.css" type="text/css"
+<link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<link href="${context}/resourcesCss/css/style.css" type="text/css"
+<link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
-<link href="${context}/resourcesCss/css/custom/custom.css"
+<link href="${context}/resources/css/custom/custom.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resourcesCss/font/font-awesome/css/font-awesome.min.css"
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-<link href="${context}/resourcesCss/js/plugins/prism/prism.css"
+<link href="${context}/resources/js/plugins/prism/prism.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
+	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
 <script type="text/javascript"
-	src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 <link
-	href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.min.css"
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-	href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.css"
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <style>
@@ -162,20 +162,20 @@
                                         <!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
                       data-target="modal1">Register Consignment</button> -->
                                     </div>
-                                    <form action="">
+                                    <form action="${context}/Consignment/updateRegisterConsignment/20192210/default" enctype="multipart/form-data" method="POST" id="editRegisterConsignment">
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" />
+                                            <input type="text" name="supplierId" id="name" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="name" maxlength="15" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" id="name" maxlength="15" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -183,14 +183,14 @@
                                             <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arrival Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input name="date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
-                                            <label for="dispatchDate" class="center-align">Expected Arrival Date <span class="star">*</span></label>
+                                            <input name="expectedDispatcheDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                                 <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
-                                            <select id="country" class="browser-default" class="mySelect"
+                                            <select id="country"  name="organisationcountry" class="browser-default" class="mySelect"
                                                 required></select>
                                             <label for="country" class="center-align"></label>
                                         </div>
@@ -199,15 +199,15 @@
                                         <div class="input-field col s12 m6">
                                             <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input name="date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
-                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
+                                            <input name="expectedArrivalDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                             <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
                                             <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
-                                            <select class="browser-default" required>
+                                            <select name="expectedArrivalPort" class="browser-default" required>
                                                 <option value="" disabled selected>Expected arrival port *</option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
@@ -216,12 +216,12 @@
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="Quantity" id="Quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="Quantity" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                                <input type="text" name="TransactionId" id="TransactionId" readonly maxlength="15" />
+                                                <input type="text" name="txnId" id="TransactionId"  value="20101910" readonly maxlength="15" />
                                                 <label for="TransactionId" class="center-align">Transaction ID</label>
                                             </div>
                                     </div>
@@ -233,7 +233,7 @@
                                                         Information <span class="star">*</span></h6>
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input type="file" id="csvUploadFile" accept=".csv">
+                                                <input type="file" name="file" id="csvUploadFile" accept=".csv">
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate responsive-file-div" type="text">
@@ -242,18 +242,18 @@
                                     </div>
                                     <p><a href="#">Download Sample Format</a></p>
 
-                                    <span> Required Field are marked with <span class="star">*</span>
+                                    <span> Required Field are marked with <span class="star">*</span> </span>
 
 
                                     <div class="row">
                                         <div class="input-field col s12 center">
                                             <button class="waves-effect waves-light modal-trigger btn"
-                                                data-target="updateConsignment" type="submit">Update</button>
+                                                data-target="updateConsignment" type="button" onclick="editRegisterConsignment()">Update</button>
                                             <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel"
                                                 style="margin-left: 10px;">Cancel</a>
 									 </div>
                                     </div>
-                                    </span>
+                                    
                                    
                                 </form>
                                 </div>
@@ -290,27 +290,27 @@
 
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/materialize.js"></script>
+		src="${context}/resources/js/materialize.js"></script>
 	<!--prism
-    <script type="text/javascript" src="${context}/resourcesCss/resourcesCss/js/prism/prism.js"></script>-->
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
-	<%-- <script type="text/javascript" src="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.js"></script> --%>
+	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins.js"></script>
+		src="${context}/resources/js/plugins.js"></script>
 	<!--custom-script.js - Add your own theme custom JS-->
 
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/countries.js"></script>
+		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.js"></script>
-		 <script type="text/javascript" src="${context}/resourcesCss/js/Validator.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+		 <script type="text/javascript" src="${context}/resources/js/Validator.js"></script>
 	<script type="text/javascript"
-		src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -323,9 +323,10 @@
 
 
     <script type="text/javascript">
-         function registerConsignment(){
+         function editRegisterConsignment(){
+        	 $("#editRegisterConsignment").submit();
         	
-        	 var dispatcDate=  $('#expectedDispatcheDate').val();
+        	/*  var dispatcDate=  $('#expectedDispatcheDate').val();
         	 var arrivalDate=  $('#expectedArrivalDate').val();
      		
         	 var csvFile=$('#consignmentFile').val();
@@ -386,7 +387,7 @@
     		 {
         		 myFunction("please enter quantity in numbers");
     		 return false;
-    		 }
+    		 } */
         	 
         	/*  else if($('#consignmentFile').val()=="")
     		 {
@@ -394,7 +395,7 @@
     		 return false;
     		 } */
     		 
-    		 else  if(csvFile!=""){
+    		/*  else  if(csvFile!=""){
         	  if (csvtext!='csv')
         	 {
         		 myFunction("please select csv file formate ");
@@ -410,10 +411,9 @@
 		 {
 		 myFunction("dispatche date should be smaler then arrival date ");
 			return false;
-		 }
+		 } */
     	
-        	 
-        	 $("#registerConsignment").submit();
+        	
         	
          }
          </script>

@@ -3,7 +3,7 @@ import java.io.File;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
-import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,7 +24,7 @@ public interface FeignCleintImplementation {
 	
 	//View all Consignment  feign  controller
 	@RequestMapping(value="/consignment/details" ,method=RequestMethod.GET) 
-	public List<ConsignmentPojo> consignmentList(@RequestParam("importerId") int importerId) ;
+	public List<ConsignmentModel> consignmentList(@RequestParam("importerId") int importerId) ;
 
 	
 	
@@ -37,14 +37,14 @@ public interface FeignCleintImplementation {
 	// @RequestLine("POST /consignment/upload")
 	@PostMapping(value="/consignment/upload")
   
-	public ConsignmentPojo addConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
+	public ConsignmentModel addConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
 			,@RequestParam("expectedDispatcheDate") String expectedDispatcheDate,@RequestParam("fileName") String fileName,@RequestParam("filePath") String filePath,@RequestParam("importerId") int importerId,@RequestParam("importerName") String importerName,
 			@RequestParam("organisationCountry") String organisationCountry,@RequestParam("supplierId") String supplierId,@RequestParam("supplierName") String supplierName,@RequestParam("quantity") String quantity); 
 
 	
 	//***************************************************** update consignment feign ******************************************************************/ 
 	@PostMapping(value="/consignment/update")
-	public ConsignmentPojo updateConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
+	public ConsignmentModel updateConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
 			,@RequestParam("expectedDispatcheDate") String expectedDispatcheDate,@RequestParam("fileName") String fileName,@RequestParam("path") String filePath,@RequestParam("importerId") int importerId,@RequestParam("importerName") String importerName,
 			@RequestParam("organisationCountry") String organisationCountry,@RequestParam("supplierId") String supplierId,@RequestParam("supplierName") String supplierName,@RequestParam("txnId") String txnid,@RequestParam("quantity") String quantity) ;
 
@@ -54,18 +54,18 @@ public interface FeignCleintImplementation {
 	
 	//edit Consignment feign  controller
 		@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 
-		public @ResponseBody ConsignmentPojo fetchConsignmentByTxnId(@RequestParam("txnId") String txnId) ;
+		public @ResponseBody ConsignmentModel fetchConsignmentByTxnId(@RequestParam("txnId") String txnId) ;
 		
 	
 	//delete Consignment feign  controller
 	@RequestMapping(value="/consigment/Delete" ,method=RequestMethod.DELETE) 
-	public @ResponseBody ConsignmentPojo deleteConsignment(@RequestParam("txnId") String txnId) ;
+	public @ResponseBody ConsignmentModel deleteConsignment(@RequestParam("txnId") String txnId) ;
 	
 	
 	
 	//filter  Consignment  feign  controller
 		@RequestMapping(value="/consignment/filterDetails" ,method=RequestMethod.POST) 
-		public List<ConsignmentPojo> filterConsignmentdata(@RequestBody ConsignmentFilterPojo pojo) ;
+		public List<ConsignmentModel> filterConsignmentdata(@RequestBody ConsignmentFilterPojo pojo) ;
 
 		
 		

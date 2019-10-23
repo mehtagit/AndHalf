@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
-import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.userTest;
 import org.gl.ceir.CeirPannelCode.Service.LoginServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +133,7 @@ System.out.println("validation sucessfulll");
 		ModelAndView mv = new ModelAndView(); 
 		System.out.println("session value@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+session.getAttribute("username"));	
 
-		List<ConsignmentPojo>  consignmentdetails=feignImpl.consignmentList(id);
+		List<ConsignmentModel>  consignmentdetails=feignImpl.consignmentList(id);
 		mv.addObject("consignmentdetails", consignmentdetails);
 		System.out.println("consignemnt pojo details=**"  +consignmentdetails);
 		mv.setViewName("demo"); 
@@ -143,7 +143,7 @@ System.out.println("validation sucessfulll");
 
 	//***********************************************  Add New Consignment  *****************************************************
 	@RequestMapping(value="/addConsignment",method=RequestMethod.POST) 
-	public ModelAndView addConsignment(@ModelAttribute ConsignmentPojo consignmentFormData,@RequestParam("file") MultipartFile file,HttpServletRequest request) {
+	public ModelAndView addConsignment(@ModelAttribute ConsignmentModel consignmentFormData,@RequestParam("file") MultipartFile file,HttpServletRequest request) {
 
 		Enumeration<String> headerNames = request.getHeaderNames();
 		while(headerNames.hasMoreElements()) {
@@ -200,7 +200,7 @@ System.out.println("validation sucessfulll");
 
 	//***********************************************  update Consignment  *****************************************************
 	@RequestMapping(value="/updateConsignmentDetail/{txnid}",method=RequestMethod.POST) 
-	public ModelAndView updateConsignment(@ModelAttribute ConsignmentPojo consignmentFormData,@RequestParam(name="file",required =false) MultipartFile file,HttpServletRequest request,@PathVariable("txnid") String txnid) {
+	public ModelAndView updateConsignment(@ModelAttribute ConsignmentModel consignmentFormData,@RequestParam(name="file",required =false) MultipartFile file,HttpServletRequest request,@PathVariable("txnid") String txnid) {
 
 		
 		consignmentFormData.setImporterId(1);
@@ -247,7 +247,7 @@ System.out.println("validation sucessfulll");
 			System.out.println("addConsignment data="+consignmentFormData);
 			
 			
-			ConsignmentPojo updateConsignment=feignImpl.updateConsignment(consignmentFormData. getConsignmentNumber(),consignmentFormData.getExpectedArrivalPort(),
+			ConsignmentModel updateConsignment=feignImpl.updateConsignment(consignmentFormData. getConsignmentNumber(),consignmentFormData.getExpectedArrivalPort(),
 			consignmentFormData.getExpectedArrivalDate(),consignmentFormData.getExpectedDispatcheDate(),file.getOriginalFilename(),
 			filePath,consignmentFormData.getImporterId(),consignmentFormData.getImporterName(),consignmentFormData.getOrganisationcountry(),
 			consignmentFormData.getSupplierId(),consignmentFormData.getSupplierName(),txnid,consignmentFormData.getQuantity());
@@ -273,7 +273,7 @@ System.out.println("validation sucessfulll");
 		ModelAndView mv = new ModelAndView(); 
 		
 
-		ConsignmentPojo  consignmentdetails=feignImpl.fetchConsignmentByTxnId(txnid);
+		ConsignmentModel  consignmentdetails=feignImpl.fetchConsignmentByTxnId(txnid);
 		mv.addObject("consignmentdetails", consignmentdetails);
 		System.out.println("consignemnt pojo details=**"  +consignmentdetails);
 		mv.setViewName("editConsignment"); 
@@ -336,7 +336,7 @@ System.out.println("validation sucessfulll");
 		filterdata.setConsignmentStatus(consignmentStatus);
 		filterdata.setImporterId(1);
 		
-		List<ConsignmentPojo>  consignmentdetails=feignImpl.filterConsignmentdata(filterdata);
+		List<ConsignmentModel>  consignmentdetails=feignImpl.filterConsignmentdata(filterdata);
 		mv.addObject("consignmentdetails", consignmentdetails);
 		mv.addObject("startDate", startDate);
 		mv.addObject("endDate", endDate);
@@ -355,7 +355,7 @@ System.out.println("validation sucessfulll");
 	public @ResponseBody ModelAndView deleteconsignment(@RequestParam("txnId") String id) {
 		System.out.println("inside delete method");
 		System.out.println("transacation id="+id);
-	ConsignmentPojo response=	feignImpl.deleteConsignment(id);
+	ConsignmentModel response=	feignImpl.deleteConsignment(id);
 		 System.out.println("delete response="+response);
 		ModelAndView mv = new ModelAndView(); 
 		
@@ -442,12 +442,12 @@ System.out.println("validation sucessfulll");
 
 
 	}
-	@RequestMapping(value = "/Logout", method = RequestMethod.GET)
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		session.removeAttribute("username");
 		session.invalidate();
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/register");
+		mv.setViewName("redirect:/login");
 		return mv;
 	}
 

@@ -3,7 +3,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
-import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

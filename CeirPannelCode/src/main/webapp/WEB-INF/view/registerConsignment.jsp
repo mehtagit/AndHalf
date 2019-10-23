@@ -15,25 +15,25 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <meta content="" name="description" />
 <meta content="" name="author" />
 
-   <script type="text/javascript" src="${context}/resourcesCss/js/plugins/jquery-1.11.2.min.js"></script> 
+   <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> 
   <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
   <!-- CORE CSS-->
-  <link href="${context}/resourcesCss/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resourcesCss/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-   <script type="text/javascript" src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <link href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resourcesCss/css/jquery-datepicker2.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+   <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/jquery-datepicker2.css" type="text/css" rel="stylesheet" media="screen,projection">
   <!-- Custome CSS-->    
-  <link href="${context}/resourcesCss/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
-   <link href="${context}/resourcesCss/font/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+   <link href="${context}/resources/font/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="${context}/resourcesCss/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
- <%--  <link href="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+  <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+ <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
  
     
@@ -92,7 +92,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                         <div class="row">
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
-                                    <form action="">
+                                    <form action="${context}/Consignment/registerConsignment/default" method="POST" enctype="multipart/form-data"  id="registerConsignment">
                                     <div class="container-fluid pageHeader">
                                         <p class="PageHeading">Register Consignment</p>
                                         <!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
@@ -101,23 +101,23 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" />
+                                            <input type="text" name="supplierId" id="name" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="name" maxlength="15" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                     </div>
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" id="name" maxlength="15" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input name="date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedDispatcheDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -126,13 +126,13 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select id="country" class="browser-default" class="mySelect"
+                                            <select id="country" name="organisationcountry" class="browser-default" class="mySelect"
                                                 style="padding-left: 0;" required></select>
                                         </div>
 
 
                                         <div class="input-field col s12 m6">
-                                            <input name="date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivalDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Arival Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -141,7 +141,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select class="browser-default">
+                                            <select class="browser-default" name="expectedArrivalPort">
                                                 <option value="" disabled selected>Expected Arrival Port <span id="starColor">*</span></option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
@@ -151,7 +151,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="Quantity" id="Quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="Quantity" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input type="file" id="csvUploadFile" accept=".csv">
+                                                <input type="file" name="file" id="csvUploadFile" accept=".csv">
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate responsive-file-div" type="text">
@@ -176,7 +176,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                     <div class="row">
                                         <div class="input-field col s12 center">
                                             <button class="waves-effect waves-light modal-trigger btn"
-                                                data-target="submitConsignment" type="submit">Submit</button>
+                                                data-target="submitConsignment" onclick="registerConsignment()" type="button">Submit</button>
                                             <a href="#cancelMessage" class="btn modal-trigger" type="cancel"
                                                 style="margin-left: 10px;">Cancel</a>
 
@@ -236,38 +236,39 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
     
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="${context}/resourcesCss/js/materialize.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
      
     
-     <script type="text/javascript" src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.js"></script>
-      <script type="text/javascript" src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-      <script type="text/javascript" src="${context}/resourcesCss/js/jquery-datepicker2.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/jquery-datepicker2.js"></script>
       
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
-     <%--   <script type="text/javascript" src="${context}/resourcesCss/js/materialize-plugins/date_picker/picker.date.js"></script>
-    <script type="text/javascript" src="${context}/resourcesCss/js/materialize-plugins/date_picker/picker.js"></script> --%>
+     <%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
     <!--custom-script.js - Add your own theme custom JS-->
- <script type="text/javascript" src="${context}/resourcesCss/js/plugins.js"></script>
-    <script type="text/javascript" src="${context}/resourcesCss/js/Validator.js"></script>
+ <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/Validator.js"></script>
    <!--prism
-    <script type="text/javascript" src="${context}/resourcesCss/resourcesCss/js/prism/prism.js"></script>-->
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
     <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
-    <%-- <script type="text/javascript" src="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.js"></script> --%>
-       <script type="text/javascript" src="${context}/resourcesCss/js/countries.js"></script>
+    <%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+       <script type="text/javascript" src="${context}/resources/js/countries.js"></script>
      
        
        
           <script type="text/javascript">
          function registerConsignment(){
         	
-     
-        	 var dispatcDate=  $('#expectedDispatcheDate').val();
+     			
+        	 $("#registerConsignment").submit();
+        	/*  var dispatcDate=  $('#expectedDispatcheDate').val();
         	 var arrivalDate=  $('#expectedArrivalDate').val();
         	
         	 var csvFile=$('#consignmentFile').val();
@@ -353,8 +354,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
         		 myFunction("please enter quantity in numbers");
     		 return false;
     		 }
-        	
-        	 $("#registerConsignment").submit();
+         */	
+        	 
         	
          }
          </script>

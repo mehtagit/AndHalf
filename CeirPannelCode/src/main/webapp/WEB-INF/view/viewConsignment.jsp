@@ -15,25 +15,25 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <meta content="" name="description" />
 <meta content="" name="author" />
 
-   <script type="text/javascript" src="${context}/resourcesCss/js/plugins/jquery-1.11.2.min.js"></script> 
+   <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> 
   <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
   <!-- CORE CSS-->
-  <link href="${context}/resourcesCss/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resourcesCss/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-   <script type="text/javascript" src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <link href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="${context}/resourcesCss/js/plugins/data-tables/css/jquery.dataTables.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resourcesCss/css/jquery-datepicker2.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
+   <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/jquery-datepicker2.css" type="text/css" rel="stylesheet" media="screen,projection">
   <!-- Custome CSS-->    
-  <link href="${context}/resourcesCss/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
-   <link href="${context}/resourcesCss/font/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+   <link href="${context}/resources/font/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="${context}/resourcesCss/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
- <%--  <link href="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+  <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+ <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 
  
     
@@ -247,9 +247,9 @@ opacity: 0;
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
                           <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
-                          <a href="${context}/Consignment/openViewConsignmentRecord/20192210"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/viewPage"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/openEditConsignment/20192210"><i class="fa fa-pencil" aria-hidden="true"
+                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                           <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
@@ -271,7 +271,7 @@ opacity: 0;
                               style="font-size: 20px; color:#2e8b57" title="download"></i></a>
                           <a href="${context}/Consignment/openViewConsignmentRecord/20192210"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/openEditConsignment/20192210"><i class="fa fa-pencil" aria-hidden="true"
+                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                           <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
@@ -293,7 +293,7 @@ opacity: 0;
                               style="font-size: 20px; color:#2e8b57" title="download"></i></a>
                           <a href="${context}/Consignment/openViewConsignmentRecord/20192210"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/openEditConsignment/20192210"><i class="fa fa-pencil" aria-hidden="true"
+                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                           <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
@@ -378,7 +378,7 @@ opacity: 0;
       <div class="row">
         <div class="input-field col s12 center">
           <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" data-target="confirmDeleteConsignment">Yes</button>
+            <a href="${context}/Consignment/deleteConsignment/20191023" class="btn">ok</a>
             <button class="modal-close btn" style="margin-left: 10px;">No</button>
           </div>
         </div>
@@ -411,30 +411,30 @@ opacity: 0;
     </div>
     <!--materialize js-->
    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="${context}/resourcesCss/js/materialize.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
      
     
-     <script type="text/javascript" src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.js"></script>
-      <script type="text/javascript" src="${context}/resourcesCss/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-      <script type="text/javascript" src="${context}/resourcesCss/js/jquery-datepicker2.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/jquery-datepicker2.js"></script>
       
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
-     <%--   <script type="text/javascript" src="${context}/resourcesCss/js/materialize-plugins/date_picker/picker.date.js"></script>
-    <script type="text/javascript" src="${context}/resourcesCss/js/materialize-plugins/date_picker/picker.js"></script> --%>
+     <%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
     <!--custom-script.js - Add your own theme custom JS-->
- <script type="text/javascript" src="${context}/resourcesCss/js/plugins.js"></script>
-    <script type="text/javascript" src="${context}/resourcesCss/js/Validator.js"></script>
+ <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/Validator.js"></script>
    <!--prism
-    <script type="text/javascript" src="${context}/resourcesCss/resourcesCss/js/prism/prism.js"></script>-->
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
     <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resourcesCss/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
-    <%-- <script type="text/javascript" src="${context}/resourcesCss/js/plugins/chartist-js/chartist.min.js"></script> --%>
-       <script type="text/javascript" src="${context}/resourcesCss/js/countries.js"></script>
+    <%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+       <script type="text/javascript" src="${context}/resources/js/countries.js"></script>
      
        
 	    <script type="text/javascript">
