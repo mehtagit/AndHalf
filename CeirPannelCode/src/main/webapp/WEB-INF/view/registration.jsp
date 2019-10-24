@@ -91,10 +91,10 @@ footer {
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<form id="registrationForm">
+				<form id="registrationForm" method="post" action="${context}/registration">
 					<div class="card-panel"
 						style="width: 90%; margin: auto; padding: 20px 5% 20px 5%;">
-						<a href="index.html"
+						<a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a>
 						<div class="row">
@@ -227,7 +227,8 @@ footer {
 										Role Type <span class="star">*</span>
 									</p>
 									<select multiple required>
-										<option value="" disabled selected>Role Type <span
+										<option value="" disabled selected>Role Type 
+										<span
 												class="star"></span></option>
 										<option value="Paid">Importer</option>
 										<option value="NotPaid">Distributor</option>
@@ -366,9 +367,11 @@ footer {
 						<div class="row">
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
-								<a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a>
+								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
+								<button class="btn" id="btnSave" type="submit" style="margin-left: 10px;">submit</button>
 								<button class="btn" style="margin-left: 10px;">cancel</button>
 							</div>
+						</div> 
 						</div>
 				</form>
 			</div>

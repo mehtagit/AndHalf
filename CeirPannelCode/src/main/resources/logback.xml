@@ -9,7 +9,7 @@
 		<encoder>
 			<pattern>%date %level [%file:%line] %msg%n</pattern>
 		</encoder>
-		 <file>/home/ubuntu/CeirContent/log.log</file> 
+		 <file>/home/ubuntu/CeirContent/logs/log.log</file> 
 	<!--	<file>/home/ubuntu/parveen/api-meeto.log</file>-->
 		
 		 
@@ -17,7 +17,7 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 		
 		<!-- <fileNamePattern>/home/ubuntu/parveen/api-meeto.%d{yyyy-MM-dd}.log</fileNamePattern> -->
-		 <fileNamePattern>/home/ubuntu/CeirContent/log.%d{yyyy-MM-dd}.log</fileNamePattern> 
+		 <fileNamePattern>/home/ubuntu/CeirContent/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern> 
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 

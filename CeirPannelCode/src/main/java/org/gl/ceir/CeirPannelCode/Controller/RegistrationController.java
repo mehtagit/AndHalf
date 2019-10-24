@@ -1,15 +1,24 @@
 package org.gl.ceir.CeirPannelCode.Controller;
+
+import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RegistrationController {
-
+     @Autowired 
+     RegistrationService registrationService;
+     
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 
 	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
@@ -20,12 +29,18 @@ public class RegistrationController {
 		return mv;    
 	}   
 
-	@RequestMapping(value = "/registration",method = RequestMethod.GET)
-	public ModelAndView registration(){
-		log.info("inside registration controller ");
-		ModelAndView mv=new ModelAndView();
-		mv.setViewName("registration");
-		return mv;   
+	@RequestMapping(value = "/registration",method = {RequestMethod.GET,RequestMethod.POST})
+	public ModelAndView registration(@ModelAttribute Registration registration){
+		if(registration.getFirstName() ==null ) {
+		ModelAndView mv=registrationService.registrationView();
+		return mv;
+		}
+		else { 
+			ModelAndView mv=registrationService.saveRegistration(registration);
+			return mv;	
+		}
+		
+		                                                                       
 	} 
 
 	
