@@ -2,7 +2,6 @@ package org.gl.ceir.CeirPannelCode.Service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.gl.ceir.CeirPannelCode.Controller.RegistrationController;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;

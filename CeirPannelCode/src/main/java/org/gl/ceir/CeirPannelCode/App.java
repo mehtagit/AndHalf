@@ -9,6 +9,7 @@ import org.gl.ceir.CeirPannelCode.config.Model.ImeiMsisdnIdentity;
 import org.gl.ceir.CeirPannelCode.config.Model.Constants.ImeiStatus;
 import org.gl.ceir.CeirPannelCode.config.Service.DeviceSnapShotService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -41,6 +42,7 @@ public class App extends SpringBootServletInitializer
 {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		application.bannerMode(Banner.Mode.OFF);
 		return application.sources(App.class);
 	} 
 	@Autowired
