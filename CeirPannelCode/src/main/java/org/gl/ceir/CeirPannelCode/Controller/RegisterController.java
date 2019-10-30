@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
 import org.gl.ceir.CeirPannelCode.Model.userTest;
@@ -37,7 +38,7 @@ public class RegisterController {
 	FeignCleintImplementation feignImpl;
 	@Autowired
 	LoginServices loginserviceIndexpage;
-
+   
 	/*
 	 * @Autowired private UserValidator userValidator;
 	 */

@@ -98,7 +98,7 @@
                             <!-- <img src="images/otpImage.png" class=""
                                 style="width: 80px; display: block; margin:auto;"> -->
                             <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
-                            <p class="center">The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID</p>
+                            <p class="center">${msg}<!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
                             
 
                             <a href="#otpVerification" class="btn modal-trigger"

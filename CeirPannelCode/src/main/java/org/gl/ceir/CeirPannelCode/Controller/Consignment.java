@@ -26,8 +26,6 @@ public class Consignment {
 		return mv;
 	}
 	
-
-	
 	@RequestMapping(value= {"/registerConsignment/{requestType}"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public ModelAndView demo(@ModelAttribute( name="consignment") ConsignmentPojo consignment,@PathVariable(name="requestType",required = false) String pagetype) {
 		log.info(" Register consignment entry point.");

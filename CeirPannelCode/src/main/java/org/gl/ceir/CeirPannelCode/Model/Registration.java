@@ -1,10 +1,12 @@
 package org.gl.ceir.CeirPannelCode.Model;
+import java.util.Arrays;
+import java.util.List;
 
 public class Registration {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String passportNo;
+	private String passportNo; 
 	private String email;
 	private String mobileNo;
 	private String companyName;
@@ -14,13 +16,37 @@ public class Registration {
 	private String province;
 	private String country;  
 	private String type;
-	private Integer vatStatus;
-	private String vatNo;
-	
-	
-	
-	
-	public String getFirstName() {
+	private Integer vatStatus; 
+	private String vatNo; 
+	private List<QuestionPair> questionList;
+	private String password;
+	private int[] roles;
+	public Registration() {};
+	public List<QuestionPair> getQuestionList() {
+			return questionList;
+		}
+		public void setQuestionList(List<QuestionPair> questionList) {
+			this.questionList = questionList;
+		}
+
+	/*
+	 * public class QuestionPair{ private Integer question; private String answer;
+	 * public QuestionPair(){};
+	 * 
+	 * public Integer getQuestion() { return question; }
+	 * 
+	 * public void setQuestion(Integer question) { this.question = question; }
+	 * 
+	 * public String getAnswer() { return answer; }
+	 * 
+	 * public void setAnswer(String answer) { this.answer = answer; }
+	 * 
+	 * @Override public String toString() { return "QuestionPair [question=" +
+	 * question + ", answer=" + answer + "]"; }
+	 * 
+	 * }
+	 */
+	 	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
@@ -104,15 +130,39 @@ public class Registration {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@Override
-	public String toString() {
-		return "Registration [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", passportNo=" + passportNo + ", email=" + email + ", mobileNo=" + mobileNo + ", companyName="
-				+ companyName + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality="
-				+ locality + ", province=" + province + ", country=" + country + ", type=" + type + ", vatStatus="
-				+ vatStatus + ", vatNo=" + vatNo + "]";
+	public String getMobileNo() {
+		return mobileNo;
+	}
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 	
 	
+		public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+		public int[] getRoles() {
+		return roles;
+	}
+	public void setRoles(int[] roles) {
+		this.roles = roles;
+	}
 	
+	
+		@Override
+		public String toString() {
+			return "Registration [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
+					+ ", passportNo=" + passportNo + ", email=" + email + ", mobileNo=" + mobileNo + ", companyName="
+					+ companyName + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality="
+					+ locality + ", province=" + province + ", country=" + country + ", type=" + type + ", vatStatus="
+					+ vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password=" + password
+					+ ", roles=" + roles + "]";
+		}
+		
+
+
+
 }

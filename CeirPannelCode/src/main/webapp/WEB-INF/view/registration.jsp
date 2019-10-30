@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+c<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -25,11 +25,11 @@
 <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
 <!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
-	href="images/favicon/apple-touch-icon-152x152.png">
+	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
 <meta name="msapplication-TileColor" content="#00bcd4">
 <meta name="msapplication-TileImage"
-	content="images/favicon/mstile-144x144.png">
+	content="${context}/resources/images/favicon/mstile-144x144.png">
 <!-- For Windows Phone -->
 <link rel="stylesheet"
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
@@ -91,7 +91,8 @@ footer {
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<form id="registrationForm" method="post" action="${context}/registration">
+				<form id="registrationForm" method="post"
+					action="${context}/registration">
 					<div class="card-panel"
 						style="width: 90%; margin: auto; padding: 20px 5% 20px 5%;">
 						<a href="${context}/"
@@ -123,7 +124,7 @@ footer {
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="passportNumber"
+									<input type="text" name="passportNo"
 										class="form-control boxBorder boxHeight" id="passportNumber"
 										maxlength="14"> <label for="passportNumber">National
 										ID/Passport Number <span class="star">*</span>
@@ -138,7 +139,7 @@ footer {
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="phone"
+									<input type="text" name="mobileNo"
 										class="form-control boxBorder boxHeight" id="phone"
 										maxlength="10"> <label for="phone">Phone
 										Number <span class="star">*</span>
@@ -146,7 +147,7 @@ footer {
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="company"
+									<input type="text" name="companyName"
 										class="form-control boxBorder boxHeight" id="company"
 										maxlength="30"> <label for="company">Company
 										Name <span class="star">*</span>
@@ -156,14 +157,14 @@ footer {
 
 							<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" name="address"
+									<input type="text" name="propertyLocation"
 										class="form-control boxBorder boxHeight" id="address">
 									<label for="address">Address(Property Location) <span
 										class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="streetNumber"
+									<input type="text" name="street"
 										class="form-control boxBorder boxHeight" id="streetNumber"
 										maxlength="30"> <label for="streetNumber">Street
 										Number <span class="star">*</span>
@@ -190,7 +191,7 @@ footer {
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Country <span class="star">*</span>
 									</p>
-									<select id="country" class="browser-default" class="mySelect"
+									<select id="country" name="country" class="browser-default" class="mySelect"
 										style="padding-left: 0;" required></select>
 									<!-- <label for="country">Country <span class="star">*</span></label> -->
 								</div>
@@ -201,9 +202,9 @@ footer {
 									<label for="vatNumber">VAT Registration <span
 										class="star">*</span></label>
 									<div class=" boxHeight">
-										<input class="with-gap" name="group3" type="radio"
+										<input value="1" class="with-gap" name="vatStatus" type="radio"
 											onclick="document.getElementById('vatNumberField').style.display = 'block';">
-										Yes <input class="with-gap" name="group3" type="radio"
+										Yes <input value="0" class="with-gap" name="vatStatus" type="radio"
 											style="margin-left: 20px;"
 											onclick="document.getElementById('vatNumberField').style.display = 'none';"
 											checked /> No
@@ -212,7 +213,7 @@ footer {
 
 								<div class="input-field col s12 m6 l6" style="display: none;"
 									id="vatNumberField">
-									<input type="text" name="vatNumber"
+									<input type="text" name="vatNo"
 										class="form-control boxBorder boxHeight" id="vatNumber"
 										maxlength="16"> <label for="roleType">VAT
 										Number <span class="star">*</span>
@@ -225,15 +226,18 @@ footer {
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Role Type <span class="star">*</span>
-									</p>
-									<select multiple required>
-										<option value="" disabled selected>Role Type 
-										<span
+									</p> 
+									<select multiple required name="roles">
+										<option value="" disabled selected>Role Type <span
 												class="star"></span></option>
-										<option value="Paid">Importer</option>
+								<c:forEach items="${usertypes}" var="usertype" >
+								<option  value="${usertype.id}">${usertype.usertypeName}</option>
+								
+								</c:forEach>	
+									<!-- 	<option value="Paid">Importer</option>
 										<option value="NotPaid">Distributor</option>
 										<option value="NotPaid">Retailer</option>
-									</select>
+ -->									</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -241,7 +245,7 @@ footer {
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Type <span class="star">*</span>
 									</p>
-									<select class="browser-default" id="mySelect"
+									<select class="browser-default" name="type" id="mySelect"
 										onchange="myFunction()" required>
 										<option value="" disabled selected>Type</option>
 										<option value="Individual">Individual</option>
@@ -267,8 +271,7 @@ footer {
 											type="text">
 									</div>
 								</div>
-								<br>
-								<br>
+								<br> <br>
 								<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
 							</div>
 
@@ -293,21 +296,24 @@ footer {
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<select class="browser-default" required>
-										<option value="" disabled selected>Security Question
-											1</option>
-										<option value="NotPaid">What is your childhood name?</option>
-										<option value="NotPaid">Where is your birth place?</option>
-										<option value="NotPaid">What is your favourite movie?</option>
-										<option value="NotPaid">What is your favourite sports
+									<select class="browser-default" name="questionList[0].question" required>
+									<c:forEach items="${questions}" var="question"> 
+									<option value="${question.id}">${question.question}</option>
+									</c:forEach>
+<!-- 										<option value="" disabled selected>Security Question
+											1</option> 
+										<option value="1">What is your childhood name?</option>
+										<option value="2">Where is your birth place?</option>
+										<option value="3">What is your favourite movie?</option>
+										<option value="4">What is your favourite sports
 											team?</option>
-										<option value="NotPaid">What is your favourite pet’s
-											name?</option>
+										<option value="5">What is your favourite pet’s
+											name?</option> -->
 									</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="SecurityAnswer"
+									<input type="text" name="questionList[0].answer"
 										class="form-control boxBorder boxHeight" id="SecurityAnswer"
 										maxlength="50"> <label for="SecurityAnswer">Answer
 										<span class="star">*</span>
@@ -317,21 +323,25 @@ footer {
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<select class="browser-default" required>
-										<option value="" disabled selected>Security Question
+									<select name="questionList[1].question" class="browser-default" required>
+										<!-- <option value="" disabled selected>Security Question
 											2</option>
-										<option value="NotPaid">What is your childhood name?</option>
-										<option value="NotPaid">Where is your birth place?</option>
-										<option value="NotPaid">What is your favourite movie?</option>
-										<option value="NotPaid">What is your favourite sports
+										<option value="1">What is your childhood name?</option>
+										<option value="2">Where is your birth place?</option>
+										<option value="3">What is your favourite movie?</option>
+										<option value="4">What is your favourite sports
 											team?</option>
-										<option value="NotPaid">What is your favourite pet’s
-											name?</option>
+										<option value="5">What is your favourite pet’s
+											name?</option> -->
+											
+											<c:forEach items="${questions}" var="question"> 
+									<option value="${question.id}">${question.question}</option>
+									</c:forEach>
 									</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="SecurityAnswer"
+									<input type="text" name="questionList[1].answer"
 										class="form-control boxBorder boxHeight" id="SecurityAnswer"
 										maxlength="50"> <label for="SecurityAnswer">Answer
 										<span class="star">*</span>
@@ -341,21 +351,25 @@ footer {
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<select class="browser-default" required>
-										<option value="" disabled selected>Security Question
+									<select name="questionList[2].question" class="browser-default" required>
+										<!-- <option value="" disabled selected>Security Question
 											3</option>
-										<option value="NotPaid">What is your childhood name?</option>
-										<option value="NotPaid">Where is your birth place?</option>
-										<option value="NotPaid">What is your favourite movie?</option>
-										<option value="NotPaid">What is your favourite sports
+										<option value="1">What is your childhood name?</option>
+										<option value="2">Where is your birth place?</option>
+										<option value="3">What is your favourite movie?</option>
+										<option value="4">What is your favourite sports
 											team?</option>
-										<option value="NotPaid">What is your favourite pet’s
-											name?</option>
+										<option value="5">What is your favourite pet’s
+											name?</option> -->
+										<c:forEach items="${questions}" var="question"> 
+									<option value="${question.id}">${question.question}</option>
+									</c:forEach>      	
+											
 									</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="SecurityAnswer"
+									<input type="text" name="questionList[2].answer"
 										class="form-control boxBorder boxHeight" id="SecurityAnswer"
 										maxlength="50"> <label for="SecurityAnswer">Answer
 										<span class="star">*</span>
@@ -368,11 +382,12 @@ footer {
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave" type="submit" style="margin-left: 10px;">submit</button>
+								<button class="btn" id="btnSave" type="submit"
+									style="margin-left: 10px;">submit</button>
 								<button class="btn" style="margin-left: 10px;">cancel</button>
 							</div>
-						</div> 
 						</div>
+					</div>
 				</form>
 			</div>
 		</div>
@@ -413,7 +428,7 @@ footer {
 
 	<!-- Modal 2 start   -->
 
-	<div id="submitActivateDeactivate" class="modal">
+	<!-- <div id="submitActivateDeactivate" class="modal">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
@@ -434,7 +449,7 @@ footer {
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<!-- Modal End -->
 
 	<!-- Modal 2 start   -->
@@ -464,45 +479,16 @@ footer {
 	<!-- ================================================
     Scripts
     ================================================ -->
-<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-		<script type="text/javascript" src="${context}/resources/js/country.js"></script>
-		<!--materialize js-->
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	<script>
-        /* $(document).ready(function () {
-            $('.modal').modal();
-        }); */
-
-        $('.dropdown-trigger').dropdown();
-
-        $(document).ready(function () {
-            $('select').formSelect();
-        });
-    </script>
-
-	<script>
-        populateCountries(
-            "country"  );
-    </script>
-
-	<script>
-        function myFunction() {
-            var x = document.getElementById("mySelect").value;
-            if (x == 'Individual') {
-                document.getElementById("uploadFile").style.display = "block";
-            } else {
-
-                document.getElementById("uploadFile").style.display = "none";
-            }
-        } 
-    </script>
+		
+		<!-- jQuery Library -->
 
 
-	<!-- jQuery Library -->
-	
-	
 	<!--prism
     <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -523,6 +509,39 @@ footer {
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
+		
+	<script>
+        $(document).ready(function () {
+            /* $('.modal').modal(); */
+            $('.dropdown-trigger').dropdown();
+            $('select').formSelect();
+        }); 
+       
+        
 
+       /*  $(document).ready(function () {
+           
+        }); */
+    </script>
+
+	<script>
+        populateCountries(
+            "country"  );
+    </script>
+
+	<script>
+        function myFunction() {
+            var x = document.getElementById("mySelect").value;
+            if (x == 'Individual') {
+                document.getElementById("uploadFile").style.display = "block";
+            } else {
+
+                document.getElementById("uploadFile").style.display = "none";
+            }
+        } 
+    </script>
+
+
+	
 </body>
 </html>

@@ -11,6 +11,7 @@
 		</encoder>
 		 <file>/home/ubuntu/CeirContent/logs/log.log</file> 
 	<!--	<file>/home/ubuntu/parveen/api-meeto.log</file>-->
+	 <!-- <file>D:/MyDocs/Logs/log.log</file> --> 
 		
 		 
 		
@@ -18,6 +19,7 @@
 		
 		<!-- <fileNamePattern>/home/ubuntu/parveen/api-meeto.%d{yyyy-MM-dd}.log</fileNamePattern> -->
 		 <fileNamePattern>/home/ubuntu/CeirContent/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern> 
+		 <!-- <fileNamePattern>D:/MyDocs/Logs/log.%d{yyyy-MM-dd}.log</fileNamePattern> -->
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 
