@@ -1,13 +1,15 @@
 package com.gl.ceir.config.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
 import com.gl.ceir.config.model.ConsignmentMgmt;
 
 
-public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long> {
+public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>,
+	JpaSpecificationExecutor<ConsignmentMgmt> {
 
 	
 	public ConsignmentMgmt save(ConsignmentMgmt consignment);

@@ -1,16 +1,18 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.GenricResponse;
@@ -41,12 +43,8 @@ public class ConsignmentController {
 	@Autowired
 	Utility utility;
 
-
-
 	@ApiOperation(value = "Add new consignment.", response = GenricResponse.class)
-
 	@RequestMapping(path = "/consignment/register", method = RequestMethod.POST)
-
 	public GenricResponse uploadFile(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
 		logger.info("Consignment Register Request="+consignmentUploadRequest);
@@ -72,10 +70,8 @@ public class ConsignmentController {
 
 	}
 
-
 	@ApiOperation(value = "View all the list of consignment", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/Record", method = RequestMethod.GET)
-
 	public MappingJacksonValue getByImporterId(@RequestParam("userId") Long userId) {
 
 		logger.info("Request TO view TO all record of user="+userId);
@@ -88,12 +84,25 @@ public class ConsignmentController {
 
 		return mapping;
 	}
+	
+	// SNAPSHOT
+	@ApiOperation(value = "View all the list of consignment", response = ConsignmentMgmt.class)
+	@PostMapping("/filter/consignment")
+	public MappingJacksonValue filterConsignment(@RequestBody ConsignmentMgmt consignmentMgmt) {
 
+		logger.info("Request TO filter all record of consignment = " + consignmentMgmt);
 
+		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilteredConsignment(userId);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
+
+		logger.info("Response of view Request ="+mapping);
+
+		return mapping;
+	}
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
-
 	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
 
 		logger.info("View Request only Single Record="+txnId);
@@ -104,7 +113,6 @@ public class ConsignmentController {
 		logger.info("Response of View ="+mapping);
 		return mapping;
 	}
-
 
 	@ApiOperation(value = "Download Sample Stoke File.", response = String.class)
 	@RequestMapping(path = "/Download/SampleFile", method = RequestMethod.GET)
@@ -121,12 +129,7 @@ public class ConsignmentController {
 		}
 	}
 
-
-
-
-
 	@ApiOperation(value = "Download Stoke upload File.", response = String.class)
-
 	@RequestMapping(path = "/Download/uploadFile", method = RequestMethod.GET)
 	public String downloadStrokeFile(String fileName,String txnId,String fileType) {
 
@@ -143,9 +146,7 @@ public class ConsignmentController {
 
 
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
-
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
-
 	public GenricResponse deleteConsigment(String txnId) {
 
 		logger.info("Consignment Withdraw Request ="+txnId);
@@ -157,10 +158,5 @@ public class ConsignmentController {
 		return genricResponse;
 
 	}
-
-	
-	
-	
-
 
 }

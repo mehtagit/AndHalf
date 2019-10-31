@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -84,6 +85,17 @@ public class ConsignmentServiceImpl {
 		try {
 			logger.info("Going to get All Cosignment List ");
 			return consignmentRepository.getByUserIdOrderByIdDesc(importerId);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+	
+	public List<ConsignmentMgmt> getFilteredConsignment(ConsignmentMgmt consignmentMgmt, Pageable pageable) {
+		try {
+			logger.info("Going to get All Cosignment List ");
+			return consignmentRepository.findAll();
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
