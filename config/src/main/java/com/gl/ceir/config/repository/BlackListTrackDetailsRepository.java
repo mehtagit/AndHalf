@@ -2,12 +2,12 @@ package com.gl.ceir.config.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.ceir.config.model.BlackListTrackDetails;
+import com.gl.ceir.config.model.BlacklistDbHistory;
 
-public interface BlackListTrackDetailsRepository extends JpaRepository<BlackListTrackDetails, Long> {
+public interface BlackListTrackDetailsRepository extends JpaRepository<BlacklistDbHistory, Long> {
 
 
-	public BlackListTrackDetails save(BlackListTrackDetails blackListTrackDetails);
+	public BlacklistDbHistory save(BlacklistDbHistory blackListTrackDetails);
 
 
 }

@@ -5,11 +5,13 @@ public class GenricResponse {
 
 	private int errorCode;
 	private String message;
+	private String txnId;
 
-	
-	public GenricResponse(int errorCode, String message) {
+
+	public GenricResponse(int errorCode, String message, String txnId) {
 		this.errorCode = errorCode;
 		this.message = message;
+		this.txnId = txnId;
 	}
 
 
@@ -24,6 +26,16 @@ public class GenricResponse {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+
+	public String getTxnId() {
+		return txnId;
+	}
+
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
 
 

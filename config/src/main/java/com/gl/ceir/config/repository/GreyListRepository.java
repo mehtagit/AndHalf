@@ -2,11 +2,11 @@ package com.gl.ceir.config.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.ceir.config.model.GreyList;
+import com.gl.ceir.config.model.GreylistDb;
 
-public interface GreyListRepository extends JpaRepository<GreyList, Long> {
+public interface GreyListRepository extends JpaRepository<GreylistDb, Long> {
 
-	public GreyList save (GreyList greyList);
+	public GreylistDb save (GreylistDb greyList);
 
 	public void deleteByImei(Long imei);
 

@@ -9,8 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class StolenandRecoveryDetails implements Serializable {
+public class StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -25,12 +30,19 @@ public class StolenandRecoveryDetails implements Serializable {
     
 	@NotNull	
 	private String txnId;
+
+	@JsonIgnore
+	@CreationTimestamp
 	private Date createdOn;
-	private Date updatedOn;
-	private String fileModeType;
-	private String sourceType;
+
+	@JsonIgnore
+	@UpdateTimestamp
+	private Date modifiedOn;
+	private String requestType;
+	private String roleType;
 	private String blockingType;
 	private String blockingTimePeriod;
+	
 	public Long getId() {
 		return id;
 	}
@@ -61,24 +73,23 @@ public class StolenandRecoveryDetails implements Serializable {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	
-	public Date getUpdatedOn() {
-		return updatedOn;
+	public Date getModifiedOn() {
+		return modifiedOn;
 	}
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
-	public String getFileModeType() {
-		return fileModeType;
+	public String getRequestType() {
+		return requestType;
 	}
-	public void setFileModeType(String fileModeType) {
-		this.fileModeType = fileModeType;
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
 	}
-	public String getSourceType() {
-		return sourceType;
+	public String getRoleType() {
+		return roleType;
 	}
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 	public String getBlockingType() {
 		return blockingType;

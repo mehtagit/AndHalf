@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.model.Consignment;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.service.impl.CustomServiceImpl;
 
@@ -25,12 +25,12 @@ public class CustomController {
 	CustomServiceImpl customServiceImpl;
 
 
-	@ApiOperation(value = "View All available Success File Info", response = Consignment.class)
+	@ApiOperation(value = "View All available Success File Info", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/custom/view", method = RequestMethod.GET)
 	public MappingJacksonValue getAll() {
 
 		logger.info("Custom view info request");
-		List<Consignment> customInfo =	customServiceImpl.getCustomDetails();
+		List<ConsignmentMgmt> customInfo =	customServiceImpl.getCustomDetails();
 
 		MappingJacksonValue mapping = new MappingJacksonValue(customInfo);
 

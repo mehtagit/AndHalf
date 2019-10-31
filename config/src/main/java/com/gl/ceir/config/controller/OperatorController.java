@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
-import com.gl.ceir.config.model.ListFileDetails;
+import com.gl.ceir.config.model.FileDumpMgmt;
 import com.gl.ceir.config.service.impl.ListFileDetailsImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -29,13 +29,13 @@ public class OperatorController {
 
 
 
-	@ApiOperation(value = "View blackList and Grey List FileDetails.", response = ListFileDetails.class)
+	@ApiOperation(value = "View blackList and Grey List FileDetails.", response = FileDumpMgmt.class)
 	@RequestMapping(path = "/operator/view", method = RequestMethod.GET)
 
 	public MappingJacksonValue getOperatorData(String listType) {
 
 		logger.info("List View Details Request ="+listType);		
-		List<ListFileDetails> fileDetails =	listFileDetailsImpl.getByListType(listType);
+		List<FileDumpMgmt> fileDetails =	listFileDetailsImpl.getByListType(listType);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(fileDetails);
 

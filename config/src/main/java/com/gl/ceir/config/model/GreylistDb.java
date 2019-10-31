@@ -3,13 +3,19 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class GreyList implements Serializable {
+public class GreylistDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -17,11 +23,24 @@ public class GreyList implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonIgnore
+	@CreationTimestamp
 	private Date createdOn;
-	private Date updatedOn;
+
+	@JsonIgnore
+	@UpdateTimestamp
+	private Date modifiedOn;
+	
 	private Long imei;
-	private String sourceType;
+
+	@Column(length = 15)
+	private String roleType;
+	
+	private Long userId;
+	
+	@Column(length = 20)
 	private String txnId;
+	
 	public Long getId() {
 		return id;
 	}
@@ -34,36 +53,38 @@ public class GreyList implements Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getUpdatedOn() {
-		return updatedOn;
-	}
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
-	}
+	
 	public Long getImei() {
 		return imei;
 	}
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
-	public String getSourceType() {
-		return sourceType;
-	}
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
-	}
+	
 	public String getTxnId() {
 		return txnId;
 	}
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	
-	
-	
-	
-	
-	
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	
 	
 }

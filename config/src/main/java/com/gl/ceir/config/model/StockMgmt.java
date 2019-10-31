@@ -1,113 +1,152 @@
 package com.gl.ceir.config.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class DistributerManagement {
+public class StockMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+ 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonIgnore
+	@CreationTimestamp
 	private Date createdOn;
-	private Date updatedOn;
-	private String userName;
-	private Long importerId;
+	@JsonIgnore
+	@UpdateTimestamp
+	private Date modifiedOn;
+
+	private String suplierName;
+
+	private Long supplierId;
+
+	@Column(length = 15)
 	private String invoiceNumber;
+
+	@Column(length = 20)
 	private String txnId;
+
 	private String fileName;
-	private String fileStatus;
+
 	private Long userId;
-	private String moduleType;
+
+	@Column(length = 15)
+	private String roleType;
+
 	private int  quantity;
 
+	@Column(length = 3)
+	private int stockStatus;
 
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Date getCreatedOn() {
 		return createdOn;
 	}
+
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getUpdatedOn() {
-		return updatedOn;
+
+	public Date getModifiedOn() {
+		return modifiedOn;
 	}
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
-	public Long getImporterId() {
-		return importerId;
+
+	public String getSuplierName() {
+		return suplierName;
 	}
-	public void setImporterId(Long importerId) {
-		this.importerId = importerId;
+
+	public void setSuplierName(String suplierName) {
+		this.suplierName = suplierName;
 	}
+
+	public Long getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
+	}
+
 	public String getInvoiceNumber() {
 		return invoiceNumber;
 	}
+
 	public void setInvoiceNumber(String invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
+
 	public String getTxnId() {
 		return txnId;
 	}
+
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+
 	public String getFileName() {
 		return fileName;
 	}
+
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public String getFileStatus() {
-		return fileStatus;
-	}
-	public void setFileStatus(String fileStatus) {
-		this.fileStatus = fileStatus;
-	}
+
 	public Long getUserId() {
 		return userId;
 	}
+
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public String getModuleType() {
-		return moduleType;
+
+	public String getRoleType() {
+		return roleType;
 	}
-	public void setModuleType(String moduleType) {
-		this.moduleType = moduleType;
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+
 	public int getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
-	@Override
-	public String toString() {
-		return "DistributerManagement [id=" + id + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn
-				+ ", userName=" + userName + ", importerId=" + importerId + ", invoiceNumber=" + invoiceNumber
-				+ ", txnId=" + txnId + ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", userId=" + userId
-				+ ", moduleType=" + moduleType + ", quantity=" + quantity + "]";
+
+	public int getStockStatus() {
+		return stockStatus;
+	}
+
+	public void setStockStatus(int stockStatus) {
+		this.stockStatus = stockStatus;
 	}
 
 

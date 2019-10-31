@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
-import com.gl.ceir.config.model.StolenandRecoveryDetails;
+import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
@@ -50,12 +50,8 @@ public class StolenAndRecoveryController {
 
 		logger.info("User id="+userId+"SourceType="+sourceType);
 
-		StolenandRecoveryDetails stolenandRecoveryDetails = new StolenandRecoveryDetails();
-		stolenandRecoveryDetails.setUserId(userId);
-		stolenandRecoveryDetails.setSourceType(sourceType);
-		stolenandRecoveryDetails.setCreatedOn(new Date());
-		stolenandRecoveryDetails.setUpdatedOn(new Date());
-		stolenandRecoveryDetails.setFileModeType("Recovery");
+		StolenandRecoveryMgmt stolenandRecoveryDetails = new StolenandRecoveryMgmt();
+	
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.storeFile(file, stolenandRecoveryDetails);
 
 		return genricResponse;
@@ -69,13 +65,8 @@ public class StolenAndRecoveryController {
 
 	public GenricResponse uploadStolenDetails(@RequestParam("file") MultipartFile file, Long userId,String sourceType,String blockingType,String blockTimePeriod)
 	{
-		StolenandRecoveryDetails stolenandRecoveryDetails = new StolenandRecoveryDetails();
-		stolenandRecoveryDetails.setUserId(userId);
-		stolenandRecoveryDetails.setSourceType(sourceType);
-		stolenandRecoveryDetails.setCreatedOn(new Date());
-		stolenandRecoveryDetails.setUpdatedOn(new Date());
-		stolenandRecoveryDetails.setFileModeType("Stolen");
-		stolenandRecoveryDetails.setFileStatus("INIT");
+		StolenandRecoveryMgmt stolenandRecoveryDetails = new StolenandRecoveryMgmt();
+	
 
 		if(blockingType == null || blockingType.equalsIgnoreCase("Default") || blockingType == "") {
 
@@ -96,7 +87,7 @@ public class StolenAndRecoveryController {
 	}
 
 
-	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryDetails.class)
+	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
 
 	@RequestMapping(path = "/stackholder/ActionView", method = RequestMethod.GET)
 
@@ -104,7 +95,7 @@ public class StolenAndRecoveryController {
 
 		logger.info("Stolen And Recovery Info userId="+userId+"SourceType="+sourceType);
 
-		List<StolenandRecoveryDetails>	stolenandRecoveryDetails = stolenAndRecoveryServiceImpl.getAllInfo(userId, sourceType);
+		List<StolenandRecoveryMgmt>	stolenandRecoveryDetails = stolenAndRecoveryServiceImpl.getAllInfo(userId, sourceType);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetails);
 

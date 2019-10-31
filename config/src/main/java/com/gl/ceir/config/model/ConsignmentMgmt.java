@@ -3,14 +3,20 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Consignment implements Serializable {
+public class ConsignmentMgmt implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
@@ -24,53 +30,43 @@ public class Consignment implements Serializable {
 	@NotNull
 	private String supplierName;
 
+	@Column(length = 15)
 	private String consignmentNumber;
-	private String taxPaidStatus;
-	private Date createdOn;
-	private Date modifiedOn;
-	private Long importerId;
-	@NotNull
-	private String txnId;
-	private String importerName;
 
-	private String totalPrice;
+	@Column(length = 10)
+	private String taxPaidStatus;
+
+	
+	@CreationTimestamp
+	private Date createdOn;
+
+
+	@UpdateTimestamp
+	private Date modifiedOn;
+
+	private Long userId  ;
+
+	@NotNull
+	@Column(length = 20)
+	private String txnId;
 
 	private String fileName;
 
-	private String fileStatus;
-
-	private String consignmentStatus;
+	@Column(length = 3)
+	private int consignmentStatus;
 
 	private String organisationCountry;
+
+	@Column(length = 25)
 	private String expectedDispatcheDate;
+
+	@Column(length = 25)
 	private String expectedArrivaldate;
+
+	@Column(length = 10)
 	private String expectedArrivalPort;
+
 	private int quantity;
-	
-
-	public String getFileName() {
-		return fileName;
-	}
-
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-
-	public String getFileStatus() {
-		return fileStatus;
-	}
-
-	public void setFileStatus(String fileStatus) {
-		this.fileStatus = fileStatus;
-	}
-
-	public String getConsignmentStatus() {
-		return consignmentStatus;
-	}
-
-	public void setConsignmentStatus(String consignmentStatus) {
-		this.consignmentStatus = consignmentStatus;
-	}
 
 	public Long getId() {
 		return id;
@@ -128,12 +124,12 @@ public class Consignment implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Long getImporterId() {
-		return importerId;
+	public Long getUserId() {
+		return userId;
 	}
 
-	public void setImporterId(Long importerId) {
-		this.importerId = importerId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getTxnId() {
@@ -144,20 +140,20 @@ public class Consignment implements Serializable {
 		this.txnId = txnId;
 	}
 
-	public String getImporterName() {
-		return importerName;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setImporterName(String importerName) {
-		this.importerName = importerName;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public String getTotalPrice() {
-		return totalPrice;
+	public int getConsignmentStatus() {
+		return consignmentStatus;
 	}
 
-	public void setTotalPrice(String totalPrice) {
-		this.totalPrice = totalPrice;
+	public void setConsignmentStatus(int consignmentStatus) {
+		this.consignmentStatus = consignmentStatus;
 	}
 
 	public String getOrganisationCountry() {
@@ -191,6 +187,7 @@ public class Consignment implements Serializable {
 	public void setExpectedArrivalPort(String expectedArrivalPort) {
 		this.expectedArrivalPort = expectedArrivalPort;
 	}
+
 	public int getQuantity() {
 		return quantity;
 	}
@@ -199,19 +196,12 @@ public class Consignment implements Serializable {
 		this.quantity = quantity;
 	}
 
-	@Override
-	public String toString() {
-		return "Consignment [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
-				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
-				+ createdOn + ", modifiedOn=" + modifiedOn + ", importerId=" + importerId + ", txnId=" + txnId
-				+ ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
-				+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", organisationCountry="
-				+ organisationCountry + ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate="
-				+ expectedArrivaldate + ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + "]";
-	}
 
 
-	
-	
+
+
+
+
+
 
 }

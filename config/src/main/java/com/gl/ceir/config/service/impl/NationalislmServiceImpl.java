@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ForeignerRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.GreyList;
-import com.gl.ceir.config.model.GreyListTracDetails;
+import com.gl.ceir.config.model.GreylistDb;
+import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.ImeiInfo;
 import com.gl.ceir.config.model.NationalismImeiDetails;
 import com.gl.ceir.config.model.NationlismDetails;
@@ -70,19 +70,19 @@ public class NationalislmServiceImpl {
 
 					if("NotPaid".equalsIgnoreCase(info.getStatus())) {
 
-						GreyList greyList =new GreyList();
+						GreylistDb greyList =new GreylistDb();
 						greyList.setCreatedOn(new Date());
-						greyList.setUpdatedOn(new Date());
+					//	greyList.setUpdatedOn(new Date());
 						greyList.setImei(info.getFirstImei());
-						greyList.setSourceType("Cambodiya Nationlism");
+						///greyList.setSourceType("Cambodiya Nationlism");
 
 						greyListRepository.save(greyList);
 
-						GreyListTracDetails greyListTracDetails = new GreyListTracDetails();
+						GreylistDbHistory greyListTracDetails = new GreylistDbHistory();
 						greyListTracDetails.setCreatedOn(new Date());
-						greyListTracDetails.setUpdatedOn(new Date());
+					//	greyListTracDetails.setUpdatedOn(new Date());
 						greyListTracDetails.setImei(info.getFirstImei());
-						greyListTracDetails.setOperation("Add");
+						//greyListTracDetails.setOperation("Add");
 
 						greyListTrackRepository.save(greyListTracDetails);
 
@@ -90,10 +90,10 @@ public class NationalislmServiceImpl {
 						nationlismImeiDetailsRepository.save(nationalismImeiDetails);
 					}
 				}
-				return new GenricResponse(200,"Save Successfully");
+				return new GenricResponse(200,"Save Successfully","");
 			}else {
 
-				return new GenricResponse(1004,"PassportNumber Or visaNumber any one exist.");
+				return new GenricResponse(1004,"PassportNumber Or visaNumber any one exist.","");
 
 			}
 		}catch (Exception e) {
@@ -113,7 +113,7 @@ public class NationalislmServiceImpl {
 
 		if(passportDetails == null) {
 
-			return new GenricResponse(1005, "PassportNmber Does Not exist");
+			return new GenricResponse(1005, "PassportNmber Does Not exist","");
 		}else {
 
 			for(ImeiInfo info : foreignerDetails.getImeiInfo() ) {
@@ -127,19 +127,19 @@ public class NationalislmServiceImpl {
 
 				if("NotPaid".equalsIgnoreCase(info.getStatus())) {
 
-					GreyList greyList =new GreyList();
+					GreylistDb greyList =new GreylistDb();
 					greyList.setCreatedOn(new Date());
-					greyList.setUpdatedOn(new Date());
+				//	greyList.setUpdatedOn(new Date());
 					greyList.setImei(info.getFirstImei());
-					greyList.setSourceType("Cambodiya Nationlism");
+					//greyList.setSourceType("Cambodiya Nationlism");
 
 					greyListRepository.save(greyList);
 
-					GreyListTracDetails greyListTracDetails = new GreyListTracDetails();
+					GreylistDbHistory greyListTracDetails = new GreylistDbHistory();
 					greyListTracDetails.setCreatedOn(new Date());
-					greyListTracDetails.setUpdatedOn(new Date());
+				//	greyListTracDetails.setUpdatedOn(new Date());
 					greyListTracDetails.setImei(info.getFirstImei());
-					greyListTracDetails.setOperation("Add");
+				//	greyListTracDetails.setOperation("Add");
 
 					greyListTrackRepository.save(greyListTracDetails);
 
@@ -148,7 +148,7 @@ public class NationalislmServiceImpl {
 				}
 			}
 
-			return new GenricResponse(200, "Update Successfully.");
+			return new GenricResponse(200, "Update Successfully.","");
 		}
 	}
 
@@ -222,15 +222,15 @@ public class NationalislmServiceImpl {
 
 		greyListRepository.deleteByImei(nationalismImeiDetails.getFirstImei());
 
-		GreyListTracDetails greyListTracDetails = new GreyListTracDetails();
+		GreylistDbHistory greyListTracDetails = new GreylistDbHistory();
 		greyListTracDetails.setCreatedOn(new Date());
-		greyListTracDetails.setUpdatedOn(new Date());
+		//greyListTracDetails.setUpdatedOn(new Date());
 		greyListTracDetails.setImei(nationalismImeiDetails.getFirstImei());
-		greyListTracDetails.setOperation("Add");
+		//greyListTracDetails.setOperation("Add");
 
 		greyListTrackRepository.save(greyListTracDetails);
 
-		return new GenricResponse(200, "Update Successfully");
+		return new GenricResponse(200, "Update Successfully","");
 
 	}
 

@@ -21,7 +21,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.FileStorageException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.StolenandRecoveryDetails;
+import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 
 @Service
@@ -41,11 +41,11 @@ public class StolenAndRecoveryServiceImpl {
 
 
 	@Transactional
-	public GenricResponse storeFile(MultipartFile file, StolenandRecoveryDetails stolenandRecoveryDetails) {
+	public GenricResponse storeFile(MultipartFile file, StolenandRecoveryMgmt stolenandRecoveryDetails) {
 		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
 		try {
-			String txnId=getTxnId();
+			String txnId=null;
 
 			String serverPath=fileStorageProperties.getActionUploadDir();
 			serverPath = serverPath.replace("txnId", txnId);
@@ -64,7 +64,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			stolenAndRecoveryRepository.save(stolenandRecoveryDetails);
 
-			return new GenricResponse(200,"Upload Successfully.");
+			return new GenricResponse(200,"Upload Successfully.",stolenandRecoveryDetails.getTxnId());
 
 		}catch (Exception e) {
 			throw new FileStorageException("Could not store file " + fileName + ". Please try again!", e);
@@ -73,30 +73,14 @@ public class StolenAndRecoveryServiceImpl {
 
 
 	}
-	public String getTxnId() {
-
-		//DateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
-		DateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
-		Date date = new Date();
-		String transactionId = dateFormat.format(date)+randomNumericString(3);	
-		return transactionId;
-	}
-
-	public static String randomNumericString(int length) {
-		StringBuilder builder = new StringBuilder();
-		while (length-- != 0) {
-			int character = (int)(Math.random()*NUMERIC_STRING.length());
-			builder.append(NUMERIC_STRING.charAt(character));
-		}
-		return builder.toString();
-	}
+	
 
 
-
-	public List<StolenandRecoveryDetails> getAllInfo(Long userId,String sourceType){
+	public List<StolenandRecoveryMgmt> getAllInfo(Long userId,String sourceType){
 		try {
 
-			return 	stolenAndRecoveryRepository.findByUserIdAndSourceType(userId, sourceType);
+			return 	null;
+					//stolenAndRecoveryRepository.findByUserIdAndSourceType(userId, sourceType);
 
 		} catch (Exception e) {
 

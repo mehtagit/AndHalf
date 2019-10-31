@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.Consignment;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.CustomDetails;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.StokeDetails;
+import com.gl.ceir.config.model.DeviceDb;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.CustomDetailsRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
@@ -32,9 +32,10 @@ public class CustomServiceImpl {
 	@Autowired
 	CustomDetailsRepository customDetailsRepository;
 
-	public List<Consignment> getCustomDetails(){
+	public List<ConsignmentMgmt> getCustomDetails(){
 		try {
-			return	consignmentRepository.getByFileStatusOrderByIdDesc("Success");
+			return null;
+			//consignmentRepository.getByFileStatusOrderByIdDesc("Success");
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -48,20 +49,12 @@ public class CustomServiceImpl {
 
 			CustomDetails CustomDetails = new CustomDetails();
 
-			consignmentRepository.updateUser("Paid","Accepted", txnId);
+			//	consignmentRepository.updateUser("Paid","Accepted", txnId);
 
-			List<StokeDetails> stokeDetails = stokeDetailsRepository.findByTxnIdAndSourceType(txnId, "Importer");
+			//	List<DeviceDb> stokeDetails = stokeDetailsRepository.findByTxnIdAndSourceType(txnId, "Importer");
 
-			for(StokeDetails details : stokeDetails) {
-				CustomDetails.setImei(details.getImei());
-				CustomDetails.setSourceType("Importer");
-				CustomDetails.setCreatedOn(new Date());
-				CustomDetails.setUpdatedOn(new Date());
 
-				customDetailsRepository.save(CustomDetails);
-			}
-
-			return new GenricResponse(200, "Update Successfully.");
+			return new GenricResponse(200, "Update Successfully.",txnId);
 
 
 		} catch (Exception e) {

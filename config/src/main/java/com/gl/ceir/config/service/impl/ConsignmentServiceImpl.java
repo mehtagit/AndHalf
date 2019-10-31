@@ -1,38 +1,22 @@
 package com.gl.ceir.config.service.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
 import javax.transaction.Transactional;
-import javax.xml.soap.Text;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.gl.ceir.config.configuration.FileStorageProperties;
-import com.gl.ceir.config.exceptions.FileStorageException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.Consignment;
-import com.gl.ceir.config.model.FilterRequest;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.StockDetailsOperation;
-import com.gl.ceir.config.model.StokeDetails;
+import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.WebActionDbRepository;
 
-import java.io.*; 
-import java.nio.file.Files; 
-import java.nio.file.*;
+
 @Service
 public class ConsignmentServiceImpl {
 
@@ -40,7 +24,7 @@ public class ConsignmentServiceImpl {
 
 	//private final Path fileStorageLocation;
 
-	private final static String NUMERIC_STRING = "0123456789";
+
 
 	@Autowired
 	private ConsignmentRepository consignmentRepository;
@@ -54,64 +38,52 @@ public class ConsignmentServiceImpl {
 	@Autowired	
 	StockDetailsOperationRepository stockDetailsOperationRepository;
 
-
+	@Autowired
+	WebActionDbRepository webActionDbRepository;
 
 	@Transactional
-	public GenricResponse storeFile(String filePth, Consignment consignmentFileRequest) {
+	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
-			String txnId=getTxnId();
 
-			String serverPath=fileStorageProperties.getStokeUploadDir();
-			serverPath = serverPath.replace("txnId", txnId);
+			if(consignmentFileRequest.getConsignmentNumber() !=null || consignmentFileRequest.getConsignmentNumber() != " ") {
 
-			File dir = new File(serverPath);
-			if (!dir.exists()) {
-				boolean status=	dir.mkdirs();
+				ConsignmentMgmt consignmentMgmt	=consignmentRepository.getByConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
+
+				if(consignmentMgmt != null) {
+
+					return new GenricResponse(3,"Consignment Already Exist",consignmentFileRequest.getTxnId());
+				}
 			}
-			consignmentFileRequest.setTxnId(txnId);
+			WebActionDb webActionDb = new WebActionDb();
+			webActionDb.setFeature("Consignment");
+			webActionDb.setSubFeature("Register");
+			webActionDb.setState(0);
+			webActionDb.setTxnId(consignmentFileRequest.getTxnId());
 
-			logger.info("Server Path="+serverPath+"Old PAth="+filePth);
 
-			Path temp = Files.move(Paths.get(filePth),Paths.get(serverPath+"/"+consignmentFileRequest.getFileName()));
-
+			webActionDbRepository.save(webActionDb);
 
 			consignmentRepository.save(consignmentFileRequest);
 
-			return new GenricResponse(200,"Upload Successfully");
+			return new GenricResponse(0,"Register Successfully",consignmentFileRequest.getTxnId());
 
 		}catch (Exception e) {
-			logger.error("Not Store File="+e.getMessage());
+			logger.error("Not Register Consignent="+e.getMessage());
 
-			throw new FileStorageException("Could not store file " + consignmentFileRequest.getFileName() + ". Please try again!", e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
 
 
-	public String getTxnId() {
-
-		DateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
-		//DateFormat dateFormat = new SimpleDateFormat("MMddHHmmss");
-		Date date = new Date();
-		String transactionId = dateFormat.format(date)+randomNumericString(3);	
-		return transactionId;
-	}
-
-	public static String randomNumericString(int length) {
-		StringBuilder builder = new StringBuilder();
-		while (length-- != 0) {
-			int character = (int)(Math.random()*NUMERIC_STRING.length());
-			builder.append(NUMERIC_STRING.charAt(character));
-		}
-		return builder.toString();
-	}
 
 
-	public List<Consignment> getAll(Long importerId) {
+
+	public List<ConsignmentMgmt> getAll(Long importerId) {
 		try {
 			logger.info("Going to get All Cosignment List ");
-			return consignmentRepository.getByImporterIdOrderByIdDesc(importerId);
+			return consignmentRepository.getByUserIdOrderByIdDesc(importerId);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -120,7 +92,7 @@ public class ConsignmentServiceImpl {
 	}
 
 
-	public Consignment getRecordInfo(String txnId) {
+	public ConsignmentMgmt getRecordInfo(String txnId) {
 		try {
 			logger.info("Going to get  Cosignment Record Info");
 			return consignmentRepository.getByTxnId(txnId);
@@ -134,148 +106,95 @@ public class ConsignmentServiceImpl {
 
 
 	@Transactional
-	public GenricResponse updatestoreFile(String fileName,String path, Consignment consignmentFileRequest) {
+	public GenricResponse updateConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
 
-			Consignment consignmentInfo = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
+			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
+
 			logger.info("ConsignmentInfo="+consignmentInfo.toString());
 
-
 			if(consignmentInfo == null) {
-				return new GenricResponse(1001,"Consignment Does Not exist.");
-			}
 
-			if(path == null || path.equalsIgnoreCase(" ") || path.isEmpty()) {
-
-				consignmentFileRequest.setFileName(consignmentInfo.getFileName());
-				consignmentFileRequest.setFileStatus(consignmentInfo.getFileStatus());
-				consignmentFileRequest.setCreatedOn(consignmentInfo.getCreatedOn());
-				consignmentFileRequest.setModifiedOn(new Date());
-				consignmentFileRequest.setConsignmentStatus(consignmentInfo.getConsignmentStatus());
-
-				consignmentRepository.updateConsignment(consignmentFileRequest.getConsignmentNumber(), consignmentFileRequest.getImporterName(), consignmentFileRequest.getSupplierId(), consignmentFileRequest.getSupplierName(),
-						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(),consignmentFileRequest.getQuantity(),consignmentFileRequest.getTxnId());
-				logger.info("FIle Null save succfully");	
-
-				return new GenricResponse(200,"Update Successfully.");
-			}else {
-				consignmentFileRequest.setFileName(fileName);
-				consignmentFileRequest.setFileStatus("INIT");
-				consignmentFileRequest.setCreatedOn(consignmentInfo.getCreatedOn());
-				consignmentFileRequest.setModifiedOn(new Date());
-				consignmentFileRequest.setConsignmentStatus("Uploading");
-
-				consignmentRepository.updateConsignmentFileStatus(consignmentFileRequest.getConsignmentNumber(), consignmentFileRequest.getImporterName(), consignmentFileRequest.getSupplierId(), consignmentFileRequest.getSupplierName(),
-						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(), 
-						"Uploading",fileName,"INIT",consignmentFileRequest.getQuantity(),consignmentFileRequest.getTxnId());
-				//logger.info("FIle Null save succfully");
-				//Consignment consignment = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
-
-				List<StokeDetails> stokrDetails = stokeDetailsRepository.findByTxnIdAndSourceType(consignmentFileRequest.getTxnId(), "Importer");
-
-				for(StokeDetails detials: stokrDetails) {			
-
-					StockDetailsOperation stockOperation = new StockDetailsOperation();
-					stockOperation.setDeviceNumber(detials.getDeviceNumber());
-					stockOperation.setDeviceType(detials.getDeviceType());
-					stockOperation.setFileName(consignmentInfo.getFileName());
-					stockOperation.setImei(detials.getImei());
-					stockOperation.setFileStatus(consignmentInfo.getFileStatus());
-					stockOperation.setImeiAction(detials.getImeiAction());
-					stockOperation.setOperation("Delete");
-					stockOperation.setSourceType("Importer");
-					stockOperation.setTxnId(consignmentFileRequest.getTxnId());
-					stockOperation.setUserId(consignmentInfo.getImporterId());
-					stockOperation.setUserName(consignmentInfo.getImporterName());
-					stockOperation.setCreatedOn(new Date());
-					stockOperation.setUpdatedOn(new Date());
-					stockOperation.setTaxPaidStatus(consignmentInfo.getTaxPaidStatus());
-
-					stockDetailsOperationRepository.save(stockOperation);
-				}
-
-
-				stokeDetailsRepository.deleteByTxnId(consignmentFileRequest.getTxnId());
-
-				String serverPath=fileStorageProperties.getStokeUploadDir();
-				serverPath = serverPath.replace("txnId", consignmentFileRequest.getTxnId());
-
-				logger.info("Server Path="+serverPath);
-				logger.info("Old Path="+path);
-				File dir = new File(serverPath);
-
-				if (!dir.exists()) {
-					boolean status=	dir.mkdirs();
-				}
-
-				Path temp = Files.move(Paths.get(path),Paths.get(serverPath+"/"+fileName));
-
-				consignmentRepository.updateConsignmentFileStatus(consignmentFileRequest.getConsignmentNumber(), consignmentFileRequest.getImporterName(), consignmentFileRequest.getSupplierId(), consignmentFileRequest.getSupplierName(),
-						consignmentFileRequest.getExpectedArrivalPort(), consignmentFileRequest.getExpectedArrivaldate(),consignmentFileRequest.getExpectedDispatcheDate(), consignmentFileRequest.getOrganisationCountry(),
-						"Uploading",consignmentFileRequest.getFileName(),"INIT",consignmentFileRequest.getQuantity(),consignmentFileRequest.getTxnId());
-
-
-
-				return new GenricResponse(200,"Update Successfully.");
+				return new GenricResponse(4,"Consignment Does Not exist.", consignmentFileRequest.getTxnId());
 
 			}
+			else {
+				if(3 == consignmentInfo.getConsignmentStatus() || 5 == consignmentInfo.getConsignmentStatus() || 8 == consignmentInfo.getConsignmentStatus())
+				{
+					if(consignmentInfo.getConsignmentNumber() == consignmentFileRequest.getConsignmentNumber())
+					{
+						return new GenricResponse(3,"Consignment Already Exist",consignmentFileRequest.getTxnId());	
 
+					}else {
+
+						consignmentInfo.setConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
+						consignmentInfo.setExpectedArrivaldate(consignmentFileRequest.getExpectedArrivaldate());
+						consignmentInfo.setExpectedArrivalPort(consignmentFileRequest.getExpectedArrivaldate());
+						consignmentInfo.setExpectedDispatcheDate(consignmentFileRequest.getExpectedDispatcheDate());
+						consignmentInfo.setOrganisationCountry(consignmentFileRequest.getOrganisationCountry());
+						consignmentInfo.setQuantity(consignmentFileRequest.getQuantity());
+						consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierId());
+						consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
+						consignmentInfo.setTaxPaidStatus(consignmentFileRequest.getTaxPaidStatus());
+
+						if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " ")
+						{
+							consignmentInfo.setConsignmentStatus(1);	
+							consignmentInfo.setFileName(consignmentFileRequest.getFileName());
+						}
+
+						consignmentRepository.save(consignmentInfo);
+
+						WebActionDb webActionDb = new WebActionDb();
+						webActionDb.setFeature("Consignment");
+						webActionDb.setSubFeature("Update");
+						webActionDb.setState(0);
+						webActionDb.setTxnId(consignmentFileRequest.getTxnId());
+
+						webActionDbRepository.save(webActionDb);
+
+						return new GenricResponse(0,"Consignment Update in Processing.",consignmentFileRequest.getTxnId());
+					}				
+
+				}else {
+
+					return new GenricResponse(200,"Operation NOt Allowed.",consignmentFileRequest.getTxnId());
+				}
+			}
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	} 
 
+
+
 	@Transactional
 	public GenricResponse deleteConsigmentInfo(String txnId) {
 		try {
-			Consignment consignment = consignmentRepository.getByTxnId(txnId);
+			ConsignmentMgmt consignment = consignmentRepository.getByTxnId(txnId);
 
-			List<StokeDetails> stokrDetails = stokeDetailsRepository.findByTxnIdAndSourceType(txnId, "Importer");
+			if(consignment == null) {
+				return new GenricResponse(4, "Consignment Does not Exist",txnId);
+			}
+			if(3 == consignment.getConsignmentStatus() || 5 == consignment.getConsignmentStatus() || 8 == consignment.getConsignmentStatus())
+			{
 
-			if(stokrDetails != null) {
-				for(StokeDetails detials: stokrDetails) {			
+				WebActionDb webActionDb = new WebActionDb();
+				webActionDb.setFeature("Consignment");
+				webActionDb.setSubFeature("Delete");
+				webActionDb.setState(0);
+				webActionDb.setTxnId(txnId);
 
-					StockDetailsOperation stockOperation = new StockDetailsOperation();
-					stockOperation.setDeviceNumber(detials.getDeviceNumber());
-					stockOperation.setDeviceType(detials.getDeviceType());
-					stockOperation.setFileName(consignment.getFileName());
-					stockOperation.setImei(detials.getImei());
-					stockOperation.setFileStatus(consignment.getFileStatus());
-					stockOperation.setImeiAction(detials.getImeiAction());
-					stockOperation.setOperation("Delete");
-					stockOperation.setSourceType("Importer");
-					stockOperation.setTxnId(txnId);
-					stockOperation.setUserId(consignment.getImporterId());
-					stockOperation.setUserName(consignment.getImporterName());
-					stockOperation.setCreatedOn(new Date());
-					stockOperation.setUpdatedOn(new Date());
-					stockOperation.setTaxPaidStatus(consignment.getTaxPaidStatus());
+				webActionDbRepository.save(webActionDb);
 
-					stockDetailsOperationRepository.save(stockOperation);
-				}
-			}else {
-				StockDetailsOperation stockOperation = new StockDetailsOperation();
-				stockOperation.setFileName(consignment.getFileName());
-				stockOperation.setFileStatus(consignment.getFileStatus());
-				stockOperation.setOperation("Delete");
-				stockOperation.setSourceType("Importer");
-				stockOperation.setTxnId(txnId);
-				stockOperation.setUserId(consignment.getImporterId());
-				stockOperation.setUserName(consignment.getImporterName());
-				stockOperation.setCreatedOn(new Date());
-				stockOperation.setUpdatedOn(new Date());
-				stockOperation.setTaxPaidStatus(consignment.getTaxPaidStatus());
-
-				stockDetailsOperationRepository.save(stockOperation);
+				return new GenricResponse(200, "Delete In Progress",txnId);
+			}
+			else {
+				return new GenricResponse(200, "Operation Not Allowed",txnId);
 
 			}
-			stokeDetailsRepository.withdrawStatus("WithdrawnByImporter",txnId);
-			consignmentRepository.withdrawStatus("Withdrawn",txnId);
-
-
-			return new GenricResponse(200, "Delete succssfully");
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -285,17 +204,12 @@ public class ConsignmentServiceImpl {
 	}
 
 
+	
+	
+	
+	
+	
 
-	public List<Consignment> getFilterDetails(FilterRequest filterRequest){
-		try {
-
-			return	consignmentRepository.viewUser(filterRequest.getImporterId(), filterRequest.getEndDate(),filterRequest.getStartDate(),
-					filterRequest.getTaxPaidStatus(),filterRequest.getFileStatus(),filterRequest.getConsignmentStatus());
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());		}
-	}
 
 
 

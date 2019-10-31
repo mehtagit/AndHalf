@@ -8,14 +8,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import com.gl.ceir.config.model.StokeDetails;
+import com.gl.ceir.config.model.DeviceDb;
 
-public interface StokeDetailsRepository extends JpaRepository<StokeDetails, Long> {
+public interface StokeDetailsRepository extends JpaRepository<DeviceDb, Long> {
 
 
-	public	List<StokeDetails>  findByTxnIdAndSourceType(String txnId,String sourceType); 
+	public	List<DeviceDb>  getByImporterTxnId(String txnId); 
 
 	public void deleteByTxnId(String txnId);
+
+
+
+	public DeviceDb getByImeiEsnMeid(String device);
+
 
 
 	@Transactional

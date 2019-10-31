@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.FileStorageException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.BlackListImeiDetails;
-import com.gl.ceir.config.model.BlackListTrackDetails;
+import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.ForeignerDetails;
 import com.gl.ceir.config.model.ForeignerImeiDetails;
 import com.gl.ceir.config.model.ForeignerRequest;
@@ -20,7 +19,6 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ImeiInfo;
 import com.gl.ceir.config.model.ImmegreationImeiDetails;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
-import com.gl.ceir.config.repository.BlackListImeiDetailsRepository;
 import com.gl.ceir.config.repository.BlackListTrackDetailsRepository;
 import com.gl.ceir.config.repository.ForeignerDetailsRepository;
 import com.gl.ceir.config.repository.ForeignerImeiDetailsRepository;
@@ -47,8 +45,6 @@ public class ForeignerServiceImpl {
 	@Autowired
 	Utility utility;
 
-	@Autowired
-	BlackListImeiDetailsRepository blackListImeiDetailsRepository;
 
 	@Autowired
 	BlackListTrackDetailsRepository blackListTrackDetailsRepository;
@@ -90,10 +86,10 @@ public class ForeignerServiceImpl {
 				}
 
 
-				return new GenricResponse(200, "Upload SuccessFully");
+				return new GenricResponse(200, "Upload SuccessFully","");
 			}else {
 
-				return new GenricResponse(1002,"Passport number or Visa number any one already exist");
+				return new GenricResponse(1002,"Passport number or Visa number any one already exist","");
 			}
 
 		}catch (Exception e) {
@@ -120,7 +116,7 @@ public class ForeignerServiceImpl {
 			ForeignerDetails passporntNumber = foreignerDetailsRepository.getByPassportNumber(foreignerDetails.getPassportNumber());
 			if(passporntNumber == null) {
 
-				return new GenricResponse(1003, "Passport number Not Found");
+				return new GenricResponse(1003, "Passport number Not Found","");
 			}else {
 
 				ForeignerDetails foreignerDetailsData = new ForeignerDetails();
@@ -151,7 +147,7 @@ public class ForeignerServiceImpl {
 					foreignerImeiDetailsRepository.save(foreignerImeiDetails);
 				}
 
-				return new GenricResponse(200, "Update Successfully");
+				return new GenricResponse(200, "Update Successfully","");
 			}
 
 		} catch (Exception e) {
@@ -217,74 +213,8 @@ public class ForeignerServiceImpl {
 	@Transactional
 	public GenricResponse updateImeiActionInfo(ImmegreationImeiDetails immegreationImeiDetails) {
 
-		BlackListImeiDetails blackListImeiDetails = new BlackListImeiDetails();
-		blackListImeiDetails.setCreatedOn(new Date());
-		blackListImeiDetails.setModifiedOn(new Date());
-		blackListImeiDetails.setImei(immegreationImeiDetails.getImei());
-		blackListImeiDetails.setSourceType("Immegreation");
 
-
-		if("Block".equalsIgnoreCase(immegreationImeiDetails.getImeiType())) {
-
-			BlackListImeiDetails imeiInfo = blackListImeiDetailsRepository.getByImei(immegreationImeiDetails.getImei());
-			if(imeiInfo == null) {
-
-				if("Default".equalsIgnoreCase(immegreationImeiDetails.getBlockingType()) || immegreationImeiDetails.getBlockingType() == ""){
-
-					StackholderPolicyMapping stackholderPolicyMapping =	stackholderPolicyMappingRepository.getByListType("BlackList");
-
-					String newDate =utility.newDate(stackholderPolicyMapping.getGraceTimePeriod());
-
-					immegreationImeiDetails.setBlockingType("Default");
-					immegreationImeiDetails.setBlockingTime(newDate);
-				}
-
-				BlackListTrackDetails blackListTrackDetails = new BlackListTrackDetails();
-				blackListTrackDetails.setCreatedOn(new Date());
-				blackListTrackDetails.setModifiedOn(new Date());
-				blackListTrackDetails.setOperation("Add");
-				blackListTrackDetails.setSourceType("Immegreation");
-				blackListTrackDetails.setImei(immegreationImeiDetails.getImei());
-				immegreationImeiDetails.setProcessState(0);
-
-
-				immegreationImeiDetailsRepository.save(immegreationImeiDetails);
-
-				blackListImeiDetailsRepository.save(blackListImeiDetails);
-
-				blackListTrackDetailsRepository.save(blackListTrackDetails);
-
-				foreignerImeiDetailsRepository.updateUser("Block", immegreationImeiDetails.getPassportNumber(),immegreationImeiDetails.getImei(),immegreationImeiDetails.getImei());
-
-				return new GenricResponse(200, "Block SuccessFully");
-			}else {
-
-				return new GenricResponse(1004, "Imei Already Block.");
-			}
-
-		}else {
-			BlackListImeiDetails imeiInfo = blackListImeiDetailsRepository.getByImei(immegreationImeiDetails.getImei());
-			if(imeiInfo == null) {
-
-				return new GenricResponse(1005, "Imei Already UnBlock.");
-			}else {
-
-				BlackListTrackDetails blackListTrackDetails = new BlackListTrackDetails();
-				blackListTrackDetails.setCreatedOn(new Date());
-				blackListTrackDetails.setModifiedOn(new Date());
-				blackListTrackDetails.setOperation("Delete");
-				blackListTrackDetails.setSourceType("Immegreation");
-				blackListTrackDetails.setImei(immegreationImeiDetails.getImei());
-
-				blackListImeiDetailsRepository.deleteByImei(immegreationImeiDetails.getImei());
-
-				foreignerImeiDetailsRepository.updateUser("UnBlock", immegreationImeiDetails.getPassportNumber(),immegreationImeiDetails.getImei(),immegreationImeiDetails.getImei());
-
-				blackListTrackDetailsRepository.save(blackListTrackDetails);
-
-				return new GenricResponse(200, "UnBlock Successfully");
-			}
-		}
+		return null;
 	}
 
 

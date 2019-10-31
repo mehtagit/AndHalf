@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.ListFileDetails;
-import com.gl.ceir.config.repository.ListFileDetailsRepository;
+import com.gl.ceir.config.model.FileDumpMgmt;
+import com.gl.ceir.config.repository.FileDumpMgmtRepository;
 
 @Service
 public class ListFileDetailsImpl {
@@ -18,16 +18,16 @@ public class ListFileDetailsImpl {
 
 
 	@Autowired
-	ListFileDetailsRepository listFileDetailsRepository;
+	FileDumpMgmtRepository fileDumpMgmtRepository;
 
 
 
 
 
-	public List<ListFileDetails> getByListType(String listType){
+	public List<FileDumpMgmt> getByListType(String listType){
 		try {
 
-			return listFileDetailsRepository.getByListType(listType);
+			return fileDumpMgmtRepository.getByServiceDump(listType);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

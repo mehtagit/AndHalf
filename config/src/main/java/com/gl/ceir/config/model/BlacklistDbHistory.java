@@ -3,27 +3,42 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class BlackListTrackDetails implements Serializable {
+public class BlacklistDbHistory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@JsonIgnore
+	@CreationTimestamp
 	private Date createdOn;
+
+	@JsonIgnore
+	@UpdateTimestamp
 	private Date modifiedOn;
 	private Long imei;
-	private String operation;
-	private String sourceType;
-	
-	
+
+	@Column(length = 15)
+	private String roleType;
+
+	private Long userId;
+
+	private int operation;
+
+
 	public Long getId() {
 		return id;
 	}
@@ -48,22 +63,29 @@ public class BlackListTrackDetails implements Serializable {
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
-	public String getOperation() {
+	public int getOperation() {
 		return operation;
 	}
-	public void setOperation(String operation) {
+	public void setOperation(int operation) {
 		this.operation = operation;
 	}
-	public String getSourceType() {
-		return sourceType;
+	public String getRoleType() {
+		return roleType;
 	}
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
-	
-	
-	
-	
-	
+
+
+
+
+
+
 }

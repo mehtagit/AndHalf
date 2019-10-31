@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.ceir.config.model.StolenandRecoveryDetails;
+import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 
 
-public interface StolenAndRecoveryRepository extends JpaRepository<StolenandRecoveryDetails, Long> {
+public interface StolenAndRecoveryRepository extends JpaRepository<StolenandRecoveryMgmt, Long> {
 
 
-	public StolenandRecoveryDetails save(StolenandRecoveryDetails stolenandRecoveryDetails);
+	public StolenandRecoveryMgmt save(StolenandRecoveryMgmt stolenandRecoveryDetails);
 
-	public List<StolenandRecoveryDetails> findByUserIdAndSourceType(Long userId,String sourceType);
+	//public List<StolenandRecoveryMgmt> findByUserIdAndSourceType(Long userId,String sourceType);
 
 
 

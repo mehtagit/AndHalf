@@ -78,7 +78,7 @@ public class ImmegreationServiceImpl {
 			immegreationFileDetails.setTxnId(txnId);
 			immegreationFileDertailsRepository.save(immegreationFileDetails);
 
-			return new GenricResponse(200, "File Upload SuccessFully");
+			return new GenricResponse(200, "File Upload SuccessFully","");
 		}catch (Exception e) {
 
 			throw new FileStorageException("Could not store file " + file.getOriginalFilename() + ". Please try again!", e);
