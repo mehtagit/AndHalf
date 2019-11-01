@@ -259,10 +259,16 @@ opacity: 0;
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
                           <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
-                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/viewPage"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails()"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "EditConsignmentDetails()"><i 
+                          class="fa fa-pencil" aria-hidden="true" 
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+                         
                           <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
                               title="delete"></i></a>
@@ -281,9 +287,96 @@ opacity: 0;
         </div>
         <!--end container-->
       </section>
-	  
-	  
-  <!-- Modal 2 start   -->
+ 
+ 
+<!-- Edit confirmation Modal start   -->
+
+
+
+ 
+ 
+ <!--viewModal Modal start   -->
+
+  <div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+    <div class="modal-content">
+
+      <h6>View Consignment</h6>
+      <hr>
+	                        <form action="">
+
+                                    <div class="row myRow"	>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="name" id="name" disabled />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="name" id="name" disabled />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer Name</label>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="name" id="name" disabled />
+                                            <label for="Name" class="center-align">Consignment Number</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6" style="color: #c4c4c4;">
+                                            <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+                                                Arival Date</p>
+                                            <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
+                                            <input type="date" disabled>
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <select id="countryview" class="browser-default" class="mySelect" Placholder="Device Origination Counrty*"
+                                                disabled></select>
+                                            <label for="countryview" class="center-align"></label>
+                                        </div>
+
+
+                                        <div class="input-field col s12 m6">
+                                            <p class="input-text-date" style="color: #c4c4c4;">Expected Dispatch Date
+                                            </p>
+                                            <!-- <label for="Name">Expected arrival Date</label> -->
+                                            <input type="date" disabled>
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+                                            <select class="browser-default" disabled>
+                                                <option value="" disabled selected>Expected Arrival Port</option>
+                                                <option value="Air">Air</option>
+                                                <option value="Land">Land</option>
+                                                <option value="Water">Water</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="Quantity" id="Quantity" disabled />
+                                            <label for="Quantity" class="center-align">Quantity</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                                <input type="text" name="TransactionId" id="TransactionId" disabled maxlength="15" />
+                                                <label for="TransactionId" class="center-align">Transaction ID</label>
+                                            </div>
+                                    </div>
+
+                                    <div class="row" style="padding: 20px 0 100px 0;">
+                                        <div class="input-field col s12 center">
+                                            <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel" name="add_user"
+                                                id="add_user">Cancel</a>
+                                        </div>
+                                    </div>
+
+                                </form>	
+			</div>
+  </div>
+  <!-- Modal End -->
+
+ 
+  <!--Delete Modal start   -->
 
   <div id="DeleteConsignment" class="modal">
     <div class="modal-content">
@@ -313,7 +406,12 @@ opacity: 0;
   </div>
   <!-- Modal End -->
 
-  <!-- Modal 2 start   -->
+
+ 
+
+
+
+ <!-- Delete confirmation Modal start   -->
 
   <div id="confirmDeleteConsignment" class="modal">
       <div class="modal-content">
@@ -381,9 +479,66 @@ opacity: 0;
           
          
          <script type="text/javascript">
+         
+         function viewConsignmentDetails(){
+        	 $("#viewModal").modal('show');
+        	 
+        		/* $.ajax({
+				url : "./Consignment/openRegisterConsignmentForm/",
+				data : JSON.stringify(),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'GET',
+				success : function(data) {
+				
+				},
+				error : function() {
+					alert("Failed");
+				}
+			}); */
+        	 
+         }
+         
+         
+         function EditConsignmentDetails(){
+        	 
+        	 $("#updateModal").modal('show');	
+        	 
+        	/*  $.ajax({
+    				url : "./Consignment/openRegisterConsignmentForm/",
+    				data : JSON.stringify(),
+    				dataType : 'json',
+    				contentType : 'application/json; charset=utf-8',
+    				type : 'GET',
+    				success : function(data) {
+    				
+    				},
+    				error : function() {
+    					alert("Failed");
+    				}
+    			});
+        	
+        	
+        	
+        		$("#supplierId").val(supplierId);
+        		$("#supplierName").val(supplierName);
+        		$("#consignmentNumber").val(consignmentNumber);
+        		$("#expectedDispatcheDate").val(expectedDispatcheDate);
+        		$("#country").val(organisationcountry);
+        		$("#expectedArrivaldate").val(expectedArrivaldate);
+        		$("#expectedArrivalPort").val(expectedArrivalPort);
+        		$("#quantity").val(quantity);
+        		$("#TransactionId").val(txnId);
+        		$("#TotalPrice").val(totalPrice);
+        		$("#file").val(file); */
+        		
+        		
+        		
+        }
+         
+       
          function registerConsignment(){
         	
-     
         	 var dispatcDate=  $('#expectedDispatcheDate').val();
         	 var arrivalDate=  $('#expectedArrivalDate').val();
         	
@@ -590,12 +745,7 @@ opacity: 0;
           }
           </script> 
          
-        <!--    <script>
-   			 populateCountries
-   			 (   
-     			 "country"
-   			 );
-  </script> -->
+       
   
   
   <script>
@@ -619,5 +769,114 @@ event.preventDefault();
         	   backdrop: 'static   
             });  */
           </script>
+          
+      
+      <!-- Update Modal Start -->     
+      <div id="updateModal" class="modal-form" style = "overflow-y: hidden;">
+      <div class="modal-content">
+  
+         <h6>Edit Consignment</h6>
+        <hr>
+   			 <form action="" enctype="multipart/form-data" method="POST" id="editRegisterConsignment">
+
+                                    <div class="row myRow">
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="supplierId" id="name" maxlength="15" />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="supplierName" id="name" maxlength="15" required />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="consignmentNumber" id="name" maxlength="15" />
+                                            <label for="Name" class="center-align">Consignment Number</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+                                                Arrival Date <span class="star">*</span></p> -->
+                                            <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
+                                            <input name="expectedDispatcheDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                                <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
+                                            <select id="country"  name="organisationcountry" class="browser-default" class="mySelect"
+                                                required></select>
+                                            <label for="country" class="center-align"></label>
+                                        </div>
+
+
+                                        <div class="input-field col s12 m6">
+                                            <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
+                                            <!-- <label for="Name">Expected arrival Date</label> -->
+                                            <input name="expectedArrivalDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+                                            <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
+                                            <select name="expectedArrivalPort" class="browser-default" required>
+                                                <option value="" disabled selected>Expected arrival port *</option>
+                                                <option value="Air">Air</option>
+                                                <option value="Land">Land</option>
+                                                <option value="Water">Water</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="quantity" id="Quantity" maxlength="7" required />
+                                            <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                                <input type="text" name="txnId" id="TransactionId"  value="" readonly maxlength="15" />
+                                                <label for="TransactionId" class="center-align">Transaction ID</label>
+                                            </div>
+                                    </div>
+
+
+                                    <div class="row myRow">
+                                        <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
+                                                <h6 class="file-upload-heading" style="margin-left: 0;">Upload Bulk Devices
+                                                        Information <span class="star">*</span></h6>
+                                            <div class="btn">
+                                                <span>Select File</span>
+                                                <input type="file" name="file" id="csvUploadFile" accept=".csv">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate responsive-file-div" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p><a href="#">Download Sample Format</a></p>
+
+                                    <span> Required Field are marked with <span class="star">*</span> </span>
+
+
+                                    <div class="row">
+                                        <div class="input-field col s12 center">
+                                            <button class="waves-effect waves-light modal-trigger btn"
+                                                data-target="updateConsignment" type="button" onclick="editRegisterConsignment()">Update</button>
+                                            <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel"
+                                                style="margin-left: 10px;">Cancel</a>
+									 </div>
+                                    </div>
+                                </form>
+  			</div>
+    </div>
+       
+         <script>
+   			 populateCountries
+   			 (   
+     			 "country"
+   			 );
+  </script>    
 </body>
 </html>
