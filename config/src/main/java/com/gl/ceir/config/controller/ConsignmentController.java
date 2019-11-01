@@ -1,16 +1,18 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.GenricResponse;
@@ -81,6 +83,21 @@ public class ConsignmentController {
 		logger.info("Request TO view TO all record of user="+userId);
 
 		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getAll(userId);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
+
+		logger.info("Response of view Request ="+mapping);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "View filtered consignment", response = ConsignmentMgmt.class)
+	@PostMapping("/filter/consignment")
+	public MappingJacksonValue filterConsignments(@RequestBody ConsignmentMgmt consignmentMgmt) {
+
+		logger.info("Request TO view filtered consignment = " + consignmentMgmt);
+
+		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 

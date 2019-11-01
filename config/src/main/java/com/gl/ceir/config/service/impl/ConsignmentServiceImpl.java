@@ -1,6 +1,8 @@
 package com.gl.ceir.config.service.impl;
 
 import java.util.List;
+import java.util.Objects;
+
 import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,11 +12,14 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.ConsignmentMgmtSpecificationBuilder;
 
 
 @Service
@@ -75,15 +80,27 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-
-
-
-
-
 	public List<ConsignmentMgmt> getAll(Long importerId) {
 		try {
 			logger.info("Going to get All Cosignment List ");
 			return consignmentRepository.getByUserIdOrderByIdDesc(importerId);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+
+	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt) {
+		try {
+			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
+			if(Objects.nonNull(consignmentMgmt.getConsignmentNumber()))
+				cmsb.with(new SearchCriteria("consignmentNumber", consignmentMgmt.getConsignmentNumber(), SearchOperation.EQUALITY));
+			if(Objects.nonNull(consignmentMgmt.getSupplierId()))
+				cmsb.with(new SearchCriteria("supplierId", consignmentMgmt.getSupplierId(), SearchOperation.EQUALITY));
+			
+			return consignmentRepository.findAll(cmsb.build());
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -204,11 +221,11 @@ public class ConsignmentServiceImpl {
 	}
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 
 
 
