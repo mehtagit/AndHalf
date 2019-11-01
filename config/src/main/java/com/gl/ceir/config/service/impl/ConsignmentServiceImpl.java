@@ -178,7 +178,7 @@ public class ConsignmentServiceImpl {
 			if(consignment == null) {
 				return new GenricResponse(4, "Consignment Does not Exist",txnId);
 			}
-			if(3 == consignment.getConsignmentStatus() || 5 == consignment.getConsignmentStatus() || 8 == consignment.getConsignmentStatus())
+			if(1 == consignment.getConsignmentStatus()||3 == consignment.getConsignmentStatus() || 5 == consignment.getConsignmentStatus() || 8 == consignment.getConsignmentStatus())
 			{
 
 				WebActionDb webActionDb = new WebActionDb();

@@ -108,7 +108,7 @@ public class StockServiceImpl {
 				return new GenricResponse(1000, "No record found against this transactionId.",stockMgmt.getTxnId());
 			}else {
 
-				if(3 == stockMgmt.getStockStatus()) {
+				if(1 == stockMgmt.getStockStatus()||3 == stockMgmt.getStockStatus()) {
 
 					WebActionDb webActionDb = new WebActionDb();
 					webActionDb.setFeature("Stock");
