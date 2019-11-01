@@ -26,6 +26,7 @@ public class ConsignmentModel {
 	private String fileStatus;
 	private String consignmentStatus;
 	private String quantity;
+	private Long userId  ;
 	public int getId() {
 		return id;
 	}
@@ -68,6 +69,54 @@ public class ConsignmentModel {
 	public void setImporterId(int importerId) {
 		this.importerId = importerId;
 	}
+	public String getConsignmentNumber() {
+		return consignmentNumber;
+	}
+	public void setConsignmentNumber(String consignmentNumber) {
+		this.consignmentNumber = consignmentNumber;
+	}
+	public String getExpectedArrivalDate() {
+		return expectedArrivalDate;
+	}
+	public void setExpectedArrivalDate(String expectedArrivalDate) {
+		this.expectedArrivalDate = expectedArrivalDate;
+	}
+	public String getExpectedArrivaldate() {
+		return expectedArrivaldate;
+	}
+	public void setExpectedArrivaldate(String expectedArrivaldate) {
+		this.expectedArrivaldate = expectedArrivaldate;
+	}
+	public String getExpectedDispatcheDate() {
+		return expectedDispatcheDate;
+	}
+	public void setExpectedDispatcheDate(String expectedDispatcheDate) {
+		this.expectedDispatcheDate = expectedDispatcheDate;
+	}
+	public String getExpectedArrivalPort() {
+		return expectedArrivalPort;
+	}
+	public void setExpectedArrivalPort(String expectedArrivalPort) {
+		this.expectedArrivalPort = expectedArrivalPort;
+	}
+	public String getOrganisationcountry() {
+		return organisationcountry;
+	}
+	public void setOrganisationcountry(String organisationcountry) {
+		this.organisationcountry = organisationcountry;
+	}
+	public String getOrganisationCountry() {
+		return organisationCountry;
+	}
+	public void setOrganisationCountry(String organisationCountry) {
+		this.organisationCountry = organisationCountry;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	public String getTxnId() {
 		return txnId;
 	}
@@ -104,70 +153,21 @@ public class ConsignmentModel {
 	public void setConsignmentStatus(String consignmentStatus) {
 		this.consignmentStatus = consignmentStatus;
 	}
-	public String getConsignmentNumber() {
-		return consignmentNumber;
-	}
-	public void setConsignmentNumber(String consignmentNumber) {
-		this.consignmentNumber = consignmentNumber;
-	}
-	public String getExpectedArrivalDate() {
-		return expectedArrivalDate;
-	}
-	public void setExpectedArrivalDate(String expectedArrivalDate) {
-		this.expectedArrivalDate = expectedArrivalDate;
-	}
-	public String getExpectedDispatcheDate() {
-		return expectedDispatcheDate;
-	}
-	public void setExpectedDispatcheDate(String expectedDispatcheDate) {
-		this.expectedDispatcheDate = expectedDispatcheDate;
-	}
-	public String getExpectedArrivalPort() {
-		return expectedArrivalPort;
-	}
-	public void setExpectedArrivalPort(String expectedArrivalPort) {
-		this.expectedArrivalPort = expectedArrivalPort;
-	}
-	public String getOrganisationcountry() {
-		return organisationcountry;
-	}
-	public void setOrganisationcountry(String organisationcountry) {
-		this.organisationcountry = organisationcountry;
-	}
-	
-	
-	public MultipartFile getFile() {
-		return file;
-	}
-	public void setFile(MultipartFile file) {
-		this.file = file;
-	}
-	
-	
-	public String getExpectedArrivaldate() {
-		return expectedArrivaldate;
-	}
-	public void setExpectedArrivaldate(String expectedArrivaldate) {
-		this.expectedArrivaldate = expectedArrivaldate;
-	}
-	
-	
-	
-	public String getOrganisationCountry() {
-		return organisationCountry;
-	}
-	public void setOrganisationCountry(String organisationCountry) {
-		this.organisationCountry = organisationCountry;
-	}
 	public String getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	@Override
 	public String toString() {
-		return "ConsignmentPojo [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
+		return "ConsignmentModel [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
 				+ ", taxPaidStatus=" + taxPaidStatus + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
 				+ ", importerId=" + importerId + ", consignmentNumber=" + consignmentNumber + ", expectedArrivalDate="
 				+ expectedArrivalDate + ", expectedArrivaldate=" + expectedArrivaldate + ", expectedDispatcheDate="
@@ -175,8 +175,16 @@ public class ConsignmentModel {
 				+ organisationcountry + ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId="
 				+ txnId + ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
 				+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity
-				+ "]";
+				+ ", userId=" + userId + "]";
 	}
+
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

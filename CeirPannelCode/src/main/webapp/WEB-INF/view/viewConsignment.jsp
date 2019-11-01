@@ -146,7 +146,7 @@ opacity: 0;
                 <div class="row card-panel">
                   <div class="container-fluid pageHeader">
                     <p class="PageHeading">Consignment</p>
-                    <a href="./registerConsignment/formPage" class="boton right">Register Consignment</a>
+                    <a href="${context}/Consignment/openRegisterConsignmentForm/formPage" class="boton right">Register Consignment</a>
                   </div>
 					<form action="${context}/Consignment/viewConsignment" method="post">
                   <div class="col s12 m12 l12" id="consignmentTableDIv"
@@ -230,18 +230,30 @@ opacity: 0;
                         <th>Supplier Name</th>
                         <th>Consignment Status</th>
                         <th>Tax Paid Status</th>
-                        <th>File Status</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody id="consignmentTableLibraryTbody">
-                      <tr>
-                        <td>20/10/2018</td>
-                        <td>GFrt4581</td>
-                        <td>John</td>
-                        <td>Processing</td>
-                        <td>Paid</td>
-                        <td>Error</td>
+                      <c:forEach items="${consignmentdetails}" var="consignmentdetails">
+                       	<tr>
+                        <td>${consignmentdetails.createdOn}</td>
+                        <td>${consignmentdetails.txnId}</td>
+                        <td>${consignmentdetails.supplierName}</td>
+                         
+                        <c:choose>
+                        <c:when test="${consignmentdetails.consignmentStatus==0}">
+                        <td>uploading</td>
+                        </c:when>
+                         <c:when test="${consignmentdetails.consignmentStatus==1}">
+                        <td>processing</td>
+                        </c:when>
+                        
+                        <c:otherwise>
+                     
+                        
+                        </c:otherwise>
+                        </c:choose>
+                           <td>${consignmentdetails.taxPaidStatus}</td>
                         <td style="width:180px !important;">
                           <a href=""><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
@@ -256,96 +268,10 @@ opacity: 0;
                               title="delete"></i></a>
                         </td>
                       </tr>
+                      </c:forEach>
+                      
 
-                      <tr>
-                        <td>20/10/2018</td>
-                        <td>GFrt4581</td>
-                        <td>Sharad</td>
-                        <td>Uploading</td>
-                        <td>Not Paid</td>
-                        <td>Success</td>
-                        <td style="width:180px !important;">
-                          <a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
-                              style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
-                              style="font-size: 20px; color:#2e8b57" title="download"></i></a>
-                          <a href="${context}/Consignment/openViewConsignmentRecord/20192210"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
-                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
-                              style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
-                          <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
-                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
-                              title="delete"></i></a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>20/10/2018</td>
-                        <td>GFrt4581</td>
-                        <td>Vipin</td>
-                        <td>Processing</td>
-                        <td>Paid</td>
-                        <td>Processing</td>
-                        <td style="width:180px !important;">
-                          <a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
-                              style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
-                              style="font-size: 20px; color:#2e8b57" title="download"></i></a>
-                          <a href="${context}/Consignment/openViewConsignmentRecord/20192210"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
-                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
-                              style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
-                          <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
-                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
-                              title="delete"></i></a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>20/10/2018</td>
-                        <td>GFrt4581</td>
-                        <td>Rohit</td>
-                        <td>Processing</td>
-                        <td>Not Paid</td>
-                        <td>Error</td>
-                        <td style="width:180px !important;">
-                          <a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
-                              style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
-                              style="font-size: 20px; color:#2e8b57" title="download"></i></a>
-                          <a href="${context}/Consignment/openViewConsignmentRecord/20192210"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
-                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href=""><i class="fa fa-pencil" aria-hidden="true"
-                              style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
-                          <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
-                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
-                              title="delete"></i></a>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>20/10/2018</td>
-                        <td>GFrt4581</td>
-                        <td>Sanjay</td>
-                        <td>Processing</td>
-                        <td>Not Paid</td>
-                        <td>Success</td>
-                        <td style="width:180px !important;">
-                          <a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
-                              style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
-                              style="font-size: 20px; color:#2e8b57" title="download"></i></a>
-                          <a href="viewConsignment.html"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
-                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="editConsignment.html"><i class="fa fa-pencil" aria-hidden="true"
-                              style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
-                          <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
-                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
-                              title="delete"></i></a>
-                        </td>
-                      </tr>
-
-                    </tbody>
+                                        </tbody>
                   </table>
                 </div>
 

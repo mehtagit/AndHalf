@@ -8951,6 +8951,9 @@ a.waves-effect .waves-ripple {
   overflow-y: auto;
   border-radius: 2px;
   will-change: top, opacity;
+  z-index: 9999;
+  top: 60 !important;
+  margin-top: -400px;
 }
 
 @media only screen and (max-width: 992px) {

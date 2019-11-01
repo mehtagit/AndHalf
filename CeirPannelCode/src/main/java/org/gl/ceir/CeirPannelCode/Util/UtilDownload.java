@@ -6,7 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,31 +19,49 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 
-
+@Component
 public class UtilDownload {
 
 	private Logger logger = (Logger) LogManager.getLogger(UtilDownload.class);
 	
-	private final String NUMERIC_STRING = "0123456789";
+	private final static String NUMERIC_STRING = "0123456789";
+	
 
 	public UtilDownload() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String randomNumericString(int count) {
+	/*
+	 * public String randomNumericString(int count) { StringBuilder builder = new
+	 * StringBuilder(); while (count-- != 0) { int character =
+	 * (int)(Math.random()*NUMERIC_STRING.length());
+	 * builder.append(NUMERIC_STRING.charAt(character)); }
+	 * 
+	 * return builder.toString(); }
+	 * 
+	 * public String createRequestId(int count) { return randomNumericString(15); }
+	 */
+	
+	
+	
+	public String getTxnId() {
+
+		DateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
+		Date date = new Date();
+		String transactionId = dateFormat.format(date)+randomNumericString(3);	
+		return transactionId;
+	}
+
+	public static String randomNumericString(int length) {
 		StringBuilder builder = new StringBuilder();
-		while (count-- != 0) {
+		while (length-- != 0) {
 			int character = (int)(Math.random()*NUMERIC_STRING.length());
 			builder.append(NUMERIC_STRING.charAt(character));
 		}
-
 		return builder.toString();
-	}
-	
-	public String createRequestId(int count) {
-		return randomNumericString(15);
 	}
 	
 	public void downloadFileProperties(HttpServletRequest req, HttpServletResponse resp, 

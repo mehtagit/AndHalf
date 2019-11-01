@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +24,8 @@ public interface FeignCleintImplementation {
 	
 	
 	//View all Consignment  feign  controller
-	@RequestMapping(value="/consignment/details" ,method=RequestMethod.GET) 
-	public List<ConsignmentModel> consignmentList(@RequestParam("importerId") int importerId) ;
+	@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 
+	public List<ConsignmentModel> consignmentList(@RequestParam long userId) ;
 
 	
 	
@@ -35,11 +36,8 @@ public interface FeignCleintImplementation {
 	// @PostMapping(value="/consignment/upload")
 	
 	// @RequestLine("POST /consignment/upload")
-	@PostMapping(value="/consignment/upload")
-  
-	public ConsignmentModel addConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
-			,@RequestParam("expectedDispatcheDate") String expectedDispatcheDate,@RequestParam("fileName") String fileName,@RequestParam("filePath") String filePath,@RequestParam("importerId") int importerId,@RequestParam("importerName") String importerName,
-			@RequestParam("organisationCountry") String organisationCountry,@RequestParam("supplierId") String supplierId,@RequestParam("supplierName") String supplierName,@RequestParam("quantity") String quantity); 
+	@PostMapping(value="/consignment/register")
+    public GenricResponse addConsignment(ConsignmentModel consignment); 
 
 	
 	//***************************************************** update consignment feign ******************************************************************/ 

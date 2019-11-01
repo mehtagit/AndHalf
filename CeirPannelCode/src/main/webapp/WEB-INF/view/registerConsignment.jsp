@@ -80,7 +80,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 </head>
 <body>
 	 <!-- START MAIN -->
-    <div id="">
+
         <!-- START WRAPPER -->
         <div class="wrapper">
 	
@@ -92,7 +92,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                         <div class="row">
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
-                                    <form action="${context}/Consignment/registerConsignment/default" method="POST" enctype="multipart/form-data"  id="registerConsignment">
+                                    <form action="" method="POST" enctype="multipart/form-data"  id="registerConsignment">
                                     <div class="container-fluid pageHeader">
                                         <p class="PageHeading">Register Consignment</p>
                                         <!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
@@ -101,23 +101,23 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierId" id="name" maxlength="15" />
+                                            <input type="text" name="supplierId" id="supplierId" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" id="name" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="supplierName" maxlength="15" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                     </div>
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" id="name" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" id="consignmentNumber" maxlength="15" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input name="expectedDispatcheDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDate"  type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -126,13 +126,13 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select id="country" name="organisationcountry" class="browser-default" class="mySelect"
+                                            <select id="country" name="organisationcountry"  class="browser-default" class="mySelect"
                                                 style="padding-left: 0;" required></select>
                                         </div>
 
 
                                         <div class="input-field col s12 m6">
-                                            <input name="expectedArrivalDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivaldate" id="expectedArrivaldate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Arival Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -141,7 +141,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select class="browser-default" name="expectedArrivalPort">
+                                            <select class="browser-default" id="expectedArrivalPort" name="expectedArrivalPort">
                                                 <option value="" disabled selected>Expected Arrival Port <span id="starColor">*</span></option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
@@ -151,7 +151,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="quantity" id="Quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="quantity" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input type="file" name="file" id="csvUploadFile" accept=".csv">
+                                                <input type="file" name="file" id="file" accept=".csv">
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate responsive-file-div" type="text">
@@ -176,8 +176,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                     <div class="row">
                                         <div class="input-field col s12 center">
                                             <button class="waves-effect waves-light modal-trigger btn"
-                                                data-target="submitConsignment" onclick="registerConsignment()" type="button">Submit</button>
-                                            <a href="#cancelMessage" class="btn modal-trigger" type="cancel"
+                                                 onclick="registerConsignment()" type="button">Submit</button>
+                                            <a href="#cancelMessage"  class="btn modal-trigger" type="cancel"
                                                 style="margin-left: 10px;">Cancel</a>
 
 
@@ -199,7 +199,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
             <h6>Submit Consignment</h6><hr>
 
             <div class="row">
-                <h6>Your form has been successfully submitted. The Transaction ID for future reference is (Tr12345678)</h6>
+                <h6 id="sucessMessage">Your form has been successfully submitted. The Transaction ID for future reference is </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -267,7 +267,48 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
          function registerConsignment(){
         	
      			
-        	 $("#registerConsignment").submit();
+        	 var supplierId=$('#supplierId').val();
+        	 var supplierName=$('#supplierName').val();
+        	 var consignmentNumber=$('#consignmentNumber').val();
+        	 var expectedArrivalDate=$('#expectedArrivaldate').val();
+        	 var expectedDispatcheDate=$('#expectedDispatcheDate').val();
+        	 var expectedArrivalPort=$('#expectedArrivalPort').val();
+        	 var organisationcountry=$('#country').val();
+        	
+        	 var quantity=$('#quantity').val();
+        	 
+        	 
+        	 var formData= new FormData();
+        		formData.append('file', $('#file')[0].files[0]);
+        	 	 formData.append('supplierId',supplierId);
+        	 	formData.append('supplierName',supplierName);
+        	 	formData.append('consignmentNumber',consignmentNumber);
+        	 	formData.append('expectedArrivaldate',expectedArrivalDate);
+        	 	formData.append('expectedDispatcheDate',expectedDispatcheDate);
+        	 	formData.append('expectedArrivalPort',expectedArrivalPort);
+        	 	formData.append('organisationcountry',organisationcountry);
+        		formData.append('quantity',quantity);
+        	 	
+        	 $.ajax({
+ 				url: '${context}/Consignment/registerConsignment',
+ 				type: 'POST',
+ 				data: formData,
+ 				processData: false,
+ 				contentType: false,
+ 				success: function (data, textStatus, jqXHR) {
+ 					
+ 					 console.log(data);
+ 					 $('#submitConsignment').modal();
+ 					 $('#sucessMessage').append(data.txnId);
+ 				   // $('#updateConsignment').modal('open'); 
+ 					//alert("success");
+ 					
+ 				},
+ 				error: function (jqXHR, textStatus, errorThrown) {
+ 				console.log("error in ajax")
+ 				}
+ 			});
+        	
         	/*  var dispatcDate=  $('#expectedDispatcheDate').val();
         	 var arrivalDate=  $('#expectedArrivalDate').val();
         	
