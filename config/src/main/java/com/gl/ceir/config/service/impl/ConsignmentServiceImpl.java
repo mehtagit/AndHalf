@@ -92,7 +92,7 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt, Integer pageNo, Integer noOfRecordsPerPage) {
+	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt, Integer pageNo, Integer pageSize) {
 		try {
 			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
 			if(Objects.nonNull(consignmentMgmt.getConsignmentNumber()))

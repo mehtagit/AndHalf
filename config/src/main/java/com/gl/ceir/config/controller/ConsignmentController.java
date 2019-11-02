@@ -95,20 +95,12 @@ public class ConsignmentController {
 	@ApiOperation(value = "View filtered consignment", response = ConsignmentMgmt.class)
 	@PostMapping("/filter/consignment")
 	public MappingJacksonValue filterConsignments(@RequestBody ConsignmentMgmt consignmentMgmt,
-			@RequestParam(value = "pageNo", required = false) Integer pageNo,
-			@RequestParam(value = "noOfRecordsPerPage", required = false) Integer noOfRecordsPerPage) {
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
 		logger.info("Request TO view filtered consignment = " + consignmentMgmt);
 		
-		if(Objects.isNull(pageNo)) {
-			pageNo = Integer.valueOf(0);
-		}
-		
-		if(Objects.isNull(noOfRecordsPerPage)) {
-			noOfRecordsPerPage = Integer.valueOf(10);
-		}
-
-		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt, pageNo, noOfRecordsPerPage);
+		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt, pageNo, pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 
