@@ -3,16 +3,19 @@ package com.gl.ceir.config.specificationsbuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.criteria.Root;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.gl.ceir.config.controller.ConsignmentController;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.SearchOperation;
 
 public class ConsignmentMgmtSpecificationBuilder {
 
+	private static final Logger logger = LogManager.getLogger(ConsignmentController.class);
+	
 	private final List<SearchCriteria> params;
 
 	public ConsignmentMgmtSpecificationBuilder() {
@@ -37,7 +40,7 @@ public class ConsignmentMgmtSpecificationBuilder {
 		finalSpecification = Specification.where(specifications.get(0));
 		
 		for(int i = 1; i<specifications.size();i++) {
-			finalSpecification.and(specifications.get(i));
+			finalSpecification = finalSpecification.and(specifications.get(i));
 		}
 		
 		return finalSpecification;

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -91,7 +92,7 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt) {
+	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt, Integer pageNo, Integer noOfRecordsPerPage) {
 		try {
 			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
 			if(Objects.nonNull(consignmentMgmt.getConsignmentNumber()))

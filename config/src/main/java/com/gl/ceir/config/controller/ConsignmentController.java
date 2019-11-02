@@ -1,6 +1,7 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -93,11 +94,21 @@ public class ConsignmentController {
 	
 	@ApiOperation(value = "View filtered consignment", response = ConsignmentMgmt.class)
 	@PostMapping("/filter/consignment")
-	public MappingJacksonValue filterConsignments(@RequestBody ConsignmentMgmt consignmentMgmt) {
+	public MappingJacksonValue filterConsignments(@RequestBody ConsignmentMgmt consignmentMgmt,
+			@RequestParam(value = "pageNo", required = false) Integer pageNo,
+			@RequestParam(value = "noOfRecordsPerPage", required = false) Integer noOfRecordsPerPage) {
 
 		logger.info("Request TO view filtered consignment = " + consignmentMgmt);
+		
+		if(Objects.isNull(pageNo)) {
+			pageNo = Integer.valueOf(0);
+		}
+		
+		if(Objects.isNull(noOfRecordsPerPage)) {
+			noOfRecordsPerPage = Integer.valueOf(10);
+		}
 
-		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt);
+		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt, pageNo, noOfRecordsPerPage);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 
