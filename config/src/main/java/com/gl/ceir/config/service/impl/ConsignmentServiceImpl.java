@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -94,13 +95,15 @@ public class ConsignmentServiceImpl {
 
 	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt, Integer pageNo, Integer pageSize) {
 		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			
 			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
 			if(Objects.nonNull(consignmentMgmt.getConsignmentNumber()))
 				cmsb.with(new SearchCriteria("consignmentNumber", consignmentMgmt.getConsignmentNumber(), SearchOperation.EQUALITY));
 			if(Objects.nonNull(consignmentMgmt.getSupplierId()))
 				cmsb.with(new SearchCriteria("supplierId", consignmentMgmt.getSupplierId(), SearchOperation.EQUALITY));
 			
-			return consignmentRepository.findAll(cmsb.build());
+			return consignmentRepository.findAll(cmsb.build(), pageable).getContent();
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

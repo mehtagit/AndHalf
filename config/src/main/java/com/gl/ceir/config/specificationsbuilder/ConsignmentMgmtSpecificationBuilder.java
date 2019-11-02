@@ -15,17 +15,37 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 public class ConsignmentMgmtSpecificationBuilder {
 
 	private static final Logger logger = LogManager.getLogger(ConsignmentController.class);
-	
+
 	private final List<SearchCriteria> params;
 
 	public ConsignmentMgmtSpecificationBuilder() {
 		params = new ArrayList<>();
+	}
+	
+	public final ConsignmentMgmtSpecificationBuilder with(SearchCriteria criteria) { 
+		params.add(criteria);
+		return this;
 	}
 
 	public Specification<ConsignmentMgmt> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
 		Specification<ConsignmentMgmt> finalSpecification = null;
+		
+		List<Specification<ConsignmentMgmt>> specifications = createSpecifications();
+		
+		if(!specifications.isEmpty()) {
+			finalSpecification = Specification.where(specifications.get(0));
+
+			for(int i = 1; i<specifications.size() ;i++) {
+				finalSpecification = finalSpecification.and(specifications.get(i));
+			}
+		}
+
+		return finalSpecification;
+	}
+
+	private List<Specification<ConsignmentMgmt>> createSpecifications(){
 		List<Specification<ConsignmentMgmt>> specifications = new ArrayList<Specification<ConsignmentMgmt>>();
 
 		for(SearchCriteria searchCriteria : params) {
@@ -37,18 +57,6 @@ public class ConsignmentMgmtSpecificationBuilder {
 			});
 		}
 		
-		finalSpecification = Specification.where(specifications.get(0));
-		
-		for(int i = 1; i<specifications.size();i++) {
-			finalSpecification = finalSpecification.and(specifications.get(i));
-		}
-		
-		return finalSpecification;
+		return specifications;
 	}
-
-	public final ConsignmentMgmtSpecificationBuilder with(SearchCriteria criteria) { 
-		params.add(criteria);
-		return this;
-	}
-
 }
