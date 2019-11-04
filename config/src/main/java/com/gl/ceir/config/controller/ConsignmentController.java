@@ -92,7 +92,7 @@ public class ConsignmentController {
 
 		logger.info("Request TO filter all record of consignment = " + consignmentMgmt);
 
-		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilteredConsignment(userId);
+		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilteredConsignment(consignmentMgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 

@@ -1,11 +1,15 @@
 package com.gl.ceir.config.service.impl;
 
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -91,17 +95,50 @@ public class ConsignmentServiceImpl {
 		}
 
 	}
-	
-	public List<ConsignmentMgmt> getFilteredConsignment(ConsignmentMgmt consignmentMgmt, Pageable pageable) {
+
+	public List<ConsignmentMgmt> getFilteredConsignment(ConsignmentMgmt consignmentMgmt) {
 		try {
+
+			CaseSearchSpecificaton filter = new CaseSearchSpecificaton(consignmentMgmt);
 			logger.info("Going to get All Cosignment List ");
-			return consignmentRepository.findAll();
+			return consignmentRepository.findAll(filter);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
 	}
+
+
+	public  class CaseSearchSpecificaton implements Specification<ConsignmentMgmt> {
+
+		public CaseSearchSpecificaton(ConsignmentMgmt filter) {
+			super();
+			this.filter = filter;
+		}
+
+		private ConsignmentMgmt  filter;
+
+		public Predicate toPredicate(Root<ConsignmentMgmt> root, CriteriaQuery<?> cq,
+				CriteriaBuilder cb) {
+			Predicate p = cb.disjunction();
+
+			if (filter.getTaxPaidStatus() != null) {
+				p.getExpressions()
+				.add(cb.equal(root.get("taxPaidStatus"), filter.getTaxPaidStatus()));
+			}
+
+			/*if (filter.getSurname() != null && filter.getAge() != null) {
+				p.getExpressions().add(
+						cb.and(cb.equal(root.get("surname"), filter.getSurname()),
+								cb.equal(root.get("age"), filter.getAge())));
+			}*/
+
+			return p;
+		}
+	}
+
+
 
 
 	public ConsignmentMgmt getRecordInfo(String txnId) {
@@ -129,7 +166,6 @@ public class ConsignmentServiceImpl {
 			if(consignmentInfo == null) {
 
 				return new GenricResponse(4,"Consignment Does Not exist.", consignmentFileRequest.getTxnId());
-
 			}
 			else {
 				if(3 == consignmentInfo.getConsignmentStatus() || 5 == consignmentInfo.getConsignmentStatus() || 8 == consignmentInfo.getConsignmentStatus())
@@ -216,11 +252,11 @@ public class ConsignmentServiceImpl {
 	}
 
 
-	
-	
-	
-	
-	
+
+
+
+
+
 
 
 

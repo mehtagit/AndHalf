@@ -17,7 +17,7 @@ public class ConsignmentManagementSpecification {
 
 	private final String wildcard = "%";
 
-	public Specification<ConsignmentMgmt> getFilter(ConsignmentMgmt request) {
+	/*public Specification<ConsignmentMgmt> getFilter(ConsignmentMgmt request) {
 
 		return new Specification<ConsignmentMgmt>() {
 			@Override
@@ -32,7 +32,7 @@ public class ConsignmentManagementSpecification {
                 }).map(a -> builder.like(root.get(a.getName()), finalText)).toArray(Predicate[]::new));
 			}
         };
-	}
+	}*/
 
 	private Specification<ConsignmentMgmt> firstNameContains(String firstName) {
 		return userAttributeContains("consignmentStatus", firstName);
