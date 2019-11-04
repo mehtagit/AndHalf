@@ -52,8 +52,7 @@ public class Consignment {
 	  log.info(" view consignment entry point."); long id=1; List<ConsignmentModel>
 	  consignmentdetails=feignCleintImplementation.consignmentList(id);
 	  
-	  log.info("consignment details feign client...."+consignmentdetails.toString()
-	  ); ModelAndView mv = new ModelAndView(); mv.setViewName("viewConsignment");
+	  ModelAndView mv = new ModelAndView(); mv.setViewName("viewConsignment");
 	  mv.addObject("consignmentdetails", consignmentdetails);
 	  log.info(" view consignment exit point."); 
 	  return mv; 
@@ -113,8 +112,7 @@ public class Consignment {
         	e.printStackTrace();
 		}
 		log.info(" submit register form block.");
-		// calling service method
-		ConsignmentService service= new ConsignmentService();
+	
 
 		// set reaquest parameters into model class
 		consignment.setSupplierId(supplierId);
@@ -145,48 +143,68 @@ public class Consignment {
 
 	//************************************************ Open consignment record  page********************************************************************************/
 
-	@RequestMapping(value= {"/updateRegisterConsignment/{txnid}/{formRequestType}"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public ModelAndView openconsignmentRecordPage(@ModelAttribute(name="consignment") ConsignmentModel consignment,  @PathVariable(name="txnid",required = false) String  txnid,@PathVariable("formRequestType") String formRequestType,  @RequestParam(name="file",required =false) MultipartFile file) {
-		ModelAndView mv = new ModelAndView(); 
-		ConsignmentService consignmentService= new ConsignmentService();
-		log.info("entry point  in update Consignment .");
-
-		log.info("formtype===="+formRequestType);
-
-		//open edit consignment form
-		if(formRequestType.equals("formpage"))
+	@RequestMapping(value= {"/updateRegisterConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
+			,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
+			@RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
+			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
+			@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId) {
+		
+		GenricResponse response= new GenricResponse();
+		log.info("entry point  in update Consignment ** **.");
+		ConsignmentModel consignment = new ConsignmentModel();
+	      
+		if(file.isEmpty()==false)
 		{
+		 try {
+				byte[] bytes = file.getBytes();
+				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+				File dir = new File(rootPath + File.separator);
+		         
+				if (!dir.exists()) 
+					dir.mkdirs();
+				// Create the file on server
+				// Calendar now = Calendar.getInstance();
 
-			log.info("open  update Consignment  page.");
-			consignment=consignmentService.fetchConsignmentData(txnid);
-			mv.addObject("consignment", consignment);
-			mv.setViewName("editConsignment");
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("COMPLETE PATH" + serverFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+			
+		         }
+		        catch (Exception e) {
+					// TODO: handle exception
+		        	e.printStackTrace();
+				}
 		}
-		//open view consignment form
-		else if(formRequestType.equals("viewPage"))
-		{
-			log.info("open  view Consignment  form page.");
-			consignment=consignmentService.fetchConsignmentData(txnid);
-			mv.addObject("consignment", consignment);
-			mv.setViewName("viewConsignmentRecord");
-		}
+		
+		
+		consignment.setSupplierId(supplierId);
+		consignment.setSupplierName(supplierName);
+		consignment.setConsignmentNumber(consignmentNumber);
+		consignment.setExpectedDispatcheDate(expectedDispatcheDate);
+		consignment.setExpectedArrivaldate(expectedArrivalDate);
+		consignment.setOrganisationCountry(organisationcountry);
+		consignment.setExpectedArrivalPort(expectedArrivalPort);
+		consignment.setQuantity(quantity);
+		consignment.setTxnId(txnId);
+		consignment.setFileName(filename);
+		consignment.setUserId(Long.valueOf(1));
+		consignment.setImporterName("sharad yadav");
+		consignment.setTaxPaidStatus("Not Paid");
+		
+		log.info(consignment.toString());
 
-		// submit update consignment form
-		else {
+		 response = feignCleintImplementation.updateConsignment(consignment);
 			log.info(" update consignment form block.");
-			ConsignmentService service= new ConsignmentService();
+			
 			// calling service method
-			String response=service.updateConsignmnet(consignment, file, txnid);
-			if(response=="success")
-			{
-				mv.setViewName("redirect:/Consignment/viewConsignment");
-			}
-			else {
-				mv.setViewName("redirect:/Consignment/updateRegisterConsignment/formPage");	
-			}
-		}
+		//	String response=service.updateConsignmnet(consignment, file, txnid);
+			
+		
 		log.info(" update consignment exit point.");
-		return mv;
+		return response;
 
 	}
 
@@ -230,8 +248,8 @@ public class Consignment {
 
 
 	// *********************************************** open register page or edit page ******************************
-	@RequestMapping(value="/openRegisterConsignmentForm/{reqType}",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ModelAndView openRegisterConsignmentForm(@PathVariable(name="reqType") String reqType)
+	@RequestMapping(value="/openRegisterConsignmentForm",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public ModelAndView openRegisterConsignmentForm(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId)
 	{
 		ModelAndView mv= new ModelAndView();
 		if(reqType.equals("formPage"))
@@ -239,10 +257,22 @@ public class Consignment {
 			log.info("open registration Consignment form");
 			mv.setViewName("registerConsignment");
 		}
-		else {
-
+		else if(reqType.equals("editPage")) {
+			ConsignmentModel  consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+			log.info("consignment details="+consignmentdetails);
+			
 			log.info("open Update registration Consignment form");
 			mv.setViewName("editConsignment");
+			mv.addObject("consignmentdetails", consignmentdetails);
+		}
+		else {
+			ConsignmentModel  consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+			log.info("consignment details="+consignmentdetails);
+			
+			log.info("open view  registration Consignment form");
+			mv.setViewName("viewConsignmentRecord");
+			mv.addObject("consignmentdetails", consignmentdetails);
+			
 		}
 		return mv;
 

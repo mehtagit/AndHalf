@@ -146,7 +146,7 @@ opacity: 0;
                 <div class="row card-panel">
                   <div class="container-fluid pageHeader">
                     <p class="PageHeading">Consignment</p>
-                    <a href="${context}/Consignment/openRegisterConsignmentForm/formPage" class="boton right">Register Consignment</a>
+                    <a href="${context}/Consignment/openRegisterConsignmentForm?reqType=formPage" class="boton right">Register Consignment</a>
                   </div>
 					<form action="${context}/Consignment/viewConsignment" method="post">
                   <div class="col s12 m12 l12" id="consignmentTableDIv"
@@ -249,9 +249,7 @@ opacity: 0;
                         </c:when>
                         
                         <c:otherwise>
-                     
-                        
-                        </c:otherwise>
+                     	</c:otherwise>
                         </c:choose>
                            <td>${consignmentdetails.taxPaidStatus}</td>
                         <td style="width:180px !important;">
@@ -259,9 +257,9 @@ opacity: 0;
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
                           <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
-                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/viewPage"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                          <a href="${context}/Consignment/openRegisterConsignmentForm?reqType=viewPage&txnId=${consignmentdetails.txnId}"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/updateRegisterConsignment/20192210/formpage"><i class="fa fa-pencil" aria-hidden="true"
+                          <a href="${context}/Consignment/openRegisterConsignmentForm?reqType=editPage&txnId=${consignmentdetails.txnId}"><i class="fa fa-pencil" aria-hidden="true"
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                           <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"

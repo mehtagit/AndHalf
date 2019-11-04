@@ -42,16 +42,14 @@ public interface FeignCleintImplementation {
 	
 	//***************************************************** update consignment feign ******************************************************************/ 
 	@PostMapping(value="/consignment/update")
-	public ConsignmentModel updateConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
-			,@RequestParam("expectedDispatcheDate") String expectedDispatcheDate,@RequestParam("fileName") String fileName,@RequestParam("path") String filePath,@RequestParam("importerId") int importerId,@RequestParam("importerName") String importerName,
-			@RequestParam("organisationCountry") String organisationCountry,@RequestParam("supplierId") String supplierId,@RequestParam("supplierName") String supplierName,@RequestParam("txnId") String txnid,@RequestParam("quantity") String quantity) ;
+	public GenricResponse updateConsignment(ConsignmentModel consignment) ;
 
 	
 
 	
 	
 	//edit Consignment feign  controller
-		@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 
+		@RequestMapping(value="/consignment/view" ,method=RequestMethod.GET) 
 		public @ResponseBody ConsignmentModel fetchConsignmentByTxnId(@RequestParam("txnId") String txnId) ;
 		
 	

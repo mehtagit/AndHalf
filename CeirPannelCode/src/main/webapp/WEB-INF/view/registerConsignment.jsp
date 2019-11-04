@@ -92,7 +92,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                         <div class="row">
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
-                                    <form action="" method="POST" enctype="multipart/form-data"  id="registerConsignment">
+                                    <form action="" onsubmit="return registerConsignment()"  method="POST" enctype="multipart/form-data"  id="registerConsignment">
                                     <div class="container-fluid pageHeader">
                                         <p class="PageHeading">Register Consignment</p>
                                         <!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
@@ -101,23 +101,23 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierId" id="supplierId" maxlength="15" />
+                                            <input type="text" name="supplierId" id="supplierId" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" id="supplierName" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="supplierName" pattern="[A-Za-z]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                     </div>
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" id="consignmentNumber" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" id="consignmentNumber"pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input name="expectedDispatcheDate" id="expectedDispatcheDate"  type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDate"   required="required"  type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -126,13 +126,13 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select id="country" name="organisationcountry"  class="browser-default" class="mySelect"
+                                            <select id="country" name="organisationcountry"  required="required"  class="browser-default" class="mySelect"
                                                 style="padding-left: 0;" required></select>
                                         </div>
 
 
                                         <div class="input-field col s12 m6">
-                                            <input name="expectedArrivaldate" id="expectedArrivaldate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivaldate" id="expectedArrivaldate" type="text" required="required"  onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Arival Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -141,7 +141,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <select class="browser-default" id="expectedArrivalPort" name="expectedArrivalPort">
+                                            <select class="browser-default" id="expectedArrivalPort" required="required" name="expectedArrivalPort">
                                                 <option value="" disabled selected>Expected Arrival Port <span id="starColor">*</span></option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
@@ -151,7 +151,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="quantity" id="quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="quantity"  pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
                                     </div>
@@ -163,7 +163,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input type="file" name="file" id="file" accept=".csv">
+                                                <input type="file" required="required" name="file" id="file" accept=".csv">
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate responsive-file-div" type="text">
@@ -175,8 +175,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row">
                                         <div class="input-field col s12 center">
-                                            <button class="waves-effect waves-light modal-trigger btn"
-                                                 onclick="registerConsignment()" type="button">Submit</button>
+                                            <button  class="waves-effect waves-light  btn"
+                                                 type="submit">Submit</button>
                                             <a href="#cancelMessage"  class="btn modal-trigger" type="cancel"
                                                 style="margin-left: 10px;">Cancel</a>
 
@@ -298,8 +298,17 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  				success: function (data, textStatus, jqXHR) {
  					
  					 console.log(data);
- 					 $('#submitConsignment').modal();
+ 					 $('#submitConsignment').openModal();
+ 					 if(data.errorCode==0)
+ 						 {
+ 						 
  					 $('#sucessMessage').append(data.txnId);
+ 						 }
+ 					 else if(data.errorCode=3)
+ 						 {
+ 						$('#sucessMessage').text('');
+ 						$('#sucessMessage').text("consignment number already exist");
+ 						 }
  				   // $('#updateConsignment').modal('open'); 
  					//alert("success");
  					
@@ -309,95 +318,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  				}
  			});
         	
-        	/*  var dispatcDate=  $('#expectedDispatcheDate').val();
-        	 var arrivalDate=  $('#expectedArrivalDate').val();
-        	
-        	 var csvFile=$('#consignmentFile').val();
-        	 var csvtext=csvFile.split('.').pop();
-        	 console.log("file formate"+csvtext);
-        	 var ss=$('#supplierId').val();
+        	 return false;
         	 
-        	 
-        	 if(!isNumericValue(ss))
-        		 {
-        		 
-        		 myFunction("supplierId must be numeric value");
-        		 return false;
-        		 }
-        	 else if($('#SupplierName').val()==""){
-        		 myFunction("supplier Name Can not be blank");
-        		 return false;
-        	 }
-        	 else if(!isAlphabateic($('#SupplierName').val()))
-        		 {
-        		 myFunction("supplier Name  must be alphabetic value");
-        		 return false;
-        		 }
-        	 else if(!isAlphanumericValue($('#consignmentNumber').val()))
-    		 {
-        		 myFunction("consignmentNumber must be alphanumeric value");
-    		 return false;
-    		 }
-        	 else if($('#expectedDispatcheDate').val()=="")
-    		 {
-        		 myFunction("please select expected dispatche Date ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#country option:selected').val()=="")
-    		 {
-        		 myFunction("please select origination Country ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#expectedArrivalDate').val()=="")
-    		 {
-        		 myFunction("please select expected arrival Date ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#expectedArrivalPort option:selected').val()=="")
-    		 {
-        		 myFunction("please select expected arrival port ");
-    		
-    		 return false;
-    		 }
-        	 
-        	 else if($('#consignmentFile').val()=="")
-    		 {
-        		 myFunction("please select file to be uploaded ");
-    		 return false;
-    		 }
-        	 else if (csvtext!='csv')
-        	 {
-        		 myFunction("please select csv file formate ");
-					return false;
-        	 }
-        	 else if(Date.parse(dispatcDate)==Date.parse(arrivalDate))
-        		 {
-        		 myFunction("can not be equal ");
-					return false;
-        		 }
-        	 else if(Date.parse(dispatcDate)>Date.parse(arrivalDate))
-    		 {
-    		 myFunction("dispatche date should be smaler then arrival date ");
-				return false;
-    		 }
-        	 
-        
-        	 else if($('#quantity').val()=="")
-    		 {
-        		 myFunction("please enter quantity");
-    		 return false;
-    		 }
-        	 else if(!isNumericValue($('#quantity').val()))
-    		 {
-        		 myFunction("please enter quantity in numbers");
-    		 return false;
-    		 }
-         */	
-        	 
-        	
          }
          </script>
           <script>
