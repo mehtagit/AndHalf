@@ -1,18 +1,15 @@
 package com.gl.ceir.config.controller;
 
-import java.util.Date;
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
@@ -21,7 +18,6 @@ import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
 import com.gl.ceir.config.util.Utility;
-
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -43,16 +39,15 @@ public class StolenAndRecoveryController {
 
 
 	@ApiOperation(value = "Upload Recovery Details.", response = GenricResponse.class)
+	@RequestMapping(path = "/stakeholder/Recovery", method = RequestMethod.POST)
+	public GenricResponse uploadFileAction(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
-	@RequestMapping(path = "/stackholder/Recovery", method = RequestMethod.POST)
+		logger.info("Upload Recovery Details="+stolenandRecoveryRequest);
 
-	public GenricResponse uploadFileAction(@RequestParam("file") MultipartFile file, Long userId,String sourceType ) {
 
-		logger.info("User id="+userId+"SourceType="+sourceType);
+		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadDetails(stolenandRecoveryRequest);
 
-		StolenandRecoveryMgmt stolenandRecoveryDetails = new StolenandRecoveryMgmt();
-	
-		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.storeFile(file, stolenandRecoveryDetails);
+		logger.info("Upload recovery details response="+genricResponse);
 
 		return genricResponse;
 
@@ -60,44 +55,52 @@ public class StolenAndRecoveryController {
 
 
 	@ApiOperation(value = "Upload Stolen Details.", response = GenricResponse.class)
-
-	@RequestMapping(path = "/stackholder/Stolen", method = RequestMethod.POST)
-
-	public GenricResponse uploadStolenDetails(@RequestParam("file") MultipartFile file, Long userId,String sourceType,String blockingType,String blockTimePeriod)
+	@RequestMapping(path = "/stakeholder/Stolen", method = RequestMethod.POST)
+	public GenricResponse uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails)
 	{
-		StolenandRecoveryMgmt stolenandRecoveryDetails = new StolenandRecoveryMgmt();
-	
+		logger.info("Stolen upload Request="+stolenandRecoveryDetails);
 
-		if(blockingType == null || blockingType.equalsIgnoreCase("Default") || blockingType == "") {
+		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
+				stolenandRecoveryDetails.getBlockingType() == "") {
 
 			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getBlackListConfigDetails();
 			String newTime = utility.newDate(config.getGraceTimePeriod());
 
 			stolenandRecoveryDetails.setBlockingTimePeriod(newTime);
 			stolenandRecoveryDetails.setBlockingType("Default");
-
-		}
-		else {
-			stolenandRecoveryDetails.setBlockingTimePeriod(blockTimePeriod);
-			stolenandRecoveryDetails.setBlockingType(blockingType);
 		}
 
-		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.storeFile(file, stolenandRecoveryDetails);
+		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadDetails(stolenandRecoveryDetails);
+		logger.info("Stolen upload Response="+genricResponse);
+
 		return genricResponse;
 	}
 
 
+	@ApiOperation(value = "Upload Multiple Stolen Details.", response = GenricResponse.class)
+	@RequestMapping(path = "/stakeholder/uploadMultiple/Stolen", method = RequestMethod.POST)
+	public GenricResponse uploadMultipleStolenDetails(@RequestBody List<StolenandRecoveryMgmt> stolenandRecoveryDetails)
+	{
+		logger.info("Multiple Stolen Upload Request="+stolenandRecoveryDetails);
+
+		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadMultipleStolen(stolenandRecoveryDetails);
+
+		logger.info("Muliple Stolen Upload Response ="+genricResponse);
+		return genricResponse;
+
+	}
+	
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
+	@RequestMapping(path = "/stakeholder/record", method = RequestMethod.POST)
+	public MappingJacksonValue getAllActionDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
-	@RequestMapping(path = "/stackholder/ActionView", method = RequestMethod.GET)
+		logger.info("Record request to Stolen And Recovery Info="+stolenandRecoveryDetails);
 
-	public MappingJacksonValue getActionAllDetails(Long userId,String sourceType) {
+		List<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails);
 
-		logger.info("Stolen And Recovery Info userId="+userId+"SourceType="+sourceType);
+		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
 
-		List<StolenandRecoveryMgmt>	stolenandRecoveryDetails = stolenAndRecoveryServiceImpl.getAllInfo(userId, sourceType);
-
-		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetails);
+		logger.info("Record Response of Stolen And Recovery Info="+mapping);
 
 		return mapping;
 	}
@@ -106,8 +109,8 @@ public class StolenAndRecoveryController {
 
 	@ApiOperation(value = "Download Stolen And Recovery file.", response = String.class)
 	@RequestMapping(value = "/stackholder/download/stolenAndRecoveyfile", method = RequestMethod.GET)
-
-	public String downloadStolenAndRecoveyrFile(@RequestParam("txnId") String txnId,@RequestParam("fileName") String fileName,@RequestParam("fileType") String fileType) {
+	public String downloadStolenAndRecoveyrFile(@RequestParam("txnId") String txnId,@RequestParam("fileName") String fileName,
+			@RequestParam("fileType") String fileType) {
 
 		String serverPath=fileStorageProperties.getActionUploadDir();
 
@@ -121,5 +124,5 @@ public class StolenAndRecoveryController {
 	}
 
 
-	
+
 }

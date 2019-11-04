@@ -12,7 +12,7 @@ public interface StolenAndRecoveryRepository extends JpaRepository<StolenandReco
 
 	public StolenandRecoveryMgmt save(StolenandRecoveryMgmt stolenandRecoveryDetails);
 
-	//public List<StolenandRecoveryMgmt> findByUserIdAndSourceType(Long userId,String sourceType);
+	public List<StolenandRecoveryMgmt> findByUserIdAndRoleType(Long userId,String roleType);
 
 
 

@@ -109,6 +109,13 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+	@Override
+	public String toString() {
+		return "StolenandRecoveryMgmt [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
+				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
+				+ ", requestType=" + requestType + ", roleType=" + roleType + ", blockingType=" + blockingType
+				+ ", blockingTimePeriod=" + blockingTimePeriod + "]";
+	}
 	
 	
 	
