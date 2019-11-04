@@ -146,7 +146,7 @@ opacity: 0;
                 <div class="row card-panel">
                   <div class="container-fluid pageHeader">
                     <p class="PageHeading">Consignment</p>
-                    <a href="${context}/Consignment/openRegisterConsignmentForm/formPage" class="boton right">Register Consignment</a>
+                    <a href="${context}/Consignment/openRegisterConsignmentForm?reqType=formPage" class="boton right">Register Consignment</a>
                   </div>
 					<form action="${context}/Consignment/viewConsignment" method="post">
                   <div class="col s12 m12 l12" id="consignmentTableDIv"
@@ -249,9 +249,7 @@ opacity: 0;
                         </c:when>
                         
                         <c:otherwise>
-                     
-                        
-                        </c:otherwise>
+                     	</c:otherwise>
                         </c:choose>
                            <td>${consignmentdetails.taxPaidStatus}</td>
                         <td style="width:180px !important;">
@@ -260,12 +258,12 @@ opacity: 0;
                           <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
                           
-                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails()"><i 
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
                           class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
                          
                          
-                          <a class="waves-effect waves-light modal-trigger" onclick = "EditConsignmentDetails()"><i 
+                          <a class="waves-effect waves-light modal-trigger" onclick = "EditConsignmentDetails('${consignmentdetails.txnId}')"><i 
                           class="fa fa-pencil" aria-hidden="true" 
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                          
@@ -306,16 +304,16 @@ opacity: 0;
 
                                     <div class="row myRow"	>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" disabled />
+                                            <input type="text" name="name" id="supplierId" disabled />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" disabled />
+                                            <input type="text" name="name" id="supplierName" disabled />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name</label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" disabled />
+                                            <input type="text" name="name" id="consignmentNumber" disabled />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -323,7 +321,7 @@ opacity: 0;
                                             <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arival Date</p>
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input type="date" disabled>
+                                            <input type="date" id="expectedArrivaldate" disabled>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
@@ -335,17 +333,17 @@ opacity: 0;
 
 
                                         <div class="input-field col s12 m6">
-                                            <p class="input-text-date" style="color: #c4c4c4;">Expected Dispatch Date
+                                            <p class="input-text-date" style="color: #c4c4c4;" >Expected Dispatch Date
                                             </p>
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input type="date" disabled>
+                                            <input type="date" id="expectedDispatcheDate" disabled>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                             <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
                                             <select class="browser-default" disabled>
-                                                <option value="" disabled selected>Expected Arrival Port</option>
+                                                <option value="" id="expectedArrivalPort" disabled selected>Expected Arrival Port</option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
                                                 <option value="Water">Water</option>
@@ -480,62 +478,78 @@ opacity: 0;
          
          <script type="text/javascript">
          
-         function viewConsignmentDetails(){
+        
+         
+         function viewConsignmentDetails(txnId){
+        
         	 $("#viewModal").modal('show');
-        	 
-        		/* $.ajax({
-				url : "./Consignment/openRegisterConsignmentForm/",
-				data : JSON.stringify(),
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				type : 'GET',
-				success : function(data) {
-				
-				},
-				error : function() {
-					alert("Failed");
-				}
-			}); */
+        	
+        	 $.ajax({
+        		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+ 				dataType : 'json',
+ 				contentType : 'application/json; charset=utf-8',
+ 				type : 'GET',
+ 				success : function(data) {
+ 					console.log(data)
+ 					setViewPopupData(data)
+ 				},
+ 				error : function() {
+ 					alert("Failed");
+ 				}
+ 			});
         	 
          }
          
          
-         function EditConsignmentDetails(){
-        	 
-        	 $("#updateModal").modal('show');	
-        	 
-        	/*  $.ajax({
-    				url : "./Consignment/openRegisterConsignmentForm/",
-    				data : JSON.stringify(),
+         function EditConsignmentDetails(txnId){ 	
+        	
+        	 $.ajax({
+    				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
     				dataType : 'json',
     				contentType : 'application/json; charset=utf-8',
     				type : 'GET',
     				success : function(data) {
-    				
+    					console.log(data)
+    					setEditPopupData(data) 
     				},
     				error : function() {
     					alert("Failed");
     				}
     			});
-        	
-        	
-        	
-        		$("#supplierId").val(supplierId);
-        		$("#supplierName").val(supplierName);
-        		$("#consignmentNumber").val(consignmentNumber);
-        		$("#expectedDispatcheDate").val(expectedDispatcheDate);
-        		$("#country").val(organisationcountry);
-        		$("#expectedArrivaldate").val(expectedArrivaldate);
-        		$("#expectedArrivalPort").val(expectedArrivalPort);
-        		$("#quantity").val(quantity);
-        		$("#TransactionId").val(txnId);
-        		$("#TotalPrice").val(totalPrice);
-        		$("#file").val(file); */
-        		
-        		
-        		
-        }
+        	 
+        	 $("#updateModal").modal('show');
+         }
          
+         
+         function setViewPopupData(data){
+        	console.log(data)
+        	
+        	$("#supplierId").val(data.supplierId);
+     		$("#supplierName").val(data.supplierName);
+     		$("#consignmentNumber").val(data.consignmentNumber);
+     		$("#expectedDispatcheDate").val(data.expectedDispatcheDate);
+     		$("#country").val(data.organisationcountry);
+     		$("#expectedArrivaldate").val(data.expectedArrivaldate);
+     		$("#expectedArrivalPort").val(data.expectedArrivalPort);
+     		$("#quantity").val(data.quantity);
+     		$("#TransactionId").val(data.txnId);
+     		$("#fileName").val(data.fileName); 
+     	}
+       
+        function setEditPopupData(data){
+        	console.log()
+        	$("#supplierIdEdit").val(data.supplierId);
+     		$("#supplierNameEdit").val(data.supplierName);
+     		$("#consignmentNumberEdit").val(data.consignmentNumber);
+     		$("#expectedDispatcheDateEdit").val(data.expectedDispatcheDate);
+     		$("#countryEdit").val(data.organisationcountry);
+     		$("#expectedArrivaldateEdit").val(data.expectedArrivaldate);
+     		$("#expectedArrivalPortEdit").val(data.expectedArrivalPort);
+     		$("#quantityEdit").val(data.quantity);
+     		$("#TransactionIdEdit").val(data.txnId);
+     		$("#fileNameEdit").val(data.fileName); 
+        	
+        } 
        
          function registerConsignment(){
         	
@@ -781,16 +795,16 @@ event.preventDefault();
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierId" id="name" maxlength="15" />
+                                            <input type="text" name="supplierId" id="supplierIdEdit" placeholder="Supplier/Manufacturer ID" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" id="name" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="supplierNameEdit" maxlength="15" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" id="name" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" id="consignmentNumberEdit" maxlength="15" placholder="" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -798,7 +812,7 @@ event.preventDefault();
                                             <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arrival Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input name="expectedDispatcheDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDateEdit" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -814,7 +828,7 @@ event.preventDefault();
                                         <div class="input-field col s12 m6">
                                             <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input name="expectedArrivalDate" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivalDate" id ="expectedArrivaldateEdit" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -822,7 +836,7 @@ event.preventDefault();
                                         <div class="input-field col s12 m6">
                                             <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
                                             <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
-                                            <select name="expectedArrivalPort" class="browser-default" required>
+                                            <select name="expectedArrivalPort" id = "expectedArrivalPortEdit" class="browser-default" required>
                                                 <option value="" disabled selected>Expected arrival port *</option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
@@ -831,12 +845,12 @@ event.preventDefault();
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="quantity" id="Quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="QuantityEdit" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                                <input type="text" name="txnId" id="TransactionId"  value="" readonly maxlength="15" />
+                                                <input type="text" name="txnId" id="TransactionIdEdit"  value="" readonly maxlength="15" />
                                                 <label for="TransactionId" class="center-align">Transaction ID</label>
                                             </div>
                                     </div>
