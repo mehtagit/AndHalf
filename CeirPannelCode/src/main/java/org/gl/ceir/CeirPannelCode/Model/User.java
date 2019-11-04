@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 
 @Entity 
-public class userTest {
+public class User {
 	
 	private static final long serialVersionUID = 1L;
 	

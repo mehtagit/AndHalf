@@ -6,86 +6,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="description"
-        content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
-    <meta name="keywords"
-        content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-    <title>CEIR | Importer Portal</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="description"
+	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
+<meta name="keywords"
+	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+<title>CEIR | Importer Portal</title>
 
-    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
-        media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 
-    <!-- Favicons-->
-    <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
-    <!-- Favicons-->
-    <link rel="apple-touch-icon-precomposed" href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
-    <!-- For iPhone -->
-    <meta name="msapplication-TileColor" content="#00bcd4">
-    <meta name="msapplication-TileImage" content="${context}/resources/images/favicon/mstile-144x144.png">
-    <!-- For Windows Phone -->
-    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+<!-- Favicons-->
+<!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
+<!-- Favicons-->
+<link rel="apple-touch-icon-precomposed"
+	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
+<!-- For iPhone -->
+<meta name="msapplication-TileColor" content="#00bcd4">
+<meta name="msapplication-TileImage"
+	content="${context}/resources/images/favicon/mstile-144x144.png">
+<!-- For Windows Phone -->
+<link rel="stylesheet"
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
-    <!-- CORE CSS-->
-    <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- Custome CSS-->
-    <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+<!-- CORE CSS-->
+<link href="${context}/resources/css/materialize.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<link href="${context}/resources/css/style.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<!-- Custome CSS-->
+<link href="${context}/resources/css/custom/custom.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 
-    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-    <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
-        media="screen,projection">
-    <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+<link href="${context}/resources/js/plugins/prism/prism.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 
-    <!-- Country -->
-    <!-- <script type="text/javascript" src="js/country.js"></script> -->
+<!-- Country -->
 
-    <style>
-        input[type="checkbox"] {
-            display: none;
-        }
 
-        footer {
-            padding-left: 0;
-        }
+<style>
+input[type="checkbox"] {
+	display: none;
+}
 
-        .btn-flat {
-            height: auto;
-        }
+footer {
+	padding-left: 0;
+}
 
-        .star {
-            color: red;
-        }
+.btn-flat {
+	height: auto;
+}
 
-        .dropdown-content li>a,
-        .dropdown-content li>span {
-            color: #444;
-        }
+.star {
+	color: red;
+}
 
-        .input-field>label {
-            color: #444 !important;
-        }
-
-        select {
-            background-color: transparent;
-            border: none;
-            border-bottom: 1px solid #9e9e9e;
-            padding: 0;
-            margin-top: 7px;
-            ;
-        }
-
-        [type="radio"]:not(:checked),
-        [type="radio"]:checked {
-            opacity: 0;
-        }
-    </style>
+.dropdown-content li>a, .dropdown-content li>span {
+	color: #444;
+}
+</style>
 
 </head>
 
@@ -226,27 +217,14 @@
 								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
 									<label for="vatNumber">VAT Registration <span
 										class="star">*</span></label>
-									<!-- <div class=" boxHeight">
+									<div class=" boxHeight">
 										<input  value="1" class="with-gap" name="vatStatus" type="radio"
 											onclick="document.getElementById('vatNumberField').style.display = 'block';">
 										Yes <input value="0" class="with-gap" name="vatStatus" type="radio"
 											style="margin-left: 20px;"
 											onclick="document.getElementById('vatNumberField').style.display = 'none';"
 											checked /> No
-									</div> -->
-									<div class=" boxHeight">
-                                        <label><input value="1" class="with-gap" name="vatStatus" type="radio"
-                                                onclick="document.getElementById('vatNumberField').style.display = 'block';">
-                                            <span>Yes</span>
-                                        </label>
-                                        <label>
-                                            <input value="0" class="with-gap" name="vatStatus" type="radio"
-                                                style="margin-left: 20px;"
-                                                onclick="document.getElementById('vatNumberField').style.display = 'none';"
-                                                checked />
-                                            <span>No</span>
-                                        </label>
-                                    </div>
+									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="display: none;"
@@ -261,9 +239,7 @@
 								</div>
 							</div>
 
-							
-                                
-								
+							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
@@ -282,8 +258,6 @@
 										<option value="NotPaid">Retailer</option>
  -->									</select>
 								</div>
-
-
 
 								<div class="input-field col s12 m6 l6">
 									<p
@@ -521,57 +495,68 @@
 	<!-- ================================================
     Scripts
     ================================================ -->
-	 <!-- jQuery Library -->
-    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-    <!--materialize js-->
-    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
-    <!--prism
-    <script type="text/javascript" src="js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/validate.js"></script>	
+			
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	<!--materialize js-->
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+		
+		<!-- jQuery Library -->
 
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <!--<script type="text/javascript" src="js/plugins.js"></script>-->
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    <script> 
+	<!--prism
+    <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+
+	<!-- data-tables -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript"
+		src="${context}/resources/js/custom-script.js"></script>
+		
+	<script>
         $(document).ready(function () {
-            $('.modal').modal();
+            /* $('.modal').modal(); */
             $('.dropdown-trigger').dropdown();
-            $('select').formSelect();
-        });
-        populateCountries("country", "");
+           // $('select').formSelect();
+            $('select').material_select();
+        }); 
+       
+        
 
+       /*  $(document).ready(function () {
+           
+        }); */
+    </script>
+
+	<script> 
+        populateCountries(
+            "country"  );
+    </script>
+
+	<script>
         function myFunction() {
             var x = document.getElementById("mySelect").value;
             if (x == 'Individual') {
                 document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                //document.getElementById("companyName").style.display = "none";
-                $('#companyName').style.display = "none";
             } else {
 
                 document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
             }
-
-            if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyName").style.display = "block";
-            } else {
-
-                document.getElementById("companyName").style.display = "none";
-            }
-        }
+        } 
     </script>
 
 

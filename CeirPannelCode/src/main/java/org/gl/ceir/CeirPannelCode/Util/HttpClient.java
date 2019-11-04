@@ -54,7 +54,7 @@ public class HttpClient {
 
 		int responseCode = con.getResponseCode();
 
-		httpCgResponse.setErrorCode(responseCode);
+		httpCgResponse.setStatusCode(responseCode);
 
 		if (responseCode/100 == 2) {
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -94,7 +94,7 @@ public class HttpClient {
 		}
 
 		int responseCode = con.getResponseCode();
-		httpResponse.setErrorCode(responseCode);
+		httpResponse.setStatusCode(responseCode);
 		
 		// Set Headers which came back in response.
 		if(responseHeadersName.size() > 0) {
@@ -104,7 +104,7 @@ public class HttpClient {
 				responseHeaderMap.put(responseHeader, con.getHeaderField(responseHeader));
 			}
 			
-			httpResponse.setResponseHeaders(responseHeaderMap);
+		//	httpResponse.setResponse(responseHeaderMap);
 		}
 
 		// Check response.
@@ -159,7 +159,7 @@ public class HttpClient {
 
 		int responseCode = con.getResponseCode();
 		System.out.println("POST Response Code :: " + responseCode);
-		httpCustomResponse.setErrorCode(responseCode);
+		httpCustomResponse.setStatusCode(responseCode);
 		if (responseCode == 200) { //success
 
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));

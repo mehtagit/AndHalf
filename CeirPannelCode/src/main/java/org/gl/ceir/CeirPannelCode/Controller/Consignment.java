@@ -1,6 +1,4 @@
 package org.gl.ceir.CeirPannelCode.Controller;
-
-
 import org.slf4j.LoggerFactory;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
 import org.slf4j.Logger;

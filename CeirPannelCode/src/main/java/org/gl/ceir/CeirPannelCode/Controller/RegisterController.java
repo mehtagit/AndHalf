@@ -16,8 +16,8 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
-import org.gl.ceir.CeirPannelCode.Model.userTest;
-import org.gl.ceir.CeirPannelCode.Service.LoginServices;
+import org.gl.ceir.CeirPannelCode.Model.User;
+import org.gl.ceir.CeirPannelCode.Service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +37,7 @@ public class RegisterController {
 	@Autowired
 	FeignCleintImplementation feignImpl;
 	@Autowired
-	LoginServices loginserviceIndexpage;
+	LoginService loginserviceIndexpage;
    
 	/*
 	 * @Autowired private UserValidator userValidator;
@@ -75,7 +75,7 @@ public class RegisterController {
 	
 	
 	@RequestMapping(value={"/Dashboard"},method={org.springframework.web.bind.annotation.RequestMethod. POST,org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ModelAndView registerUser(@ModelAttribute("userForm") userTest userForm,HttpSession session) {
+	public ModelAndView registerUser(@ModelAttribute("userForm") User userForm,HttpSession session) {
 		System.out.println("inside login method");
 		String username="sharad";
 		//session.setAttribute("username", username);
@@ -84,11 +84,9 @@ public class RegisterController {
 		ModelAndView mv = new ModelAndView();
 
 		if(session.getAttribute("username")==null) {
-		try { userTest userDetails = new userTest();
-		System.out.println("username="+userForm.getUsername()+" usertype="+userForm.
-				getUsertype()+" password="+userForm.getUsertype()); userDetails=
-				loginserviceIndexpage.findByUsertypeAndUsernameAndPassword(userForm.
-						getUsertype(), userForm.getUsername(), userForm.getUsertype());
+		try { User userDetails = new User();
+		System.out.println("username="+userForm.getUsername()+" usertype="+userForm.getUsertype()+" password="+userForm.getUsertype()); 
+		//userDetails=loginserviceIndexpage.find(userForm.getUsertype(), userForm.getUsername(), userForm.getUsertype());
 				if(userDetails!=null ) 
 				{
 					if(userDetails.getUsername().equals(userForm.getUsertype()) &&

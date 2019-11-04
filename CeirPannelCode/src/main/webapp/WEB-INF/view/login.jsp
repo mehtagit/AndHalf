@@ -95,26 +95,30 @@
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel" style="width: 40%; height: 50vh; margin: auto; margin-top: 10vh;">
-                            <form action="">
+                            <form action="${context}/login" method="post">
                             <div class="col s12 m12 l12">
                                 <div class="row">
-                                    <h5 style="text-align: -webkit-center;">Login</h5> <hr style="margin-bottom: 30px;">
+                                    <h5 style="text-align: -webkit-center;">Login</h5>
+                                     <span style="color: red;">${msg}</span>    
+                                     <hr style="margin-bottom: 30px;">
+                               
                                     <div class="input-field col s12">
                                         
                                         <label for="newPassword" style="color: #000; font-size: 12px;">Username</label>
-                                        <input type="text" id="newPassword" class="" maxlength="10" />
+                                        <input type="text" required="required" name="username" id="newPassword" class="" maxlength="10" />
                                     </div>
         
                                     <div class="input-field col s12">
                                         
                                         <label for="confirmPassword" style="color: #000; font-size: 12px;">Password</label>
-                                        <input type="text" class="" id="confirmPassword" maxlength="10" />
+                                        <input type="text" required="required" class="" name="password" id="confirmPassword" maxlength="10" />
                                     </div>
                                     <a href="${context}/forgotPassword" class="right"> Forgot Password?</a>
                                 </div>
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
-                                        <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a>
+                                    <%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>
+                                    <input type="submit" class="btn" id="save" style="width: 100%;" value="Login"  >
                                     </div>
                                 </div>
 
