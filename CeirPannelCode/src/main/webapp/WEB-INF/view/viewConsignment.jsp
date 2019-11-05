@@ -156,7 +156,7 @@ opacity: 0;
 
                       <div id="startdatepicker" class="input-group date" data-date-format="yyyy-mm-dd">
                         <label for="TotalPrice">Start date</label>
-                        <input type="date">
+                        <input type="date" id="startDate">
                         <!-- <input class="form-control" type="date" id="datepicker" /> -->
                         <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar"
                             aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
@@ -168,7 +168,7 @@ opacity: 0;
                         <!-- <input type='text' class='datepicker-here' data-language='en' /> -->
                         <label for="TotalPrice">End date</label>
                         <!-- <input type="text" class="form-control" name="date" id="date" data-select="datepicker"> -->
-                        <input class="form-control" type="date" id="datepicker" />
+                        <input class="form-control" type="date" id="endDate" />
                         <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar"
                             aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
                       </div>
@@ -177,47 +177,36 @@ opacity: 0;
                     <div class="col s6 m2 l2 selectDropdwn">
                         <br />
                         <!-- <label for="TotalPrice" class="center-align">File Status</label> -->
-                        <select id="filterFileStatus" class="select2 form-control boxBorder boxHeight">
+                        <select id="filterConsignmentStatus" class="select2 form-control boxBorder boxHeight">
                           <option value="" disabled selected>Consignment Status</option>
-                          <option value="Success">Uploading</option>
-                          <option value="Processing">Processing</option>
-                          <option value="Error">Rejected by system</option>
-                          <option value="Error">Pending approval from CEIR</option>
-                          <option value="Error">Rejected by CEIR authority</option>
-                          <option value="Error">Pending approval from Custom (CEIR authority has approved)</option>
-                          <option value="Error">Approved by custom</option>
-                          <option value="Error">Rejected by custom</option>
-                          <option value="Error">Withdrawn by Importer</option>
-                          <option value="Error">Withdrawn by CEIR</option>
+                          <option value="0">Uploading</option>
+                          <option value="1">Processing</option>
+                          <option value="2">Rejected by system</option>
+                          <option value="3">Pending approval from CEIR</option>
+                          <option value="4">Rejected by CEIR authority</option>
+                          <option value="5">Pending approval from Custom (CEIR authority has approved)</option>
+                          <option value="6">Approved by custom</option>
+                          <option value="7">Rejected by custom</option>
+                          <option value="8">Withdrawn by Importer</option>
+                          <option value="9">Withdrawn by CEIR</option>
                         </select>
   
                       </div>
 
-                    <div class="col s6 m2 l2 selectDropdwn">
-                      <br />
-                      <!-- <label for="TotalPrice" class="center-align">File Status</label> -->
-                      <select id="filterFileStatus" class="select2 form-control boxBorder boxHeight">
-                        <option value="" disabled selected>File Status</option>
-                        <option value="Success">Success</option>
-                        <option value="Error">Error</option>
-                        <option value="Processing">Processing</option>
-
-                      </select>
-
-                    </div>
+                  
                     <div class="col s6 m2 l2 selectDropdwn">
                       <br />
                       <!-- <label for="TotalPrice" class="center-align">Tax Paid Status</label> -->
                       <select id="taxPaidStatus" class="select2 form-control boxBorder boxHeight">
                         <option value="" disabled selected>Tax Paid Status</option>
                         <option value="Paid">Paid</option>
-                        <option value="NotPaid">Not Paid</option>
+                        <option value="Not Paid">Not Paid</option>
                       </select>
 
                     </div>
 
                     <div class="col s12 m2 l2">
-                      <button type="submit" class="btn primary botton" id="submitFilter">Filter</button>
+                      <button type="button" class="btn primary botton" onclick="filterConsignment()" id="submitFilter">Filter</button>
                     </div>
 
                   </div>
@@ -253,7 +242,8 @@ opacity: 0;
                         </c:choose>
                            <td>${consignmentdetails.taxPaidStatus}</td>
                         <td style="width:180px !important;">
-                          <a href=""><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                          
+                          <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
                           <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
@@ -267,7 +257,8 @@ opacity: 0;
                           class="fa fa-pencil" aria-hidden="true" 
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                          
-                          <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
                               title="delete"></i></a>
                         </td>
@@ -286,13 +277,6 @@ opacity: 0;
         <!--end container-->
       </section>
  
- 
-<!-- Edit confirmation Modal start   -->
-
-
-
- 
- 
  <!--viewModal Modal start   -->
 
   <div id="viewModal" class="modal-form" style="overflow-y: hidden;">
@@ -300,20 +284,20 @@ opacity: 0;
 
       <h6>View Consignment</h6>
       <hr>
-	                        <form action="">
+	                      
 
                                     <div class="row myRow"	>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="supplierId" disabled />
+                                            <input type="text" name="name" id="supplierId" placeholder="Supplier/Manufacturer ID" readonly="readonly"  />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="supplierName" disabled />
+                                            <input type="text" name="name" id="supplierName"placeholder="Supplier/Manufacturer Name" readonly="readonly"  />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name</label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="consignmentNumber" disabled />
+                                            <input type="text" name="name" id="consignmentNumber" placeholder="Consignment Number" readonly="readonly"  />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -321,13 +305,14 @@ opacity: 0;
                                             <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arival Date</p>
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input type="date" id="expectedArrivaldate" disabled>
+                                            <input type="date" id="expectedArrivaldate" placeholder="Expected Arival Date" readonly="readonly" >
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <select id="countryview" class="browser-default" class="mySelect" Placholder="Device Origination Counrty*"
-                                                disabled></select>
+                                            <input type="text" id="countryview" class="browser-default" readonly="readonly" class="mySelect" placeholder="Device Origination Counrty*"
+                                                >
+                                                 <label for="Name" class="center-align"> Origination Country</label>
                                             <label for="countryview" class="center-align"></label>
                                         </div>
 
@@ -336,39 +321,40 @@ opacity: 0;
                                             <p class="input-text-date" style="color: #c4c4c4;" >Expected Dispatch Date
                                             </p>
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input type="date" id="expectedDispatcheDate" disabled>
+                                            <input type="date" id="expectedDispatcheDate" placeholder="Expected Dispatch Date" readonly="readonly" >
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                             <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
-                                            <select class="browser-default" disabled>
-                                                <option value="" id="expectedArrivalPort" disabled selected>Expected Arrival Port</option>
-                                                <option value="Air">Air</option>
-                                                <option value="Land">Land</option>
-                                                <option value="Water">Water</option>
-                                            </select>
+                                            <input type="text" id="expectedArrivalPort" readonly="readonly" placeholder="Arrival port">
+                                             <label for="Name" class="center-align">Expected Arrival Port</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="Quantity" id="Quantity" disabled />
+                                            <input type="text" name="Quantity" placeholder="Quantity" id="Quantity" readonly="readonly"  />
                                             <label for="Quantity" class="center-align">Quantity</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                                <input type="text" name="TransactionId" id="TransactionId" disabled maxlength="15" />
-                                                <label for="TransactionId" class="center-align">Transaction ID</label>
+                                                <input type="text" name="TransactionId" placeholder="Transaction ID" id="TransactionId" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Transaction ID</label>
                                             </div>
+                                            
+                                        <div class="input-field col s12 m6">
+                                                <input type="text" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Remark</label>
+                                            </div>    
                                     </div>
 
                                     <div class="row" style="padding: 20px 0 100px 0;">
                                         <div class="input-field col s12 center">
-                                            <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel" name="add_user"
-                                                id="add_user">Cancel</a>
+                                            <button  class="btn"  onclick="closeViewModal()" class="modal-close btn" 
+                                                id="add_user">Cancel</button>
                                         </div>
                                     </div>
 
-                                </form>	
+                                	
 			</div>
   </div>
   <!-- Modal End -->
@@ -383,7 +369,7 @@ opacity: 0;
       <hr>
 
       <div class="row">
-        <h6>Are you sure you want to withdraw the consignment details for (Transaction ID)</h6>
+        <h6>Are you sure you want to withdraw the consignment details for (<span id ="transID"></span>)</h6>
       </div>
 
       <div class="row">
@@ -391,18 +377,20 @@ opacity: 0;
               <textarea id="textarea1" class="materialize-textarea"></textarea>
               <label for="textarea1">Remarks</label>
             </div>
-      </div>
+       </div>
+       <input type="text" id="popupTransactionId" maxlength="15" hidden/>
       <div class="row">
         <div class="input-field col s12 center">
           <div class="input-field col s12 center">
-            <a href="${context}/Consignment/deleteConsignment/20191023" class="btn">ok</a>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
+            <a class="btn" onclick="confirmantiondelete()">ok</a>
+            <button class="modal-close btn" onclick="closeUpdateModal()" style="margin-left: 10px;">No</button>
           </div>
         </div>
       </div>
     </div>
   </div>
   <!-- Modal End -->
+      <!-- END CONTENT -->
 
 
  
@@ -419,7 +407,7 @@ opacity: 0;
         <!-- <h4 class="header2 pb-2">User Info</h4> -->
   
         <div class="row">
-          <h6>The consignment has been successfully withdrawn</h6>
+          <h6 id=consignmentText></h6>
         </div>
   
         <div class="row">
@@ -465,45 +453,54 @@ opacity: 0;
             		{
             			"destroy":true,
             			"bLengthChange": true,
+            			
             			"sorting":[]
             		}); 
            </script>
-          
-     <!--      <script>
-    $(document).ready(function () {
-      $('.modal').modal();
-    });
-  </script> -->
+
           
          
          <script type="text/javascript">
          
+        function DeleteConsignmentRecord(txnId){
+       		 $("#DeleteConsignment").modal('show');
+        	 $("#transID").text(txnId);
+        }
         
-         
-         function viewConsignmentDetails(txnId){
         
-        	 $("#viewModal").modal('show');
-        	
+        function confirmantiondelete(){
+        	 var txnId = $("#transID").text();
+        	 var remarks = $("#textarea1").val();
+     		 var obj ={
+        			 "txnId" : txnId,
+        	 		 "remarks" : remarks
+        	 }
         	 $.ajax({
-        		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
- 				dataType : 'json',
- 				contentType : 'application/json; charset=utf-8',
- 				type : 'GET',
- 				success : function(data) {
- 					console.log(data)
- 					setViewPopupData(data)
- 				},
- 				error : function() {
- 					alert("Failed");
- 				}
- 			});
-        	 
-         }
+        			url : "./Consignment/deleteConsignment",
+        			data : JSON.stringify(obj),
+        			dataType : 'json',
+        			contentType : 'application/json; charset=utf-8',
+        			type : 'POST',
+        			success : function(data, textStatus, xhr) {
+        				alert(data.errorCode);
+        				console.log(data);
+        				if(data.errorCode == 200){
+        					$("#consignmentText").text(data.message);
+        				}else if(data.errorCode == 0){
+        					$("#consignmentText").text(data.message);
+        				}
+        			},
+        			error : function() {
+        					console.log("Error");
+        			}
+        		});
+     		 $("#DeleteConsignment").modal('hide');
+     		 $("#confirmDeleteConsignment").modal('show');
+        }
          
-         
-         function EditConsignmentDetails(txnId){ 	
-        	
-        	 $.ajax({
+     
+        function EditConsignmentDetails(txnId){ 	
+        	$.ajax({
     				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
     				dataType : 'json',
     				contentType : 'application/json; charset=utf-8',
@@ -520,20 +517,42 @@ opacity: 0;
         	 $("#updateModal").modal('show');
          }
          
+    	
+        function viewConsignmentDetails(txnId){
+        
+        	 $("#viewModal").modal('show');
+        	 $.ajax({
+    				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+    				dataType : 'json',
+    				contentType : 'application/json; charset=utf-8',
+    				type : 'GET',
+    				success : function(data) {
+    					console.log(data)
+    					setViewPopupData(data);
+    				},
+    				error : function() {
+    					alert("Failed");
+    				}
+    			});
+        }
+         
          
          function setViewPopupData(data){
-        	console.log(data)
+        	console.log("_________________++++++++++"+data.organisationCountry)
         	
         	$("#supplierId").val(data.supplierId);
      		$("#supplierName").val(data.supplierName);
      		$("#consignmentNumber").val(data.consignmentNumber);
      		$("#expectedDispatcheDate").val(data.expectedDispatcheDate);
-     		$("#country").val(data.organisationcountry);
+     		$("#countryview").val(data.organisationCountry);
      		$("#expectedArrivaldate").val(data.expectedArrivaldate);
      		$("#expectedArrivalPort").val(data.expectedArrivalPort);
      		$("#quantity").val(data.quantity);
      		$("#TransactionId").val(data.txnId);
+     		$("#remark").val(data.remarks);
      		$("#fileName").val(data.fileName); 
+     		
+     		
      	}
        
         function setEditPopupData(data){
@@ -542,146 +561,200 @@ opacity: 0;
      		$("#supplierNameEdit").val(data.supplierName);
      		$("#consignmentNumberEdit").val(data.consignmentNumber);
      		$("#expectedDispatcheDateEdit").val(data.expectedDispatcheDate);
-     		$("#countryEdit").val(data.organisationcountry);
+     		$('#country :selected').text(data.organisationCountry);
      		$("#expectedArrivaldateEdit").val(data.expectedArrivaldate);
      		$("#expectedArrivalPortEdit").val(data.expectedArrivalPort);
-     		$("#quantityEdit").val(data.quantity);
+     		$("#QuantityEdit").val(data.quantity);
      		$("#TransactionIdEdit").val(data.txnId);
      		$("#fileNameEdit").val(data.fileName); 
+     		
         	
         } 
        
-         function registerConsignment(){
-        	
-        	 var dispatcDate=  $('#expectedDispatcheDate').val();
-        	 var arrivalDate=  $('#expectedArrivalDate').val();
-        	
-        	 var csvFile=$('#consignmentFile').val();
-        	 var csvtext=csvFile.split('.').pop();
-        	 console.log("file formate"+csvtext);
-        	 var ss=$('#supplierId').val();
-        	 
-        	 
-        	 if(!isNumericValue(ss))
-        		 {
-        		 
-        		 myFunction("supplierId must be numeric value");
-        		 return false;
-        		 }
-        	 else if($('#SupplierName').val()==""){
-        		 myFunction("supplier Name Can not be blank");
-        		 return false;
-        	 }
-        	 else if(!isAlphabateic($('#SupplierName').val()))
-        		 {
-        		 myFunction("supplier Name  must be alphabetic value");
-        		 return false;
-        		 }
-        	 else if(!isAlphanumericValue($('#consignmentNumber').val()))
-    		 {
-        		 myFunction("consignmentNumber must be alphanumeric value");
-    		 return false;
-    		 }
-        	 else if($('#expectedDispatcheDate').val()=="")
-    		 {
-        		 myFunction("please select expected dispatche Date ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#country option:selected').val()=="")
-    		 {
-        		 myFunction("please select origination Country ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#expectedArrivalDate').val()=="")
-    		 {
-        		 myFunction("please select expected arrival Date ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#expectedArrivalPort option:selected').val()=="")
-    		 {
-        		 myFunction("please select expected arrival port ");
-    		
-    		 return false;
-    		 }
-        	 
-        	 else if($('#consignmentFile').val()=="")
-    		 {
-        		 myFunction("please select file to be uploaded ");
-    		 return false;
-    		 }
-        	 else if (csvtext!='csv')
-        	 {
-        		 myFunction("please select csv file formate ");
-					return false;
-        	 }
-        	 else if(Date.parse(dispatcDate)==Date.parse(arrivalDate))
-        		 {
-        		 myFunction("can not be equal ");
-					return false;
-        		 }
-        	 else if(Date.parse(dispatcDate)>Date.parse(arrivalDate))
-    		 {
-    		 myFunction("dispatche date should be smaler then arrival date ");
-				return false;
-    		 }
-        	 
-        
-        	 else if($('#quantity').val()=="")
-    		 {
-        		 myFunction("please enter quantity");
-    		 return false;
-    		 }
-        	 else if(!isNumericValue($('#quantity').val()))
-    		 {
-        		 myFunction("please enter quantity in numbers");
-    		 return false;
-    		 }
-        	
-        	 $("#registerConsignment").submit();
-        	
-         }
-         </script>
+        </script>
          
          
-         <script>
-         function filterData(){
-        	 var startDate=$('#filterStartDate').val()
-        	 var endDate=$('#endDateFilter').val()
+        <script>
+         function filterConsignment()
+         {
         	 
-        	 var result=dateValidation(startDate,endDate);
-        	  if(result=="smaller")
-        		 {
-        		 myFunction("end date should be greater then start date")
-        		 $('#endDateFilter').val("")
-        		 }
+        	 var startdate="";
+         	 var endDate="";
+         	 var taxStatus=$('#taxPaidStatus').val();
+         	 var consignmentStatus=$('#filterConsignmentStatus').val();
+         	 var userId="1";
+         	 console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus"+consignmentStatus)
+         	 var filterRequest={
+         		 "consignmentStatus":consignmentStatus,
+         		 "endDate":startdate,
+         		 "startDate":endDate,
+         		 "taxPaidStatus":taxStatus,
+         		 "userId":userId
+         		 
+         	}
+         	 
+        	 $.ajax({
+   				url: '${context}/Consignment/filterConsignment/',
+   				type: 'POST',
+   				data: JSON.stringify(filterRequest),
+				processData: false,
+				contentType: 'application/json',
+   				success: function (data, textStatus, jqXHR) {
+   					
+   					 console.log(data);
+   					var table = $('#consignmentLibraryTable').DataTable();
+   					table.destroy();
+   				    $('#consignmentLibraryTable').DataTable(
+   	            		{
+   	            			"oLanguage": {
+   	         				"sLengthMenu": "Display  _MENU_ "
+   	         			},
+   	         			"bDestroy": true,
+   	         			"bLengthChange": false,
+   	         			//"bFilter": false,
+   	         			"bStateSave": false,
+   	         			"responsive": true,
+   	         			"deferRender": true,
+   	         			"bProcessing": false,
+   	         			
+   	                 	"scrollCollapse": true,
+   	         			"aaData": data,
+   	         			"iDisplayLength": 10,
+   	         			"sPaginationType": "full_numbers",
+   	         			"aLengthMenu": [
+   	         				[5, 10, 25, 50, -1],
+   	         				[5, 10, 25, 50, "All"]
+   	         			],
+   	         			"bSort": false,
+   	         			
+   	         			"aoColumns": [ 
+   	         				{
+   	         					"mData": "modifiedOn"
+   	         				},
+   	         				{
+   	         					"mData": "txnId"
+   	         				},
+   	         				{
+   	         					"mData":"supplierName"
+   	         				},
+   	         				
+   	         				{
+   	         					"mData":"consignmentStatus",
+								"mRender": function (data, type, full) {
+   	         					
+									if(full.consignmentStatus==0)
+										{
+										return "uploading"
+										}
+									else if(full.consignmentStatus==1)
+									{
+									return "processing"
+									}
+									
+   	         					}
+   	         				},
+   	         				{
+   	         					"mData":"taxPaidStatus"
+   	         				}, null],
+   	         				"aoColumnDefs": [{
+   	         					"className": "dt-body-center", 
+   	         					"aTargets": [5],
+   	         					"mData": "CampaignName",
+   	         					
+   	         					//"targets": "_all",
+   	         					"mRender": function (data, type, full) {
+   	         						
+									
+									console.log(full.fileName);
+									return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a> <a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+									 // return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName'/'full.txnId}+' ><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a   href="${context}/Consignment/dowloadFiles/actual/'+full.fileName'/'full.txnId}+'><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "EditConsignmentDetails('full.txnId')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-right:15px;"></i></a><a href="#EditConsignment" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+   	         					}
+   	         				}]
+   	         				
+   	         		
+   	            			
+   	            		});
+   					
+   				
+   					
+   				},
+   				error: function (jqXHR, textStatus, errorThrown) {
+   				console.log("error in ajax")
+   				}
+   			});
+         	 
+        	 
+         }
+ //******************************************************************************************************************************************************************888888
+ //******************************************************************************************************************************************************************888888
+ //******************************************************************************************************************************************************************888888   
+ 
+ function editRegisterConsignment(){
+         	/*  $("#editRegisterConsignment").submit(); */
+         	 
+         	 var supplierId=$('#supplierIdEdit').val();
+         	 var supplierName=$('#supplierNameEdit').val();
+         	 var consignmentNumber=$('#consignmentNumberEdit').val();
+         	 var expectedArrivalDate=$('#expectedArrivaldateEdit').val();
+         	 var expectedDispatcheDate=$('#expectedDispatcheDateEdit').val();
+         	 var expectedArrivalPort=$('#expectedArrivalPortEdit').val();
+         	 var organisationcountry=$('#country').val();
+         	 var filename=$('#fileNameEdit').val();
+         	 var txnId=$('#TransactionIdEdit').val();
+         	 var quantity=$('#QuantityEdit').val();
+         	  console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
+         	 
+         	 
+         	 var formData= new FormData();
+         		formData.append('file', $('#csvUploadFile')[0].files[0]);
+         	 	formData.append('supplierId',supplierId);
+         	 	formData.append('supplierName',supplierName);
+         	 	formData.append('consignmentNumber',consignmentNumber);
+         	 	formData.append('expectedArrivaldate',expectedArrivalDate);
+         	 	formData.append('expectedDispatcheDate',expectedDispatcheDate);
+         	 	formData.append('expectedArrivalPort',expectedArrivalPort);
+         	 	formData.append('organisationcountry',organisationcountry);
+         		formData.append('quantity',quantity);
+         		formData.append('txnId',txnId);
+         		formData.append('filename',filename);
+         		
+         		console.log(JSON.stringify(formData));
+         		console.log("*********");
+         	 	
+         	 $.ajax({
+  				url: '${context}/Consignment/updateRegisterConsignment',
+  				type: 'POST',
+  				data: formData,
+  				processData: false,
+  				contentType: false,
+  				success: function (data, textStatus, jqXHR) {
+  					
+  					 console.log(data);
+  					 $('#updateModal').closeModal();
+  					 $('#updateConsignment').modal();
+  					  if(data.errorCode==200){
+  					
+  					$('#sucessMessage').text('');
+ 					 $('#sucessMessage').text('Operation is not allowed');
+  						 }
+  					 else{
+  						 $('#sucessMessage').text('');
+  		 				 $('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+  					 }
+  				   // $('#updateConsignment').modal('open'); 
+  					//alert("success");
+  					
+  				},
+  				error: function (jqXHR, textStatus, errorThrown) {
+  				console.log("error in ajax")
+  				}
+  			});
+         
          }
          
-         function submitFilterData(){
-        
-        	 var startDate=$('#filterStartDate').val()
-        	 var endDate=$('#endDateFilter').val()
-        	 if($('#filterStartDate').val()=="")
-        		 {
-        		 myFunction("Please select start date")
-        		 return false;
-        		 }
-        	 else if($('#endDateFilter').val()=="")
-        		 {
-        		 myFunction("Please select end date");
-        		 return false;
-        		 }
-        	 else if(Date.parse(startDate)>Date.parse(endDate))
-        		 
-        	 {
-        		 myFunction("start date should be smaller than end date");
-        		 return false;
-        	 }
-        	 
-        	 $("#submitFilterConsignment").submit();
-         }
+       
+         
+      
          </script>
          
           <script type="text/javascript">
@@ -772,39 +845,28 @@ event.preventDefault();
 })
 </script>
   
-           <script type="text/javascript">
-          /*  $(document ).ready(function() {
-        	   setTimeout(function(){ alert("Hello"); }, 3000);
-           }); */
-            
-        /*     $(document).ready(function(){
-            	
-        	   $('#registerConsignmentModal').modal('show');
-        	   backdrop: 'static   
-            });  */
-          </script>
           
-      
-      <!-- Update Modal Start -->     
+          
+     <!-- Update Modal Start -->     
       <div id="updateModal" class="modal-form" style = "overflow-y: hidden;">
       <div class="modal-content">
   
          <h6>Edit Consignment</h6>
         <hr>
-   			 <form action="" enctype="multipart/form-data" method="POST" id="editRegisterConsignment">
+   			 
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierId" id="supplierIdEdit" placeholder="Supplier/Manufacturer ID" maxlength="15" />
+                                            <input type="text" name="supplierId" id="supplierIdEdit"  placeholder="Supplier/Manufacturer ID" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" id="supplierNameEdit" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="supplierNameEdit" placeholder="Supplier/Manufacturer Name" maxlength="15" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" id="consignmentNumberEdit" maxlength="15" placholder="" />
+                                            <input type="text" name="consignmentNumber" id="consignmentNumberEdit" placeholder="Consignment Number" maxlength="15" placholder="" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -812,7 +874,7 @@ event.preventDefault();
                                             <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arrival Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input name="expectedDispatcheDate" id="expectedDispatcheDateEdit" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDateEdit" placeholder="Expected Dispatch Date " type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -828,7 +890,7 @@ event.preventDefault();
                                         <div class="input-field col s12 m6">
                                             <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input name="expectedArrivalDate" id ="expectedArrivaldateEdit" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivalDate" id ="expectedArrivaldateEdit" placeholder="Expected Arrival  Date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -845,12 +907,12 @@ event.preventDefault();
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="quantity" id="QuantityEdit" maxlength="7" required />
+                                            <input type="text" name="quantity" id="QuantityEdit" placeholder="Quantity" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                                <input type="text" name="txnId" id="TransactionIdEdit"  value="" readonly maxlength="15" />
+                                                <input type="text" name="txnId" id="TransactionIdEdit"  placeholder="Transaction ID" value="" readonly maxlength="15" />
                                                 <label for="TransactionId" class="center-align">Transaction ID</label>
                                             </div>
                                     </div>
@@ -865,7 +927,7 @@ event.preventDefault();
                                                 <input type="file" name="file" id="csvUploadFile" accept=".csv">
                                             </div>
                                             <div class="file-path-wrapper">
-                                                <input class="file-path validate responsive-file-div" type="text">
+                                                <input class="file-path validate responsive-file-div" id="fileNameEdit" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -877,16 +939,29 @@ event.preventDefault();
                                     <div class="row">
                                         <div class="input-field col s12 center">
                                             <button class="waves-effect waves-light modal-trigger btn"
-                                                data-target="updateConsignment" type="button" onclick="editRegisterConsignment()">Update</button>
-                                            <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel"
-                                                style="margin-left: 10px;">Cancel</a>
+                                                type="button" onclick="editRegisterConsignment()">Update</button>
+                                            <button  class="modal-close btn" onclick="closeUpdateModal()"
+                                                style="margin-left: 10px;">Cancel</button>
 									 </div>
                                     </div>
-                                </form>
+                                
   			</div>
     </div>
        
          <script>
+         function closeUpdateModal(){
+        	 $("#DeleteConsignment").modal('hide');
+        	 $('#updateModal').modal('hide');
+        	 $(".lean-overlay").remove();
+         }
+         
+         function closeViewModal()
+         {
+        	 $('#viewModal').modal('hide');
+        	 $(".lean-overlay").remove();
+        	 
+         }
+         
    			 populateCountries
    			 (   
      			 "country"
