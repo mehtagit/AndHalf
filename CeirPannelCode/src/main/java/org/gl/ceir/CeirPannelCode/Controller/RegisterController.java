@@ -366,8 +366,8 @@ System.out.println("validation sucessfulll");
 	public @ResponseBody ModelAndView deleteconsignment(@RequestParam("txnId") String id) {
 		System.out.println("inside delete method");
 		System.out.println("transacation id="+id);
-	ConsignmentModel response=	feignImpl.deleteConsignment(id);
-		 System.out.println("delete response="+response);
+	///ConsignmentModel response=	feignImpl.deleteConsignment(id);
+		// System.out.println("delete response="+response);
 		ModelAndView mv = new ModelAndView(); 
 		
 		mv.setViewName("redirect:/importerConsignment/1"); 

@@ -245,8 +245,8 @@ opacity: 0;
                           
                           <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" download="download"><i class="fa fa-download " aria-hidden="true"
-                              style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download"></i></a>
                           
                           <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
                           class="fa fa-eye teal-text" aria-hidden="true" title="view"
@@ -290,7 +290,7 @@ opacity: 0;
 
       <h6>View Consignment</h6>
       <hr>
-	                        <form action="">
+	                      
 
                                     <div class="row myRow"	>
                                         <div class="input-field col s12 m6">
@@ -350,12 +350,12 @@ opacity: 0;
 
                                     <div class="row" style="padding: 20px 0 100px 0;">
                                         <div class="input-field col s12 center">
-                                            <button  class="btn" class="modal-close btn" 
+                                            <button  class="btn"  onclick="closeViewModal()" class="modal-close btn" 
                                                 id="add_user">Cancel</button>
                                         </div>
                                     </div>
 
-                                </form>	
+                                	
 			</div>
   </div>
   <!-- Modal End -->
@@ -852,7 +852,7 @@ event.preventDefault();
   
          <h6>Edit Consignment</h6>
         <hr>
-   			 <form action="" enctype="multipart/form-data" method="POST" id="editRegisterConsignment">
+   			 
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
@@ -939,15 +939,26 @@ event.preventDefault();
                                         <div class="input-field col s12 center">
                                             <button class="waves-effect waves-light modal-trigger btn"
                                                 type="button" onclick="editRegisterConsignment()">Update</button>
-                                            <button  class="modal-close btn" 
+                                            <button  class="modal-close btn" onclick="closeUpdateModal()"
                                                 style="margin-left: 10px;">Cancel</button>
 									 </div>
                                     </div>
-                                </form>
+                                
   			</div>
     </div>
        
          <script>
+         function closeUpdateModal(){
+        	 
+        	 $('#updateModal').closeModal();
+         }
+         
+         function closeViewModal()
+         {
+        	 $('#viewModal').closeModal();
+        	 
+         }
+         
    			 populateCountries
    			 (   
      			 "country"

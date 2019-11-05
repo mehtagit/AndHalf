@@ -163,52 +163,80 @@ public class Consignment {
 			@RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
 			@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId) {
-		
+		ConsignmentModel consignment = new ConsignmentModel();
 		GenricResponse response= new GenricResponse();
 		log.info("entry point  in update Consignment ** **.");
-		ConsignmentModel consignment = new ConsignmentModel();
-	      
-		if(file.isEmpty()==false)
+		
+	    
+	    log.info("file name without upload file="+filename);
+		
+		if(file.isEmpty()==true)
 		{
-		 try {
-				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
-				File dir = new File(rootPath + File.separator);
-		         
-				if (!dir.exists()) 
-					dir.mkdirs();
-				// Create the file on server
-				// Calendar now = Calendar.getInstance();
-
-				File serverFile = new File(rootPath+file.getOriginalFilename());
-				log.info("COMPLETE PATH" + serverFile);
-				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				stream.write(bytes);
-				stream.close();
+	        log.info("message  in file upload block ");
 			
-		         }
-		        catch (Exception e) {
-					// TODO: handle exception
-		        	e.printStackTrace();
-				}
+			consignment.setSupplierId(supplierId);
+			consignment.setSupplierName(supplierName);
+			consignment.setConsignmentNumber(consignmentNumber);
+			consignment.setExpectedDispatcheDate(expectedDispatcheDate);
+			consignment.setExpectedArrivaldate(expectedArrivalDate);
+			consignment.setOrganisationCountry(organisationcountry);
+			consignment.setExpectedArrivalPort(expectedArrivalPort);
+			consignment.setQuantity(quantity);
+			consignment.setTxnId(txnId);
+			consignment.setFileName(filename);
+			consignment.setUserId(Long.valueOf(1));
+			consignment.setImporterName("sharad yadav");
+			consignment.setTaxPaidStatus("Not Paid");
+			
+			log.info(consignment.toString());
 		}
+		else {
+			
 		
-		
-		consignment.setSupplierId(supplierId);
-		consignment.setSupplierName(supplierName);
-		consignment.setConsignmentNumber(consignmentNumber);
-		consignment.setExpectedDispatcheDate(expectedDispatcheDate);
-		consignment.setExpectedArrivaldate(expectedArrivalDate);
-		consignment.setOrganisationCountry(organisationcountry);
-		consignment.setExpectedArrivalPort(expectedArrivalPort);
-		consignment.setQuantity(quantity);
-		consignment.setTxnId(txnId);
-		consignment.setFileName(filename);
-		consignment.setUserId(Long.valueOf(1));
-		consignment.setImporterName("sharad yadav");
-		consignment.setTaxPaidStatus("Not Paid");
-		
-		log.info(consignment.toString());
+			
+			log.info("file is empty or not "+file.isEmpty());
+			 try {
+					byte[] bytes = file.getBytes();
+					String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+					File dir = new File(rootPath + File.separator);
+			         
+					if (!dir.exists()) 
+						dir.mkdirs();
+					// Create the file on server
+					// Calendar now = Calendar.getInstance();
+
+					File serverFile = new File(rootPath+file.getOriginalFilename());
+					log.info("COMPLETE PATH" + serverFile);
+					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+					stream.write(bytes);
+					stream.close();
+				
+			         }
+			        catch (Exception e) {
+						// TODO: handle exception
+			        	e.printStackTrace();
+					}
+			
+			
+			log.info("message after file upload block ");
+			
+			consignment.setSupplierId(supplierId);
+			consignment.setSupplierName(supplierName);
+			consignment.setConsignmentNumber(consignmentNumber);
+			consignment.setExpectedDispatcheDate(expectedDispatcheDate);
+			consignment.setExpectedArrivaldate(expectedArrivalDate);
+			consignment.setOrganisationCountry(organisationcountry);
+			consignment.setExpectedArrivalPort(expectedArrivalPort);
+			consignment.setQuantity(quantity);
+			consignment.setTxnId(txnId);
+			consignment.setFileName(filename);
+			consignment.setUserId(Long.valueOf(1));
+			consignment.setImporterName("sharad yadav");
+			consignment.setTaxPaidStatus("Not Paid");
+			
+			log.info(consignment.toString());
+
+		}
 
 		 response = feignCleintImplementation.updateConsignment(consignment);
 			log.info(" update consignment form block.");
@@ -229,23 +257,12 @@ public class Consignment {
 	//************************************************ delete consignment record  page********************************************************************************/
 
 	@RequestMapping(value= {"/deleteConsignment/{txnid}"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public ModelAndView deleteConsignment(@PathVariable("txnid") String  txnid) {
-		ModelAndView mv = new ModelAndView(); 
-		ConsignmentService consignmentService= new ConsignmentService();
-		String response=consignmentService.deleteConsignment(txnid);
-		log.info("response="+response);
-		if (response.equals("success"))
-		{
-			log.info("success");
-			mv.setViewName("redirect:/Consignment/viewConsignment"); 
-			return mv;
-		}
-		else {
-			log.info("fail");
-			mv.setViewName("redirect:/Consignment/viewConsignment"); 
-			return mv;
-
-		}
+	public GenricResponse deleteConsignment(@PathVariable("txnid") String  txnid) {
+		
+		log.info("enter in  delete consignment.");
+		GenricResponse response=feignCleintImplementation.deleteConsignment(txnid);
+		log.info("response after delete consignment."+response);
+		return response;
 
 	}
 
@@ -332,7 +349,7 @@ public class Consignment {
 	
 	//**************************************************  download file  **************************************************************** 
 		@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-		public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
+		public @ResponseBody String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
 			
 			log.info("inside file download method");
 			System.out.println("transacation id="+txnid+" fileName="+fileName+" fileType="+filetype);
