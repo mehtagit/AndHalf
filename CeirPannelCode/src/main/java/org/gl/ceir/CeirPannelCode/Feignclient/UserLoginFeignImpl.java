@@ -6,6 +6,7 @@ import javax.jws.soap.SOAPBinding.Use;
 
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
+import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserLoginFeignImpl {
 
 	
-	@PostMapping("/Login/chekUser") 
-	public HttpResponse checkUser(User user);
+	@PostMapping("/Login/checkUser") 
+	public LoginResponse checkUser(User user);
 	   
 }
 

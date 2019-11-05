@@ -56,7 +56,7 @@ public class RegistrationService {
 					log.info("if file is empty");
 					mv.addObject("msg","please upload national information");
 					mv.setViewName("registration");
-				}    
+				}     
 				else{ 
 					log.info("if user is individual  "); 
 					log.info("file name: " +file.getOriginalFilename());
@@ -116,6 +116,11 @@ public class RegistrationService {
 		return response;
 	}
 	
+	public List<SecurityQuestion> securityQuestionList(){
+		log.info("inside security question controller");
+		List<SecurityQuestion> questionList =userRegistrationFeignImpl.securityQuestionList();
+		return questionList; 
+	}
 	public HttpResponse resendOtp(Integer id) {
 		log.info("inside resend otp controller");
 		log.info("id:   "+id);     

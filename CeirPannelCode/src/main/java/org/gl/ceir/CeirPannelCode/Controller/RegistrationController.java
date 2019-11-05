@@ -1,9 +1,11 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.IOException;
+import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
@@ -35,8 +37,8 @@ public class RegistrationController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
 		return mv;     
-	}    
-
+	}        
+ 
 	@RequestMapping(value = "/registration",method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView registration(@ModelAttribute Registration registration, @RequestParam(name = "file",required = false) MultipartFile file ) throws IOException{
 		if(registration.getFirstName() ==null ) {
@@ -57,13 +59,24 @@ public class RegistrationController {
 		mv.setViewName("verifyOtp");
 		return mv;      
 	} 
+	 
+	@RequestMapping(value = "/securityQuestionList",method = {RequestMethod.GET})
+	@ResponseBody 
+	public List<SecurityQuestion> questionList(){
+		List<SecurityQuestion> response =registrationService.securityQuestionList();
+		return response;         
+	}
+	
+	
 	
 	@RequestMapping(value = "/verifyOtp",method = {RequestMethod.POST})
 	@ResponseBody
 	public HttpResponse verifyOtp(@RequestBody Otp otp){
 		HttpResponse response =registrationService.verifyOtp(otp);
 		return response;       
-	}  
+	}
+	
+	
                         
 	@RequestMapping(value = "/resendOtp/{userid}",method = {RequestMethod.POST})
 	@ResponseBody
@@ -71,6 +84,14 @@ public class RegistrationController {
 		HttpResponse response =registrationService.resendOtp(userid);
 		return response;                 
 	}  
+
+	
+	/*
+	 * @RequestMapping(value = "/securityQuestions",method = {RequestMethod.POST})
+	 * 
+	 * @ResponseBody public HttpResponse securityQuestions(@){ HttpResponse response
+	 * =registrationService.resendOtp(userid); return response; }
+	 */ 
 
 	
 

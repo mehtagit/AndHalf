@@ -1,7 +1,10 @@
 package org.gl.ceir.CeirPannelCode.Service;
 
+import javax.servlet.http.HttpSession;
+
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.User;
+import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +26,18 @@ public class LoginService {
 		return mv;
 	}
 	
-	public ModelAndView checkLogin(User user) {
+	public ModelAndView checkLogin(User user,HttpSession session) {
 		log.info("check login controller");
 		ModelAndView mv=new ModelAndView();
-		HttpResponse response=new HttpResponse();
+		LoginResponse response=new LoginResponse();
 		response=userLoginFeignImpl.checkUser(user);
+		log.info("login response:  "+response); 
 		if(response.getStatusCode()==200) {
-			mv.setViewName("dashboard");
-			return mv;
+			session.setAttribute("username", response.getUsername());
+			session.setAttribute("userid", response.getUserId());
+			session.setAttribute("userRoles", response.getUserRoles());
+			mv.setViewName("redirect:/importerDashboard");
+			return mv;     
 		}
 		else {
 			mv.setViewName("login");
