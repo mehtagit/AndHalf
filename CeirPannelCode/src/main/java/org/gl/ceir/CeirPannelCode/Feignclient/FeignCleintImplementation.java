@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public interface FeignCleintImplementation {
 	public List<ConsignmentModel> consignmentList(@RequestParam long userId) ;
 
 	
+	
+	//View filter Consignment  feign  controller
+		@RequestMapping(value="/filter/consignment" ,method=RequestMethod.GET) 
+		public List<ConsignmentModel> consignmentFilter(FilterRequest filterrequest) ;
+
+		
 	
 	
 	//Add new  Consignment  feign  controller
@@ -59,15 +66,10 @@ public interface FeignCleintImplementation {
 	
 	
 	
-	//filter  Consignment  feign  controller
-		@RequestMapping(value="/consignment/filterDetails" ,method=RequestMethod.POST) 
-		public List<ConsignmentModel> filterConsignmentdata(@RequestBody ConsignmentFilterPojo pojo) ;
-
-		
 		
 	
 	//download file(Error or Uploaded file) feign  controller
-	@RequestMapping(value="/stoke/Download/uploadFile" ,method=RequestMethod.GET) 
+	@RequestMapping(value="/Download/uploadFile" ,method=RequestMethod.GET) 
 		public @ResponseBody String downloadFile(@RequestParam("txnId") String txnId,@RequestParam("fileType") String fileType,@RequestParam("fileName") String fileName);
 
 	

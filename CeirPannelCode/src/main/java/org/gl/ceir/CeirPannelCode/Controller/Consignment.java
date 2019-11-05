@@ -4,10 +4,12 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,6 +60,18 @@ public class Consignment {
 	  log.info(" view consignment exit point."); 
 	  return mv; 
 	  }
+	  
+	  @RequestMapping(value=
+		  {"/filterConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	  public List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest) {
+		  
+		  log.info("view consignment filter  entry point."+filterRequest);
+		  List<ConsignmentModel>
+		  consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest);
+		  log.info("fillter Data=="+consignmentdetails);
+		  log.info(" view consignment exit point."); 
+		  return consignmentdetails; 
+		  }
 	 
 
 
@@ -131,7 +146,6 @@ public class Consignment {
 
 		log.info("consignment object "+consignment.toString());
 		log.info(file.getOriginalFilename());
-
 		GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 		log.info("response from feign client=="+response.toString());
 		return response;
@@ -235,16 +249,7 @@ public class Consignment {
 
 	}
 
-	//**************************************************  download file  **************************************************************** 
-	@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype)  {
-		ConsignmentService consignmentService= new ConsignmentService();
-
-		String response=  consignmentService.downloadFile(txnid, fileName, filetype);
-
-		return response;
-
-	}
+	
 
 
 	// *********************************************** open register page or edit page ******************************
@@ -277,6 +282,26 @@ public class Consignment {
 		return mv;
 
 	}
+	
+	// *********************************************** open register page or edit popup ******************************
+	@RequestMapping(value="/openRegisterConsignmentPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public ConsignmentModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId)
+	{
+		ConsignmentModel  consignmentdetails= new ConsignmentModel();
+		if(reqType.equals("editPage")) {
+			consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+			log.info("consignment details="+consignmentdetails);
+			log.info("open Update registration Consignment popup");
+			
+		}
+		else {
+			consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
+			log.info("consignment details="+consignmentdetails);
+			log.info("open view  registration Consignment pop up");
+		}
+		return consignmentdetails;
+
+	}
 
 	@RequestMapping(value="/demo/{reqType}",method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody ConsignmentModel demo(@RequestParam(name="supplierId") String supplierId,@RequestParam(name="supplierName") String supplierName
@@ -304,5 +329,32 @@ public class Consignment {
 		return consignment;
 
 	}
+	
+	//**************************************************  download file  **************************************************************** 
+		@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+		public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
+			
+			log.info("inside file download method");
+			System.out.println("transacation id="+txnid+" fileName="+fileName+" fileType="+filetype);
+			log.info("txnid"+txnid+" fileName "+fileName+" fileType "+filetype);
+			String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName);
+			log.info(response);
+		
+			return "redirect:"+response;
+
+		}
+		
+		
+		//************************************************ Download Sampmle file **************************************************
+		@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+		public  String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
+			System.out.println("inside file download method");
+			System.out.println(" fileType="+filetype);
+			String response=feignCleintImplementation.downloadSampleFile(filetype);
+			log.info(response);
+		
+			return "redirect:"+response;
+
+		}
 
 }

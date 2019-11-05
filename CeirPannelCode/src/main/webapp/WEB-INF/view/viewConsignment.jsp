@@ -156,7 +156,7 @@ opacity: 0;
 
                       <div id="startdatepicker" class="input-group date" data-date-format="yyyy-mm-dd">
                         <label for="TotalPrice">Start date</label>
-                        <input type="date">
+                        <input type="date" id="startDate">
                         <!-- <input class="form-control" type="date" id="datepicker" /> -->
                         <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar"
                             aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
@@ -168,7 +168,7 @@ opacity: 0;
                         <!-- <input type='text' class='datepicker-here' data-language='en' /> -->
                         <label for="TotalPrice">End date</label>
                         <!-- <input type="text" class="form-control" name="date" id="date" data-select="datepicker"> -->
-                        <input class="form-control" type="date" id="datepicker" />
+                        <input class="form-control" type="date" id="endDate" />
                         <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar"
                             aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
                       </div>
@@ -177,47 +177,36 @@ opacity: 0;
                     <div class="col s6 m2 l2 selectDropdwn">
                         <br />
                         <!-- <label for="TotalPrice" class="center-align">File Status</label> -->
-                        <select id="filterFileStatus" class="select2 form-control boxBorder boxHeight">
+                        <select id="filterConsignmentStatus" class="select2 form-control boxBorder boxHeight">
                           <option value="" disabled selected>Consignment Status</option>
-                          <option value="Success">Uploading</option>
-                          <option value="Processing">Processing</option>
-                          <option value="Error">Rejected by system</option>
-                          <option value="Error">Pending approval from CEIR</option>
-                          <option value="Error">Rejected by CEIR authority</option>
-                          <option value="Error">Pending approval from Custom (CEIR authority has approved)</option>
-                          <option value="Error">Approved by custom</option>
-                          <option value="Error">Rejected by custom</option>
-                          <option value="Error">Withdrawn by Importer</option>
-                          <option value="Error">Withdrawn by CEIR</option>
+                          <option value="0">Uploading</option>
+                          <option value="1">Processing</option>
+                          <option value="2">Rejected by system</option>
+                          <option value="3">Pending approval from CEIR</option>
+                          <option value="4">Rejected by CEIR authority</option>
+                          <option value="5">Pending approval from Custom (CEIR authority has approved)</option>
+                          <option value="6">Approved by custom</option>
+                          <option value="7">Rejected by custom</option>
+                          <option value="8">Withdrawn by Importer</option>
+                          <option value="9">Withdrawn by CEIR</option>
                         </select>
   
                       </div>
 
-                    <div class="col s6 m2 l2 selectDropdwn">
-                      <br />
-                      <!-- <label for="TotalPrice" class="center-align">File Status</label> -->
-                      <select id="filterFileStatus" class="select2 form-control boxBorder boxHeight">
-                        <option value="" disabled selected>File Status</option>
-                        <option value="Success">Success</option>
-                        <option value="Error">Error</option>
-                        <option value="Processing">Processing</option>
-
-                      </select>
-
-                    </div>
+                  
                     <div class="col s6 m2 l2 selectDropdwn">
                       <br />
                       <!-- <label for="TotalPrice" class="center-align">Tax Paid Status</label> -->
                       <select id="taxPaidStatus" class="select2 form-control boxBorder boxHeight">
                         <option value="" disabled selected>Tax Paid Status</option>
                         <option value="Paid">Paid</option>
-                        <option value="NotPaid">Not Paid</option>
+                        <option value="Not Paid">Not Paid</option>
                       </select>
 
                     </div>
 
                     <div class="col s12 m2 l2">
-                      <button type="submit" class="btn primary botton" id="submitFilter">Filter</button>
+                      <button type="button" class="btn primary botton" onclick="filterConsignment()" id="submitFilter">Filter</button>
                     </div>
 
                   </div>
@@ -253,14 +242,21 @@ opacity: 0;
                         </c:choose>
                            <td>${consignmentdetails.taxPaidStatus}</td>
                         <td style="width:180px !important;">
-                          <a href=""><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                          
+                          <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="#" download="download"><i class="fa fa-download " aria-hidden="true"
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" download="download"><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" download="download"></i></a>
-                          <a href="${context}/Consignment/openRegisterConsignmentForm?reqType=viewPage&txnId=${consignmentdetails.txnId}"><i class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
                               style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                          <a href="${context}/Consignment/openRegisterConsignmentForm?reqType=editPage&txnId=${consignmentdetails.txnId}"><i class="fa fa-pencil" aria-hidden="true"
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "EditConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-pencil" aria-hidden="true" 
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+                         
                           <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
                               title="delete"></i></a>
@@ -279,9 +275,93 @@ opacity: 0;
         </div>
         <!--end container-->
       </section>
-	  
-	  
-  <!-- Modal 2 start   -->
+ 
+ 
+<!-- Edit confirmation Modal start   -->
+
+
+
+ 
+ 
+ <!--viewModal Modal start   -->
+
+  <div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+    <div class="modal-content">
+
+      <h6>View Consignment</h6>
+      <hr>
+	                        <form action="">
+
+                                    <div class="row myRow"	>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="name" id="supplierId" placeholder="Supplier/Manufacturer ID" readonly="readonly"  />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="name" id="supplierName"placeholder="Supplier/Manufacturer Name" readonly="readonly"  />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer Name</label>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="name" id="consignmentNumber" placeholder="Consignment Number" readonly="readonly"  />
+                                            <label for="Name" class="center-align">Consignment Number</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6" style="color: #c4c4c4;">
+                                            <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+                                                Arival Date</p>
+                                            <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
+                                            <input type="date" id="expectedArrivaldate" placeholder="Expected Arival Date" readonly="readonly" >
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" id="countryview" class="browser-default" readonly="readonly" class="mySelect" placeholder="Device Origination Counrty*"
+                                                >
+                                                 <label for="Name" class="center-align"> Origination Country</label>
+                                            <label for="countryview" class="center-align"></label>
+                                        </div>
+
+
+                                        <div class="input-field col s12 m6">
+                                            <p class="input-text-date" style="color: #c4c4c4;" >Expected Dispatch Date
+                                            </p>
+                                            <!-- <label for="Name">Expected arrival Date</label> -->
+                                            <input type="date" id="expectedDispatcheDate" placeholder="Expected Dispatch Date" readonly="readonly" >
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+                                            <input type="text" id="expectedArrivalPort" readonly="readonly" placeholder="Arrival port">
+                                             <label for="Name" class="center-align">Expected Arrival Port</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="Quantity" placeholder="Quantity" id="Quantity" readonly="readonly"  />
+                                            <label for="Quantity" class="center-align">Quantity</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                                <input type="text" name="TransactionId" placeholder="Transaction ID" id="TransactionId" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Transaction ID</label>
+                                            </div>
+                                    </div>
+
+                                    <div class="row" style="padding: 20px 0 100px 0;">
+                                        <div class="input-field col s12 center">
+                                            <button  class="btn" class="modal-close btn" 
+                                                id="add_user">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </form>	
+			</div>
+  </div>
+  <!-- Modal End -->
+
+ 
+  <!--Delete Modal start   -->
 
   <div id="DeleteConsignment" class="modal">
     <div class="modal-content">
@@ -310,8 +390,31 @@ opacity: 0;
     </div>
   </div>
   <!-- Modal End -->
+      <!-- END CONTENT -->
 
-  <!-- Modal 2 start   -->
+<!-- Modal 1 start   -->
+
+    <div id="updateConsignment" class="modal">
+        <div class="modal-content">
+            <h6>Update Consignment</h6> <hr>
+
+            <div class="row">
+                <h6 id="sucessMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="${context}/Consignment/viewConsignment" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+ 
+
+
+
+ <!-- Delete confirmation Modal start   -->
 
   <div id="confirmDeleteConsignment" class="modal">
       <div class="modal-content">
@@ -367,6 +470,7 @@ opacity: 0;
             		{
             			"destroy":true,
             			"bLengthChange": true,
+            			
             			"sorting":[]
             		}); 
            </script>
@@ -379,138 +483,266 @@ opacity: 0;
           
          
          <script type="text/javascript">
-         function registerConsignment(){
-        	
-     
-        	 var dispatcDate=  $('#expectedDispatcheDate').val();
-        	 var arrivalDate=  $('#expectedArrivalDate').val();
-        	
-        	 var csvFile=$('#consignmentFile').val();
-        	 var csvtext=csvFile.split('.').pop();
-        	 console.log("file formate"+csvtext);
-        	 var ss=$('#supplierId').val();
-        	 
-        	 
-        	 if(!isNumericValue(ss))
-        		 {
-        		 
-        		 myFunction("supplierId must be numeric value");
-        		 return false;
-        		 }
-        	 else if($('#SupplierName').val()==""){
-        		 myFunction("supplier Name Can not be blank");
-        		 return false;
-        	 }
-        	 else if(!isAlphabateic($('#SupplierName').val()))
-        		 {
-        		 myFunction("supplier Name  must be alphabetic value");
-        		 return false;
-        		 }
-        	 else if(!isAlphanumericValue($('#consignmentNumber').val()))
-    		 {
-        		 myFunction("consignmentNumber must be alphanumeric value");
-    		 return false;
-    		 }
-        	 else if($('#expectedDispatcheDate').val()=="")
-    		 {
-        		 myFunction("please select expected dispatche Date ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#country option:selected').val()=="")
-    		 {
-        		 myFunction("please select origination Country ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#expectedArrivalDate').val()=="")
-    		 {
-        		 myFunction("please select expected arrival Date ");
-    		 return false;
-    		 }
-        	 
-        	 else if($('#expectedArrivalPort option:selected').val()=="")
-    		 {
-        		 myFunction("please select expected arrival port ");
-    		
-    		 return false;
-    		 }
-        	 
-        	 else if($('#consignmentFile').val()=="")
-    		 {
-        		 myFunction("please select file to be uploaded ");
-    		 return false;
-    		 }
-        	 else if (csvtext!='csv')
-        	 {
-        		 myFunction("please select csv file formate ");
-					return false;
-        	 }
-        	 else if(Date.parse(dispatcDate)==Date.parse(arrivalDate))
-        		 {
-        		 myFunction("can not be equal ");
-					return false;
-        		 }
-        	 else if(Date.parse(dispatcDate)>Date.parse(arrivalDate))
-    		 {
-    		 myFunction("dispatche date should be smaler then arrival date ");
-				return false;
-    		 }
-        	 
+         
         
-        	 else if($('#quantity').val()=="")
-    		 {
-        		 myFunction("please enter quantity");
-    		 return false;
-    		 }
-        	 else if(!isNumericValue($('#quantity').val()))
-    		 {
-        		 myFunction("please enter quantity in numbers");
-    		 return false;
-    		 }
+         
+         function viewConsignmentDetails(txnId){
+        
+        	 $("#viewModal").modal('show');
         	
-        	 $("#registerConsignment").submit();
-        	
+        	 $.ajax({
+        		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+ 				dataType : 'json',
+ 				contentType : 'application/json; charset=utf-8',
+ 				type : 'GET',
+ 				success : function(data) {
+ 					console.log(data)
+ 					setViewPopupData(data)
+ 				},
+ 				error : function() {
+ 					alert("Failed");
+ 				}
+ 			});
+        	 
          }
-         </script>
+         
+         
+         function EditConsignmentDetails(txnId){ 	
+        	
+        	 $.ajax({
+    				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+    				dataType : 'json',
+    				contentType : 'application/json; charset=utf-8',
+    				type : 'GET',
+    				success : function(data) {
+    					console.log(data)
+    					setEditPopupData(data) 
+    				},
+    				error : function() {
+    					alert("Failed");
+    				}
+    			});
+        	 
+        	 $("#updateModal").modal('show');
+         }
+         
+         
+         function setViewPopupData(data){
+        	console.log("_________________++++++++++"+data.organisationCountry)
+        	
+        	$("#supplierId").val(data.supplierId);
+     		$("#supplierName").val(data.supplierName);
+     		$("#consignmentNumber").val(data.consignmentNumber);
+     		$("#expectedDispatcheDate").val(data.expectedDispatcheDate);
+     		$("#countryview").val(data.organisationCountry);
+     		$("#expectedArrivaldate").val(data.expectedArrivaldate);
+     		$("#expectedArrivalPort").val(data.expectedArrivalPort);
+     		$("#quantity").val(data.quantity);
+     		$("#TransactionId").val(data.txnId);
+     		$("#fileName").val(data.fileName); 
+     	}
+       
+        function setEditPopupData(data){
+        	console.log()
+        	$("#supplierIdEdit").val(data.supplierId);
+     		$("#supplierNameEdit").val(data.supplierName);
+     		$("#consignmentNumberEdit").val(data.consignmentNumber);
+     		$("#expectedDispatcheDateEdit").val(data.expectedDispatcheDate);
+     		$("#countryEdit").val(data.organisationcountry);
+     		$("#expectedArrivaldateEdit").val(data.expectedArrivaldate);
+     		$("#expectedArrivalPortEdit").val(data.expectedArrivalPort);
+     		$("#QuantityEdit").val(data.quantity);
+     		$("#TransactionIdEdit").val(data.txnId);
+     		$("#fileNameEdit").val(data.fileName); 
+        	
+        } 
+       
+        </script>
          
          
          <script>
-         function filterData(){
-        	 var startDate=$('#filterStartDate').val()
-        	 var endDate=$('#endDateFilter').val()
+         
+         
+         function filterConsignment()
+         {
         	 
-        	 var result=dateValidation(startDate,endDate);
-        	  if(result=="smaller")
-        		 {
-        		 myFunction("end date should be greater then start date")
-        		 $('#endDateFilter').val("")
-        		 }
+        	 var startdate="";
+         	 var endDate="";
+         	 var taxStatus=$('#taxPaidStatus').val();
+         	 var consignmentStatus=$('#filterConsignmentStatus').val();
+         	 var userId="1";
+         	 console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus"+consignmentStatus)
+         	 var filterRequest={
+         		 "consignmentStatus":consignmentStatus,
+         		 "endDate":startdate,
+         		 "startDate":endDate,
+         		 "taxPaidStatus":taxStatus,
+         		 "userId":userId
+         		 
+         	}
+         	 
+        	 $.ajax({
+   				url: '${context}/Consignment/filterConsignment/',
+   				type: 'POST',
+   				data: JSON.stringify(filterRequest),
+				processData: false,
+				contentType: 'application/json',
+   				success: function (data, textStatus, jqXHR) {
+   					
+   					 console.log(data);
+   					var table = $('#consignmentLibraryTable').DataTable();
+   					table.destroy();
+   				    $('#consignmentLibraryTable').DataTable(
+   	            		{
+   	            			"oLanguage": {
+   	         				"sLengthMenu": "Display  _MENU_ "
+   	         			},
+   	         			"bDestroy": true,
+   	         			"bLengthChange": false,
+   	         			//"bFilter": false,
+   	         			"bStateSave": false,
+   	         			"responsive": true,
+   	         			"deferRender": true,
+   	         			"bProcessing": false,
+   	         			
+   	                 	"scrollCollapse": true,
+   	         			"aaData": data,
+   	         			"iDisplayLength": 10,
+   	         			"sPaginationType": "full_numbers",
+   	         			"aLengthMenu": [
+   	         				[5, 10, 25, 50, -1],
+   	         				[5, 10, 25, 50, "All"]
+   	         			],
+   	         			"bSort": false,
+   	         			
+   	         			"aoColumns": [ 
+   	         				{
+   	         					"mData": "modifiedOn"
+   	         				},
+   	         				{
+   	         					"mData": "txnId"
+   	         				},
+   	         				{
+   	         					"mData":"supplierName"
+   	         				},
+   	         				
+   	         				{
+   	         					"mData":"consignmentStatus",
+								"mRender": function (data, type, full) {
+   	         					
+									if(full.consignmentStatus==0)
+										{
+										return "uploading"
+										}
+									else if(full.consignmentStatus==1)
+									{
+									return "processing"
+									}
+									
+   	         					}
+   	         				},
+   	         				{
+   	         					"mData":"taxPaidStatus"
+   	         				}, null],
+   	         				"aoColumnDefs": [{
+   	         					"className": "dt-body-center", 
+   	         					"aTargets": [5],
+   	         					"mData": "CampaignName",
+   	         					
+   	         					//"targets": "_all",
+   	         					"mRender": function (data, type, full) {
+   	         						
+									
+									console.log(full.fileName);
+									return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a> <a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+									 // return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName'/'full.txnId}+' ><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a   href="${context}/Consignment/dowloadFiles/actual/'+full.fileName'/'full.txnId}+'><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "EditConsignmentDetails('full.txnId')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-right:15px;"></i></a><a href="#EditConsignment" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+   	         					}
+   	         				}]
+   	         				
+   	         		
+   	            			
+   	            		});
+   					
+   				
+   					
+   				},
+   				error: function (jqXHR, textStatus, errorThrown) {
+   				console.log("error in ajax")
+   				}
+   			});
+         	 
+        	 
+         }
+ //******************************************************************************************************************************************************************888888
+ //******************************************************************************************************************************************************************888888
+ //******************************************************************************************************************************************************************888888   
+ 
+ function editRegisterConsignment(){
+         	/*  $("#editRegisterConsignment").submit(); */
+         	 
+         	 var supplierId=$('#supplierIdEdit').val();
+         	 var supplierName=$('#supplierNameEdit').val();
+         	 var consignmentNumber=$('#consignmentNumberEdit').val();
+         	 var expectedArrivalDate=$('#expectedArrivaldateEdit').val();
+         	 var expectedDispatcheDate=$('#expectedDispatcheDateEdit').val();
+         	 var expectedArrivalPort=$('#expectedArrivalPortEdit').val();
+         	 var organisationcountry=$('#country').val();
+         	 var filename=$('#fileNameEdit').val();
+         	 var txnId=$('#TransactionIdEdit').val();
+         	 var quantity=$('#QuantityEdit').val();
+         	  console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
+         	 
+         	 
+         	 var formData= new FormData();
+         		formData.append('file', $('#csvUploadFile')[0].files[0]);
+         	 	formData.append('supplierId',supplierId);
+         	 	formData.append('supplierName',supplierName);
+         	 	formData.append('consignmentNumber',consignmentNumber);
+         	 	formData.append('expectedArrivaldate',expectedArrivalDate);
+         	 	formData.append('expectedDispatcheDate',expectedDispatcheDate);
+         	 	formData.append('expectedArrivalPort',expectedArrivalPort);
+         	 	formData.append('organisationcountry',organisationcountry);
+         		formData.append('quantity',quantity);
+         		formData.append('txnId',txnId);
+         		formData.append('filename',filename);
+         		
+         		console.log(JSON.stringify(formData));
+         		console.log("*********");
+         	 	
+         	 $.ajax({
+  				url: '${context}/Consignment/updateRegisterConsignment',
+  				type: 'POST',
+  				data: formData,
+  				processData: false,
+  				contentType: false,
+  				success: function (data, textStatus, jqXHR) {
+  					
+  					 console.log(data);
+  					 $('#updateModal').closeModal();
+  					 $('#updateConsignment').modal();
+  					  if(data.errorCode==200){
+  					
+  					$('#sucessMessage').text('');
+ 					 $('#sucessMessage').text('Operation is not allowed');
+  						 }
+  					 else{
+  						 $('#sucessMessage').text('');
+  		 				 $('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+  					 }
+  				   // $('#updateConsignment').modal('open'); 
+  					//alert("success");
+  					
+  				},
+  				error: function (jqXHR, textStatus, errorThrown) {
+  				console.log("error in ajax")
+  				}
+  			});
+         
          }
          
-         function submitFilterData(){
-        
-        	 var startDate=$('#filterStartDate').val()
-        	 var endDate=$('#endDateFilter').val()
-        	 if($('#filterStartDate').val()=="")
-        		 {
-        		 myFunction("Please select start date")
-        		 return false;
-        		 }
-        	 else if($('#endDateFilter').val()=="")
-        		 {
-        		 myFunction("Please select end date");
-        		 return false;
-        		 }
-        	 else if(Date.parse(startDate)>Date.parse(endDate))
-        		 
-        	 {
-        		 myFunction("start date should be smaller than end date");
-        		 return false;
-        	 }
-        	 
-        	 $("#submitFilterConsignment").submit();
-         }
+       
+         
+      
          </script>
          
           <script type="text/javascript">
@@ -588,12 +820,7 @@ opacity: 0;
           }
           </script> 
          
-        <!--    <script>
-   			 populateCountries
-   			 (   
-     			 "country"
-   			 );
-  </script> -->
+       
   
   
   <script>
@@ -617,5 +844,114 @@ event.preventDefault();
         	   backdrop: 'static   
             });  */
           </script>
+          
+      
+      <!-- Update Modal Start -->     
+      <div id="updateModal" class="modal-form" style = "overflow-y: hidden;">
+      <div class="modal-content">
+  
+         <h6>Edit Consignment</h6>
+        <hr>
+   			 <form action="" enctype="multipart/form-data" method="POST" id="editRegisterConsignment">
+
+                                    <div class="row myRow">
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="supplierId" id="supplierIdEdit"  placeholder="Supplier/Manufacturer ID" maxlength="15" />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="supplierName" id="supplierNameEdit" placeholder="Supplier/Manufacturer Name" maxlength="15" required />
+                                            <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="consignmentNumber" id="consignmentNumberEdit" placeholder="Consignment Number" maxlength="15" placholder="" />
+                                            <label for="Name" class="center-align">Consignment Number</label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+                                                Arrival Date <span class="star">*</span></p> -->
+                                            <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDateEdit" placeholder="Expected Dispatch Date " type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                                <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
+                                            <select id="country"  name="organisationcountry" class="browser-default" class="mySelect"
+                                                required></select>
+                                            <label for="country" class="center-align"></label>
+                                        </div>
+
+
+                                        <div class="input-field col s12 m6">
+                                            <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
+                                            <!-- <label for="Name">Expected arrival Date</label> -->
+                                            <input name="expectedArrivalDate" id ="expectedArrivaldateEdit" placeholder="Expected Arrival  Date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
+                                            <span class="input-group-addon" style="color:#ff4081"><i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></span>
+                                        </div>
+                                        <div class="input-field col s12 m6">
+                                            <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+                                            <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
+                                            <select name="expectedArrivalPort" id = "expectedArrivalPortEdit" class="browser-default" required>
+                                                <option value="" disabled selected>Expected arrival port *</option>
+                                                <option value="Air">Air</option>
+                                                <option value="Land">Land</option>
+                                                <option value="Water">Water</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                            <input type="text" name="quantity" id="QuantityEdit" placeholder="Quantity" maxlength="7" required />
+                                            <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
+                                        </div>
+
+                                        <div class="input-field col s12 m6">
+                                                <input type="text" name="txnId" id="TransactionIdEdit"  placeholder="Transaction ID" value="" readonly maxlength="15" />
+                                                <label for="TransactionId" class="center-align">Transaction ID</label>
+                                            </div>
+                                    </div>
+
+
+                                    <div class="row myRow">
+                                        <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
+                                                <h6 class="file-upload-heading" style="margin-left: 0;">Upload Bulk Devices
+                                                        Information <span class="star">*</span></h6>
+                                            <div class="btn">
+                                                <span>Select File</span>
+                                                <input type="file" name="file" id="csvUploadFile" accept=".csv">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate responsive-file-div" id="fileNameEdit" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p><a href="#">Download Sample Format</a></p>
+
+                                    <span> Required Field are marked with <span class="star">*</span> </span>
+
+
+                                    <div class="row">
+                                        <div class="input-field col s12 center">
+                                            <button class="waves-effect waves-light modal-trigger btn"
+                                                type="button" onclick="editRegisterConsignment()">Update</button>
+                                            <button  class="modal-close btn" 
+                                                style="margin-left: 10px;">Cancel</button>
+									 </div>
+                                    </div>
+                                </form>
+  			</div>
+    </div>
+       
+         <script>
+   			 populateCountries
+   			 (   
+     			 "country"
+   			 );
+  </script>    
 </body>
 </html>

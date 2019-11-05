@@ -181,11 +181,16 @@ System.out.println("validation sucessfulll");
 			
 			String filePath=rootPath+file.getOriginalFilename();
 			
-			feignImpl.addConsignment(consignmentFormData. getConsignmentNumber(),consignmentFormData.getExpectedArrivalPort(),
-			consignmentFormData.getExpectedArrivalDate(),consignmentFormData.getExpectedDispatcheDate(),file.getOriginalFilename(),
-			filePath,consignmentFormData.getImporterId(),consignmentFormData.getImporterName(),consignmentFormData.getOrganisationcountry(),
-			consignmentFormData.getSupplierId(),consignmentFormData.getSupplierName(),consignmentFormData.getQuantity());
-			
+			/*
+			 * feignImpl.addConsignment(consignmentFormData.
+			 * getConsignmentNumber(),consignmentFormData.getExpectedArrivalPort(),
+			 * consignmentFormData.getExpectedArrivalDate(),consignmentFormData.
+			 * getExpectedDispatcheDate(),file.getOriginalFilename(),
+			 * filePath,consignmentFormData.getImporterId(),consignmentFormData.
+			 * getImporterName(),consignmentFormData.getOrganisationcountry(),
+			 * consignmentFormData.getSupplierId(),consignmentFormData.getSupplierName(),
+			 * consignmentFormData.getQuantity());
+			 */
 			mv.setViewName("redirect:/importerConsignment/1");  
 			 
 			 
@@ -247,12 +252,18 @@ System.out.println("validation sucessfulll");
 			System.out.println("addConsignment data="+consignmentFormData);
 			
 			
-			ConsignmentModel updateConsignment=feignImpl.updateConsignment(consignmentFormData. getConsignmentNumber(),consignmentFormData.getExpectedArrivalPort(),
-			consignmentFormData.getExpectedArrivalDate(),consignmentFormData.getExpectedDispatcheDate(),file.getOriginalFilename(),
-			filePath,consignmentFormData.getImporterId(),consignmentFormData.getImporterName(),consignmentFormData.getOrganisationcountry(),
-			consignmentFormData.getSupplierId(),consignmentFormData.getSupplierName(),txnid,consignmentFormData.getQuantity());
-			 
-			System.out.println("response from update api======"+updateConsignment);
+			/*
+			 * ConsignmentModel
+			 * updateConsignment=feignImpl.updateConsignment(consignmentFormData.
+			 * getConsignmentNumber(),consignmentFormData.getExpectedArrivalPort(),
+			 * consignmentFormData.getExpectedArrivalDate(),consignmentFormData.
+			 * getExpectedDispatcheDate(),file.getOriginalFilename(),
+			 * filePath,consignmentFormData.getImporterId(),consignmentFormData.
+			 * getImporterName(),consignmentFormData.getOrganisationcountry(),
+			 * consignmentFormData.getSupplierId(),consignmentFormData.getSupplierName(),
+			 * txnid,consignmentFormData.getQuantity());
+			 */
+			//System.out.println("response from update api======"+updateConsignment);
 			mv.setViewName("redirect:/importerConsignment/1");  
 			 
 			 
@@ -336,14 +347,14 @@ System.out.println("validation sucessfulll");
 		filterdata.setConsignmentStatus(consignmentStatus);
 		filterdata.setImporterId(1);
 		
-		List<ConsignmentModel>  consignmentdetails=feignImpl.filterConsignmentdata(filterdata);
-		mv.addObject("consignmentdetails", consignmentdetails);
+	//	List<ConsignmentModel>  consignmentdetails=feignImpl.filterConsignmentdata(filterdata);
+		//mv.addObject("consignmentdetails", consignmentdetails);
 		mv.addObject("startDate", startDate);
 		mv.addObject("endDate", endDate);
 		mv.addObject("fileStatus", fileStatus);
 		mv.addObject("taxStatus", taxStatus);
 		mv.addObject("consignmentStatus", consignmentStatus);
-		System.out.println("consignemnt pojo details=********"  +consignmentdetails);
+	//	System.out.println("consignemnt pojo details=********"  +consignmentdetails);
 		return mv;
 
 	}
