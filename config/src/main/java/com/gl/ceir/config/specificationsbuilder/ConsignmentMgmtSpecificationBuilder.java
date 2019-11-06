@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.Specification;
 import com.gl.ceir.config.controller.ConsignmentController;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 
 public class ConsignmentMgmtSpecificationBuilder {
@@ -50,7 +51,8 @@ public class ConsignmentMgmtSpecificationBuilder {
 
 		for(SearchCriteria searchCriteria : params) {
 			specifications.add((root, query, cb)-> {
-				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation()))
+				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+						&& Datatype.DATE.equals(searchCriteria.getDatatype()))
 					return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 				else
 					return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());

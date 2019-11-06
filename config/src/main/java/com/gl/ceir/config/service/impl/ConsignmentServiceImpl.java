@@ -4,25 +4,28 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.ConsignmentMgmtSpecificationBuilder;
-
 
 @Service
 public class ConsignmentServiceImpl {
@@ -93,23 +96,26 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	public List<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt, Integer pageNo, Integer pageSize) {
+	public Page<ConsignmentMgmt> getFilterConsignments(ConsignmentMgmt consignmentMgmt, Integer pageNo, Integer pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			
 			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
 			if(Objects.nonNull(consignmentMgmt.getConsignmentNumber()))
-				cmsb.with(new SearchCriteria("consignmentNumber", consignmentMgmt.getConsignmentNumber(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("consignmentNumber", consignmentMgmt.getConsignmentNumber(), Datatype.STRING, SearchOperation.EQUALITY));
 			if(Objects.nonNull(consignmentMgmt.getSupplierId()))
-				cmsb.with(new SearchCriteria("supplierId", consignmentMgmt.getSupplierId(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("supplierId", consignmentMgmt.getSupplierId(), Datatype.STRING, SearchOperation.EQUALITY));
+			if(Objects.nonNull(consignmentMgmt.getCreatedOn()))
+				cmsb.with(new SearchCriteria("createdOn", consignmentMgmt.getCreatedOn(), Datatype.DATE, SearchOperation.GREATER_THAN));
 			
-			return consignmentRepository.findAll(cmsb.build(), pageable).getContent();
+			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
+			
+			return page;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
 	}
 
 

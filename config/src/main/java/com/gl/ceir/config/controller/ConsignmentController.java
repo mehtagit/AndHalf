@@ -6,6 +6,7 @@ import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -100,11 +101,11 @@ public class ConsignmentController {
 
 		logger.info("Request TO view filtered consignment = " + consignmentMgmt);
 		
-		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt, pageNo, pageSize);
+		Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterConsignments(consignmentMgmt, pageNo, pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 
-		logger.info("Response of view Request ="+mapping);
+		logger.info("Response of view Request = " + mapping);
 
 		return mapping;
 	}

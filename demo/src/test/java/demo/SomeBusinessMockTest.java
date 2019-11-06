@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import javax.annotation.Resource;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -30,6 +31,7 @@ public class SomeBusinessMockTest {
 	@Resource
 	EmployeeService employeeService;
 
+	@Ignore
 	@Test
 	public void testCase1() {
 		Employee emp = new Employee();
@@ -40,6 +42,7 @@ public class SomeBusinessMockTest {
 		assertEquals("MEHTA", empv.getName());
 	}
 
+	@Ignore
 	@Test
 	public void testCase2() {
 
