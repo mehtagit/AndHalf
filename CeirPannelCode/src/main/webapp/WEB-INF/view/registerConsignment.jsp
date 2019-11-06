@@ -112,7 +112,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                     </div>
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" id="consignmentNumber"pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -304,7 +304,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  						 
  					 $('#sucessMessage').append(data.txnId);
  						 }
- 					 else if(data.errorCode=3)
+ 					 else if(data.errorCode=3 )
  						 {
  						$('#sucessMessage').text('');
  						$('#sucessMessage').text("consignment number already exist");
@@ -436,6 +436,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
            
            function closeConfirmation()
            {
+        	   
         	   $("#closeOkPop").submit();
            }
           </script> 

@@ -179,6 +179,7 @@ opacity: 0;
                         <!-- <label for="TotalPrice" class="center-align">File Status</label> -->
                         <select id="filterConsignmentStatus" class="select2 form-control boxBorder boxHeight">
                           <option value="" disabled selected>Consignment Status</option>
+                         <option value="">ALL</option>
                           <option value="0">Uploading</option>
                           <option value="1">Processing</option>
                           <option value="2">Rejected by system</option>
@@ -199,6 +200,7 @@ opacity: 0;
                       <!-- <label for="TotalPrice" class="center-align">Tax Paid Status</label> -->
                       <select id="taxPaidStatus" class="select2 form-control boxBorder boxHeight">
                         <option value="" disabled selected>Tax Paid Status</option>
+                        <option value="">ALL</option>
                         <option value="Paid">Paid</option>
                         <option value="Not Paid">Not Paid</option>
                       </select>
@@ -245,8 +247,8 @@ opacity: 0;
                           
                           <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
                               style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-download " aria-hidden="true"
-                              style="font-size: 20px; color:#2e8b57" title="download"></i></a>
+                          <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
                           
                           <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
                           class="fa fa-eye teal-text" aria-hidden="true" title="view"
@@ -257,7 +259,8 @@ opacity: 0;
                           class="fa fa-pencil" aria-hidden="true" 
                               style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
                          
-                          <a href="#DeleteConsignment" class="waves-effect waves-light modal-trigger"><i
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
                               title="delete"></i></a>
                         </td>
@@ -275,13 +278,6 @@ opacity: 0;
         </div>
         <!--end container-->
       </section>
- 
- 
-<!-- Edit confirmation Modal start   -->
-
-
-
- 
  
  <!--viewModal Modal start   -->
 
@@ -346,6 +342,14 @@ opacity: 0;
                                                 <input type="text" name="TransactionId" placeholder="Transaction ID" id="TransactionId" readonly="readonly" maxlength="15" />
                                                <label for="TransactionId" class="center-align">Transaction ID</label>
                                             </div>
+                                            
+                                        <div class="input-field col s12 m6">
+                                        <textarea id="remark" class="materialize-textarea" style="height: 0px;" readonly="readonly"></textarea>
+            							 <label for="remark" class="">Remarks</label>
+                                        
+                                              <!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Remark</label> -->
+                                            </div>    
                                     </div>
 
                                     <div class="row" style="padding: 20px 0 100px 0;">
@@ -370,7 +374,7 @@ opacity: 0;
       <hr>
 
       <div class="row">
-        <h6>Are you sure you want to withdraw the consignment details for (Transaction ID)</h6>
+        <h6>Are you sure you want to withdraw the consignment details for (<span id ="transID"></span>)</h6>
       </div>
 
       <div class="row">
@@ -378,12 +382,13 @@ opacity: 0;
               <textarea id="textarea1" class="materialize-textarea"></textarea>
               <label for="textarea1">Remarks</label>
             </div>
-      </div>
+       </div>
+       <input type="text" id="popupTransactionId" maxlength="15" hidden/>
       <div class="row">
         <div class="input-field col s12 center">
           <div class="input-field col s12 center">
-            <a href="${context}/Consignment/deleteConsignment/20191023" class="btn">ok</a>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
+            <a class="btn" onclick="confirmantiondelete()">ok</a>
+            <button class="modal-close btn" onclick="closeUpdateModal()" style="margin-left: 10px;">No</button>
           </div>
         </div>
       </div>
@@ -391,6 +396,9 @@ opacity: 0;
   </div>
   <!-- Modal End -->
       <!-- END CONTENT -->
+
+
+ 
 
 <!-- Modal 1 start   -->
 
@@ -410,9 +418,6 @@ opacity: 0;
     </div>
 
 
- 
-
-
 
  <!-- Delete confirmation Modal start   -->
 
@@ -424,7 +429,7 @@ opacity: 0;
         <!-- <h4 class="header2 pb-2">User Info</h4> -->
   
         <div class="row">
-          <h6>The consignment has been successfully withdrawn</h6>
+          <h6 id=consignmentText></h6>
         </div>
   
         <div class="row">
@@ -474,42 +479,49 @@ opacity: 0;
             			"sorting":[]
             		}); 
            </script>
-          
-     <!--      <script>
-    $(document).ready(function () {
-      $('.modal').modal();
-    });
-  </script> -->
+
           
          
          <script type="text/javascript">
          
+        function DeleteConsignmentRecord(txnId){
+       		 $("#DeleteConsignment").modal('show');
+        	 $("#transID").text(txnId);
+        }
         
-         
-         function viewConsignmentDetails(txnId){
         
-        	 $("#viewModal").modal('show');
-        	
+        function confirmantiondelete(){
+        	 var txnId = $("#transID").text();
+        	 var remarks = $("#textarea1").val();
+     		 var obj ={
+        			 "txnId" : txnId,
+        	 		 "remarks" : remarks
+        	 }
         	 $.ajax({
-        		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
- 				dataType : 'json',
- 				contentType : 'application/json; charset=utf-8',
- 				type : 'GET',
- 				success : function(data) {
- 					console.log(data)
- 					setViewPopupData(data)
- 				},
- 				error : function() {
- 					alert("Failed");
- 				}
- 			});
-        	 
-         }
+        			url : "./deleteConsignment",
+        			data : JSON.stringify(obj),
+        			dataType : 'json',
+        			contentType : 'application/json; charset=utf-8',
+        			type : 'POST',
+        			success : function(data, textStatus, xhr) {
+        				console.log(data);
+        				if(data.errorCode == 200){
+        					$("#consignmentText").text(data.message);
+        				}else if(data.errorCode == 0){
+        					$("#consignmentText").text(data.message);
+        				}
+        			},
+        			error : function() {
+        					console.log("Error");
+        			}
+        		});
+     		 $("#DeleteConsignment").modal('hide');
+     		 $("#confirmDeleteConsignment").modal('show');
+        }
          
-         
-         function EditConsignmentDetails(txnId){ 	
-        	
-        	 $.ajax({
+     
+        function EditConsignmentDetails(txnId){ 	
+        	$.ajax({
     				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
     				dataType : 'json',
     				contentType : 'application/json; charset=utf-8',
@@ -526,6 +538,25 @@ opacity: 0;
         	 $("#updateModal").modal('show');
          }
          
+    	
+        function viewConsignmentDetails(txnId){
+        
+        	 $("#viewModal").modal('show');
+        	 $.ajax({
+    				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+    				dataType : 'json',
+    				contentType : 'application/json; charset=utf-8',
+    				type : 'GET',
+    				success : function(data) {
+    					console.log(data)
+    					setViewPopupData(data);
+    				},
+    				error : function() {
+    					alert("Failed");
+    				}
+    			});
+        }
+         
          
          function setViewPopupData(data){
         	console.log("_________________++++++++++"+data.organisationCountry)
@@ -537,9 +568,12 @@ opacity: 0;
      		$("#countryview").val(data.organisationCountry);
      		$("#expectedArrivaldate").val(data.expectedArrivaldate);
      		$("#expectedArrivalPort").val(data.expectedArrivalPort);
-     		$("#quantity").val(data.quantity);
+     		$("#Quantity").val(data.quantity);
      		$("#TransactionId").val(data.txnId);
+     		$("#remark").val(data.remarks);
      		$("#fileName").val(data.fileName); 
+     		
+     		
      	}
        
         function setEditPopupData(data){
@@ -548,21 +582,20 @@ opacity: 0;
      		$("#supplierNameEdit").val(data.supplierName);
      		$("#consignmentNumberEdit").val(data.consignmentNumber);
      		$("#expectedDispatcheDateEdit").val(data.expectedDispatcheDate);
-     		$("#countryEdit").val(data.organisationcountry);
+     		$('#country').val(data.organisationCountry);
      		$("#expectedArrivaldateEdit").val(data.expectedArrivaldate);
      		$("#expectedArrivalPortEdit").val(data.expectedArrivalPort);
      		$("#QuantityEdit").val(data.quantity);
      		$("#TransactionIdEdit").val(data.txnId);
      		$("#fileNameEdit").val(data.fileName); 
+     		
         	
         } 
        
         </script>
          
          
-         <script>
-         
-         
+        <script>
          function filterConsignment()
          {
         	 
@@ -652,9 +685,8 @@ opacity: 0;
    	         					//"targets": "_all",
    	         					"mRender": function (data, type, full) {
    	         						
-									
-									console.log(full.fileName);
-									return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a> <a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+									console.log(full.txnId);
+									return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a> <a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
 									 // return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName'/'full.txnId}+' ><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a   href="${context}/Consignment/dowloadFiles/actual/'+full.fileName'/'full.txnId}+'><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "EditConsignmentDetails('full.txnId')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-right:15px;"></i></a><a href="#EditConsignment" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
    	         					}
    	         				}]
@@ -833,20 +865,9 @@ event.preventDefault();
 })
 </script>
   
-           <script type="text/javascript">
-          /*  $(document ).ready(function() {
-        	   setTimeout(function(){ alert("Hello"); }, 3000);
-           }); */
-            
-        /*     $(document).ready(function(){
-            	
-        	   $('#registerConsignmentModal').modal('show');
-        	   backdrop: 'static   
-            });  */
-          </script>
           
-      
-      <!-- Update Modal Start -->     
+          
+     <!-- Update Modal Start -->     
       <div id="updateModal" class="modal-form" style = "overflow-y: hidden;">
       <div class="modal-content">
   
@@ -856,16 +877,16 @@ event.preventDefault();
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierId" id="supplierIdEdit"  placeholder="Supplier/Manufacturer ID" maxlength="15" />
+                                            <input type="text" name="supplierId" id="supplierIdEdit" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" placeholder="Supplier/Manufacturer ID" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" id="supplierNameEdit" placeholder="Supplier/Manufacturer Name" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="supplierNameEdit" pattern="[A-Za-z]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" placeholder="Supplier/Manufacturer Name"  required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="consignmentNumber" id="consignmentNumberEdit" placeholder="Consignment Number" maxlength="15" placholder="" />
+                                            <input type="text" name="consignmentNumber" id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}" placeholder="Consignment Number" maxlength="15"  />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -873,14 +894,14 @@ event.preventDefault();
                                             <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arrival Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input name="expectedDispatcheDate" id="expectedDispatcheDateEdit" placeholder="Expected Dispatch Date " type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDateEdit" required="required" placeholder="Expected Dispatch Date " type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                                 <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
-                                            <select id="country"  name="organisationcountry" class="browser-default" class="mySelect"
+                                            <select id="country"  name="organisationcountry" required="required" class="browser-default" class="mySelect"
                                                 required></select>
                                             <label for="country" class="center-align"></label>
                                         </div>
@@ -889,7 +910,7 @@ event.preventDefault();
                                         <div class="input-field col s12 m6">
                                             <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input name="expectedArrivalDate" id ="expectedArrivaldateEdit" placeholder="Expected Arrival  Date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivalDate" id ="expectedArrivaldateEdit" required="required" placeholder="Expected Arrival  Date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
                                             <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -906,7 +927,7 @@ event.preventDefault();
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="quantity" id="QuantityEdit" placeholder="Quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="QuantityEdit" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" placeholder="Quantity"  required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
 
@@ -949,13 +970,15 @@ event.preventDefault();
        
          <script>
          function closeUpdateModal(){
-        	 
-        	 $('#updateModal').closeModal();
+        	 $("#DeleteConsignment").modal('hide');
+        	 $('#updateModal').modal('hide');
+        	 $(".lean-overlay").remove();
          }
          
          function closeViewModal()
          {
-        	 $('#viewModal').closeModal();
+        	 $('#viewModal').modal('hide');
+        	 $(".lean-overlay").remove();
         	 
          }
          

@@ -27,6 +27,7 @@ public class ConsignmentModel {
 	private String consignmentStatus;
 	private String quantity;
 	private Long userId  ;
+	private String remarks;
 	public int getId() {
 		return id;
 	}
@@ -165,6 +166,12 @@ public class ConsignmentModel {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	@Override
 	public String toString() {
 		return "ConsignmentModel [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
@@ -175,19 +182,9 @@ public class ConsignmentModel {
 				+ organisationcountry + ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId="
 				+ txnId + ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
 				+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity
-				+ ", userId=" + userId + "]";
+				+ ", userId=" + userId + ", remarks=" + remarks + "]";
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
+	
 }

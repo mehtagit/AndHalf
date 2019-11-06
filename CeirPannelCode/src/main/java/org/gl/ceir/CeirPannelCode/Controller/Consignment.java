@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping(value="/Consignment")
 @Controller
-@ResponseBody
+
 public class Consignment {
 
 
@@ -61,9 +61,10 @@ public class Consignment {
 	  return mv; 
 	  }
 	  
+	  
 	  @RequestMapping(value=
 		  {"/filterConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	  public List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest) {
+	  public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest) {
 		  
 		  log.info("view consignment filter  entry point."+filterRequest);
 		  List<ConsignmentModel>
@@ -91,7 +92,7 @@ public class Consignment {
 	 */
 
 	@RequestMapping(value= {"/registerConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
+	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 			@RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,@RequestParam(name="file",required = false) MultipartFile file) {
@@ -158,7 +159,7 @@ public class Consignment {
 	//************************************************ Open consignment record  page********************************************************************************/
 
 	@RequestMapping(value= {"/updateRegisterConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
+	public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 			@RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
@@ -170,7 +171,7 @@ public class Consignment {
 	    
 	    log.info("file name without upload file="+filename);
 		
-		if(file.isEmpty()==true)
+		if(file==null)
 		{
 	        log.info("message  in file upload block ");
 			
@@ -256,11 +257,11 @@ public class Consignment {
 
 	//************************************************ delete consignment record  page********************************************************************************/
 
-	@RequestMapping(value= {"/deleteConsignment/{txnid}"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public GenricResponse deleteConsignment(@PathVariable("txnid") String  txnid) {
+	@RequestMapping(value= {"/deleteConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public @ResponseBody GenricResponse deleteConsignment(@RequestBody ConsignmentModel consignmentModel) {
 		
 		log.info("enter in  delete consignment.");
-		GenricResponse response=feignCleintImplementation.deleteConsignment(txnid);
+		GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel);
 		log.info("response after delete consignment."+response);
 		return response;
 
@@ -302,7 +303,7 @@ public class Consignment {
 	
 	// *********************************************** open register page or edit popup ******************************
 	@RequestMapping(value="/openRegisterConsignmentPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ConsignmentModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId)
+	public @ResponseBody ConsignmentModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId)
 	{
 		ConsignmentModel  consignmentdetails= new ConsignmentModel();
 		if(reqType.equals("editPage")) {
@@ -349,7 +350,7 @@ public class Consignment {
 	
 	//**************************************************  download file  **************************************************************** 
 		@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-		public @ResponseBody String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
+		public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
 			
 			log.info("inside file download method");
 			System.out.println("transacation id="+txnid+" fileName="+fileName+" fileType="+filetype);
