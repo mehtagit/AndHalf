@@ -235,19 +235,55 @@ opacity: 0;
                         <c:when test="${consignmentdetails.consignmentStatus==0}">
                         <td>uploading</td>
                         </c:when>
-                         <c:when test="${consignmentdetails.consignmentStatus==1}">
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==1}">
                         <td>processing</td>
+                        </c:when>
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==2}">
+                        <td>Rejected by System</td>
+                        </c:when>
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==3}">
+                        <td>Pending approval from CEIR Authority</td>
+                        </c:when>
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==4}">
+                        <td>Rejected by CEIR Authority</td>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==5}">
+                        <td>Pending approval from Custom</td>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==6}">
+                        <td>Approved</td>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==7}">
+                        <td>Rejected by customs</td>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==8}">
+                        <td>Withdrawn by Importer</td>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==9}">
+                        <td>Withdrawn by CEIR</td>
                         </c:when>
                         
                         <c:otherwise>
                      	</c:otherwise>
                         </c:choose>
-                           <td>${consignmentdetails.taxPaidStatus}</td>
+                        <td>${consignmentdetails.taxPaidStatus}</td>
                         <td style="width:180px !important;">
+                        <c:choose>
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==0}">
+                        <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ;color: grey; font-size:20px; margin-right:15px;"></i></a>
                           
-                          <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
-                              style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
-                          <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
                               style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
                           
                           <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
@@ -263,7 +299,199 @@ opacity: 0;
                           <a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
                               class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
                               title="delete"></i></a>
-                        </td>
+                        </c:when>
+                         
+                         
+                        <c:when test="${consignmentdetails.consignmentStatus==1}">
+                        <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ; color: grey; font-size:20px; margin-right:15px;"></i></a>
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; cursor: not-allowed; color:grey; margin:0 15px 0 15px;title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
+                              title="delete"></i></a>
+                        </c:when>  
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==2}">
+                         <a href="${context}/Consignment/dowloadFiles/error/${consignmentdetails.fileName}/${consignmentdetails.txnId}"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         <a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a>
+                       	
+                       		<a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
+                              title="delete"></i></a>
+                        </c:when>  
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==3}">
+						  <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ; color: grey; font-size:20px; margin-right:15px;"></i></a>                          
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; cursor: not-allowed; color:grey; margin:0 15px 0 15px;title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"
+                              title="delete"></i></a>
+                        </c:when> 
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==4}">
+                        <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ;color: grey; font-size:20px; margin-right:15px;" disabled></i></a>
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "EditConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
+                              title="delete"></i></a>
+                        </c:when>
+                        
+                      
+                          <c:when test="${consignmentdetails.consignmentStatus==5}">
+						  <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ; color: grey; font-size:20px; margin-right:15px;"></i></a>                          
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; cursor: not-allowed; color:grey; margin:0 15px 0 15px;title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"
+                              title="delete"></i></a>
+                        </c:when> 
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==6}">
+                            <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ; color: grey; font-size:20px; margin-right:15px;"></i></a>                          
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; cursor: not-allowed; color:grey; margin:0 15px 0 15px;title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"
+                              title="delete"></i></a>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==7}">
+                         <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ;color: grey; font-size:20px; margin-right:15px;" disabled></i></a>
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "EditConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger" onclick = "DeleteConsignmentRecord('${consignmentdetails.txnId}')" ><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"
+                              title="delete"></i></a>
+                        </c:when>
+                        
+                        <c:when test="${consignmentdetails.consignmentStatus==8}">
+                       <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ; color: grey; font-size:20px; margin-right:15px;"></i></a>                          
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; cursor: not-allowed; color:grey; margin:0 15px 0 15px;title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"
+                              title="delete"></i></a>
+                        </c:when>
+                        
+                         <c:when test="${consignmentdetails.consignmentStatus==9}">
+                          <a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+                              style="pointer-events:auto;cursor: not-allowed ; color: grey; font-size:20px; margin-right:15px;"></i></a>                          
+                          
+                          <a href="${context}/Consignment/dowloadFiles/actual/${consignmentdetails.fileName}/${consignmentdetails.txnId}" ><i class="fa fa-download " aria-hidden="true"
+                              style="font-size: 20px; color:#2e8b57" title="download" ></i></a>
+                          
+                          <a class="waves-effect waves-light modal-trigger" onclick = "viewConsignmentDetails('${consignmentdetails.txnId}')"><i 
+                          class="fa fa-eye teal-text" aria-hidden="true" title="view"
+                              style="font-size: 20px; margin:0 0 0 15px;"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i class="fa fa-pencil" aria-hidden="true" 
+                              style="font-size: 20px; cursor: not-allowed; color:grey; margin:0 15px 0 15px;title="edit"></i></a>
+                         
+                         
+                          <a class="waves-effect waves-light modal-trigger"><i
+                              class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"
+                              title="delete"></i></a>
+                        </c:when>
+                      </c:choose> 
+                   </td>
                       </tr>
                       </c:forEach>
                       
@@ -598,113 +826,176 @@ opacity: 0;
         <script>
          function filterConsignment()
          {
-        	 
-        	 var startdate="";
-         	 var endDate="";
+        	 var startdate=$('#startDate').val(); 
+         	 var endDate=$('#endDate').val();
          	 var taxStatus=$('#taxPaidStatus').val();
          	 var consignmentStatus=$('#filterConsignmentStatus').val();
          	 var userId="1";
-         	 console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus"+consignmentStatus)
-         	 var filterRequest={
-         		 "consignmentStatus":consignmentStatus,
-         		 "endDate":startdate,
-         		 "startDate":endDate,
-         		 "taxPaidStatus":taxStatus,
-         		 "userId":userId
-         		 
-         	}
-         	 
-        	 $.ajax({
-   				url: '${context}/Consignment/filterConsignment/',
-   				type: 'POST',
-   				data: JSON.stringify(filterRequest),
-				processData: false,
-				contentType: 'application/json',
-   				success: function (data, textStatus, jqXHR) {
-   					
-   					 console.log(data);
-   					var table = $('#consignmentLibraryTable').DataTable();
-   					table.destroy();
-   				    $('#consignmentLibraryTable').DataTable(
-   	            		{
-   	            			"oLanguage": {
-   	         				"sLengthMenu": "Display  _MENU_ "
-   	         			},
-   	         			"bDestroy": true,
-   	         			"bLengthChange": false,
-   	         			//"bFilter": false,
-   	         			"bStateSave": false,
-   	         			"responsive": true,
-   	         			"deferRender": true,
-   	         			"bProcessing": false,
-   	         			
-   	                 	"scrollCollapse": true,
-   	         			"aaData": data,
-   	         			"iDisplayLength": 10,
-   	         			"sPaginationType": "full_numbers",
-   	         			"aLengthMenu": [
-   	         				[5, 10, 25, 50, -1],
-   	         				[5, 10, 25, 50, "All"]
-   	         			],
-   	         			"bSort": false,
-   	         			
-   	         			"aoColumns": [ 
-   	         				{
-   	         					"mData": "modifiedOn"
-   	         				},
-   	         				{
-   	         					"mData": "txnId"
-   	         				},
-   	         				{
-   	         					"mData":"supplierName"
-   	         				},
-   	         				
-   	         				{
-   	         					"mData":"consignmentStatus",
-								"mRender": function (data, type, full) {
-   	         					
-									if(full.consignmentStatus==0)
-										{
-										return "uploading"
-										}
-									else if(full.consignmentStatus==1)
-									{
-									return "processing"
-									}
-									
-   	         					}
-   	         				},
-   	         				{
-   	         					"mData":"taxPaidStatus"
-   	         				}, null],
-   	         				"aoColumnDefs": [{
-   	         					"className": "dt-body-center", 
-   	         					"aTargets": [5],
-   	         					"mData": "CampaignName",
-   	         					
-   	         					//"targets": "_all",
-   	         					"mRender": function (data, type, full) {
-   	         						
-									console.log(full.txnId);
-									return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a> <a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
-									 // return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName'/'full.txnId}+' ><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a   href="${context}/Consignment/dowloadFiles/actual/'+full.fileName'/'full.txnId}+'><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "EditConsignmentDetails('full.txnId')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-right:15px;"></i></a><a href="#EditConsignment" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
-   	         					}
-   	         				}]
-   	         				
-   	         		
-   	            			
-   	            		});
-   					
-   				
-   					
-   				},
-   				error: function (jqXHR, textStatus, errorThrown) {
-   				console.log("error in ajax")
-   				}
-   			});
-         	 
-        	 
-         }
+         	 console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
+         	  var filterRequest={
+                 		 "consignmentStatus":consignmentStatus,
+                 		 "endDate":startdate,
+                 		 "startDate":endDate,
+                 		 "taxPaidStatus":taxStatus,
+                 		 "userId":userId
+                 		 
+                 	}
+         	  if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
+         		 console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
+         		$.ajax({
+        				url: '${context}/Consignment/filterConsignment/',
+        				type: 'POST',
+        				data: JSON.stringify(filterRequest),
+     				processData: false,
+     				contentType: 'application/json',
+        				success: function (data, textStatus, jqXHR) {
+        					
+        					 console.log(data);
+        					var table = $('#consignmentLibraryTable').DataTable();
+        					table.destroy();
+        				    $('#consignmentLibraryTable').DataTable(
+        	            		{
+        	            			"oLanguage": {
+        	         				"sLengthMenu": "Display  _MENU_ "
+        	         			},
+        	         			"bDestroy": true,
+        	         			"bLengthChange": false,
+        	         			//"bFilter": false,
+        	         			"bStateSave": false,
+        	         			"responsive": true,
+        	         			"deferRender": true,
+        	         			"bProcessing": false,
+        	         			
+        	                 	"scrollCollapse": true,
+        	         			"aaData": data,
+        	         			"iDisplayLength": 10,
+        	         			"sPaginationType": "full_numbers",
+        	         			"aLengthMenu": [
+        	         				[5, 10, 25, 50, -1],
+        	         				[5, 10, 25, 50, "All"]
+        	         			],
+        	         			"bSort": false,
+        	         			
+        	         			"aoColumns": [ 
+        	         				{
+        	         					"mData": "modifiedOn"
+        	         				},
+        	         				{
+        	         					"mData": "txnId"
+        	         				},
+        	         				{
+        	         					"mData":"supplierName"
+        	         				},
+        	         				
+        	         				{
+        	         					"mData":"consignmentStatus",
+     								"mRender": function (data, type, full) {
+        	         					
+     									if(full.consignmentStatus==0)
+     									{
+     										return "uploading"
+     									}else if(full.consignmentStatus==1)
+     									{
+     										return "processing"
+     									}else if(full.consignmentStatus==2)
+     									{
+         									return "Rejected by System"
+         								}else if(full.consignmentStatus==3)
+     									{
+         									return "Pending approval from CEIR Authority"
+         								}else if(full.consignmentStatus==4)
+     									{
+         									return "Rejected by CEIR Authority"
+         								}else if(full.consignmentStatus==5)
+     									{
+         									return "Pending approval from Custom"
+         								}else if(full.consignmentStatus==6)
+     									{
+         									return "Approved"
+         								}else if(full.consignmentStatus==7)
+     									{
+         									return "Rejected by customs"
+         								}else if(full.consignmentStatus==8)
+     									{
+         									return "Withdrawn by Importer"
+         								}else if(full.consignmentStatus==9)
+     									{
+         									return "Withdrawn by CEIR"
+         								}
+     									
+        	         					}
+        	         				},
+        	         				{
+        	         					"mData":"taxPaidStatus"
+        	         				}, null],
+        	         				"aoColumnDefs": [{
+        	         					"className": "dt-body-center", 
+        	         					"aTargets": [5],
+        	         					"mData": "CampaignName",
+        	         					
+        	         					//"targets": "_all",
+        	         					"mRender": function (data, type, full) {
+        	         						
+     									console.log(full.consignmentStatus);
+     									if(full.consignmentStatus==0){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+     									
+     									
+     									}else if(full.consignmentStatus==1){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+     									
+     									
+     									}else if(full.consignmentStatus==2){
+     										return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>'; 
+     									
+     									
+     									}else if(full.consignmentStatus==3){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"title="delete"></i></a>';
+     									
+     									
+     									}else if(full.consignmentStatus==4){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+     									
+     									}else if(full.consignmentStatus==5){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"title="delete"></i></a>';
+     									
+     									
+     									}else if(full.consignmentStatus==6){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"title="delete"></i></a>';
+     									
+     									
+     									}else if(full.consignmentStatus==7){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+     									
+     									}else if(full.consignmentStatus==8){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"title="delete"></i></a>';
+     									
+     									
+     									}else if(full.consignmentStatus==9){
+     										return '<a><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px;cursor: not-allowed; color:grey; margin-right:15px;"></i></a><a  href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red; cursor: not-allowed; color:grey;"title="delete"></i></a>';
+     									
+     									
+     									}
+     									// return '<a  href="${context}/Consignment/dowloadFiles/error/'+full.fileName'/'full.txnId}+' ><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a   href="${context}/Consignment/dowloadFiles/actual/'+full.fileName'/'full.txnId}+'><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a  href="#ErrorFile" onclick = "EditConsignmentDetails('full.txnId')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-right:15px;"></i></a><a href="#EditConsignment" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#DeleteConsignment" ><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>';
+        	         					}
+        	         				}]
+        	         				
+        	         		
+        	            			
+        	            		});
+        					
+        				
+        					
+        				},
+        				error: function (jqXHR, textStatus, errorThrown) {
+        				console.log("error in ajax")
+        				}
+        			});
+         	  }else{
+         		  console.log("please fill select");
+         	  }
+         	
+      }
  //******************************************************************************************************************************************************************888888
  //******************************************************************************************************************************************************************888888
  //******************************************************************************************************************************************************************888888   

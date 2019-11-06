@@ -94,7 +94,7 @@
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel" style="width: 40%; height: 50vh; margin: auto; margin-top: 10vh;">
+                        <div class="row card-panel" style="width: 40%; margin: auto; margin-top: 10vh;">
                             <form action="">
                             <div class="col s12 m12 l12">
                                 <div class="row">
