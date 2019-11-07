@@ -107,7 +107,7 @@ var contextpath = "${context}";
 				<div class="container">
 					<div class="section">
 						<div class="row card-panel"
-							style="width: 40%; height: 50vh; margin: auto; margin-top: 10vh;">
+							style="width: 40%;  margin: auto; margin-top: 10vh;">
 							<form action="${context}/login" method="post">
 								<div class="col s12 m12 l12">
 									<div class="row">
@@ -145,7 +145,7 @@ var contextpath = "${context}";
 												<div class="input-field col s12 m6 l12">
 													<input type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="address">Enter
+														required="required"> <label for="captcha">Enter
 														your captcha <span class="star">*</span>
 													</label>
 												</div>

@@ -126,7 +126,7 @@ public class RegistrationService {
 		log.info("inside verify otp page");
 		return "verifyOtp";  
 	} 
-
+   
 	public HttpResponse verifyOtp(Otp otp) {
 		log.info("inside verify otp controller");
 		log.info("otp data:  "+otp);    

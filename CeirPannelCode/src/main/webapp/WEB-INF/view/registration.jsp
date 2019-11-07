@@ -461,12 +461,12 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="questionList[0].answer"
-										class="form-control boxBorder boxHeight" id="SecurityAnswer"
+									<input type="text" name="questionList[0].answer" 
+										class="form-control boxBorder boxHeight" id="SecurityAnswer1"
 										pattern="[A-Za-z]{0,50}" required="required"
 										maxlength="50"
 										title="Please enter alphabets upto 50 characters only"
-										> <label for="SecurityAnswer">Answer
+										> <label for="SecurityAnswer1">Answer
 										<span class="star">*</span>
 									</label>
 								</div>
@@ -491,11 +491,11 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="questionList[1].answer"
-										class="form-control boxBorder boxHeight" id="SecurityAnswer"
+										class="form-control boxBorder boxHeight" id="SecurityAnswer2"
 										pattern="[A-Za-z]{0,50}"
 										maxlength="50"
 										title="Please enter alphabets upto 50 characters only"
-										 required="required"> <label for="SecurityAnswer">Answer
+										 required="required"> <label for="SecurityAnswer2">Answer
 										<span class="star">*</span>
 									</label>
 								</div>
@@ -523,10 +523,10 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="questionList[2].answer"
-										class="form-control boxBorder boxHeight" id="SecurityAnswer"
+										class="form-control boxBorder boxHeight" id="SecurityAnswer3"
 										title="Please enter alphabets upto 50 characters only"
 										maxlength="50"
-										pattern="[A-Za-z]{0,50}" required="required"> <label for="SecurityAnswer">Answer
+										pattern="[A-Za-z]{0,50}" required="required"> <label for="SecurityAnswer3">Answer
 										<span class="star">*</span>
 									</label>
 								</div>
