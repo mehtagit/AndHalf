@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.gl.ceir.config.model.DeviceDb;
 
+
 public interface StokeDetailsRepository extends JpaRepository<DeviceDb, Long> {
 
 
@@ -23,12 +24,7 @@ public interface StokeDetailsRepository extends JpaRepository<DeviceDb, Long> {
 
 
 
-	@Transactional
-	@Modifying
-	@Query(value = "UPDATE consignment  set imei_action= ?1  where txn_id= ?2",
-	nativeQuery = true)
-	void withdrawStatus(String txnStatus,String txnId);
-
+	
 
 
 }
