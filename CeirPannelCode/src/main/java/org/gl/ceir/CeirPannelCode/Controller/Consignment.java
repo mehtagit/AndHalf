@@ -93,7 +93,6 @@ public class Consignment {
 	 
 	  filterRequest.setUserId("1");
 	  
-	  
 	  log.info("filterRequest=="+filterRequest);
 	  
 	  session.setAttribute("startDate", filterRequest.getStartDate());
