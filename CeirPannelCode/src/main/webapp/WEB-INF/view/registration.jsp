@@ -5,7 +5,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,6 +87,12 @@
         }
     </style>
 
+
+<script>
+var contextpath = "${context}";
+</script>
+
+
 </head>
 
 
@@ -134,7 +140,57 @@
 									</label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
+
+<div class="input-field col s12 m6 l6">
+                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">AsType <span
+                                            class="star">*</span></p>
+                                    <select name="type" class="browser-default" id="mySelect" onchange="myFunction()" required>
+                                        <option value="" disabled selected>Type</option>
+                                        <option value="Individual"> Individual</option>
+                                        <option value="Company">Company</option>
+                                        <option value="Organization">Organization</option>
+                                        <option value="Government">Government</option>
+                                    </select>
+                                </div>
+                                
+                                                                <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
+                                    <input type="text" name="passportNo" class="form-control boxBorder boxHeight"
+                                      title="Please enter alphanumeric with special character upto 12 characters only"
+										 id="passportNumber" maxlength="12"
+										 pattern="[A-Za-z0-9\s]{0,12}"/>
+                                    <label for="passportNumber">National ID/Passport Number <span
+                                            class="star">*</span></label>
+                                </div>
+
+                                <div class="input-field col s12 m6 l6" id="companyName" style="display: none;">
+                                    <input type="text" name="companyName" 
+										class="form-control boxBorder boxHeight" id="company"
+										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
+										 title="Please enter alphanumeric upto 50 characters only">
+                                    <label for="company">Company Name <span class="star">*</span></label>
+                                </div>
+
+                                <div class="row myRow" style="display: none;" id="uploadFile">
+                                    <div class="col s12 m12">
+                                        <h6 class="file-upload-heading">Upload Nationality
+                                            Information<span class="star">*</span></h6>
+                                        <div class="file-field input-field col s12 m6"
+                                            style="margin-top: 5px; padding-left:0;">
+                                            <div class="btn">
+                                                <span>Select File</span>
+                                                <input  name="file" type="file" id="csvUploadFile"
+											accept=".pfg">
+                                            </div>
+                                            <div class="file-path-wrapper">
+                                                <input class="file-path validate responsive-file-div" type="text">
+                                            </div>
+                                        </div><br><br>
+                                    </div>
+                                    <!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
+                                </div>
+                                
+                                
+								<!-- <div class="input-field col s12 m6 l6">
 									<input  type="text" required="required" name="passportNo"
 										class="form-control boxBorder boxHeight"
 										title="Please enter alphanumeric with special character upto 12 characters only"
@@ -142,7 +198,7 @@
 										 pattern="[A-Za-z0-9\s]{0,12}"> <label for="passportNumber">National
 										ID/Passport Number <span class="star">*</span>
 									</label>
-								</div>
+								</div> -->
 
 								<div class="input-field col s12 m6 l6">
 									<input type="email" name="email"
@@ -159,7 +215,7 @@
 									</label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
+								<!-- <div class="input-field col s12 m6 l6">
 									<input type="text" name="companyName" required="required"
 										class="form-control boxBorder boxHeight" id="company"
 										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
@@ -167,7 +223,7 @@
 										 > <label for="company">Company
 										Name <span class="star">*</span>
 									</label>
-								</div>
+								</div> -->
 							</div>
 
 							<div class="row">
@@ -222,18 +278,10 @@
 								</div>
 							</div>
 
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
 									<label for="vatNumber">VAT Registration <span
 										class="star">*</span></label>
-									<!-- <div class=" boxHeight">
-										<input  value="1" class="with-gap" name="vatStatus" type="radio"
-											onclick="document.getElementById('vatNumberField').style.display = 'block';">
-										Yes <input value="0" class="with-gap" name="vatStatus" type="radio"
-											style="margin-left: 20px;"
-											onclick="document.getElementById('vatNumberField').style.display = 'none';"
-											checked /> No
-									</div> -->
 									<div class=" boxHeight">
                                         <label><input value="1" class="with-gap" name="vatStatus" type="radio"
                                                 onclick="document.getElementById('vatNumberField').style.display = 'block';">
@@ -259,12 +307,51 @@
 										Number <span class="star">*</span>
 									</label>
 								</div>
-							</div>
+							</div> -->
 
 							
-                                
+                               <div class="row">
+                                <div class="col s12 m6 l6" style="margin-bottom: 20px;">
+                                    <label for="vatNumber">VAT Registration <span class="star">*</span></label>
+                                    <div class=" boxHeight">
+                                        <label><input class="with-gap" name="vatStatus" type="radio"
+                                                onclick="document.getElementById('vatNumberField').style.display = 'block';">
+                                            <span>Yes</span>
+                                        </label>
+                                        <label>
+                                            <input class="with-gap" name="vatStatus" type="radio"
+                                                style="margin-left: 20px;"
+                                                onclick="document.getElementById('vatNumberField').style.display = 'none';"
+                                                checked />
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="input-field col s12 m6 l6">
+                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Role Type <span
+                                            class="star">*</span></p>
+                                   <select multiple required name="roles"  >
+										<option value="" disabled>Role Type <span
+												class="star"></span></option>
+								<c:forEach items="${usertypes}" var="usertype" >
+								<c:if test="${usertype.usertypeName!='admin'}">
+								<option  value="${usertype.id}">${usertype.usertypeName}</option>
+								</c:if> 
+								</c:forEach>	
+								</select>  
+                                </div>
+
+                                <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
+                                    <input type="text" name="vatNo" maxlength="15"
+										class="form-control boxBorder boxHeight" id="vatNumber"
+										pattern="[A-Za-z0-9]{0,15}"
+								title="Please enter alphanumeric upto 15 characters only">
+                                    <label for="roleType">VAT Number <span class="star">*</span></label>
+                                </div>
+                            </div>    
 								
-								<div class="input-field col s12 m6 l6">
+								<%-- <div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Role Type <span class="star">*</span>
@@ -276,16 +363,13 @@
 								<c:if test="${usertype.usertypeName!='admin'}">
 								<option  value="${usertype.id}">${usertype.usertypeName}</option>
 								</c:if> 
-								</c:forEach>	  
-									<!-- 	<option value="Paid">Importer</option>
-										<option value="NotPaid">Distributor</option>
-										<option value="NotPaid">Retailer</option>
- -->									</select>
-								</div>
+								</c:forEach>	
+								</select>  
+								</div> --%>
 
 
 
-								<div class="input-field col s12 m6 l6">
+								<!-- <div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Type <span class="star">*</span>
@@ -298,10 +382,10 @@
 										<option value="Organization">Organization</option>
 										<option value="Government">Government</option>
 									</select>
-								</div>
+								</div> -->
 							</div>
 
-							<div class="row myRow" style="display: none;" id="uploadFile">
+							<!-- div class="row myRow" style="display: none;" id="uploadFile">
 								<h6 class="file-upload-heading" style="margin-left: 15px;">
 									Upload Nationality Information<span class="star">*</span>
 								</h6>
@@ -317,8 +401,8 @@
 									</div>
 								</div>
 								<br> <br>
-								<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
-							</div>
+								<p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p>
+							</div> -->
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
@@ -343,8 +427,27 @@
 							</div>
 
 
+<!-- <div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Country <span class="star">*</span>
+									</p>
+									<select id="country" name="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required>
+									
+										</select>
+									<label for="country">Country <span class="star">*</span></label>
+								</div>
+							</div> -->
+							
+                             <div class="securityQuestionDiv">
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
+										<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 1 <span class="star">*</span>
+									</p>
+									
 									<select class="browser-default" name="questionList[0].question" required>
 									<option value="" disabled selected>Security Question
 											1</option> 
@@ -371,6 +474,10 @@
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
+								<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 2 <span class="star">*</span>
+									</p>
 									<select name="questionList[1].question" class="browser-default" required>
 									<option value="" disabled selected>Security Question
 											2</option>
@@ -396,6 +503,12 @@
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
+								
+								<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 3<span class="star">*</span>
+									</p>
+								
 									<select name="questionList[2].question" class="browser-default" required>
 									<option value="" disabled selected>Security Question
 											3</option>
@@ -418,17 +531,29 @@
 									</label>
 								</div>
 								
-													<div class="form-group form-actions">
-						<span class="input-icon"> 
-						<img id="captchaImage" src="${pageContext.request.contextPath }/captcha"><a href="" onclick="refreshCaptcha()">
-						<i class="fa fa-refresh"></i></a>:
-						<input type="text" name="captcha" required="required" style="margin-left: 5px;" placeholder="Enter Captcha">
-						</span> 
-					</div>
+													
 					
 							</div>
-						</div>
-
+							</div>
+							
+							<div class="form-group form-actions">
+						<span class="input-icon"> 
+						<img id="captchaImage" src="${context}/captcha"><button style="background: none;border: none;outline:none;" type="button" onclick="refreshCaptcha('captchaImage')">
+						<i class="fa fa-refresh"></i></button>:
+						 <%-- <img src="${context}/captcha"" id="captchaImage">
+						 <br>
+                           <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
+							<div class="input-field col s12 m6 l12">
+									<input type="text"  name="captcha"
+										class="form-control boxBorder boxHeight"
+									 id="captcha" required="required"> 
+									<label for="address" >Enter your captcha <span
+										class="star">*</span></label>
+								</div>
+								
+						</span>  
+					</div>
+					
 						<div class="row">
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
@@ -438,7 +563,9 @@
 								<button class="btn" style="margin-left: 10px;">cancel</button>
 							</div>
 						</div>
-					</div>
+						</div>
+
+						
 				</form>
 			</div>
 		</div>
@@ -533,6 +660,9 @@
 	 <!-- jQuery Library -->
     <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+    
     <!--materialize js-->
     <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
@@ -558,15 +688,15 @@
             $('.modal').modal();
             $('.dropdown-trigger').dropdown();
             $('select').formSelect();
-        });
+        }); 
         populateCountries("country", "");
-
+ 
         function myFunction() {
             var x = document.getElementById("mySelect").value;
             if (x == 'Individual') {
                 document.getElementById("uploadFile").style.display = "block";
                 document.getElementById("passportNumberDiv").style.display = "block";
-                //document.getElementById("companyName").style.display = "none";
+                document.getElementById("companyName").style.display = "none";
                 $('#companyName').style.display = "none";
             } else {
 

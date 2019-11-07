@@ -62,7 +62,6 @@ public class RegistrationController {
 		}
 	} 
 
-
 	@RequestMapping(value = "/verifyOtpPage",method = {RequestMethod.GET})
 	public ModelAndView verifyOtpPage(){
 		ModelAndView mv=new ModelAndView();
@@ -77,8 +76,6 @@ public class RegistrationController {
 		List<SecurityQuestion> response =registrationService.securityQuestionList();
 		return response;         
 	}
-	
-	
 	
 	@RequestMapping(value = "/verifyOtp",method = {RequestMethod.POST})
 	@ResponseBody
@@ -108,7 +105,9 @@ public class RegistrationController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET,value = "/captcha")
+	@ResponseBody
 	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+		
 		registrationService.captcha(request, response, session);
 	} 
 	

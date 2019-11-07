@@ -82,8 +82,16 @@
 
                         <ul class="haed-btn">
                             <li class="haed-btn-style"><a href="${context}/login" style="color: #000;">Login</a></li>
-                            <li class="haed-btn-style"><a href="${context}/registration"
-                                    style="color: #000;">Registration</a></li>
+                            <li class="haed-btn-style">
+<select class="browser-default" onchange="location = this.value;">
+<option value="" disabled selected>Registration</option>
+<option value="#">Admin</option>  
+<option value="#">Custom</option>  
+<option value="${registration}">Importer</option>
+<option value="#">Operator</option>
+</select>
+</li>
+
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Check IMEI</a></li>
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Upload
                                     Document</a></li>

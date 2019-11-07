@@ -23,7 +23,6 @@ function verifyOtp(){
 		console.log(data);	
          var resp=JSON.parse(data);
          if(resp.statusCode==200){
-        	 alert(data);   
 //        	window.location.href='#otpMessage';
         	$('#otpMessage').openModal();   
         	$("#otpResponse").text(resp.response);
@@ -34,37 +33,38 @@ function verifyOtp(){
          }
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
-	        alert(xhr.status);
-	        alert(thrownError);
 	      }
 		
 	});
 } 
-
+ 
 function resendOtp(){
 	var id=document.getElementById("userid").value;
-	
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/resendOtp/'+id,
 		contentType : "application/json",
 		dataType : 'html',
 		success : function(data) {
-         //alert(data);                                
          var response=JSON.parse(data);
-        alert("response");
-        $("#resendOtp").text(response.response+ "hello"); 
+        $("#resendOtp").text(response.response); 
 		},    
 		error: function (xhr, ajaxOptions, thrownError) {
-	        alert(xhr.status);
-	        alert(thrownError);
 	      }
-		
 	});
-
-	function refreshCaptcha(){
-		document.getElementById("captchaImage").src = contextpath+'/captcha';
-	}
 }
 
+function refreshCaptcha(imageId){
+	
+	 path = contextpath+'/captcha?cache='; //for example
+	   imageObject = document.getElementById(imageId);
+	   imageObject.src = path + (new Date()).getTime();
+}
+
+function reg(){
+	
+	alert("inside reg function");
+	return false;
+	
+}
 

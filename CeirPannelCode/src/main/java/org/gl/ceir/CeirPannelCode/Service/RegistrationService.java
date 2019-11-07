@@ -151,6 +151,7 @@ public class RegistrationService {
 	}
 	
 	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+		log.info("inside captcha controller");
 		response.setContentType("image/jpg");
 		int iTotalChars = 6;
 		int iHeight = 40;
@@ -177,5 +178,6 @@ public class RegistrationService {
 		ImageIO.write(biImage, "jpeg", osImage);
 		g2dImage.dispose();
 		session.setAttribute("captcha_security", sImageCode);
+		log.info("exit from captcha controller");
 	}
 }
