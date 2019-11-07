@@ -63,6 +63,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	public List<StolenandRecoveryMgmt> getAllInfo(StolenandRecoveryMgmt stolenandRecoveryMgmt){
 		try {
+
+
+
 			return 	stolenAndRecoveryRepository.findByUserIdAndRoleType(stolenandRecoveryMgmt.getUserId(), 
 					stolenandRecoveryMgmt.getRoleType());
 

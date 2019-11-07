@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,8 +13,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class ConsignmentMgmt implements Serializable {
@@ -36,13 +35,13 @@ public class ConsignmentMgmt implements Serializable {
 	@Column(length = 10)
 	private String taxPaidStatus;
 
-	
+
 	@CreationTimestamp
-	private Date createdOn;
+	private LocalDateTime createdOn;
 
 
 	@UpdateTimestamp
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 
 	private Long userId  ;
 
@@ -67,6 +66,8 @@ public class ConsignmentMgmt implements Serializable {
 	private String expectedArrivalPort;
 
 	private int quantity;
+
+	private String remarks;
 
 	public Long getId() {
 		return id;
@@ -108,19 +109,19 @@ public class ConsignmentMgmt implements Serializable {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
 
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
@@ -194,6 +195,14 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 

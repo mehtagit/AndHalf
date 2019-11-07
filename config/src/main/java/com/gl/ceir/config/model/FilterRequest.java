@@ -1,43 +1,35 @@
 package com.gl.ceir.config.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 public class FilterRequest {
 
-	public Long importerId;
-
-	public String  startDate;
-	public String   endDate;
-	public String fileStatus;
+	public Long userId;
+	public LocalDateTime  startDate;
+	public LocalDateTime   endDate;
 	public String taxPaidStatus;
-	private String consignmentStatus;
+	private int consignmentStatus;
+	private String roleType;
 
-	public Long getImporterId() {
-		return importerId;
+
+	public Long getUserId() {
+		return userId;
 	}
-	public void setImporterId(Long importerId) {
-		this.importerId = importerId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getStartDate() {
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
-	}
-	public String getFileStatus() {
-		return fileStatus;
-	}
-	public void setFileStatus(String fileStatus) {
-		this.fileStatus = fileStatus;
 	}
 	public String getTaxPaidStatus() {
 		return taxPaidStatus;
@@ -45,13 +37,25 @@ public class FilterRequest {
 	public void setTaxPaidStatus(String taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
-	public String getConsignmentStatus() {
+
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	public int getConsignmentStatus() {
 		return consignmentStatus;
 	}
-	public void setConsignmentStatus(String consignmentStatus) {
+	public void setConsignmentStatus(int consignmentStatus) {
 		this.consignmentStatus = consignmentStatus;
 	}
-
+	@Override
+	public String toString() {
+		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
+				+ roleType + "]";
+	}
 
 
 

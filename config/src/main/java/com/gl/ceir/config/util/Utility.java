@@ -1,7 +1,9 @@
 package com.gl.ceir.config.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,6 +42,21 @@ public class Utility {
 		}
 		return builder.toString();
 	}
+
+
+	public Date formatChanger(LocalDateTime localDateTime ) throws ParseException {
+
+		/*SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");
+		java.util.Date date = format.parse(dateString);
+		 */
+		String dmyFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(localDateTime);
+		java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(dmyFormat);
+		
+		return date;
+
+
+	}
+
 
 
 

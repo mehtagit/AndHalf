@@ -3,11 +3,12 @@ package com.gl.ceir.config.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 
 
-public interface StolenAndRecoveryRepository extends JpaRepository<StolenandRecoveryMgmt, Long> {
+public interface StolenAndRecoveryRepository extends JpaRepository<StolenandRecoveryMgmt, Long>,JpaSpecificationExecutor<StolenandRecoveryMgmt> {
 
 
 	public StolenandRecoveryMgmt save(StolenandRecoveryMgmt stolenandRecoveryDetails);
