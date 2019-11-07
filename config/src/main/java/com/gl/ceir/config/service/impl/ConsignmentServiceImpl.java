@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -102,7 +103,7 @@ public class ConsignmentServiceImpl {
 
 	}
 
-	public List<ConsignmentMgmt> getFilterConsignments(FilterRequest consignmentMgmt, Integer pageNo, Integer pageSize) {
+	public Page<ConsignmentMgmt> getFilterConsignments(FilterRequest consignmentMgmt, Integer pageNo, Integer pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
@@ -119,10 +120,10 @@ public class ConsignmentServiceImpl {
 			 */
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
 				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY));
-			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getConsignmentStatus()))
+			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
 				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY));
 
-			return consignmentRepository.findAll(cmsb.build(), pageable).getContent();
+			return consignmentRepository.findAll(cmsb.build(), pageable);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -221,7 +222,7 @@ public class ConsignmentServiceImpl {
 			/*if(0 == consignment.getConsignmentStatus()|| 2 == consignment.getConsignmentStatus())
 			{
 			 */
-			
+
 			consignment.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
 			consignment.setRemarks(consignmentRequest.getRemarks());
 
