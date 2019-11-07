@@ -2,21 +2,9 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-
-
-@Entity 
-public class userTest {
-	
-	private static final long serialVersionUID = 1L;
+public class User {
 	
 	
-	@Id
-	@GeneratedValue(strategy =GenerationType.IDENTITY) 
 	private int   id ;
 	private Date createdOn;
 	private String usertype;
@@ -32,7 +20,7 @@ public class userTest {
 	private String organization;
 	private int user_limit;
 	private String organization_id;
-	
+	private String captcha;
 
 	public int getId() {
 		return id;
@@ -124,17 +112,19 @@ public class userTest {
 	public void setOrganization_id(String organization_id) {
 		this.organization_id = organization_id;
 	}
-	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getCaptcha() {
+		return captcha;
+	}
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 	@Override
 	public String toString() {
-		return "user [id=" + id + ", createdOn=" + createdOn + ", usertype=" + usertype + ", username=" + username
+		return "User [id=" + id + ", createdOn=" + createdOn + ", usertype=" + usertype + ", username=" + username
 				+ ", password=" + password + ", fwstatus=" + fwstatus + ", modifiedBy=" + modifiedBy + ", modifiedOn="
 				+ modifiedOn + ", subuser_status=" + subuser_status + ", parent_id=" + parent_id + ", email=" + email
 				+ ", phone_no=" + phone_no + ", organization=" + organization + ", user_limit=" + user_limit
-				+ ", organization_id=" + organization_id + "]";
+				+ ", organization_id=" + organization_id + ", captcha=" + captcha + "]";
 	}
 	
 	

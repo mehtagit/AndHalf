@@ -91,7 +91,10 @@ public class Consignment {
 	  List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest,  HttpSession session)
 	  { log.info("coming in controller+++++");
 	 
-	  filterRequest.setUserId("1");
+	  
+	  String userid= session.getAttribute("userid").toString();
+	  log.info("user id from session="+userid);
+	  filterRequest.setUserId(userid);
 	  
 	  log.info("filterRequest=="+filterRequest);
 	  

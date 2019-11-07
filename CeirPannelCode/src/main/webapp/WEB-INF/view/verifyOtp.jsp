@@ -68,10 +68,35 @@
             margin: 0 0 5px 0;
         }
     </style>
-
+<script>
+var contextpath = "${context}";
+</script>
 </head>
 
 <body>
+    <!-- jQuery Library -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+    
+    <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+     
+    <!--materialize js-->
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+    <!--prism
+    <script type="text/javascript" src="js/prism/prism.js"></script>-->
+    <!--scrollbar-->
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- chartist -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+
+    <!-- data-tables -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -98,7 +123,7 @@
                             <!-- <img src="images/otpImage.png" class=""
                                 style="width: 80px; display: block; margin:auto;"> -->
                             <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
-                            <p class="center">The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID</p>
+                            <p class="center">${msg}<!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
                             
 
                             <a href="#otpVerification" class="btn modal-trigger"
@@ -124,20 +149,44 @@
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
         <div class="modal-content">
+                <form id="verifyOtpForm" action="">
+                        <h5 class="center">Enter OTP</h5>
+                        <p class="center" id="resendOtp" style="display: none;"></p>
+                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <div class="row">          
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="emailOtp" id="emailOtp" placeholder="Enter OTP of Email"/>
+                            </div> 
+                   
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="phoneOtp" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                            </div>
+                        </div>
+
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+
+                        <a onclick="verifyOtp();"   class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
+                    </form>
+        </div>
+    </div>
+    <!-- Modal End -->
+
+    <!-- modal start -->
+
+    <div id="" class="modal" style="width: 40%;">
+        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button> -->
+        <div class="modal-content">
                 <form action="">
                         <h5 class="center">Enter OTP</h5>
-                        <p class="center" id="resendOtp" style="display: none;">A text message and e-mail with OTP has been sent</p>
+                        <p class="center" id="resendOtp" style="display: none;"></p>
                         <div class="row">
-                            <div class="input-field col s12 m12">
-                                <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Email"/>
-                            </div>
-
                             <div class="input-field col s12 m12">
                                 <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Phone"/>
                             </div>
                         </div>
 
-                        <a href="#" onclick="document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
 
                         <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
                     </form>
@@ -153,37 +202,14 @@
         <div class="modal-content">
                 <form action="">
                         <h5 class="center">Enter OTP</h5>
-                        <p class="center" id="resendOtp" style="display: none;">A text message and e-mail with OTP has been sent</p>
-                        <div class="row">
-                            <div class="input-field col s12 m12">
-                                <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Phone"/>
-                            </div>
-                        </div>
-
-                        <a href="#" onclick="document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
-
-                        <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
-                    </form>
-        </div>
-    </div>
-    <!-- Modal End -->
-
-    <!-- modal start -->
-
-    <div id="" class="modal" style="width: 40%;">
-        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button> -->
-        <div class="modal-content">
-                <form action="">
-                        <h5 class="center">Enter OTP</h5>
-                        <p class="center" id="resendOtp" style="display: none;">A text message and e-mail with OTP has been sent</p>
+                        <p class="center" id="resendOtp" style="display: none;"></p>
                         <div class="row">
                             <div class="input-field col s12 m12">
                                 <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Email"/>
-                            </div>
+                            </div> 
                         </div>
 
-                        <a href="#" onclick="document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
 
                         <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
                     </form>
@@ -199,13 +225,13 @@
 <!-- Modal 2 start   -->
 
 <div id="otpMessage" class="modal">
-        <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
         <div class="modal-content">
             <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-            <div class="row">
-                <h6>Your OTP is verified! The form has been submitted for approval. You will receive an intimation on your registered e-mail with the approval status within 2 to 3 working days </h6>
+            <div class="row">  
+                <h6 id="otpResponse"></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -230,25 +256,6 @@
         // $('.dropdown-trigger').dropdown();
     </script>
 
-    <!-- jQuery Library -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-    <!--materialize js-->
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-    <!--prism
-    <script type="text/javascript" src="js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
-
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 
 </body>
 

@@ -268,8 +268,7 @@ opacity: 0;
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="countryview" class="browser-default" readonly="readonly" class="mySelect" placeholder="Device Origination Counrty*"
-                                                >
+                                            <input type="text" id="countryview" class="browser-default" readonly="readonly" class="mySelect" placeholder="Device Origination Counrty*">
                                                  <label for="Name" class="center-align"> Origination Country</label>
                                             <label for="countryview" class="center-align"></label>
                                         </div>
@@ -441,7 +440,7 @@ opacity: 0;
          <script type="text/javascript">
          
         function DeleteConsignmentRecord(txnId){
-       		 $("#DeleteConsignment").modal('show');
+       		 $("#DeleteConsignment").openModal();
         	 $("#transID").text(txnId);
         }
         
@@ -471,8 +470,8 @@ opacity: 0;
         					console.log("Error");
         			}
         		});
-     		 $("#DeleteConsignment").modal('hide');
-     		 $("#confirmDeleteConsignment").modal('show');
+     		 $("#DeleteConsignment").closeModal();
+     		 $("#confirmDeleteConsignment").openModal();
         }
          
      
@@ -491,13 +490,13 @@ opacity: 0;
     				}
     			});
         	 
-        	 $("#updateModal").modal('show');
+        	 $("#updateModal").openModal();
          }
          
     	
         function viewConsignmentDetails(txnId){
         
-        	 $("#viewModal").modal('show');
+        	 $("#viewModal").openModal();
         	 $.ajax({
     				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
     				dataType : 'json',
@@ -662,7 +661,7 @@ opacity: 0;
 
 
         			}else if(full.consignmentStatus==2){
-        			return '<a href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>'; 
+        			return '<a href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>'; 
 
 
         			}else if(full.consignmentStatus==3){
@@ -845,7 +844,7 @@ opacity: 0;
 
 
         	}else if(full.consignmentStatus==2){
-        	return '<a href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; cursor: not-allowed; color:grey;" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>'; 
+        		return '<a href="${context}/Consignment/dowloadFiles/error/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile" style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a><a href="${context}/Consignment/dowloadFiles/actual/'+full.fileName+'/'+full.txnId+'"><i class="fa fa-download " aria-hidden="true" style="font-size: 20px; color:#2e8b57" title="download"></i></a><a href="#ErrorFile" onclick = "viewConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-eye teal-text" aria-hidden="true" title="view" style="pointer-events:auto;color: green; font-size:20px; margin-left:15px;"></i></a><a href="#EditConsignment" onclick = "EditConsignmentDetails(\''+full.txnId+'\')" ><i class="fa fa-pencil" aria-hidden="true" style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a><a href="#" onclick="DeleteConsignmentRecord(\''+full.txnId+'\')"><i	class="fa fa-trash" aria-hidden="true" style="font-size: 20px; color: red;"title="delete"></i></a>'; 
 
 
         	}else if(full.consignmentStatus==3){
@@ -1166,14 +1165,14 @@ event.preventDefault();
        
          <script>
          function closeUpdateModal(){
-        	 $("#DeleteConsignment").modal('hide');
-        	 $('#updateModal').modal('hide');
+        	 $("#DeleteConsignment").closeModal();
+        	 $('#updateModal').closeModal();
         	 $(".lean-overlay").remove();
          }
          
          function closeViewModal()
          {
-        	 $('#viewModal').modal('hide');
+        	 $('#viewModal').closeModal();
         	 $(".lean-overlay").remove();
         	 
          }

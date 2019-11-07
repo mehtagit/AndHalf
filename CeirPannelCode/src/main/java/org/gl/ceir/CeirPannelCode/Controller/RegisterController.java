@@ -15,8 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
-import org.gl.ceir.CeirPannelCode.Model.userTest;
-import org.gl.ceir.CeirPannelCode.Service.LoginServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,8 +33,9 @@ public class RegisterController {
 
 	@Autowired
 	FeignCleintImplementation feignImpl;
-	@Autowired
-	LoginServices loginserviceIndexpage;
+	/*
+	 * @Autowired LoginServices loginserviceIndexpage;
+	 */
 
 	/*
 	 * @Autowired private UserValidator userValidator;
@@ -73,57 +72,44 @@ public class RegisterController {
 
 	
 	
-	@RequestMapping(value={"/Dashboard"},method={org.springframework.web.bind.annotation.RequestMethod. POST,org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ModelAndView registerUser(@ModelAttribute("userForm") userTest userForm,HttpSession session) {
-		System.out.println("inside login method");
-		String username="sharad";
-		//session.setAttribute("username", username);
-		
-		System.out.println("session value"+session.getAttribute("username"));
-		ModelAndView mv = new ModelAndView();
-
-		if(session.getAttribute("username")==null) {
-		try { userTest userDetails = new userTest();
-		System.out.println("username="+userForm.getUsername()+" usertype="+userForm.
-				getUsertype()+" password="+userForm.getUsertype()); userDetails=
-				loginserviceIndexpage.findByUsertypeAndUsernameAndPassword(userForm.
-						getUsertype(), userForm.getUsername(), userForm.getUsertype());
-				if(userDetails!=null ) 
-				{
-					if(userDetails.getUsername().equals(userForm.getUsertype()) &&
-							userDetails.getPassword().equals(userForm.getUsertype()) ) {
-System.out.println("validation sucessfulll");
-						mv.setViewName("indexpage");
-						session.setAttribute("username",username);
-						mv.addObject("username", userDetails.getUsername()); 
-						return mv;
-						} 
-					else {
-						System.out.println("wrong username or password");
-						mv.setViewName("UserRegistration");
-						return mv ;
-						}
-					} 
-				else {
-						System.out.println("username or password is null");
-						mv.setViewName("UserRegistration"); 
-						return mv;
-					} 
-				} catch (Exception e) { // TODO: handle exception
-								System.out.println("exception in login "+e); }
-		
-				return mv;
-		}
-				else {
-					System.out.println("dashboard page witout login+++++++");
-					
-					mv.setViewName("indexpage");
-			
-					
-				}
-		return mv;
-
-	}
+	/*
+	 * @RequestMapping(value={"/Dashboard"},method={org.springframework.web.bind.
+	 * annotation.RequestMethod.
+	 * POST,org.springframework.web.bind.annotation.RequestMethod.GET}) public
+	 * ModelAndView registerUser(@ModelAttribute("userForm") userTest
+	 * userForm,HttpSession session) { System.out.println("inside login method");
+	 * String username="sharad"; //session.setAttribute("username", username);
+	 * 
+	 * System.out.println("session value"+session.getAttribute("username"));
+	 * ModelAndView mv = new ModelAndView();
+	 * 
+	 * if(session.getAttribute("username")==null) { try { userTest userDetails = new
+	 * userTest();
+	 * System.out.println("username="+userForm.getUsername()+" usertype="+userForm.
+	 * getUsertype()+" password="+userForm.getUsertype()); userDetails=
+	 * loginserviceIndexpage.findByUsertypeAndUsernameAndPassword(userForm.
+	 * getUsertype(), userForm.getUsername(), userForm.getUsertype());
+	 * if(userDetails!=null ) {
+	 * if(userDetails.getUsername().equals(userForm.getUsertype()) &&
+	 * userDetails.getPassword().equals(userForm.getUsertype()) ) {
+	 * System.out.println("validation sucessfulll"); mv.setViewName("indexpage");
+	 * session.setAttribute("username",username); mv.addObject("username",
+	 * userDetails.getUsername()); return mv; } else {
+	 * System.out.println("wrong username or password");
+	 * mv.setViewName("UserRegistration"); return mv ; } } else {
+	 * System.out.println("username or password is null");
+	 * mv.setViewName("UserRegistration"); return mv; } } catch (Exception e) { //
+	 * TODO: handle exception System.out.println("exception in login "+e); }
+	 * 
+	 * return mv; } else { System.out.println("dashboard page witout login+++++++");
+	 * 
+	 * mv.setViewName("indexpage");
+	 * 
+	 * 
+	 * } return mv;
+	 * 
+	 * }
+	 */
 
 
 
@@ -366,7 +352,7 @@ System.out.println("validation sucessfulll");
 	public @ResponseBody ModelAndView deleteconsignment(@RequestParam("txnId") String id) {
 		System.out.println("inside delete method");
 		System.out.println("transacation id="+id);
-	///ConsignmentModel response=	feignImpl.deleteConsignment(id);
+//	ConsignmentModel response=	feignImpl.deleteConsignment(id);
 		// System.out.println("delete response="+response);
 		ModelAndView mv = new ModelAndView(); 
 		
@@ -446,20 +432,6 @@ System.out.println("validation sucessfulll");
 	
 	
 
-	@RequestMapping(value={"/Home"},method={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ModelAndView Home() { System.out.println("inside home method");
-	ModelAndView mv = new ModelAndView(); mv.setViewName("Home"); return mv;
-
-
-
-	}
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logout(HttpSession session) {
-		session.removeAttribute("username");
-		session.invalidate();
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/login");
-		return mv;
-	}
+	
 
 }
