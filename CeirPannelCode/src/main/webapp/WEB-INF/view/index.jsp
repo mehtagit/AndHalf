@@ -87,7 +87,7 @@
 <option value="" disabled selected>Registration</option>
 <option value="#">Admin</option>  
 <option value="#">Custom</option>  
-<option value="${registration}">Importer</option>
+<option value="${context}/registration">Importer</option>
 <option value="#">Operator</option>
 </select>
 </li>
