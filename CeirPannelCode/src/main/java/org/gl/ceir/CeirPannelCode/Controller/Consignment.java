@@ -5,7 +5,12 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -37,7 +42,7 @@ public class Consignment {
 
 
 	@Autowired
-	
+
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
@@ -47,34 +52,86 @@ public class Consignment {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+
+	@RequestMapping(value=
+		{"/viewConsignment"},method={org.springframework.web.bind.annotation.
+				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+			) public ModelAndView viewConsignment() {
+		log.info(" view consignment entry point."); long id=1; List<ConsignmentModel>
+		consignmentdetails=feignCleintImplementation.consignmentList(id);
+		//log.info("complete consignment details="+consignmentdetails.toString());
+		ModelAndView mv = new ModelAndView(); mv.setViewName("viewConsignment");
+		mv.addObject("consignmentdetails", consignmentdetails);
+		log.info(" view consignment exit point."); 
+		return mv; 
+	}
+
+
+	
+	/*
+	 * @RequestMapping(value=
+	 * {"/filterConsignments"},method={org.springframework.web.bind.annotation.
+	 * RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+	 * ) public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody
+	 * FilterRequest filterRequest) { filterRequest.setUserId("1");
+	 * log.info("view consignment filter  entry point.************"+filterRequest);
+	 * List<ConsignmentModel>
+	 * consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest)
+	 * ; log.info("fillter Data=="+consignmentdetails);
+	 * log.info(" view consignment exit point."); return consignmentdetails; }
+	 * 
+	 */
+
+	
 	
 	  @RequestMapping(value=
-	  {"/viewConsignment"},method={org.springframework.web.bind.annotation.
+	  {"/filterConsignment"},method={org.springframework.web.bind.annotation.
 	  RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-	  ) public ModelAndView viewConsignment() {
-	  log.info(" view consignment entry point."); long id=1; List<ConsignmentModel>
-	  consignmentdetails=feignCleintImplementation.consignmentList(id);
+	  ) public @ResponseBody
+	  List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest,  HttpSession session)
+	  { log.info("coming in controller+++++");
+	 
+	  filterRequest.setUserId("1");
 	  
-	  ModelAndView mv = new ModelAndView(); mv.setViewName("viewConsignment");
-	  mv.addObject("consignmentdetails", consignmentdetails);
-	  log.info(" view consignment exit point."); 
-	  return mv; 
+	  
+	  log.info("filterRequest=="+filterRequest);
+	  
+	  session.setAttribute("startDate", filterRequest.getStartDate());
+	  session.setAttribute("endDate",filterRequest.getEndDate());
+	  session.setAttribute("consignmentStatus", filterRequest.getConsignmentStatus());
+	  session.setAttribute("taxPaidStatus", filterRequest.getTaxPaidStatus());
+	  
+	  log.info("session value=="+session.getAttribute("consignmentStatus"));
+	  
+	  if(session.getAttribute("startDate")!=null ||session.getAttribute("endDate")!=null|| session.getAttribute("consignmentStatus")!=null ||
+			  session.getAttribute("taxPaidStatus")!=null ) {
+	  
+	  log.info("session is available atleast in one parameters");
+	  filterRequest.setConsignmentStatus((int)session.getAttribute("consignmentStatus"));
+	  filterRequest.setEndDate((String)
+	  session.getAttribute("startdate")); 
+	  filterRequest.setStartDate((String)
+	  session.getAttribute("endDate"));
+	  filterRequest.setTaxPaidStatus((String)
+	  session.getAttribute("taxPaidStatus")); 
+	  }
+	  
+	  else {
+		  log.info("session is not present consignment value ="+filterRequest);
+	 
 	  }
 	  
 	  
-	  @RequestMapping(value=
-		  {"/filterConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	  public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest) {
-		  
-		  log.info("view consignment filter  entry point."+filterRequest);
-		  List<ConsignmentModel>
-		  consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest);
-		  log.info("fillter Data=="+consignmentdetails);
-		  log.info(" view consignment exit point."); 
-		  return consignmentdetails; 
-		  }
-	 
-
+	  
+	  
+	  log.info("view consignment filter  entry point."+filterRequest); 
+	  List<ConsignmentModel> consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest);
+	  log.info("fillter Data=="+consignmentdetails);
+	  log.info(" view consignment exit point.");
+	  return consignmentdetails; 
+	  }
+	  
+	 	 	 
 
 	/*
 	 * @RequestMapping(value={"/viewConsignment"},method={org.springframework.web.
@@ -101,34 +158,34 @@ public class Consignment {
 
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "C"+txnNumner;
-		
-		
-		log.info("txnid="+txnNumner);
-		
-		ConsignmentModel consignment = new ConsignmentModel();
-        try {
-		byte[] bytes = file.getBytes();
-		String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumner+"/";
-		File dir = new File(rootPath + File.separator);
-         
-		if (!dir.exists()) 
-			dir.mkdirs();
-		// Create the file on server
-		// Calendar now = Calendar.getInstance();
 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("COMPLETE PATH" + serverFile);
-		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes);
-		stream.close();
-	
-         }
-        catch (Exception e) {
+
+		log.info("txnid="+txnNumner);
+
+		ConsignmentModel consignment = new ConsignmentModel();
+		try {
+			byte[] bytes = file.getBytes();
+			String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumner+"/";
+			File dir = new File(rootPath + File.separator);
+
+			if (!dir.exists()) 
+				dir.mkdirs();
+			// Create the file on server
+			// Calendar now = Calendar.getInstance();
+
+			File serverFile = new File(rootPath+file.getOriginalFilename());
+			log.info("COMPLETE PATH" + serverFile);
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes);
+			stream.close();
+
+		}
+		catch (Exception e) {
 			// TODO: handle exception
-        	e.printStackTrace();
+			e.printStackTrace();
 		}
 		log.info(" submit register form block.");
-	
+
 
 		// set reaquest parameters into model class
 		consignment.setSupplierId(supplierId);
@@ -167,14 +224,14 @@ public class Consignment {
 		ConsignmentModel consignment = new ConsignmentModel();
 		GenricResponse response= new GenricResponse();
 		log.info("entry point  in update Consignment ** **.");
-		
-	    
-	    log.info("file name without upload file="+filename);
-		
+
+
+		log.info("file name without upload file="+filename);
+
 		if(file==null)
 		{
-	        log.info("message  in file upload block ");
-			
+			log.info("message  in file upload block ");
+
 			consignment.setSupplierId(supplierId);
 			consignment.setSupplierName(supplierName);
 			consignment.setConsignmentNumber(consignmentNumber);
@@ -188,39 +245,57 @@ public class Consignment {
 			consignment.setUserId(Long.valueOf(1));
 			consignment.setImporterName("sharad yadav");
 			consignment.setTaxPaidStatus("Not Paid");
-			
+
 			log.info(consignment.toString());
 		}
 		else {
-			
-		
-			
-			log.info("file is empty or not "+file.isEmpty());
-			 try {
-					byte[] bytes = file.getBytes();
-					String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
-					File dir = new File(rootPath + File.separator);
-			         
-					if (!dir.exists()) 
-						dir.mkdirs();
-					// Create the file on server
-					// Calendar now = Calendar.getInstance();
 
-					File serverFile = new File(rootPath+file.getOriginalFilename());
-					log.info("COMPLETE PATH" + serverFile);
-					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-					stream.write(bytes);
-					stream.close();
-				
-			         }
-			        catch (Exception e) {
-						// TODO: handle exception
-			        	e.printStackTrace();
-					}
-			
-			
+
+
+			log.info("file is empty or not "+file.isEmpty());
+			try {
+				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+
+
+				File tmpDir = new File(rootPath+file.getOriginalFilename());
+				boolean exists = tmpDir.exists();
+
+				if(exists) {
+						
+					log.info("file is exist.");
+					Path temp = Files.move 
+							(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()),  
+									Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
+
+					// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
+					log.info("after move file");
+					tmpDir.delete();
+				}
+
+
+				byte[] bytes = file.getBytes();
+
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) 
+					dir.mkdirs();
+
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("COMPLETE PATH" + serverFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				log.error(e.getMessage(), e);
+			}
+
+
 			log.info("message after file upload block ");
-			
+
 			consignment.setSupplierId(supplierId);
 			consignment.setSupplierName(supplierName);
 			consignment.setConsignmentNumber(consignmentNumber);
@@ -234,18 +309,18 @@ public class Consignment {
 			consignment.setUserId(Long.valueOf(1));
 			consignment.setImporterName("sharad yadav");
 			consignment.setTaxPaidStatus("Not Paid");
-			
+
 			log.info(consignment.toString());
 
 		}
 
-		 response = feignCleintImplementation.updateConsignment(consignment);
-			log.info(" update consignment form block.");
-			
-			// calling service method
+		response = feignCleintImplementation.updateConsignment(consignment);
+		log.info(" update consignment form block.");
+
+		// calling service method
 		//	String response=service.updateConsignmnet(consignment, file, txnid);
-			
-		
+
+
 		log.info(" update consignment exit point.");
 		return response;
 
@@ -259,7 +334,7 @@ public class Consignment {
 
 	@RequestMapping(value= {"/deleteConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse deleteConsignment(@RequestBody ConsignmentModel consignmentModel) {
-		
+
 		log.info("enter in  delete consignment.");
 		GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel);
 		log.info("response after delete consignment."+response);
@@ -267,7 +342,7 @@ public class Consignment {
 
 	}
 
-	
+
 
 
 	// *********************************************** open register page or edit page ******************************
@@ -283,7 +358,7 @@ public class Consignment {
 		else if(reqType.equals("editPage")) {
 			ConsignmentModel  consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
 			log.info("consignment details="+consignmentdetails);
-			
+
 			log.info("open Update registration Consignment form");
 			mv.setViewName("editConsignment");
 			mv.addObject("consignmentdetails", consignmentdetails);
@@ -291,16 +366,16 @@ public class Consignment {
 		else {
 			ConsignmentModel  consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
 			log.info("consignment details="+consignmentdetails);
-			
+
 			log.info("open view  registration Consignment form");
 			mv.setViewName("viewConsignmentRecord");
 			mv.addObject("consignmentdetails", consignmentdetails);
-			
+
 		}
 		return mv;
 
 	}
-	
+
 	// *********************************************** open register page or edit popup ******************************
 	@RequestMapping(value="/openRegisterConsignmentPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 	public @ResponseBody ConsignmentModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId)
@@ -310,7 +385,7 @@ public class Consignment {
 			consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
 			log.info("consignment details="+consignmentdetails);
 			log.info("open Update registration Consignment popup");
-			
+
 		}
 		else {
 			consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
@@ -347,32 +422,32 @@ public class Consignment {
 		return consignment;
 
 	}
-	
+
 	//**************************************************  download file  **************************************************************** 
-		@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-		public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
-			
-			log.info("inside file download method");
-			System.out.println("transacation id="+txnid+" fileName="+fileName+" fileType="+filetype);
-			log.info("txnid"+txnid+" fileName "+fileName+" fileType "+filetype);
-			String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName);
-			log.info(response);
-		
-			return "redirect:"+response;
+	@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+	public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
 
-		}
-		
-		
-		//************************************************ Download Sampmle file **************************************************
-		@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-		public  String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
-			System.out.println("inside file download method");
-			System.out.println(" fileType="+filetype);
-			String response=feignCleintImplementation.downloadSampleFile(filetype);
-			log.info(response);
-		
-			return "redirect:"+response;
+		log.info("inside file download method");
+		System.out.println("transacation id="+txnid+" fileName="+fileName+" fileType="+filetype);
+		log.info("txnid"+txnid+" fileName "+fileName+" fileType "+filetype);
+		String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName);
+		log.info(response);
 
-		}
+		return "redirect:"+response;
+
+	}
+
+
+	//************************************************ Download Sampmle file **************************************************
+	@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+	public  String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
+		System.out.println("inside file download method");
+		System.out.println(" fileType="+filetype);
+		String response=feignCleintImplementation.downloadSampleFile(filetype);
+		log.info(response);
+
+		return "redirect:"+response;
+
+	}
 
 }

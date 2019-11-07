@@ -175,7 +175,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
                                     <div class="row">
                                         <div class="input-field col s12 center">
-                                            <button  class="waves-effect waves-light  btn"
+                                            <button  class=" btn"
                                                  type="submit">Submit</button>
                                             <a href="#cancelMessage"  class="btn modal-trigger" type="cancel"
                                                 style="margin-left: 10px;">Cancel</a>
@@ -200,6 +200,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
             <div class="row">
                 <h6 id="sucessMessage">Your form has been successfully submitted. The Transaction ID for future reference is </h6>
+                <input type="text" style="display:none" id="errorCode">
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -299,15 +300,19 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  					
  					 console.log(data);
  					 $('#submitConsignment').openModal();
- 					 if(data.errorCode==0)
+ 					 if(data.errorCode=="0")
  						 {
- 						 
+ 						 console.log("status code = 0");
+ 						$('#sucessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is');
  					 $('#sucessMessage').append(data.txnId);
+ 					 $('#errorCode').val(data.errorCode);
  						 }
- 					 else if(data.errorCode=3 )
+ 					 else if(data.errorCode=="3")
  						 {
+ 						console.log("status code = 3"); 
  						$('#sucessMessage').text('');
  						$('#sucessMessage').text("consignment number already exist");
+ 						 $('#errorCode').val(data.errorCode);
  						 }
  				   // $('#updateConsignment').modal('open'); 
  					//alert("success");
@@ -437,7 +442,18 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
            function closeConfirmation()
            {
         	   
+        	   var errorCode=$('#errorCode').val();
+        	   if(errorCode==0){
+        		   console.log("status code = 0");
         	   $("#closeOkPop").submit();
+        	   }
+        	   else if(errorCode==3)
+        		   {
+        		   console.log("status code = 3");
+        		   $('#sucessMessage').text('');
+        		   $('#submitConsignment').closeModal();
+        		  /// $('#submitConsignment').modal('hide');
+        		   }
            }
           </script> 
           
