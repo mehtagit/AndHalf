@@ -26,6 +26,7 @@ public class LoginController {
 	LoginService loginService;
 	
 	
+	
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView login(@ModelAttribute User user,HttpSession session){
 		if(user.getUsername()==null) {
@@ -34,7 +35,13 @@ public class LoginController {
 		else {
 			return loginService.checkLogin(user,session);
 		}
-	}      
+	} 
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	public ModelAndView logout(HttpSession session) {
+		return loginService.logout(session);
+		
+	}
 	
 	 
 

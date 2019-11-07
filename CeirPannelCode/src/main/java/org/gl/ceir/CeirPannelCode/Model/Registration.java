@@ -25,7 +25,7 @@ public class Registration {
 	private String  rePassword;
 	private String username;
 	private int[] roles;
-	
+	private String captcha;
 	public Registration() {};
 	public List<QuestionPair> getQuestionList() {
 			return questionList;
@@ -169,8 +169,12 @@ public class Registration {
 		public void setUsername(String username) {
 			this.username = username;
 		}
-		
-		
+		public String getCaptcha() {
+			return captcha;
+		}
+		public void setCaptcha(String captcha) {
+			this.captcha = captcha;
+		}
 		@Override
 		public String toString() {
 			return "Registration [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
@@ -178,8 +182,10 @@ public class Registration {
 					+ companyName + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality="
 					+ locality + ", province=" + province + ", country=" + country + ", type=" + type + ", vatStatus="
 					+ vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password=" + password
-					+ ", rePassword=" + rePassword + ", username=" + username + ", roles=" + Arrays.toString(roles)+ "]";
+					+ ", rePassword=" + rePassword + ", username=" + username + ", roles=" + roles + ", captcha="
+					+ captcha + "]";
 		}
+		
 		
 		
 

@@ -3,7 +3,9 @@ import java.io.File;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
-import org.gl.ceir.CeirPannelCode.Model.ConsignmentPojo;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +25,16 @@ public interface FeignCleintImplementation {
 	
 	
 	//View all Consignment  feign  controller
-	@RequestMapping(value="/consignment/details" ,method=RequestMethod.GET) 
-	public List<ConsignmentPojo> consignmentList(@RequestParam("importerId") int importerId) ;
+	@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 
+	public List<ConsignmentModel> consignmentList(@RequestParam long userId) ;
 
 	
+	
+	//View filter Consignment  feign  controller
+		@RequestMapping(value="/filter/consignment" ,method=RequestMethod.GET) 
+		public List<ConsignmentModel> consignmentFilter(FilterRequest filterrequest) ;
+
+		
 	
 	
 	//Add new  Consignment  feign  controller
@@ -35,43 +43,33 @@ public interface FeignCleintImplementation {
 	// @PostMapping(value="/consignment/upload")
 	
 	// @RequestLine("POST /consignment/upload")
-	@PostMapping(value="/consignment/upload")
-  
-	public ConsignmentPojo addConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
-			,@RequestParam("expectedDispatcheDate") String expectedDispatcheDate,@RequestParam("fileName") String fileName,@RequestParam("filePath") String filePath,@RequestParam("importerId") int importerId,@RequestParam("importerName") String importerName,
-			@RequestParam("organisationCountry") String organisationCountry,@RequestParam("supplierId") String supplierId,@RequestParam("supplierName") String supplierName,@RequestParam("quantity") String quantity); 
+	@PostMapping(value="/consignment/register")
+    public GenricResponse addConsignment(ConsignmentModel consignment); 
 
 	
 	//***************************************************** update consignment feign ******************************************************************/ 
 	@PostMapping(value="/consignment/update")
-	public ConsignmentPojo updateConsignment(@RequestParam("consignmentNumber") String consignmentNumber,@RequestParam("expectedArrivalPort") String expectedArrivalPort,@RequestParam("expectedArrivaldate") String expectedArrivaldate
-			,@RequestParam("expectedDispatcheDate") String expectedDispatcheDate,@RequestParam("fileName") String fileName,@RequestParam("path") String filePath,@RequestParam("importerId") int importerId,@RequestParam("importerName") String importerName,
-			@RequestParam("organisationCountry") String organisationCountry,@RequestParam("supplierId") String supplierId,@RequestParam("supplierName") String supplierName,@RequestParam("txnId") String txnid,@RequestParam("quantity") String quantity) ;
+	public GenricResponse updateConsignment(ConsignmentModel consignment) ;
 
 	
 
 	
 	
 	//edit Consignment feign  controller
-		@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 
-		public @ResponseBody ConsignmentPojo fetchConsignmentByTxnId(@RequestParam("txnId") String txnId) ;
+		@RequestMapping(value="/consignment/view" ,method=RequestMethod.GET) 
+		public @ResponseBody ConsignmentModel fetchConsignmentByTxnId(@RequestParam("txnId") String txnId) ;
 		
 	
 	//delete Consignment feign  controller
 	@RequestMapping(value="/consigment/Delete" ,method=RequestMethod.DELETE) 
-	public @ResponseBody ConsignmentPojo deleteConsignment(@RequestParam("txnId") String txnId) ;
+	public @ResponseBody ConsignmentModel deleteConsignment(@RequestParam("txnId") String txnId) ;
 	
 	
 	
-	//filter  Consignment  feign  controller
-		@RequestMapping(value="/consignment/filterDetails" ,method=RequestMethod.POST) 
-		public List<ConsignmentPojo> filterConsignmentdata(@RequestBody ConsignmentFilterPojo pojo) ;
-
-		
 		
 	
 	//download file(Error or Uploaded file) feign  controller
-	@RequestMapping(value="/stoke/Download/uploadFile" ,method=RequestMethod.GET) 
+	@RequestMapping(value="/Download/uploadFile" ,method=RequestMethod.GET) 
 		public @ResponseBody String downloadFile(@RequestParam("txnId") String txnId,@RequestParam("fileType") String fileType,@RequestParam("fileName") String fileName);
 
 	

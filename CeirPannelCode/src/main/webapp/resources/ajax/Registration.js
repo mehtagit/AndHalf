@@ -62,7 +62,9 @@ function resendOtp(){
 		
 	});
 
-
+	function refreshCaptcha(){
+		document.getElementById("captchaImage").src = contextpath+'/captcha';
+	}
 }
 
 

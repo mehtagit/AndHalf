@@ -8943,6 +8943,7 @@ a.waves-effect .waves-ripple {
   position: fixed;
   left: 0;
   right: 0;
+  top : 50px;
   background-color: #fafafa;
   padding: 0;
   max-height: 70%;
@@ -8951,6 +8952,27 @@ a.waves-effect .waves-ripple {
   overflow-y: auto;
   border-radius: 2px;
   will-change: top, opacity;
+  z-index: 9999;
+  top: 60 !important;
+}
+
+.modal-form {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top : 50px;
+  background-color: #fafafa;
+  padding: 24px;
+  padding-right: 24px !important;
+  max-height: 83%;
+  width: 66%;
+  margin: auto;
+  overflow-y: auto;
+  border-radius: 2px;
+  will-change: top, opacity;
+  z-index: 9999;
+  top: 60 !important;
 }
 
 @media only screen and (max-width: 992px) {

@@ -104,9 +104,9 @@
 					action="${context}/registration" enctype="multipart/form-data" >
 					<div class="card-panel"
 						style="width: 90%; margin: auto; padding: 20px 5% 20px 5%;">
-						<a href="${context}/"
+						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
-							class="fa fa-times boton" aria-hidden="true"></i></a>
+							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
 							<h5>Registration</h5>
 							<hr> 
@@ -270,13 +270,13 @@
 										Role Type <span class="star">*</span>
 									</p> 
 									<select multiple required name="roles"  >
-										<option value="" disabled selected>Role Type <span
+										<option value="" disabled>Role Type <span
 												class="star"></span></option>
 								<c:forEach items="${usertypes}" var="usertype" >
 								<c:if test="${usertype.usertypeName!='admin'}">
 								<option  value="${usertype.id}">${usertype.usertypeName}</option>
-								</c:if>
-								</c:forEach>	 
+								</c:if> 
+								</c:forEach>	  
 									<!-- 	<option value="Paid">Importer</option>
 										<option value="NotPaid">Distributor</option>
 										<option value="NotPaid">Retailer</option>
@@ -417,6 +417,15 @@
 										<span class="star">*</span>
 									</label>
 								</div>
+								
+													<div class="form-group form-actions">
+						<span class="input-icon"> 
+						<img id="captchaImage" src="${pageContext.request.contextPath }/captcha"><a href="" onclick="refreshCaptcha()">
+						<i class="fa fa-refresh"></i></a>:
+						<input type="text" name="captcha" required="required" style="margin-left: 5px;" placeholder="Enter Captcha">
+						</span> 
+					</div>
+					
 							</div>
 						</div>
 

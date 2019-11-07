@@ -1,6 +1,17 @@
 package org.gl.ceir.CeirPannelCode.Controller;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
+import java.util.Random;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
@@ -40,14 +51,14 @@ public class RegistrationController {
 	}        
  
 	@RequestMapping(value = "/registration",method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView registration(@ModelAttribute Registration registration, @RequestParam(name = "file",required = false) MultipartFile file ) throws IOException{
+	public ModelAndView registration(@ModelAttribute Registration registration,HttpSession session, @RequestParam(name = "file",required = false) MultipartFile file ) throws IOException{
 		if(registration.getFirstName() ==null ) {
 			ModelAndView mv=registrationService.registrationView();
 			return mv; 
 		} 
 		else { 
-			ModelAndView mv=registrationService.saveRegistration(registration, file);
-			return mv;	  
+			ModelAndView mv=registrationService.saveRegistration(registration, file,session);
+			return mv;	   
 		}
 	} 
 
@@ -85,22 +96,7 @@ public class RegistrationController {
 		return response;                 
 	}  
 
-	
-	/*
-	 * @RequestMapping(value = "/securityQuestions",method = {RequestMethod.POST})
-	 * 
-	 * @ResponseBody public HttpResponse securityQuestions(@){ HttpResponse response
-	 * =registrationService.resendOtp(userid); return response; }
-	 */ 
 
-	
-
-	/*
-	 * @GetMapping({"/importerDashboard" }) public ModelAndView
-	 * openUserRegisterPage() { ModelAndView mv = new ModelAndView();
-	 * log.info("importer dashboard entry point.."); mv.setViewName("dashboard");
-	 * log.info("importer dashboard exit point.."); return mv; }
-	 */
 
 	@GetMapping("/editProfile")
 	public ModelAndView editProfile() {
@@ -110,5 +106,10 @@ public class RegistrationController {
 		log.info("editProfile exit point..");
 		return mv;
 	}
+	
+	@RequestMapping(method = RequestMethod.GET,value = "/captcha")
+	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+		registrationService.captcha(request, response, session);
+	} 
 	
 }

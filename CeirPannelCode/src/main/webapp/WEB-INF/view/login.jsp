@@ -111,10 +111,22 @@
                                     <div class="input-field col s12">
                                         
                                         <label for="confirmPassword" style="color: #000; font-size: 12px;">Password</label>
-                                        <input type="text" required="required" class="" name="password" id="confirmPassword" maxlength="10" />
+                                        <input type="password" required="required" class="" name="password" id="confirmPassword" maxlength="10" />
                                     </div>
+                                <div class="form-group form-actions">
+						<span class="input-icon"> 
+						<img id="captchaImage" src="${pageContext.request.contextPath }/captcha"><a href="" onclick="refreshCaptcha()">
+						<i class="fa fa-refresh"></i></a>:
+						<input type="text" name="captcha" required="required" style="margin-left: 5px;" placeholder="Enter Captcha">
+						</span> 
+					</div>
+                                
                                     <a href="${context}/forgotPassword" class="right"> Forgot Password?</a>
+                                
+                                
                                 </div>
+                                
+					
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
                                     <%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>

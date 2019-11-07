@@ -57,8 +57,8 @@
 						<li>
 							<h1 class="logo-wrapper">
 								<a href="index.html" class="brand-logo darken-1">CEIR -
-									Importer Portal</a> <span class="logo-text">Materialize</span>
-							</h1>
+									<%=(String)session.getAttribute("primayRole")%> Portal</a> <span class="logo-text">Materialize</span>
+							</h1> 
 						</li>
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
@@ -113,24 +113,35 @@
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 20px; margin-top: 2px;">
-									welcome sharad</p>
+									welcome <%=(String)session.getAttribute("name") %></p>
 							</div>
 
 						</div>
 					</li>
-					<li>
+					<%-- <li>
 						<ul>
 							<li class="bold"><a href="${context}/Home" target="mainArea"
 								class="waves-effect waves-cyan"><i class="fa fa-tachometer"></i>
 									Dashboard</a></li>
 							<li><a href="./Consignment/viewConsignment"
 								target="mainArea"><i class="fa fa-list-alt"></i>Consignment
-							</a></li>
+							</a></li> 
 							<li><a href="./assignDistributor" target="mainArea"><i
 									class="fa fa-th-list"></i>Upload Stock</a></li>
 							<li><a href="./stolenRecovery" target="mainArea"><i
 									class="fa fa-hand-o-right"></i>Stolen/Stock </a></li>
 						</ul>
+					</li> --%>
+					
+					
+					<li>
+					<ul>
+					<c:forEach items="${features}"  var="feature">
+							<li class="bold"><a href="${feature.link}" target="mainArea"
+								class="waves-effect waves-cyan"><i class="${feature.logo}"></i>
+									 ${feature.name}</a></li>
+					</c:forEach>
+					</ul>
 					</li>
 
 

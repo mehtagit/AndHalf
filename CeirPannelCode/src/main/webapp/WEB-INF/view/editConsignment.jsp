@@ -162,20 +162,20 @@
                                         <!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
                       data-target="modal1">Register Consignment</button> -->
                                     </div>
-                                    <form action="">
+                                    <form action="${context}/Consignment/updateRegisterConsignment/20192210/default" enctype="multipart/form-data" method="POST" id="editRegisterConsignment">
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" />
+                                            <input type="text" name="supplierId" id="supplierId" value="${consignmentdetails.supplierId}" maxlength="15" />
                                             <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" required />
+                                            <input type="text" name="supplierName" id="supplierName" value="${consignmentdetails.supplierName}" maxlength="15" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="name" id="name" maxlength="15" />
+                                            <input type="text" name="consignmentNumber" value="${consignmentdetails.consignmentNumber}" id="consignmentNumber" maxlength="15" />
                                             <label for="Name" class="center-align">Consignment Number</label>
                                         </div>
 
@@ -183,14 +183,14 @@
                                             <!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arrival Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-                                            <input name="date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
-                                            <label for="dispatchDate" class="center-align">Expected Arrival Date <span class="star">*</span></label>
+                                            <input name="expectedDispatcheDate" id="expectedDispatcheDate" type="text"  value="${consignmentdetails.expectedDispatcheDate}" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                                 <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
-                                            <select id="country" class="browser-default" class="mySelect"
+                                            <select id="country"  name="organisationcountry" class="browser-default" class="mySelect"
                                                 required></select>
                                             <label for="country" class="center-align"></label>
                                         </div>
@@ -199,16 +199,16 @@
                                         <div class="input-field col s12 m6">
                                             <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name">Expected arrival Date</label> -->
-                                            <input name="date" type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
-                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
+                                            <input name="expectedArrivalDate" id="expectedArrivaldate" type="text" value="${consignmentdetails.expectedArrivaldate}" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
                                         <div class="input-field col s12 m6">
                                             <!-- <label for="Name" class="center-align">Expected arrival port</label> -->
                                             <!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
-                                            <select class="browser-default" required>
-                                                <option value="" disabled selected>Expected arrival port *</option>
+                                            <select name="expectedArrivalPort" id="expectedArrivalPort" class="browser-default" required>
+                                                <option value="${consignmentdetails.expectedArrivalPort}" disabled selected>${consignmentdetails.expectedArrivalPort} *</option>
                                                 <option value="Air">Air</option>
                                                 <option value="Land">Land</option>
                                                 <option value="Water">Water</option>
@@ -216,12 +216,12 @@
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="Quantity" id="Quantity" maxlength="7" required />
+                                            <input type="text" name="quantity" id="quantity" value="${consignmentdetails.quantity}" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                                <input type="text" name="TransactionId" id="TransactionId" readonly maxlength="15" />
+                                                <input type="text" name="txnId" id="txnId"  value="${consignmentdetails.txnId}" readonly maxlength="15" />
                                                 <label for="TransactionId" class="center-align">Transaction ID</label>
                                             </div>
                                     </div>
@@ -233,27 +233,27 @@
                                                         Information <span class="star">*</span></h6>
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input type="file" id="csvUploadFile" accept=".csv">
+                                                <input type="file" name="file" id="file" accept=".csv">
                                             </div>
                                             <div class="file-path-wrapper">
-                                                <input class="file-path validate responsive-file-div" type="text">
+                                                <input class="file-path validate responsive-file-div" id="filename" value="${consignmentdetails.fileName}" type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <p><a href="#">Download Sample Format</a></p>
 
-                                    <span> Required Field are marked with <span class="star">*</span>
+                                    <span> Required Field are marked with <span class="star">*</span> </span>
 
 
                                     <div class="row">
                                         <div class="input-field col s12 center">
                                             <button class="waves-effect waves-light modal-trigger btn"
-                                                data-target="updateConsignment" type="submit">Update</button>
+                                                 type="button" onclick="editRegisterConsignment()">Update</button>
                                             <a href="${context}/Consignment/viewConsignment" class="btn" type="cancel"
                                                 style="margin-left: 10px;">Cancel</a>
 									 </div>
                                     </div>
-                                    </span>
+                                    
                                    
                                 </form>
                                 </div>
@@ -277,7 +277,7 @@
             <h6>Update Consignment</h6> <hr>
 
             <div class="row">
-                <h6>Your update on the form for transaction ID (Tr12345678) has been successfully updated.</h6>
+                <h6 id="sucessMessage"></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -323,9 +323,68 @@
 
 
     <script type="text/javascript">
-         function registerConsignment(){
+         function editRegisterConsignment(){
+        	/*  $("#editRegisterConsignment").submit(); */
+        	 
+        	 var supplierId=$('#supplierId').val();
+        	 var supplierName=$('#supplierName').val();
+        	 var consignmentNumber=$('#consignmentNumber').val();
+        	 var expectedArrivalDate=$('#expectedArrivaldate').val();
+        	 var expectedDispatcheDate=$('#expectedDispatcheDate').val();
+        	 var expectedArrivalPort=$('#expectedArrivalPort').val();
+        	 var organisationcountry=$('#country').val();
+        	 var filename=$('#filename').val();
+        	 var txnId=$('#txnId').val();
+        	 var quantity=$('#quantity').val();
+        	  console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
+        	 
+        	 
+        	 var formData= new FormData();
+        		formData.append('file', $('#file')[0].files[0]);
+        	 	formData.append('supplierId',supplierId);
+        	 	formData.append('supplierName',supplierName);
+        	 	formData.append('consignmentNumber',consignmentNumber);
+        	 	formData.append('expectedArrivaldate',expectedArrivalDate);
+        	 	formData.append('expectedDispatcheDate',expectedDispatcheDate);
+        	 	formData.append('expectedArrivalPort',expectedArrivalPort);
+        	 	formData.append('organisationcountry',organisationcountry);
+        		formData.append('quantity',quantity);
+        		formData.append('txnId',txnId);
+        		formData.append('filename',filename);
+        		
+        		console.log(JSON.stringify(formData));
+        		console.log("*********");
+        	 	
+        	 $.ajax({
+ 				url: '${context}/Consignment/updateRegisterConsignment',
+ 				type: 'POST',
+ 				data: formData,
+ 				processData: false,
+ 				contentType: false,
+ 				success: function (data, textStatus, jqXHR) {
+ 					
+ 					 console.log(data);
+ 					 $('#updateConsignment').modal();
+ 					  if(data.errorCode==200){
+ 					
+ 					$('#sucessMessage').text('');
+					 $('#sucessMessage').text('Operation is not allowed');
+ 						 }
+ 					 else{
+ 						 $('#sucessMessage').text('');
+ 		 				 $('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+ 					 }
+ 				   // $('#updateConsignment').modal('open'); 
+ 					//alert("success");
+ 					
+ 				},
+ 				error: function (jqXHR, textStatus, errorThrown) {
+ 				console.log("error in ajax")
+ 				}
+ 			});
         	
-        	 var dispatcDate=  $('#expectedDispatcheDate').val();
+        	
+        	/*  var dispatcDate=  $('#expectedDispatcheDate').val();
         	 var arrivalDate=  $('#expectedArrivalDate').val();
      		
         	 var csvFile=$('#consignmentFile').val();
@@ -386,7 +445,7 @@
     		 {
         		 myFunction("please enter quantity in numbers");
     		 return false;
-    		 }
+    		 } */
         	 
         	/*  else if($('#consignmentFile').val()=="")
     		 {
@@ -394,7 +453,7 @@
     		 return false;
     		 } */
     		 
-    		 else  if(csvFile!=""){
+    		/*  else  if(csvFile!=""){
         	  if (csvtext!='csv')
         	 {
         		 myFunction("please select csv file formate ");
@@ -410,10 +469,9 @@
 		 {
 		 myFunction("dispatche date should be smaler then arrival date ");
 			return false;
-		 }
+		 } */
     	
-        	 
-        	 $("#registerConsignment").submit();
+        	
         	
          }
          </script>
