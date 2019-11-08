@@ -50,8 +50,9 @@ public class LoginService {
 			session.setAttribute("userRoles", response.getUserRoles());
 			session.setAttribute("primayRole", response.getPrimaryRole());
 			session.setAttribute("name", response.getName());   
-			mv.setViewName("redirect:/importerDashboard");
-			return mv;     
+			session.setAttribute("userStatus", response.getStatus());
+			mv.setViewName("redirect:/importerDashboard"); 
+			return mv;      
 		}
 		else {
 			mv.setViewName("login");
@@ -89,8 +90,10 @@ public class LoginService {
 		ModelAndView mv = new ModelAndView();
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
+		String status=(String)session.getAttribute("userStatus");
 		if(username!=null) {
 		log.info("username from session:  "+username);
+		log.info("user status from session :   "+status); 
 		Integer userId=(Integer)session.getAttribute("userid");
 		List<Feature> features=new ArrayList<Feature>();
 		if(userId!=0) {

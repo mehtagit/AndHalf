@@ -13,7 +13,7 @@ public class LoginResponse {
 	private Integer userId;
 	private String name;
 	private String primaryRole;
-
+    private String status;
 	public String getResponse() {
 		return response;
 	}
@@ -57,11 +57,16 @@ public class LoginResponse {
 	public void setPrimaryRole(String primaryRole) {
 		this.primaryRole = primaryRole;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
-				+ "]";
+				+ ", status=" + status + "]";
 	}
-
 }
