@@ -31,7 +31,7 @@ public interface FeignCleintImplementation {
 	
 	
 	//View filter Consignment  feign  controller
-		@RequestMapping(value="/filter/consignment" ,method=RequestMethod.GET) 
+		@RequestMapping(value="/v1/filter/consignment" ,method=RequestMethod.GET) 
 		public List<ConsignmentModel> consignmentFilter(FilterRequest filterrequest) ;
 
 		

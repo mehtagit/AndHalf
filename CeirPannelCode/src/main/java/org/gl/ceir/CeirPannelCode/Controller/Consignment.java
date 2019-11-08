@@ -57,11 +57,10 @@ public class Consignment {
 		{"/viewConsignment"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			) public ModelAndView viewConsignment() {
-		log.info(" view consignment entry point."); long id=1; List<ConsignmentModel>
-		consignmentdetails=feignCleintImplementation.consignmentList(id);
-		//log.info("complete consignment details="+consignmentdetails.toString());
-		ModelAndView mv = new ModelAndView(); mv.setViewName("viewConsignment");
-		mv.addObject("consignmentdetails", consignmentdetails);
+		ModelAndView mv = new ModelAndView();
+		log.info(" view consignment entry point."); 
+		 mv.setViewName("viewConsignment");
+		//mv.addObject("consignmentdetails", consignmentdetails);
 		log.info(" view consignment exit point."); 
 		return mv; 
 	}
@@ -89,7 +88,8 @@ public class Consignment {
 	  RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 	  ) public @ResponseBody
 	  List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest,  HttpSession session)
-	  { log.info("coming in controller+++++");
+	  {
+		  log.info("coming in controller+++++");
 	 
 	  
 	  String userid= session.getAttribute("userid").toString();
@@ -154,8 +154,15 @@ public class Consignment {
 	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 			@RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
-			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,@RequestParam(name="file",required = false) MultipartFile file) {
+			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
+			@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
 
+		String userName=session.getAttribute("username").toString();
+		String userId= session.getAttribute("userid").toString();
+		String name=session.getAttribute("name").toString();
+		
+		log.info(" values from session  username="+userName+ "userId="+userId+" name ="+name);
+		
 		log.info(" Register consignment entry point.");
 
 		String txnNumner=utildownload.getTxnId();
@@ -200,8 +207,7 @@ public class Consignment {
 		consignment.setQuantity(quantity);
 		consignment.setTxnId(txnNumner);
 		consignment.setFileName(file.getOriginalFilename());
-		consignment.setUserId(Long.valueOf(1));
-		consignment.setImporterName("sharad yadav");
+		consignment.setUserId(Long.valueOf(userId));
 		consignment.setTaxPaidStatus("Not Paid");
 
 		log.info("consignment object "+consignment.toString());
@@ -221,10 +227,16 @@ public class Consignment {
 	public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 			@RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
-			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
+			@RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity, HttpSession session,
 			@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId) {
 		ConsignmentModel consignment = new ConsignmentModel();
+		
+		String userName=session.getAttribute("username").toString();
+		String userId= session.getAttribute("userid").toString();
+		String name=session.getAttribute("name").toString();
+		
 		GenricResponse response= new GenricResponse();
+		
 		log.info("entry point  in update Consignment ** **.");
 
 
@@ -244,8 +256,7 @@ public class Consignment {
 			consignment.setQuantity(quantity);
 			consignment.setTxnId(txnId);
 			consignment.setFileName(filename);
-			consignment.setUserId(Long.valueOf(1));
-			consignment.setImporterName("sharad yadav");
+			consignment.setUserId(Long.valueOf(userId));
 			consignment.setTaxPaidStatus("Not Paid");
 
 			log.info(consignment.toString());
