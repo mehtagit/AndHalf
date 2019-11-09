@@ -56,8 +56,12 @@ public class Consignment {
 	@RequestMapping(value=
 		{"/viewConsignment"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			) public ModelAndView viewConsignment() {
+			)
+	    public ModelAndView viewConsignment(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
+		 
+
+		
 		log.info(" view consignment entry point."); 
 		 mv.setViewName("viewConsignment");
 		//mv.addObject("consignmentdetails", consignmentdetails);
@@ -65,7 +69,7 @@ public class Consignment {
 		return mv; 
 	}
 
-
+	
 	
 	/*
 	 * @RequestMapping(value=
@@ -109,6 +113,7 @@ public class Consignment {
 			  session.getAttribute("taxPaidStatus")!=null ) {
 	  
 	  log.info("session is available atleast in one parameters");
+	  
 	  filterRequest.setConsignmentStatus((int)session.getAttribute("consignmentStatus"));
 	  filterRequest.setEndDate((String)
 	  session.getAttribute("startdate")); 

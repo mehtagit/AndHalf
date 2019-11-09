@@ -28,6 +28,8 @@ public class ConsignmentModel {
 	private String quantity;
 	private Long userId  ;
 	private String remarks;
+	private String roleType;
+	
 	public int getId() {
 		return id;
 	}
@@ -172,6 +174,12 @@ public class ConsignmentModel {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
 	@Override
 	public String toString() {
 		return "ConsignmentModel [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
@@ -182,9 +190,10 @@ public class ConsignmentModel {
 				+ organisationcountry + ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId="
 				+ txnId + ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
 				+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity
-				+ ", userId=" + userId + ", remarks=" + remarks + "]";
+				+ ", userId=" + userId + ", remarks=" + remarks + ", roleType=" + roleType + "]";
 	}
 	
-
+	
+	
 	
 }

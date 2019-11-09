@@ -40,18 +40,21 @@ public class LoginService {
 		
 		if(user.getCaptcha().equals(validCaptcha)) {
 			log.info("if captcha match");
-			ModelAndView mv=new ModelAndView();
+		
+		ModelAndView mv=new ModelAndView();
 		LoginResponse response=new LoginResponse();
 		response=userLoginFeignImpl.checkUser(user);
+		
 		log.info("login response:  "+response); 
 		if(response.getStatusCode()==200) {
 			session.setAttribute("username", response.getUsername());
 			session.setAttribute("userid", response.getUserId());
-			session.setAttribute("userRoles", response.getUserRoles());
-			session.setAttribute("primayRole", response.getPrimaryRole());
-			session.setAttribute("name", response.getName());   
-			mv.setViewName("redirect:/importerDashboard");
-			return mv;     
+			session.setAttribute("usertypeList", response.getUserRoles());
+			session.setAttribute("usertype", response.getPrimaryRole());
+			session.setAttribute("name", response.getName()); 
+			session.setAttribute("userStatus", response.getStatus());
+			mv.setViewName("redirect:/importerDashboard"); 
+			return mv;      
 		}
 		else {
 			mv.setViewName("login");
@@ -76,7 +79,7 @@ public class LoginService {
 		log.info("response got:  "+response);
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 
-		session.removeAttribute("userRoles");
+		session.removeAttribute("usertype");
 		session.invalidate(); 
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/login");
@@ -89,8 +92,10 @@ public class LoginService {
 		ModelAndView mv = new ModelAndView();
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
+		String status=(String)session.getAttribute("userStatus");
 		if(username!=null) {
 		log.info("username from session:  "+username);
+		log.info("user status from session :   "+status); 
 		Integer userId=(Integer)session.getAttribute("userid");
 		List<Feature> features=new ArrayList<Feature>();
 		if(userId!=0) {

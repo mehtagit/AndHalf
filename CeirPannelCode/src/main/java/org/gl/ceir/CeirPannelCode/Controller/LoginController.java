@@ -7,7 +7,6 @@ import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Service.LoginService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

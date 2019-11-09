@@ -387,14 +387,13 @@ public class RegisterController {
 	}
 
 	//*************************************  upload stock *******************************************************************************************
-	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ModelAndView assignDistributor() {
-
-		System.out.println("inside distributor method");
-		ModelAndView mv = new ModelAndView(); 
-		mv.setViewName("assignDistributor");
-		return mv;
-     }
+	/*
+	 * @RequestMapping(value={"/assignDistributor"},method={org.springframework.web.
+	 * bind.annotation.RequestMethod.GET}) public ModelAndView assignDistributor() {
+	 * 
+	 * System.out.println("inside distributor method"); ModelAndView mv = new
+	 * ModelAndView(); mv.setViewName("assignDistributor"); return mv; }
+	 */
 
 	//********************************************* Stolen Recovery **************************************************
 	@RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.bind.annotation.RequestMethod.GET})

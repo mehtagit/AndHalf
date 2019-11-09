@@ -57,7 +57,7 @@
 						<li>
 							<h1 class="logo-wrapper">
 								<a href="index.html" class="brand-logo darken-1">CEIR -
-									<%=(String)session.getAttribute("primayRole")%> Portal</a> <span class="logo-text">Materialize</span>
+									<%=(String)session.getAttribute("usertype")%> Portal</a> <span class="logo-text">Materialize</span>
 							</h1> 
 						</li>
 					</ul>

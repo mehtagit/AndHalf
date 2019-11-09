@@ -100,15 +100,22 @@
                                         <h5 class="center">Role Type</h5>
                                         <form action="${context}/selectModuleType" method="POST">
                                             <h5 class="center">
+                                            <c:forEach items="${userTypelist}" var="userTypelist">
                                                 <label>
+                                                    <input type="radio" name="modeuleType" value="${userTypelist.id}" onclick="StockController(\''+${userTypelist.id}'\')" />
+                                                    <span class="checkboxFont"> ${userTypelist.usertypeName}</span>
+                                                </label>
+                                              
+                                               <%--  <label>
                                                     <input type="radio" name="modeuleType" value="Distributor" />
-                                                    <span class="checkboxFont"> Distributor</span>
+                                                    <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
                                                 </label>
 
                                                 <label>
                                                     <input type="radio" name="modeuleType" value="Retailer"/>
-                                                    <span class="checkboxFont"> Retailer</span>
-                                                </label>
+                                                    <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
+                                                </label> --%>
+                                                </c:forEach>
                                             </h5>
 
                                             <div class="input-field col s12 center">
