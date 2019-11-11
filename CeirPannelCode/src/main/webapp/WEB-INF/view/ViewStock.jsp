@@ -308,6 +308,142 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
             <!-- LEFT RIGHT SIDEBAR NAV-->
 
       
+      <!-- Modal 1 start   -->
+
+    <div id="editStockModal" class="modal">
+        <div class="modal-content">
+            <h6>Edit Stock</h6>
+            <hr>
+            <form action="" style="margin-top: 10px;">
+                    <div class="row myRow">
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="SupplierId" id="SupplierId" placeholder="ABCD12345" maxlength="15" />
+                            <label for="SupplierId" class="center-align">Supplier ID</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="SupplierName" id="SupplierName" placeholder="Abcd"
+                                maxlength="15" />
+                            <label for="SupplierName" class="center-align">Supplier Name </label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="Quantity" id="Quantity" placeholder="120" maxlength="7"
+                                required />
+                            <label for="Quantity" class="center-align">Quantity </label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="InvoiceNumber" id="InvoiceNumber" placeholder="12345678"
+                                maxlength="15" />
+                            <label for="InvoiceNumber" class="center-align">Invoice Number</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="TransactionId" id="TransactionId" placeholder="TR12345678" disabled
+                                maxlength="15" />
+                            <label for="TransactionId" class="center-align">Transaction ID</label>
+                        </div>
+                    </div>
+
+
+                    <div class="row myRow">
+                        <h6 style="color: #000; margin-left: 10px; font-size: 16px;">Upload Bulk
+                            Stock <span class="star">*</span></h6>
+                        <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
+                            <div class="btn">
+                                <span>Select File</span>
+                                <input type="file" id="csvUploadFile" accept=".csv">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate responsive-file-div" type="text">
+                            </div>
+                        </div><br><br>
+                        <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
+                    </div>
+
+                    <span> Required Field are marked with <span class="star">*</span></span>
+
+
+                        <div class="row" style="padding-bottom: 100px;">
+                            <div class="input-field col s12 center">
+                                <button class="waves-effect waves-light modal-trigger btn"
+                                    data-target="submitStock" type="submit">Update</button>
+                                <a href="stockManagement.html" class="btn" type="cancel"
+                                    style="margin-left: 10px;">Cancel</a>
+
+
+                            </div>
+                        </div>
+                </form>
+        </div>
+    </div>
+
+
+<!-- View Stock Modal start   -->
+
+    <div id="viewStockModal" class="modal">
+        <div class="modal-content">
+            <h6>View Stock</h6>
+            <hr>
+            <form action="" style="margin-top: 10px;">
+
+                    <div class="row myRow">
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="SupplierId" id="SupplierId"
+                                placeholder="ABCD12345" disabled />
+                            <label for="SupplierId" class="center-align">Supplier ID</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="SupplierName" id="SupplierName"
+                                placeholder="Abcd" disabled />
+                            <label for="SupplierName" class="center-align">Supplier Name</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="Quantity" id="Quantity" placeholder="120"
+                                disabled />
+                            <label for="Quantity" class="center-align">Quantity</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="InvoiceNumber" id="InvoiceNumber"
+                                placeholder="12345678" disabled />
+                            <label for="InvoiceNumber" class="center-align">Invoice Number</label>
+                        </div>
+
+                        <div class="input-field col s12 m6">
+                            <input type="text" name="TransactionId" id="TransactionId" disabled
+                                placeholder="TR12345678" maxlength="15" />
+                            <label for="TransactionId" class="center-align">Transaction ID</label>
+                        </div>
+                    </div>
+					
+					<div class="row myRow">
+                        <h6 style="color: #000; margin-left: 10px; font-size: 16px;">Upload Bulk
+                            Stock <span class="star">*</span></h6>
+                        <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
+                            <div class="btn">
+                                <span>Select File</span>
+                                <input type="file" id="csvUploadFile" accept=".csv" disabled>
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate responsive-file-div" placeholder="fileName.csv" type="text" disabled>
+                            </div>
+                        </div><br><br>
+                        <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
+                    </div>
+
+                    <div class="row center" style="padding:20px 0 100px 0;">
+                        <a href="stockManagement.html" class="btn" type="cancel">Cancel</a>
+                    </div>
+                </form>
+        </div>
+    </div>
+
+    <!-- View Stock Modal End -->
+    <!-- Modal End -->
     <!-- END MAIN -->
 
 

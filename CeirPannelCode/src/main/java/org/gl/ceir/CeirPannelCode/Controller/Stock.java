@@ -152,6 +152,7 @@ public class Stock {
 
 
 		// set reaquest parameters into model class
+		
 		stockUpload.setSupplierId(supplierId);
 		stockUpload.setSuplierName(supplierName);
 		stockUpload.setInvoiceNumber(invoiceNumber); 
