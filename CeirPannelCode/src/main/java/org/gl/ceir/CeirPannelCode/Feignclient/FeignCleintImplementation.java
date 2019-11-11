@@ -65,8 +65,6 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/consigment/delete" ,method=RequestMethod.DELETE) 
 	public @ResponseBody GenricResponse deleteConsignment(ConsignmentModel consignmentModel) ;
 	
-	
-	
 		
 	
 	//download file(Error or Uploaded file) feign  controller
@@ -88,6 +86,11 @@ public interface FeignCleintImplementation {
 		@PostMapping(value="/Stock/upload")
 	    public GenricResponse uploadStock(StockUploadModel stockUploadModel); 
 
+		
+		@RequestMapping(value="/stock/record" ,method=RequestMethod.POST) 
+		public  Object stockFilter(@RequestBody FilterRequest filterRequest,
+				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 		
 }
 
