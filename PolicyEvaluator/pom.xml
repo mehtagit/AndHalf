@@ -77,8 +77,10 @@
 		<dependency>
 			<groupId>com.gl.ceir</groupId>
 			<artifactId>config</artifactId>
-			<version>1.0</version>
+			<version>1.0.1</version>
 			<classifier>import-lib</classifier>
+			<scope>system</scope>
+			<systemPath>D:\Glocks\CEIR\workspace\AndHalf\config\target\config-1.0.1.jar</systemPath>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>

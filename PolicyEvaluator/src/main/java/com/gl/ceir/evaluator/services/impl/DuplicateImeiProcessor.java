@@ -30,7 +30,7 @@ public class DuplicateImeiProcessor implements Runnable {
 	@Override
 	public void run() {
 		logger.info("DuplicateImeiProcessor Thread Started");
-		while (true) {
+		while (Boolean.TRUE) {
 			try {
 				Request request = queue.take();
 				logger.info("Duplicate " + request);

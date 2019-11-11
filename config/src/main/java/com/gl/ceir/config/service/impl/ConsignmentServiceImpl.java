@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FilterRequest;
@@ -17,6 +18,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
@@ -52,6 +54,9 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+	
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@Autowired
 	Utility utility;
@@ -106,21 +111,20 @@ public class ConsignmentServiceImpl {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
+			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder(propertiesReader.dialect);
 
 			if(Objects.nonNull(consignmentMgmt.getUserId()))
-				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY));
-
-			/*	if(Objects.nonNull(consignmentMgmt.getStartDate()))
-				cmsb.with(new SearchCriteria("modifiedOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN));
-
+				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(consignmentMgmt.getStartDate()))
+				cmsb.with(new SearchCriteria("createdOn", consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+			/*
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
 				cmsb.with(new SearchCriteria("modifiedOn", consignmentMgmt.getEndDate(), SearchOperation.LESS_THAN));
 			 */
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY));
-			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
+				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			return consignmentRepository.findAll(cmsb.build(), pageable).getContent();
 
@@ -221,7 +225,7 @@ public class ConsignmentServiceImpl {
 			/*if(0 == consignment.getConsignmentStatus()|| 2 == consignment.getConsignmentStatus())
 			{
 			 */
-			
+
 			consignment.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
 			consignment.setRemarks(consignmentRequest.getRemarks());
 
