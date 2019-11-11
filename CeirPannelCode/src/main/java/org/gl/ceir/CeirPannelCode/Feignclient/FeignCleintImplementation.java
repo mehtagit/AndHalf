@@ -6,6 +6,7 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,29 +80,14 @@ public interface FeignCleintImplementation {
 		@RequestMapping(value="/stoke/Download/SampleFile" ,method=RequestMethod.GET) 
 			public @ResponseBody String downloadSampleFile(@RequestParam("samplFileType") String fileType);
 
+	
+	/// ****************************************Stock Api Integrreation******************************************************************************************
 		
-	/*
-	 * @PostMapping("/MobileOperators/") public void saveOperator(@RequestBody
-	 * Operator operator);
-	 */ 
+		
+		// @RequestLine("POST /consignment/upload")
+		@PostMapping(value="/Stock/upload")
+	    public GenricResponse uploadStock(StockUploadModel stockUploadModel); 
 
-	/*
-	 * @PutMapping("/MobileOperators/{id}") void
-	 * editOperatorById(@PathVariable("id") int id,@RequestBody Operator op);
-	 * 
-	 * @DeleteMapping("/MobileOperators/{id}") void
-	 * deleteOperatorById(@PathVariable("id") int id);
-	 * 
-	 * @GetMapping("/MediationSource/") public List<Mediation> getMediationData();
-	 * 
-	 * @PostMapping("/MediationSource/") public void addMediationData(@RequestBody
-	 * Mediation mediation);
-	 * 
-	 * @PutMapping("/MediationSource/{id}") public void editMediation(@PathVariable
-	 * int id,Mediation mediation);
-	 * 
-	 * @DeleteMapping("/MediationSource/{id}") public void
-	 * deleteMediation(@PathVariable("id") int id);
-	 */
+		
 }
 

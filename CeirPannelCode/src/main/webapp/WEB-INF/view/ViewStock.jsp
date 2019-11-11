@@ -82,7 +82,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                 <div class="row card-panel">
                                         <div class="container-fluid pageHeader">
                                             <p class="PageHeading">View Stock</p>
-                                            <a href="uploadStock.html" type="button" class="boton right">Upload
+                                            <a href="${context}/openUploadStock?reqType=formPage" type="button" class="boton right">Upload
                                                 Stock</a>
                                         </div>
 

@@ -396,16 +396,15 @@ public class RegisterController {
 	 */
 
 	//********************************************* Stolen Recovery **************************************************
-	@RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public ModelAndView stolenRecovery() {
-
-		System.out.println("inside stolen  Recovery method");
-		ModelAndView mv = new ModelAndView(); 
-		mv.setViewName("stolenRecovery");
-		return mv;
-
-	}
-	
+	/*
+	 * @RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.
+	 * bind.annotation.RequestMethod.GET}) public ModelAndView stolenRecovery() {
+	 * 
+	 * System.out.println("inside stolen  Recovery method"); ModelAndView mv = new
+	 * ModelAndView(); mv.setViewName("stolenRecovery"); return mv;
+	 * 
+	 * }
+	 */
 	
 //***************************************** close update consignment page
 	@RequestMapping(value={"/closeEditPage"},method={org.springframework.web.bind.annotation.RequestMethod.GET})

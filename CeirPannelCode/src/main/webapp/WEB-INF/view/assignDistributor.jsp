@@ -102,7 +102,7 @@
                                             <h5 class="center">
                                             <c:forEach items="${userTypelist}" var="userTypelist">
                                                 <label>
-                                                    <input type="radio" name="modeuleType" value="${userTypelist.id}" onclick="StockController(\''+${userTypelist.id}'\')" />
+                                                    <input type="radio" id="userTypelistId" name="modeuleType" value="${userTypelist.id}" onclick="StockController(${userTypelist.id})" />
                                                     <span class="checkboxFont"> ${userTypelist.usertypeName}</span>
                                                 </label>
                                               
@@ -118,13 +118,7 @@
                                                 </c:forEach>
                                             </h5>
 
-                                            <div class="input-field col s12 center">
-                                                <button class="btn" type="button" id="Save" name="save" id="save"
-                                                    onclick="document.getElementById('stolenRecoveryDiv').style.display = 'block'; document.getElementById('roleTypeDiv').style.display = 'none';">Submit</button>
-
-                                                <button class="btn modal-action modal-close waves-effect" type="reset"
-                                                    name="cancel" id="cancel">Cancel</button>
-                                            </div>
+                                            
                                         </form>
                                     </div>
                                  <!--    <div class="container-fluid"
@@ -379,9 +373,14 @@ style="font-size: 20px; color: red;" title="delete"></i></a>
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
     
     <script>
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
+    function StockController(usertypeId){
+    	var url="${context}/assignDistributor?userTypeId="+usertypeId;
+    	console.log(url);
+    	window.location.href=url;
+   
+    }   
+    
+    
     </script>
      <script type="text/javascript">
             $('#assignDistibutorTableId').DataTable(

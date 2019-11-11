@@ -201,7 +201,8 @@ public class Consignment {
 		log.info(" submit register form block.");
 
 
-		// set reaquest parameters into model class
+		// set request parameters into model class
+		
 		consignment.setSupplierId(supplierId);
 		consignment.setSupplierName(supplierName);
 		consignment.setConsignmentNumber(consignmentNumber);
