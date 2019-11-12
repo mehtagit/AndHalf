@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model.constants;
 
 public enum StockStatus {
-	SUCCESS(0), UPLOADING(1), PROCESSING(2), REJECTED_BY_SYSTEM(3), WITHDRAWAL_BY_USER(4);
+	SUCCESS(3), UPLOADING(0), PROCESSING(1), REJECTED_BY_SYSTEM(2), WITHDRAWAL_BY_USER(4);
 	
 	private int code;
 

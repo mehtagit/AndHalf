@@ -5,18 +5,20 @@ import java.util.Date;
 
 public class FilterRequest {
 
-	public Long userId;
+	public Integer userId;
 	public LocalDateTime  startDate;
 	public LocalDateTime   endDate;
 	public String taxPaidStatus;
-	private int consignmentStatus;
+	private Integer consignmentStatus;
 	private String roleType;
+	private String requestType;
 
 
-	public Long getUserId() {
+	
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	public LocalDateTime getStartDate() {
@@ -44,17 +46,24 @@ public class FilterRequest {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-	public int getConsignmentStatus() {
+
+	public Integer getConsignmentStatus() {
 		return consignmentStatus;
 	}
-	public void setConsignmentStatus(int consignmentStatus) {
+	public void setConsignmentStatus(Integer consignmentStatus) {
 		this.consignmentStatus = consignmentStatus;
+	}
+	public String getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
 	}
 	@Override
 	public String toString() {
 		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
-				+ roleType + "]";
+				+ roleType + ", requestType=" + requestType + "]";
 	}
 
 

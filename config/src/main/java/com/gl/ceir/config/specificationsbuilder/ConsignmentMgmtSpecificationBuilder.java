@@ -3,6 +3,9 @@ package com.gl.ceir.config.specificationsbuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
@@ -48,8 +51,12 @@ public class ConsignmentMgmtSpecificationBuilder {
 	private List<Specification<ConsignmentMgmt>> createSpecifications(){
 		List<Specification<ConsignmentMgmt>> specifications = new ArrayList<Specification<ConsignmentMgmt>>();
 
+
+
 		for(SearchCriteria searchCriteria : params) {
 			specifications.add((root, query, cb)-> {
+
+
 				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation()))
 					return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 

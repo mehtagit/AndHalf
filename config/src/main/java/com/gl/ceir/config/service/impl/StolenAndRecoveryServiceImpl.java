@@ -1,21 +1,29 @@
 package com.gl.ceir.config.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.StolenAndRecoverySpecificationBuilder;
 
 @Service
 public class StolenAndRecoveryServiceImpl {
@@ -61,13 +69,27 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 
-	public List<StolenandRecoveryMgmt> getAllInfo(StolenandRecoveryMgmt stolenandRecoveryMgmt){
+	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest stolenandRecoveryMgmt,Integer pageNo, Integer pageSize){
 		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+			StolenAndRecoverySpecificationBuilder str =  new StolenAndRecoverySpecificationBuilder();
+
+			if(Objects.nonNull(stolenandRecoveryMgmt.getUserId()))
+				str.with(new SearchCriteria("userId", stolenandRecoveryMgmt.getUserId(), SearchOperation.EQUALITY));
+
+			if(Objects.nonNull(stolenandRecoveryMgmt.getRoleType()))
+				str.with(new SearchCriteria("roleType", stolenandRecoveryMgmt.getRoleType(), SearchOperation.EQUALITY));
+
+			if(Objects.nonNull(stolenandRecoveryMgmt.getConsignmentStatus()))
+				str.with(new SearchCriteria("fileStatus", stolenandRecoveryMgmt.getConsignmentStatus(), SearchOperation.EQUALITY));
+
+			if(Objects.nonNull(stolenandRecoveryMgmt.getRequestType()))
+				str.with(new SearchCriteria("requestType", stolenandRecoveryMgmt.getRequestType(), SearchOperation.EQUALITY));
 
 
+			return 	stolenAndRecoveryRepository.findAll(str.build(), pageable);
 
-			return 	stolenAndRecoveryRepository.findByUserIdAndRoleType(stolenandRecoveryMgmt.getUserId(), 
-					stolenandRecoveryMgmt.getRoleType());
 
 		} catch (Exception e) {
 
@@ -75,6 +97,7 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
+
 
 
 	public GenricResponse uploadMultipleStolen(List<StolenandRecoveryMgmt> stolenandRecoveryMgmt) {

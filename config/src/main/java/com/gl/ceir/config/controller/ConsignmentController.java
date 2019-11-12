@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.service.impl.ConsignmentServiceImpl;
@@ -92,16 +93,35 @@ public class ConsignmentController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "View filtered consignment", response = ConsignmentMgmt.class)
-	@PostMapping("/filter/consignment")
+	@PostMapping("v1/filter/consignment")
 	public MappingJacksonValue filterConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
 		logger.info("Request TO view filtered consignment = " + filterRequest);
-		
-		Page<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(filterRequest, pageNo, pageSize);
+
+		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(filterRequest, pageNo, pageSize);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
+
+		logger.info("Response of view Request ="+mapping);
+
+		return mapping;
+	}
+
+
+
+	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
+	@PostMapping("v2/filter/consignment")
+	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+
+		logger.info("Request TO view filtered consignment = " + filterRequest);
+
+		Page<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 
@@ -134,10 +154,10 @@ public class ConsignmentController {
 
 		String directoryPath=fileStorageProperties.getDownloadDir();
 		if("Stoke".equalsIgnoreCase(samplFileType)) {
-			directoryPath= directoryPath+"SampleFiles/StokeSampleFile.csv";
+			directoryPath= "http://13.233.39.58:9090/CEIR/Design/SampleFiles/StokeSampleFile.csv";
 			return directoryPath;
 		}else {
-			directoryPath= directoryPath+"SampleFiles/StolenAndRecovery.csv";
+			directoryPath="http://13.233.39.58:9090/CEIR/Design/SampleFiles/StolenAndRecovery.csv";
 			return directoryPath;
 		}
 	}
@@ -164,9 +184,7 @@ public class ConsignmentController {
 
 
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
-
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
-
 	public GenricResponse deleteConsigment(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
 		logger.info("Consignment Withdraw Request ="+consignmentUploadRequest);
@@ -174,14 +192,26 @@ public class ConsignmentController {
 		GenricResponse genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUploadRequest);
 
 		logger.info("Response of Delete Request="+genricResponse);
-		
+
 		return genricResponse;
 
 	}
 
-	
-	
-	
+	@ApiOperation(value = "Update Consignment Status.", response = GenricResponse.class)
+	@RequestMapping(path = "update/consigmentStatus", method = RequestMethod.PUT)
+
+	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest) {
+
+		logger.info("Request to update the consignmentStatus="+consignmentUpdateRequest);
+
+		GenricResponse genricResponse	=consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
+
+		return genricResponse ;
+
+	}
+
+
+
 
 
 }
