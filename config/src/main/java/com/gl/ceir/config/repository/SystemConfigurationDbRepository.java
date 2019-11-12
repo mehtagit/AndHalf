@@ -6,4 +6,10 @@ import com.gl.ceir.config.model.SystemConfigurationDb;
 
 public interface SystemConfigurationDbRepository extends JpaRepository<SystemConfigurationDb, Long> {
 
+
+	public SystemConfigurationDb getByTag(String tag);
+
+	public SystemConfigurationDb getById(Long id);
+
+
 }
