@@ -28,7 +28,7 @@ import org.springframework.context.annotation.FilterType;
 @EnableFeignClients
 @EnableAutoConfiguration
 @SpringBootConfiguration 
-@ComponentScan(basePackages ="org.gl.ceir.CeirPannelCode,com.gl.ceir.config")
+@ComponentScan(basePackages ="org.gl.ceir")
 public class App extends SpringBootServletInitializer
 {
 	@Override

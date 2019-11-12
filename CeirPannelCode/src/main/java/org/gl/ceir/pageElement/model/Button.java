@@ -4,12 +4,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Button {
+	private String type = null;
 	private String buttonTitle = null;
 	private String buttonURL = null;
 	private String id =null;
-	@Override
-	public String toString() {
-		return "Button [buttonTitle=" + buttonTitle + ", buttonURL=" + buttonURL + ", id=" + id + "]";
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getButtonTitle() {
 		return buttonTitle;
@@ -29,4 +32,10 @@ public class Button {
 	public void setId(String id) {
 		this.id = id;
 	}
+	@Override
+	public String toString() {
+		return "Button [type=" + type + ", buttonTitle=" + buttonTitle + ", buttonURL=" + buttonURL + ", id=" + id
+				+ "]";
+	}
+	
 }

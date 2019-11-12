@@ -32,8 +32,10 @@ public interface FeignCleintImplementation {
 	
 	
 	//View filter Consignment  feign  controller
-		@RequestMapping(value="/v1/filter/consignment" ,method=RequestMethod.GET) 
-		public List<ConsignmentModel> consignmentFilter(FilterRequest filterrequest) ;
+		@RequestMapping(value="/v2/filter/consignment" ,method=RequestMethod.GET) 
+		public Object consignmentFilter(@RequestBody FilterRequest filterRequest,
+				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 
 		
 	
@@ -88,7 +90,7 @@ public interface FeignCleintImplementation {
 
 		
 		@RequestMapping(value="/stock/record" ,method=RequestMethod.POST) 
-		public  Object stockFilter(@RequestBody FilterRequest filterRequest,
+		public Object stockFilter(@RequestBody FilterRequest filterRequest,
 				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 		

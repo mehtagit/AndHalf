@@ -4,26 +4,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.stereotype.Component;
 @Component
-public class StockPaginationModel {
-	private List<StockContent> content = null;
+public class ConsignmentPaginationModel {
+	private List<ConsignmentContent> content = null;
 	private Pageable pageable;
 	private Integer totalPages;
 	private Integer totalElements;
 	private Boolean last;
 	private Boolean first;
 	private Sort sort;
-	private Integer numberOfElements;
-	private Integer size;
-	private Integer number;
-	private Boolean empty;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	public List<StockContent> getContent() {
+	@Override
+	public String toString() {
+		return "ConsignmentPaginationModel [content=" + content + ", pageable=" + pageable + ", totalPages="
+				+ totalPages + ", totalElements=" + totalElements + ", last=" + last + ", first=" + first + ", sort="
+				+ sort + ", numberOfElements=" + numberOfElements + ", size=" + size + ", number=" + number + ", empty="
+				+ empty + ", additionalProperties=" + additionalProperties + "]";
+	}
+	public List<ConsignmentContent> getContent() {
 		return content;
 	}
-	public void setContent(List<StockContent> content) {
+	public void setContent(List<ConsignmentContent> content) {
 		this.content = content;
 	}
 	public Pageable getPageable() {
@@ -92,14 +93,9 @@ public class StockPaginationModel {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	@Override
-	public String toString() {
-		return "StockPaginationModel [content=" + content + ", pageable=" + pageable + ", totalPages=" + totalPages
-				+ ", totalElements=" + totalElements + ", last=" + last + ", first=" + first + ", sort=" + sort
-				+ ", numberOfElements=" + numberOfElements + ", size=" + size + ", number=" + number + ", empty="
-				+ empty + ", additionalProperties=" + additionalProperties + "]";
-	}
-	
-	
-	
+	private Integer numberOfElements;
+	private Integer size;
+	private Integer number;
+	private Boolean empty;
+	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 }

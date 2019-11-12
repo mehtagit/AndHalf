@@ -1,24 +1,20 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-public class FilterRequest {
+import java.time.LocalDateTime;
 
-	
-	private int consignmentStatus;
-	private String endDate;
-	private String  startDate;
-	private String taxPaidStatus;
-	private  String userId;
-	public int getConsignmentStatus() {
-		return consignmentStatus;
+public class FilterRequest {
+	public Integer userId;
+	public String  startDate;
+	public String   endDate;
+	public String taxPaidStatus;
+	private Integer consignmentStatus;
+	private String roleType;
+	private String requestType;
+	public Integer getUserId() {
+		return userId;
 	}
-	public void setConsignmentStatus(int consignmentStatus) {
-		this.consignmentStatus = consignmentStatus;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public String getStartDate() {
 		return startDate;
@@ -26,24 +22,41 @@ public class FilterRequest {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 	public String getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
 	public void setTaxPaidStatus(String taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
-	public String getUserId() {
-		return userId;
+	public Integer getConsignmentStatus() {
+		return consignmentStatus;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setConsignmentStatus(Integer consignmentStatus) {
+		this.consignmentStatus = consignmentStatus;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+	public String getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(String requestType) {
+		this.requestType = requestType;
 	}
 	@Override
 	public String toString() {
-		return "FilterRequest [consignmentStatus=" + consignmentStatus + ", endDate=" + endDate + ", startDate="
-				+ startDate + ", taxPaidStatus=" + taxPaidStatus + ", userId=" + userId + "]";
+		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
+				+ roleType + ", requestType=" + requestType + "]";
 	}
-	
-	
 	
 }

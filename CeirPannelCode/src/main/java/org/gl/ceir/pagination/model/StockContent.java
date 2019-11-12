@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class StockContent {
 	private Integer id;
+	private String createdOn;
+	private String modifiedOn;
 	private String suplierName;
 	private Integer supplierId;
 	private String invoiceNumber;
@@ -15,12 +17,23 @@ public class StockContent {
 	private Integer quantity;
 	private Integer stockStatus;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public String getSuplierName() {
 		return suplierName;
@@ -82,11 +95,12 @@ public class StockContent {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	
 	@Override
 	public String toString() {
-		return "StockContent [id=" + id + ", suplierName=" + suplierName + ", supplierId=" + supplierId
-				+ ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId + ", fileName=" + fileName + ", userId="
-				+ userId + ", roleType=" + roleType + ", quantity=" + quantity + ", stockStatus=" + stockStatus + "]";
+		return "StockContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", suplierName="
+				+ suplierName + ", supplierId=" + supplierId + ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId
+				+ ", fileName=" + fileName + ", userId=" + userId + ", roleType=" + roleType + ", quantity=" + quantity
+				+ ", stockStatus=" + stockStatus + ", additionalProperties=" + additionalProperties + "]";
 	}
+
 }

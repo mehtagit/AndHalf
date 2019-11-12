@@ -92,8 +92,16 @@
        
        
        
-       <div class="section">
-                        <div class="row">
+
+                    
+                    
+                    <!-- START CONTENT -->
+	<section id="content">
+		<!--start container-->
+		<div class="container">
+			<div class="section">
+			
+			<div class="row">
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
                                 <div class="col s12 m12 l12" id="roleTypeDiv">
@@ -106,15 +114,6 @@
                                                     <span class="checkboxFont"> ${userTypelist.usertypeName}</span>
                                                 </label>
                                               
-                                               <%--  <label>
-                                                    <input type="radio" name="modeuleType" value="Distributor" />
-                                                    <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
-                                                </label>
-
-                                                <label>
-                                                    <input type="radio" name="modeuleType" value="Retailer"/>
-                                                    <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
-                                                </label> --%>
                                                 </c:forEach>
                                             </h5>
 
@@ -126,37 +125,10 @@
 
                             </div>
                         </div>
-                    </div>
-                    
-                    
-                    <!-- START CONTENT -->
-	<section id="content">
-		<!--start container-->
-		<div class="container">
-			<div class="section">
-				<div class="row">
-					<div class="col s12 m12 l12">
-						<div class="row card-panel">
-							<div class="container-fluid pageHeader" id="pageHeader">
-								
-								<a href="" class="boton right" id="btnLink"></a>
-							</div>
-							<form action="${context}/Consignment/viewConsignment"
-								method="post">
-								<div class="col s12 m12 l12" id="consignmentTableDIv"
-									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv">
-	<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 --></div>
-</div>
-							</form>
-							<table id="stockTable"
-								class="responsive-table striped display"></table>
+                        
+                        
+                        
 
-						</div>
-
-					</div>
-				</div>
 			</div>
 		</div>
 	</section>
@@ -194,91 +166,7 @@
     	window.location.href=url;
    
     }   
-    
-    
-function request(){
-var request ={
-		  "consignmentStatus": null,
-		  "endDate": "2019-11-11T10:53:37.289Z",
-		  "roleType": "Distributer",
-		  "startDate": "2019-11-11T10:53:37.290Z",
-		  "taxPaidStatus": null,
-		  "userId": 1
-		}
-		return request;
-}
- $.ajax({
-	url: "${context}/Stock/headers",
-	type: 'POST',
-	dataType: "json",
-	success: function(result){
-			var table=	$("#stockTable").DataTable({
-    	  		destroy:true,
-                "serverSide": true,
-    			orderCellsTop : true,
-    			"aaSorting" : [],
-    			"bPaginate" : true,
-    			"bFilter" : true,
-    			"bInfo" : true,
-    			"bSearchable" : true,
-				ajax: {
-           		        url: '${context}/Stock/stockData',
-           		        type: 'POST',
-           		    	dataType: "json",
-           		    	data : JSON.stringify(request())
-         		},
-                "columns": result
-            });
-	}
-					}); 
-					
-		
- $.ajax({
-		url: "${context}/Stock/pageRendering",
-		type: 'POST',
-		dataType: "json",
-		success: function(data){
-var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
-$("#pageHeader").append(elem);
-var button=data.buttonList;
-
-var date=data.inputTypeDateList;
-for(i=0; i<date.length; i++){
-$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-		"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
-		"<label for='TotalPrice'>"+date[i].title
-		+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
-		"<span	class='input-group-addon' style='color: #ff4081'>"+
-		"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-} 
-
-// dynamic dropdown portion
-var dropdown=data.dropdownList;
-for(i=0; i<dropdown.length; i++){
-var dropdownDiv=
-$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-		"<br>"+
-		"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-		"<span class='caret'>"+"</span>"+
-		"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-		
-		"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-		"<option>"+dropdown[i].title+
-		"</option>"+
-		"</select>"+
-		"</div>"+
-		"</div>");
-}
-
-$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>");
-for(i=0; i<button.length; i++){
-	$('#'+button[i].id).text(button[i].buttonTitle);
-	$('#'+button[i].id).attr("href", button[i].buttonURL);
-	}
-		}
-
-//$("#filterBtnDiv").append();
-}); 
+   
 </script>
 </body>
 </html>

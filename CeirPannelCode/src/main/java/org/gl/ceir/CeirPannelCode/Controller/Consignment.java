@@ -87,57 +87,55 @@ public class Consignment {
 
 	
 	
-	  @RequestMapping(value=
-	  {"/filterConsignment"},method={org.springframework.web.bind.annotation.
-	  RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-	  ) public @ResponseBody
-	  List<ConsignmentModel>filterConsignment(@RequestBody FilterRequest filterRequest,  HttpSession session)
-	  {
-		  log.info("coming in controller+++++");
-	 
-	  
-	  String userid= session.getAttribute("userid").toString();
-	  log.info("user id from session="+userid);
-	  filterRequest.setUserId(userid);
-	  
-	  log.info("filterRequest=="+filterRequest);
-	  
-	  session.setAttribute("startDate", filterRequest.getStartDate());
-	  session.setAttribute("endDate",filterRequest.getEndDate());
-	  session.setAttribute("consignmentStatus", filterRequest.getConsignmentStatus());
-	  session.setAttribute("taxPaidStatus", filterRequest.getTaxPaidStatus());
-	  
-	  log.info("session value=="+session.getAttribute("consignmentStatus"));
-	  
-	  if(session.getAttribute("startDate")!=null ||session.getAttribute("endDate")!=null|| session.getAttribute("consignmentStatus")!=null ||
-			  session.getAttribute("taxPaidStatus")!=null ) {
-	  
-	  log.info("session is available atleast in one parameters");
-	  
-	  filterRequest.setConsignmentStatus((int)session.getAttribute("consignmentStatus"));
-	  filterRequest.setEndDate((String)
-	  session.getAttribute("startdate")); 
-	  filterRequest.setStartDate((String)
-	  session.getAttribute("endDate"));
-	  filterRequest.setTaxPaidStatus((String)
-	  session.getAttribute("taxPaidStatus")); 
-	  }
-	  
-	  else {
-		  log.info("session is not present consignment value ="+filterRequest);
-	 
-	  }
-	  
-	  
-	  
-	  
-	  log.info("view consignment filter  entry point."+filterRequest); 
-	  List<ConsignmentModel> consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest);
-	  log.info("fillter Data=="+consignmentdetails);
-	  log.info(" view consignment exit point.");
-	  return consignmentdetails; 
-	  }
-	  
+	/*
+	 * @RequestMapping(value=
+	 * {"/filterConsignment"},method={org.springframework.web.bind.annotation.
+	 * RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+	 * ) public @ResponseBody List<ConsignmentModel>filterConsignment(@RequestBody
+	 * FilterRequest filterRequest, HttpSession session) {
+	 * log.info("coming in controller+++++");
+	 * 
+	 * 
+	 * String userid= session.getAttribute("userid").toString();
+	 * log.info("user id from session="+userid);
+	 * filterRequest.setUserId(Integer.parseInt(userid));
+	 * 
+	 * log.info("filterRequest=="+filterRequest);
+	 * 
+	 * session.setAttribute("startDate", filterRequest.getStartDate());
+	 * session.setAttribute("endDate",filterRequest.getEndDate());
+	 * session.setAttribute("consignmentStatus",
+	 * filterRequest.getConsignmentStatus()); session.setAttribute("taxPaidStatus",
+	 * filterRequest.getTaxPaidStatus());
+	 * 
+	 * log.info("session value=="+session.getAttribute("consignmentStatus"));
+	 * 
+	 * if(session.getAttribute("startDate")!=null
+	 * ||session.getAttribute("endDate")!=null||
+	 * session.getAttribute("consignmentStatus")!=null ||
+	 * session.getAttribute("taxPaidStatus")!=null ) {
+	 * 
+	 * log.info("session is available atleast in one parameters");
+	 * 
+	 * filterRequest.setConsignmentStatus((int)session.getAttribute(
+	 * "consignmentStatus")); filterRequest.setEndDate((String)
+	 * session.getAttribute("startdate")); filterRequest.setStartDate((String)
+	 * session.getAttribute("endDate")); filterRequest.setTaxPaidStatus((String)
+	 * session.getAttribute("taxPaidStatus")); }
+	 * 
+	 * else { log.info("session is not present consignment value ="+filterRequest);
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * log.info("view consignment filter  entry point."+filterRequest);
+	 * List<ConsignmentModel>
+	 * consignmentdetails=feignCleintImplementation.consignmentFilter(filterRequest)
+	 * ; log.info("fillter Data=="+consignmentdetails);
+	 * log.info(" view consignment exit point."); return consignmentdetails; }
+	 */
 	 	 	 
 
 	/*
