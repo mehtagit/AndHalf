@@ -56,8 +56,8 @@
 					<ul class="left">
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="index.html" class="brand-logo darken-1">CEIR -
-									<%=(String)session.getAttribute("usertype")%> Portal</a> <span class="logo-text">Materialize</span>
+									<a href="index.html" class="brand-logo darken-1" >CEIR -
+									<span id="cierRoletype"><%=(String)session.getAttribute("usertype")%></span> Portal</a> <span class="logo-text">Materialize</span>
 							</h1> 
 						</li>
 					</ul>
@@ -406,6 +406,7 @@
     ================================================ -->
 
 
+
 	<!-- jQuery Library -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -426,6 +427,15 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
+
+		
+ <script type="text/javascript">
+	    
+   console.log($("#cierRoletype").text());
+   var cierRoletype = $("#cierRoletype").text()
+   sessionStorage.setItem("cierRoletype", cierRoletype);
+	     
+ </script>
 
 </body>
 
