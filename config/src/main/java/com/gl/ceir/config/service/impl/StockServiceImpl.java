@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -70,7 +71,7 @@ public class StockServiceImpl {
 
 			webActionDbRepository.save(webActionDb);
 
-			return new GenricResponse(200,"Upload Successfully",stackholderRequest.getTxnId());
+			return new GenricResponse(0,"Upload Successfully",stackholderRequest.getTxnId());
 
 		} catch (Exception e) {
 
@@ -78,6 +79,11 @@ public class StockServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+
+
+
+
+
 
 	public List<StockMgmt> getAllData(StockMgmt stockMgmt){
 		try {
@@ -93,7 +99,7 @@ public class StockServiceImpl {
 	}
 
 
-	public List<StockMgmt> getAllFilteredData(FilterRequest filterRequest,Integer pageNo, Integer pageSize){
+	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest,Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
@@ -109,13 +115,19 @@ public class StockServiceImpl {
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
-			return distributerManagementRepository.findAll(smsb.build(), pageable).getContent();
+			return distributerManagementRepository.findAll(smsb.build(), pageable);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+
+
 	}
+
+
+
+
 
 	public StockMgmt view(StockMgmt stockMgmt) {
 		try {
@@ -178,8 +190,8 @@ public class StockServiceImpl {
 
 		}else {
 
-			if(3 == stackHolderInfo.getStockStatus()) {
-
+			/*if(3 == stackHolderInfo.getStockStatus()) {
+*/
 				stackHolderInfo.setInvoiceNumber(distributerManagement.getInvoiceNumber());
 				stackHolderInfo.setQuantity(distributerManagement.getQuantity());
 				stackHolderInfo.setSuplierName(distributerManagement.getSuplierName());
@@ -200,12 +212,12 @@ public class StockServiceImpl {
 
 				webActionDbRepository.save(webActionDb);
 
-			}else {
+			/*}else {
 
 				return new GenricResponse(200, "Operation Not Allowed.",distributerManagement.getTxnId());
-			}
+			}*/
 
-			return new GenricResponse(200, "Update SuccessFully",distributerManagement.getTxnId());
+			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
 }

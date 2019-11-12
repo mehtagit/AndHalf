@@ -1,5 +1,4 @@
 package com.gl.ceir.config.model;
-
 import java.util.Date;
 import java.util.List;
 
@@ -15,35 +14,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity          
 public class User {  
-	
 	private static long serialVersionUID = 1L;
-	
 	@Id       
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
 	private String username;
-	
 	private String password; 
-	
 	private Date createdOn;
-	
 	private Date modifiedOn; 
-	
 	private String status;  
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	UserProfile userProfile;
-
 	/*
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "usertype_id", nullable = false) 
 	private Usertype usertype; 
  
+	
+	
 	@OneToMany(mappedBy = "userTrack",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	List<LoginTracking> loginTracking;
 	
@@ -52,8 +44,10 @@ public class User {
 	 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<UserSecurityquestion> userSecurityquestion;
+*/
 	
-	*/
+	
+	
 	public Integer getId() {      
 		return id;
 	}
@@ -90,13 +84,12 @@ public class User {
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
 	}
-	/*
-	public Usertype getUsertype() {
+	/*public Usertype getUsertype() {
 		return usertype;
 	}
 	public void setUsertype(Usertype usertype) {
 		this.usertype = usertype;
-	} */
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -104,7 +97,6 @@ public class User {
 		this.status = status;
 	}
 	
-	/*
 	public List<UserSecurityquestion> getUserSecurityquestion() {
 		return userSecurityquestion;
 	}
@@ -123,9 +115,7 @@ public class User {
 	}
 	public void setLoginTracking(List<LoginTracking> loginTracking) {
 		this.loginTracking = loginTracking;
-	}
-	*/
-	
+	}*/
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createdOn=" + createdOn

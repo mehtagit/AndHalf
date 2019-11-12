@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -46,8 +49,8 @@ public class ConsignmentMgmt implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	private UserProfile userProfile;
+
+	private Integer userId;
 
 	@NotNull
 	@Column(length = 20)
@@ -66,12 +69,21 @@ public class ConsignmentMgmt implements Serializable {
 	@Column(length = 25)
 	private String expectedArrivaldate;
 
+
 	@Column(length = 10)
 	private String expectedArrivalPort;
 
 	private int quantity;
 
 	private String remarks;
+
+	/*@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name="user", joinColumns = @JoinColumn(name="id", insertable = false, updatable = false),
+	inverseJoinColumns = @JoinColumn(name="user_id"))*/
+	@OneToOne
+	@JoinColumn(name="local_user_id",insertable = false, updatable = false)
+	private User user;
+
 
 	public Long getId() {
 		return id;
@@ -81,7 +93,7 @@ public class ConsignmentMgmt implements Serializable {
 		this.id = id;
 	}
 
-	public String getSupplierId() {
+	public String getSupplierld() {
 		return supplierId;
 	}
 
@@ -129,18 +141,17 @@ public class ConsignmentMgmt implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	
 
-	public UserProfile getUserProfile() {
-		return userProfile;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getSupplierId() {
+		return supplierId;
 	}
 
 	public String getTxnId() {
@@ -214,11 +225,6 @@ public class ConsignmentMgmt implements Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
-
-
-
-
 
 
 

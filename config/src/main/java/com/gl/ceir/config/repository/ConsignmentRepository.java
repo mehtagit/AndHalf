@@ -9,7 +9,7 @@ import com.gl.ceir.config.model.ConsignmentMgmt;
 
 
 public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>, JpaSpecificationExecutor<ConsignmentMgmt> {
-	
+
 	public ConsignmentMgmt save(ConsignmentMgmt consignment);
 
 	public ConsignmentMgmt getByConsignmentNumber(String consignmEntNumber);
@@ -17,5 +17,9 @@ public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Lo
 	public List<ConsignmentMgmt> getByUserIdOrderByIdDesc(Long userId);
 
 	public ConsignmentMgmt getByTxnId(String txnId);
+
+
+	public List<ConsignmentMgmt> findByUser_id(int id);
+
 
 }

@@ -13,11 +13,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity 
 public class UserProfile {
 	private static long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -40,26 +38,25 @@ public class UserProfile {
 	private Date modifiedOn;
 	private String phoneOtp;
 	private String emailOtp;
-	private Integer status = 0;
+	private Integer status=0;
 
-	@Transient
+	/*@Transient
 	private String username;
-	/*
 	@Transient
 	private List<QuestionPair> questionList ; 
-	*/
 	@Transient 
 	private Integer[] roles;
 	@Transient
 	private Integer usertypeId;
 	@Transient
-	private String password;    
+	private String password;    */
  
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user; 
-
+	
+/*
 	public Integer[] getRoles() {
 		return roles;
 	}
@@ -83,7 +80,7 @@ public class UserProfile {
 	}
 	public void setUser(User user) {
 		this.user = user;
-	}
+	}*/
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
@@ -216,32 +213,7 @@ public class UserProfile {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	/*
-	public List<QuestionPair> getQuestionList() {
-		return questionList;
-	}
-	public void setQuestionList(List<QuestionPair> questionList) {
-		this.questionList = questionList; 
-	}
-	*/
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	@Override
-	public String toString() {
-		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus=" + vatStatus + ", vatNo="
-				+ vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
-				+ ", province=" + province + ", country=" + country + ", passportNo=" + passportNo + ", email=" + email
-				+ ", phoneNo=" + phoneNo + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", phoneOtp="
-				+ phoneOtp + ", emailOtp=" + emailOtp + ", status=" + status + ", username=" + username
-				// + ", questionList=" + questionList 
-				+ ", roles=" + roles + ", usertypeId=" + usertypeId + ", password="
-				+ password + "]";
-	}
+	
 	
 	
 }

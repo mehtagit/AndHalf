@@ -76,6 +76,11 @@ public class ConsignmentMgmtSpecificationBuilder {
 						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
 					return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				}
+				else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+					return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 				}else {
 					return null;
 				}
