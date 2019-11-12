@@ -6,9 +6,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,7 +46,8 @@ public class ConsignmentMgmt implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	private Long userId  ;
+	@OneToOne(fetch = FetchType.LAZY)
+	private UserProfile userProfile;
 
 	@NotNull
 	@Column(length = 20)
@@ -125,12 +129,18 @@ public class ConsignmentMgmt implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Long getUserId() {
-		return userId;
+	
+
+	public UserProfile getUserProfile() {
+		return userProfile;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getTxnId() {
