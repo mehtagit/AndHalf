@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.dialect.Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
@@ -24,6 +26,7 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
@@ -58,6 +61,9 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@Autowired
 	Utility utility;
@@ -118,23 +124,23 @@ public class ConsignmentServiceImpl {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
+			System.out.println("dialect : " + propertiesReader.dialect);
+			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder(propertiesReader.dialect);
 
 			if(Objects.nonNull(consignmentMgmt.getUserId()))
-				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			/*	if(Objects.nonNull(consignmentMgmt.getStartDate()))
-				cmsb.with(new SearchCriteria("modifiedOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN));
-
+			if(Objects.nonNull(consignmentMgmt.getStartDate()))
+				cmsb.with(new SearchCriteria("createdOn", consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+			
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
-				cmsb.with(new SearchCriteria("modifiedOn", consignmentMgmt.getEndDate(), SearchOperation.LESS_THAN));
-			 */
+				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+			
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
-				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY));
-
-
+				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			List<ConsignmentMgmt> data =consignmentRepository.findByUser_id(consignmentMgmt.getUserId());
 			logger.info("Data to be fetch in db using jioin ="+data);
@@ -156,24 +162,22 @@ public class ConsignmentServiceImpl {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder();
+			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder(propertiesReader.dialect);
 
 			if(Objects.nonNull(consignmentMgmt.getUserId()))
-				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			/*	if(Objects.nonNull(consignmentMgmt.getStartDate()))
-				cmsb.with(new SearchCriteria("modifiedOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN));
-
+			if(Objects.nonNull(consignmentMgmt.getStartDate()))
+				cmsb.with(new SearchCriteria("modifiedOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+	
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
-				cmsb.with(new SearchCriteria("modifiedOn", consignmentMgmt.getEndDate(), SearchOperation.LESS_THAN));
-			 */
+				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+				
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY));
+				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+	
 			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
-				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY));
-
-
-
+				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			return consignmentRepository.findAll(cmsb.build(), pageable);
 

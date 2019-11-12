@@ -21,6 +21,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
@@ -105,13 +106,13 @@ public class StockServiceImpl {
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler();
 
 			if(Objects.nonNull(filterRequest.getUserId()))
-				smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY));
+				smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getUserId()))
-				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY));
+				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
-				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY));
+				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
 			return distributerManagementRepository.findAll(smsb.build(), pageable);

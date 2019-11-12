@@ -20,6 +20,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
@@ -69,23 +70,23 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 
-	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest stolenandRecoveryMgmt,Integer pageNo, Integer pageSize){
+	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest stolenandRecoveryMgmt, Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
 			StolenAndRecoverySpecificationBuilder str =  new StolenAndRecoverySpecificationBuilder();
 
 			if(Objects.nonNull(stolenandRecoveryMgmt.getUserId()))
-				str.with(new SearchCriteria("userId", stolenandRecoveryMgmt.getUserId(), SearchOperation.EQUALITY));
+				str.with(new SearchCriteria("userId", stolenandRecoveryMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(stolenandRecoveryMgmt.getRoleType()))
-				str.with(new SearchCriteria("roleType", stolenandRecoveryMgmt.getRoleType(), SearchOperation.EQUALITY));
+				str.with(new SearchCriteria("roleType", stolenandRecoveryMgmt.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(stolenandRecoveryMgmt.getConsignmentStatus()))
-				str.with(new SearchCriteria("fileStatus", stolenandRecoveryMgmt.getConsignmentStatus(), SearchOperation.EQUALITY));
+				str.with(new SearchCriteria("fileStatus", stolenandRecoveryMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(stolenandRecoveryMgmt.getRequestType()))
-				str.with(new SearchCriteria("requestType", stolenandRecoveryMgmt.getRequestType(), SearchOperation.EQUALITY));
+				str.with(new SearchCriteria("requestType", stolenandRecoveryMgmt.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
 			return 	stolenAndRecoveryRepository.findAll(str.build(), pageable);
