@@ -25,8 +25,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private Long id;
 	
 	private Long userId;
+	
 	private String fileName;
-	private int fileStatus;
+	
+	private Integer fileStatus;
     
 	@NotNull	
 	private String txnId;
@@ -61,10 +63,11 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-	public int getFileStatus() {
+	
+	public Integer getFileStatus() {
 		return fileStatus;
 	}
-	public void setFileStatus(int fileStatus) {
+	public void setFileStatus(Integer fileStatus) {
 		this.fileStatus = fileStatus;
 	}
 	public String getTxnId() {

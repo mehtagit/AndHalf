@@ -1,16 +1,20 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
@@ -18,6 +22,7 @@ import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
 import com.gl.ceir.config.util.Utility;
+
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -92,11 +97,13 @@ public class StolenAndRecoveryController {
 	
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
 	@RequestMapping(path = "/stakeholder/record", method = RequestMethod.POST)
-	public MappingJacksonValue getAllActionDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails) {
+	public MappingJacksonValue getAllActionDetails(@RequestBody FilterRequest stolenandRecoveryDetails,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
 		logger.info("Record request to Stolen And Recovery Info="+stolenandRecoveryDetails);
 
-		List<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails);
+		Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
 

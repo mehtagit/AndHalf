@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -60,7 +61,7 @@ public class StockController {
 
 
 	@ApiOperation(value = "View Retailer And Distributer All  Info.", response = StockMgmt.class)
-	@RequestMapping(path = "/stock/record", method = RequestMethod.POST)
+	@RequestMapping(path = "v1/stock/record", method = RequestMethod.POST)
 
 	public MappingJacksonValue findAll(@RequestBody StockMgmt stockMgmt) {
 
@@ -76,14 +77,14 @@ public class StockController {
 
 
 	@ApiOperation(value = "Filter View Retailer And Distributer All  Info.", response = StockMgmt.class)
-	@RequestMapping(path = "/stock/record/filter", method = RequestMethod.POST)
+	@RequestMapping(path = "/stock/record", method = RequestMethod.POST)
 	public MappingJacksonValue findAllFilteredData(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
 		logger.info("Stock View filter Details Request="+filterRequest);
 
-		List<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize);
+		Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize);
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
 
 		logger.info("Response Filtered Record Details="+mapping);
