@@ -363,6 +363,8 @@ opacity: 0;
 
 
 
+
+
  <!-- Delete confirmation Modal start   -->
 
   <div id="confirmDeleteConsignment" class="modal">
@@ -568,6 +570,7 @@ opacity: 0;
             		 "endDate":"",
             		 "startDate":"",
             		 "taxPaidStatus":"",
+            		 "roleType" : cierRoletype,
         	 }
         	
         	$.ajax({

@@ -5,6 +5,7 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
+import org.gl.ceir.CeirPannelCode.Model.StolenRecovery;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -99,6 +100,13 @@ public interface FeignCleintImplementation {
 			public GenricResponse updateStock(StockUploadModel stockUploadModel) ;
 
 			
-
+			
+//****************************************************                              ***************************************************************************		
+//**************************************************** Stolen Recovery integration  **************************************************************************
+//****************************************************                              **************************************************************************			
+			
+		
+			
+			
 }
 

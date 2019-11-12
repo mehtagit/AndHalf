@@ -159,7 +159,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                                                 aria-hidden="true"
                                                                 style="font-size: 20px;  color:#2e8b57;"
                                                                 title="download"></i></a>
-                                                        <a href="viewStockManagement.html"><i
+                                                        <a onclick="viewUploadedStockDetails('C20191111104643073')"><i
                                                                 class="fa fa-eye teal-text" aria-hidden="true"
                                                                 title="view"
                                                                 style="font-size: 20px; margin:0 0 0 15px;"></i></a>
@@ -174,124 +174,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                                                 title="delete"></i></a>
                                                     </td>
                                                 </tr>
-
-                                                <tr>
-                                                    <td>20/10/2018</td>
-                                                    <td>GFrt4581</td>
-                                                    <td>name.csv</td>
-                                                    <td>Error</td>
-                                                    <td>
-                                                        <a href="#ErrorFile"><i class="fa fa-exclamation-circle"
-                                                                title="ErrorFile"
-                                                                style=" color:red; font-size:20px; margin-right:15px;"></i></a>
-                                                        <a href="#" download="download"><i class="fa fa-download"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px;  color:#2e8b57;"
-                                                                title="download"></i></a>
-                                                        <a href="viewStockManagement.html"><i
-                                                                class="fa fa-eye teal-text" aria-hidden="true"
-                                                                title="view"
-                                                                style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                                                        <a href="editStockManagement.html"><i class="fa fa-pencil"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px; margin:0 15px 0 15px; color: #006994"
-                                                                title="edit"></i></a>
-                                                        <a href="#DeleteStock"
-                                                            class="waves-effect waves-light modal-trigger mr-3"><i
-                                                                class="fa fa-trash" aria-hidden="true"
-                                                                style="font-size: 20px; color: red;"
-                                                                title="delete"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>20/10/2018</td>
-                                                    <td>GFrt4581</td>
-                                                    <td>name.csv</td>
-                                                    <td>Processing</td>
-                                                    <td>
-                                                        <a href="#ErrorFile"><i class="fa fa-exclamation-circle"
-                                                                title="ErrorFile"
-                                                                style=" color:red; font-size:20px; margin-right:15px;"></i></a>
-                                                        <a href="#" download="download"><i class="fa fa-download"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px;  color:#2e8b57;"
-                                                                title="download"></i></a>
-                                                        <a href="viewStockManagement.html"><i
-                                                                class="fa fa-eye teal-text" aria-hidden="true"
-                                                                title="view"
-                                                                style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                                                        <a href="editStockManagement.html"><i class="fa fa-pencil"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px; margin:0 15px 0 15px; color: #006994"
-                                                                title="edit"></i></a>
-                                                        <a href="#DeleteStock"
-                                                            class="waves-effect waves-light modal-trigger mr-3"><i
-                                                                class="fa fa-trash" aria-hidden="true"
-                                                                style="font-size: 20px; color: red;"
-                                                                title="delete"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>20/10/2018</td>
-                                                    <td>GFrt4581</td>
-                                                    <td>name.csv</td>
-                                                    <td>INIT</td>
-                                                    <td>
-                                                        <a href="#ErrorFile"><i class="fa fa-exclamation-circle"
-                                                                title="ErrorFile"
-                                                                style=" color:red; font-size:20px; margin-right:15px;"></i></a>
-                                                        <a href="#" download="download"><i class="fa fa-download"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px;  color:#2e8b57;"
-                                                                title="download"></i></a>
-                                                        <a href="viewStockManagement.html"><i
-                                                                class="fa fa-eye teal-text" aria-hidden="true"
-                                                                title="view"
-                                                                style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                                                        <a href="editStockManagement.html"><i class="fa fa-pencil"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px; margin:0 15px 0 15px; color: #006994"
-                                                                title="edit"></i></a>
-                                                        <a href="#DeleteStock"
-                                                            class="waves-effect waves-light modal-trigger mr-3"><i
-                                                                class="fa fa-trash" aria-hidden="true"
-                                                                style="font-size: 20px; color: red;"
-                                                                title="delete"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>20/10/2018</td>
-                                                    <td>GFrt4581</td>
-                                                    <td>name.csv</td>
-                                                    <td>Success</td>
-                                                    <td>
-                                                        <a href="#ErrorFile"><i class="fa fa-exclamation-circle"
-                                                                title="ErrorFile"
-                                                                style=" color:red; font-size:20px; margin-right:15px;"></i></a>
-                                                        <a href="#" download="download"><i class="fa fa-download"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px;  color:#2e8b57;"
-                                                                title="download"></i></a>
-                                                        <a href="viewStockManagement.html"><i
-                                                                class="fa fa-eye teal-text" aria-hidden="true"
-                                                                title="view"
-                                                                style="font-size: 20px; margin:0 0 0 15px;"></i></a>
-                                                        <a href="editStockManagement.html"><i class="fa fa-pencil"
-                                                                aria-hidden="true"
-                                                                style="font-size: 20px; margin:0 15px 0 15px; color: #006994"
-                                                                title="edit"></i></a>
-                                                        <a href="#DeleteStock"
-                                                            class="waves-effect waves-light modal-trigger mr-3"><i
-                                                                class="fa fa-trash" aria-hidden="true"
-                                                                style="font-size: 20px; color: red;"
-                                                                title="delete"></i></a>
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
+											 </tbody>
                                         </table>
                                 </div>
                             </div>
@@ -310,6 +193,25 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
       
       <!-- Modal 1 start   -->
 
+   
+
+    <div id="successUpdateStockModal" class="modal">
+        <div class="modal-content">
+            <h6 style="font-size: 16px;">Update Stock</h6><hr>
+
+            <div class="row">
+                <p id="stockSucessMessage">Your updated on the form for transaction ID (Tr12345678) has been successfull.</p>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal End -->
+
     <div id="editStockModal" class="modal">
         <div class="modal-content">
             <h6>Edit Stock</h6>
@@ -317,30 +219,30 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
             <form action="" style="margin-top: 10px;">
                     <div class="row myRow">
                         <div class="input-field col s12 m6">
-                            <input type="text" name="SupplierId" id="SupplierId" placeholder="ABCD12345" maxlength="15" />
+                            <input type="text" name="SupplierId" id="editSupplierId" placeholder="ABCD12345" maxlength="15" />
                             <label for="SupplierId" class="center-align">Supplier ID</label>
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <input type="text" name="SupplierName" id="SupplierName" placeholder="Abcd"
+                            <input type="text" name="SupplierName" id="editSupplierName" placeholder="Abcd"
                                 maxlength="15" />
                             <label for="SupplierName" class="center-align">Supplier Name </label>
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <input type="text" name="Quantity" id="Quantity" placeholder="120" maxlength="7"
+                            <input type="text" name="Quantity" id="editQuantity" placeholder="120" maxlength="7"
                                 required />
                             <label for="Quantity" class="center-align">Quantity </label>
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <input type="text" name="InvoiceNumber" id="InvoiceNumber" placeholder="12345678"
+                            <input type="text" name="InvoiceNumber" id="editInvoiceNumber" placeholder="12345678"
                                 maxlength="15" />
                             <label for="InvoiceNumber" class="center-align">Invoice Number</label>
                         </div>
 
                         <div class="input-field col s12 m6">
-                            <input type="text" name="TransactionId" id="TransactionId" placeholder="TR12345678" disabled
+                            <input type="text" name="TransactionId" id="editTransactionId" placeholder="TR12345678" disabled
                                 maxlength="15" />
                             <label for="TransactionId" class="center-align">Transaction ID</label>
                         </div>
@@ -353,7 +255,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                         <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                             <div class="btn">
                                 <span>Select File</span>
-                                <input type="file" id="csvUploadFile" accept=".csv">
+                                <input type="file" id="editcsvUploadFile" accept=".csv">
                             </div>
                             <div class="file-path-wrapper">
                                 <input class="file-path validate responsive-file-div" type="text">
@@ -438,16 +340,287 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                     </div>
 
                     <div class="row center" style="padding:20px 0 100px 0;">
-                        <a href="stockManagement.html" class="btn" type="cancel">Cancel</a>
+                        <a onclick="closeViewModal()" class="btn" type="cancel">Cancel</a>
                     </div>
                 </form>
         </div>
     </div>
 
-    <!-- View Stock Modal End -->
+<!-- --------------------------------------------------------------View Stock Modal End --------------------------------------------------------------->
+ 
+ 
+ <!-- --------------------------------------------------------------Delete Stock Modal End --------------------------------------------------------------->
+ 	
+ 	
+    <div id="DeleteStockconfirmationModal" class="modal">
+        <div class="modal-content">
+
+            <h6>Delete Stock</h6>
+            <hr>
+
+            <div class="row">
+                <h6>Are you sure you want to withdraw the stock details for transaction ID </h6>
+            </div>
+             <input type="text" id="popupTransactionId" maxlength="15" hidden/>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="confirmantiondelete()"  class="modal-close modal-trigger btn" type="submit">Yes</a>
+                    <button class="modal-close btn" onclick="closeDeleteModal()" style="margin-left: 10px;">no</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+ 	<div id="closeDeleteModal" class="modal">
+        <div class="modal-content">
+            <h6>Delete Stock</h6>
+            <hr>
+            <div class="row">
+           
+                <h6 id="stockModalText"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="modal-close btn" style="margin-left: 10px;" onclick="confirmantiondelete()">ok</button>
+                </div>
+            </div>
+        </div>
+     </div>
+
     <!-- Modal End -->
     <!-- END MAIN -->
 
+
+
+ <!------------------------------------------------------------- materialize js --------------------------------------------------------------------------- -->
+ <!------------------------------------------------------------- materialize js --------------------------------------------------------------------------- -->
+
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+   	  <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/jquery-datepicker2.js"></script>
+      
+
+      <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+      <!--custom-script.js - Add your own theme custom JS-->
+ 	
+ 	  <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+      <script type="text/javascript" src="${context}/resources/js/Validator.js"></script>
+   
+  	   <!--scrollbar-->
+      <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  
+      <!-- chartist -->
+      <%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+       <script type="text/javascript" src="${context}/resources/js/countries.js"></script>
+     
+     
+     
+ <!------------------------------------------------------------- End  materialize js --------------------------------------------------------------------------- -->
+ <!------------------------------------------------------------- End materialize js --------------------------------------------------------------------------- -->  
+     
+     
+
+<script type="text/javascript">
+
+// *******************************************View Pop up data *************************************************************************************************
+function viewUploadedStockDetails(txnId){
+    
+	 $("#viewStockModal").openModal();
+	 $.ajax({
+			url : "./openStockPopup?reqType=editPage&txnId="+txnId,
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'GET',
+			success : function(data) {
+				console.log(data)
+				setViewPopupData(data);
+			},
+			error : function() {
+				alert("Failed");
+			}
+		});
+}
+
+
+function setViewPopupData(data){
+	console.log("_________________++++++++++"+data)
+	
+	$("#SupplierId").val(data.supplierId);
+	$("#SupplierName").val(data.suplierName);
+	$("#InvoiceNumber").val(data.invoiceNumber);
+	$("#Quantity").val(data.quantity);
+	$("#TransactionId").val(data.txnId);
+	$("#csvUploadFile").val(data.fileName); 
+	
+	
+}
+
+
+//******************************************* end View Pop up data *************************************************************************************************
+
+//******************************************* start edit Pop up data *************************************************************************************************
+
+ function EditUploadedStockDetails(txnId){ 	
+        	$.ajax({
+    				url : "./openStockPopup?reqType=editPage&txnId="+txnId,
+    				dataType : 'json',
+    				contentType : 'application/json; charset=utf-8',
+    				type : 'GET',
+    				success : function(data) {
+    					console.log(data)
+    					setEditPopupData(data) 
+    				},
+    				error : function() {
+    					alert("Failed");
+    				}
+    			});
+        	 
+        	 $("#editStockModal").openModal();
+         }
+
+
+ function setEditPopupData(data){
+ 	console.log()
+ 	$("#editSupplierId").val(data.supplierId);
+	$("#editSupplierName").val(data.suplierName);
+	$("#editInvoiceNumber").val(data.invoiceNumber);
+	$("#editQuantity").val(data.quantity);
+	$("#editTransactionId").val(data.txnId);
+	$("#editcsvUploadFile").val(data.fileName);
+ 	
+ } 
+
+
+//********************************************************************************************************************************************************
+//********************************************************* update Stock function ****************************************************************************
+
+function editRegisterConsignment(){
+     
+         	 var supplierId=$('#editSupplierId').val();
+         	 var supplierName=$('#editSupplierName').val();
+         	 var filename=$('#editcsvUploadFile').val();
+         	 var txnId=$('#editTransactionId').val();
+         	 var quantity=$('#editQuantity').val();
+         	 var InvoiceNumber=$('#editInvoiceNumber').val();
+         	  
+         	 console.log(supplierName,supplierName,filename,txnId,quantity,InvoiceNumber);
+         	 
+         	 var formData= new FormData();
+         		formData.append('file', $('#editcsvUploadFile')[0].files[0]);
+         	 	formData.append('supplierId',supplierId);
+         	 	formData.append('supplierName',supplierName);
+         	 	formData.append('quantity',quantity);
+         		formData.append('txnId',txnId);
+         		formData.append('filename',filename);
+         		formData.append('invoiceNumber',filename);
+         		
+         		console.log(JSON.stringify(formData));
+         		console.log("*********");
+         	 	
+         	 $.ajax({
+  				url: '${context}/updateUploadedStock',
+  				type: 'POST',
+  				data: formData,
+  				processData: false,
+  				contentType: false,
+  				success: function (data, textStatus, jqXHR) {
+  					
+  					 console.log(data);
+  					 $('#editStockModal').closeModal();
+  					 $('#successUpdateStockModal').modal();
+  					  if(data.errorCode==200){
+  					
+  					$('#stockSucessMessage').text('');
+ 					 $('#stockSucessMessage').text('Operation is not allowed');
+  						 }
+  					 else{
+  						 $('#stockSucessMessage').text('');
+  		 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+  					 }
+  				   // $('#updateConsignment').modal('open'); 
+  					//alert("success");
+  					
+  				},
+  				error: function (jqXHR, textStatus, errorThrown) {
+  				console.log("error in ajax")
+  				}
+  			});
+         
+         }
+         
+       
+         
+ //*************************************************************** End update Stock function *********************************************************
+
+
+//****************************************************** Delete Stock Modal ***************************************************************************
+
+		function DeleteStockRecord(txnId){
+       		 $("#DeleteStockconfirmationModal").openModal();
+        	 $("#popupTransactionId").text(txnId);
+        }
+        
+        
+        function confirmantiondelete(){
+        	 var txnId = $("#popupTransactionId").text();
+        	 var obj ={
+        			 "txnId" : txnId,
+        	 }
+        	 
+        	 $.ajax({
+        			url : "./stockDelete",
+        			data : JSON.stringify(obj),
+        			dataType : 'json',
+        			contentType : 'application/json; charset=utf-8',
+        			type : 'POST',
+        			success : function(data, textStatus, xhr) {
+        				console.log(data);
+        				if(data.errorCode == 200){
+        					$("#stockModalText").text(data.message);
+        				}else if(data.errorCode == 0){
+        					$("#stockModalText").text(data.message);
+        				}
+        			},
+        			error : function() {
+        					console.log("Error");
+        			}
+        		});
+     		 $("#DeleteStockconfirmationModal").closeModal();
+     		 $("#closeDeleteModal").openModal();
+        }
+
+
+
+
+
+
+        function closeDeleteModal(){
+       	 $("#DeleteStockconfirmationModal").closeModal();
+       	// $('#updateModal').closeModal();
+       	 $(".lean-overlay").remove();
+        }
+        
+        function closeViewModal()
+        {
+       	 $('#viewStockModal').closeModal();
+       	 $(".lean-overlay").remove();
+       	 
+        }
+
+
+
+
+
+
+
+
+</script>
 
 </body>
 </html>

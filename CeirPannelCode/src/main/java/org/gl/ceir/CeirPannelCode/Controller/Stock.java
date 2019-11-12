@@ -184,9 +184,11 @@ public class Stock {
 	}
 
 	@RequestMapping(value= {"/stockDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public @ResponseBody GenricResponse deleteStock(@RequestBody StockUploadModel stockUpload) {
+	public @ResponseBody GenricResponse deleteStock(@RequestBody StockUploadModel stockUpload,HttpSession session) {
 
 		log.info("enter in  delete stock.");
+		String roletypesession=String.valueOf(session.getAttribute("usertype"));
+		stockUpload.setRoleType(roletypesession);
 		GenricResponse response=feignCleintImplementation.deleteStock(stockUpload);
 		log.info("response after delete consignment."+response);
 		return response;
@@ -207,7 +209,7 @@ public class Stock {
 		String roletypesession=String.valueOf(session.getAttribute("usertype"));
 		log.info("session value=="+roletypesession);
 		stockUploadModel.setTxnId(txnId);
-		stockUploadModel.setRoleType("Importer");
+		stockUploadModel.setRoleType(roletypesession);
 		
 		
 		if(reqType.equals("editPage")) {
