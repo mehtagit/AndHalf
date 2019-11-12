@@ -8,6 +8,7 @@ public class FilterRequest {
 	private String  startDate;
 	private String taxPaidStatus;
 	private  String userId;
+	private String roleType;
 	public int getConsignmentStatus() {
 		return consignmentStatus;
 	}
@@ -38,11 +39,20 @@ public class FilterRequest {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [consignmentStatus=" + consignmentStatus + ", endDate=" + endDate + ", startDate="
-				+ startDate + ", taxPaidStatus=" + taxPaidStatus + ", userId=" + userId + "]";
+				+ startDate + ", taxPaidStatus=" + taxPaidStatus + ", userId=" + userId + ", roleType=" + roleType
+				+ "]";
 	}
+	
+	
 	
 	
 	

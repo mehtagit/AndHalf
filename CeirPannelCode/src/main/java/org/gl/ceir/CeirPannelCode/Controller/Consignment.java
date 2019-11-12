@@ -95,17 +95,20 @@ public class Consignment {
 	  {
 		  log.info("coming in controller+++++");
 	 
-	  
+		  
+	  String roletype=session.getAttribute("usertype").toString();
 	  String userid= session.getAttribute("userid").toString();
 	  log.info("user id from session="+userid);
+	  filterRequest.setRoleType(roletype);
 	  filterRequest.setUserId(userid);
-	  
+	  log.info("roletype name=+"+roletype);
 	  log.info("filterRequest=="+filterRequest);
 	  
 	  session.setAttribute("startDate", filterRequest.getStartDate());
 	  session.setAttribute("endDate",filterRequest.getEndDate());
 	  session.setAttribute("consignmentStatus", filterRequest.getConsignmentStatus());
 	  session.setAttribute("taxPaidStatus", filterRequest.getTaxPaidStatus());
+	  
 	  
 	  log.info("session value=="+session.getAttribute("consignmentStatus"));
 	  
@@ -121,6 +124,8 @@ public class Consignment {
 	  session.getAttribute("endDate"));
 	  filterRequest.setTaxPaidStatus((String)
 	  session.getAttribute("taxPaidStatus")); 
+	
+	  
 	  }
 	  
 	  else {

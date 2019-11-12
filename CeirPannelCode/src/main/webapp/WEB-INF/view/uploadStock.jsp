@@ -316,7 +316,7 @@ function uploadStock(){
 				 {
 				console.log("status code = 3"); 
 				$('#sucessMessage').text('');
-				$('#sucessMessage').text("consignment number already exist");
+				$('#sucessMessage').text("Invoice number already exist");
 				 $('#errorCode').val(data.errorCode);
 				 }
 		   // $('#updateConsignment').modal('open'); 

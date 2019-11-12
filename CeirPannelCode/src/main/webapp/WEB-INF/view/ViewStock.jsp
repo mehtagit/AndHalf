@@ -155,7 +155,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                                         <a href="#ErrorFile"><i class="fa fa-exclamation-circle"
                                                                 title="ErrorFile"
                                                                 style=" color:red; font-size:20px; margin-right:15px;"></i></a>
-                                                        <a href="#" download="download"><i class="fa fa-download"
+                                                        <a href="#" ><i class="fa fa-download"
                                                                 aria-hidden="true"
                                                                 style="font-size: 20px;  color:#2e8b57;"
                                                                 title="download"></i></a>
@@ -426,6 +426,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                         <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                             <div class="btn">
                                 <span>Select File</span>
+      
+      
                                 <input type="file" id="csvUploadFile" accept=".csv" disabled>
                             </div>
                             <div class="file-path-wrapper">
