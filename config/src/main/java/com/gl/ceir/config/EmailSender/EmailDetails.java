@@ -1,4 +1,4 @@
-package com.ceir.CeirCode.model;
+package com.gl.ceir.config.EmailSender;
 
 public class EmailDetails {
 private String fromEmail;
