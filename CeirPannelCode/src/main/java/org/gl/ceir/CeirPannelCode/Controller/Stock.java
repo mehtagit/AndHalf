@@ -42,42 +42,43 @@ public class Stock {
 	
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-			public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId ) {
-		ModelAndView mv = new ModelAndView();
-		
-		log.info("stock page"+selectedUserTypeId); 
-		if(selectedUserTypeId==null)
-		{
-		List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
-		log.info("role type list=="+userTypelist);
-		
-		log.info("list size of  usertype=="+userTypelist.size());
-		
-		if(userTypelist.size()>1)
-		{
-			log.info("if condition.");
+	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId ) {
+ModelAndView mv = new ModelAndView();
 
-			mv.addObject("userTypelist", userTypelist);
-			mv.setViewName("assignDistributor");
-		}
-		else if(userTypelist.size()==1)
-		{
-		log.info("else condition.");
-		session.setAttribute("selectedUserTypeId", selectedUserTypeId);
-		mv.setViewName("ViewStock");
-		}
+
+
+log.info("stock page"+selectedUserTypeId); 
+if(selectedUserTypeId==null)
+{
+List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
+log.info("role type list=="+userTypelist);
+
+log.info("list size of  usertype=="+userTypelist.size());
+
+if(userTypelist.size()>1)
+{
+	log.info("if condition.");
+
+	mv.addObject("userTypelist", userTypelist);
+	mv.setViewName("assignDistributor");
+}
+else if(userTypelist.size()==1)
+{
+log.info("else condition.");
+session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+mv.setViewName("ViewStock");
+}
+}
+else {
+	log.info("else condition selectedUserTypeId is not empty="+selectedUserTypeId);
+	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+	mv.setViewName("ViewStock");
+
+}
 		
-		
-		}
-		else {
-			log.info("else condition selectedUserTypeId is not empty="+selectedUserTypeId);
-			session.setAttribute("selectedUserTypeId", selectedUserTypeId);
-			mv.setViewName("ViewStock");
-		
-		}
-				
-				return mv; 
-			}
+		return mv; 
+	}
+
 
 
 	// *********************************************** open register page or edit page ******************************

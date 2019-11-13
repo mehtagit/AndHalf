@@ -5,6 +5,7 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
+import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -115,6 +116,16 @@ public interface FeignCleintImplementation {
 		public Object stockFilter(@RequestBody FilterRequest filterRequest,
 				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+		
+		
+		
+//********************************************  upload multiple Stolen and Recovery ***************************************************************88
+		@RequestMapping(value="/stakeholder/uploadMultiple/Stolen" ,method=RequestMethod.POST) 
+		public GenricResponse multipleStolenRecovery(@RequestBody List<StolenRecoveryModel> request) ;
+
+
+
+	
 		
 }
 

@@ -58,6 +58,7 @@
 							<h1 class="logo-wrapper">
 									<a href="index.html" class="brand-logo darken-1" >CEIR -
 									<span id="cierRoletype"><%=(String)session.getAttribute("usertype")%></span> Portal</a> <span class="logo-text">Materialize</span>
+								
 							</h1> 
 						</li>
 					</ul>

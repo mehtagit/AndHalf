@@ -73,6 +73,10 @@ public class ConsignmentDatatableController {
 		String apiResponse = gson.toJson(response);
 		consignmentPaginationModel = gson.fromJson(apiResponse, ConsignmentPaginationModel.class);
 		List<ConsignmentContent> paginationContentList = consignmentPaginationModel.getContent();
+		if(paginationContentList.isEmpty()) {
+			datatableResponseModel.setData(Collections.emptyList());
+		}
+		else {
 		for(ConsignmentContent dataInsideList : paginationContentList) 
 		{
 			String createdOn= dataInsideList.getCreatedOn();
@@ -92,14 +96,15 @@ public class ConsignmentDatatableController {
 											statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
 			String taxPaidStatus= dataInsideList.getTaxPaidStatus();
 			String userStatus = (String) session.getAttribute("userStatus");
-			String action=iconState.state(dataInsideList.getFileName(), dataInsideList.getTxnId(), statusOfConsignment,userStatus);
+			String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 			String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
 				List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 				finalList.add(finalDataList);
-				datatableResponseModel.setData(finalList);
 				}
+		}
 		
 		//data set on ModelClass
+		datatableResponseModel.setData(finalList);
 		datatableResponseModel.setRecordsTotal(consignmentPaginationModel.getNumberOfElements());
 		datatableResponseModel.setRecordsFiltered(consignmentPaginationModel.getTotalElements());
 		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
@@ -127,23 +132,7 @@ public class ConsignmentDatatableController {
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-		if("Disable".equals(userStatus)) {
-			log.info("CAN NOT REGISTER USER BCOZ:::::::::"+userStatus);
-			String[] names= {"FilterButton", "filter","filterConsignment()","submitFilter"};
-			for(int i=0; i< names.length ; i++) {
-				button = new Button();
-				button.setType(names[i]);
-				i++;
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}			
-			pageElement.setButtonList(buttonList);	
-		}
-		else {
+			log.info("USER STATUS:::::::::"+userStatus);
 			String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
@@ -157,7 +146,7 @@ public class ConsignmentDatatableController {
 				buttonList.add(button);
 			}			
 			pageElement.setButtonList(buttonList);
-			}
+			
 		//Dropdown items			
 		String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
 		for(int i=0; i< selectParam.length; i++) {

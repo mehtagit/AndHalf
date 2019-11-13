@@ -99,7 +99,7 @@
                                             <h5 class="center">
                                             <c:forEach items="${userTypelist}" var="userTypelist">
                                                 <label>
-                                                    <input type="radio" id="userTypelistId" name="modeuleType" value="${userTypelist.id}" onclick="StockController(${userTypelist.id})" />
+                                                    <input type="radio" id="userTypelistId" name="modeuleType" value="${userTypelist.id}" onclick="StockController('${userTypelist.usertypeName}')" />
                                                     <span class="checkboxFont"> ${userTypelist.usertypeName}</span>
                                                 </label>
                                               
@@ -149,8 +149,8 @@
     
 
   <script>
-    function StockController(usertypeId){
-    	var url="${context}/stolenRecovery?userTypeId="+usertypeId;
+    function StockController(selectedRoleTyple){
+    	var url="${context}/stolenRecovery?userTypeId="+selectedRoleTyple;
     	console.log(url);
     	window.location.href=url;
    

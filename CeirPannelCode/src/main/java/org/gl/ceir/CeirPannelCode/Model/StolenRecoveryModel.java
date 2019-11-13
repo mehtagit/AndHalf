@@ -1,6 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-public class StolenRecovery {
+public class StolenRecoveryModel {
 	
 	private String blockingTimePeriod;
 	private String blockingType;

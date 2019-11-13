@@ -6,10 +6,12 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
+import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -40,24 +42,20 @@ public class StockDatatableController {
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	StockPaginationModel stockPaginationModel;
-
-	
+	@Autowired
+	IconsState iconState;
 	
 	@PostMapping("stockData")
-	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role ,HttpServletRequest request) {	 		
+	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role ,HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
 				List<List<String>> finalList=new ArrayList<List<String>>();
 
 				//FilterRequest filterrequest = request.getParameter("FilterRequest");
 				String filter = request.getParameter("filter");
-				log.info("-------filter"+filter);
 				Gson gsonObject=new Gson();	
-				log.info("proccessing");
 				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-				log.info("error");
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-				log.info("filter----------"+filterrequest+"------"+pageSize+"------"+pageNo);
 				// TODO Convert header to an ENUM.
 				// list provided via Back-end process
 				try {
@@ -68,6 +66,10 @@ public class StockDatatableController {
 				stockPaginationModel = gson.fromJson(apiResponse, StockPaginationModel.class);
 				List<StockContent> paginationContentList = stockPaginationModel.getContent();
 				log.info("-----after response-  paginationContentList------" + paginationContentList);
+				if(paginationContentList.isEmpty()) {
+					datatableResponseModel.setData(Collections.emptyList());
+				}
+				else {
 				for(StockContent dataInsideList : paginationContentList) 
 				{
 					String date= dataInsideList.getCreatedOn(); 
@@ -76,91 +78,18 @@ public class StockDatatableController {
 					// if API provide me consignmentStatusName
 					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
 					String stockStatus = null;
-					stockStatus = statusOfStock.equals("0") ? "Uploading" : 
-						statusOfStock.equals("1") ? "Success" :
-							statusOfStock.equals("2")  ? "Processing" :
-								statusOfStock.equals("3") ?   "Error" : "Not Defined";
-					
-
-					
-					//Icon classes
-					String errorIcon="\"fa fa-exclamation-circle\"";
-					String downloadIcon="\"fa fa-download\""; 
-					String viewIcon="\"fa fa-eye teal-text\"";
-					String editIcon="\"fa fa-pencil\""; 
-					String deletionIcon="\"fa fa-trash\"";
-					String replyIcon="\"fa-reply\""; 
-					// URL link 
-					String emptyURL="JavaScript:void(0);"; 
-					String viewURL="./updateRegisterConsignment/"+dataInsideList.getTxnId()+"/viewPage"; 
-					String editURL="./updateRegisterConsignment/"+dataInsideList.getTxnId()+"/formpage";
-
-					// icon title  
-					String errorIconTitle="Error-File";
-					String downloadIconTitle="Download"; 
-					String viewIconTitle="View"; 
-					String editIconTitle="Edit"; 
-					String deleteIconTitle="Delete"; 
-					String replyIconTitle="Reply";
-
-					// state related Code 
-					String error="<a href="+emptyURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
-							+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\"></i></a>";
-					String download="<a href="+emptyURL+" download=\"download\"><i class="
-									+downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
-									+downloadIconTitle+" download=\"download\"></i></a>"; 
-					String view="<a href="+viewURL+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-											+viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>";
-					String edit="<a href="+editURL+"><i class="
-											+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
-											+editIconTitle+"></i></a>"; 
-					String delete="<a href="+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-													+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-													+deleteIconTitle+"></i></a>"; 
-					String reply="<a href="+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-															+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-															+replyIconTitle+"></i></a>";
-
-				
-					if("0".equals(statusOfStock)) {
-						error="<a href="+emptyURL+" class="+className+"><i  class="
-																+errorIcon+" aria-hidden=\"true\" title="
-																+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\" ></i></a>"
-																; 
-						download="<a href="+emptyURL+" class="
-																		+className+" download=\"download\"><i class="
-																		+downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
-																		+downloadIconTitle+" download=\"download\" ></i></a>";
-																
-						edit="<a href="+editURL+" class="+className+"><i class="
-																		+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
-																		+editIconTitle+"></i></a>"; 
-						} else if("1".equals(statusOfStock)) {
-								delete="<a class="+className+" href="
-																					+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-																					+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-																					+deleteIconTitle+"></i></a>";
-								view="<a class="+className+" href="+viewURL+"><i class="
-																					+viewIcon+" aria-hidden=\"true\" title="
-																					+viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>";
-								}
-							else if("2".equals(statusOfStock)) {
-								view="<a class="+className+" href="+viewURL+"><i class="
-																					+viewIcon+" aria-hidden=\"true\" title="
-																					+viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\" ></i></a>";
-								reply="<a class="+className+" href="
-																					+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-																					+replyIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-																					+replyIconTitle+"></i></a>"; 
-								}
-
-						String action=error.concat(download).concat(view).concat(edit).concat(delete);
-						String[] finalData={date,txnId,file,stockStatus,action}; 
-						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
-						finalList.add(finalDataList);
-						datatableResponseModel.setData(finalList);
-						}
-				
+					stockStatus = statusOfStock.equals("0") ? "INIT" : 
+						statusOfStock.equals("1") ? "Processing" :
+							statusOfStock.equals("2")  ? "Error" :
+								statusOfStock.equals("3") ?   "Success" : "Not Defined";
+					String userStatus = (String) session.getAttribute("userStatus");
+					String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+					String[] finalData={date,txnId,file,stockStatus,action}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+					}
+				}
 				//data set on ModelClass
 				datatableResponseModel.setRecordsTotal(stockPaginationModel.getNumberOfElements());
 				datatableResponseModel.setRecordsFiltered(stockPaginationModel.getTotalElements());

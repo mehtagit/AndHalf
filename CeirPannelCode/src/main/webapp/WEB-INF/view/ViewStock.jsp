@@ -183,7 +183,7 @@ to {
 </style>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" >
+<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -304,8 +304,8 @@ to {
                         <div class="row" style="padding-bottom: 100px;">
                             <div class="input-field col s12 center">
                                 <button class="waves-effect waves-light modal-trigger btn"
-                                    data-target="submitStock" type="submit">Update</button>
-                                <a href="stockManagement.html" class="btn" type="cancel"
+                                    data-target="submitStock" onclick="editUploadStock()" type="button">Update</button>
+                                <a onclick="closeEditModal();" class="btn" type="cancel"
                                     style="margin-left: 10px;">Cancel</a>
 
 
@@ -545,7 +545,7 @@ function setEditPopupData(data){
 //********************************************************************************************************************************************************
 //********************************************************* update Stock function ****************************************************************************
 
-function editRegisterConsignment(){
+function editUploadStock(){
   
       	 var supplierId=$('#editSupplierId').val();
       	 var supplierName=$('#editSupplierName').val();
@@ -657,6 +657,13 @@ function editRegisterConsignment(){
     	 $(".lean-overlay").remove();
     	 
      }
+     
+     function closeEditModal()
+     {
+    	 $('#editStockModal').closeModal();
+    	 $(".lean-overlay").remove();
+    	 
+     }
 
 </script>
 	<script type="text/javascript">
@@ -664,16 +671,17 @@ function editRegisterConsignment(){
 	
 	 var roleType = $("body").attr("data-roleType");
      var userId = $("body").attr("data-userID");
-     
+     var currentRoleType = $("body").attr("data-selected-roleType"); 
+     var role = currentRoleType == null ? roleType : currentRoleType;
    var jsonObj = {
     	 "consignmentStatus": null,
     	 "endDate": "2019-11-11T10:53:37.289Z",
-    	 "roleType": roleType,
+    	 "roleType": role,
     	 "startDate": "2019-11-11T10:53:37.290Z",
     	 "taxPaidStatus": null,
     	 "userId": userId
     	 };
-  console.log(jsonObj)
+  console.log("REQUEST JSON:::::::::::::::::::::"+jsonObj)
     $(document).ready(function () {
     	 $.ajax({
 	url: "${context}/headers",

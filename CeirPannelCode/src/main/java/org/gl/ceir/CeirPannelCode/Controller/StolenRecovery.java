@@ -1,12 +1,14 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -54,7 +57,7 @@ public class StolenRecovery {
 		else if(userTypelist.size()==1)
 		{
 		log.info("else condition.");
-		session.setAttribute("selectedUserTypeId", roletype);
+		session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 		mv.setViewName("stolenRecovery");
 		}
 		
@@ -62,23 +65,27 @@ public class StolenRecovery {
 		else {
 			log.info("else condition selectedUserTypeId is not empty="+selectedUserTypeId);
 			session.setAttribute("selectedUserTypeId", selectedUserTypeId);
-			mv.setViewName("stolenRecovery");
+			mv.setViewName("stolenRecovery");		
 		
 		}
 				
 				return mv; 
 			}
 	
-	/*
-	 * @RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.
-	 * bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
-	 * RequestMethod.POST}) public GenricResponse markStolen(@RequestBody
-	 * StolenRecovery stolen,@RequestParam(name="requestType") String requestType )
-	 * { log.info("enter in stolenRecovery controller");
-	 * log.info("StolenRequest details=="+stolen);
-	 * log.info("requestType="+requestType); return null;
-	 * 
-	 * }
-	 */
+	
+	  @RequestMapping(value={"/multipleStolenRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+	  RequestMethod.POST}) 
+	  public @ResponseBody GenricResponse markStolen(@RequestBody  StolenRecoveryModel stolen)
+	  { 
+	  log.info("enter in stolenRecovery controller");
+	  log.info("StolenRequest details=="+stolen);
+	  List<StolenRecoveryModel> request= new ArrayList<StolenRecoveryModel>();
+	  request.add(stolen);
+	  GenricResponse response=  feignCleintImplementation.multipleStolenRecovery(request);
+	  log.info("response from feign=="+response);
+	  return response;
+	  
+	  }
+	 
 
 }

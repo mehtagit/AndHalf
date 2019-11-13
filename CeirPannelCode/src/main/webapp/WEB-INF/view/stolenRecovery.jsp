@@ -104,6 +104,7 @@ input[type=text] {
 </head>
 
 <body>
+   
 	<div class="section">
 		<div class="row">
 			<div class="col s12 m12 l12">
@@ -113,6 +114,7 @@ input[type=text] {
 						<button type="button"
 							class="waves-effect waves-light modal-trigger boton right"
 							data-target="modal1">Report Stolen/Recovery</button>
+							 <%-- <span id="selectedRoleType" style="display: block;"><%=(String)session.getAttribute("selectedUserTypeId")%></span> --%>
 					</div>
 
 					<div class="col s12 m12 l12" id="distributorTableDIv"

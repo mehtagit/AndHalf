@@ -102,4 +102,67 @@ public class IconsState {
 		return action;
 		 
 	}
+	
+	
+	
+	
+	public String stockState(String fileName,String txnId,String status,String userStatus) {
+		// URL link 
+		String emptyURL="JavaScript:void(0);"; 
+		String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
+		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";	
+		String viewAction="viewUploadedStockDetails('"+txnId+"')"; 
+		String editAction="EditUploadedStockDetails('"+txnId+"')";
+		String deleteAction ="DeleteStockRecord('"+txnId+"')";
+
+		// state related Code 
+		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+				+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\"></i></a>";
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+						+downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
+						+downloadIconTitle+" download=\"download\"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+								+viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>";
+		String edit="<a onclick="+editAction+"><i class="
+								+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
+								+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+										+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
+										+deleteIconTitle+"></i></a>"; 
+		String reply="<a href="+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
+												+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
+												+replyIconTitle+"></i></a>";
+
+		if(("0".equals(status))  && "Active".equals(userStatus)) {
+			  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+			  +errorIcon+" aria-hidden=\"true\" title="
+			  +errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\" ></i></a>"; 
+			  }
+			  
+			  else if(("1".equals(status) || "3".equals(status)) && "Active".equals(userStatus)) {
+				  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+						  +errorIcon+" aria-hidden=\"true\" title="
+						  +errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\" ></i></a>"; 
+				  edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+							+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
+							+editIconTitle+"></i></a>"; 
+			  	}
+			   
+			  else if("Disable".equals(userStatus)) {
+				  log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+					error="<a href="+errorURL+" class="+disableIconClass+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+							+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\"></i></a>";
+					download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+									+downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
+									+downloadIconTitle+" download=\"download\"></i></a>"; 
+					edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+											+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
+											+editIconTitle+"></i></a>"; 
+					delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+													+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
+													+deleteIconTitle+"></i></a>"; 			
+			  }
+			 String action=error.concat(download).concat(view).concat(edit).concat(delete);
+			return action;
+		}
 }
