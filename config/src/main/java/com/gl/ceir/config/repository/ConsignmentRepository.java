@@ -2,6 +2,9 @@ package com.gl.ceir.config.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
@@ -19,7 +22,7 @@ public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Lo
 	public ConsignmentMgmt getByTxnId(String txnId);
 
 
-	public List<ConsignmentMgmt> findByUser_id(int id);
+	public Page<ConsignmentMgmt> findByUser_id(Specification<ConsignmentMgmt> specification, Pageable pg);
 
 
 }

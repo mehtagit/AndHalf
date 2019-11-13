@@ -49,9 +49,7 @@ public class ConsignmentController {
 
 
 	@ApiOperation(value = "Add new consignment.", response = GenricResponse.class)
-
 	@RequestMapping(path = "/consignment/register", method = RequestMethod.POST)
-
 	public GenricResponse uploadFile(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
 		logger.info("Consignment Register Request="+consignmentUploadRequest);
@@ -129,6 +127,9 @@ public class ConsignmentController {
 
 		return mapping;
 	}
+
+
+
 
 
 
