@@ -6,16 +6,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class PageElement {
 	private String pageTitle = null;
+	private String userStatus = null;
 	@Override
 	public String toString() {
-		return "PageElement [pageTitle=" + pageTitle + ", buttonList=" + buttonList + ", dropdownList=" + dropdownList
-				+ ", inputTypeDateList=" + inputTypeDateList + "]";
+		return "PageElement [pageTitle=" + pageTitle + ", userStatus=" + userStatus + ", buttonList=" + buttonList
+				+ ", dropdownList=" + dropdownList + ", inputTypeDateList=" + inputTypeDateList + "]";
 	}
 	public String getPageTitle() {
 		return pageTitle;
 	}
 	public void setPageTitle(String pageTitle) {
 		this.pageTitle = pageTitle;
+	}
+	public String getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 	public List<Button> getButtonList() {
 		return buttonList;

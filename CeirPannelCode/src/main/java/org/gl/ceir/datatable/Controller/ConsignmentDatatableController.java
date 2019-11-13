@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
@@ -52,7 +53,7 @@ public class ConsignmentDatatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@PostMapping("consignmentData")
-	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,HttpServletRequest request) {	 		
+	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,HttpServletRequest request,HttpSession session) {	 		
 
 		// Data set on this List
 		List<List<String>> finalList=new ArrayList<List<String>>();
@@ -80,12 +81,18 @@ public class ConsignmentDatatableController {
 			// if API provide me consignmentStatusName
 			String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 			String consignmentStatus = null;
-			consignmentStatus = statusOfConsignment.equals("0") ? "Uploading" : 
-				statusOfConsignment.equals("1") ? "Success" :
-					statusOfConsignment.equals("2")  ? "Processing" :
-						statusOfConsignment.equals("3") ?   "Error" : "Not Defined";
+			consignmentStatus = statusOfConsignment.equals("0") ? "INIT" : 
+				statusOfConsignment.equals("1") ? "Processing" :
+					statusOfConsignment.equals("2")  ? "Rejected By System" :
+						statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
+							statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
+								statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
+									statusOfConsignment.equals("6") ?   "Approved" : 
+										statusOfConsignment.equals("7") ?   "Rejected by Customs" :
+											statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
 			String taxPaidStatus= dataInsideList.getTaxPaidStatus();
-			String action=iconState.state(dataInsideList.getFileName(), dataInsideList.getTxnId(), statusOfConsignment);
+			String userStatus = (String) session.getAttribute("userStatus");
+			String action=iconState.state(dataInsideList.getFileName(), dataInsideList.getTxnId(), statusOfConsignment,userStatus);
 			String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
 				List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 				finalList.add(finalDataList);
@@ -110,8 +117,8 @@ public class ConsignmentDatatableController {
 
 	
 	@PostMapping("consignment/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role){
-		log.info("USER ROLE ON THIS "+role);
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role,HttpSession session){
+		String userStatus = (String) session.getAttribute("userStatus");
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
@@ -120,21 +127,37 @@ public class ConsignmentDatatableController {
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
-		String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
-
-		for(int i=0; i< names.length ; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}			
-		pageElement.setButtonList(buttonList);
+		if("Disable".equals(userStatus)) {
+			log.info("CAN NOT REGISTER USER BCOZ:::::::::"+userStatus);
+			String[] names= {"FilterButton", "filter","filterConsignment()","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);	
+		}
+		else {
+			String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);
+			}
 		//Dropdown items			
 		String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
 		for(int i=0; i< selectParam.length; i++) {
@@ -164,7 +187,7 @@ public class ConsignmentDatatableController {
 			inputTypeDateList.add(dateRelatedFields);
 		}
 		pageElement.setInputTypeDateList(inputTypeDateList);
-
+		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK); 	
 	}
 

@@ -173,6 +173,13 @@ to {
 [type="date"]::-webkit-calendar-picker-indicator {
 	opacity: 0;
 }
+
+
+.eventNone {
+    cursor: not-allowed;
+    user-select: none;
+    pointer-events: none;
+}
 </style>
 
 </head>
@@ -949,7 +956,12 @@ event.preventDefault();
    					type: 'POST',
    					dataType: "json",
    					success: function(data){
+   						if(data.userStatus === "Disable"){
+   							$('#btnLink').css({"display":"none"});
+   							}
+   		   				
    			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
+   			
    			$("#pageHeader").append(elem);
    			var button=data.buttonList;
 
@@ -986,11 +998,11 @@ event.preventDefault();
    				$('#'+button[i].id).text(button[i].buttonTitle);
  			if(button[i].type === "HeaderButton"){
    				$('#'+button[i].id).attr("href", button[i].buttonURL);
- }
- else{
+					 }
+ 			else{
    				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
- }
-   				}
+ 				}
+ 			}
    					}
 
    			//$("#filterBtnDiv").append();
