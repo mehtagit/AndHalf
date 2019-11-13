@@ -69,16 +69,16 @@ public class StolenRecovery {
 				return mv; 
 			}
 	
-	/*
-	 * @RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.
-	 * bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
-	 * RequestMethod.POST}) public GenricResponse markStolen(@RequestBody
-	 * StolenRecovery stolen,@RequestParam(name="requestType") String requestType )
-	 * { log.info("enter in stolenRecovery controller");
-	 * log.info("StolenRequest details=="+stolen);
-	 * log.info("requestType="+requestType); return null;
-	 * 
-	 * }
-	 */
+	
+	  @RequestMapping(value={"/MultiplestolenRecovery"},method={org.springframework.web.
+	  bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+	  RequestMethod.POST}) public GenricResponse markStolen(@RequestBody
+	  StolenRecovery stolen,@RequestParam(name="requestType") String requestType )
+	  { log.info("enter in stolenRecovery controller");
+	  log.info("StolenRequest details=="+stolen);
+	  log.info("requestType="+requestType); return null;
+	  
+	  }
+	 
 
 }

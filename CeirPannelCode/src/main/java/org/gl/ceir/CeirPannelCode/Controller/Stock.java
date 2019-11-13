@@ -66,8 +66,6 @@ public class Stock {
 		session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 		mv.setViewName("ViewStock");
 		}
-		
-		
 		}
 		else {
 			log.info("else condition selectedUserTypeId is not empty="+selectedUserTypeId);

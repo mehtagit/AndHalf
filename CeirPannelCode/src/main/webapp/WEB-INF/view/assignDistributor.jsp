@@ -102,7 +102,7 @@
                                             <h5 class="center">
                                             <c:forEach items="${userTypelist}" var="userTypelist">
                                                 <label>
-                                                    <input type="radio" id="userTypelistId" name="modeuleType" value="${userTypelist.id}" onclick="StockController(${userTypelist.id})" />
+                                                    <input type="radio" id="userTypelistId" name="modeuleType" value="${userTypelist.id}" onclick="StockController(${userTypelist.usertypeName})" />
                                                     <span class="checkboxFont"> ${userTypelist.usertypeName}</span>
                                                 </label>
                                               
@@ -373,8 +373,9 @@ style="font-size: 20px; color: red;" title="delete"></i></a>
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
     
     <script>
-    function StockController(usertypeId){
-    	var url="${context}/assignDistributor?userTypeId="+usertypeId;
+    function StockController(selectedUserTypeRole){
+    	console.log("selectedUserTypeRole=="+selectedUserTypeRole);
+    	var url="${context}/assignDistributor?userTypeId="+selectedUserTypeRole;
     	console.log(url);
     	window.location.href=url;
    
