@@ -92,16 +92,8 @@
        
        
        
-
-                    
-                    
-                    <!-- START CONTENT -->
-	<section id="content">
-		<!--start container-->
-		<div class="container">
-			<div class="section">
-			
-			<div class="row">
+       <div class="section">
+                        <div class="row">
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
                                 <div class="col s12 m12 l12" id="roleTypeDiv">
@@ -114,26 +106,247 @@
                                                     <span class="checkboxFont"> ${userTypelist.usertypeName}</span>
                                                 </label>
                                               
+                                               <%--  <label>
+                                                    <input type="radio" name="modeuleType" value="Distributor" />
+                                                    <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
+                                                </label>
+
+                                                <label>
+                                                    <input type="radio" name="modeuleType" value="Retailer"/>
+                                                    <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
+                                                </label> --%>
                                                 </c:forEach>
                                             </h5>
 
                                             
                                         </form>
                                     </div>
-                                 
+                                 <!--    <div class="container-fluid"
+                                        style="height:50px; background-color:#529dba; margin:-20px -20px 0 -20px; padding:10px;">
+                                        <button type="button" class="waves-effect waves-light modal-trigger boton right"
+                                            data-target="modal1">Assign Distributor</button>
+                                    </div>
+
+                                    <div class="col s12 m12 l12" id="distributorTableDIv"
+                                        style="padding-bottom: 5px;background-color: #e2edef52;">
+
+                                        <div class="col s6 m2 l2" style="padding-right: 10px;">
+                                            <br />
+                                            <label for="TotalPrice">Start date</label>
+                                            <div id="startdatepicker" class="input-group date"
+                                                data-date-format="yyyy-mm-dd" style="    margin-top: 10px;">
+                                                <input class="form-control" type="date" id="datepicker"
+                                                    style="margin-top: -9px" />
+                                                <span class="input-group-addon" style="color:#ff4081"><i
+                                                        class="fa fa-calendar" aria-hidden="true"
+                                                        style="float: right; margin-top: -35px;"></i></span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col s6 m2 l2" style="padding-right: 10px">
+                                            <br />
+                                            <label for="TotalPrice">End date</label>
+                                            <div id="enddatepicker" class="input-group date"
+                                                data-date-format="yyyy-mm-dd" style="    margin-top: 10px;">
+
+                                                <input class="form-control" id="endDateFilter" type="date"
+                                                    style="margin-top: -9px" />
+                                                <span class="input-group-addon" style="color:#ff4081"><i
+                                                        class="fa fa-calendar" aria-hidden="true"
+                                                        style="float: right; margin-top: -35px;"></i></span>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col s6 m2 l2" style="margin-top: -11px;padding-right: 10px">
+                                            <br />
+                                            <label for="TotalPrice" class="center-align">File Status</label>
+                                            <select id="filterFileStatus"
+                                                >
+                                                <option value="" disabled selected></option>
+                                                <option value="Success">Success</option>
+                                                <option value="Error">Error</option>
+                                                <option value="Processing">Processing</option>
+
+                                            </select>
+
+                                        </div>
+                                        <div class="col s6 m2 l2">
+                                            <button type="button"
+                                                style="margin-top: 42px;    margin-left: 15px; height: 32px;"
+                                                class="btn primary" id="submitFilter"
+                                                onclick="_Services._submitToDistributorFilterData()">Filter</button>
+                                        </div>
+                                    </div>
+                                    <table class="responsive-table striped display" id="assignDistibutorTableId"
+                                        cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Distributor ID</th>
+                                                <th>Invoice Number</th>
+                                                <th>File Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="consignmentTableLibraryTbody">
+                                            <tr>
+                                                <td>20/10/2018</td>
+                                                <td>GFrt4581</td>
+                                                <td>kjnckd654654</td>
+                                                <td>dskhcbjds</td>
+                                               <td>
+<a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
+<a href="javascript:void(0)"><i class="fa fa-download " aria-hidden="true"
+style="font-size: 20px; color:#2e8b57" title="download"></i></a>
+<a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true"
+style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+<a href="#DeleteConsignment"><i class="fa fa-trash" aria-hidden="true"
+style="font-size: 20px; color: red;" title="delete"></i></a>
+</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>20/10/2018</td>
+                                                <td>GFrt4581</td>
+                                                <td>kjnckd654654</td>
+                                                <td>dskhcbjds</td>
+                                               <td>
+<a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
+<a href="javascript:void(0)"><i class="fa fa-download " aria-hidden="true"
+style="font-size: 20px; color:#2e8b57" title="download"></i></a>
+<a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true"
+style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+<a href="#DeleteConsignment"><i class="fa fa-trash" aria-hidden="true"
+style="font-size: 20px; color: red;" title="delete"></i></a>
+</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>20/10/2018</td>
+                                                <td>GFrt4581</td>
+                                                <td>kjnckd654654</td>
+                                                <td>dskhcbjds</td>
+                                               <td>
+<a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
+<a href="javascript:void(0)"><i class="fa fa-download " aria-hidden="true"
+style="font-size: 20px; color:#2e8b57" title="download"></i></a>
+<a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true"
+style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+<a href="#DeleteConsignment"><i class="fa fa-trash" aria-hidden="true"
+style="font-size: 20px; color: red;" title="delete"></i></a>
+</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>20/10/2018</td>
+                                                <td>GFrt4581</td>
+                                                <td>kjnckd654654</td>
+                                                <td>dskhcbjds</td>
+                                                <td>
+<a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
+<a href="javascript:void(0)"><i class="fa fa-download " aria-hidden="true"
+style="font-size: 20px; color:#2e8b57" title="download"></i></a>
+<a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true"
+style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+<a href="#DeleteConsignment"><i class="fa fa-trash" aria-hidden="true"
+style="font-size: 20px; color: red;" title="delete"></i></a>
+</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>20/10/2018</td>
+                                                <td>GFrt4581</td>
+                                                <td>kjnckd654654</td>
+                                                <td>dskhcbjds</td>
+                                               <td>
+<a href="#ErrorFile"><i class="fa fa-exclamation-circle" aria-hidden="true" title="ErrorFile"
+style="pointer-events:auto;color: red; font-size:20px; margin-right:15px;"></i></a>
+<a href="javascript:void(0)"><i class="fa fa-download " aria-hidden="true"
+style="font-size: 20px; color:#2e8b57" title="download"></i></a>
+<a href="#EditConsignment"><i class="fa fa-pencil" aria-hidden="true"
+style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i></a>
+<a href="#DeleteConsignment"><i class="fa fa-trash" aria-hidden="true"
+style="font-size: 20px; color: red;" title="delete"></i></a>
+</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+ -->
+ 
+ 
+ 
                                  </div>
 
                             </div>
                         </div>
-                        
-                        
-                        
+                    </div>
+                    
+                    <!-- Modal 1 start   -->
 
-			</div>
-		</div>
-	</section>
-	
-                 
+    <div id="modal1" class="modal">
+        <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <div class="modal-content">
+
+            <h6>Assign Distributor</h6>
+            <hr>
+            <!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+            <div class="row">
+                <div class="input-field col s10 m6">
+                    <input type="text" name="name" id="name" />
+                    <label for="Name" class="center-align">Distributor ID</label>
+                </div>
+
+                <div class="input-field col s10 m6">
+                    <input type="text" name="name" id="name" />
+                    <label for="Name" class="center-align">Distributor Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s10 m6">
+                    <input type="text" name="name" id="name" />
+                    <label for="Name" class="center-align">Invoice Number</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <h6 style="color: #000; margin-left: 10px;">Upload Bulk Stock *</h6>
+                <div class="file-field input-field col s12 m6">
+                    <div class="btn" style="height: 35px; line-height:2.5rem;">
+                        <span>Select File</span>
+                        <input type="file" id="csvUploadFile" accept=".csv">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <button
+                        class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1"
+                        type="submit" name="add_user" id="add_user" style="margin-left: 35%;">Submit</button>
+                    <button
+                        class="modal-close waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1"
+                        type="submit" name="add_user" id="add_user">Cancel</button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+       
+       
        <!-- ================================================
     Scripts
     ================================================ -->
@@ -166,7 +379,16 @@
     	window.location.href=url;
    
     }   
-   
-</script>
+    
+    
+    </script>
+     <script type="text/javascript">
+            $('#assignDistibutorTableId').DataTable(
+            		{
+            			"bLengthChange": false
+            		});
+            
+          </script>
+
 </body>
 </html>

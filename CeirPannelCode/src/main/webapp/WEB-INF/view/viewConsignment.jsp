@@ -984,7 +984,7 @@ event.preventDefault();
    			$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
    			for(i=0; i<button.length; i++){
    				$('#'+button[i].id).text(button[i].buttonTitle);
- if(button[i].type === "HeaderButton"){
+ 			if(button[i].type === "HeaderButton"){
    				$('#'+button[i].id).attr("href", button[i].buttonURL);
  }
  else{

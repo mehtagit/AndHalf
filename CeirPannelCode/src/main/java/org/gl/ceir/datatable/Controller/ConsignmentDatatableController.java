@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
+import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -42,7 +43,8 @@ public class ConsignmentDatatableController {
 	PageElement pageElement;
 	@Autowired
 	Button button;
-	
+	@Autowired
+	IconsState iconState;
 	/*
 	 * @Autowired ConsignmentService consignmentService;
 	 */
@@ -70,7 +72,6 @@ public class ConsignmentDatatableController {
 		String apiResponse = gson.toJson(response);
 		consignmentPaginationModel = gson.fromJson(apiResponse, ConsignmentPaginationModel.class);
 		List<ConsignmentContent> paginationContentList = consignmentPaginationModel.getContent();
-		log.info("-----after response-  paginationContentList------" + paginationContentList);
 		for(ConsignmentContent dataInsideList : paginationContentList) 
 		{
 			String createdOn= dataInsideList.getCreatedOn();
@@ -83,80 +84,9 @@ public class ConsignmentDatatableController {
 				statusOfConsignment.equals("1") ? "Success" :
 					statusOfConsignment.equals("2")  ? "Processing" :
 						statusOfConsignment.equals("3") ?   "Error" : "Not Defined";
-
 			String taxPaidStatus= dataInsideList.getTaxPaidStatus();
-			//Icon classes
-			String errorIcon="\"fa fa-exclamation-circle\"";
-			String downloadIcon="\"fa fa-download\""; 
-			String viewIcon="\"fa fa-eye teal-text\"";
-			String editIcon="\"fa fa-pencil\""; 
-			String deletionIcon="\"fa fa-trash\"";
-			String replyIcon="\"fa-reply\""; 
-			// URL link 
-			String emptyURL="JavaScript:void(0);"; 
-			String downloadURL = "./dowloadFiles/actual/"+dataInsideList.getFileName()+"/"+dataInsideList.getTxnId()+"";
-			String errorURL = "./dowloadFiles/eror/"+dataInsideList.getFileName()+"/"+dataInsideList.getTxnId()+"";			
-			String viewAction="viewConsignmentDetails('"+dataInsideList.getTxnId()+"')"; 
-			String editAction="EditConsignmentDetails('"+dataInsideList.getTxnId()+"')";
-			String deleteAction ="DeleteConsignmentRecord('"+dataInsideList.getTxnId()+"')";
-			// icon title  
-			String errorIconTitle="Error-File";
-			String downloadIconTitle="Download"; 
-			String viewIconTitle="View"; 
-			String editIconTitle="Edit"; 
-			String deleteIconTitle="Delete"; 
-			String replyIconTitle="Reply";
-
-			// state related Code 
-			String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\"></i></a>";
-			String download="<a href="+downloadURL+" download=\"download\"><i class="
-							+downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
-							+downloadIconTitle+" download=\"download\"></i></a>"; 
-			String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-									+viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>";
-			String edit="<a onclick="+editAction+"><i class="
-									+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
-									+editIconTitle+"></i></a>"; 
-			String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
-											+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-											+deleteIconTitle+"></i></a>"; 
-			String reply="<a href="+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-													+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-													+replyIconTitle+"></i></a>";
-
-				/*
-				 * if("0".equals(statusOfConsignment)) {
-				 * error="<a href="+errorURL+" class="+className+"><i  class="
-				 * +errorIcon+" aria-hidden=\"true\" title="
-				 * +errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\" ></i></a>"
-				 * ; download="<a href="+downloadURL+" class="
-				 * +className+" download=\"download\"><i class="
-				 * +downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
-				 * +downloadIconTitle+" download=\"download\" ></i></a>";
-				 * 
-				 * edit="<a onclick="+editAction+" class="+className+"><i class="
-				 * +editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
-				 * +editIconTitle+"></i></a>"; } else if("1".equals(statusOfConsignment)) {
-				 * delete="<a class="+className+" onclick="
-				 * +deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
-				 * +deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-				 * +deleteIconTitle+"></i></a>";
-				 * view="<a class="+className+" onclick="+viewAction+"><i class="
-				 * +viewIcon+" aria-hidden=\"true\" title="
-				 * +viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>"; }
-				 * else if("2".equals(statusOfConsignment)) {
-				 * view="<a class="+className+" onclick="+viewAction+"><i class="
-				 * +viewIcon+" aria-hidden=\"true\" title="
-				 * +viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\" ></i></a>";
-				 * reply="<a class="+className+" href="
-				 * +emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-				 * +replyIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
-				 * +replyIconTitle+"></i></a>"; }
-				 */
-
-				String action=error.concat(download).concat(view).concat(edit).concat(delete);
-				String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
+			String action=iconState.state(dataInsideList.getFileName(), dataInsideList.getTxnId(), statusOfConsignment);
+			String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
 				List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 				finalList.add(finalDataList);
 				datatableResponseModel.setData(finalList);
