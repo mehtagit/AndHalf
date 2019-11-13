@@ -2,21 +2,27 @@ package com.gl.ceir.config.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
+import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
+import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
@@ -46,6 +52,13 @@ public class ConfigurationManagementServiceImpl {
 	@Autowired
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
 
+	@Autowired
+	NotificationRepository notificationRepository;
+
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
+
+
 
 
 	public List<SystemConfigurationDb> getAllInfo(){
@@ -74,7 +87,7 @@ public class ConfigurationManagementServiceImpl {
 	}
 
 
-
+	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
 
@@ -133,7 +146,7 @@ public class ConfigurationManagementServiceImpl {
 		}	
 	}
 
-
+	@Transactional
 	public GenricResponse updateMessageInfo(MessageConfigurationDb messageConfigurationDb) {
 		try {
 
@@ -187,6 +200,7 @@ public class ConfigurationManagementServiceImpl {
 	}
 
 
+	@Transactional
 	public GenricResponse updatePolicyInfo(PolicyConfigurationDb policyConfigurationDb) {
 		try {
 
@@ -218,7 +232,33 @@ public class ConfigurationManagementServiceImpl {
 
 
 
+	@Transactional
+	public GenricResponse saveAudit(AuditTrail auditTrail) {
+		try {
 
+			auditTrailRepository.save(auditTrail);
+
+			return new GenricResponse(0, "Audit trail save Sucess fully", "");
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+
+
+	@Transactional
+	public GenricResponse saveNotification(Notification notification) {
+		try {
+
+			notificationRepository.save(notification);
+
+			return new GenricResponse(0, "Notification save Sucess fully", "");
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 
 

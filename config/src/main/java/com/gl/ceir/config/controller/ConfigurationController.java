@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
+import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
@@ -171,6 +173,33 @@ public class ConfigurationController {
 	}
 
 
+	@ApiOperation(value = "Audit trail save data", response = GenricResponse.class)
+	@RequestMapping(path = "/audit/save", method = RequestMethod.POST)
+	public GenricResponse saveAudit(@RequestBody AuditTrail auditTrail) {
+
+		logger.info("Audit trail request to save the data="+auditTrail);
+
+		GenricResponse genricResponse = configurationManagementServiceImpl.saveAudit(auditTrail);
+
+		logger.info("Response to send ="+genricResponse);
+
+		return genricResponse;
+	}
+
+
+
+	@ApiOperation(value = " save Notification data", response = GenricResponse.class)
+	@RequestMapping(path = "/notification/save", method = RequestMethod.POST)
+	public GenricResponse saveNotification(@RequestBody Notification notification) {
+
+		logger.info("Notification save request to save the data="+notification);
+
+		GenricResponse genricResponse = configurationManagementServiceImpl.saveNotification(notification);
+
+		logger.info("Response to send ="+genricResponse);
+
+		return genricResponse;
+	}
 
 
 
