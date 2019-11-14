@@ -3,7 +3,8 @@ package com.gl.CEIR.FileProcess.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gl.CEIR.FileProcess.model.WebActionDb;
+import com.gl.ceir.config.model.WebActionDb;
+
 @Service
 public class StockUploadServiceImpl {
 

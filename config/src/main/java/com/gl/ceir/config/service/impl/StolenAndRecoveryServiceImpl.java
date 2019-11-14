@@ -18,9 +18,11 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.StolenAndRecoverySpecificationBuilder;
@@ -42,6 +44,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+
+	@Autowired
+	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
 
 
 	@Transactional
@@ -99,7 +104,7 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 
-
+	@Transactional
 	public GenricResponse uploadMultipleStolen(List<StolenandRecoveryMgmt> stolenandRecoveryMgmt) {
 		try {
 
@@ -123,6 +128,95 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+
+
+	@Transactional
+	public GenricResponse deleteRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+
+		try {
+			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo =stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
+			if(stolenandRecoveryMgmtInfo == null) {
+
+				return new GenricResponse(4,"TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
+			}
+
+			else {
+				StolenAndRecoveryHistoryMgmt historyMgmt = new  StolenAndRecoveryHistoryMgmt();
+				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
+				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
+				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
+				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
+				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
+				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
+				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
+				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
+				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
+
+
+				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
+
+				stolenAndRecoveryRepository.deleteByTxnId(stolenandRecoveryMgmt.getTxnId());
+
+				return new GenricResponse(0,"Record Delete Sucessfully", stolenandRecoveryMgmt.getTxnId());
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+
+	@Transactional
+	public GenricResponse updateRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+
+		try {
+			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo =stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
+			if(stolenandRecoveryMgmtInfo == null) {
+
+				return new GenricResponse(4,"TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
+			}else {
+
+				StolenAndRecoveryHistoryMgmt historyMgmt = new  StolenAndRecoveryHistoryMgmt();
+				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
+				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
+				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
+				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
+				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
+				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
+				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
+				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
+				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
+
+				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
+
+				stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
+
+				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
+			}
+		}catch (Exception e) {
+
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+
+
+	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		try {
+
+			return 	stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+
+
+
+	}
+
 
 
 
