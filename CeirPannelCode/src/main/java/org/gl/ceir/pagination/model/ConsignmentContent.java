@@ -1,13 +1,11 @@
 package org.gl.ceir.pagination.model;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConsignmentContent {
-
 	private Integer id;
 	private String supplierId;
-	private String supplierName = null;
+	private String supplierName;
 	private String consignmentNumber;
 	private String taxPaidStatus;
 	private String createdOn;
@@ -18,16 +16,14 @@ public class ConsignmentContent {
 	private Integer consignmentStatus;
 	private String organisationCountry;
 	private String expectedDispatcheDate;
-	@Override
-	public String toString() {
-		return "ConsignmentContent [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
-				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
-				+ createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId + ", txnId=" + txnId + ", fileName="
-				+ fileName + ", consignmentStatus=" + consignmentStatus + ", organisationCountry=" + organisationCountry
-				+ ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate=" + expectedArrivaldate
-				+ ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + ", remarks=" + remarks
-				+ ", additionalProperties=" + additionalProperties + "]";
-	}
+	private String expectedArrivaldate;
+	private String expectedArrivalPort;
+	private Integer quantity;
+	private Object remarks;
+	private UserModel user;
+
+	private String supplierld;
+	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
@@ -130,16 +126,33 @@ public class ConsignmentContent {
 	public void setRemarks(Object remarks) {
 		this.remarks = remarks;
 	}
+	public UserModel getUser() {
+		return user;
+	}
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
+	public String getSupplierld() {
+		return supplierld;
+	}
+	public void setSupplierld(String supplierld) {
+		this.supplierld = supplierld;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	private String expectedArrivaldate;
-	private String expectedArrivalPort;
-	private Integer quantity;
-	private Object remarks;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	
+	@Override
+	public String toString() {
+		return "ConsignmentContent [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
+				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
+				+ createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId + ", txnId=" + txnId + ", fileName="
+				+ fileName + ", consignmentStatus=" + consignmentStatus + ", organisationCountry=" + organisationCountry
+				+ ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate=" + expectedArrivaldate
+				+ ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + ", remarks=" + remarks
+				+ ", user=" + user + ", supplierld=" + supplierld + ", additionalProperties=" + additionalProperties
+				+ "]";
+	}
 }

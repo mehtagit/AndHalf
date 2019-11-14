@@ -180,22 +180,6 @@ to {
     user-select: none;
     pointer-events: none;
 }
-.error-icon
-{
-color:red; font-size:20px; margin-right:15px;
-}
-.download-icon{
-font-size: 20px; color:#2e8b57;
-}
-.view-icon{
-font-size: 20px; margin:0 0 0 15px;
-}
-.edit-icon{
-font-size: 20px; margin:0 15px 0 15px; color: #006994
-}
-.delete-icon{
-font-size: 20px; color: red;
-}
 </style>
 
 </head>
@@ -215,7 +199,7 @@ font-size: 20px; color: red;
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/Consignment/viewConsignment"
+							<form action="${context}/grievanceManagement"
 								method="post">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
@@ -225,7 +209,9 @@ font-size: 20px; color: red;
 									</div>
 								</div>
 							</form>
+							<p>grievance Management</p>
 							<table id="consignmentLibraryTable"
+							
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -595,9 +581,6 @@ font-size: 20px; color: red;
 
 	<script type="text/javascript">
          
-		var cierRoletype = sessionStorage.getItem("cierRoletype");
-	/* 	alert(cierRoletype);	 */
-	
         function DeleteConsignmentRecord(txnId){
        		 $("#DeleteConsignment").openModal();
         	 $("#transID").text(txnId);
@@ -709,68 +692,55 @@ font-size: 20px; color: red;
         
         // **************************************************filter table**********************************************
      
-        function table(url){
-        	$.ajax({
-        		url: url,
-        		type: 'POST',
-        		dataType: "json",
-        		success: function(result){
-        				var table=	$("#consignmentLibraryTable").DataTable({
-        	    	  		destroy:true,
-        	                "serverSide": true,
-        	    			orderCellsTop : true,
-        	    			"aaSorting" : [],
-        	    			"bPaginate" : true,
-        	    			"bFilter" : true,
-        	    			"bInfo" : true,
-        	    			"bSearchable" : true,
-        					ajax: {
-        	           		        url: '${context}/consignmentData',
-        	           		        type: 'POST',
-        	           		    	data : function(d) {
-        	          		    		d.filter = JSON.stringify(filterRequest);       		    		
-        	           				}
-        	           		    	
-        	         		},
-        	                "columns": result
-        	            });
-        		},
-        		error: function (jqXHR, textStatus, errorThrown) {
-        	    	console.log("error in ajax")
-        	    	}
-        	    	});
-        }
-      
         
-        
-        
-        
-        var startdate=$('#startDate').val(); 
-    	var endDate=$('#endDate').val();
-    	var taxStatus=$('#taxPaidStatus').val();
-    	var consignmentStatus=$('#filterConsignmentStatus').val();
-    	var userId="";
-    	
-    	var filterRequest={
-    	"consignmentStatus":consignmentStatus,
-    	"endDate":startdate,
-    	"startDate":endDate,
-    	"taxPaidStatus":taxStatus,
-    	"userId":userId
-    	};
-    	
-    	
         function filterConsignment()
-        {       	 	
+        {
+       	 	var startdate=$('#startDate').val(); 
+        	var endDate=$('#endDate').val();
+        	var taxStatus=$('#taxPaidStatus').val();
+        	var consignmentStatus=$('#filterConsignmentStatus').val();
+        	var userId="1";
+        	
+        	var filterRequest={
+        	"consignmentStatus":consignmentStatus,
+        	"endDate":startdate,
+        	"startDate":endDate,
+        	"taxPaidStatus":taxStatus,
+        	"userId":userId
+        	};
         	
         	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
         	console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
         	
-        	if(cierRoletype=="Importer"){
-        		table('${context}/headers?type=consignment');	
-        	}else if(cierRoletype=="Custom"){
-        		table('${context}/headers?type=customConsignment');
-        	}        	
+	$.ajax({
+	url: "${context}/headers?type=consignment",
+	type: 'POST',
+	dataType: "json",
+	success: function(result){
+			var table=	$("#consignmentLibraryTable").DataTable({
+    	  		destroy:true,
+                "serverSide": true,
+    			orderCellsTop : true,
+    			"aaSorting" : [],
+    			"bPaginate" : true,
+    			"bFilter" : true,
+    			"bInfo" : true,
+    			"bSearchable" : true,
+				ajax: {
+           		        url: '${context}/consignmentData',
+           		        type: 'POST',
+           		    	data : function(d) {
+          		    		d.filter = JSON.stringify(filterRequest);       		    		
+           				}
+           		    	
+         		},
+                "columns": result
+            });
+	},
+	error: function (jqXHR, textStatus, errorThrown) {
+    	console.log("error in ajax")
+    	}
+    	});
         	}
         	else{
             	console.log("please fill select");
@@ -926,12 +896,11 @@ font-size: 20px; color: red;
            
 $(document).ready(function(){
 $('.datepicker').datepicker();
-filterConsignment();
 });
 
 $('.datepicker').on('mousedown',function(event){
 event.preventDefault();
-	});
+});
 
 
 
@@ -954,7 +923,37 @@ event.preventDefault();
    			 );
    			 
    			 
-   			$.ajax({
+   			 
+   			 
+   			 
+   			 $.ajax({
+   				url: "${context}/headers?type=consignment",
+   				type: 'POST',
+   				dataType: "json",
+   				success: function(result){
+   						var table=	$("#consignmentLibraryTable").DataTable({
+   			    	  		destroy:true,
+   			                "serverSide": true,
+   			    			orderCellsTop : true,
+   			    			"aaSorting" : [],
+   			    			"bPaginate" : true,
+   			    			"bFilter" : true,
+   			    			"bInfo" : true,
+   			    			"bSearchable" : true,
+   							ajax: {
+   			           		        url: '${context}/consignmentData',
+   			           		        type: 'POST',
+   			           		  data : function(d) {
+   	          		    		d.filter = null;       		    		
+   	           				}
+   			         		},
+   			                "columns": result
+   			            });
+   				}
+   								}); 
+   								
+   					
+   			 $.ajax({
    					url: "${context}/consignment/pageRendering",
    					type: 'POST',
    					dataType: "json",

@@ -18,6 +18,8 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.ConsignmentContent;
 import org.gl.ceir.pagination.model.ConsignmentPaginationModel;
+import org.gl.ceir.pagination.model.UserModel;
+import org.gl.ceir.pagination.model.UserProfileModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,9 @@ public class ConsignmentDatatableController {
 	Button button;
 	@Autowired
 	IconsState iconState;
+	@Autowired
+	UserProfileModel userprofileModel;	
+	
 	/*
 	 * @Autowired ConsignmentService consignmentService;
 	 */
@@ -54,7 +59,10 @@ public class ConsignmentDatatableController {
 
 	@PostMapping("consignmentData")
 	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,HttpServletRequest request,HttpSession session) {	 		
-
+		
+		log.info("session value user Type=="+session.getAttribute("usertype"));
+		String userType = (String) session.getAttribute("usertype");
+		
 		// Data set on this List
 		List<List<String>> finalList=new ArrayList<List<String>>();
 
@@ -73,38 +81,66 @@ public class ConsignmentDatatableController {
 		String apiResponse = gson.toJson(response);
 		consignmentPaginationModel = gson.fromJson(apiResponse, ConsignmentPaginationModel.class);
 		List<ConsignmentContent> paginationContentList = consignmentPaginationModel.getContent();
+		log.info("paginationContentList::::::::::::"+paginationContentList);
 		if(paginationContentList.isEmpty()) {
 			datatableResponseModel.setData(Collections.emptyList());
 		}
 		else {
-		for(ConsignmentContent dataInsideList : paginationContentList) 
-		{
-			String createdOn= dataInsideList.getCreatedOn();
-			String txnId=	dataInsideList.getTxnId(); 
-			String supplierName= dataInsideList.getSupplierName(); 
-			// if API provide me consignmentStatusName
-			String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
-			String consignmentStatus = null;
-			consignmentStatus = statusOfConsignment.equals("0") ? "INIT" : 
-				statusOfConsignment.equals("1") ? "Processing" :
-					statusOfConsignment.equals("2")  ? "Rejected By System" :
-						statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
-							statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
-								statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
-									statusOfConsignment.equals("6") ?   "Approved" : 
-										statusOfConsignment.equals("7") ?   "Rejected by Customs" :
-											statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
-			String taxPaidStatus= dataInsideList.getTaxPaidStatus();
-			String userStatus = (String) session.getAttribute("userStatus");
-			String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
-			String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
-				List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
-				finalList.add(finalDataList);
+		
+			if("Importer".equals(userType)){
+				for(ConsignmentContent dataInsideList : paginationContentList) 
+				{
+				String createdOn= dataInsideList.getCreatedOn();
+				String txnId=	dataInsideList.getTxnId(); 
+				String supplierName= dataInsideList.getSupplierName(); 
+				
+				// if API provide me consignmentStatusName
+				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
+				String consignmentStatus = null;
+				consignmentStatus = statusOfConsignment.equals("0") ? "INIT" : 
+					statusOfConsignment.equals("1") ? "Processing" :
+						statusOfConsignment.equals("2")  ? "Rejected By System" :
+							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
+								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
+									statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
+										statusOfConsignment.equals("6") ?   "Approved" : 
+											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
+												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
+				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+				String userStatus = (String) session.getAttribute("userStatus");
+				String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
+				
+				String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 				}
-		}
+			}else if("Custom".equals(userType)) {
+				for(ConsignmentContent dataInsideList : paginationContentList) 
+				{
+				UserModel userModel = dataInsideList.getUser();
+				UserProfileModel userprofileModel = userModel.getUserProfile();
+				String createdOn= dataInsideList.getCreatedOn();
+				String txnId = dataInsideList.getTxnId(); 
+				String companyName = userprofileModel.getCompanyName();		
+				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
+				String consignmentStatus = null;
+				consignmentStatus = statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" : "Not Listed";
+				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+				String userStatus = (String) session.getAttribute("userStatus");
+				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
+				
+				String[] finalData={createdOn,txnId,companyName,consignmentStatus,taxPaidStatus,action}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+				}
+			}
+			}
+		
 		
 		//data set on ModelClass
-		datatableResponseModel.setData(finalList);
+		
 		datatableResponseModel.setRecordsTotal(consignmentPaginationModel.getNumberOfElements());
 		datatableResponseModel.setRecordsFiltered(consignmentPaginationModel.getTotalElements());
 		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
