@@ -196,6 +196,32 @@ font-size: 20px; margin:0 15px 0 15px; color: #006994
 .delete-icon{
 font-size: 20px; color: red;
 }
+.approve-icon {
+   font-size: 20px;
+      margin: 0 7px 0 15px;
+      color: #006994
+    }
+
+    .reject-icon {
+      font-size: 20px;
+      color: red;
+      margin: 0 7px 0 7px;
+    }
+
+.reply-disable-icon{
+            font-size: 20px; cursor: not-allowed; color: gray;
+            margin: 0 7px;
+        }
+
+        .reply-icon{
+            font-size: 20px; color: #006994;
+            margin: 0 7px;
+        }
+
+.pay-tax-icon{
+            font-size: 20px;  color:#2e568b;
+            margin: 0 7px;
+        }
 </style>
 
 </head>
@@ -770,6 +796,8 @@ font-size: 20px; color: red;
         		table('${context}/headers?type=consignment');	
         	}else if(cierRoletype=="Custom"){
         		table('${context}/headers?type=customConsignment');
+        	
+        		        		
         	}        	
         	}
         	else{
@@ -1004,7 +1032,11 @@ event.preventDefault();
    				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
  				}
  			}
+		
+   			cierRoletype=="Importer" ? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
+   					
    					}
+   	
 
    			//$("#filterBtnDiv").append();
    			}); 

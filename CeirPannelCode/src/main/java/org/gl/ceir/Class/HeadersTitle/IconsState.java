@@ -18,8 +18,9 @@ public class IconsState {
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
 	String replyIcon="\"fa-reply\""; 
-	String approveIcon = "\"fa fa-check-circle-o\"";
-	String rejectIcon = "\"fa fa-user-times\"";
+	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
+	String rejectIcon = "\"fa fa-user-times reject-icon\"";
+	
 	// icon title  
 	String errorIconTitle="Error-File";
 	String downloadIconTitle="Download"; 
@@ -27,14 +28,17 @@ public class IconsState {
 	String editIconTitle="Edit"; 
 	String deleteIconTitle="Delete"; 
 	String replyIconTitle="Reply";
-		
-	
+	String approveIconTitle="Approve";
+	String rejectIconTitle="Reject";
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
 	String disableViewIcon="\"fa fa-eye view-icon disable\"";
 	String disableEditIcon="\"fa fa-pencil edit-icon disable\""; 
 	String disableDeletionIcon="\"fa fa-trash delete-icon disable\"";
 	String disableReplyIcon="\"fa-reply\"";
+	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
+	String disableAejectIcon = "\"fa fa-user-times reject-icon disable\"";
+	
 	
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link 
@@ -243,29 +247,27 @@ public String customState(String fileName,String txnId ,String status,String use
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = "\"fa fa-check-circle-o\"";
-String rejectAction = "\"fa fa-user-times\"";
+String approveAction = null;
+String rejectAction = null;
 
 
 
 // state related Code 
 String download="<a href="+downloadURL+" download=\"download\"><i class="
-		+downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
+		+downloadIcon+" aria-hidden=\"true\"  title="
 		+downloadIconTitle+" download=\"download\"></i></a>"; 
+
 String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-		+viewIconTitle+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>";
+		+viewIconTitle+" ></i></a>";
 
 String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
-		+approveAction+" style=\"font-size: 20px; margin:0 0 0 15px;\"></i></a>";   
+		+approveIconTitle+" ></i></a>";   
 
-String reject = "\"fa fa-user-times\"";
 
- if("0".equals(status) || "1".equals(status) || "2".equals(status) && "Active".equals(userStatus) ) {
-	  
-	 
-}
- 
- if("2".equals(status) && "Active".equals(userStatus) ) {
+String reject = "<a onclick="+approveAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		+rejectIconTitle+" ></i></a>";
+
+if("5".equals(status) && "Active".equals(userStatus) ) {
  
  } 
 
@@ -274,14 +276,14 @@ String reject = "\"fa fa-user-times\"";
 	 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 
 	 download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
-	 +downloadIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color:#2e8b57\" title="
+	 +downloadIcon+" aria-hidden=\"true\"  title="
 	 +downloadIconTitle+" download=\"download\"></i></a>"; 
 
 	 }
 
 
-return null;
-
+String action=download.concat(view).concat(approve).concat(reject);	
+return action;
 }
 
 }
