@@ -36,7 +36,7 @@ if("consignment".equals(role)) {
 
 //STOLEN DATATABLE HEADERS
 else if("stolen".equals(role)) {
-	String[] headers = {HeadersTitle.creationDate};		
+	String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType,HeadersTitle.action };		
 	for(String header : headers) {
 		dataTableInputs.add(new DatatableHeaderModel(header));
 	}

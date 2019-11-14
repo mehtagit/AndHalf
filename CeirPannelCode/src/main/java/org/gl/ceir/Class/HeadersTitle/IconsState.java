@@ -165,4 +165,57 @@ public class IconsState {
 			 String action=error.concat(download).concat(view).concat(edit).concat(delete);
 			return action;
 		}
+	
+	
+	
+	/********************************** Icons for Stolen **********************************/ 
+
+public String stolenState(String fileName,String txnId ,String status,String userStatus) {
+	// URL link 
+	String emptyURL="JavaScript:void(0);"; 
+	String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";	
+	String editAction="EditConsignmentDetails('"+txnId+"')";
+	String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
+
+
+	// state related Code 
+	String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+	+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:0px;\"></i></a>";
+	
+	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
+			+editIconTitle+"></i></a>"; 
+	
+	String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
+	+deleteIconTitle+"></i></a>"; 
+
+	/*if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Active".equals(userStatus)) {
+	error="<a href="+errorURL+" class="+disableIconClass+"><i class="
+	+errorIcon+" aria-hidden=\"true\" title="
+	+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:0px;\" ></i></a>"; 
+	}*/
+
+	 if("1".equals(status)) {
+		delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+		+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
+		+deleteIconTitle+"></i></a>"; 
+	}
+	
+	
+	else if("Disable".equals(userStatus)) {
+	log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+	error="<a href="+errorURL+" class="+disableIconClass+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+	+errorIconTitle+" style=\"color: red; font-size:20px; margin-right:15px;\"></i></a>";
+	edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+			+editIcon+" aria-hidden=\"true\" style=\"font-size: 20px; margin:0 15px 0 15px; color: #006994\" title="
+			+editIconTitle+"></i></a>"; 
+	delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+	+deletionIcon+" aria-hidden=\"true\" style=\"font-size: 20px; color: red;\" title="
+	+deleteIconTitle+"></i></a>"; 
+	}
+
+	String action=error.concat(edit).concat(delete);	
+	return action;
+
+	}
 }
+

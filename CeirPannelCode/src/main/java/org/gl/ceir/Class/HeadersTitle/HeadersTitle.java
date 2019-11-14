@@ -12,4 +12,11 @@ public class HeadersTitle {
 	public static final String date ="Date";
 	public static final String fileName ="File Name";	
 	public static final String stockStatus ="Stock Status";
+	
+	//Stolen
+	public static final String Status = "Status";
+	public static final String source = "Source";
+	public static final String requestType = "Request Type";
+	
+	
 }
