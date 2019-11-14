@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class StolenRecoveryModel {
 	
 	private String blockingTimePeriod;
@@ -11,6 +13,8 @@ public class StolenRecoveryModel {
 	private String roleType;
 	private String  txnId;
 	private int userId;
+	private String sourceType;
+	
 	public String getBlockingTimePeriod() {
 		return blockingTimePeriod;
 	}
@@ -65,12 +69,23 @@ public class StolenRecoveryModel {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	public String getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
 	@Override
 	public String toString() {
-		return "StolenRecovery [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
+		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
 				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
-				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", userId=" + userId + "]";
+				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", userId=" + userId + ", sourceType="
+				+ sourceType + "]";
 	}
+	
+	
+	
+	
 	
 	
 	

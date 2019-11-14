@@ -1,7 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-import java.time.LocalDateTime;
-
 public class FilterRequest {
 	public Integer userId;
 	public String  startDate;

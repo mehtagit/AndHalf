@@ -44,6 +44,16 @@ else if("stolen".equals(role)) {
 }
 
 
+//CUSTOM DATATABLE HEADERS
+else if("customConsignment".equals(role)) {
+	String[] headers = {HeadersTitle.creationDate,HeadersTitle.transactionID,HeadersTitle.ImporterCompanyName,HeadersTitle.consignmentStatus,HeadersTitle.taxPaidStatus,HeadersTitle.action};		
+	for(String header : headers) {
+		dataTableInputs.add(new DatatableHeaderModel(header));
+	}
+	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+}
+
+
 
 //DEFAULT PORTION  
 else {

@@ -105,7 +105,13 @@ public interface FeignCleintImplementation {
 			@PostMapping(value="/Stock/update")
 			public GenricResponse updateStock(StockUploadModel stockUploadModel) ;
 
+	
 			
+			@RequestMapping(value="/stakeholder/record" ,method=RequestMethod.POST) 
+			public Object stolenFilter(@RequestBody FilterRequest filterRequest,
+					@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+					@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+		
 			
 //****************************************************                              ***************************************************************************		
 //**************************************************** Stolen Recovery integration  **************************************************************************
@@ -121,21 +127,29 @@ public interface FeignCleintImplementation {
 		
 //********************************************  upload multiple Stolen and Recovery ***************************************************************88
 		@RequestMapping(value="/stakeholder/uploadMultiple/Stolen" ,method=RequestMethod.POST) 
-		public GenricResponse multipleStolenRecovery(@RequestBody List<StolenRecoveryModel> request) ;
+		public GenricResponse multipleStolen(@RequestBody List<StolenRecoveryModel> request) ;
 
 
 
 	
 		
-		
-		@RequestMapping(value="/stakeholder/record" ,method=RequestMethod.POST) 
-		public Object stolenFilter(@RequestBody FilterRequest filterRequest,
-				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 	
-		
+//**************************************************************** file Stolen type ***************************************************************************************************		
 		
 
+		@RequestMapping(value="/stakeholder/Stolen" ,method=RequestMethod.POST) 
+		public GenricResponse fileStolen(@RequestBody StolenRecoveryModel request) ;
+
+
+
 		
+//**************************************************************** file Recovery type ***************************************************************************************************		
+				
+
+		@RequestMapping(value="/stakeholder/Recovery" ,method=RequestMethod.POST) 
+		public GenricResponse fileRecovery(@RequestBody StolenRecoveryModel request) ;
+
+
+	
 }
 

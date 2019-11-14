@@ -174,30 +174,11 @@ to {
 	opacity: 0;
 }
 
+
 .eventNone {
     cursor: not-allowed;
     user-select: none;
     pointer-events: none;
-}
-
-.error-icon
-{
-color:red; font-size:20px; margin-right:15px;
-}
-.download-icon{
-font-size: 20px; color:#2e8b57;
-}
-.view-icon{
-font-size: 20px; margin:0 0 0 15px;
-}
-.edit-icon{
-font-size: 20px; margin:0 15px 0 15px; color: #006994
-}
-.delete-icon{
-font-size: 20px; color: red;
-}
-.disable{
-color: grey;
 }
 </style>
 
@@ -218,7 +199,7 @@ color: grey;
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/stakeholder/record"
+							<form action="${context}/grievanceManagement"
 								method="post">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
@@ -228,7 +209,9 @@ color: grey;
 									</div>
 								</div>
 							</form>
-							<table id="stolenLibraryTable"
+							<p>grievance Management</p>
+							<table id="consignmentLibraryTable"
+							
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -766,7 +749,7 @@ color: grey;
 
         
         //******************************************************************************************************************************************************************888888
- //******************************************      ************************************************************************************************************************888888
+ //******************************************************************************************************************************************************************888888
  //******************************************************************************************************************************************************************888888   
  
  function editRegisterConsignment(){
@@ -801,7 +784,7 @@ color: grey;
          		console.log(JSON.stringify(formData));
          		console.log("*********");
          	 	
-         	 $.ajax({ 
+         	 $.ajax({
   				url: '${context}/Consignment/updateRegisterConsignment',
   				type: 'POST',
   				data: formData,
@@ -944,11 +927,11 @@ event.preventDefault();
    			 
    			 
    			 $.ajax({
-   				url: "${context}/headers?type=stolen",
+   				url: "${context}/headers?type=consignment",
    				type: 'POST',
    				dataType: "json",
    				success: function(result){
-   						var table=	$("#stolenLibraryTable").DataTable({
+   						var table=	$("#consignmentLibraryTable").DataTable({
    			    	  		destroy:true,
    			                "serverSide": true,
    			    			orderCellsTop : true,
@@ -958,7 +941,7 @@ event.preventDefault();
    			    			"bInfo" : true,
    			    			"bSearchable" : true,
    							ajax: {
-   			           		        url: './stolenData',
+   			           		        url: '${context}/consignmentData',
    			           		        type: 'POST',
    			           		  data : function(d) {
    	          		    		d.filter = null;       		    		
@@ -971,11 +954,14 @@ event.preventDefault();
    								
    					
    			 $.ajax({
-   					url: "${context}/stolen/pageRendering",
+   					url: "${context}/consignment/pageRendering",
    					type: 'POST',
    					dataType: "json",
    					success: function(data){
-   			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
+   						data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+							
+   		   				
+   			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
    			$("#pageHeader").append(elem);
    			var button=data.buttonList;
 
@@ -1011,183 +997,16 @@ event.preventDefault();
    			for(i=0; i<button.length; i++){
    				$('#'+button[i].id).text(button[i].buttonTitle);
  			if(button[i].type === "HeaderButton"){
- 				
    				$('#'+button[i].id).attr("href", button[i].buttonURL);
- }
- else{
+					 }
+ 			else{
    				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
- }
-   				}
+ 				}
+ 			}
    					}
 
    			//$("#filterBtnDiv").append();
    			}); 
-   			 
-   	
-   function fileStolenReport(){
-    		
-	    var roleType = $("body").attr("data-roleType");
-	    var userId = $("body").attr("data-userID");
-	    var currentRoleType = $("body").attr("data-selected-roleType"); 
-	    
-	    var sourceType;
-	    var requestType;
-	    var role = currentRoleType == null ? roleType : currentRoleType;
-	    var blockPeriod=$('#blockPeriod').val();
-   	    var blockType=$('#blockType').val();
-   	      	
-   	      	  
-   	      	
-   	      	 
-   	      	 	var formData= new FormData();
-   	      		formData.append('blockingType',blockType);
-   	      	 	formData.append('blockingTimePeriod',blockPeriod);
-   	      	 	formData.append('requestType',requestType);
-   	      	 	formData.append('roleType',role);
-   	      		formData.append('sourceType',sourceType);
-   	      		formData.append('userId',userId);
-   	      		
-   	      		
-   	      		console.log(JSON.stringify(formData));
-   	      		console.log("*********");
-   	      	 	
-   	      	 $.ajax({
-   					url: '${context}/fileTypeStolen',
-   					type: 'POST',
-   					data: formData,
-   					processData: false,
-   					contentType: false,
-   					success: function (data, textStatus, jqXHR) {
-   						
-   						 console.log(data);
-   						/*  $('#editStockModal').closeModal();
-   						 $('#successUpdateStockModal').modal();
-   						  if(data.errorCode==200){
-   						
-   						$('#stockSucessMessage').text('');
-   						 $('#stockSucessMessage').text('Operation is not allowed');
-   							 }
-   						 else{
-   							 $('#stockSucessMessage').text('');
-   			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-   						 } */
-   					   // $('#updateConsignment').modal('open'); 
-   						//alert("success");
-   						
-   					},
-   					error: function (jqXHR, textStatus, errorThrown) {
-   					console.log("error in ajax")
-   					}
-   				});
-   	      
-   	      }
-   	      
-  
-
-   function fileRecoveryReport(){
-	    var roleType = $("body").attr("data-roleType");
-	    var userId = $("body").attr("data-userID");
-	    var currentRoleType = $("body").attr("data-selected-roleType"); 
-	    var sourceType;
-	    var requestType;
-	    var role = currentRoleType == null ? roleType : currentRoleType;
-	   	var formData= new FormData();
-   	      	 
-	   	     formData.append('requestType',requestType);
-   	      	 formData.append('roleType',role);
-   	         formData.append('sourceType',sourceType);
-   	      	 formData.append('userId',userId);
-   	      	 
-   	      	 console.log(JSON.stringify(formData));
-   	      	 console.log("*********");
-   	      	 $.ajax({
-   					url: '${context}/fileTypeStolen',
-   					type: 'POST',
-   					data: formData,
-   					processData: false,
-   					contentType: false,
-   					success: function (data, textStatus, jqXHR) {
-   				    console.log(data);
-   						/*  $('#editStockModal').closeModal();
-   						 $('#successUpdateStockModal').modal();
-   						  if(data.errorCode==200){
-   						
-   						$('#stockSucessMessage').text('');
-   						 $('#stockSucessMessage').text('Operation is not allowed');
-   							 }
-   						 else{
-   							 $('#stockSucessMessage').text('');
-   			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-   						 } */
-   					   // $('#updateConsignment').modal('open'); 
-   						//alert("success");
-   						
-   					},
-   					error: function (jqXHR, textStatus, errorThrown) {
-   					console.log("error in ajax")
-   					}
-   				});
-   	      
-   	      }
-   	      
-  
-   function multipleStolenRecovery(){
-	   /*    			  
-	      	      	 var supplierId=$('#editSupplierId').val();
-	      	      	 var supplierName=$('#editSupplierName').val();
-	      	      	 var filename=$('#editcsvUploadFileName').val();
-	      	      	 var txnId=$('#editTransactionId').val();
-	      	      	 var quantity=$('#editQuantity').val();
-	      	      	 var InvoiceNumber=$('#editInvoiceNumber').val(); */
-	      	      	  
-	      	      	
-	      	      	 
-	      	      	 var stolenRecoverydata= 
-	      	      			[{
-	      	      		    
-	      	      		    "txnId": "C2019103113182217",
-	      	      		    "userId": 265
-	      	      		  },
-	      	      		  {
-	      	      		    
-	      	      		    "txnId": "C201910311318229976",
-	      	      		    "userId": 266
-	      	      		  }]
-	      	      	 
-	      	      	
-	      	      	 $.ajax({
-	      					url: '${context}/multipleStolenRecovery',
-	      					type: 'POST',
-	      					data: JSON.stringify(stolenRecoverydata),
-	      					dataType : 'json',
-	            			contentType : 'application/json; charset=utf-8',
-	            			success: function (data, textStatus, jqXHR) {
-	      						
-	      						 console.log(data);
-	      						/*  $('#editStockModal').closeModal();
-	      						 $('#successUpdateStockModal').modal();
-	      						  if(data.errorCode==200){
-	      						
-	      						$('#stockSucessMessage').text('');
-	      						 $('#stockSucessMessage').text('Operation is not allowed');
-	      							 }
-	      						 else{
-	      							 $('#stockSucessMessage').text('');
-	      			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-	      						 } */
-	      					   // $('#updateConsignment').modal('open'); 
-	      						//alert("success");
-	      						
-	      					},
-	      					error: function (jqXHR, textStatus, errorThrown) {
-	      					console.log("error in ajax")
-	      					}
-	      				});
-	      	      
-	      	      }
-	      	      
-	     
-   			 
   </script>
 </body>
 </html>

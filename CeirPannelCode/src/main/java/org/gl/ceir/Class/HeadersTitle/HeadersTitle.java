@@ -18,5 +18,8 @@ public class HeadersTitle {
 	public static final String source = "Source";
 	public static final String requestType = "Request Type";
 	
+	//Custom
+	public static final String ImporterCompanyName = "Importer/Company Name";
+	
 	
 }

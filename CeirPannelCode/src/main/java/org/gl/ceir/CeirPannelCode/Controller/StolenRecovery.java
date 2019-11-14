@@ -1,6 +1,9 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -72,7 +76,7 @@ public class StolenRecovery {
 				return mv; 
 			}
 	
-	
+//******************************************* multiple stolen recovery ************************************************************************88	
 	  @RequestMapping(value={"/multipleStolenRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
 	  RequestMethod.POST}) 
 	  public @ResponseBody GenricResponse markStolen(@RequestBody  StolenRecoveryModel stolen)
@@ -81,11 +85,111 @@ public class StolenRecovery {
 	  log.info("StolenRequest details=="+stolen);
 	  List<StolenRecoveryModel> request= new ArrayList<StolenRecoveryModel>();
 	  request.add(stolen);
-	  GenricResponse response=  feignCleintImplementation.multipleStolenRecovery(request);
+	  GenricResponse response=  feignCleintImplementation.multipleStolen(request);
 	  log.info("response from feign=="+response);
 	  return response;
 	  
 	  }
 	 
+//*************************************************** file type stolen ****************************************************************************
+	  
+	  @RequestMapping(value={"/fileTypeStolen"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+			  RequestMethod.POST}) 
+	  public @ResponseBody GenricResponse FileTypeStolen(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
+			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
+			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
+			  @RequestParam(name="userId",required = false) Integer userId)
+	  {			
+		  log.info("blockingType value="+blockingType+" blockingTimePeriod=="+blockingTimePeriod+" file value="+file+"  requestType="+requestType+" roleType=="+roleType+" sourceType="+sourceType+" userId="+userId );
+			
+		  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
+		  GenricResponse response= new GenricResponse();
+			String stlnTxnNumber=utildownload.getTxnId();
+			stlnTxnNumber = "S"+stlnTxnNumber;
+			log.info("txnid="+stlnTxnNumber);
+		  	try {
+				byte[] bytes = file.getBytes();
+				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) 
+					dir.mkdirs();
+				// Create the file on server
+				// Calendar now = Calendar.getInstance();
+
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("COMPLETE PATH" + serverFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			stolenRecoveryModel.setBlockingTimePeriod(blockingTimePeriod);
+			stolenRecoveryModel.setBlockingType(blockingType);
+			stolenRecoveryModel.setFileName(file.getOriginalFilename());
+			stolenRecoveryModel.setRequestType(requestType);
+			stolenRecoveryModel.setSourceType(sourceType);
+			stolenRecoveryModel.setUserId(userId);
+			stolenRecoveryModel.setRoleType(roleType);
+			log.info("request sent to feign=="+stolenRecoveryModel);
+			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
+		  	return response;
+	
+	  }
+	  
+	  
+// ************************************************************ file type recovery ********************************************************************
+	  
+	  @RequestMapping(value={"/fileTypeRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+			  RequestMethod.POST}) 
+	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
+			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
+			  @RequestParam(name="userId",required = false) Integer userId)
+	  {			
+		  log.info(" file value="+file+"  requestType="+requestType+" roleType=="+roleType+" sourceType="+sourceType+" userId="+userId );
+			
+		  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
+		  GenricResponse response= new GenricResponse();
+			String stlnTxnNumber=utildownload.getTxnId();
+			stlnTxnNumber = "S"+stlnTxnNumber;
+			log.info("txnid="+stlnTxnNumber);
+		  	try {
+				byte[] bytes = file.getBytes();
+				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) 
+					dir.mkdirs();
+				// Create the file on server
+				// Calendar now = Calendar.getInstance();
+
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("COMPLETE PATH" + serverFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			stolenRecoveryModel.setFileName(file.getOriginalFilename());
+			stolenRecoveryModel.setRequestType(requestType);
+			stolenRecoveryModel.setSourceType(sourceType);
+			stolenRecoveryModel.setUserId(userId);
+			stolenRecoveryModel.setRoleType(roleType);
+			log.info("request sent to feign=="+stolenRecoveryModel);
+			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
+		  	return response;
+	
+	  }
+
+	  
 
 }

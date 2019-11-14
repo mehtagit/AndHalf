@@ -175,10 +175,30 @@ to {
 	width: 150px;
 }
 
+/* icon color */
+
+.error-icon
+{
+color:red; font-size:20px; margin-right:15px;
+}
+.download-icon{
+font-size: 20px; color:#2e8b57;
+}
+.view-icon{
+font-size: 20px; margin:0 0 0 15px;
+}
+.edit-icon{
+font-size: 20px; margin:0 15px 0 15px; color: #006994
+}
+.delete-icon{
+font-size: 20px; color: red;
+}
 .eventNone {
-	cursor: not-allowed;
-	user-select: none;
-	pointer-events: none;
+    user-select: none;
+    pointer-events: none;
+}
+.disable {
+    color: grey;
 }
 </style>
 
@@ -301,7 +321,7 @@ to {
                     <span> Required Field are marked with <span class="star">*</span></span>
 
 
-                        <div class="row" style="padding-bottom: 100px;">
+                        <div class="row" >
                             <div class="input-field col s12 center">
                                 <button class="waves-effect waves-light modal-trigger btn"
                                     data-target="submitStock" onclick="editUploadStock()" type="button">Update</button>
@@ -373,7 +393,7 @@ to {
                         <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
                     </div>
 
-                    <div class="row center" style="padding:20px 0 100px 0;">
+                    <div class="row center">
                         <a onclick="closeViewModal()" class="btn" type="cancel">Cancel</a>
                     </div>
                 </form>
@@ -399,7 +419,7 @@ to {
             <div class="row">
                 <div class="input-field col s12 center">
                     <a onclick="confirmantiondelete()"  class="modal-close modal-trigger btn" type="submit">Yes</a>
-                    <button class="modal-close btn" onclick="closeDeleteModal()" style="margin-left: 10px;">no</button>
+                    <button class="modal-close btn"  style="margin-left: 10px;">no</button>
                 </div>
             </div>
         </div>
@@ -415,7 +435,7 @@ to {
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <button class="modal-close btn" style="margin-left: 10px;" onclick="confirmantiondelete()">ok</button>
+                    <a href="./assignDistributor" class="modal-close btn" style="margin-left: 10px;" >ok</a>
                 </div>
             </div>
         </div>
@@ -649,13 +669,18 @@ function editUploadStock(){
      				}else if(data.errorCode == 0){
      					$("#stockModalText").text(data.message);
      				}
+     		  	     $("#materialize-lean-overlay-3").css("display","none");
      			},
      			error : function() {
      					console.log("Error");
      			}
      		});
   		 $("#DeleteStockconfirmationModal").closeModal();
+  		 
   		 $("#closeDeleteModal").openModal();
+  		/*  
+  		 $(".lean-overlay").remove(); */ 
+
      }
 
 

@@ -320,6 +320,7 @@ else {
 	stockUpload.setSuplierName(supplierName);
 	stockUpload.setQuantity(quantity);
 	stockUpload.setTxnId(txnId);
+	stockUpload.setInvoiceNumber(invoiceNumber);
 	stockUpload.setFileName(file.getOriginalFilename());
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
