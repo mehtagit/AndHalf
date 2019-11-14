@@ -167,22 +167,4 @@ public class StolenAndRecoveryController {
 
 
 
-	@ApiOperation(value = "Download Stolen And Recovery file.", response = String.class)
-	@RequestMapping(value = "/stackholder/download/stolenAndRecoveyfile", method = RequestMethod.GET)
-	public String downloadStolenAndRecoveyrFile(@RequestParam("txnId") String txnId,@RequestParam("fileName") String fileName,
-			@RequestParam("fileType") String fileType) {
-
-		String serverPath=fileStorageProperties.getActionUploadDir();
-
-		if(fileType.equals("ERROR")) {
-			serverPath= serverPath+"action/"+txnId+"/error.csv";
-			return serverPath;
-		}else {
-			serverPath= serverPath+"action/"+txnId+"/"+fileName;
-			return serverPath;
-		}
-	}
-
-
-
 }
