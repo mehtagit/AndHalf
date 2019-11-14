@@ -121,6 +121,7 @@ else {
 		int userId= (int) session.getAttribute("userid");
 		String name=session.getAttribute("name").toString();
 		String roletype=session.getAttribute("usertype").toString();
+		String selectedRoletype=(String) session.getAttribute("selectedUserTypeId");
 		//String selectedUserTypeId=session.getAttribute("selectedUserTypeId").toString();
 		
 		log.info(" values from session  username="+userName+ "userId="+userId+" name ="+name);
@@ -167,7 +168,7 @@ else {
 		stockUpload.setTxnId(txnNumner);
 		stockUpload.setFileName(file.getOriginalFilename());
 		stockUpload.setUserId(userId);
-		stockUpload.setRoleType(roletype);
+		stockUpload.setRoleType(selectedRoletype);
 		
 		
 		
@@ -187,9 +188,8 @@ else {
 	@RequestMapping(value= {"/stockDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse deleteStock(@RequestBody StockUploadModel stockUpload,HttpSession session) {
 
-		log.info("enter in  delete stock.");
-		String roletypesession=String.valueOf(session.getAttribute("usertype"));
-		stockUpload.setRoleType(roletypesession);
+		log.info("enter in  delete stock."+stockUpload);
+		
 		GenricResponse response=feignCleintImplementation.deleteStock(stockUpload);
 		log.info("response after delete consignment."+response);
 		return response;
@@ -198,7 +198,7 @@ else {
 	
 	// *********************************************** open register page or edit popup ******************************
 	@RequestMapping(value="/openStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,HttpSession session)
+	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="role",required = false) String role,HttpSession session)
 	{
 
 	
@@ -207,10 +207,10 @@ else {
 		StockUploadModel stockUploadModel= new StockUploadModel();
 		StockUploadModel stockUploadModelResponse;
 		log.info("roletype value=="+txnId);
-		String roletypesession=String.valueOf(session.getAttribute("usertype"));
-		log.info("session value=="+roletypesession);
+		
+		log.info("session value=="+role);
 		stockUploadModel.setTxnId(txnId);
-		stockUploadModel.setRoleType(roletypesession);
+		stockUploadModel.setRoleType(role);
 		
 		
 		if(reqType.equals("editPage")) {
@@ -231,115 +231,113 @@ else {
 		
 	}
 	
-	
 	//************************************************ Open stock record page********************************************************************************/
 
-		@RequestMapping(value= {"/updateUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-		public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) int supplierId,@RequestParam(name="supplierName",required = false) String supplierName
-				,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
-				@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename) {
-			log.info("entry point  in update Stock ** **.");
-			StockUploadModel stockUpload= new StockUploadModel();
-		/*
-		 * String roletypesession=String.valueOf(session.getAttribute("usertype"));
-		 * String userName=session.getAttribute("username").toString(); int userId=
-		 * (int) session.getAttribute("userid"); String
-		 * name=session.getAttribute("name").toString();
-		 */
-			
-			GenricResponse response= new GenricResponse();
-			
-			
+	@RequestMapping(value= {"/updateUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) int supplierId,@RequestParam(name="supplierName",required = false) String supplierName
+	,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
+	@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename) {
+	log.info("entry point in update Stock * *.");
+	StockUploadModel stockUpload= new StockUploadModel();
 
-			
-			log.info("file name without upload file="+filename);
+	String roletypesession=String.valueOf(session.getAttribute("usertype"));
+	String userName=session.getAttribute("username").toString();
+	int userId=(int) session.getAttribute("userid"); 
+	String name=session.getAttribute("name").toString();
+	String selectedRoletype=(String) session.getAttribute("selectedUserTypeId");
 
-			if(file==null)
-			{
-				log.info("message  in file upload block ");
 
-				stockUpload.setSupplierId(supplierId);
-				stockUpload.setSuplierName(supplierName);
-				stockUpload.setQuantity(quantity);
-				stockUpload.setTxnId(txnId);
-				stockUpload.setFileName(filename);
-				stockUpload.setUserId(265);
-				stockUpload.setRoleType("Importer");
-				log.info(stockUpload.toString());
-			}
-			else {
+	GenricResponse response= new GenricResponse();
 
 
 
-				log.info("file is empty or not "+file.isEmpty());
-				try {
-					String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
 
+	log.info("file name without upload file="+filename);
 
-					File tmpDir = new File(rootPath+file.getOriginalFilename());
-					boolean exists = tmpDir.exists();
+	if(file==null)
+	{
+	log.info("message in file upload block ");
 
-					if(exists) {
-							
-						log.info("file is exist.");
-						Path temp = Files.move 
-								(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()),  
-										Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
-
-						// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
-						log.info("after move file");
-						tmpDir.delete();
-					}
-
-
-					byte[] bytes = file.getBytes();
-
-					File dir = new File(rootPath + File.separator);
-
-					if (!dir.exists()) 
-						dir.mkdirs();
-
-					File serverFile = new File(rootPath+file.getOriginalFilename());
-					log.info("COMPLETE PATH" + serverFile);
-					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-					stream.write(bytes);
-					stream.close();
-
-				}
-				catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-					log.error(e.getMessage(), e);
-				}
-
-
-				log.info("message after file upload block ");
-
-				stockUpload.setSupplierId(supplierId);
-				stockUpload.setSuplierName(supplierName);
-				stockUpload.setQuantity(quantity);
-				stockUpload.setTxnId(txnId);
-				stockUpload.setFileName(filename);
-				stockUpload.setUserId(265);
-				stockUpload.setRoleType("Importer");
-
-				log.info(stockUpload.toString());
-				
-			}
-
-			response = feignCleintImplementation.updateStock(stockUpload);
-			log.info(" update stock form block.");
-
-			// calling service method
-			//	String response=service.updateConsignmnet(consignment, file, txnid);
-
-
-			log.info(" update consignment exit point.");
-			return response;
-
-		}
+	stockUpload.setSupplierId(supplierId);
+	stockUpload.setSuplierName(supplierName);
+	stockUpload.setQuantity(quantity);
+	stockUpload.setTxnId(txnId);
+	stockUpload.setFileName(filename);
+	stockUpload.setInvoiceNumber(invoiceNumber);
+	stockUpload.setUserId(userId);
+	stockUpload.setRoleType(selectedRoletype);
+	log.info(stockUpload.toString());
+	}
+	else {
 
 
 
+	log.info("file is empty or not "+file.isEmpty());
+	try {
+	String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+
+
+	File tmpDir = new File(rootPath+file.getOriginalFilename());
+	boolean exists = tmpDir.exists();
+
+	if(exists) {
+
+	log.info("file is exist.");
+	Path temp = Files.move 
+	(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
+	Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
+
+	// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
+	log.info("after move file");
+	tmpDir.delete();
+	}
+
+
+	byte[] bytes = file.getBytes();
+
+	File dir = new File(rootPath + File.separator);
+
+	if (!dir.exists()) 
+	dir.mkdirs();
+
+	File serverFile = new File(rootPath+file.getOriginalFilename());
+	log.info("COMPLETE PATH" + serverFile);
+	BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+	stream.write(bytes);
+	stream.close();
+
+	}
+	catch (Exception e) {
+	// TODO: handle exception
+	e.printStackTrace();
+	log.error(e.getMessage(), e);
+	}
+
+
+	log.info("message after file upload block ");
+
+	stockUpload.setSupplierId(supplierId);
+	stockUpload.setSuplierName(supplierName);
+	stockUpload.setQuantity(quantity);
+	stockUpload.setTxnId(txnId);
+	stockUpload.setFileName(file.getOriginalFilename());
+	stockUpload.setUserId(userId);
+	stockUpload.setRoleType(selectedRoletype);
+
+	log.info(stockUpload.toString());
+
+	}
+
+	response = feignCleintImplementation.updateStock(stockUpload);
+	log.info(" update stock form block.");
+
+	// calling service method
+//		String response=service.updateConsignmnet(consignment, file, txnid);
+
+
+	log.info(" update consignment exit point.");
+	return response;
+
+	}
 	
 }

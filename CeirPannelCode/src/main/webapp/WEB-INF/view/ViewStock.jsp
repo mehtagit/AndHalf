@@ -292,7 +292,7 @@ to {
                                 <input type="file" id="editcsvUploadFile" accept=".csv">
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate responsive-file-div" type="text">
+							<input class="file-path validate responsive-file-div" id="editcsvUploadFileName" type="text">
                             </div>
                         </div><br><br>
                         <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
@@ -367,7 +367,7 @@ to {
                                 <input type="file" id="csvUploadFile" accept=".csv" disabled>
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate responsive-file-div" placeholder="fileName.csv" type="text" disabled>
+                                <input class="file-path validate responsive-file-div" placeholder="fileName.csv" id="csvUploadFileName" type="text" disabled>
                             </div>
                         </div><br><br>
                         <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
@@ -477,8 +477,13 @@ event.preventDefault();
 function viewUploadedStockDetails(txnId){
  
 	 $("#viewStockModal").openModal();
-	 $.ajax({
-			url : "./openStockPopup?reqType=editPage&txnId="+txnId,
+	 var roleType = $("body").attr("data-roleType");
+	    var userId = $("body").attr("data-userID");
+	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    var role = currentRoleType == null ? roleType : currentRoleType;
+	    
+	     	$.ajax({
+	 				url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			type : 'GET',
@@ -501,7 +506,7 @@ function setViewPopupData(data){
 	$("#InvoiceNumber").val(data.invoiceNumber);
 	$("#Quantity").val(data.quantity);
 	$("#TransactionId").val(data.txnId);
-	$("#csvUploadFile").val(data.fileName); 
+	$("#csvUploadFileName").val(data.fileName);
 	
 	
 }
@@ -511,9 +516,16 @@ function setViewPopupData(data){
 
 //******************************************* start edit Pop up data *************************************************************************************************
 
-function EditUploadedStockDetails(txnId){ 	
+function EditUploadedStockDetails(txnId){ 
+	
+
+	 var roleType = $("body").attr("data-roleType");
+    var userId = $("body").attr("data-userID");
+    var currentRoleType = $("body").attr("data-selected-roleType"); 
+    var role = currentRoleType == null ? roleType : currentRoleType;
+    
      	$.ajax({
- 				url : "./openStockPopup?reqType=editPage&txnId="+txnId,
+ 				url : "./openStockPopup?reqType=editPage&txnId="+txnId+'&role='+role,
  				dataType : 'json',
  				contentType : 'application/json; charset=utf-8',
  				type : 'GET',
@@ -537,7 +549,7 @@ function setEditPopupData(data){
 	$("#editInvoiceNumber").val(data.invoiceNumber);
 	$("#editQuantity").val(data.quantity);
 	$("#editTransactionId").val(data.txnId);
-	$("#editcsvUploadFile").val(data.fileName);
+	$("#editcsvUploadFileName").val(data.fileName);
 	
 } 
 
@@ -549,7 +561,7 @@ function editUploadStock(){
   
       	 var supplierId=$('#editSupplierId').val();
       	 var supplierName=$('#editSupplierName').val();
-      	 var filename=$('#editcsvUploadFile').val();
+      	 var filename=$('#editcsvUploadFileName').val();
       	 var txnId=$('#editTransactionId').val();
       	 var quantity=$('#editQuantity').val();
       	 var InvoiceNumber=$('#editInvoiceNumber').val();
@@ -563,7 +575,7 @@ function editUploadStock(){
       	 	formData.append('quantity',quantity);
       		formData.append('txnId',txnId);
       		formData.append('filename',filename);
-      		formData.append('invoiceNumber',filename);
+      		formData.append('invoiceNumber',InvoiceNumber);
       		
       		console.log(JSON.stringify(formData));
       		console.log("*********");
@@ -614,8 +626,14 @@ function editUploadStock(){
      
      function confirmantiondelete(){
      	 var txnId = $("#popupTransactionId").text();
+     	 var roleType = $("body").attr("data-roleType");
+         var userId = $("body").attr("data-userID");
+         var currentRoleType = $("body").attr("data-selected-roleType"); 
+         var role = currentRoleType == null ? roleType : currentRoleType;
+         
      	 var obj ={
      			 "txnId" : txnId,
+     			 "roleType":role
      	 }
      	 
      	 $.ajax({
@@ -645,11 +663,11 @@ function editUploadStock(){
 
 
 
-     function closeDeleteModal(){
+    /*  function closeDeleteModal(){
     	 $("#DeleteStockconfirmationModal").closeModal();
     	// $('#updateModal').closeModal();
     	 $(".lean-overlay").remove();
-     }
+     } */
      
      function closeViewModal()
      {
