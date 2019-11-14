@@ -175,10 +175,30 @@ to {
 }
 
 
+/* icon color */
+
+.error-icon
+{
+color:red; font-size:20px; margin-right:15px;
+}
+.download-icon{
+font-size: 20px; color:#2e8b57;
+}
+.view-icon{
+font-size: 20px; margin:0 0 0 15px;
+}
+.edit-icon{
+font-size: 20px; margin:0 15px 0 15px; color: #006994
+}
+.delete-icon{
+font-size: 20px; color: red;
+}
 .eventNone {
-    cursor: not-allowed;
     user-select: none;
     pointer-events: none;
+}
+.disable {
+    color: grey;
 }
 </style>
 
