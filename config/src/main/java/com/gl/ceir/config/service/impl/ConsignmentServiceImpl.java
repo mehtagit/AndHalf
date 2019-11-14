@@ -168,7 +168,7 @@ public class ConsignmentServiceImpl {
 				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(consignmentMgmt.getStartDate()))
-				cmsb.with(new SearchCriteria("modifiedOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 	
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
