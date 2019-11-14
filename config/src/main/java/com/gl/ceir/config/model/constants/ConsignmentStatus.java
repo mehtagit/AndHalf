@@ -1,24 +1,39 @@
 package com.gl.ceir.config.model.constants;
 
 public enum ConsignmentStatus {
-	UPLOADING(0), PROCESSING(1), REJECTED_BY_SYSTEM(2), PENDING_FOR_APPROVAL_CEIR_AUTHORITY(3), 
-	REJECTED_BY_CEIR_AUTHORITY(4), PENDING_FOR_APPROVAL_CUSTOM(5),APPROVED(6), REJECTED_BY_CUSTOM(7), WITHDRAWAL_BY_IMPORTER(8),
-	WITHDRAWAL_BY_CEIR(9);
+	
+	UPLOADING(0, "Uploading"), PROCESSING(1, "Processing"), REJECTED_BY_SYSTEM(2, "Rejected By System"), 
+	
+	PENDING_APPROVAL_FROM_CEIR_AUTHORITY(3, "Pending Approval From CEIR Authority"), 
+	
+	REJECTED_BY_CEIR_AUTHORITY(4, "Rejected by CEIR Authority"), 
+	
+	PENDING_APPROVAL_FROM_CUSTOMS(5, "Pending Approval From Customs"), APPROVED(6, "Approved"), 
+	
+	REJECTED_BY_CUSTOMS(7, "Rejected By Customs"), WITHDRAWN_BY_IMPORTER(8, "Withdrawn By Importer"),
+	
+	WITHDRAWN_BY_CEIR(9, "Withdrawn By CEIR");
 
 	private int code;
+	private String desc;
 
-	ConsignmentStatus(int code) {
+	ConsignmentStatus(int code, String desc) {
 		this.code = code;
+		this.desc = desc;
 	}
 
 	public Integer getCode() {
 		return code;
 	}
 
+	public String getDesc() {
+		return desc;
+	}
+
 	public static ConsignmentStatus getActionNames(int code) {
-		for (ConsignmentStatus codes : ConsignmentStatus.values()) {
-			if (codes.equals(code))
-				return codes;
+		for (ConsignmentStatus consignmentStatus : ConsignmentStatus.values()) {
+			if (consignmentStatus.getCode() == code)
+				return consignmentStatus;
 		}
 
 		return null;

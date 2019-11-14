@@ -323,7 +323,7 @@ public class ConsignmentServiceImpl {
 					UserProfile userProfile =	userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
 
 					if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
-						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_FOR_APPROVAL_CUSTOM.getCode());
+						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
 						consignmentRepository.save(consignmentMgmt);	
 						//mail send to user and Custom 
 						logger.info("Email sending to user to accept ceir");
@@ -348,7 +348,7 @@ public class ConsignmentServiceImpl {
 					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
-					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOM.getCode());
+					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentRepository.save(consignmentMgmt);
 					//send mail to user and CEIR
 					logger.info("Email sending to user reject custom");
