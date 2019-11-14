@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.repository.StackholderPolicyMappingRepository;
 
@@ -25,9 +26,9 @@ public class StackholderPolicyMappingServiceImpl {
 
 
 
-	public StackholderPolicyMapping getBlackListConfigDetails() {
+	public StackholderPolicyMapping getPocessListConfigDetails(StackholderPolicyMapping StackholderPolicyMapping) {
 		try {
-			return stackholderPolicyMappingRepository.getByListType("BlackList");
+			return stackholderPolicyMappingRepository.getByListType(StackholderPolicyMapping.getListType());
 
 		} catch (Exception e) {
 
@@ -36,6 +37,19 @@ public class StackholderPolicyMappingServiceImpl {
 		}
 	}
 
+
+
+	public GenricResponse updateProcessPolicy(StackholderPolicyMapping StackholderPolicyMapping) {
+		try {
+
+			stackholderPolicyMappingRepository.save(StackholderPolicyMapping);
+			return new GenricResponse(0,"Update Sucessfully","");
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 
 	public List<StackholderPolicyMapping> getFileControllingDetails(){

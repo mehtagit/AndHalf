@@ -90,6 +90,7 @@ public class DeviceDb  implements Serializable{
 	public Long getImporterUserId() {
 		return importerUserId;
 	}
+
 	public void setImporterUserId(Long importerUserId) {
 		this.importerUserId = importerUserId;
 	}
