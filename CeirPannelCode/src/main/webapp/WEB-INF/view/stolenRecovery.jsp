@@ -740,7 +740,7 @@ to {
 
         
         //******************************************************************************************************************************************************************888888
- //******************************************************************************************************************************************************************888888
+ //******************************************      ************************************************************************************************************************888888
  //******************************************************************************************************************************************************************888888   
  
  function editRegisterConsignment(){
@@ -775,7 +775,7 @@ to {
          		console.log(JSON.stringify(formData));
          		console.log("*********");
          	 	
-         	 $.ajax({
+         	 $.ajax({ 
   				url: '${context}/Consignment/updateRegisterConsignment',
   				type: 'POST',
   				data: formData,
@@ -985,6 +985,7 @@ event.preventDefault();
    			for(i=0; i<button.length; i++){
    				$('#'+button[i].id).text(button[i].buttonTitle);
  			if(button[i].type === "HeaderButton"){
+ 				
    				$('#'+button[i].id).attr("href", button[i].buttonURL);
  }
  else{
@@ -995,6 +996,172 @@ event.preventDefault();
 
    			//$("#filterBtnDiv").append();
    			}); 
+   			 
+   	
+   function fileStolenReport(){
+    		
+	    var roleType = $("body").attr("data-roleType");
+	    var userId = $("body").attr("data-userID");
+	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    
+	    var sourceType;
+	    var requestType;
+	    var role = currentRoleType == null ? roleType : currentRoleType;
+	    var blockPeriod=$('#blockPeriod').val();
+   	    var blockType=$('#blockType').val();
+   	      	
+   	      	  
+   	      	
+   	      	 
+   	      	 	var formData= new FormData();
+   	      		formData.append('blockingType',blockType);
+   	      	 	formData.append('blockingTimePeriod',blockPeriod);
+   	      	 	formData.append('requestType',requestType);
+   	      	 	formData.append('roleType',role);
+   	      		formData.append('sourceType',sourceType);
+   	      		formData.append('userId',userId);
+   	      		
+   	      		
+   	      		console.log(JSON.stringify(formData));
+   	      		console.log("*********");
+   	      	 	
+   	      	 $.ajax({
+   					url: '${context}/fileTypeStolen',
+   					type: 'POST',
+   					data: formData,
+   					processData: false,
+   					contentType: false,
+   					success: function (data, textStatus, jqXHR) {
+   						
+   						 console.log(data);
+   						/*  $('#editStockModal').closeModal();
+   						 $('#successUpdateStockModal').modal();
+   						  if(data.errorCode==200){
+   						
+   						$('#stockSucessMessage').text('');
+   						 $('#stockSucessMessage').text('Operation is not allowed');
+   							 }
+   						 else{
+   							 $('#stockSucessMessage').text('');
+   			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+   						 } */
+   					   // $('#updateConsignment').modal('open'); 
+   						//alert("success");
+   						
+   					},
+   					error: function (jqXHR, textStatus, errorThrown) {
+   					console.log("error in ajax")
+   					}
+   				});
+   	      
+   	      }
+   	      
+  
+
+   function fileRecoveryReport(){
+	    var roleType = $("body").attr("data-roleType");
+	    var userId = $("body").attr("data-userID");
+	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    var sourceType;
+	    var requestType;
+	    var role = currentRoleType == null ? roleType : currentRoleType;
+	   	var formData= new FormData();
+   	      	 
+	   	     formData.append('requestType',requestType);
+   	      	 formData.append('roleType',role);
+   	         formData.append('sourceType',sourceType);
+   	      	 formData.append('userId',userId);
+   	      	 
+   	      	 console.log(JSON.stringify(formData));
+   	      	 console.log("*********");
+   	      	 $.ajax({
+   					url: '${context}/fileTypeStolen',
+   					type: 'POST',
+   					data: formData,
+   					processData: false,
+   					contentType: false,
+   					success: function (data, textStatus, jqXHR) {
+   				    console.log(data);
+   						/*  $('#editStockModal').closeModal();
+   						 $('#successUpdateStockModal').modal();
+   						  if(data.errorCode==200){
+   						
+   						$('#stockSucessMessage').text('');
+   						 $('#stockSucessMessage').text('Operation is not allowed');
+   							 }
+   						 else{
+   							 $('#stockSucessMessage').text('');
+   			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+   						 } */
+   					   // $('#updateConsignment').modal('open'); 
+   						//alert("success");
+   						
+   					},
+   					error: function (jqXHR, textStatus, errorThrown) {
+   					console.log("error in ajax")
+   					}
+   				});
+   	      
+   	      }
+   	      
+  
+   function multipleStolenRecovery(){
+	   /*    			  
+	      	      	 var supplierId=$('#editSupplierId').val();
+	      	      	 var supplierName=$('#editSupplierName').val();
+	      	      	 var filename=$('#editcsvUploadFileName').val();
+	      	      	 var txnId=$('#editTransactionId').val();
+	      	      	 var quantity=$('#editQuantity').val();
+	      	      	 var InvoiceNumber=$('#editInvoiceNumber').val(); */
+	      	      	  
+	      	      	
+	      	      	 
+	      	      	 var stolenRecoverydata= 
+	      	      			[{
+	      	      		    
+	      	      		    "txnId": "C2019103113182217",
+	      	      		    "userId": 265
+	      	      		  },
+	      	      		  {
+	      	      		    
+	      	      		    "txnId": "C201910311318229976",
+	      	      		    "userId": 266
+	      	      		  }]
+	      	      	 
+	      	      	
+	      	      	 $.ajax({
+	      					url: '${context}/multipleStolenRecovery',
+	      					type: 'POST',
+	      					data: JSON.stringify(stolenRecoverydata),
+	      					dataType : 'json',
+	            			contentType : 'application/json; charset=utf-8',
+	            			success: function (data, textStatus, jqXHR) {
+	      						
+	      						 console.log(data);
+	      						/*  $('#editStockModal').closeModal();
+	      						 $('#successUpdateStockModal').modal();
+	      						  if(data.errorCode==200){
+	      						
+	      						$('#stockSucessMessage').text('');
+	      						 $('#stockSucessMessage').text('Operation is not allowed');
+	      							 }
+	      						 else{
+	      							 $('#stockSucessMessage').text('');
+	      			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+	      						 } */
+	      					   // $('#updateConsignment').modal('open'); 
+	      						//alert("success");
+	      						
+	      					},
+	      					error: function (jqXHR, textStatus, errorThrown) {
+	      					console.log("error in ajax")
+	      					}
+	      				});
+	      	      
+	      	      }
+	      	      
+	     
+   			 
   </script>
 </body>
 </html>
