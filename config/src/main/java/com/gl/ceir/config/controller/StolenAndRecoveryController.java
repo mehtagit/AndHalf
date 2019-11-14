@@ -65,10 +65,14 @@ public class StolenAndRecoveryController {
 	{
 		logger.info("Stolen upload Request="+stolenandRecoveryDetails);
 
+		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
+		mapping.setListType("BlackList");
+
+
 		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
 				stolenandRecoveryDetails.getBlockingType() == "") {
 
-			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getBlackListConfigDetails();
+			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
 			String newTime = utility.newDate(config.getGraceTimePeriod());
 
 			stolenandRecoveryDetails.setBlockingTimePeriod(newTime);
@@ -83,7 +87,7 @@ public class StolenAndRecoveryController {
 
 
 	@ApiOperation(value = "Upload Multiple Stolen Details.", response = GenricResponse.class)
-	@RequestMapping(path = "/stakeholder/uploadMultiple/Stolen", method = RequestMethod.POST)
+	@RequestMapping(path = "/stakeholder/uploadMultiple/StolenAndRecovery", method = RequestMethod.POST)
 	public GenricResponse uploadMultipleStolenDetails(@RequestBody List<StolenandRecoveryMgmt> stolenandRecoveryDetails)
 	{
 		logger.info("Multiple Stolen Upload Request="+stolenandRecoveryDetails);
@@ -94,7 +98,7 @@ public class StolenAndRecoveryController {
 		return genricResponse;
 
 	}
-	
+
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
 	@RequestMapping(path = "/stakeholder/record", method = RequestMethod.POST)
 	public MappingJacksonValue getAllActionDetails(@RequestBody FilterRequest stolenandRecoveryDetails,
@@ -114,21 +118,52 @@ public class StolenAndRecoveryController {
 
 
 
-	@ApiOperation(value = "Download Stolen And Recovery file.", response = String.class)
-	@RequestMapping(value = "/stackholder/download/stolenAndRecoveyfile", method = RequestMethod.GET)
-	public String downloadStolenAndRecoveyrFile(@RequestParam("txnId") String txnId,@RequestParam("fileName") String fileName,
-			@RequestParam("fileType") String fileType) {
+	@ApiOperation(value = "Delete Stolen and  Recovery Details.", response = GenricResponse.class)
+	@RequestMapping(path = "/stakeholder/Delete", method = RequestMethod.DELETE)
+	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
-		String serverPath=fileStorageProperties.getActionUploadDir();
+		logger.info("Record Delete request ="+stolenandRecoveryRequest);
 
-		if(fileType.equals("ERROR")) {
-			serverPath= serverPath+"action/"+txnId+"/error.csv";
-			return serverPath;
-		}else {
-			serverPath= serverPath+"action/"+txnId+"/"+fileName;
-			return serverPath;
-		}
+		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
+
+		logger.info("Response send ="+genricResponse);
+
+		return genricResponse;
+
+
 	}
+
+
+
+	@ApiOperation(value = "Update Stolen and  Recovery Details.", response = GenricResponse.class)
+	@RequestMapping(path = "/stakeholder/update", method = RequestMethod.PUT)
+	public GenricResponse updateRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
+		logger.info("Record update request="+stolenandRecoveryRequest);
+
+		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.updateRecord(stolenandRecoveryRequest);
+
+		logger.info("Response send="+genricResponse);
+
+		return genricResponse;
+
+	}
+
+
+
+	@ApiOperation(value = "View Stolen and  Recovery Details.", response = StolenandRecoveryMgmt.class)
+	@RequestMapping(path = "/stakeholder/view", method = RequestMethod.POST)
+	public MappingJacksonValue viewRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest)
+	{
+		logger.info("view Stolen and recovery request="+stolenandRecoveryRequest);
+
+		StolenandRecoveryMgmt mgmt = stolenAndRecoveryServiceImpl.viewRecord(stolenandRecoveryRequest);
+		logger.info("View details Response send ="+mgmt);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(mgmt);
+		return mapping;
+
+	}
+
 
 
 

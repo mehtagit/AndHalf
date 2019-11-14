@@ -26,7 +26,7 @@ public class User {
 	private Date modifiedOn; 
 	private String status;  
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	UserProfile userProfile;
 	/*
 	@JsonIgnore

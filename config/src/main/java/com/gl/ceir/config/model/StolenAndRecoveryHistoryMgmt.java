@@ -12,14 +12,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class StolenandRecoveryMgmt implements Serializable {
+public class StolenAndRecoveryHistoryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -120,6 +118,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 				+ ", requestType=" + requestType + ", roleType=" + roleType + ", blockingType=" + blockingType
 				+ ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType + "]";
 	}
+
+
 
 
 
