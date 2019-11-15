@@ -22,7 +22,7 @@ import feign.Headers;
 @Service
 @FeignClient(url = "http://13.233.39.58:9090/CEIR",value = "dsj" )
 public interface FeignCleintImplementation {
-	
+	 
 	
 	//View all Consignment  feign  controller
 	@RequestMapping(value="/consignment/Record" ,method=RequestMethod.GET) 

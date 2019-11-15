@@ -31,10 +31,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-@Service
+@Service 
 public class RegistrationService {
+	
 	@Value("${FilePath1}") 
 	String filePath; 
+	
 	@Autowired
 	UserRegistrationFeignImpl registrationFeignImpl;
 	@Autowired
@@ -42,9 +44,10 @@ public class RegistrationService {
 	@Autowired
 	GenerateRandomDigits randomDigits;
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	public ModelAndView registrationView() {
+	public ModelAndView registrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
-		ModelAndView mv=new ModelAndView();
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();       
 		mv.setViewName("registration");
 		List<Usertype> usertypeList=registrationFeignImpl.userypeList();
 		List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();

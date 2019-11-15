@@ -25,7 +25,7 @@
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
-    <link rel="stylesheet" href="font/font-awesome/${context}/resources/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -58,6 +58,9 @@
             padding-left: 0;
         }
     </style>
+<script>
+var contextpath = "${context}";
+</script>
 
 </head>
 
@@ -83,13 +86,16 @@
                         <ul class="haed-btn">
                             <li class="haed-btn-style"><a href="${context}/login" style="color: #000;">Login</a></li>
                             <li class="haed-btn-style">
-<select class="browser-default" onchange="location = this.value;">
+  <a href="${context}/registration"
+                                    style="color: #000;">Registration</a>
+                                                              
+<%-- <select id="usertypes" class="browser-default" onchange="location = this.value;">
 <option value="" disabled selected>Registration</option>
 <option value="#">Admin</option>  
 <option value="#">Custom</option>  
 <option value="${context}/registration">Importer</option>
 <option value="#">Operator</option>
-</select>
+</select> --%>
 </li>
 
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Check IMEI</a></li>
@@ -194,17 +200,11 @@
     <!-- ================================================
     Scripts
     ================================================ -->
-
-    <script>
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
-
-        $('.dropdown-trigger').dropdown();
-    </script>
-
-    <!-- jQuery Library -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+ <!-- jQuery Library -->
+    <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
     <!--prism
@@ -212,16 +212,26 @@
     <!--scrollbar-->
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-${context}/resources/js/chartist.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 
     <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/${context}/resources/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+    <script>
+        $(document).ready(function () {
+        	usertypeData();
+            $('.modal').modal();
+        });
+
+        $('.dropdown-trigger').dropdown();
+    </script>
+
+   
 
 </body>
 

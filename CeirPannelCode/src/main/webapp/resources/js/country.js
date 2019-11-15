@@ -282,7 +282,7 @@ function populateCountries(countryElementId, stateElementId){
 	var countryElement = document.getElementById(countryElementId);
 	countryElement.length=0;
 	countryElement.options[0] = new Option('Country ',''); 
-	countryElement.selectedIndex = 0;
+	countryElement.selectedIndex = 0; 
 	for (var i=0; i<country_arr.length; i++) {
 		countryElement.options[countryElement.length] = new Option(country_arr[i],country_arr[i]);
 	}

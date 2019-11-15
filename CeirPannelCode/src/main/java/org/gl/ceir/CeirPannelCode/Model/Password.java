@@ -1,9 +1,10 @@
 package org.gl.ceir.CeirPannelCode.Model;
 public class Password {
+	private String oldPassword;
 	private String password;
 	private String confirmPassword;
 	private String username;
-	private Integer userid;
+	private Integer userid; 
 	public String getPassword() {
 		return password;
 	} 
@@ -29,9 +30,17 @@ public class Password {
 	public void setUserid(Integer userid) {
 		this.userid = userid;
 	}
+	
+	
+	public String getOldPassword() {
+		return oldPassword;
+	}
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
 	@Override
 	public String toString() {
-		return "Password [password=" + password + ", confirmPassword=" + confirmPassword + ", username=" + username
-				+ ", userid=" + userid + "]";
+		return "Password [oldPassword=" + oldPassword + ", password=" + password + ", confirmPassword="
+				+ confirmPassword + ", username=" + username + ", userid=" + userid + "]";
 	}              
 }

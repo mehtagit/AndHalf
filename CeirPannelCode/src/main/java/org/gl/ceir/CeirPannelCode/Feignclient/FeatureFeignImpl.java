@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
 @FeignClient(url = "http://13.127.239.247:8085/CEIRCode",value = "featureUrls" )
-public interface FeatureFeignImpl {
+public interface FeatureFeignImpl { 
 
 	@PostMapping("/featureList/{userid}")
 	public List<Feature> featureList(@PathVariable("userid") Integer userid);

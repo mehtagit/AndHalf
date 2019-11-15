@@ -15,10 +15,8 @@
     <meta name="keywords"
         content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
     <title>CEIR | Importer Portal</title>
-
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
@@ -28,24 +26,22 @@
     <meta name="msapplication-TileImage" content="${context}/resources/images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
     <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
-
     <!-- CORE CSS-->
+    
+    
     <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->
     <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
-
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
     <!-- Country -->
     <!-- <script type="text/javascript" src="js/country.js"></script> -->
-
     <style>
         input[type="checkbox"] {
             display: none;
@@ -86,28 +82,19 @@
             opacity: 0;
         }
     </style>
-
-
 <script>
 var contextpath = "${context}";
 </script>
-
-
 </head>
-
-
 <body>
-
-
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm"  method="post"
-					action="${context}/registration" enctype="multipart/form-data" >
+					action="${context}/registration"  >
 					<div class="card-panel"
 						style="width: 90%; margin: auto; padding: 20px 5% 20px 5%;">
 						<%-- <a href="${context}/"
@@ -144,7 +131,7 @@ var contextpath = "${context}";
 <div class="input-field col s12 m6 l6">
                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">AsType <span
                                             class="star">*</span></p>
-                                    <select name="type" class="browser-default" id="mySelect" onchange="myFunction()" required>
+                                    <select name="type" class="browser-default" id="type" onchange="myFunction()" required>
                                         <option value="" disabled selected>Type</option>
                                         <option value="Individual"> Individual</option>
                                         <option value="Company">Company</option>
@@ -156,7 +143,7 @@ var contextpath = "${context}";
                                                                 <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
                                     <input type="text" name="passportNo" class="form-control boxBorder boxHeight"
                                       title="Please enter alphanumeric with special character upto 12 characters only"
-										 id="passportNumber" maxlength="12"
+										 id="passportNo" maxlength="12"
 										 pattern="[A-Za-z0-9\s]{0,12}"/>
                                     <label for="passportNumber">National ID/Passport Number <span
                                             class="star">*</span></label>
@@ -164,7 +151,7 @@ var contextpath = "${context}";
 
                                 <div class="input-field col s12 m6 l6" id="companyName" style="display: none;">
                                     <input type="text" name="companyName" 
-										class="form-control boxBorder boxHeight" id="company"
+										class="form-control boxBorder boxHeight" id="companyName"
 										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
 										 title="Please enter alphanumeric upto 50 characters only">
                                     <label for="company">Company Name <span class="star">*</span></label>
@@ -178,7 +165,7 @@ var contextpath = "${context}";
                                             style="margin-top: 5px; padding-left:0;">
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input  name="file" type="file" id="csvUploadFile"
+                                                <input  name="file" type="file" id="file"
 											accept=".pfg">
                                             </div>
                                             <div class="file-path-wrapper">
@@ -209,7 +196,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="phoneNo" maxlength="20"
-										class="form-control boxBorder boxHeight" id="phone"
+										class="form-control boxBorder boxHeight" id="phoneNo"
 										pattern="[0-9]{8,20}" title="Please enter phone number between 8 to 20 characters only"  required="required"> <label for="phone">Phone
 										Number <span class="star">*</span> 
 									</label>
@@ -231,14 +218,14 @@ var contextpath = "${context}";
 									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
 										class="form-control boxBorder boxHeight"
 									title="Please enter alphanumeric with special character upto 200 characters only"	
-										 id="address" required="required">
+										 id="propertyLocation" required="required">
 									<label for="address" >Address(Property Location) <span
 										class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
-										class="form-control boxBorder boxHeight" id="streetNumber"
+										class="form-control boxBorder boxHeight" id="street"
 										 pattern="[A-Za-z0-9\s]{0,20}" required="required" 
 									title="Please enter alphanumeric with special character upto 20 characters only"	 
 										 > <label for="streetNumber">Street
@@ -314,37 +301,36 @@ var contextpath = "${context}";
                                 <div class="col s12 m6 l6" style="margin-bottom: 20px;">
                                     <label for="vatNumber">VAT Registration <span class="star">*</span></label>
                                     <div class=" boxHeight">
-                                        <label><input class="with-gap" name="vatStatus" type="radio"
+                                        <label><input class="with-gap vatStatus" value="1" name="vatStatus" type="radio"
                                                 onclick="document.getElementById('vatNumberField').style.display = 'block';">
-                                            <span>Yes</span>
+                                            <span>Yes</span> 
                                         </label>
                                         <label>
-                                            <input class="with-gap" name="vatStatus" type="radio"
-                                                style="margin-left: 20px;"
+                                            <input class="with-gap vatStatus" name="vatStatus" type="radio"
+                                                style="margin-left: 20px;" value="0"
                                                 onclick="document.getElementById('vatNumberField').style.display = 'none';"
                                                 checked />
                                             <span>No</span>
                                         </label>
                                     </div>
                                 </div>
-
                                 <div class="input-field col s12 m6 l6">
                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Role Type <span
                                             class="star">*</span></p>
-                                   <select multiple required name="roles"  >
+                                
+                                   <select multiple required name="roles" id="roles"  >
 										<option value="" disabled>Role Type <span
 												class="star"></span></option>
 								<c:forEach items="${usertypes}" var="usertype" >
 								<c:if test="${usertype.usertypeName!='admin'}">
 								<option  value="${usertype.id}">${usertype.usertypeName}</option>
-								</c:if> 
+								</c:if>   
 								</c:forEach>	
 								</select>  
                                 </div>
-
                                 <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
                                     <input type="text" name="vatNo" maxlength="15"
-										class="form-control boxBorder boxHeight" id="vatNumber"
+										class="form-control boxBorder boxHeight" id="vatNo"
 										pattern="[A-Za-z0-9]{0,15}"
 								title="Please enter alphanumeric upto 15 characters only">
                                     <label for="roleType">VAT Number <span class="star">*</span></label>
@@ -441,14 +427,14 @@ var contextpath = "${context}";
 							</div> -->
 							
                              <div class="securityQuestionDiv">
-							<div class="row">
+							<div class="row securityQuestionDiv">
 								<div class="input-field col s12 m6 l6">
 										<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Security Question 1 <span class="star">*</span>
 									</p>
 									
-									<select class="browser-default" name="questionList[0].question" required>
+									<select  class="browser-default questionId" name="questionList[0].questionId" required>
 									<option value="" disabled selected>Security Question
 											1</option> 
 									<c:forEach items="${questions}" var="question"> 
@@ -462,9 +448,9 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="questionList[0].answer" 
-										class="form-control boxBorder boxHeight" id="SecurityAnswer1"
+										class="form-control boxBorder boxHeight answer" id="SecurityAnswer1"
 										pattern="[A-Za-z]{0,50}" required="required"
-										maxlength="50"
+										maxlength="50"  
 										title="Please enter alphabets upto 50 characters only"
 										> <label for="SecurityAnswer1">Answer
 										<span class="star">*</span>
@@ -472,13 +458,13 @@ var contextpath = "${context}";
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row securityQuestionDiv">
 								<div class="input-field col s12 m6 l6">
 								<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Security Question 2 <span class="star">*</span>
 									</p>
-									<select name="questionList[1].question" class="browser-default" required>
+									<select name="questionList[1].questionId" class="browser-default questionId" required>
 									<option value="" disabled selected>Security Question
 											2</option>
 									<c:forEach items="${questions}" var="question"> 		
@@ -491,7 +477,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="questionList[1].answer"
-										class="form-control boxBorder boxHeight" id="SecurityAnswer2"
+										class="form-control boxBorder boxHeight answer" id="SecurityAnswer2"
 										pattern="[A-Za-z]{0,50}"
 										maxlength="50"
 										title="Please enter alphabets upto 50 characters only"
@@ -501,7 +487,7 @@ var contextpath = "${context}";
 								</div>
 							</div>
 
-							<div class="row">
+							<div class="row securityQuestionDiv">
 								<div class="input-field col s12 m6 l6">
 								
 								<p
@@ -509,7 +495,7 @@ var contextpath = "${context}";
 										Security Question 3<span class="star">*</span>
 									</p>
 								
-									<select name="questionList[2].question" class="browser-default" required>
+									<select name="questionList[2].questionId" class="browser-default questionId" required>
 									<option value="" disabled selected>Security Question
 											3</option>
 									<c:forEach items="${questions}" var="question"> 		
@@ -523,7 +509,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="questionList[2].answer"
-										class="form-control boxBorder boxHeight" id="SecurityAnswer3"
+										class="form-control boxBorder boxHeight answer" id="SecurityAnswer3"
 										title="Please enter alphabets upto 50 characters only"
 										maxlength="50"
 										pattern="[A-Za-z]{0,50}" required="required"> <label for="SecurityAnswer3">Answer
@@ -601,7 +587,6 @@ var contextpath = "${context}";
 			</div>
 		</div>
 	</div>
-
 	<!-- Modal End -->
 
 	<!-- Modal 2 start   -->
@@ -687,12 +672,13 @@ var contextpath = "${context}";
         $(document).ready(function () {
             $('.modal').modal();
             $('.dropdown-trigger').dropdown();
+           
             $('select').formSelect();
         }); 
         populateCountries("country", "");
- 
+                                              
         function myFunction() {
-            var x = document.getElementById("mySelect").value;
+            var x = document.getElementById("type").value;
             if (x == 'Individual') {
                 document.getElementById("uploadFile").style.display = "block";
                 document.getElementById("passportNumberDiv").style.display = "block";

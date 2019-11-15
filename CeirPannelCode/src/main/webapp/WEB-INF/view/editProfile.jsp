@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
-<head>
+<html>          
+<head>  
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,610 +29,691 @@
     <!-- For Windows Phone -->
     <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
-    <!-- Datepicker -->
-    <link href="${context}/resources/jquery.datepicker2.css" rel="stylesheet">
-
-    <!-- new file -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize.min.js"></script>
-
-
     <!-- CORE CSS-->
-    <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->
     <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <!-- countries -->
-    <script type="text/javascript" src="${context}/resources/js/countries.js">
-    </script>
+
+    <!-- Country -->
+    <!-- <script type="text/javascript" src="js/country.js"></script> -->
 
     <style>
-        .boton {
-            color: #fff;
-            font-size: 20px;
-            background-color: #ff4081;
-            padding: 1px 3px;
-            border-radius: 999px;
+        input[type="checkbox"] {
+            display: none;
         }
 
-        textarea.materialize-textarea {
-            padding: 0;
-            padding-left: 10px;
+        footer {
+            padding-left: 0;
         }
 
         .btn-flat {
             height: auto;
         }
 
-        input[type="checkbox"] {
-            display: none;
+        .star {
+            color: red;
         }
 
         .dropdown-content li>a,
         .dropdown-content li>span {
             color: #444;
         }
+
+        .input-field>label {
+            color: #444 !important;
+        }
+
+        select {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #9e9e9e;
+            padding: 0;
+            margin-top: 7px;
+            ;
+        }
+
+        [type="radio"]:not(:checked),
+        [type="radio"]:checked {
+            opacity: 0;
+        }
     </style>
+
+
+<script>
+var contextpath = "${context}";
+</script>
+
 
 </head>
 
+
 <body>
-    
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-    <!-- START MAIN -->
-    <div>
-        <!-- START WRAPPER -->
-        <div class="wrapper">
-
-       
-            <!-- END LEFT SIDEBAR NAV-->
-
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
-            <!-- START CONTENT -->
-            <section id="content" id="mainPage">
-                <!--start container-->
-                <div class="container">
-                    <div class="section">
-                        <form action="" id="registrationForm">
-                            <div class="card-panel">
-                                <!-- <a href="dashboard.html" style="float: right; margin: -10px;"><i
-                                    class="fa fa-times boton" aria-hidden="true"></i></a> -->
-                                <div class="row">
-                                    <h5>Edit Information</h5>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="input-field col s12 m4 l4">
-                                            <input type="text" name="firstName" id="firstName" maxlength="14">
-                                            <label for="firstName" class="center-align">First Name <span
-                                                    class="star">*</span></label>
-                                        </div>
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
-                                        <div class="input-field col s12 m4 l4">
-                                            <input type="text" name="middleName"
-                                                class="form-control boxBorder boxHeight" id="middleName" maxlength="14">
-                                            <label for="middleName">Middle Name</label>
-                                        </div>
+	<!-- START CONTENT -->
+	<section id="content" id="mainPage">
+		<!--start container-->
+		<div class="container">
+			<div class="section">
+				<form id="registrationForm"  method="post"
+					action="${context}/registration" enctype="multipart/form-data" >
+					<div class="card-panel">
+						<%-- <a href="${context}/"
+							style="float: right; margin: -10px; margin-right: -20px;"><i
+							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
+						<div class="row">
+							<h5>Edit Information</h5>
+							<hr> 
+					<span style="color: red;">${msg}</span>		
+							
+							<div class="row">
+								<div class="input-field col s12 m4 l4">
+								<input type="hidden" id="id" name="id">
+								
+									<input type="text" name="firstName" id="firstName" placeholder=""
+										 required="required" pattern="[A-Za-z]{0,20}" maxlength="20" title="Please enter alphabets upto 20 characters only"> <label 
+										class="center-align" >First Name <span class="star">*</span></label>
+								</div>
 
-                                        <div class="input-field col s12 m4 l4">
-                                            <input type="text" name="lastName" class="form-control boxBorder boxHeight"
-                                                id="lastName" maxlength="14">
-                                            <label for="lastName">Last Name <span class="star">*</span></label>
-                                        </div>
+								<div class="input-field col s12 m4 l4">
+									<input type="text" name="middleName" placeholder=""
+										class="form-control boxBorder boxHeight" id="middleName"
+										 pattern="[A-Za-z]{0,20}" maxlength="20" title="Please enter alphabets upto 20 characters only"> <label >Middle
+										Name</label>
+								</div>
 
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="passportNumber"
-                                                class="form-control boxBorder boxHeight" id="passportNumber"
-                                                maxlength="14" readonly>
-                                            <label for="passportNumber">National ID/Passport Number <span
-                                                    class="star">*</span></label>
-                                        </div>
+								<div class="input-field col s12 m4 l4">
+									<input type="text" name="lastName" placeholder=""
+										class="form-control boxBorder boxHeight" id="lastName"
+										pattern="[A-Za-z]{0,20}" maxlength="20" title="Please enter alphabets upto 20 characters only" required="required" title="Please enter alphabets upto 20 characters only"> <label>Last
+										Name <span class="star">*</span>
+									</label>
+								</div>
 
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="email" class="form-control boxBorder boxHeight"
-                                                id="email" maxlength="30">
-                                            <label for="email">Email <span class="star">*</span></label>
-                                        </div>
 
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="phone" class="form-control boxBorder boxHeight"
-                                                id="phone" maxlength="10">
-                                            <label for="phone">Phone Number <span class="star">*</span></label>
-                                        </div>
+<div class="input-field col s12 m6 l6">
+                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">AsType <span
+                                            class="star">*</span></p>
+                                        <input type="text" readonly="readonly" id="type" name="type"  />                         
+                                   <!--  <select name="type" class="browser-default" id="type" onchange="myFunction()" required>
+                                        <option value="" disabled selected>Type</option>
+                                        <option value="Individual"> Individual</option>
+                                        <option value="Company">Company</option>
+                                        <option value="Organization">Organization</option>
+                                        <option value="Government">Government</option>
+                                    </select> -->
+                                </div>
+                                
+                                                                <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
+                                    <input placeholder="" type="text" name="passportNo"  readonly="readonly" class="form-control boxBorder boxHeight"
+                                      title="Please enter alphanumeric with special character upto 12 characters only"
+										 id="passportNo" maxlength="12"
+										 pattern="[A-Za-z0-9\s]{0,12}"/>
+                                    <label>National ID/Passport Number <span
+                                            class="star">*</span></label>
+                                </div>
 
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="company" class="form-control boxBorder boxHeight"
-                                                id="company" maxlength="30">
-                                            <label for="company">Company Name <span class="star">*</span></label>
-                                        </div>
-                                    </div>
+                                <div class="input-field col s12 m6 l6" id="companyNames" style="display: none;">
+                                    <input placeholder="" type="text" name="companyName"  
+										class="form-control boxBorder boxHeight" id="companyName"
+										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
+										 title="Please enter alphanumeric upto 50 characters only">
+                                    <label >Company Name <span class="star">*</span></label>
+                                </div>
 
-                                    <div class="row">
-                                        <div class="input-field col s12 m12 l12">
-                                            <input type="text" name="address" class="form-control boxBorder boxHeight"
-                                                id="address">
-                                            <label for="address">Address(Property Location) <span
-                                                    class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="streetNumber"
-                                                class="form-control boxBorder boxHeight" id="streetNumber"
-                                                maxlength="30">
-                                            <label for="streetNumber">Street Number <span class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="locality" class="form-control boxBorder boxHeight"
-                                                id="locality" maxlength="20">
-                                            <label for="locality">Locality <span class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="province" class="form-control boxBorder boxHeight"
-                                                id="province" maxlength="20">
-                                            <label for="province">Province<span class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Country
-                                                <span class="star">*</span></p>
-                                            <select id="country" class="browser-default" class="mySelect"
-                                                style="padding-left: 0;" required></select>
-                                            <!-- <label for="country">Country <span class="star">*</span></label> -->
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col s12 m6 l6" style="margin-bottom: 20px;">
-                                            <label for="vatNumber">VAT Registration <span class="star">*</span></label>
-                                            <div class=" boxHeight">
-                                                <input class="with-gap" name="group3" type="radio"
-                                                    onclick="document.getElementById('vatNumberField').style.display = 'block';">
-                                                Yes
-                                                <input class="with-gap" name="group3" type="radio"
-                                                    style="margin-left: 20px;"
-                                                    onclick="document.getElementById('vatNumberField').style.display = 'none';"
-                                                    checked />
-                                                No
-                                            </div>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6" style="display: none;"
-                                            id="vatNumberField">
-                                            <input type="text" name="vatNumber" class="form-control boxBorder boxHeight"
-                                                id="vatNumber" maxlength="16" readonly>
-                                            <label for="roleType">VAT Number <span class="star">*</span></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="input-field col s12 m6 l6">
-                                            <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Role
-                                                Type <span class="star">*</span></p>
-                                            <select multiple required>
-                                                <option value="" disabled selected>Role Type <span class="star"></span>
-                                                </option>
-                                                <option value="Paid">Importer</option>
-                                                <option value="NotPaid">Distributor</option>
-                                                <option value="NotPaid">Retailer</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Type
-                                                <span class="star">*</span></p>
-                                            <select class="browser-default" id="mySelect" onchange="myFunction()"
-                                                required>
-                                                <option value="" disabled selected>Type</option>
-                                                <option value="Individual"> Individual</option>
-                                                <option value="Company">Company</option>
-                                                <option value="Organization">Organization</option>
-                                                <option value="Government">Government</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="row myRow" style="display: none;" id="uploadFile">
-                                        <h6 class="file-upload-heading" style="margin-left: 15px;">Upload Nationality
+                                <div class="row myRow" style="display: none;" id="uploadFile">
+                                    <div class="col s12 m12">
+                                        <h6 class="file-upload-heading">Upload Nationality
                                             Information<span class="star">*</span></h6>
-                                        <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
+                                        <div class="file-field input-field col s12 m6"
+                                            style="margin-top: 5px; padding-left:0;">
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input type="file" id="csvUploadFile" accept=".csv">
+                                                <input  name="file" type="file" id="csvUploadFile"
+											accept=".pfg">
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate responsive-file-div" type="text">
                                             </div>
                                         </div><br><br>
-                                        <!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
                                     </div>
-
-                                    <div class="row">
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="password" name="password"
-                                                class="form-control boxBorder boxHeight" id="password" maxlength="14">
-                                            <label for="password">Password <span class="star">*</span></label>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="password" name="rePassword"
-                                                class="form-control boxBorder boxHeight" id="rePassword" maxlength="14">
-                                            <label for="rePassword">Retype Password <span class="star">*</span></label>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="input-field col s12 m6 l6">
-                                            <select class="browser-default" required>
-                                                <option value="" disabled selected>Security Question 1</option>
-                                                <option value="NotPaid">What is your childhood name?</option>
-                                                <option value="NotPaid">Where is your birth place?</option>
-                                                <option value="NotPaid">What is your favourite movie?</option>
-                                                <option value="NotPaid">What is your favourite sports team?</option>
-                                                <option value="NotPaid">What is your favourite pet’s name?</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="SecurityAnswer"
-                                                class="form-control boxBorder boxHeight" id="SecurityAnswer"
-                                                maxlength="50">
-                                            <label for="SecurityAnswer">Answer <span class="star">*</span></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="input-field col s12 m6 l6">
-                                            <select class="browser-default" required>
-                                                <option value="" disabled selected>Security Question 2</option>
-                                                <option value="NotPaid">What is your childhood name?</option>
-                                                <option value="NotPaid">Where is your birth place?</option>
-                                                <option value="NotPaid">What is your favourite movie?</option>
-                                                <option value="NotPaid">What is your favourite sports team?</option>
-                                                <option value="NotPaid">What is your favourite pet’s name?</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="SecurityAnswer"
-                                                class="form-control boxBorder boxHeight" id="SecurityAnswer"
-                                                maxlength="50">
-                                            <label for="SecurityAnswer">Answer <span class="star">*</span></label>
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="input-field col s12 m6 l6">
-                                            <select class="browser-default" required>
-                                                <option value="" disabled selected>Security Question 3</option>
-                                                <option value="NotPaid">What is your childhood name?</option>
-                                                <option value="NotPaid">Where is your birth place?</option>
-                                                <option value="NotPaid">What is your favourite movie?</option>
-                                                <option value="NotPaid">What is your favourite sports team?</option>
-                                                <option value="NotPaid">What is your favourite pet’s name?</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="SecurityAnswer"
-                                                class="form-control boxBorder boxHeight" id="SecurityAnswer"
-                                                maxlength="50">
-                                            <label for="SecurityAnswer">Answer <span class="star">*</span></label>
-                                        </div>
-                                    </div>
+                                    <!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
                                 </div>
+                                
+                                
+								<!-- <div class="input-field col s12 m6 l6">
+									<input  type="text" required="required" name="passportNo"
+										class="form-control boxBorder boxHeight"
+										title="Please enter alphanumeric with special character upto 12 characters only"
+										 id="passportNumber" maxlength="12"
+										 pattern="[A-Za-z0-9\s]{0,12}"> <label for="passportNumber">National
+										ID/Passport Number <span class="star">*</span>
+									</label>
+								</div> -->
 
-                                <div class="row">
-                                    <span> Required Field are marked with <span class="star">*</span></span>
-                                    <div class="input-field col s12 center">
-                                        <!-- <a href="index.html" class="btn" id="btnSave"> Submit</a> -->
-                                        <a href="#updateInformation" class="modal-trigger btn" type="button"
-                                            id="btnUpdate">Update</a>
-                                        <a href="${context}/Home" class="btn">Cancel</a>
+								<div class="input-field col s12 m6 l6">
+									<input type="email"  placeholder="" name="email"
+										class="form-control boxBorder boxHeight" id="email"
+										 required="required"> <label for="email">Email <span
+										class="star">*</span></label>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input  placeholder="" type="text"  name="phoneNo" maxlength="20"
+										class="form-control boxBorder boxHeight" id="phoneNo"
+										pattern="[0-9]{8,20}" title="Please enter phone number between 8 to 20 characters only"  required="required"> <label>Phone
+										Number <span class="star">*</span> 
+									</label>
+								</div>
+
+								<!-- <div class="input-field col s12 m6 l6">
+									<input type="text" name="companyName" required="required"
+										class="form-control boxBorder boxHeight" id="company"
+										 pattern="[A-Za-z\s]{0,50}"  maxlength="50"
+										 title="Please enter alphanumeric upto 50 characters only"
+										 > <label for="company">Company
+										Name <span class="star">*</span>
+									</label>
+								</div> -->
+							</div>
+
+							<div class="row">
+								<div class="input-field col s12 m12 l12">
+									<input  placeholder="" type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
+										class="form-control boxBorder boxHeight"
+									title="Please enter alphanumeric with special character upto 200 characters only"	
+										 id="propertyLocation" required="required">
+									<label  >Address(Property Location) <span
+										class="star">*</span></label>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="street" maxlength="20" placeholder=""
+										class="form-control boxBorder boxHeight" id="street"
+										 pattern="[A-Za-z0-9\s]{0,20}" required="required" 
+									title="Please enter alphanumeric with special character upto 20 characters only"	 
+										 > <label >Street
+										Number <span class="star">*</span>
+									</label>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="locality" placeholder=""  maxlength="30"
+										class="form-control boxBorder boxHeight" id="locality"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only"
+										> <label >Locality
+										<span class="star">*</span>
+									</label>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="province" maxlength="20"
+										class="form-control  boxBorder boxHeight" id="province"
+									pattern="[A-Za-z\s]{0,20}"  placeholder=""  required="required"  
+									title="Please enter alphanumeric with special character upto 20 characters only"
+									> <label>Province<span
+										class="star">*</span></label>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Country <span class="star">*</span>
+									</p>
+									<select id="country" name="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required>
+									
+										</select>
+									<!-- <label for="country">Country <span class="star">*</span></label> -->
+								</div>
+							</div>
+
+							<!-- <div class="row">
+								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
+									<label for="vatNumber">VAT Registration <span
+										class="star">*</span></label>
+									<div class=" boxHeight">
+                                        <label><input value="1" class="with-gap" name="vatStatus" type="radio"
+                                                onclick="document.getElementById('vatNumberField').style.display = 'block';">
+                                            <span>Yes</span>
+                                        </label>
+                                        <label>
+                                            <input value="0" class="with-gap" name="vatStatus" type="radio"
+                                                style="margin-left: 20px;"
+                                                onclick="document.getElementById('vatNumberField').style.display = 'none';"
+                                                checked />
+                                            <span>No</span>
+                                        </label>
                                     </div>
+								</div>
+
+								<div class="input-field col s12 m6 l6" style="display: none;"
+									id="vatNumberField">
+									<input type="text" name="vatNo" maxlength="15"
+										class="form-control boxBorder boxHeight" id="vatNumber"
+										pattern="[A-Za-z0-9]{0,15}"
+								title="Please enter alphanumeric upto 15 characters only"		
+										> <label for="roleType">VAT
+										Number <span class="star">*</span>
+									</label>
+								</div>
+							</div> -->
+
+							
+                               <div class="row">
+                               <!--  <div class="col s12 m6 l6" style="margin-bottom: 20px;">
+                                    <label for="vatNumber">VAT Registration <span class="star">*</span></label>
+                                    <div class=" boxHeight">
+                                        <label><input class="with-gap" name="vatStatus" type="radio"
+                                                onclick="document.getElementById('vatNumberField').style.display = 'block';">
+                                            <span>Yes</span>
+                                        </label>
+                                        <label>
+                                            <input class="with-gap" name="vatStatus" type="radio"
+                                                style="margin-left: 20px;"
+                                                onclick="document.getElementById('vatNumberField').style.display = 'none';"
+                                                checked />
+                                            <span>No</span>
+                                        </label>
+                                    </div>
+                                </div> -->
+
+                               <%--  <div class="input-field col s12 m6 l6">
+                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Role Type <span
+                                            class="star">*</span></p>
+                               <input type="text" readonly="readonly" id="roles" name="roles"  />                                       
+                                            
+                                   <select multiple required name="roles"  >
+										<option value="" disabled>Role Type <span
+												class="star"></span></option>
+								<c:forEach items="${usertypes}" var="usertype" >
+								<c:if test="${usertype.usertypeName!='admin'}">
+								<option  value="${usertype.id}">${usertype.usertypeName}</option>
+								</c:if> 
+								</c:forEach>	
+								</select>  
+                                </div> --%>
+
+                                <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
+                                    <input type="text" name="vatNo" maxlength="15"
+										class="form-control boxBorder boxHeight" id="vatNumber"
+										pattern="[A-Za-z0-9]{0,15}"
+								title="Please enter alphanumeric upto 15 characters only">
+                                    <label for="roleType">VAT Number <span class="star">*</span></label>
                                 </div>
+                            </div>    
+								
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Role Type <span class="star">*</span>
+									</p> 
+									<select multiple required name="roles" id="usertypes"  >
+										<option value="" disabled>Role Type <span
+							 					class="star"></span></option>
+								                   
+								</select>  
+								</div>
+								
 
-                        </form>
-                    </div>
-                </div>
-                <!--end container-->
-            </section>
-            <!-- END CONTENT -->
+								<!-- <div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Type <span class="star">*</span>
+									</p>
+									<select class="browser-default" name="type" id="mySelect"
+										onchange="myFunction()" required>
+										<option value="" disabled selected>Type</option>
+										<option value="Individual">Individual</option>
+										<option value="Company">Company</option>
+										<option value="Organization">Organization</option>
+										<option value="Government">Government</option>
+									</select>
+								</div> -->
+							</div>
 
+							<!-- div class="row myRow" style="display: none;" id="uploadFile">
+								<h6 class="file-upload-heading" style="margin-left: 15px;">
+									Upload Nationality Information<span class="star">*</span>
+								</h6>
+								<div class="file-field input-field col s12 m6"
+									style="margin-top: 5px;">
+									<div class="btn">
+										<span>Select File</span> <input name="file" type="file" id="csvUploadFile"
+											accept=".pfg">     
+									</div>
+									<div class="file-path-wrapper">
+										<input class="file-path validate responsive-file-div"
+											type="text">
+									</div>
+								</div>
+								<br> <br>
+								<p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p>
+							</div> -->
 
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
+							<!-- <div class="row">
+								<div class="input-field col s12 m6 l6">
+									<input type="password" name="password"
+										class="form-control boxBorder boxHeight" id="password"
+									pattern="[A-Za-z0-9\s]{0,10}" maxlength="10"
+									title="Please enter alphanumeric with special character upto 10 characters only"
+									 required="required"> <label for="password">Password
+										<span class="star">*</span>
+									</label>
+								</div>
 
-           
-
-
-            <!-- Modal 1 start   -->
-
-            <div id="updateInformation" class="modal" style="width: 40%;">
-                <div class="modal-content">
-
-                    <div class="row">
-                        <form action="">
-                            <h5 style="text-align: -webkit-center;">Enter</h5>
-                            <div class="input-field col s12">
-
-                                <label for="newPassword" style="color: #000; font-size: 12px;">Username</label>
-                                <input type="text" id="newPassword" class="" maxlength="10" />
-                            </div>
-
-                            <div class="input-field col s12">
-
-                                <label for="confirmPassword" style="color: #000; font-size: 12px;">Password</label>
-                                <input type="text" class="" id="confirmPassword" maxlength="10" />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 center">
-                            <a href="#updateInformationMsg" class="btn modal-trigger modal-close">Submit</a>
-                            <button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal End -->
-
-
-            <!-- Modal 1 start   -->
-
-            <div id="updateInformationMsg" class="modal">
-                <div class="modal-content">
-                    <h6>Update Information</h6><hr>
-                    <div class="row">
-                        <h6>Your request has been successfully updated</h6>
-                    </div>
-                    <div class="center">
-                        <a href="${context}/Home" class="btn">ok</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal End -->
-
-            <!-- Modal 2 start   -->
-
-            <div id="errorMessage" class="modal">
-                <div class="modal-content">
-                    <h6>Error</h6><hr>
-                    <div class="row">
-                        <h6>Enter a valid username and password</h6>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 center">
-                            <a href="#updateInformation" class="btn modal-trigger modal-close">ok</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal End -->
+								<div class="input-field col s12 m6 l6">
+									<input type="password" name="rePassword"
+									title="Please enter alphanumeric with special character upto 10 characters only"
+										class="form-control boxBorder boxHeight" id="confirm_password"
+										pattern="[A-Za-z0-9\s]{0,10}" maxlength="10"
+                                    required="required"> <label for="rePassword">Retype
+										Password <span class="star">*</span>
+									</label>
+								</div>
+							</div> -->
 
 
+<!-- <div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Country <span class="star">*</span>
+									</p>
+									<select id="country" name="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required>
+									
+										</select>
+									<label for="country">Country <span class="star">*</span></label>
+								</div>
+							</div> -->
+							
+							<div class="row securityQuestionDiv">
+								<div class="input-field col s12 m6 l6">
+										<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 1 <span class="star">*</span>
+									</p>
+									<input type="hidden"  class="id" id="id0">
+									<select class="browser-default questionId" id="questionId0" name="questionId" required>
+									<option value="" disabled selected>Security Question
+											1</option> 
+									<c:forEach items="${questions}" var="question"> 
+									<c:if test="${question.category=='1'}">
+									<option value="${question.id}">${question.question}</option>
+									</c:if>
+									</c:forEach> 
+									</select>
+								</div>
 
-            <!-- Modal 4 start   -->
+								<div class="input-field col s12 m6 l6">
+									<input  type="text" placeholder="" name="answer" 
+										class="form-control boxBorder boxHeight answer" id="answer0"
+										pattern="[A-Za-z]{0,50}" required="required"
+										maxlength="50"
+										title="Please enter alphabets upto 50 characters only"
+										> <label>Answer
+										<span class="star">*</span>
+									</label>
+								</div>
+							</div>
+							<div class="row securityQuestionDiv">
+								<div class="input-field col s12 m6 l6">
+								<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 2 <span class="star">*</span>
+									</p>
+									<input type="hidden"  class="id"  id="id1"/>
+									<select name="questionId" id="questionId1" class="browser-default questionId" required>
+									<option value="" disabled selected>Security Question
+											2</option>
+									<c:forEach items="${questions}" var="question"> 		
+										<c:if test="${question.category=='2'}">
+									<option value="${question.id}">${question.question}</option>
+									</c:if>
+									</c:forEach>
+									</select>
+								</div>
 
-            <div id="manageAccount" class="modal">
-                <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-                    data-dismiss="modal">&times;</button>
-                <div class="modal-content">
-                    <h6>Manage Account</h6>
-                    <hr>
-                    <p>Request CEIR ADMIN to </p>
-                    <div class="row" style="height: 30px;">
-                        <p><label style="margin-right: 50px "> <input type="radio"
-                                    onclick="document.getElementById('calender').style.display = 'none';"
-                                    name="stolen"><span>
-                                    Deactivate</span></label>Permanently delete the account, you will not login into the
-                            portal.</p>
-                    </div>
-                    <div class="row" style="height: 30px;">
-                        <p><label style="margin-right: 67px "> <input type="radio"
-                                    onclick="document.getElementById('calender').style.display = 'block';"
-                                    name="stolen"><span> Disable</span></label>All the action will be disabled, only
-                            view option will be available</p>
-                    </div>
-                    <div class="input-field col s12 center">
-                        <button class="btn modal-trigger modal-close" data-target="manageAccountSubmit">Submit</button>
-                        <a href="consignment.html" class="btn" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal End -->
+								<div class="input-field col s12 m6 l6">
+									<input  type="text" placeholder="" name="answer"
+										class="form-control boxBorder boxHeight answer" id="answer1"
+										pattern="[A-Za-z]{0,50}"
+										maxlength="50"
+										title="Please enter alphabets upto 50 characters only"
+										 required="required"> <label >Answer
+										<span class="star">*</span>
+									</label>
+								</div>
+							</div>
 
-            <!-- Modal 4 start   -->
+							<div class="row securityQuestionDiv">
+								<div class="input-field col s12 m6 l6">
+								
+								<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 3<span class="star">*</span>
+									</p>
+								     <input type="hidden"  class="id" id="id2" />
+									<select name="questionId" id="questionId2" class="browser-default questionId" required>
+									<option value="" disabled selected>Security Question
+											3</option>
+									<c:forEach items="${questions}" var="question"> 		
+										<c:if test="${question.category=='3'}">
+									<option value="${question.id}">${question.question}</option>
+									</c:if>     	
+									</c:forEach>
+											
+									</select>
+								</div>
 
-            <div id="manageAccountSubmit" class="modal">
-                <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-                    data-dismiss="modal">&times;</button>
-                <div class="modal-content">
-                    <h6>The request has been successfully registered with CEIR Admin. Please find confirmation over
-                        registered mail in 2 to 3 working days.</h6>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="answer" placeholder=""
+										class="form-control boxBorder boxHeight answer" id="answer2"
+										title="Please enter alphabets upto 50 characters only"
+										maxlength="50"
+										pattern="[A-Za-z]{0,50}" required="required"> <label >Answer
+										<span class="star">*</span>
+									</label>
+								</div>
+								
+													
+					
+							</div>
+							
+							<%-- <div class="form-group form-actions">
+						<span class="input-icon"> 
+						<img id="captchaImage" src="${context}/captcha"><button style="background: none;border: none;outline:none;" type="button" onclick="refreshCaptcha('captchaImage')">
+						<i class="fa fa-refresh"></i></button>:
+						 <img src="${context}/captcha"" id="captchaImage">
+						 <br>
+                           <input type="button" onclick="refreshCaptcha('captchaImage')">
+							<div class="input-field col s12 m6 l12">
+									<input type="text"  name="captcha"
+										class="form-control boxBorder boxHeight"
+									 id="captcha" required="required"> 
+									<label for="address" >Enter your captcha <span
+										class="star">*</span></label>
+								</div>
+								
+						</span>  
+					</div> --%>
+					
+						<div class="row">
+							<span> Required Field are marked with <span class="star">*</span></span>
+							<div class="input-field col s12 center">
+								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
+								<button class="btn"  id="btnSave" onclick="updateProfile();" type="button"
+									style="margin-left: 10px;">submit</button>
+								<button class="btn" style="margin-left: 10px;">cancel</button>
+							</div>
+						</div>
+						</div>
 
+						
+				</form>
+			</div>
+		</div>
+		<!--end container-->
+	</section>
+	<!-- END CONTENT -->
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+                                                
+	<!-- Modal 1 start   -->
 
-                    <div class="input-field col s12 center">
-                        <button class="btn modal-close">ok</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal End -->
+	<div id="submitForm" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<div class="modal-content">
+			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-            <!-- Modal 2 start   -->
+			<div class="row">
+				<h6>Verify OTP</h6>
+				<hr>
+				<p>A text message and an E-Mail has been sent to your registered
+					Phone number and E-mail. Please Verify !</p>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="otpVerification.html" class="btn">Verify OTP</a>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            <div id="cancelActivateDeactivate" class="modal">
-                <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-                    data-dismiss="modal">&times;</button>
-                <div class="modal-content">
+	<!-- Modal End -->
 
-                    <div class="row">
-                        <h6>Do you want to cancel the request?</h6>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12 center">
-                            <div class="input-field col s12 center">
-                                <a href="index.html" class="btn" type="submit" name="add_user" id="add_user">yes</a>
-                                <a href="#activateDeactivate" class="modal-close modal-trigger btn"
-                                    style="margin-left: 10px;">no</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal End -->
+	<!-- Modal 2 start   -->
 
+	<!-- <div id="submitActivateDeactivate" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<div class="modal-content">
 
-            <!-- Modal 4 start   -->
+			<div class="row">
+				<h6>The request has been successfully registered with CEIR
+					Admin. Please find the confirmation over registered mail <
+					mail@mail.com> in 2 to 3 working days.</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn"
+							style="margin-left: 10px;" type="submit" name="add_user"
+							id="add_user">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<!-- Modal End -->
 
-            <div id="changePassword" class="modal" style="width: 40%;">
-                <div class="modal-content">
-                    <div class="row">
-                        <h5 style="text-align: -webkit-center;">Change Password</h5>
+	<!-- Modal 2 start   -->
 
-                        <div class="col s1"><i class="fa fa-lock" aria-hidden="true"
-                                style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i></div>
-                        <div class="input-field col s11">
-                            <input type="text" id="oldPassword" class="validate" maxlength="10" />
-                            <label for="oldPassword" class="center-align" style="color: #000; font-size: 12px;"> Old
-                                Password </label>
-                            <div class="password"></div>
-                        </div>
+	<div id="cancelActivateDeactivate" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<div class="modal-content">
 
-                        <div class="col s1">
-                            <span class="fa-passwd-reset fa-stack" style="margin-top: 12px; color: #ff4081;">
-                                <i class="fa fa-undo fa-stack-2x"></i>
-                                <i class="fa fa-lock fa-stack-1x"></i>
-                            </span></div>
-                        <div class="input-field col s11">
-
-                            <label for="newPassword" style="color: #000; font-size: 12px;">New Password</label>
-                            <input type="text" id="newPassword" class="" maxlength="10" />
-                        </div>
-
-                        <div class="col s1"><i class="fa fa-check-square-o" aria-hidden="true"
-                                style="font-size: 28px; margin-top: 12px; color: #ff4081;;"></i></div>
-                        <div class="input-field col s11">
-
-                            <label for="confirmPassword" style="color: #000; font-size: 12px;">Confirm Password</label>
-                            <input type="text" class="" id="confirmPassword" maxlength="10" />
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 30px;">
-                        <div class="input-field col s12 m12 l12 center">
-                            <a href="index.html" class="btn" type="button" id="save" style="width: 100%;">Save</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-</div>
-</div>
-            <!-- Modal End -->
-
-            <!-- ================================================
+			<div class="row">
+				<h6>Do you want to cancel the request?</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<!-- <a  href="userRegistration.html" class="btn" type="submit"
+							name="add_user" id="add_user">yes</a> -->
+		<button type="button" onclick="" class="btn" >SUBMIT</button>				
+							 <a
+							href="#activateDeactivate" class="modal-close modal-trigger btn"
+							style="margin-left: 10px;">no</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+	<!-- ================================================
     Scripts
     ================================================ -->
- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-            <script>
-                $(document).ready(function () {
-                    $('.modal').modal();
-                });
-            </script>
-
-            <script>
-                $('#data-table-simple').dataTable({
-                    "lengthChange": false,
-                });
-                  </script>
-
-            <script>
-                populateCountries(
-                    "country",
-                );
-            </script>
-
-            <script>
-                $(document).ready(function () {
-                    $('.datepicker').datepicker();
-                });
-
-                $('.datepicker').on('mousedown', function (event) {
-                    event.preventDefault();
-                })
-            </script>
-
-            <script>
-                $('#data-table-simple').DataTable({
-                    responsive: true
-                });
-            </script>
-
-            <script>
-                function myFunction() {
-                    var x = document.getElementById("mySelect").value;
-                    if (x == 'Individual') {
-                        document.getElementById("uploadFile").style.display = "block";
-                    } else {
-
-                        document.getElementById("uploadFile").style.display = "none";
-                    }
-                }
-            </script>
-
-            <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-                integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
-                crossorigin="anonymous">
-            </script>
-            <script src="${context}/resources/jquery.datepicker2.js"></script>
-            <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-
-            <!-- jQuery Library -->
-           
-            <!--materialize js-->
-            <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-            <!--prism
+	 <!-- jQuery Library -->
+    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+      <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+    <!--materialize js-->
+    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
+    <!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
-            <!--scrollbar-->
-            <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-            <!-- chartist -->
-            <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+    <!--scrollbar-->
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- chartist -->
+    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
-            <!-- data-tables -->
-            <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-            <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+    <!-- data-tables -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-            <!-- date picker -->
-            <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
-            <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script>
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <!--<script type="text/javascript" src="js/plugins.js"></script>-->
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+    <script> 
+        $(document).ready(function () {
+        	questionDataByCategory();
+        	usertypeData();
+        	editProfile();         
+            $('.modal').modal();
+           
+            /* $('.dropdown-trigger').dropdown();
+            $('select').formSelect(); */
+            
+        }); 
+        populateCountries("country", "");
+     
+        function myFunction() { 
+            var x = document.getElementById("type").value;
+            if (x == 'Individual') {
+                document.getElementById("uploadFile").style.display = "block";
+                document.getElementById("passportNumberDiv").style.display = "block";
+                document.getElementById("companyNames").style.display = "none";
+                $('#companyNames').style.display = "none";
+            } else {  
+                      
+                document.getElementById("uploadFile").style.display = "none";
+                document.getElementById("passportNumberDiv").style.display = "none";
+            }
 
-            <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-            <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-            <!--custom-script.js - Add your own theme custom JS-->
-            <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+            if (x == 'Company', 'Organization', 'Government') {
+                document.getElementById("companyNames").style.display = "block";
+            } else {
+
+                document.getElementById("companyNames").style.display = "none";
+            }
+        }
+        
+        
+    </script>
 
 
-
-</html>
-
-
-
-
-<a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
-    data-activates="profile-dropdown" style="margin-top:-5px; height:63px;"></a>
-<ul id="profile-dropdown" class="dropdown-content" style="margin-top: 51px;">
-    <li><a href="javascript:void(0)" id=""><i class="mdi-action-settings"></i>Change Password</a></li>
-    <li class="divider"></li>
-    <li><a href="javascript:void(0)" id=""><i class="mdi-hardware-keyboard-tab"></i>
-            Logout</a></li>
+	
+</body>
+</html>  	

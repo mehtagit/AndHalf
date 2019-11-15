@@ -26,7 +26,8 @@ public class User {
 	private int user_limit;
 	private String organization_id;
 	private String captcha;
-
+    private String status;
+    
 	public int getId() {
 		return id;
 	}
@@ -123,13 +124,23 @@ public class User {
 	public void setCaptcha(String captcha) {
 		this.captcha = captcha;
 	}
+	
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", createdOn=" + createdOn + ", usertype=" + usertype + ", username=" + username
 				+ ", password=" + password + ", fwstatus=" + fwstatus + ", modifiedBy=" + modifiedBy + ", modifiedOn="
 				+ modifiedOn + ", subuser_status=" + subuser_status + ", parent_id=" + parent_id + ", email=" + email
 				+ ", phone_no=" + phone_no + ", organization=" + organization + ", user_limit=" + user_limit
-				+ ", organization_id=" + organization_id + ", captcha=" + captcha + "]";
+				+ ", organization_id=" + organization_id + ", captcha=" + captcha + ", status=" + status + "]";
 	}
 	
 	

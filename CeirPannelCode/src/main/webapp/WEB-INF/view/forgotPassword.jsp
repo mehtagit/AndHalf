@@ -30,13 +30,13 @@
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
-    <link rel="stylesheet" href="font/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
     <!-- Custome CSS-->
-    <link href="css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
     <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -71,7 +71,9 @@
             margin: 0 0 5px 0;
         }
     </style>
-
+<script type="text/javascript">
+var contextpath='${context}';
+</script>
 </head>
 
 <body>
@@ -96,31 +98,31 @@
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel" style="width: 40%; height: 50vh; margin: auto; margin-top: 10vh;">
+                        <div class="row card-panel" style="width: 40%;  margin: auto; margin-top: 10vh;">
                             <div class="col s12 m12 l12">
-                                <form action="">
+                                <form  id="forgotPassword" >
                                 <div class="row">
                                     <h5 style="text-align: -webkit-center;">Forgot Password</h5> <hr style="margin-bottom: 30px;">
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="userId" class="right">Please enter your User ID</label>
+                                            <label for="username" class="right">Please enter your User ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="userId" id="userId" maxlength="15" />
+                                            <input type="text" name="username" id="username" maxlength="15" />
                                         </div>
                                     </div>
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="Name">Please select your security question, provide at the time of registration</label>
+                                            <label for="questionId">Please select your security question, provide at the time of registration</label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <select class="browser-default" required>
+                                            <select class="browser-default" id="questionId" required>
                                                 <option value="" disabled selected>Security Question</option>
                                                 <option value="NotPaid">What is your childhood name?</option>
                                                 <option value="NotPaid">Where is your birth place?</option>
@@ -134,18 +136,18 @@
                                     <div class="row myRow" style="margin-top: 20px;">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="securityQueistion" class="center-align">Provide answer to the question</label>
+                                            <label for="answer" class="center-align">Provide answer to the question</label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="securityQueistion" id="securityQueistion" maxlength="50" />
+                                            <input type="text" name="answer" id="answer" maxlength="50" />
                                         </div>
                                     </div>
                                     
                                 </div>
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
-                                        <a href="${context}/login" class="btn">submit</a>
+                                        <button onclick="forgotPassword();"  type="button" class="btn">submit</button>
                                         <a href="${context}/login" class="btn" style="margin-left: 10px;">cancel</a>
                                     </div>
                                 </div>
@@ -170,6 +172,54 @@
 
     
 
+<div id="changePassword" class="modal" style="width: 40%;">
+		<div class="modal-content">
+		<form>
+			<div class="row">
+				<h5 style="text-align: -webkit-center;">New Password</h5>
+
+				<div class="col s1">
+					<i class="fa fa-lock" aria-hidden="true"
+						style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
+				</div>
+				<div class="col s1">
+					<span class="fa-passwd-reset fa-stack"
+						style="margin-top: 12px; color: #ff4081;"> <i
+						class="fa fa-undo fa-stack-2x"></i> <i
+						class="fa fa-lock fa-stack-1x"></i>
+					</span>
+				</div>
+				<div class="input-field col s11">
+                    <input type="hidden" id="usernamedata">
+					<label for="password" style="color: #000; font-size: 12px;">New
+						Password</label> <input type="text" id="password" class=""
+						maxlength="10" />
+				</div>
+
+				<div class="col s1">
+					<i class="fa fa-check-square-o" aria-hidden="true"
+						style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
+				</div>
+				<div class="input-field col s11">
+
+					<label for="confirmPassword" style="color: #000; font-size: 12px;">Confirm
+						Password</label> <input type="text" class="" id="confirmPassword"
+						maxlength="10" />
+				</div>
+			</div>
+			<div class="row" style="margin-top: 30px;">
+				<div class="input-field col s12 m12 l12 center">
+					<button  onclick="udapteNewPassword();"
+						class="btn" type="button" id="save"
+						style="width: 100%;">Save</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+	
+	
+
 
     <div id="submitBtnAction" class="modal">
         <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
@@ -177,18 +227,18 @@
         <div class="modal-content">
     
           <div class="row">
-            <h6>The has been sent to your registered email ID</h6>
+            <h6 id="responseMsg"></h6>
           </div>
           <div class="row">
             <div class="input-field col s12 center">
               <div class="input-field col s12 center">
-                  <a href="otpVerification.html" class="btn" style="margin-left: 10px;">ok</a>
+                  <a href="${context}/login" class="btn" style="margin-left: 10px;">ok</a>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Modal End -->
+     <!--  Modal End -->
     
 
 
@@ -196,16 +246,12 @@
     Scripts
     ================================================ -->
 
-    <script>
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
-
-        // $('.dropdown-trigger').dropdown();
-    </script>
-
-    <!-- jQuery Library -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+  <!-- jQuery Library -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+    <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+ 
     <!--materialize js-->
     <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
     <!--prism
@@ -224,6 +270,17 @@
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 
+
+    <script>
+        $(document).ready(function () {
+            //$('.modal').openModal();
+            questionData();
+        });
+
+        // $('.dropdown-trigger').dropdown();
+    </script>
+
+  
 </body>
 
 </html>

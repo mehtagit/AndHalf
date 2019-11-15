@@ -34,6 +34,9 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+	<script>
+var contextpath = "${context}";
+</script>
 </head>
 
 <body>
@@ -57,7 +60,7 @@
 						<li>
 							<h1 class="logo-wrapper">
 								<a href="index.html" class="brand-logo darken-1">CEIR -
-									<%=(String)session.getAttribute("primayRole")%> Portal</a> <span class="logo-text">Materialize</span>
+									<%=(String)session.getAttribute("usertype")%> Portal</a> <span class="logo-text">Materialize</span>
 							</h1> 
 						</li>
 					</ul>
@@ -69,7 +72,7 @@
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
-								<li><a href="${context}/editProfile" target="mainArea"><i
+								<li><a href="${context}/editProfile"  target="mainArea"><i
 										class="fa fa-pencil dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor">Edit Info</span></a></li>
 								<li class="divider"></li>
@@ -226,29 +229,37 @@
 	<div id="manageAccount" class="modal">
 		<div class="modal-content">
 			<h6>Manage Account</h6>
-			<hr>
+			<hr> 
 			<p>Request CEIR ADMIN to</p>
 			<div class="row" style="height: 30px;">
 				<p>
-					<label style="margin-right: 50px"> <input type="radio"
-						onclick="document.getElementById('calender').style.display = 'none';"
-						name="stolen"><span> Deactivate</span></label>Permanently delete
+					<label style="margin-right: 50px"> <input  type="radio"
+						name="status" value="Deactivate" ><span> Deactivate</span></label>Permanently delete
 					the account, you will not login into the portal.
-				</p>
+				</p>                        
 			</div>
+			<%String status=(String)session.getAttribute("userStatus"); %>
+			<%if(status.equalsIgnoreCase("Active")){ %>
 			<div class="row" style="height: 30px;">
 				<p>
-					<label style="margin-right: 67px"> <input type="radio"
-						onclick="document.getElementById('calender').style.display = 'block';"
-						name="stolen"><span> Disable</span></label>All the action will be
+					<label style="margin-right: 67px"> <input type="radio" value="Disable"
+						name="status"><span> Disable</span></label>All the action will be
 					disabled, only view option will be available
+				</p> 
+			</div>
+			<%} else if(status.equalsIgnoreCase("Disable")){ %>
+                    <div class="row" style="height: 30px;">
+				<p>
+					<label style="margin-right: 67px"> <input type="radio" value="Active"
+						name="status"><span> Enable</span></label>All the action will be
+					Enable 
 				</p>
 			</div>
 
+<%} else {} %>
 			<div class="input-field col s12 center">
-				<button class="btn modal-trigger modal-close"
-					data-target="manageAccountSubmit">Submit</button>
-				<a href="consignment.html" class="btn" style="margin-left: 10px;">Cancel</a>
+				<button class="btn" onclick="updateUSerStatus()">Submit</button>
+				<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
 			</div>
 		</div>
 	</div>
@@ -261,9 +272,9 @@
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<div class="modal-content">
-			<h6>The request has been successfully registered with CEIR
+			<h6><!-- The request has been successfully registered with CEIR
 				Admin. Please find confirmation over registered mail in 2 to 3
-				working days.</h6>
+				working days. --></h6>
 
 
 			<div class="input-field col s12 center">
@@ -277,6 +288,7 @@
 
 	<div id="changePassword" class="modal" style="width: 40%;">
 		<div class="modal-content">
+		<form>
 			<div class="row">
 				<h5 style="text-align: -webkit-center;">Change Password</h5>
 
@@ -318,11 +330,12 @@
 			</div>
 			<div class="row" style="margin-top: 30px;">
 				<div class="input-field col s12 m12 l12 center">
-					<a href="#changePasswordMessage"
-						class="btn modal-trigger modal-close" type="button" id="save"
-						style="width: 100%;">Save</a>
+					<button onclick="changePassword();"
+						class="btn" type="button" id="save"
+						style="width: 100%;">Save</button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 
@@ -387,12 +400,12 @@
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Your Password has been changed</h6>
+				<h6></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="#" class="btn modal-close">ok</a>
+						<a href="" class="btn">ok</a>
 					</div>
 				</div>
 			</div>
@@ -407,8 +420,11 @@
 
 
 	<!-- jQuery Library -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

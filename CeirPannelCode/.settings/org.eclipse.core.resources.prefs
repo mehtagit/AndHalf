@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
 encoding//src/main/webapp/WEB-INF/view/editProfile.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/view/editProfile3.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/forgotPassword.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/reg4.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/registration.jsp=UTF-8

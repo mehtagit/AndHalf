@@ -1,10 +1,12 @@
 package org.gl.ceir.CeirPannelCode.Model;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
 public class Registration {
+	private Integer id;
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -20,17 +22,17 @@ public class Registration {
 	private String type;
 	private Integer vatStatus; 
 	private String vatNo; 
-	private List<QuestionPair> questionList;
+	private ArrayList<QuestionPair> questionList;
 	private String password;
 	private String  rePassword;
 	private String username;
 	private int[] roles;
 	private String captcha;
 	public Registration() {};
-	public List<QuestionPair> getQuestionList() {
+	public ArrayList<QuestionPair> getQuestionList() {
 			return questionList;
 		}
-		public void setQuestionList(List<QuestionPair> questionList) {
+		public void setQuestionList(ArrayList<QuestionPair> questionList) {
 			this.questionList = questionList;
 		}
 
@@ -175,19 +177,21 @@ public class Registration {
 		public void setCaptcha(String captcha) {
 			this.captcha = captcha;
 		}
+		public Integer getId() {
+			return id;
+		}
+		public void setId(Integer id) {
+			this.id = id;
+		}
 		@Override
 		public String toString() {
-			return "Registration [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-					+ ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", companyName="
-					+ companyName + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality="
-					+ locality + ", province=" + province + ", country=" + country + ", type=" + type + ", vatStatus="
-					+ vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password=" + password
-					+ ", rePassword=" + rePassword + ", username=" + username + ", roles=" + roles + ", captcha="
-					+ captcha + "]";
+			return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+					+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo
+					+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
+					+ ", locality=" + locality + ", province=" + province + ", country=" + country + ", type=" + type
+					+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password="
+					+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + Arrays.toString(roles)
+					+ ", captcha=" + captcha + "]";
 		}
-		
-		
-		
-
 
 }
