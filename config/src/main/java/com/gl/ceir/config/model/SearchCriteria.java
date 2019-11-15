@@ -9,7 +9,7 @@ public class SearchCriteria {
 	private Object value;
 	private SearchOperation searchOperation;
 	private Datatype datatype;
-	
+
 	public SearchCriteria(String key, Object value, SearchOperation searchOperation, Datatype datatype) {
 		// TODO Auto-generated constructor stub
 		this.key = key;
@@ -17,7 +17,7 @@ public class SearchCriteria {
 		this.searchOperation = searchOperation;
 		this.datatype = datatype;
 	}
-	
+
 	public String getKey() {
 		return key;
 	}
@@ -42,5 +42,5 @@ public class SearchCriteria {
 	public void setDatatype(Datatype datatype) {
 		this.datatype = datatype;
 	}
-	
+
 }

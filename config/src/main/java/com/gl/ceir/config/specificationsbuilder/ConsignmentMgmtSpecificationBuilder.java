@@ -22,7 +22,7 @@ public class ConsignmentMgmtSpecificationBuilder {
 
 	private final List<SearchCriteria> params;
 	private final String dialect;
-	
+
 
 	public ConsignmentMgmtSpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
@@ -57,35 +57,35 @@ public class ConsignmentMgmtSpecificationBuilder {
 		// Path<Tuple> tuple = null;
 
 		try {
-		for(SearchCriteria searchCriteria : params) {
-			specifications.add((root, query, cb)-> {
-				// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
-				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-					return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-				}
-				else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-					return cb.lessThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-				}
-				else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
-						&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-					return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-				}
-				else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
-					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-					return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
-				}
-				else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
-					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-					return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
-				}else {
-					return null;
-				}
-			});
-		}
+			for(SearchCriteria searchCriteria : params) {
+				specifications.add((root, query, cb)-> {
+					// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
+					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.lessThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+						return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+						return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+					}else {
+						return null;
+					}
+				});
+			}
 		}catch (Exception e) {
 			// TODO: handle exception
 			logger.error(e.getMessage(), e);
