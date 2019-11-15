@@ -1,5 +1,3 @@
-
-
 function verifyOtp(){
 	var obj="";
 	$("#verifyOtpForm").each(function(key, val){
