@@ -1,5 +1,7 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +14,9 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.StatesInterpretationDb;
 import com.gl.ceir.config.repository.StateMgmtRepository;
+import com.gl.ceir.config.repository.StatesInterpretaionRepository;
 import com.gl.ceir.config.util.Utility;
 
 
@@ -23,6 +27,9 @@ public class StateMgmtServiceImpl {
 
 	@Autowired
 	private StateMgmtRepository stateMgmtRepository;
+
+	@Autowired
+	private StatesInterpretaionRepository statesInterpretaionRepository; 
 
 	@Autowired
 	FileStorageProperties fileStorageProperties;
@@ -37,20 +44,39 @@ public class StateMgmtServiceImpl {
 	EmailUtil emailUtil;
 
 	/*
-	 * @RequestParam = 0 - Return states
-	 * @RequestParam = 1 - Return description of states.
+	 * 
+	 * @future_scope : must use a join between state_mgmt_db and states_interpretation_db
 	 */
-	public List<StateMgmtDb> getByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId, Integer returnType) {
+	public List<StateMgmtDb> getByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId) {
 		try {
+			List<StateMgmtDb> stateMgmtDbsResult = new ArrayList<StateMgmtDb>();
 			
 			logger.info("Going to get states by featureId and usertypeId ");
+
 			List<StateMgmtDb> stateMgmtDbs = stateMgmtRepository.getByFeatureIdAndUserTypeId(featureId, userTypeId);
+			logger.debug(stateMgmtDbs);
+			logger.debug("Instance of Linked List : " + (stateMgmtDbs instanceof LinkedList<?>));
+			logger.debug("Instance of Array List : " + (stateMgmtDbs instanceof ArrayList<?>));
 			
-			return stateMgmtDbs;
+			List<StatesInterpretationDb> statesInterpretationDbs = statesInterpretaionRepository.findByFeatureId(featureId);
+			logger.debug(statesInterpretationDbs);
+			
+			for(StatesInterpretationDb statesInterpretationDb : statesInterpretationDbs) {
+				
+				for(StateMgmtDb stateMgmtDb : stateMgmtDbs) {
+					if(stateMgmtDb.getState().equals(statesInterpretationDb.getState())) {
+						stateMgmtDb.setInterp(statesInterpretationDb.getInterp());
+						stateMgmtDbsResult.add(stateMgmtDb);
+					}
+				}
+			}
+
+			return stateMgmtDbsResult;
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 }
