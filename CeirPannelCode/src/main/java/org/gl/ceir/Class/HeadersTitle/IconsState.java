@@ -248,8 +248,8 @@ public String customState(String fileName,String txnId ,String status,String use
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = null;
-String rejectAction = null;
+String approveAction = "openApprovePopUp('"+txnId+"')";
+String rejectAction = "openDisapprovePopup('"+txnId+"')";
 
 
 
@@ -265,7 +265,7 @@ String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hid
 		+approveIconTitle+" ></i></a>";   
 
 
-String reject = "<a onclick="+approveAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 
 if("5".equals(status) && "Active".equals(userStatus) ) {

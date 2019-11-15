@@ -53,6 +53,7 @@ public class LoginService {
 			session.setAttribute("usertype", response.getPrimaryRole());
 			session.setAttribute("name", response.getName()); 
 			session.setAttribute("userStatus", response.getStatus());
+			session.setAttribute("primaryRoleId",response.getPrimaryRoleId());
 			mv.setViewName("redirect:/importerDashboard"); 
 			return mv;      
 		}

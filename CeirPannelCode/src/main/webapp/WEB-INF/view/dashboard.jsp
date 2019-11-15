@@ -139,7 +139,7 @@
 					<ul>
 					<c:forEach items="${features}"  var="feature">
 							<li class="bold"><a href="${feature.link}" target="mainArea"
-								class="waves-effect waves-cyan"><i class="${feature.logo}"></i>
+								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 									 ${feature.name}</a></li>
 					</c:forEach>
 					</ul>

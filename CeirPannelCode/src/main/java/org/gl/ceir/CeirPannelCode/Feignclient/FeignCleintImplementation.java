@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
@@ -63,6 +64,10 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/consigment/delete" ,method=RequestMethod.DELETE) 
 	public @ResponseBody GenricResponse deleteConsignment(ConsignmentModel consignmentModel) ;
 	
+	//delete Consignment feign  controller
+		@RequestMapping(value="/update/consigmentStatus" ,method=RequestMethod.PUT) 
+		public @ResponseBody GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) ;
+		
 	
 	
 		

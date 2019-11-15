@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 
 import java.io.BufferedOutputStream;
+import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
@@ -354,6 +356,30 @@ public class Consignment {
 
 		log.info("enter in  delete consignment.");
 		GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel);
+		log.info("response after delete consignment."+response);
+		return response;
+
+	}
+
+
+	
+	//************************************************ update consignment Status ********************************************************************************/
+
+	@RequestMapping(value= {"/updateConsignmentStatus"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public @ResponseBody GenricResponse updateConsignmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest,HttpSession session) {
+		ConsignmentUpdateRequest request= new ConsignmentUpdateRequest ();
+		log.info("enter in  update  consignment status ."+consignmentUpdateRequest);
+		
+		
+		request.setAction(consignmentUpdateRequest.getAction());
+		request.setTxnId(consignmentUpdateRequest.getTxnId());
+		request.setRoleType((String) session.getAttribute("usertype"));
+		request.setRoleTypeUserId((int) session.getAttribute("primaryRoleId"));
+		request.setUserId((int) session.getAttribute("userid"));
+		request.setRemark(consignmentUpdateRequest.getRemark());
+		
+	    log.info("complete request."+request);
+		GenricResponse response=feignCleintImplementation.updateConsignmentStatus(consignmentUpdateRequest);
 		log.info("response after delete consignment."+response);
 		return response;
 

@@ -449,7 +449,95 @@ font-size: 20px; color: red;
 	</div>
 
 
+<!-- -----------------------------------------------------------------Approved Model------------------------------------------------------------------------------ -->
 
+
+  <div id="ApproveConsignment" class="modal">
+    <div class="modal-content">
+      <h6>Approve Consignment</h6>
+      <hr>
+      <div class="row">
+        <h6>The tax against the consignment with (Importer/Company name) having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
+          successfully paid.</h6>
+      </div>
+      <div class="row">
+        <h6>Do you approve the consignment?</h6>
+        <input type="text" id="setApproveConsignmentTxnId" style="display: none">
+      </div>
+      <div class="row">
+        <div class="input-field col s12 center">
+          <div class="input-field col s12 center">
+            <button class="modal-close modal-trigger btn" onclick="approveSubmit(0)">Yes</button>
+            <button class="modal-close btn" style="margin-left: 10px;">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="confirmApproveConsignment" class="modal">
+    <div class="modal-content">
+      <h6>Approve Consignment</h6>
+      <hr>
+      <div class="row">
+        <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 center">
+          <div class="input-field col s12 center">
+            <a  href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+    <div id="RejectConsignment" class="modal">
+    <div class="modal-content">
+      <h6>Reject Consignment</h6>
+      <hr>
+      <div class="row">
+        <h6>Do you really want to mark the consignment (Importer/Company name) having Transaction ID: <span id="disaproveTxnId"></span> as
+          rejected.</h6>
+            <input type="text" id="setDisapproveConsignmentTxnId" style="display: none">
+      </div>
+      <div class="row">
+        <div class="input-field col s12 m12" style="margin-left: -10px;">
+          <textarea id="dispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
+          <label for="textarea1">Remarks <span class="star">*</span></label>
+        </div>
+        <p>Required Field are marked with <span class="star">*</span></p>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 center">
+          <div class="input-field col s12 center">
+            <button class="modal-close modal-trigger btn" onclick="disapproveSubmit(1)">Yes</button>
+            <button class="modal-close btn" style="margin-left: 10px;">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <div id="confirmRejectConsignment" class="modal">
+    <div class="modal-content">
+      <h6>Reject Consignment</h6>
+      <hr>
+      <div class="row">
+        <h6 id="disapproveSuccessMessage">The consignment has been marked as rejected.</h6>
+      </div>
+      <div class="row">
+        <div class="input-field col s12 center">
+          <div class="input-field col s12 center">
+            <a href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 	<!-- Update Modal Start -->
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
 		<div class="modal-content">
@@ -1043,6 +1131,98 @@ event.preventDefault();
 
    			//$("#filterBtnDiv").append();
    			}); 
+   			
+   		function openApprovePopUp(txnId)
+   		{
+   			console.log("open approve pop  up."+txnId);
+   			$('#ApproveConsignment').openModal();
+   			$('#ApproveConsignmentTxnid').text(txnId);
+   			$('#setApproveConsignmentTxnId').val(txnId);
+   			
+   			
+   			
+   		}
+   	  function approveSubmit(actiontype){
+ 	        var txnId=$('#setApproveConsignmentTxnId').val();
+ 	        console.log("txnId==="+txnId)
+ 	        var approveRequest={
+ 	        	"action": actiontype,
+ 	        	"txnId":txnId
+ 	        }
+ 	     console.log(JSON.stringify(approveRequest));
+     	 $.ajax({
+ 				url : "./updateConsignmentStatus",
+ 				data : JSON.stringify(approveRequest),
+  			dataType : 'json',
+  			contentType : 'application/json; charset=utf-8',
+  			type : 'POST',
+ 				success : function(data) {
+ 					console.log(data)
+ 					$('#confirmApproveConsignment').openModal();
+ 					  if(data.errorCode==0){
+ 		  					
+ 		  					$('#approveSuccessMessage').text('');
+ 		 					 $('#approveSuccessMessage').text(data.message);
+ 		  						 }
+ 		  					 else{
+ 		  						 $('#approveSuccessMessage').text('');
+ 		  		 				 $('#approveSuccessMessage').text(data.message);
+ 		  					 }
+ 				},
+ 				error : function() {
+ 					alert("Failed");
+ 				}
+ 			});
+     }
+   	  
+   		function openDisapprovePopup(txnId)
+   		{
+   			console.log("open approve pop  up."+txnId);
+   			$('#RejectConsignment').openModal();
+   			$('#disaproveTxnId').text(txnId);
+   			$('#setDisapproveConsignmentTxnId').val(txnId);
+   			
+   			
+   			
+   		}
+   		
+   		function disapproveSubmit(actiontype){
+ 	        var txnId=$('#disaproveTxnId').val();
+ 	      	var Remark=$('#dispproveRemarks').val();
+ 	       
+ 	        console.log("txnId==="+txnId+"  Remark  "+Remark)
+ 	        var approveRequest={
+ 	        	"action": actiontype,
+ 	        	"txnId":txnId,
+ 	        	"remark":Remark
+ 	        }
+ 	     console.log(JSON.stringify(approveRequest));
+     	 $.ajax({
+ 				url : "./updateConsignmentStatus",
+ 				data : JSON.stringify(approveRequest),
+  			dataType : 'json',
+  			contentType : 'application/json; charset=utf-8',
+  			type : 'POST',
+ 				success : function(data) {
+ 					console.log(data)
+ 					$('#confirmRejectConsignment').openModal();
+ 					 if(data.errorCode==0){
+		  					
+		  					$('#disapproveSuccessMessage').text('');
+		 					 $('#disapproveSuccessMessage').text(data.message);
+		  						 }
+		  					 else{
+		  						 $('#disapproveSuccessMessage').text('');
+		  		 				 $('#disapproveSuccessMessage').text(data.message);
+		  					 }
+ 				},
+ 				error : function() {
+ 					alert("Failed");
+ 				}
+ 			});
+     }	
+   		 
+      
   </script>
 </body>
 </html>
