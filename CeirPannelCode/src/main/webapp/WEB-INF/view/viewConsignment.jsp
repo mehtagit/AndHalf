@@ -49,7 +49,7 @@
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
-
+<link rel="stylesheet" href="${context}/resources/project_css/iconStates.css">
 
 
 <style>
@@ -174,57 +174,6 @@ to {
 	opacity: 0;
 }
 
-
-.eventNone {
-    cursor: not-allowed;
-    user-select: none;
-    pointer-events: none;
-}
-.error-icon
-{
-color:red; font-size:20px; margin-right:15px;
-}
-.download-icon{
-font-size: 20px; color:#2e8b57;
-}
-.view-icon{
-font-size: 20px; margin:0 0 0 15px;
-}
-.edit-icon{
-font-size: 20px; margin:0 15px 0 15px; color: #006994
-}
-.delete-icon{
-font-size: 20px; color: red;
-}
-.approve-icon {
-   font-size: 20px;
-      margin: 0 7px 0 15px;
-      color: #006994
-    }
-
-    .reject-icon {
-      font-size: 20px;
-      color: red;
-      margin: 0 7px 0 7px;
-    }
-
-.reply-disable-icon{
-            font-size: 20px; cursor: not-allowed; color: gray;
-            margin: 0 7px;
-        }
-
-        .reply-icon{
-            font-size: 20px; color: #006994;
-            margin: 0 7px;
-        }
-
-.pay-tax-icon{
-            font-size: 20px;  color:#2e568b;
-            margin: 0 7px;
-        }
-        .disable{
-        color:grey;
-        }
 </style>
 
 </head>

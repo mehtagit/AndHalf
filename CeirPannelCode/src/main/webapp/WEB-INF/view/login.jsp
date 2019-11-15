@@ -201,7 +201,7 @@ var contextpath = "${context}";
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-		 <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+		 <script type="text/javascript" src="${context}/resources/project_js/Registration.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

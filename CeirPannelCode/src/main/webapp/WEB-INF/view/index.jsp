@@ -38,27 +38,7 @@
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
-    <style>
-        ul li {
-            display: inline-flex;
-        }
-
-        li {
-            padding: 7px 15px;
-            border: solid 1px #c9c9c9;
-            border-radius: 5px;
-            margin-right: 10px;
-        }
-        select{
-            height: 1.5rem;
-            border: none;
-        }
-        footer {
-            padding-left: 0;
-        }
-    </style>
-
+	<link rel="stylesheet" href="${context}/resources/project_css/index.css">
 </head>
 
 <body>
