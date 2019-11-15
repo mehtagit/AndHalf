@@ -132,13 +132,13 @@ public class ConsignmentServiceImpl {
 
 			if(Objects.nonNull(consignmentMgmt.getStartDate()))
 				cmsb.with(new SearchCriteria("createdOn", consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-			
+
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			
+
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
 				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
 				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
@@ -169,13 +169,13 @@ public class ConsignmentServiceImpl {
 
 			if(Objects.nonNull(consignmentMgmt.getStartDate()))
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-	
+
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-				
+
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
 				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-	
+
 			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
 				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
@@ -324,6 +324,7 @@ public class ConsignmentServiceImpl {
 
 					if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
+						consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 						consignmentRepository.save(consignmentMgmt);	
 						//mail send to user and Custom 
 						logger.info("Email sending to user to accept ceir");
@@ -333,6 +334,7 @@ public class ConsignmentServiceImpl {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentRepository.save(consignmentMgmt);
+						consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 						//send mail to user and CEIR
 						logger.info("Email sending to user accpet custom");
 						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
@@ -343,12 +345,14 @@ public class ConsignmentServiceImpl {
 				if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentRepository.save(consignmentMgmt);
+					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					//mail send to user and custom 
 					logger.info("Email sending to user reject ceir");
 					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
+					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentRepository.save(consignmentMgmt);
 					//send mail to user and CEIR
 					logger.info("Email sending to user reject custom");

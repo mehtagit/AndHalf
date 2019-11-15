@@ -134,7 +134,6 @@ public class ConsignmentController {
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
-
 	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
 
 		logger.info("View Request only Single Record="+txnId);
