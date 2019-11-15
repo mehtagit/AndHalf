@@ -16,7 +16,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint( columnNames = { "state", "userTypeId" } ) })
 public class StateMgmtDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
