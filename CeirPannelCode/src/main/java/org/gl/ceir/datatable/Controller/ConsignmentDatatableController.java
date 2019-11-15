@@ -135,8 +135,37 @@ public class ConsignmentDatatableController {
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 				}
+			}else if("CEIRAdmin".equals(userType)) {
+				for(ConsignmentContent dataInsideList : paginationContentList) 
+				{
+				UserModel userModel = dataInsideList.getUser();
+				UserProfileModel userprofileModel = userModel.getUserProfile();
+				String createdOn= dataInsideList.getCreatedOn();
+				String txnId = dataInsideList.getTxnId(); 
+				String companyName = userprofileModel.getCompanyName();		
+				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
+				String consignmentStatus = null;
+				consignmentStatus = statusOfConsignment.equals("2")  ? "Rejected By System" :
+							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
+								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
+									statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
+										statusOfConsignment.equals("6") ?   "Approved" : 
+											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
+												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : 
+														statusOfConsignment.equals("9") ?   "Withdrawn by CEIR" : "Not Listed";
+				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+				String userStatus = (String) session.getAttribute("userStatus");
+				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
+				
+				
+				String[] finalData={createdOn,txnId,companyName,consignmentStatus,taxPaidStatus,action}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+				}
 			}
-			}
+			
+		}
 		
 		
 		//data set on ModelClass

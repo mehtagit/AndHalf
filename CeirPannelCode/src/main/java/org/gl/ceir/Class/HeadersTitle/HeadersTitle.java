@@ -21,5 +21,8 @@ public class HeadersTitle {
 	//Custom
 	public static final String ImporterCompanyName = "Importer/Company Name";
 	
+	//Admin
+	public static final String submissionDate = "Submission Date";
+	
 	
 }

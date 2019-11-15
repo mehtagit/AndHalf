@@ -248,8 +248,8 @@ public String customState(String fileName,String txnId ,String status,String use
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = null;
-String rejectAction = null;
+String approveAction = "openApprovePopUp('"+txnId+"')";
+String rejectAction = "openDisapprovePopup('"+txnId+"')";
 
 
 
@@ -265,7 +265,7 @@ String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hid
 		+approveIconTitle+" ></i></a>";   
 
 
-String reject = "<a onclick="+approveAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 
 if("5".equals(status) && "Active".equals(userStatus) ) {
@@ -284,6 +284,70 @@ if("5".equals(status) && "Active".equals(userStatus) ) {
 
 
 String action=download.concat(view).concat(approve).concat(reject);	
+return action;
+}
+
+/********************************** Icons for Admin **********************************/ 
+
+public String adminState(String fileName,String txnId ,String status,String userStatus) {
+// URL link 
+String emptyURL="JavaScript:void(0);"; 
+String viewAction="viewConsignmentDetails('"+txnId+"')"; 
+String approveAction = null;
+String rejectAction = null;
+String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
+
+
+
+
+// state related Code 
+
+
+String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		+viewIconTitle+" ></i></a>";
+
+String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		+approveIconTitle+" ></i></a>";   
+
+
+String reject = "<a onclick="+rejectIcon+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		+rejectIconTitle+" ></i></a>";
+
+String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
+		+deleteIconTitle+"></i></a>";
+
+//Disable approves
+if( "5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Active".equals(userStatus) ) {
+	approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+			+approveIconTitle+" ></i></a>";
+}
+//Disable reject
+else if("4".equals(status) ||"5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Active".equals(userStatus) ) {
+	reject = "<a onclick="+rejectIcon+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
+			+rejectIconTitle+" ></i></a>";
+}
+
+//Disable Delete
+else if("6".equals(status) || "8".equals(status) || "9".equals(status) && "Active".equals(userStatus) ) {
+	delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+			 +disableDeletionIcon+" aria-hidden=\"true\"  title="
+			 +deleteIconTitle+"></i></a>";  
+}
+
+
+else if("Disable".equals(userStatus)) {
+	 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+	 approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";
+	 reject = "<a onclick="+rejectIcon+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+	 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+			 +disableDeletionIcon+" aria-hidden=\"true\"  title="
+			 +deleteIconTitle+"></i></a>"; 
+}
+
+
+String action=view.concat(approve).concat(reject).concat(delete);	
 return action;
 }
 

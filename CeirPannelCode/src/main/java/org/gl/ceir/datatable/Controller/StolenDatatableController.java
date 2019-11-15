@@ -120,7 +120,7 @@ public class StolenDatatableController {
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 		
-			String[] names = { "HeaderButton", "Report Stolen/Recovery", "./openRegisterConsignmentForm?reqType=formPage",
+			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
 					"btnLink", "FilterButton", "filter", "filterConsignment()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();

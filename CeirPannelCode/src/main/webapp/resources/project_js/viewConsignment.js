@@ -1,3 +1,7 @@
+
+var cierRoletype = sessionStorage.getItem("cierRoletype");
+/* 	alert(cierRoletype);	 */
+
 function DeleteConsignmentRecord(txnId){
 	$("#DeleteConsignment").openModal();
 	$("#transID").text(txnId);
@@ -107,66 +111,87 @@ function setEditPopupData(data){
 } 
 
 
-// **************************************************filter table**********************************************
+
+
+
+var startdate=$('#startDate').val(); 
+var endDate=$('#endDate').val();
+var taxStatus=$('#taxPaidStatus').val();
+var consignmentStatus=$('#filterConsignmentStatus').val();
+var userId="";
+
+var filterRequest={
+		"consignmentStatus":consignmentStatus,
+		"endDate":startdate,
+		"startDate":endDate,
+		"taxPaidStatus":taxStatus,
+		"userId":userId
+};
 
 
 function filterConsignment()
-{
-	var startdate=$('#startDate').val(); 
-	var endDate=$('#endDate').val();
-	var taxStatus=$('#taxPaidStatus').val();
-	var consignmentStatus=$('#filterConsignmentStatus').val();
-	var userId="1";
-
-	var filterRequest={
-			"consignmentStatus":consignmentStatus,
-			"endDate":startdate,
-			"startDate":endDate,
-			"taxPaidStatus":taxStatus,
-			"userId":userId
-	};
+{       	 	
 
 	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
 		console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
 
-		$.ajax({
-			url: "./headers?type=consignment",
-			type: 'POST',
-			dataType: "json",
-			success: function(result){
-				var table=	$("#consignmentLibraryTable").DataTable({
-					destroy:true,
-					"serverSide": true,
-					orderCellsTop : true,
-					"aaSorting" : [],
-					"bPaginate" : true,
-					"bFilter" : true,
-					"bInfo" : true,
-					"bSearchable" : true,
-					ajax: {
-						url: './consignmentData',
-						type: 'POST',
-						data : function(d) {
-							d.filter = JSON.stringify(filterRequest);       		    		
-						}
+		if(cierRoletype=="Importer"){
+			table('../headers?type=consignment');	
+		}else if(cierRoletype=="Custom"){
+			table('../headers?type=customConsignment');
+		}else if(cierRoletype=="CEIRAdmin"){
+			table('../headers?type=adminConsignment');
 
-					},
-					"columns": result
-				});
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
-			}
-		});
+
+		}        	
 	}
 	else{
 		console.log("please fill select");
 	}
 }
 
+//**************************************************filter table**********************************************
+
+function table(url){
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: "json",
+		success: function(result){
+			var table=	$("#consignmentLibraryTable").DataTable({
+				destroy:true,
+				"serverSide": true,
+				orderCellsTop : true,
+				"aaSorting" : [],
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"bSearchable" : true,
+				ajax: {
+					url: '../consignmentData',
+					type: 'POST',
+					data : function(d) {
+						d.filter = JSON.stringify(filterRequest);       		    		
+					}
+
+				},
+				"columns": result
+			});
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax");
+		}
+	});
+}
+
+
+
+
+
+
 
 //******************************************************************************************************************************************************************888888
-//******************************************      ************************************************************************************************************************888888
+//******************************************************************************************************************************************************************888888
 //******************************************************************************************************************************************************************888888   
 
 function editRegisterConsignment(){
@@ -201,7 +226,7 @@ function editRegisterConsignment(){
 	console.log(JSON.stringify(formData));
 	console.log("*********");
 
-	$.ajax({ 
+	$.ajax({
 		url: './Consignment/updateRegisterConsignment',
 		type: 'POST',
 		data: formData,
@@ -313,6 +338,7 @@ function arrivalDateValidation(){
 
 $(document).ready(function(){
 	$('.datepicker').datepicker();
+	filterConsignment();
 });
 
 $('.datepicker').on('mousedown',function(event){
@@ -340,42 +366,15 @@ populateCountries
 );
 
 
-
-
-
 $.ajax({
-	url: "./headers?type=stolen",
-	type: 'POST',
-	dataType: "json",
-	success: function(result){
-		var table=	$("#stolenLibraryTable").DataTable({
-			destroy:true,
-			"serverSide": true,
-			orderCellsTop : true,
-			"aaSorting" : [],
-			"bPaginate" : true,
-			"bFilter" : true,
-			"bInfo" : true,
-			"bSearchable" : true,
-			ajax: {
-				url: './stolenData',
-				type: 'POST',
-				data : function(d) {
-					d.filter = null;       		    		
-				}
-			},
-			"columns": result
-		});
-	}
-}); 
-
-
-$.ajax({
-	url: "./stolen/pageRendering",
+	url: "../consignment/pageRendering",
 	type: 'POST',
 	dataType: "json",
 	success: function(data){
-		var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
+		data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+
+
+		var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 		$("#pageHeader").append(elem);
 		var button=data.buttonList;
 
@@ -408,194 +407,111 @@ $.ajax({
 		}
 
 		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
-		for(i=0; i<button.length; i++){
-			$('#'+button[i].id).text(button[i].buttonTitle);
+			for(i=0; i<button.length; i++){
+				$('#'+button[i].id).text(button[i].buttonTitle);
 			if(button[i].type === "HeaderButton"){
-				$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
-			}
+				$('#'+button[i].id).attr("href", button[i].buttonURL);
+				 }
 			else{
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+				}
 			}
-		}
-	}
+	
+			cierRoletype=="Importer" ? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
+					
+					}
+	
 
-//$("#filterBtnDiv").append();
-}); 
-
-
-function fileStolenReport(){
-
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-selected-roleType"); 
-
-	var sourceType;
-	var requestType;
-	var role = currentRoleType == null ? roleType : currentRoleType;
-	var blockPeriod=$('#blockPeriod').val();
-	var blockType=$('#blockType').val();
-
-
-
-
-	var formData= new FormData();
-	formData.append('blockingType',blockType);
-	formData.append('blockingTimePeriod',blockPeriod);
-	formData.append('requestType',requestType);
-	formData.append('roleType',role);
-	formData.append('sourceType',sourceType);
-	formData.append('userId',userId);
-
-
-	console.log(JSON.stringify(formData));
-	console.log("*********");
-
-	$.ajax({
-		url: './fileTypeStolen',
-		type: 'POST',
-		data: formData,
-		processData: false,
-		contentType: false,
-		success: function (data, textStatus, jqXHR) {
-
-			console.log(data);
-			/*  $('#editStockModal').closeModal();
-   						 $('#successUpdateStockModal').modal();
-   						  if(data.errorCode==200){
-
-   						$('#stockSucessMessage').text('');
-   						 $('#stockSucessMessage').text('Operation is not allowed');
-   							 }
-   						 else{
-   							 $('#stockSucessMessage').text('');
-   			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-   						 } */
-			// $('#updateConsignment').modal('open'); 
-			//alert("success");
-
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
-		}
-	});
-
-}
-
-
-
-function fileRecoveryReport(){
-	var roleType = $("body").attr("data-roleType");
-	var userId = $("body").attr("data-userID");
-	var currentRoleType = $("body").attr("data-selected-roleType"); 
-	var sourceType;
-	var requestType;
-	var role = currentRoleType == null ? roleType : currentRoleType;
-	var formData= new FormData();
-
-	formData.append('requestType',requestType);
-	formData.append('roleType',role);
-	formData.append('sourceType',sourceType);
-	formData.append('userId',userId);
-
-	console.log(JSON.stringify(formData));
-	console.log("*********");
-	$.ajax({
-		url: './fileTypeStolen',
-		type: 'POST',
-		data: formData,
-		processData: false,
-		contentType: false,
-		success: function (data, textStatus, jqXHR) {
-			console.log(data);
-			/*  $('#editStockModal').closeModal();
-   						 $('#successUpdateStockModal').modal();
-   						  if(data.errorCode==200){
-
-   						$('#stockSucessMessage').text('');
-   						 $('#stockSucessMessage').text('Operation is not allowed');
-   							 }
-   						 else{
-   							 $('#stockSucessMessage').text('');
-   			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-   						 } */
-			// $('#updateConsignment').modal('open'); 
-			//alert("success");
-
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
-		}
-	});
-
-}
-
-
-function multipleStolenRecovery(){
-	/*    			  
-	      	      	 var supplierId=$('#editSupplierId').val();
-	      	      	 var supplierName=$('#editSupplierName').val();
-	      	      	 var filename=$('#editcsvUploadFileName').val();
-	      	      	 var txnId=$('#editTransactionId').val();
-	      	      	 var quantity=$('#editQuantity').val();
-	      	      	 var InvoiceNumber=$('#editInvoiceNumber').val(); */
-
-
-
-	var stolenRecoverydata= 
-		[{
-
-			"txnId": "C2019103113182217",
-			"userId": 265
-		},
+			//$("#filterBtnDiv").append();
+			}); 
+			
+		function openApprovePopUp(txnId)
 		{
-
-			"txnId": "C201910311318229976",
-			"userId": 266
-		}]
-
-
-	$.ajax({
-		url: './multipleStolenRecovery',
-		type: 'POST',
-		data: JSON.stringify(stolenRecoverydata),
-		dataType : 'json',
-		contentType : 'application/json; charset=utf-8',
-		success: function (data, textStatus, jqXHR) {
-
-			console.log(data);
-			/*  $('#editStockModal').closeModal();
-	      						 $('#successUpdateStockModal').modal();
-	      						  if(data.errorCode==200){
-
-	      						$('#stockSucessMessage').text('');
-	      						 $('#stockSucessMessage').text('Operation is not allowed');
-	      							 }
-	      						 else{
-	      							 $('#stockSucessMessage').text('');
-	      			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-	      						 } */
-			// $('#updateConsignment').modal('open'); 
-			//alert("success");
-
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+			console.log("open approve pop  up."+txnId);
+			$('#ApproveConsignment').openModal();
+			$('#ApproveConsignmentTxnid').text(txnId);
+			$('#setApproveConsignmentTxnId').val(txnId);
+			
+			
+			
 		}
-	});
-
-}
-
-
-function openStolenRecoveryModal(){
-	console.log("openStolenRecoveryModal===");
-	$('#stoleRecoveryModal').openModal();
-}
-
-function openFileStolenModal(){
-	console.log("openfileStolenModal===");
-	$("#materialize-lean-overlay-3").css("display","none");
-	$('#stoleRecoveryModal').closeModal();
-
-	$('#fileStolenModal').openModal();
-
-}
+	  function approveSubmit(actiontype){
+	        var txnId=$('#setApproveConsignmentTxnId').val();
+	        console.log("txnId==="+txnId)
+	        var approveRequest={
+	        	"action": actiontype,
+	        	"txnId":txnId
+	        }
+	     console.log(JSON.stringify(approveRequest));
+ 	 $.ajax({
+				url : "./updateConsignmentStatus",
+				data : JSON.stringify(approveRequest),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+				success : function(data) {
+					console.log(data)
+					$('#confirmApproveConsignment').openModal();
+					  if(data.errorCode==0){
+		  					
+		  					$('#approveSuccessMessage').text('');
+		 					 $('#approveSuccessMessage').text(data.message);
+		  						 }
+		  					 else{
+		  						 $('#approveSuccessMessage').text('');
+		  		 				 $('#approveSuccessMessage').text(data.message);
+		  					 }
+				},
+				error : function() {
+					alert("Failed");
+				}
+			});
+ }
+	  
+		function openDisapprovePopup(txnId)
+		{
+			console.log("open approve pop  up."+txnId);
+			$('#RejectConsignment').openModal();
+			$('#disaproveTxnId').text(txnId);
+			$('#setDisapproveConsignmentTxnId').val(txnId);
+			
+			
+			
+		}
+		
+		function disapproveSubmit(actiontype){
+	        var txnId=$('#disaproveTxnId').val();
+	      	var Remark=$('#dispproveRemarks').val();
+	       
+	        console.log("txnId==="+txnId+"  Remark  "+Remark)
+	        var approveRequest={
+	        	"action": actiontype,
+	        	"txnId":txnId,
+	        	"remark":Remark
+	        }
+	     console.log(JSON.stringify(approveRequest));
+ 	 $.ajax({
+				url : "./updateConsignmentStatus",
+				data : JSON.stringify(approveRequest),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+				success : function(data) {
+					console.log(data)
+					$('#confirmRejectConsignment').openModal();
+					 if(data.errorCode==0){
+	  					
+	  					$('#disapproveSuccessMessage').text('');
+	 					 $('#disapproveSuccessMessage').text(data.message);
+	  						 }
+	  					 else{
+	  						 $('#disapproveSuccessMessage').text('');
+	  		 				 $('#disapproveSuccessMessage').text(data.message);
+	  					 }
+				},
+				error : function() {
+					alert("Failed");
+				}
+			});
+ }	
+		 
