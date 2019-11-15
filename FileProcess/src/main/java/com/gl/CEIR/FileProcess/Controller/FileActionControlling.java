@@ -11,7 +11,7 @@ import com.gl.CEIR.FileProcess.ServiceImpl.FileActionServiceImpl;
 import com.gl.CEIR.FileProcess.ServiceImpl.StockDeleteServiceImpl;
 import com.gl.CEIR.FileProcess.ServiceImpl.StockUpdateServiceImpl;
 import com.gl.CEIR.FileProcess.ServiceImpl.StockUploadServiceImpl;
-import com.gl.CEIR.FileProcess.model.WebActionDb;
+import com.gl.ceir.config.model.WebActionDb;
 
 
 @Service

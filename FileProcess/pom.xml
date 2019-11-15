@@ -73,14 +73,14 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.0.CR2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.gl.ceir</groupId>
 			<artifactId>config</artifactId>
-			<version>1.0.1</version>
+			<version>1.0</version>
 			<classifier>import-lib</classifier>
-			<scope>system</scope>
-			<systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath>
+			<!-- <scope>system</scope>
+			<systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath>-->
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
@@ -137,4 +137,13 @@
 		</plugins>
 	</build>
 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.gl.ceir</groupId>
+				<artifactId>config</artifactId>
+				<version>1.0.1</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
