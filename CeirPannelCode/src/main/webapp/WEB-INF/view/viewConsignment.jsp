@@ -799,6 +799,8 @@ font-size: 20px; color: red;
         		table('${context}/headers?type=consignment');	
         	}else if(cierRoletype=="Custom"){
         		table('${context}/headers?type=customConsignment');
+        	}else if(cierRoletype=="CEIRAdmin"){
+        		table('${context}/headers?type=adminConsignment');
         	
         		        		
         	}        	

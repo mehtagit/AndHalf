@@ -54,6 +54,15 @@ else if("customConsignment".equals(role)) {
 }
 
 
+//Admin DATATABLE HEADERS
+else if("adminConsignment".equals(role)) {
+	String[] headers = {HeadersTitle.submissionDate,HeadersTitle.transactionID,HeadersTitle.ImporterCompanyName,HeadersTitle.consignmentStatus,HeadersTitle.taxPaidStatus,HeadersTitle.action};		
+	for(String header : headers) {
+		dataTableInputs.add(new DatatableHeaderModel(header));
+	}
+	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+}
+
 
 //DEFAULT PORTION  
 else {
