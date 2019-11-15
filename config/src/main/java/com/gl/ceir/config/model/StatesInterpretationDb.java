@@ -30,10 +30,10 @@ public class StatesInterpretationDb implements Serializable {
 	@NotNull
 	private Integer featureId;
 
-	private String interp;
-	
 	@NotNull
 	private Integer state;
+	
+	private String interp;
 
 	public Long getId() {
 		return id;

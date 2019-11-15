@@ -33,12 +33,11 @@ public class StateMgmtController {
 	@ApiOperation(value = "View list of state by feature_id and user_type_id", response = StateMgmtDb.class)
 	@GetMapping("/state-mgmt/{featureId}/{userTypeId}")
 	public MappingJacksonValue getByFeatureIdAndUserTypeId(@PathVariable("featureId") Integer featureId, 
-			@PathVariable("userTypeId") Integer userTypeId,
-			@RequestParam(value = "returnType", defaultValue = "0") Integer returnType) {
+			@PathVariable("userTypeId") Integer userTypeId) {
 
 		logger.info("Request TO view list of state by feature_id = " + featureId + " and userTypeId = "+ userTypeId);
 
-		List<StateMgmtDb> states =  stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(featureId, userTypeId, returnType);
+		List<StateMgmtDb> states =  stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(featureId, userTypeId);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(states);
 
