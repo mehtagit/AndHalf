@@ -426,7 +426,7 @@ $.ajax({
 			}); 
 			
 
-$.getJSON('./getDropdownList/3/4', function(data) {
+$.getJSON('../getDropdownList/3/4', function(data) {
 	for (i = 0; i < data.length; i++) {
 	$('<option>').val(data[i].state).text(data[i].interp)
 	.appendTo('#filterConsignmentStatus');
