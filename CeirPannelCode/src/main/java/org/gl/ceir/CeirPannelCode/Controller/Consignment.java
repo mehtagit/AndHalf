@@ -66,7 +66,6 @@ public class Consignment {
 		
 		log.info(" view consignment entry point."); 
 		 mv.setViewName("viewConsignment");
-		//mv.addObject("consignmentdetails", consignmentdetails);
 		log.info(" view consignment exit point."); 
 		return mv; 
 	}
@@ -165,17 +164,10 @@ public class Consignment {
 		String userName=session.getAttribute("username").toString();
 		String userId= session.getAttribute("userid").toString();
 		String name=session.getAttribute("name").toString();
-		
-		log.info(" values from session  username="+userName+ "userId="+userId+" name ="+name);
-		
 		log.info(" Register consignment entry point.");
-
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "C"+txnNumner;
-
-
-		log.info("txnid="+txnNumner);
-
+		log.info("Random transaction id number="+txnNumner);
 		ConsignmentModel consignment = new ConsignmentModel();
 		try {
 			byte[] bytes = file.getBytes();
@@ -188,7 +180,7 @@ public class Consignment {
 			// Calendar now = Calendar.getInstance();
 
 			File serverFile = new File(rootPath+file.getOriginalFilename());
-			log.info("COMPLETE PATH" + serverFile);
+			log.info("uploaded file path on server" + serverFile);
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
@@ -198,11 +190,7 @@ public class Consignment {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		log.info(" submit register form block.");
-
-
 		// set request parameters into model class
-		
 		consignment.setSupplierId(supplierId);
 		consignment.setSupplierName(supplierName);
 		consignment.setConsignmentNumber(consignmentNumber);
@@ -215,11 +203,9 @@ public class Consignment {
 		consignment.setFileName(file.getOriginalFilename());
 		consignment.setUserId(Long.valueOf(userId));
 		consignment.setTaxPaidStatus("Not Paid");
-
-		log.info("consignment object "+consignment.toString());
-		log.info(file.getOriginalFilename());
+		log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 		GenricResponse response = feignCleintImplementation.addConsignment(consignment);
-		log.info("response from feign client=="+response.toString());
+		log.info("response from register consignment api"+response.toString());
 		return response;
 
 
@@ -243,15 +229,9 @@ public class Consignment {
 		
 		GenricResponse response= new GenricResponse();
 		
-		log.info("entry point  in update Consignment ** **.");
-
-
-		log.info("file name without upload file="+filename);
-
+		log.info("entry point  in update Consignment.");
 		if(file==null)
 		{
-			log.info("message  in file upload block ");
-
 			consignment.setSupplierId(supplierId);
 			consignment.setSupplierName(supplierName);
 			consignment.setConsignmentNumber(consignmentNumber);
@@ -264,43 +244,30 @@ public class Consignment {
 			consignment.setFileName(filename);
 			consignment.setUserId(Long.valueOf(userId));
 			consignment.setTaxPaidStatus("Not Paid");
-
-			log.info(consignment.toString());
+			
 		}
 		else {
-
-
-
 			log.info("file is empty or not "+file.isEmpty());
 			try {
 				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
-
-
 				File tmpDir = new File(rootPath+file.getOriginalFilename());
 				boolean exists = tmpDir.exists();
-
 				if(exists) {
-						
-					log.info("file is exist.");
+					
 					Path temp = Files.move 
 							(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()),  
 									Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
-
+					String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();	
 					// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
-					log.info("after move file");
+					log.info("file is already exist, moved to this  "+movedPath+"  path. ");
 					tmpDir.delete();
 				}
-
-
 				byte[] bytes = file.getBytes();
-
 				File dir = new File(rootPath + File.separator);
-
 				if (!dir.exists()) 
 					dir.mkdirs();
-
 				File serverFile = new File(rootPath+file.getOriginalFilename());
-				log.info("COMPLETE PATH" + serverFile);
+				log.info("uploaded file path on server" + serverFile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
@@ -326,21 +293,12 @@ public class Consignment {
 			consignment.setTxnId(txnId);
 			consignment.setFileName(filename);
 			consignment.setUserId(Long.valueOf(1));
-			consignment.setImporterName("sharad yadav");
 			consignment.setTaxPaidStatus("Not Paid");
-
-			log.info(consignment.toString());
-
 		}
 
+		log.info("Request passed to the update register consignment="+consignment.toString());
 		response = feignCleintImplementation.updateConsignment(consignment);
-		log.info(" update consignment form block.");
-
-		// calling service method
-		//	String response=service.updateConsignmnet(consignment, file, txnid);
-
-
-		log.info(" update consignment exit point.");
+		log.info(" response from update Consignment api="+response);
 		return response;
 
 	}
@@ -355,6 +313,7 @@ public class Consignment {
 	public @ResponseBody GenricResponse deleteConsignment(@RequestBody ConsignmentModel consignmentModel) {
 
 		log.info("enter in  delete consignment.");
+		log.info("request passed to the deleteConsignment Api="+consignmentModel);
 		GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel);
 		log.info("response after delete consignment."+response);
 		return response;
@@ -378,9 +337,9 @@ public class Consignment {
 		request.setUserId((int) session.getAttribute("userid"));
 		request.setRemark(consignmentUpdateRequest.getRemark());
 		
-	    log.info("complete request."+request);
+	    log.info(" request passed to the update consignment status="+request);
 		GenricResponse response=feignCleintImplementation.updateConsignmentStatus(consignmentUpdateRequest);
-		log.info("response after delete consignment."+response);
+		log.info("response after update consignment status="+response);
 		return response;
 
 	}
@@ -409,7 +368,6 @@ public class Consignment {
 		else {
 			ConsignmentModel  consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
 			log.info("consignment details="+consignmentdetails);
-
 			log.info("open view  registration Consignment form");
 			mv.setViewName("viewConsignmentRecord");
 			mv.addObject("consignmentdetails", consignmentdetails);
@@ -425,56 +383,30 @@ public class Consignment {
 	{
 		ConsignmentModel  consignmentdetails= new ConsignmentModel();
 		if(reqType.equals("editPage")) {
+			log.info("transaction id passed to the fetch consignment api="+txnId);
 			consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
-			log.info("consignment details="+consignmentdetails);
-			log.info("open Update registration Consignment popup");
+			log.info(" response from fetch consignment api ="+consignmentdetails);
+
 
 		}
 		else {
+			log.info("transaction id passed to the fetch consignment api="+txnId);
 			consignmentdetails=feignCleintImplementation.fetchConsignmentByTxnId(txnId);
-			log.info("consignment details="+consignmentdetails);
-			log.info("open view  registration Consignment pop up");
+			log.info(" response from fetch consignment api ="+consignmentdetails);
 		}
 		return consignmentdetails;
 
 	}
-
-	@RequestMapping(value="/demo/{reqType}",method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public @ResponseBody ConsignmentModel demo(@RequestParam(name="supplierId") String supplierId,@RequestParam(name="supplierName") String supplierName
-			,@RequestParam(name="consignmentNumber") String consignmentNumber,@RequestParam(name="expectedArrivalDate") String expectedArrivalDate,
-			@RequestParam(name="organisationcountry") String organisationcountry,@RequestParam(name="expectedDispatcheDate") String expectedDispatcheDate,
-			@RequestParam(name="expectedArrivalPort") String expectedArrivalPort,@RequestParam(name="quantity") String quantity,@RequestParam(name="file") MultipartFile file,@PathVariable("reqType") String reqType)  {
-
-
-		ConsignmentModel consignment = new ConsignmentModel();
-
-		consignment.setSupplierId(supplierId);
-		consignment.setSupplierName(supplierName);
-		consignment.setConsignmentNumber(consignmentNumber);
-		consignment.setExpectedDispatcheDate(expectedDispatcheDate);
-		consignment.setExpectedArrivalDate(expectedArrivalDate);
-		consignment.setOrganisationcountry(organisationcountry);
-		consignment.setExpectedArrivalPort(expectedArrivalPort);
-		consignment.setQuantity(quantity);
-
-		log.info("request type=="+reqType);
-		log.info("consignment object "+consignment.toString());
-		log.info(file.getOriginalFilename());
-
-
-		return consignment;
-
-	}
+	
 
 	//**************************************************  download file  **************************************************************** 
 	@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 	public  String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
 
 		log.info("inside file download method");
-		System.out.println("transacation id="+txnid+" fileName="+fileName+" fileType="+filetype);
-		log.info("txnid"+txnid+" fileName "+fileName+" fileType "+filetype);
+		log.info("request send to the download file api=  txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")");
 		String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName);
-		log.info(response);
+		log.info("response of download api="+response);
 
 		return "redirect:"+response;
 
@@ -484,10 +416,9 @@ public class Consignment {
 	//************************************************ Download Sampmle file **************************************************
 	@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 	public  String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
-		System.out.println("inside file download method");
-		System.out.println(" fileType="+filetype);
+		log.info("request send to the  sample file download  api="+filetype);
 		String response=feignCleintImplementation.downloadSampleFile(filetype);
-		log.info(response);
+		log.info("response from sample file download file "+response);
 
 		return "redirect:"+response;
 

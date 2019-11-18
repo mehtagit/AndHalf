@@ -156,7 +156,10 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/stakeholder/Recovery" ,method=RequestMethod.POST) 
 	public GenricResponse fileRecovery(@RequestBody StolenRecoveryModel request) ;
 
-
+	
+//delete stolen recovery feign  controller
+	    @RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
+	    public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 

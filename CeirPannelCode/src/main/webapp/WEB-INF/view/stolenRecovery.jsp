@@ -55,7 +55,8 @@
 	href="${context}/resources/project_css/iconStates.css">
 
 </head>
-<body>
+
+<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -69,18 +70,23 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a class="boton right" id="btnLink"></a>
+								<a  class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/stakeholder/record" method="post">
+							<form action="${context}/stakeholder/record"
+								method="post">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv"></div>
+									<div id="filterBtnDiv">
+										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
+		 -->
+									</div>
 								</div>
 							</form>
 							<table id="stolenLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -95,6 +101,8 @@
 
 			<h6>View Consignment</h6>
 			<hr>
+
+
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId"
@@ -104,8 +112,9 @@
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierName"
-						placeholder="Supplier/Manufacturer Name" readonly="readonly" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer Name</label>
+						placeholder="Supplier/Manufacturer Name" readonly="readonly" />
+					<label for="Name" class="center-align">Supplier/Manufacturer
+						Name</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="consignmentNumber"
@@ -188,7 +197,7 @@
 	<div id="DeleteConsignment" class="modal">
 		<div class="modal-content">
 
-			<h6>Delete Consignment</h6>
+			<h6>Delete</h6>
 			<hr>
 
 			<div class="row">
@@ -197,14 +206,7 @@
 						id="transID"></span>)
 				</h6>
 			</div>
-
-			<div class="row">
-				<div class="input-field col s12 m12">
-					<textarea id="textarea1" class="materialize-textarea"></textarea>
-					<label for="textarea1">Remarks</label>
-				</div>
-			</div>
-			<input type="text" id="popupTransactionId" maxlength="15" hidden />
+		<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
@@ -258,9 +260,9 @@
 			</div>
 
 			<div class="row">
-				<div class="input-field col s12 center">
+				<div class="input-field col s12 cent\er">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment" class="btn">ok</a>
+						<a href="${context}/stolenRecovery" class="btn">ok</a>
 					</div>
 				</div>
 			</div>
@@ -400,171 +402,248 @@
 
 		</div>
 	</div>
+	
+	<div id="markAsStolen" class="modal">
+        <div class="modal-content">
+
+            <h6>Mark As Stolen</h6>
+            <hr>
+
+            <div class="row">
+                <h6>The following devices marked as stolen has been recieved successfully.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="./stolenRecovery" class="modal-close btn" style="margin-left: 10px;">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+
+    <div id="stoleRecoveryModal" class="modal">
+        <div class="row" style="padding-bottom: 20px;" id="stolenRecoveryDivPage">
+        <button type="button" class=" modal-action modal-close  btn-flat right" data-dismiss="modal">×</button>
+            <div class="col s12 m12 modal-content">
+                <h6>Report Stolen/Recovery</h6>
+                <hr>
+                <div class="row">
+                    <form action="#">
+                        <h5 class="center">
+                            <label>
+                                <input name="group1" type="radio"
+                                    onclick="document.getElementById('stolendiv').style.display ='block'; document.getElementById('recoverydiv').style.display ='none';" />
+                                <span class="checkboxFont"> Stolen</span>
+                            </label>
+
+                            <label>
+                                <input name="group1" type="radio"
+                                    onclick="document.getElementById('recoverydiv').style.display ='block'; document.getElementById('stolendiv').style.display ='none';" />
+                                <span class="checkboxFont"> Recovery</span>
+                            </label>
+                        </h5>
+                    </form>
+                </div>
+
+                <div class="row" style="padding-bottom: 20px; display: none;" id="stolendiv">
+                    <div class="col s12 m12 l12">
+                        <form action="#">
+                            <h5 class="center">
+                                <label>
+                                    <input name="group1" type="radio" onclick="location.href = 'markAsStolen.html';" />
+                                    <span class="checkboxFont"> Choose from consignment</span>
+                                </label>
+
+                                <label>
+                                    <input name="group1" type="radio"
+                                        onclick="location.href = 'chooseFromStockDetail.html';" />
+                                    <span class="checkboxFont"> Choose from the stock</span>
+                                </label>
+
+                                <label>
+                                    <input name="group1" type="radio" onclick="openFileStolenModal()"
+                                        class="modal-trigger modal-close" />
+                                    <span class="checkboxFont"> Upload Bulk Devices</span>
+                                </label>
+                            </h5>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" style="padding-bottom: 20px; display: none;" id="recoverydiv">
+                    <div class="col s12 m12 l12">
+                        <form action="#">
+                            <h5 class="center">
+                                <label>
+                                    <input name="group1" type="radio"
+                                        onclick="location.href = 'markAsRecovery.html';" />
+                                    <span class="checkboxFont"> Choose from existing</span>
+                                </label>
+
+                                <label>
+                                    <input name="group1" type="radio" onclick="openRecoveryModal()" data-target="recoveryDiv1"
+                                        class="modal-trigger modal-close" />
+                                    <span class="checkboxFont"> Upload Bulk Devices</span>
+                                </label>
+                            </h5>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+     <div id="fileStolenModal" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12 m12">
+                    <h6>Mark As Stolen</h6>
+                    <hr>
+                    <div class="row">
+                        <h6 style="color: #000;">Upload Bulk Devices Information <span class="star">*</span>
+                        </h6>
+
+                        <div class="file-field input-field col s12 m8">
+                            <div class="btn" style="height: 35px; line-height: 2.5rem;">
+                                <span>Select File</span>
+                                <input type="file" id="stolenCsvUploadFile" accept=".csv">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="col s12 m6 l6" id="SavedFileNameDiv" style="display: none">
+                    <label for="TotalPrice" class="center-align">Uploaded File</label>
+                    <input type="text" name="" class="form-control boxBorder boxHeight" readonly id="SavedFileName" />
+                </div>
+            </div>
+            <a href="#" style="margin-left: 10px;">Download Sample Format</a><br><br>
 
-	<div id="stoleRecoveryModal" class="modal">
-		<div class="row" style="padding-bottom: 20px;"
-			id="stolenRecoveryDivPage">
-			<div class="col s12 m12 modal-content">
-				<h6>Report Stolen/Recovery</h6>
-				<hr>
-				<div class="row">
-					<form action="#">
-						<h5 class="center">
-							<label> <input name="group1" type="radio"
-								onclick="document.getElementById('stolendiv').style.display ='block'; document.getElementById('recoverydiv').style.display ='none';" />
-								<span class="checkboxFont"> Stolen</span>
-							</label> <label> <input name="group1" type="radio"
-								onclick="document.getElementById('recoverydiv').style.display ='block'; document.getElementById('stolendiv').style.display ='none';" />
-								<span class="checkboxFont"> Recovery</span>
-							</label>
-						</h5>
-					</form>
-				</div>
+            <div class="row" id="samplefileDiv3" style="display: none;margin-left:05px;">
+                <div style="display: inline-flex">
+                    <a href="#" id="simDevice3">IMEI dual SIM device entry</a><br><br>
+                    <a href="#" style="margin-left: 75px;" id="rangeDevice3">IMEI Range Device entry</a><br><br>
+                </div>
+            </div>
+            <div style="margin-left:36%; margin-top: -25px;">
+                <label style="margin-right: 2%;">
+                 <input type="radio" id="" value="Immediate" onclick="document.getElementById('calender').style.display = 'none';" name="stolenBlockPeriod" checked>
+                    Immediate</label>
+                <label style="margin-right: 2%;"> 
+                <input type="radio"  value="Default"
+                        onclick="document.getElementById('calender').style.display = 'none';" name="stolenBlockPeriod">
+                    Default</label>
+                <label> <input type="radio"  value="tilldate"
+                        onclick="document.getElementById('calender').style.display = 'block';" name="stolenBlockPeriod">
+                    Later
+                </label>
+                <div class="col s6 m2 responsiveDiv" style="display: none; width: 30%;" id="calender">
+                    <div id="startdatepicker" class="input-group date" data-date-format="yyyy-mm-dd">
+                        <input class="form-control" type="date" id="stolenDatePeriod" style="margin-top: -9px" />
+                        <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar"
+                                aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+                    </div>
 
-				<div class="row" style="padding-bottom: 20px; display: none;"
-					id="stolendiv">
-					<div class="col s12 m12 l12">
-						<form action="#">
-							<h5 class="center">
-								<label> <input name="group1" type="radio"
-									onclick="location.href = 'markAsStolen.html';" /> <span
-									class="checkboxFont"> Choose from consignment</span>
-								</label> <label> <input name="group1" type="radio"
-									onclick="location.href = 'chooseFromStockDetail.html';" /> <span
-									class="checkboxFont"> Choose from the stock</span>
-								</label> <label> <input name="group1" type="radio"
-									onclick="openFileStolenModal()"
-									class="modal-trigger modal-close" /> <span
-									class="checkboxFont"> Upload Bulk Devices</span>
-								</label>
-							</h5>
-						</form>
-					</div>
-				</div>
-
-				<div class="row" style="padding-bottom: 20px; display: none;"
-					id="recoverydiv">
-					<div class="col s12 m12 l12">
-						<form action="#">
-							<h5 class="center">
-								<label> <input name="group1" type="radio"
-									onclick="location.href = 'markAsRecovery.html';" /> <span
-									class="checkboxFont"> Choose from existing</span>
-								</label> <label> <input name="group1" type="radio"
-									data-target="recoveryDiv1" class="modal-trigger modal-close" />
-									<span class="checkboxFont"> Upload Bulk Devices</span>
-								</label>
-							</h5>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="fileStolenModal" class="modal">
-		<div class="modal-content">
-			<div class="row">
-				<div class="col s12 m12">
-					<h6>Mark As Stolen</h6>
-					<hr>
-					<div class="row">
-						<h6 style="color: #000;">
-							Upload Bulk Devices Information <span class="star">*</span>
-						</h6>
-
-						<div class="file-field input-field col s12 m8">
-							<div class="btn" style="height: 35px; line-height: 2.5rem;">
-								<span>Select File</span> <input type="file" id="csvUploadFile"
-									accept=".csv">
-							</div>
-							<div class="file-path-wrapper">
-								<input class="file-path validate" type="text">
-							</div>
-						</div>
-					</div>
-				</div>
+                </div>
 
 
-				<div class="col s12 m6 l6" id="SavedFileNameDiv"
-					style="display: none">
-					<label for="TotalPrice" class="center-align">Uploaded File</label>
-					<input type="text" name="" class="form-control boxBorder boxHeight"
-						readonly id="SavedFileName" />
-				</div>
-			</div>
-			<a href="#" style="margin-left: 10px;">Download Sample Format</a><br>
-			<br>
+                <div class="col s12 m2 l2" style=" width:40%;display:none" id="stolenDate">
 
-			<div class="row" id="samplefileDiv3"
-				style="display: none; margin-left: 05px;">
-				<div style="display: inline-flex">
-					<a href="#" id="simDevice3">IMEI dual SIM device entry</a><br>
-					<br> <a href="#" style="margin-left: 75px;" id="rangeDevice3">IMEI
-						Range Device entry</a><br>
-					<br>
-				</div>
-			</div>
-			<div style="margin-left: 36%; margin-top: -25px;">
-				<label style="margin-right: 2%;"> <input type="radio"
-					id="blockPeriod" value="Immediate"
-					onclick="document.getElementById('calender').style.display = 'none';"
-					name="blockPeriod" checked> Immediate
-				</label> <label style="margin-right: 2%;"> <input type="radio"
-					id="blockPeriod" value="Default"
-					onclick="document.getElementById('calender').style.display = 'none';"
-					name="blockPeriod"> Default
-				</label> <label> <input type="radio" id="blockPeriod"
-					value="tilldate"
-					onclick="document.getElementById('calender').style.display = 'block';"
-					name="blockPeriod"> Later
-				</label>
-				<div class="col s6 m2 responsiveDiv"
-					style="display: none; width: 30%;" id="calender">
-					<div id="startdatepicker" class="input-group date"
-						data-date-format="yyyy-mm-dd">
-						<input class="form-control" type="date" id="datepicker"
-							style="margin-top: -9px" /> <span class="input-group-addon"
-							style="color: #ff4081"><i class="fa fa-calendar"
-							aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
-					</div>
+                    <label for="TotalPrice" class="center-align">Till date</label>
+                    <div id="startdatepicker" class="input-group date" data-date-format="yyyy-mm-dd"
+                        style="   margin-top: 10px;">
 
-				</div>
+                        <input class="form-control" name="inputsaves" type="text" id="startDateFilter" readonly />
+                        <span class="input-group-addon" style="color:#ff4081"><i class="glyphicon glyphicon-calendar"
+                                onclick="_Services._selectstartDate()"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m12">
+                <p style="margin-left: 10px;"> Required Field are marked with <span class="star">*</span></p>
+            </div>
 
+            <div class="row" style="margin-bottom: 30px;">
+                <div class="input-field col s12 center">
+                    <a  onclick="fileStolenReport()" class="modal-close modal-trigger btn" style="margin-right: 10px;">Submit</a>
 
-				<div class="col s12 m2 l2" style="width: 40%; display: none"
-					id="stolenDate">
+                    <button class="btn" onclick="closeStolenModalModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	
+    <div id="recoveryFileModal" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col s12 m12">
+                    <h6>Mark As Recovered</h6>
+                    <hr>
+                    <div class="row">
+                        <h6 style="color: #000;">Upload Bulk Devices Information <span class="star">*</span>
+                        </h6>
 
-					<label for="TotalPrice" class="center-align">Till date</label>
-					<div id="startdatepicker" class="input-group date"
-						data-date-format="yyyy-mm-dd" style="margin-top: 10px;">
+                        <div class="file-field input-field col s12 m8">
+                            <div class="btn" style="height: 35px; line-height: 2.5rem;">
+                                <span>Select File</span>
+                                <input type="file" id="recoveryCsvUploadFile" accept=".csv">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
 
-						<input class="form-control" name="inputsaves" type="text"
-							id="startDateFilter" readonly /> <span class="input-group-addon"
-							style="color: #ff4081"><i
-							class="glyphicon glyphicon-calendar"
-							onclick="_Services._selectstartDate()"></i></span>
-					</div>
-				</div>
-			</div>
-			<div class="col s12 m12">
-				<p style="margin-left: 10px;">
-					Required Field are marked with <span class="star">*</span>
-				</p>
-			</div>
+                        <div class="col s12 m6 l6" id="SavedFileNameDiv" style="display: none">
+                            <label for="TotalPrice" class="center-align">Uploaded File</label>
+                            <input type="text" name="" class="form-control boxBorder boxHeight" readonly
+                                id="SavedFileName" />
+                        </div>
+                    </div>
+                    <a href="#" style="margin-left: 10px;">Download Sample Format</a><br><br>
 
-			<div class="row" style="margin-bottom: 30px;">
-				<div class="input-field col s12 center">
-					<a href="#markAsStolen" class="modal-close modal-trigger btn"
-						style="margin-right: 10px;">Submit</a>
+                    <div class="row" id="samplefileDiv12" style="display: none;margin-left:05px;">
+                        <div style="display: inline-flex">
+                            <a href="#" id="simDevice12">IMEI dual SIM device entry</a><br><br>
+                            <a href="#" style="margin-left: 75px;" id="rangeDevice12">IMEI Range Device
+                                entry</a><br><br>
+                        </div>
+                    </div>
+                    <span style="margin-left: 10px;"> Required Field are marked with <span class="star">*</span></span>
 
-					<button class="btn modal-action modal-close">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
+                        <div class="row" style="margin-bottom: 30px;">
+                            <div class="input-field col s12 center">
+                                <button class="modal-close modal-trigger btn"  onclick="fileRecoveryReport()"  data-target="markAsRecoverDone"
+                                    style="margin-right: 10px;">Submit</button>
+
+                                <button class="btn " onclick="closeRecoveryModalModal()">Cancel</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	
+	 <div id="markAsRecoverDone" class="modal">
+        <div class="modal-content">
+            <h6>Mark As Recovered</h6>
+            <hr>
+            <div class="row">
+                <h6>The following devices marked as recover has been recieved successfully.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a  href="./stolenRecovery" class="modal-close btn" style="margin-left: 10px;">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+	
 
 
 	<!--materialize js-->

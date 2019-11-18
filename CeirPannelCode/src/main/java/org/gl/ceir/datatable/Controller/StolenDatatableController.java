@@ -114,7 +114,7 @@ public class StolenDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 
-		pageElement.setPageTitle("Consignment");
+		pageElement.setPageTitle("Stolen Recovery");
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
