@@ -280,7 +280,7 @@
 
 			<div class="row">
 				<h6>Are you sure you want to withdraw the stock details for
-					transaction ID</h6>
+					transaction ID<span id="stockdeleteTxnId"></span></h6>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
@@ -303,7 +303,7 @@
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="./assignDistributor" class="modal-close btn"
+					<a href="" class="modal-close btn"
 						style="margin-left: 10px;">ok</a>
 				</div>
 			</div>

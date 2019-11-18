@@ -153,13 +153,13 @@ function editUploadStock(){
 
 		function DeleteStockRecord(txnId){
     		 $("#DeleteStockconfirmationModal").openModal();
-     	 $("#popupTransactionId").text(txnId);
+    		 $("#stockdeleteTxnId").text(txnId);
      }
      
      
      function confirmantiondelete(){
          var role = currentRoleType == null ? roleType : currentRoleType;
-         
+         var txnId= $("#stockdeleteTxnId").text();
      	 var obj ={
      			 "txnId" : txnId,
      			 "roleType":role

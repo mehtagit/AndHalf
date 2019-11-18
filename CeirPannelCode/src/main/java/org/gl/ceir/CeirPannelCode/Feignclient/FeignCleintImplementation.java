@@ -165,6 +165,14 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
 	public List<Dropdown> consignmentDropdownList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
 
+	//**************************************************************** file Stolen type ***************************************************************************************************		
+
+
+		@RequestMapping(value="/stakeholder/update" ,method=RequestMethod.PUT) 
+		public GenricResponse updateFileStolen(@RequestBody StolenRecoveryModel request) ;
+
+
+
 
 }
 

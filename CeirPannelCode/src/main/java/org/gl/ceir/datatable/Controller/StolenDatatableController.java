@@ -82,9 +82,10 @@ public class StolenDatatableController {
 										: statusOfConsignment.equals("3") ? "Error" : "Not Defined";
 				String source = " ";
 				String requestType = dataInsideList.getRequestType();
+				int id = dataInsideList.getId();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action = iconState.stolenState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
-						statusOfConsignment, userStatus);
+						statusOfConsignment, userStatus,requestType,id);
 
 				String[] finalData = { createdOn,txnId,fileName, consignmentStatus,source, requestType, action };
 				List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));

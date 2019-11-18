@@ -183,12 +183,12 @@ public class IconsState {
 	
 	/********************************** Icons for Stolen **********************************/ 
 
-public String stolenState(String fileName,String txnId ,String status,String userStatus) {
+public String stolenState(String fileName,String txnId ,String status,String userStatus, String requestType,int id) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
 	String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";	
 	String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
-	String editAction="EditConsignmentDetails('"+txnId+"')";
+	String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"')";
 	String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
 
 

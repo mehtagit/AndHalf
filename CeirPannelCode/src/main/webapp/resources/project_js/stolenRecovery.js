@@ -611,7 +611,7 @@ event.preventDefault();
 	   console.log("openfileStolenModal===");
 	 //  $("#materialize-lean-overlay-3").css("display","none");
 	
-	  $('#stoleRecoveryModal').closeModal();
+	  $('#editRecoveryFileModal').closeModal();
 	  setTimeout(function(){
 		 
 		  $('#recoveryFileModal').openModal();
@@ -629,5 +629,110 @@ event.preventDefault();
    {
   	 $('#recoveryFileModal').closeModal();
   	 $(".lean-overlay").remove();
-  	}
+   }
+   
+   function openFileStolenUpdate(txnId,requestType,id)
+   {
+	 console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
+	 if(requestType=='recovery'){
+		 $('#editRecoveryFileModal').openModal(); 
+		 $('#editFileRecoveryTxnId').text(txnId)
+		 $('#editFileRecoveryId').val(id);
+	 }
+	 else{
+		 $('#editFileStolenModal').openModal(); 
+		 $('#editFileStolenTxnId').text(txnId)
+		 $('#editFileStolenId').val(id);
+	 }
+  	 
+  	 
+  	 $('#editFileStolenRequestType').val(requestType);
+  
+  	
+   }
+   
+   
+   function updatefileStolenReport(){
+	 
+	    var roleType = $("body").attr("data-roleType");
+	    var userId = $("body").attr("data-userID");
+	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    var sourceType='file';
+	    var requestType=$('#editFileStolenRequestType').val();
+	    var role = currentRoleType == null ? roleType : currentRoleType;
+		var blockType=$('input[name=editStolenBlockPeriod]:checked').val();
+		var blockingTimePeriod=$('#editStolenDatePeriod').val();
+		var txnId=$('#editFileStolenTxnId').text();
+	    console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType+" txnId ="+txnId);
+  	  	var formData= new FormData();
+  	  		if(requestType=='recovery'){
+  	    		formData.append('file', $('#editRecoveryCsvUploadFile')[0].files[0]);
+  	    		formData.append('blockingType','');
+  	      	 	formData.append('blockingTimePeriod','');
+  	      	   formData.append('id',$('#editFileRecoveryId').val());
+  	  		}
+  	  		else{
+  	  		formData.append('file', $('#editStolenCsvUploadFile')[0].files[0]);
+  	  		formData.append('blockingType',blockType);
+    	 	formData.append('blockingTimePeriod',blockingTimePeriod);
+    	 	formData.append('id',$('#editFileStolenId').val());
+  	  		}
+  	  		
+  	      		
+  	      	 	formData.append('requestType',requestType);
+  	      	 	formData.append('roleType',role);
+  	      		formData.append('sourceType',sourceType);
+  	      		formData.append('userId',userId);
+  	      		formData.append('txnId',txnId);
+  	      		console.log(JSON.stringify(formData));
+  	      		console.log("*********");
+  	      	 	
+  	      	 $.ajax({
+  					url: './updateFileTypeStolenRecovery',
+  					type: 'POST',
+  					data: formData,
+  					processData: false,
+  					contentType: false,
+  					success: function (data, textStatus, jqXHR) {
+  						
+  						 console.log(data);
+  						if(requestType=='recovery'){
+  							console.log("close recovery model.");
+  						 $('#editFileStolenModal').closeModal();
+  						}
+  						else{
+  							console.log("close stolen model.");
+  							$('#editRecoveryFileModal').closeModal();
+  						}
+  						 $('#updateMarkAsStolen').openModal();
+  						if(data.errorCode==0){
+  						 
+  						 $('#editMessageTextStoleRecovery').text('');
+  						 $('#editMessageTextStoleRecovery').text(data.message);
+  							 }
+  						 else{
+  							 $('#editMessageTextStoleRecovery').text('');
+  			 				 $('#editMessageTextStoleRecovery').text(data.message);
+  						 }  
+  					   // $('#updateConsignment').modal('open'); 
+  						//alert("success");
+  						
+  					},
+  					error: function (jqXHR, textStatus, errorThrown) {
+  					console.log("error in ajax")
+  					}
+  				});
+  	      
+  	      }
+  	      
+   function closeEditRecoveryModal()
+   {
+  	 $('#editRecoveryFileModal').closeModal();
+  	 $(".lean-overlay").remove();
+   }
+   function closeEditStolenRecoveryModal()
+   {
+  	 $('#editFileStolenModal').closeModal();
+  	 $(".lean-overlay").remove();
+   }
    

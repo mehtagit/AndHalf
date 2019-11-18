@@ -4,6 +4,9 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,7 +196,7 @@ public class StolenRecovery {
 	  }
 
 	  
-
+// ***************************************** delete stolen recovery controller **************************************************************
 
 		@RequestMapping(value= {"/stolenRecoveryDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 		public @ResponseBody GenricResponse deleteStock(@RequestBody StolenRecoveryModel stolenRecoveryModel,HttpSession session) {
@@ -207,4 +210,72 @@ public class StolenRecovery {
 			
 
 		}
+		
+// ****************************************** update stolen recovery controller**********************************************************8
+		 
+		
+			  
+			  @RequestMapping(value={"/updateFileTypeStolenRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+					  RequestMethod.POST}) 
+			  public @ResponseBody GenricResponse updateFileTypeStolenRecovery(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
+					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
+					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
+					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) int id)
+			  {	
+				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
+				  GenricResponse response = new GenricResponse();
+				  log.info(" update file stolen/recovery entry point .");
+				  log.info("Random transaction id number="+txnId);
+				  	try {
+				  		String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
+				  		boolean exists = tmpDir.exists();
+
+				  		if(exists) {
+				  		Path temp = Files.move 
+				  		(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
+				  		Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
+
+				  		String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();
+				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
+				  		log.info("file is already exist moved to the this "+movedPath+" path");
+				  		tmpDir.delete();
+				  		}
+						byte[] bytes = file.getBytes();
+						File dir = new File(rootPath + File.separator);
+						if (!dir.exists()) 
+							dir.mkdirs();
+						// Create the file on server
+						// Calendar now = Calendar.getInstance();
+
+						File serverFile = new File(rootPath+file.getOriginalFilename());
+						log.info("uploaded file path on server" + serverFile);
+						BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						stream.write(bytes);
+						stream.close();
+
+					}
+					catch (Exception e) {
+						// TODO: handle exception
+						e.printStackTrace();
+					}
+					stolenRecoveryModel.setBlockingTimePeriod(blockingTimePeriod);
+					stolenRecoveryModel.setBlockingType(blockingType);
+					stolenRecoveryModel.setFileName(file.getOriginalFilename());
+					stolenRecoveryModel.setRequestType(requestType);
+					stolenRecoveryModel.setSourceType(sourceType);
+					stolenRecoveryModel.setUserId(userId);
+					stolenRecoveryModel.setRoleType(roleType);
+					stolenRecoveryModel.setTxnId(txnId);
+					stolenRecoveryModel.setId(id);
+					
+					log.info("request passed to the update file stolen api ="+stolenRecoveryModel);
+					response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
+					log.info("respondse from update  file stolen api="+response);
+					log.info(" update  file stolen api exist point .");
+				  	return response;
+			
+			  }
+			  
+			  
 }
