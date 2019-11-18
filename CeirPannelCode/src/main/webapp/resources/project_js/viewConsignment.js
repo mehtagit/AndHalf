@@ -132,11 +132,9 @@ function filterConsignment()
 	if(startdate == undefined && endDate == undefined && taxStatus == undefined && consignmentStatus == undefined){
 		localStorage.setItem('key', JSON.stringify(filterRequest));
 		var x = localStorage.getItem('key');
-	alert("empty------"+consignmentStatus)
-			
 	}
 	else{
-		alert("not empty");
+		
 		
 	}
 }
