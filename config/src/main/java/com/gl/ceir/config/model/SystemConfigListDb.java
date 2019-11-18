@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class SystemConfigListDb implements Serializable {
 
@@ -18,14 +20,18 @@ public class SystemConfigListDb implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	private Long id;
 
 	@CreationTimestamp
+	@JsonIgnore
 	private Date createdOn;
 
 	@UpdateTimestamp
+	@JsonIgnore
 	private Date modifiedOn;
 	
+	@JsonIgnore
 	private String tag;
 	
 	private Integer value;
