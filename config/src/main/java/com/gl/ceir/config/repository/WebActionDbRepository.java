@@ -14,7 +14,7 @@ public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long> 
 	public WebActionDb getByState(int state);
 
 
-	
+	public WebActionDb findFirstByState(int state);
 	
 
 }

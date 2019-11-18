@@ -39,5 +39,11 @@ public class GenricResponse {
 	}
 
 
+	@Override
+	public String toString() {
+		return "GenricResponse [errorCode=" + errorCode + ", message=" + message + ", txnId=" + txnId + "]";
+	}
+
+
 
 }

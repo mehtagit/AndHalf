@@ -7,9 +7,9 @@ import com.gl.ceir.config.model.ConfigurationManagement;
 public interface ConfigurationManagementRepository extends JpaRepository<ConfigurationManagement, Long> {
 
 
+	public ConfigurationManagement getByName(String name);
 
-	
-	
-	
-	
+
+
+
 }

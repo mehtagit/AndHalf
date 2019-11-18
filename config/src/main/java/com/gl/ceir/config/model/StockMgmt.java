@@ -12,18 +12,22 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class StockMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+
 	@CreationTimestamp
 	private Date createdOn;
-	
+
 	@UpdateTimestamp
 	private Date modifiedOn;
 
@@ -145,35 +149,11 @@ public class StockMgmt implements Serializable {
 		this.stockStatus = stockStatus;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("StockMgmt [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", suplierName=");
-		builder.append(suplierName);
-		builder.append(", supplierId=");
-		builder.append(supplierId);
-		builder.append(", invoiceNumber=");
-		builder.append(invoiceNumber);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", fileName=");
-		builder.append(fileName);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", quantity=");
-		builder.append(quantity);
-		builder.append(", stockStatus=");
-		builder.append(stockStatus);
-		builder.append("]");
-		return builder.toString();
-	}
+
+
+
+
+
+
 
 }
