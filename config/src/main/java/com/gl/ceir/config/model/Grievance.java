@@ -12,9 +12,16 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
+@NamedQuery(name = "Grievance.getAllGrievanceStatusNotClosed",
+query = "select g from Grievance g where g.grievanceId = ?1 and grievanceStatus != ?1")
+@NamedQuery(name = "Grievance.getAllGrievanceStatusNotClosedForAdmin",
+query = "select g from Grievance g where grievanceStatus != ?1")
+@NamedQuery(name = "Grievance.getGrievanceByUserId",
+query = "select g from Grievance g where g.grievanceId = ?1")
 public class Grievance {
 
 	@Id

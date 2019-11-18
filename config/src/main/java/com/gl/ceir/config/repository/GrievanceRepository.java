@@ -12,5 +12,7 @@ public interface GrievanceRepository extends JpaRepository<Grievance, Long>, Jpa
 	public Grievance save(Grievance grievance);
 	public List<Grievance> getGrievanceByUserId(Integer userId);
 	//public Grievance getByGrievanceTxnId(String txnId);
-	
+	public Grievance getBygrievanceId( Long grievanceId );
+	public List<Grievance> getAllGrievanceStatusNotClosed( Integer userId, Integer grievanceStatus );
+	public List<Grievance> getAllGrievanceStatusNotClosedForAdmin( Integer grievanceStatus );
 }

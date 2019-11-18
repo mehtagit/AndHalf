@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.GrievanceMsg;
+import com.gl.ceir.config.model.GrievanceReply;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.service.impl.GrievanceServiceImpl;
-import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
-import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
 import com.gl.ceir.config.util.Utility;
 
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +37,7 @@ public class GrievanceController {
 	Utility utility;
 	
 	@ApiOperation(value = "Add new grievance.", response = GenricResponse.class)
-	@RequestMapping(path = "/grievance/save", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(path = "/grievance/save", method = {RequestMethod.POST})
 	public GenricResponse uploadFile(@RequestBody Grievance grievance) {
 		logger.info("New Grievance Request="+grievance);
 		GenricResponse genricResponse = grievanceServiceImpl.save(grievance);
@@ -46,17 +45,33 @@ public class GrievanceController {
 		return genricResponse;
 	}
 	
+	/**This api will give all open grievances**/
 	@ApiOperation(value = "View all the list of grievances", response = Grievance.class)
-	@RequestMapping(path = "/grievance/Record", method = {RequestMethod.GET,RequestMethod.POST})
-	public MappingJacksonValue getGrievanceByUserId(@RequestParam("userId") Integer userId) {
-		logger.info("Request TO view TO all record of user="+userId);
-		List<Grievance>  grievance =  grievanceServiceImpl.getGrievanceByUserId(userId);
+	@RequestMapping(path = "/grievance/Record", method = {RequestMethod.GET})
+	public MappingJacksonValue getGrievanceByUserId(@RequestParam("userId") Integer userId, @RequestParam("userType") String userType) {
+		List<Grievance>  grievance = null;
+		logger.info("Request TO view TO all record of user="+userId+" and user type="+userType);
+		if( userType.equalsIgnoreCase("admin"))
+			grievance = grievanceServiceImpl.getAllGrievanceStatusNotClosed(userId);
+		else
+			grievance = grievanceServiceImpl.getAllGrievanceStatusNotClosedForAdmin();
 		MappingJacksonValue response = new MappingJacksonValue(grievance);
 		logger.info("Response of view Request ="+response);
 		return response;
 	}
 	
-	@ApiOperation(value = "View filtered consignment", response = Grievance.class)
+	/**This api will give all grievances even with closed status**/
+	@ApiOperation(value = "View all the list of grievances", response = Grievance.class)
+	@RequestMapping(path = "/grievance/AllRecord", method = {RequestMethod.GET})
+	public MappingJacksonValue getAllGrievanceByUserId(@RequestParam("userId") Integer userId) {
+		logger.info("Request TO view TO all record of user="+userId);
+		List<Grievance>  grievance =  grievanceServiceImpl.getAllGrievanceStatusNotClosed(userId);
+		MappingJacksonValue response = new MappingJacksonValue(grievance);
+		logger.info("Response of view Request ="+response);
+		return response;
+	}
+	
+	@ApiOperation(value = "View filtered grievance", response = Grievance.class)
 	@PostMapping("v1/filter/grievance")
 	public MappingJacksonValue filterGrievances(@RequestBody GrievanceFilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -69,7 +84,7 @@ public class GrievanceController {
 		return mapping;
 	}
 
-	@ApiOperation(value = "pagination View filtered consignment", response = Grievance.class)
+	@ApiOperation(value = "pagination View filtered grievance", response = Grievance.class)
 	@PostMapping("v2/filter/grievance")
 	public MappingJacksonValue withPaginationGrievances(@RequestBody GrievanceFilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -80,6 +95,26 @@ public class GrievanceController {
 		MappingJacksonValue mapping = new MappingJacksonValue(grievance);
 		logger.info("Response of view Request ="+mapping);
 		return mapping;
+	}
+	
+	@ApiOperation(value = "Add new grievance Message", response = GenricResponse.class)
+	@RequestMapping(path = "/grievance/saveMessage", method = {RequestMethod.POST})
+	public GenricResponse saveGrievanceMessage(@RequestBody GrievanceReply grievanceReply) {
+		logger.info("New Grievance message Request="+grievanceReply);
+		GenricResponse genricResponse = grievanceServiceImpl.saveGrievanceMsg(grievanceReply);
+		logger.info("New Grievance Response="+genricResponse);
+		return genricResponse;
+	}
+	
+	/**This api will give all open grievances**/
+	@ApiOperation(value = "View all the list of grievances", response = Grievance.class)
+	@RequestMapping(path = "/grievance/msg", method = {RequestMethod.GET})
+	public MappingJacksonValue getGrievanceMessagesByGrievanceId(@RequestParam("userId") Integer userId,@RequestParam("grievanceId") Long grievanceId) {
+		logger.info("Request TO view TO all messages of user="+userId+" and Grievance Id:["+grievanceId+"]");
+		List<GrievanceMsg>  msgs =  grievanceServiceImpl.getAllGrievanceMessagesByGrievanceId(grievanceId);
+		MappingJacksonValue response = new MappingJacksonValue(grievanceId);
+		logger.info("Response of view Request ="+response);
+		return response;
 	}
 	
 }
