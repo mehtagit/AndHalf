@@ -111,14 +111,11 @@ function setEditPopupData(data){
 } 
 
 
-
-
-
 var startdate=$('#startDate').val(); 
 var endDate=$('#endDate').val();
 var taxStatus=$('#taxPaidStatus').val();
 var consignmentStatus=$('#filterConsignmentStatus').val();
-var userId="";
+var userId = $("body").attr("data-userID");
 
 var filterRequest={
 		"consignmentStatus":consignmentStatus,
@@ -407,122 +404,121 @@ $.ajax({
 		}
 
 		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
-			for(i=0; i<button.length; i++){
-				$('#'+button[i].id).text(button[i].buttonTitle);
+		for(i=0; i<button.length; i++){
+			$('#'+button[i].id).text(button[i].buttonTitle);
 			if(button[i].type === "HeaderButton"){
 				$('#'+button[i].id).attr("href", button[i].buttonURL);
-				 }
+			}
 			else{
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-				}
 			}
-	
-			cierRoletype=="Importer" ? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
-					
-					}
-	
+		}
 
-			//$("#filterBtnDiv").append();
-			}); 
-			
+		cierRoletype=="Importer" ? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
+
+	}
+
+
+//$("#filterBtnDiv").append();
+}); 
+
 
 $.getJSON('../getDropdownList/3/4', function(data) {
 	for (i = 0; i < data.length; i++) {
-	$('<option>').val(data[i].state).text(data[i].interp)
-	.appendTo('#filterConsignmentStatus');
+		$('<option>').val(data[i].state).text(data[i].interp)
+		.appendTo('#filterConsignmentStatus');
 
 	}
+});
+
+
+function openApprovePopUp(txnId)
+{
+	console.log("open approve pop  up."+txnId);
+	$('#ApproveConsignment').openModal();
+	$('#ApproveConsignmentTxnid').text(txnId);
+	$('#setApproveConsignmentTxnId').val(txnId);
+
+
+
+}
+function approveSubmit(actiontype){
+	var txnId=$('#setApproveConsignmentTxnId').val();
+	console.log("txnId==="+txnId)
+	var approveRequest={
+		"action": actiontype,
+		"txnId":txnId
+	}
+	console.log(JSON.stringify(approveRequest));
+	$.ajax({
+		url : "./updateConsignmentStatus",
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(data)
+			$('#confirmApproveConsignment').openModal();
+			if(data.errorCode==0){
+
+				$('#approveSuccessMessage').text('');
+				$('#approveSuccessMessage').text(data.message);
+			}
+			else{
+				$('#approveSuccessMessage').text('');
+				$('#approveSuccessMessage').text(data.message);
+			}
+		},
+		error : function() {
+			alert("Failed");
+		}
 	});
+}
+
+function openDisapprovePopup(txnId)
+{
+	console.log("open approve pop  up."+txnId);
+	$('#RejectConsignment').openModal();
+	$('#disaproveTxnId').text(txnId);
+	$('#setDisapproveConsignmentTxnId').val(txnId);
 
 
-		function openApprovePopUp(txnId)
-		{
-			console.log("open approve pop  up."+txnId);
-			$('#ApproveConsignment').openModal();
-			$('#ApproveConsignmentTxnid').text(txnId);
-			$('#setApproveConsignmentTxnId').val(txnId);
-			
-			
-			
+
+}
+
+function disapproveSubmit(actiontype){
+	var txnId=$('#disaproveTxnId').val();
+	var Remark=$('#dispproveRemarks').val();
+
+	console.log("txnId==="+txnId+"  Remark  "+Remark)
+	var approveRequest={
+		"action": actiontype,
+		"txnId":txnId,
+		"remark":Remark
+	}
+	console.log(JSON.stringify(approveRequest));
+	$.ajax({
+		url : "./updateConsignmentStatus",
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(data)
+			$('#confirmRejectConsignment').openModal();
+			if(data.errorCode==0){
+
+				$('#disapproveSuccessMessage').text('');
+				$('#disapproveSuccessMessage').text(data.message);
+			}
+			else{
+				$('#disapproveSuccessMessage').text('');
+				$('#disapproveSuccessMessage').text(data.message);
+			}
+		},
+		error : function() {
+			alert("Failed");
 		}
-	  function approveSubmit(actiontype){
-	        var txnId=$('#setApproveConsignmentTxnId').val();
-	        console.log("txnId==="+txnId)
-	        var approveRequest={
-	        	"action": actiontype,
-	        	"txnId":txnId
-	        }
-	     console.log(JSON.stringify(approveRequest));
- 	 $.ajax({
-				url : "./updateConsignmentStatus",
-				data : JSON.stringify(approveRequest),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-				success : function(data) {
-					console.log(data)
-					$('#confirmApproveConsignment').openModal();
-					  if(data.errorCode==0){
-		  					
-		  					$('#approveSuccessMessage').text('');
-		 					 $('#approveSuccessMessage').text(data.message);
-		  						 }
-		  					 else{
-		  						 $('#approveSuccessMessage').text('');
-		  		 				 $('#approveSuccessMessage').text(data.message);
-		  					 }
-				},
-				error : function() {
-					alert("Failed");
-				}
-			});
- }
-	  
-		function openDisapprovePopup(txnId)
-		{
-			console.log("open approve pop  up."+txnId);
-			$('#RejectConsignment').openModal();
-			$('#disaproveTxnId').text(txnId);
-			$('#setDisapproveConsignmentTxnId').val(txnId);
-			
-			
-			
-		}
-		
-		function disapproveSubmit(actiontype){
-	        var txnId=$('#disaproveTxnId').val();
-	      	var Remark=$('#dispproveRemarks').val();
-	       
-	        console.log("txnId==="+txnId+"  Remark  "+Remark)
-	        var approveRequest={
-	        	"action": actiontype,
-	        	"txnId":txnId,
-	        	"remark":Remark
-	        }
-	     console.log(JSON.stringify(approveRequest));
- 	 $.ajax({
-				url : "./updateConsignmentStatus",
-				data : JSON.stringify(approveRequest),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-				success : function(data) {
-					console.log(data)
-					$('#confirmRejectConsignment').openModal();
-					 if(data.errorCode==0){
-	  					
-	  					$('#disapproveSuccessMessage').text('');
-	 					 $('#disapproveSuccessMessage').text(data.message);
-	  						 }
-	  					 else{
-	  						 $('#disapproveSuccessMessage').text('');
-	  		 				 $('#disapproveSuccessMessage').text(data.message);
-	  					 }
-				},
-				error : function() {
-					alert("Failed");
-				}
-			});
- }	
-		 		
-		
+	});
+}	
+

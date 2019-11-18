@@ -57,7 +57,7 @@
 
 
 </head>
-<body>
+<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -621,7 +621,6 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 </body>
