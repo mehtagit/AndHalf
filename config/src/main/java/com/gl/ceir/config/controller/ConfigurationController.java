@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +18,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
 
@@ -201,7 +204,20 @@ public class ConfigurationController {
 		return genricResponse;
 	}
 
+	@ApiOperation(value = "System Config List DB - view All Data", response = SystemConfigListDb.class)
+	@GetMapping("/system-config-list/{tag}")
+	public MappingJacksonValue findSystemConfigListByTag(@PathVariable("tag") String tag) {
 
+		logger.info("Request to get system all details");
+
+		List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDbs);
+
+		logger.info("Response to send = " + systemConfigListDbs);
+
+		return mapping;
+	}
 
 
 }
