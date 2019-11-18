@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
@@ -42,32 +43,25 @@ public class StolenRecovery {
 	@RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 			public ModelAndView  viewStolenRecovery( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId ) {
 		ModelAndView mv = new ModelAndView();
+		log.info("entry point in stolen recovery  page");
 		String roletype=session.getAttribute("usertype").toString();
-		log.info("stolen page"+selectedUserTypeId); 
 		if(selectedUserTypeId==null)
 		{
 		List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
-		log.info("role type list=="+userTypelist);
-		
-		log.info("list size of  usertype=="+userTypelist.size());
-		
 		if(userTypelist.size()>1)
-		{
-			log.info("if condition.");
-
+		{   log.info("role type list=="+userTypelist);
 			mv.addObject("userTypelist", userTypelist);
 			mv.setViewName("StolenRecoverytRoleType");
 		}
 		else if(userTypelist.size()==1)
 		{
-		log.info("else condition.");
+		log.info("role type is"+roletype);
 		session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 		mv.setViewName("stolenRecovery");
 		}
-		
 		}
 		else {
-			log.info("else condition selectedUserTypeId is not empty="+selectedUserTypeId);
+			log.info("selected role type in stolen and recovery  is = "+selectedUserTypeId);
 			session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 			mv.setViewName("stolenRecovery");		
 		
@@ -81,12 +75,13 @@ public class StolenRecovery {
 	  RequestMethod.POST}) 
 	  public @ResponseBody GenricResponse markStolen(@RequestBody  StolenRecoveryModel stolen)
 	  { 
-	  log.info("enter in stolenRecovery controller");
-	  log.info("StolenRequest details=="+stolen);
+	  log.info("enter in multiple stolenRecovery controller");
 	  List<StolenRecoveryModel> request= new ArrayList<StolenRecoveryModel>();
 	  request.add(stolen);
+	  log.info("stolen request  passed to the multiple stolen ="+request);
 	  GenricResponse response=  feignCleintImplementation.multipleStolen(request);
-	  log.info("response from feign=="+response);
+	  log.info("response from multiple Stolen api=="+response);
+	  log.info(" multiple stolen recovery  exit point .");
 	  return response;
 	  
 	  }
@@ -99,14 +94,14 @@ public class StolenRecovery {
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId)
-	  {			
-		  log.info("blockingType value="+blockingType+" blockingTimePeriod=="+blockingTimePeriod+" file value="+file+"  requestType="+requestType+" roleType=="+roleType+" sourceType="+sourceType+" userId="+userId );
-			
-		  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
-		  GenricResponse response= new GenricResponse();
+	  {	
+		  log.info(" file stolen entry point .");
+		 
+		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
+		    GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "S"+stlnTxnNumber;
-			log.info("txnid="+stlnTxnNumber);
+			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
 				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
@@ -118,7 +113,7 @@ public class StolenRecovery {
 				// Calendar now = Calendar.getInstance();
 
 				File serverFile = new File(rootPath+file.getOriginalFilename());
-				log.info("COMPLETE PATH" + serverFile);
+				log.info("uploaded file path on server" + serverFile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
@@ -135,8 +130,11 @@ public class StolenRecovery {
 			stolenRecoveryModel.setSourceType(sourceType);
 			stolenRecoveryModel.setUserId(userId);
 			stolenRecoveryModel.setRoleType(roleType);
-			log.info("request sent to feign=="+stolenRecoveryModel);
+			stolenRecoveryModel.setTxnId(stlnTxnNumber);
+			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
+			log.info("respondse from file stolen api="+response);
+			log.info(" file stolen api exist point .");
 		  	return response;
 	
 	  }
@@ -149,14 +147,14 @@ public class StolenRecovery {
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId)
-	  {			
-		  log.info(" file value="+file+"  requestType="+requestType+" roleType=="+roleType+" sourceType="+sourceType+" userId="+userId );
-			
+	  {	
+		  
+		  log.info(" file Recovery api entry point .");
 		  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "S"+stlnTxnNumber;
-			log.info("txnid="+stlnTxnNumber);
+			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
 				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
@@ -168,7 +166,7 @@ public class StolenRecovery {
 				// Calendar now = Calendar.getInstance();
 
 				File serverFile = new File(rootPath+file.getOriginalFilename());
-				log.info("COMPLETE PATH" + serverFile);
+				log.info("uploaded file path on server" + serverFile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 				stream.write(bytes);
 				stream.close();
@@ -184,12 +182,29 @@ public class StolenRecovery {
 			stolenRecoveryModel.setSourceType(sourceType);
 			stolenRecoveryModel.setUserId(userId);
 			stolenRecoveryModel.setRoleType(roleType);
-			log.info("request sent to feign=="+stolenRecoveryModel);
-			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
-		  	return response;
+			stolenRecoveryModel.setTxnId(stlnTxnNumber);
+			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
+			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
+			log.info("request sent to file Recovery api ="+response);
+			log.info(" file Recovery api exist point .");
+			
+			return response;
 	
 	  }
 
 	  
 
+
+		@RequestMapping(value= {"/stolenRecoveryDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+		public @ResponseBody GenricResponse deleteStock(@RequestBody StolenRecoveryModel stolenRecoveryModel,HttpSession session) {
+
+			log.info("enter in  delete stolenRecovery.");
+			log.info("request passed to the delete stolenRecovery Api="+stolenRecoveryModel);
+			GenricResponse response=feignCleintImplementation.deleteStolenRecovery(stolenRecoveryModel);
+			log.info("response after delete stolenRecovery."+response);
+			log.info("exit point of delete stolenRecovery.");
+			return response;
+			
+
+		}
 }

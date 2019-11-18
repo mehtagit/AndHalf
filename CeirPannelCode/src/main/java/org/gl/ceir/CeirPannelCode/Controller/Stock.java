@@ -47,30 +47,27 @@ ModelAndView mv = new ModelAndView();
 
 
 
-log.info("stock page"+selectedUserTypeId); 
+log.info("stock page entry point."); 
 if(selectedUserTypeId==null)
 {
 List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
-log.info("role type list=="+userTypelist);
+log.info("role type or role type id="+userTypelist);
 
-log.info("list size of  usertype=="+userTypelist.size());
 
 if(userTypelist.size()>1)
 {
-	log.info("if condition.");
-
 	mv.addObject("userTypelist", userTypelist);
 	mv.setViewName("assignDistributor");
 }
 else if(userTypelist.size()==1)
 {
-log.info("else condition.");
+
 session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 mv.setViewName("ViewStock");
 }
 }
 else {
-	log.info("else condition selectedUserTypeId is not empty="+selectedUserTypeId);
+	
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
 	mv.setViewName("ViewStock");
 
@@ -124,15 +121,11 @@ else {
 		String selectedRoletype=(String) session.getAttribute("selectedUserTypeId");
 		//String selectedUserTypeId=session.getAttribute("selectedUserTypeId").toString();
 		
-		log.info(" values from session  username="+userName+ "userId="+userId+" name ="+name);
-		
-		log.info(" Register consignment entry point.");
+		log.info("upload stock  entry point.");
 
 		String txnNumner=utildownload.getTxnId();
 		txnNumner = "C"+txnNumner;
-
-
-		log.info("txnid="+txnNumner);
+		log.info("Random  genrated transaction number ="+txnNumner);
 
 		StockUploadModel stockUpload= new StockUploadModel();
 		try {
@@ -146,7 +139,7 @@ else {
 			// Calendar now = Calendar.getInstance();
 
 			File serverFile = new File(rootPath+file.getOriginalFilename());
-			log.info("COMPLETE PATH" + serverFile);
+			log.info("uploaded file path on server" + serverFile);
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes);
 			stream.close();
@@ -156,11 +149,7 @@ else {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		log.info(" submit register form block.");
-
-
 		// set reaquest parameters into model class
-		
 		stockUpload.setSupplierId(supplierId);
 		stockUpload.setSuplierName(supplierName);
 		stockUpload.setInvoiceNumber(invoiceNumber); 
@@ -169,17 +158,10 @@ else {
 		stockUpload.setFileName(file.getOriginalFilename());
 		stockUpload.setUserId(userId);
 		stockUpload.setRoleType(selectedRoletype);
-		
-		
-		
-		log.info(file.getOriginalFilename());
-		log.info("consignment object "+stockUpload.toString());
-	
-		
+		log.info("consignment form parameters passed to register consignment api "+stockUpload);
 		GenricResponse response = feignCleintImplementation.uploadStock(stockUpload);
-		//log.info("response from feign client=="+response.toString());
-	
-		log.info("setting response=="+response.toString());
+		log.info("response from register consignment api"+response);
+		log.info("upload stock  exit point.");
 		return response;
 
 
@@ -188,11 +170,13 @@ else {
 	@RequestMapping(value= {"/stockDelete"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse deleteStock(@RequestBody StockUploadModel stockUpload,HttpSession session) {
 
-		log.info("enter in  delete stock."+stockUpload);
-		
+		log.info("enter in  delete stock.");
+		log.info("request passed to the deleteStock Api="+stockUpload);
 		GenricResponse response=feignCleintImplementation.deleteStock(stockUpload);
-		log.info("response after delete consignment."+response);
+		log.info("response after delete Stock."+response);
+		log.info("exit point of delete stock.");
 		return response;
+		
 
 	}
 	
@@ -200,33 +184,22 @@ else {
 	@RequestMapping(value="/openStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="role",required = false) String role,HttpSession session)
 	{
-
-	
-		log.info(" stock pop  up controller");
-		
+		log.info("entry point of  fetch stock in the bases of transaction id .");
 		StockUploadModel stockUploadModel= new StockUploadModel();
 		StockUploadModel stockUploadModelResponse;
-		log.info("roletype value=="+txnId);
-		
-		log.info("session value=="+role);
 		stockUploadModel.setTxnId(txnId);
 		stockUploadModel.setRoleType(role);
-		
-		
+		log.info("request passed to the fetch stock api="+stockUploadModel);
 		if(reqType.equals("editPage")) {
 			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
-			log.info("stockUpload details="+stockUploadModelResponse);
-			log.info("open Update stockUpload popup");
+			log.info("response from fetch stock api="+stockUploadModelResponse);
 			return stockUploadModelResponse;
-
-
 		}
 		else {
 			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
-			log.info("stockUpload details="+stockUploadModelResponse);
-			log.info("open view stockUpload pop up");
+			log.info("response from fetch stock api="+stockUploadModelResponse);
+			log.info("exit point of  fetch stock api.");
 			return stockUploadModelResponse;
-
 		}
 		
 	}
@@ -245,19 +218,9 @@ else {
 	int userId=(int) session.getAttribute("userid"); 
 	String name=session.getAttribute("name").toString();
 	String selectedRoletype=(String) session.getAttribute("selectedUserTypeId");
-
-
 	GenricResponse response= new GenricResponse();
-
-
-
-
-	log.info("file name without upload file="+filename);
-
 	if(file==null)
 	{
-	log.info("message in file upload block ");
-
 	stockUpload.setSupplierId(supplierId);
 	stockUpload.setSuplierName(supplierName);
 	stockUpload.setQuantity(quantity);
@@ -266,13 +229,10 @@ else {
 	stockUpload.setInvoiceNumber(invoiceNumber);
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
-	log.info(stockUpload.toString());
+
 	}
 	else {
-
-
-
-	log.info("file is empty or not "+file.isEmpty());
+	
 	try {
 	String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
 
@@ -281,14 +241,13 @@ else {
 	boolean exists = tmpDir.exists();
 
 	if(exists) {
-
-	log.info("file is exist.");
 	Path temp = Files.move 
 	(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
 	Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
 
+	String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();
 	// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
-	log.info("after move file");
+	log.info("file is already exist moved to the this "+movedPath+" path");
 	tmpDir.delete();
 	}
 
@@ -301,7 +260,7 @@ else {
 	dir.mkdirs();
 
 	File serverFile = new File(rootPath+file.getOriginalFilename());
-	log.info("COMPLETE PATH" + serverFile);
+	log.info("uploaded file path on server" + serverFile);
 	BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 	stream.write(bytes);
 	stream.close();
@@ -313,9 +272,6 @@ else {
 	log.error(e.getMessage(), e);
 	}
 
-
-	log.info("message after file upload block ");
-
 	stockUpload.setSupplierId(supplierId);
 	stockUpload.setSuplierName(supplierName);
 	stockUpload.setQuantity(quantity);
@@ -324,19 +280,11 @@ else {
 	stockUpload.setFileName(file.getOriginalFilename());
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
-
-	log.info(stockUpload.toString());
-
-	}
-
+}
+	log.info("Request passed to the update register consignment="+stockUpload);
 	response = feignCleintImplementation.updateStock(stockUpload);
-	log.info(" update stock form block.");
-
-	// calling service method
-//		String response=service.updateConsignmnet(consignment, file, txnid);
-
-
-	log.info(" update consignment exit point.");
+	log.info(" response from update Consignment api="+response);
+	log.info(" update Stock exit point.");
 	return response;
 
 	}

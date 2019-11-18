@@ -156,5 +156,10 @@ public interface FeignCleintImplementation {
 
 
 	
+		
+ //delete stolen recovery feign  controller
+		    @RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
+		    public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
+				
 }
 
