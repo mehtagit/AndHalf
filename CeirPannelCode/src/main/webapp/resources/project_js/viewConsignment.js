@@ -116,7 +116,6 @@ var endDate=$('#endDate').val();
 var taxStatus=$('#taxPaidStatus').val();
 var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
-
 var filterRequest={
 		"consignmentStatus":consignmentStatus,
 		"endDate":startdate,
@@ -126,29 +125,33 @@ var filterRequest={
 };
 
 
+
 function filterConsignment()
 {       	 	
 
-	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
-		console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
-
-		if(cierRoletype=="Importer"){
-			table('../headers?type=consignment');	
-		}else if(cierRoletype=="Custom"){
-			table('../headers?type=customConsignment');
-		}else if(cierRoletype=="CEIRAdmin"){
-			table('../headers?type=adminConsignment');
-
-
-		}        	
+	if(startdate == undefined && endDate == undefined && taxStatus == undefined && consignmentStatus == undefined){
+		localStorage.setItem('key', JSON.stringify(filterRequest));
+		var x = localStorage.getItem('key');
+	alert("empty------"+consignmentStatus)
+			
 	}
 	else{
-		console.log("please fill select");
+		alert("not empty");
+		
 	}
 }
 
 //**************************************************filter table**********************************************
 
+function onloadFunc(){
+	if(cierRoletype=="Importer"){
+		table('../headers?type=consignment');	
+	}else if(cierRoletype=="Custom"){
+		table('../headers?type=customConsignment');
+	}else if(cierRoletype=="CEIRAdmin"){
+		table('../headers?type=adminConsignment');
+	}   
+}
 function table(url){
 	$.ajax({
 		url: url,
@@ -335,7 +338,7 @@ function arrivalDateValidation(){
 
 $(document).ready(function(){
 	$('.datepicker').datepicker();
-	filterConsignment();
+	onloadFunc();
 });
 
 $('.datepicker').on('mousedown',function(event){
@@ -416,20 +419,24 @@ $.ajax({
 
 		cierRoletype=="Importer" ? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 
+		
+//consignment status-----------dropdown		
+		$.getJSON('../getDropdownList/3/4', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#filterConsignmentStatus');
+			}
+		});
+		
+		//Tax paid status-----------dropdown
+		$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#taxPaidStatus');
+			}
+		});
 	}
-
-
-//$("#filterBtnDiv").append();
 }); 
-
-
-$.getJSON('../getDropdownList/3/4', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].state).text(data[i].interp)
-		.appendTo('#filterConsignmentStatus');
-
-	}
-});
 
 
 function openApprovePopUp(txnId)

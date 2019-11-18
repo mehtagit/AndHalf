@@ -19,8 +19,16 @@ public class ProjectDropdownController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@ResponseBody
 	@GetMapping("getDropdownList/{featureId}/{userTypeId}")
-	public List<Dropdown> getDropdownValues(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId) {
-		List<Dropdown> dropdown = feignCleintImplementation.consignmentDropdownList(featureId, userTypeId);
+	public List<Dropdown> getConsignmentStatus(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId) {
+		List<Dropdown> dropdown = feignCleintImplementation.consignmentStatusList(featureId, userTypeId);
+		return dropdown;
+	}
+
+	
+	@ResponseBody
+	@GetMapping("getDropdownList/{tag}")
+	public List<Dropdown> getTaxPaidStatus(@PathVariable("tag") String tag) {
+		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
 		log.info("DROPDOWN::::::::"+dropdown);
 		return dropdown;
 	}
