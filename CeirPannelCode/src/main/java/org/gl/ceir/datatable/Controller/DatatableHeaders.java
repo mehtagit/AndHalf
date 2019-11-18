@@ -63,6 +63,15 @@ else if("adminConsignment".equals(role)) {
 	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 }
 
+//consignments from stolen headers
+else if("stolenconsignment".equals(role)) {
+	String[] headers = {HeadersTitle.blankHeader,HeadersTitle.creationDate,HeadersTitle.transactionID,HeadersTitle.supplierName,HeadersTitle.consignmentStatus,HeadersTitle.taxPaidStatus};		
+	for(String header : headers) {
+		dataTableInputs.add(new DatatableHeaderModel(header));
+	}
+	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+}
+
 
 //DEFAULT PORTION  
 else {

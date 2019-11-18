@@ -58,7 +58,7 @@ public class ConsignmentDatatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@PostMapping("consignmentData")
-	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,HttpServletRequest request,HttpSession session) {	 		
+	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,@RequestParam(name="sourceType",required = false) String sourceType,HttpServletRequest request,HttpSession session) {	 		
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
@@ -86,14 +86,44 @@ public class ConsignmentDatatableController {
 			datatableResponseModel.setData(Collections.emptyList());
 		}
 		else {
-		
-			if("Importer".equals(userType)){
+			log.info("sourceType---@@@@@@@@@@@@@@@@@--------"+sourceType);
+			
+			if("Importer".equals(userType) && "viaStolen".equals(sourceType)){
+				for(ConsignmentContent dataInsideList : paginationContentList) 
+				{
+				String checboxes = "<input type=checkbox class=filled-in>";
+				String createdOn= dataInsideList.getCreatedOn();
+				String txnId=	dataInsideList.getTxnId(); 
+				String supplierName= dataInsideList.getSupplierName(); 
+				// if API provide me consignmentStatusName
+				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
+				String consignmentStatus = null;
+				consignmentStatus = statusOfConsignment.equals("0") ? "INIT" : 
+					statusOfConsignment.equals("1") ? "Processing" :
+						statusOfConsignment.equals("2")  ? "Rejected By System" :
+							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
+								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
+									statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
+										statusOfConsignment.equals("6") ?   "Approved" : 
+											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
+												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
+				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+			//	String userStatus = (String) session.getAttribute("userStatus");
+				//String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
+				
+				String[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+				}
+			}
+			
+			else if("Importer".equals(userType)){
 				for(ConsignmentContent dataInsideList : paginationContentList) 
 				{
 				String createdOn= dataInsideList.getCreatedOn();
 				String txnId=	dataInsideList.getTxnId(); 
 				String supplierName= dataInsideList.getSupplierName(); 
-				
 				// if API provide me consignmentStatusName
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatus = null;
@@ -115,7 +145,10 @@ public class ConsignmentDatatableController {
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 				}
-			}else if("Custom".equals(userType)) {
+			}
+		
+			
+			else if("Custom".equals(userType)) {
 				for(ConsignmentContent dataInsideList : paginationContentList) 
 				{
 				UserModel userModel = dataInsideList.getUser();
@@ -187,8 +220,9 @@ public class ConsignmentDatatableController {
 
 	
 	@PostMapping("consignment/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role,HttpSession session){
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
 		String userStatus = (String) session.getAttribute("userStatus");
+		log.info("sourceType in rendering $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" +sourceType);
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
@@ -198,6 +232,7 @@ public class ConsignmentDatatableController {
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 			log.info("USER STATUS:::::::::"+userStatus);
+			
 			String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
@@ -243,9 +278,10 @@ public class ConsignmentDatatableController {
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK); 	
+		}
 	}
+	
 
-}
 
 
 

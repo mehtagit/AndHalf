@@ -333,9 +333,21 @@ event.preventDefault();
      			 "country"
    			 );
    			 
+   		
+   			var roleType = $("body").attr("data-roleType");
+   			var userId = $("body").attr("data-userID");
+   			var currentRoleType = $("body").attr("data-selected-roleType");  
    			 
-   			 
-   			 
+   			console.log("roleType=======" +roleType+"---------userId------"+userId+"-----------currentRoleType-----"+currentRoleType) 
+   		   var role = currentRoleType == null ? roleType : currentRoleType;
+   		   var jsonObj = {
+   		    	 "consignmentStatus": null,
+   		    	 "endDate": "2019-11-11T10:53:37.289Z",
+   		    	 "roleType": role,
+   		    	 "startDate": "2019-11-11T10:53:37.290Z",
+   		    	 "taxPaidStatus": null,
+   		    	 "userId": userId
+   		    	 };
    			 
    			 $.ajax({
    				url: "./headers?type=stolen",
@@ -355,7 +367,7 @@ event.preventDefault();
    			           		        url: './stolenData',
    			           		        type: 'POST',
    			           		  data : function(d) {
-   	          		    		d.filter = null;       		    		
+   			           		d.filter = JSON.stringify(jsonObj);      		    		
    	           				}
    			         		},
    			                "columns": result
@@ -630,4 +642,14 @@ event.preventDefault();
   	 $('#recoveryFileModal').closeModal();
   	 $(".lean-overlay").remove();
   	}
+   
+   function pickConsignment(){
+		if($("input[name='chooseconsignment']:checked")){
+			var url="./Consignment/viewConsignment";
+			localStorage.setItem("sourceType", "viaStolen");
+				console.log(url);
+				window.location.href=url;
+			
+		}
+	}
    
