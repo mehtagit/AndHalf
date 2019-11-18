@@ -17,6 +17,7 @@ import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.repository.AuditTrailRepository;
@@ -25,6 +26,7 @@ import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
+import com.gl.ceir.config.repository.SystemConfigListRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 
@@ -54,6 +56,9 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	NotificationRepository notificationRepository;
+	
+	@Autowired
+	SystemConfigListRepository systemConfigListRepository;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
@@ -260,7 +265,18 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
+	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
+		try {
 
+			logger.debug("getSystemConfigListByTag : " + tag);
+			
+			return systemConfigListRepository.findByTag(tag);
+
+		} catch (Exception e) {
+			logger.info("Exception found = " + e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 
 }
