@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.dialect.Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +21,7 @@ import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
@@ -32,6 +32,7 @@ import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
@@ -73,6 +74,9 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	UserProfileRepository userProfileRepository;
+
+	@Autowired
+	MessageConfigurationDbRepository messageConfigurationDbRepository;
 
 	@Transactional
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
@@ -323,40 +327,50 @@ public class ConsignmentServiceImpl {
 					UserProfile userProfile =	userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
 
 					if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+						MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Success_CEIRAuthority_Email_Message");
+
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
-						consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 						consignmentRepository.save(consignmentMgmt);	
 						//mail send to user and Custom 
+
+
+
 						logger.info("Email sending to user to accept ceir");
-						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
+						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentRepository.save(consignmentMgmt);
-						consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+
+						MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Approved_CustomImporter_Email_Message");
+
 						//send mail to user and CEIR
 						logger.info("Email sending to user accpet custom");
-						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
+						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 
 					}
 				}
 			}else {
 				if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
-					consignmentRepository.save(consignmentMgmt);
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					//mail send to user and custom 
+					consignmentRepository.save(consignmentMgmt);
+					//mail send to user and custom
+					MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Reject_CEIRAuthority_Email_Message");
+
 					logger.info("Email sending to user reject ceir");
-					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
+					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+					MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Rejected_Custom_Email_Message");
+
 					consignmentRepository.save(consignmentMgmt);
 					//send mail to user and CEIR
 					logger.info("Email sending to user reject custom");
-					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", "TESTING");
+					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 
 				}
 			}

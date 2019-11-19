@@ -190,7 +190,16 @@ public class StolenAndRecoveryServiceImpl {
 
 				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
 
-				stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
+				if("Stolen".equalsIgnoreCase(stolenandRecoveryMgmt.getRequestType())){
+					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
+					stolenandRecoveryMgmtInfo.setBlockingType(stolenandRecoveryMgmt.getBlockingType());
+				}
+				stolenandRecoveryMgmtInfo.setFileName(stolenandRecoveryMgmt.getFileName());
+				stolenandRecoveryMgmtInfo.setFileStatus(0);
+
+
+
+				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
 			}
