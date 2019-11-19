@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Model.EditProfile;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
+import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,10 +52,10 @@ public class ProfileService {
 		return response;  
 	}
 	
-	public HttpResponse updateProfile(Registration registration,HttpSession session) {
+	public UpdateProfileResponse updateProfile(Registration registration,HttpSession session) {
 		log.info("inside update profile controller");
 		log.info("profile data=  "+registration);
-		HttpResponse response=new HttpResponse();   
+		UpdateProfileResponse response=new UpdateProfileResponse();   
 		response=userProfileFeignImpl.updateUserProfile(registration);
 		log.info("exit from update profile controller");
 		return response;    

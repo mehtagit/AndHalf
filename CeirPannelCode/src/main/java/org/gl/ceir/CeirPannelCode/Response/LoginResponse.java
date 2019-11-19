@@ -11,9 +11,11 @@ public class LoginResponse {
 	private List<Usertype> userRoles;
 	private String username; 
 	private Integer userId;
-	private String name;
+	private String name; 
 	private String primaryRole;
-    private String status;
+	private Integer primaryRoleId; 
+	private String status;
+    
 	public String getResponse() {
 		return response;
 	}
@@ -63,10 +65,19 @@ public class LoginResponse {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	
+	public Integer getPrimaryRoleId() {
+		return primaryRoleId;
+	}
+	public void setPrimaryRoleId(Integer primaryRoleId) {
+		this.primaryRoleId = primaryRoleId;
+	}
+	
 	@Override
 	public String toString() {
 		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
-				+ ", status=" + status + "]";
+				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + "]";
 	}
 }

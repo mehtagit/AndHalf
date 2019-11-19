@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
+import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
@@ -40,9 +41,9 @@ public class RegistrationController {
 		log.info("inside index controller ");
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
-		return mv;     
+		return mv;      
 	}        
- 
+
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> usertypeList(){ 
@@ -50,18 +51,21 @@ public class RegistrationController {
 		return response;          
 	} 
 
-	@RequestMapping(value = "/registration",method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView registration(@ModelAttribute @Valid Registration registration,HttpSession session, @RequestParam(name = "file",required = false) MultipartFile file,
-			@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
-		if(registration.getFirstName() ==null ) {  
+	@RequestMapping(value = "/registration",method = {RequestMethod.GET})
+	public ModelAndView registration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
 			ModelAndView mv=registrationService.registrationView(usertypeId);
 			return mv; 
-		}      
-		else {  
-			ModelAndView mv=registrationService.saveRegistration(registration, file,session);
-			return mv;	   
-		}
-	} 
+	}  
+	    
+	@RequestMapping(value = "/saveRegistration",method = {RequestMethod.POST})
+	@ResponseBody     
+	public OtpResponse saveRegistration(@RequestParam(name = "data",required = true) String data,
+			@RequestParam(name = "file",required = false)MultipartFile file,HttpSession session) throws IOException{
+		OtpResponse response =registrationService.saveRegistration(data, file,session);  
+		return response;             
+	}
+	
+	
 
 	@RequestMapping(value = "/verifyOtpPage",method = {RequestMethod.GET})
 	public ModelAndView verifyOtpPage(){

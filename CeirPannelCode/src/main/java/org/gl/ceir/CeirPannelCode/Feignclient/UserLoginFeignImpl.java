@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 @Service
-@FeignClient(url="http://13.127.239.247:8085/CEIRCode",value = "loginUrls")
+@FeignClient(url="http://13.127.239.247:8086/CEIRCode2",value = "loginUrls")
 public interface UserLoginFeignImpl { 
 	
 	@PostMapping("/Login/checkUser") 

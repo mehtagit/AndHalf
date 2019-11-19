@@ -22,8 +22,9 @@ function verifyOtp(){
 		success : function(data) {
 			console.log(data);	
 			var resp=JSON.parse(data);
-			if(resp.statusCode==200){
-//				window.location.href='#otpMessage';
+			if(resp.statusCode=="200"){
+				window.location.href='#otpMessage';
+				
 				$('#otpMessage').openModal();   
 				$("#otpResponse").text(resp.response);
 				// $('#otpMessage').modal('open');
@@ -80,7 +81,7 @@ function usertypeData(){
 					usertypeDropdown.append(data2);
 				}  
 				else{
-					
+
 				}
 			}    
 			setTimeout(function(){ 
@@ -121,7 +122,7 @@ function questionData(){
 
 
 
-function registration(){
+function saveRegistration(){ 
 	var obj="";
 	var oj2=""; 
 	var questionData=[];
@@ -132,7 +133,6 @@ function registration(){
 			{  
 					questionId:parseInt(val.find('.questionId').val()),
 					answer:val.find('.answer').val(),    
-
 			}  
 			questionData.push(obj2);
 		}
@@ -158,33 +158,46 @@ function registration(){
 					province:val.find('#province').val(),
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
-					vatNo:val.find('#country').val(),
-					roles:val.find('#usertypes').val(),
-					questionList:questionData  
+					vatNo:val.find('#vatNo').val(),
+					roles:val.find('#usertypes').val(),  
+					password:val.find('#password').val(),  
+					rePassword:val.find('#confirm_password').val(),
+					captcha:val.find('#captcha').val(),
+					questionList:questionData   
 			}    
 		} 
-
-
 	});
 	console.log("question data:  "+JSON.stringify(obj));
+	var formData;
 
-	$.ajax({
+	formData = new FormData();
+	formData.append( 'file', $( '#file' )[0].files[0] );
+    formData.append('data',JSON.stringify(obj));
+    console.log("data=  "+formData);
+    $.ajax({   
 		type : 'POST',
-		url : contextpath + '/updateProfile',
-		contentType : "application/json",
-		dataType : 'html',
-		data : JSON.stringify(obj),
-		success : function(data) {
-			//var resp=JSON.parse(data);
-			//$("#changePasswordMessage h6").text(resp.response);
-			//$("#changePasswordMessage").openModal();
+		url : contextpath + '/saveRegistration',
+	   //	contentType : "application/json",
+		//dataType : 'html',            
+		data :formData, 
+		  processData : false,
+          contentType : false,
+		success : function(response) {
+			var respData=JSON.parse(JSON.stringify(response));
+			console.log("response from server:  "+JSON.stringify(respData));
+			if(respData.statusCode==200){
+				window.location.href='./verifyOtpPage/?userid='+respData.userId;
+			}
+			else{
+				$("#registrationForm #msg").text(respData.response);
+			}
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
 
 	});
 
-
+return false;
 }
 
 

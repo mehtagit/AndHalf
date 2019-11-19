@@ -52,9 +52,10 @@ public class LoginService {
 				session.setAttribute("usertype", response.getPrimaryRole());
 				session.setAttribute("name", response.getName());   
 				session.setAttribute("userStatus", response.getStatus());
-				mv.setViewName("redirect:/importerDashboard"); 
+				session.setAttribute("usertypeId", response.getPrimaryRoleId());
+				mv.setViewName("redirect:/importerDashboard");  
 				return mv;      
-			} 
+			}      
 			else {
 				mv.setViewName("login");
 				mv.addObject("msg",response.getResponse());

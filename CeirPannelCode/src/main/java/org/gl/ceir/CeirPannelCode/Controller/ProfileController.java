@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
+import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +43,8 @@ public class ProfileController {
 	} 
 	
 	@RequestMapping(value = "/updateProfile",method = RequestMethod.POST)
-	@ResponseBody
-	public  HttpResponse updateProfile(@RequestBody Registration registration,HttpSession session) {
+	@ResponseBody                                                             
+	public  UpdateProfileResponse updateProfile(@RequestBody Registration registration,HttpSession session) {
 		return profileService.updateProfile(registration, session);
 	} 
 }

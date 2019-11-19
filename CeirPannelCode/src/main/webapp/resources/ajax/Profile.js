@@ -62,16 +62,15 @@ function questionDataByCategory(){
 		success : function(data) {
 			var response=JSON.parse(data);
 			var usertypeDropdown1=$("#registrationForm #questionId0");
-			// usertypeDropdown1.empty();
 			var usertypeDropdown2=$("#registrationForm #questionId1");
 			// usertypeDropdown2.empty();
 			var usertypeDropdown3=$("#registrationForm #questionId2");
 			// usertypeDropdown3.empty(); 
-			var data1='<option value="" disabled selected>Security Question</option>';
+			var data1='<option value="" disabled selected>Security Question 1</option>';
 			//usertypeDropdown1.append(data1);
-			var data2='<option value="" disabled selected>Security Question</option>';
+			var data2='<option value="" disabled selected>Security Question 2</option>';
 			//usertypeDropdown2.append(data2);
-			var data3='<option value="" disabled selected>Security Question</option>';
+			var data3='<option value="" disabled selected>Security Question 3</option>';
 			// usertypeDropdown3.append(data3);
 
 			for(var i=0; i<response.length; i++){
@@ -125,14 +124,14 @@ function editProfile(){
 			$("#registrationForm #country").val(resp.country);  
 			$("#questionId1 #country").val(resp.country);  
 			$("#registrationForm #usertypes").val(resp.roles); 
-			
-			var arr=[];
+
+			var arr=[];    
 			arr=resp.roles;
 			for (var i = 0; i < arr.length; i++) {
-				 $('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
+				$('#registrationForm #usertypes option[value="'+arr[i]+'"]').attr('disabled', true);
 			}
-			
-		   
+
+
 			//$("#").val(resp[i].); 
 			var questionData=resp.questionList;
 			for(var i=0;i<questionData.length;i++){
@@ -154,7 +153,6 @@ function editProfile(){
 function updateProfile(){
 	$('#registrationForm #usertypes option').attr('disabled', false);
 	console.log($('select#usertypes').val());
-alert($('select#usertypes').val());
 	var obj="";
 	var oj2=""; 
 	var questionData=[];
@@ -174,7 +172,7 @@ alert($('select#usertypes').val());
 
 
 	$("#registrationForm").each(function(key, val){
-		val = $(this);
+		val = $(this);  
 		if(val.html() !== "") {
 			obj =  
 			{       id:val.find('#id').val(),
@@ -195,8 +193,6 @@ alert($('select#usertypes').val());
 					questionList:questionData
 			}    
 		} 
-
-
 	});
 	console.log("question data:  "+JSON.stringify(obj));
 
@@ -206,16 +202,28 @@ alert($('select#usertypes').val());
 		contentType : "application/json",
 		dataType : 'html',
 		data : JSON.stringify(obj),
+
 		success : function(data) {
-			//var resp=JSON.parse(data);
-			//$("#changePasswordMessage h6").text(resp.response);
-			//$("#changePasswordMessage").openModal();
+
+			var response=JSON.parse(data);
+			if(response.userstatus=='Approved'){
+
+			}
+			else if(response.userstatus=='OTP Verification Pending'){
+				$("#userid").val(response.userId);
+				window.location.href='#otpMsgModal';
+				$("#otpMsgModal").openModal();   
+				$("#otpMsg").text(response.response);
+			}
+			else{
+
+			}
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
 
 	});
-
+	return false;
 
 }
 
