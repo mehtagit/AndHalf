@@ -559,8 +559,8 @@ var contextpath = "${context}";
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave" onclick="saveRegistration();"
-									type="button" style="margin-left: 10px;">submit</button>
+								<button class="btn" id="btnSave" 
+									type="submit" style="margin-left: 10px;">submit</button>
 								<button class="btn" style="margin-left: 10px;">cancel</button>
 							</div>
 						</div>
