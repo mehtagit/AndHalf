@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@FeignClient(url="http://13.127.239.247:8086/CEIRCode2",value = "registrationUrls")
+@FeignClient(url="http://13.127.239.247:8085/CEIRCode",value = "registrationUrls")
 public interface UserRegistrationFeignImpl {
   
 	@PostMapping("/userRegistration/getUsertypes")

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
-@FeignClient(url="http://13.127.239.247:8086/CEIRCode2",value = "profileUrls")
+@FeignClient(url="http://13.127.239.247:8085/CEIRCode",value = "profileUrls")
 public interface UserProfileFeignImpl {
 
 	@PostMapping("/userProfile/changePassword")
