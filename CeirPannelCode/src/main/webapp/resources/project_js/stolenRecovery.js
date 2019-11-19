@@ -333,9 +333,21 @@ event.preventDefault();
      			 "country"
    			 );
    			 
+   		
+   			var roleType = $("body").attr("data-roleType");
+   			var userId = $("body").attr("data-userID");
+   			var currentRoleType = $("body").attr("data-selected-roleType");  
    			 
-   			 
-   			 
+   			console.log("roleType=======" +roleType+"---------userId------"+userId+"-----------currentRoleType-----"+currentRoleType) 
+   		   var role = currentRoleType == null ? roleType : currentRoleType;
+   		   var jsonObj = {
+   		    	 "consignmentStatus": null,
+   		    	 "endDate": "2019-11-11T10:53:37.289Z",
+   		    	 "roleType": role,
+   		    	 "startDate": "2019-11-11T10:53:37.290Z",
+   		    	 "taxPaidStatus": null,
+   		    	 "userId": userId
+   		    	 };
    			 
    			 $.ajax({
    				url: "./headers?type=stolen",
@@ -670,12 +682,14 @@ event.preventDefault();
   	    		formData.append('blockingType','');
   	      	 	formData.append('blockingTimePeriod','');
   	      	   formData.append('id',$('#editFileRecoveryId').val());
+  	      	   formData.append('txnId',$('#editFileRecoveryTxnId').text());
   	  		}
   	  		else{
   	  		formData.append('file', $('#editStolenCsvUploadFile')[0].files[0]);
   	  		formData.append('blockingType',blockType);
     	 	formData.append('blockingTimePeriod',blockingTimePeriod);
     	 	formData.append('id',$('#editFileStolenId').val());
+    	 	formData.append('txnId',$('#editFileStolenTxnId').text());
   	  		}
   	  		
   	      		
@@ -683,7 +697,7 @@ event.preventDefault();
   	      	 	formData.append('roleType',role);
   	      		formData.append('sourceType',sourceType);
   	      		formData.append('userId',userId);
-  	      		formData.append('txnId',txnId);
+  	      		
   	      		console.log(JSON.stringify(formData));
   	      		console.log("*********");
   	      	 	
@@ -735,4 +749,24 @@ event.preventDefault();
   	 $('#editFileStolenModal').closeModal();
   	 $(".lean-overlay").remove();
    }
+   
+   function pickConsignment(){
+		if($("input[name='chooseconsignment']:checked")){
+			var url="./Consignment/viewConsignment";
+			localStorage.setItem("sourceType", "viaStolen");
+				console.log(url);
+				window.location.href=url;
+			
+		}
+	}
+   
+   function pickConsignment(){
+		if($("input[name='chooseconsignment']:checked")){
+			var url="./Consignment/viewConsignment";
+			localStorage.setItem("sourceType", "viaStolen");
+				console.log(url);
+				window.location.href=url;
+			
+		}
+	}
    

@@ -11,7 +11,7 @@ public class StockUploadModel {
 	private String txnId;
 	private int quantity;
 	private int stockStatus;
-	private int supplierId;
+	private String supplierId;
 	private int userId;
 	public String getFileName() {
 		return fileName;
@@ -61,17 +61,18 @@ public class StockUploadModel {
 	public void setStockStatus(int stockStatus) {
 		this.stockStatus = stockStatus;
 	}
-	public int getSupplierId() {
-		return supplierId;
-	}
-	public void setSupplierId(int supplierId) {
-		this.supplierId = supplierId;
-	}
+	
 	public int getUserId() {
 		return userId;
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public String getSupplierId() {
+		return supplierId;
+	}
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
 	}
 	@Override
 	public String toString() {
@@ -79,6 +80,7 @@ public class StockUploadModel {
 				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
 				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId + "]";
 	}
+	
 	
 	
 	

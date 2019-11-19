@@ -24,5 +24,6 @@ public class HeadersTitle {
 	//Admin
 	public static final String submissionDate = "Submission Date";
 	
-	
+	//pick consignments from stolen
+	public static final String blankHeader = "";
 }

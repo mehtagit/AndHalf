@@ -122,25 +122,34 @@ var filterRequest={
 		"endDate":startdate,
 		"startDate":endDate,
 		"taxPaidStatus":taxStatus,
-		"userId":userId
+		"userId":userId,
 };
 
-
+var sourceType =localStorage.getItem("sourceType");
 function filterConsignment()
 {       	 	
+	
 
 	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
 		console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
-
-		if(cierRoletype=="Importer"){
-			table('../headers?type=consignment');	
-		}else if(cierRoletype=="Custom"){
-			table('../headers?type=customConsignment');
-		}else if(cierRoletype=="CEIRAdmin"){
-			table('../headers?type=adminConsignment');
-
-
-		}        	
+		
+	
+		if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
+			table('../headers?type=consignment','../consignmentData');
+		}
+		
+		else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
+			table('../headers?type=customConsignment','../consignmentData');
+		}
+		
+		else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
+			table('../headers?type=adminConsignment','../consignmentData');
+		}  
+		
+		else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
+			table('../headers?type=stolenconsignment','../consignmentData?sourceType=viaStolen');
+		}
+		localStorage.removeItem('sourceType');
 	}
 	else{
 		console.log("please fill select");
@@ -149,12 +158,14 @@ function filterConsignment()
 
 //**************************************************filter table**********************************************
 
-function table(url){
+function table(url,dataUrl){
+
 	$.ajax({
 		url: url,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
+			/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 			var table=	$("#consignmentLibraryTable").DataTable({
 				destroy:true,
 				"serverSide": true,
@@ -165,10 +176,12 @@ function table(url){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url: '../consignmentData',
+					url : dataUrl,
 					type: 'POST',
+					dataType: "json",
 					data : function(d) {
-						d.filter = JSON.stringify(filterRequest);       		    		
+						d.filter = JSON.stringify(filterRequest); 
+						console.log(JSON.stringify(filterRequest));
 					}
 
 				},
@@ -224,7 +237,7 @@ function editRegisterConsignment(){
 	console.log("*********");
 
 	$.ajax({
-		url: './Consignment/updateRegisterConsignment',
+		url: './updateRegisterConsignment',
 		type: 'POST',
 		data: formData,
 		processData: false,
@@ -336,6 +349,8 @@ function arrivalDateValidation(){
 $(document).ready(function(){
 	$('.datepicker').datepicker();
 	filterConsignment();
+	pageRendering();
+
 });
 
 $('.datepicker').on('mousedown',function(event){
@@ -362,9 +377,23 @@ populateCountries
 		"country"
 );
 
+function pageRendering(){
+	if(sourceType !="viaStolen" ){
+		pageButtons('../consignment/pageRendering');
+	
+	}else if(sourceType ==="viaStolen" ){
+		pageButtons('../consignment/pageRendering?sourceType=viaStolen');
+		
+	}
+	localStorage.removeItem('sourceType');
+	
+}
 
+
+
+function pageButtons(url){
 $.ajax({
-	url: "../consignment/pageRendering",
+	url: url,
 	type: 'POST',
 	dataType: "json",
 	success: function(data){
@@ -383,6 +412,7 @@ $.ajax({
 					+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
 					"<span	class='input-group-addon' style='color: #ff4081'>"+
 					"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+			
 		} 
 
 		// dynamic dropdown portion
@@ -413,14 +443,16 @@ $.ajax({
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 			}
 		}
-
-		cierRoletype=="Importer" ? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
+		
+		cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
+		/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
 
 	}
 
 
 //$("#filterBtnDiv").append();
 }); 
+};
 
 
 $.getJSON('../getDropdownList/3/4', function(data) {

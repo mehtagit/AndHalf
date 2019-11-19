@@ -84,7 +84,7 @@
 							</form>
 							<table id="stolenLibraryTable"
 								class="responsive-table striped display"></table>
-
+							
 						</div>
 
 					</div>
@@ -467,13 +467,13 @@
                         <form action="#">
                             <h5 class="center">
                                 <label>
-                                    <input name="group1" type="radio" onclick="location.href = 'markAsStolen.html';" />
+                                    <input name="group1" class="chooseconsignment" type="radio" onclick="pickConsignment()" />
                                     <span class="checkboxFont"> Choose from consignment</span>
                                 </label>
 
                                 <label>
-                                    <input name="group1" type="radio"
-                                        onclick="location.href = 'chooseFromStockDetail.html';" />
+                                    <input name="group1" type="radio" class="chooseStock"
+                                        onclick="pickConsignment()" />
                                     <span class="checkboxFont"> Choose from the stock</span>
                                 </label>
 

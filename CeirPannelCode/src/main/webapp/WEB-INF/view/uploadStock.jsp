@@ -1,4 +1,4 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+\<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -168,7 +168,7 @@ opacity: 0;
                                             </div>
 
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="invoiceNumber" id="invoiceNumber" pattern="[A-Za-z]{0,15}" title="Please enter alphabets  upto 50 characters only" maxlength="15" required />
+                                                <input type="text" name="invoiceNumber" id="invoiceNumber" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers  upto 15 characters only" maxlength="15" required />
                                                 <label for="InvoiceNumber" class="center-align">Invoice Number</label>
                                             </div>
                                         </div>

@@ -110,7 +110,7 @@ else {
 	}
 	
 	@RequestMapping(value= {"/uploadStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) int supplierId,@RequestParam(name="supplierName",required = false) String supplierName
+	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
 			@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
 
@@ -207,7 +207,7 @@ else {
 	//************************************************ Open stock record page********************************************************************************/
 
 	@RequestMapping(value= {"/updateUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-	public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) int supplierId,@RequestParam(name="supplierName",required = false) String supplierName
+	public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 	,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
 	@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="filename",required = false) String filename) {
 	log.info("entry point in update Stock * *.");
