@@ -433,6 +433,8 @@ $.ajax({
 				"</div>");
 		}
 
+		
+	if(sourceType=="viaStolen"){
 		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
 		for(i=0; i<button.length; i++){
 			$('#'+button[i].id).text(button[i].buttonTitle);
@@ -444,24 +446,64 @@ $.ajax({
 			}
 		}
 		
+		$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedstolen' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
+		for(i=0; i<button.length; i++){
+			$('#'+button[i].id).text(button[i].buttonTitle);
+			if(button[i].type === "FooterButton"){
+				$('#'+button[i].id).attr("href", button[i].buttonURL);
+			}
+			else{
+				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+			}
+		}		
+	
+	}else{
+		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+		for(i=0; i<button.length; i++){
+			$('#'+button[i].id).text(button[i].buttonTitle);
+			if(button[i].type === "HeaderButton"){
+				$('#'+button[i].id).attr("href", button[i].buttonURL);
+			}
+			else{
+				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+			}
+		}
+		
+	}	
+	
+		
 		cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
-		sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});
+		/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
+		
+		
 
+		
+		
+		$.getJSON('../getDropdownList/3/4', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#filterConsignmentStatus');
+
+			}
+		});
+
+
+
+		//Tax paid status-----------dropdown
+		$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#taxPaidStatus');
+			}
+		});
 	}
-
-
 //$("#filterBtnDiv").append();
 }); 
 };
 
 
-$.getJSON('../getDropdownList/3/4', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].state).text(data[i].interp)
-		.appendTo('#filterConsignmentStatus');
 
-	}
-});
+
 
 
 function openApprovePopUp(txnId)

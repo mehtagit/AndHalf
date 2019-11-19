@@ -163,7 +163,11 @@ public interface FeignCleintImplementation {
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
-	public List<Dropdown> consignmentDropdownList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+	public List<Dropdown> consignmentStatusList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+
+	
+	@RequestMapping(value="system-config-list/{tag}" ,method=RequestMethod.GET) 
+	public List<Dropdown> taxPaidStatusList(@PathVariable("tag") String tag);
 
 
 }
