@@ -203,7 +203,7 @@ public class ConsignmentController {
 
 		logger.info("Request to update the consignmentStatus="+consignmentUpdateRequest);
 
-		GenricResponse genricResponse	=consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
+		GenricResponse genricResponse = consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
 
 		return genricResponse ;
 

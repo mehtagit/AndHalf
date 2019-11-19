@@ -140,6 +140,20 @@ public class StolenAndRecoveryController {
 	public GenricResponse updateRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 		logger.info("Record update request="+stolenandRecoveryRequest);
 
+		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
+		mapping.setListType("BlackList");
+		if(stolenandRecoveryRequest.getBlockingType() == null || stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
+				stolenandRecoveryRequest.getBlockingType() == "") {
+
+			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
+			String newTime = utility.newDate(config.getGraceTimePeriod());
+
+			stolenandRecoveryRequest.setBlockingTimePeriod(newTime);
+			stolenandRecoveryRequest.setBlockingType("Default");
+		}
+
+
+
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.updateRecord(stolenandRecoveryRequest);
 
 		logger.info("Response send="+genricResponse);
