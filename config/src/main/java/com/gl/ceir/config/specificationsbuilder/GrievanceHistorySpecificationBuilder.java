@@ -10,33 +10,33 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.gl.ceir.config.controller.GrievanceController;
-import com.gl.ceir.config.model.Grievance;
+import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.util.DbFunctions;
 
-public class GrievanceSpecificationBuilder {
+public class GrievanceHistorySpecificationBuilder {
 	private static final Logger logger = LogManager.getLogger(GrievanceController.class);
 
 	private final List<SearchCriteria> params;
 	private final String dialect;
 	
 
-	public GrievanceSpecificationBuilder(String dialect) {
+	public GrievanceHistorySpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
 		this.dialect = dialect;
 	}
 
-	public final GrievanceSpecificationBuilder with(SearchCriteria criteria) { 
+	public final GrievanceHistorySpecificationBuilder with(SearchCriteria criteria) { 
 		params.add(criteria);
 		return this;
 	}
 
-	public Specification<Grievance> build() { 
+	public Specification<GrievanceHistory> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
-		Specification<Grievance> finalSpecification = null;
-		List<Specification<Grievance>> specifications = createSpecifications();
+		Specification<GrievanceHistory> finalSpecification = null;
+		List<Specification<GrievanceHistory>> specifications = createSpecifications();
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
 			for(int i = 1; i<specifications.size() ;i++) {
@@ -46,8 +46,8 @@ public class GrievanceSpecificationBuilder {
 		return finalSpecification;
 	}
 
-	private List<Specification<Grievance>> createSpecifications(){
-		List<Specification<Grievance>> specifications = new ArrayList<Specification<Grievance>>();
+	private List<Specification<GrievanceHistory>> createSpecifications(){
+		List<Specification<GrievanceHistory>> specifications = new ArrayList<Specification<GrievanceHistory>>();
 		// Path<Tuple> tuple = null;
 		try {
 		for(SearchCriteria searchCriteria : params) {

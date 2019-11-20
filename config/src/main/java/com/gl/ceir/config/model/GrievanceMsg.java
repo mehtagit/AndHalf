@@ -31,16 +31,6 @@ public class GrievanceMsg {
 
 	private String userType;
 	
-	@Column(length = 3)
-	private int grievanceStatus;
-	
-	@NotNull
-	@Column(length = 20)
-	private String txnId;
-	
-	@Column(length = 3)
-	private int categoryId;
-	
 	private String fileName;
 	
 	@CreationTimestamp
@@ -87,30 +77,6 @@ public class GrievanceMsg {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
-	}
-
-	public int getGrievanceStatus() {
-		return grievanceStatus;
-	}
-
-	public void setGrievanceStatus(int grievanceStatus) {
-		this.grievanceStatus = grievanceStatus;
-	}
-
-	public String getTxnId() {
-		return txnId;
-	}
-
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
-
-	public int getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	public String getFileName() {

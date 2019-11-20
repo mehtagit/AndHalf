@@ -2,23 +2,19 @@ package com.gl.ceir.config.service.impl;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.PropertiesReader;
-import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.model.GrievanceHistory;
@@ -32,9 +28,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.GrievanceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
-import com.gl.ceir.config.model.constants.WebActionDbState;
-import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
-import com.gl.ceir.config.service.GrievanceService;
+import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
 import com.gl.ceir.config.repository.GrievanceHistoryRepository;
 import com.gl.ceir.config.repository.GrievanceMsgRepository;
@@ -44,7 +38,7 @@ import com.gl.ceir.config.repository.WebActionDbRepository;
 @Service
 public class GrievanceServiceImpl{
 
-	private static final Logger logger = LogManager.getLogger(ConsignmentServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(GrievanceServiceImpl.class);
 	@Autowired
 	GrievanceRepository grievanceRepository;
 	@Autowired
@@ -55,6 +49,8 @@ public class GrievanceServiceImpl{
 	WebActionDbRepository webActionDbRepository;
 	@Autowired
 	PropertiesReader propertiesReader;
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
 	
 	@Transactional
 	public GenricResponse save(Grievance grievance) {
@@ -67,7 +63,7 @@ public class GrievanceServiceImpl{
 			grievance.setGrievanceStatus( GrievanceStatus.NEW.getCode() );
 			grievanceRepository.save(grievance);
 			webActionDbRepository.save(webActionDb);
-			return new GenricResponse(0,"Grievance Update in Processing.",grievance.getTxnId());
+			return new GenricResponse(0,"Grievance registered successfuly",grievance.getTxnId());
 
 		}catch (Exception e) {
 			logger.error("Grievance Registration failed="+e.getMessage());
@@ -112,21 +108,23 @@ public class GrievanceServiceImpl{
 	
 	public List<Grievance> getFilterGrievances(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "grievanceId"));
 			System.out.println("dialect : " + propertiesReader.dialect);
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
-			if(Objects.nonNull(grievance.getUserId()))
-				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
+				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
 			if(Objects.nonNull(grievance.getStartDate()))
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 			if(Objects.nonNull(grievance.getEndDate()))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getGrievanceStatus()))
-				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			if(Objects.nonNull(grievance.getGrievanceId()))
-				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(grievance.getGrievanceStatus()) && grievance.getGrievanceStatus() != -1)
+				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
+			else
+				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
+			if(Objects.nonNull(grievance.getGrievanceId()) && (grievance.getGrievanceId() != -1 && grievance.getGrievanceId() != 0))
+				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
-				gsb.with(new SearchCriteria("txnId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.STRING));
+				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 			//List<Grievance> data = grievanceRepository.getGrievanceByUserId(grievance.getUserId());
 			//logger.info("Data to be fetch in db using jioin ="+data);
 			return grievanceRepository.findAll(gsb.build(), pageable).getContent();
@@ -140,20 +138,22 @@ public class GrievanceServiceImpl{
 	
 	public Page<Grievance> getFilterPaginationGrievances(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "grievanceId"));
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
-			if(Objects.nonNull(grievance.getUserId()))
-				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
+				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
 			if(Objects.nonNull(grievance.getStartDate()))
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 			if(Objects.nonNull(grievance.getEndDate()))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getGrievanceStatus()))
-				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			if(Objects.nonNull(grievance.getGrievanceId()))
-				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(grievance.getGrievanceStatus()) && grievance.getGrievanceStatus() != -1)
+				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
+			else
+				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
+			if(Objects.nonNull(grievance.getGrievanceId()) && (grievance.getGrievanceId() != -1 && grievance.getGrievanceId() != 0))
+				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
-				gsb.with(new SearchCriteria("txnId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.STRING));
+				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 			return grievanceRepository.findAll(gsb.build(), pageable);
 
 		} catch (Exception e) {
@@ -173,27 +173,24 @@ public class GrievanceServiceImpl{
 			grievanceMsg = new GrievanceMsg();
 			grievanceMsg.setGrievanceId( grievance.getGrievanceId() );
 			grievanceMsg.setUserId( grievanceReply.getUserId() );
-			grievanceMsg.setUserType( grievanceReply.getUserType() );
-			grievanceMsg.setCategoryId( grievance.getCategoryId());
+			grievanceMsg.setUserType( grievanceReply.getUserType());
 			grievanceMsg.setFileName( grievanceReply.getFileName());
-			grievanceMsg.setTxnId( grievanceReply.getTxnId() );
 			grievanceMsg.setReply( grievanceReply.getReply());
 			/*****Grievance Message new object all parameters set*****/
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.GRIEVANCE.getName());
 			/**Grievance status update**/
-			if( (grievanceReply.getGrievanceStatus()).equalsIgnoreCase("PENDING_WITH_USER")) { 
-				webActionDb.setState(GrievanceStatus.PENDING_WITH_USER.getCode());
-				grievance.setGrievanceStatus( GrievanceStatus.PENDING_WITH_USER.getCode() );
-				grievanceMsg.setGrievanceStatus( GrievanceStatus.PENDING_WITH_USER.getCode() );
-			}else if( (grievanceReply.getGrievanceStatus()).equalsIgnoreCase("PENDING_WITH_ADMIN")) {
-				webActionDb.setState(GrievanceStatus.PENDING_WITH_ADMIN.getCode());
-				grievance.setGrievanceStatus( GrievanceStatus.PENDING_WITH_ADMIN.getCode() );
-				grievanceMsg.setGrievanceStatus( GrievanceStatus.PENDING_WITH_ADMIN.getCode() );
-			}else {
+			if( grievanceReply.getGrievanceStatus() != GrievanceStatus.CLOSED.getCode() ) {
+				if( grievance.getUserId() != grievanceReply.getUserId() ) { 
+					webActionDb.setState(GrievanceStatus.PENDING_WITH_USER.getCode());
+					grievance.setGrievanceStatus( GrievanceStatus.PENDING_WITH_USER.getCode() );
+				}else{
+					webActionDb.setState(GrievanceStatus.PENDING_WITH_ADMIN.getCode());
+					grievance.setGrievanceStatus( GrievanceStatus.PENDING_WITH_ADMIN.getCode() );
+				}
+			}else{
 				webActionDb.setState(GrievanceStatus.CLOSED.getCode());
 				grievance.setGrievanceStatus( GrievanceStatus.CLOSED.getCode() );
-				grievanceMsg.setGrievanceStatus( GrievanceStatus.CLOSED.getCode() );
 				/**Grievance History object**/
 				grievanceHistory = new GrievanceHistory();
 				grievanceHistory.setGrievanceId( grievance.getGrievanceId());
@@ -215,10 +212,10 @@ public class GrievanceServiceImpl{
 			grievanceMsgRepository.save(grievanceMsg);
 			if( grievanceHistory != null )
 				grievanceHistoryRepository.save(grievanceHistory);
-			return new GenricResponse(0,"Consignment Update in Processing.",grievance.getTxnId());
+			return new GenricResponse(0,"Grievance Message saved successfuly.",grievance.getTxnId());
 
 		}catch (Exception e) {
-			logger.error("Not Register Consignent="+e.getMessage());
+			logger.error("Grievance Message update failed"+e.getMessage());
 
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
@@ -232,6 +229,29 @@ public class GrievanceServiceImpl{
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+	
+	public Page<GrievanceHistory> getFilterPaginationGrievanceHistory(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
+		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "id"));
+			GrievanceHistorySpecificationBuilder gsb = new GrievanceHistorySpecificationBuilder(propertiesReader.dialect);
+			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
+				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
+			if(Objects.nonNull(grievance.getStartDate()))
+				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+			if(Objects.nonNull(grievance.getEndDate()))
+				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+			if(Objects.nonNull(grievance.getGrievanceId()) && (grievance.getGrievanceId() != -1 && grievance.getGrievanceId() != 0))
+				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
+			if(Objects.nonNull(grievance.getTxnId()))
+				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			return grievanceHistoryRepository.findAll(gsb.build(), pageable);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
 	}
 
 }

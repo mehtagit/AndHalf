@@ -4,7 +4,7 @@ public class GrievanceReply {
 	private Long grievanceId;
 	private Integer userId ;
 	private String userType;
-	private String grievanceStatus;
+	private Integer grievanceStatus;
 	private String txnId;
 	private int categoryId;
 	private String fileName;
@@ -27,10 +27,10 @@ public class GrievanceReply {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	public String getGrievanceStatus() {
+	public Integer getGrievanceStatus() {
 		return grievanceStatus;
 	}
-	public void setGrievanceStatus(String grievanceStatus) {
+	public void setGrievanceStatus(Integer grievanceStatus) {
 		this.grievanceStatus = grievanceStatus;
 	}
 	public String getTxnId() {
@@ -56,6 +56,5 @@ public class GrievanceReply {
 	}
 	public void setReply(String reply) {
 		this.reply = reply;
-	}
-	
+	}	
 }
