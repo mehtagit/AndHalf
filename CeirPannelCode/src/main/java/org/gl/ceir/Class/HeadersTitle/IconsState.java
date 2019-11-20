@@ -84,6 +84,9 @@ public class IconsState {
 			  edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 						+disableEditIcon+" aria-hidden=\"true\"  title="
 						+editIconTitle+"></i></a>"; 
+			  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+						+disableDeletionIcon+" aria-hidden=\"true\" title="
+						+deleteIconTitle+"></i></a>";
 		  	}
 		   else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status))  && "Active".equals(userStatus)) {
 			  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="

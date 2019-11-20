@@ -133,7 +133,7 @@ opacity: 0;
 </style>
 
 </head>
-<body>	
+<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">	
 
 
 <section id="content">
@@ -244,7 +244,7 @@ opacity: 0;
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./assignDistributor" class="btn">ok</a>
+                    <a onclick="redirectToViewPage()" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -332,6 +332,31 @@ function uploadStock(){
 	 
 }
 
+function redirectToViewPage()
+{
+
+	 var roleType = $("body").attr("data-roleType");
+	 var userId = $("body").attr("data-userID");
+	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+	 var role = currentRoleType == null ? roleType : currentRoleType;
+	 console.log(" userId="+userId+" role="+role);
+	console.log("./assignDistributor?userTypeId="+role);
+	 window.location.href = "./assignDistributor?userTypeId="+role;
+	 /*  $.ajax({
+	url : "./assignDistributor?userTypeId="+role,
+	dataType : 'json',
+	contentType : 'application/json; charset=utf-8',
+	type : 'GET',
+	success : function(data) {
+		console.log(data)
+		
+	},
+	error : function() {
+		alert("Failed");
+	}
+}); */
+
+}
 </script>
 
 </body>

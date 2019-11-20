@@ -68,8 +68,12 @@
             margin: 0 0 5px 0;
         }
     </style>
+    <%Integer userId=Integer.parseInt(request.getParameter("userid"));
+    
+    %>
 <script>
 var contextpath = "${context}";
+
 </script>
 </head>
 
@@ -97,13 +101,16 @@ var contextpath = "${context}";
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-
+ 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
 
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
-
+<script type="text/javascript">
+var userIdValue='<%=userId%>';
+//$("#userid").val(userIdValue);
+</script>
     <!-- START MAIN -->
     <div id="">
         <!-- START WRAPPER -->
@@ -152,7 +159,7 @@ var contextpath = "${context}";
                 <form id="verifyOtpForm" action="">
                         <h5 class="center">Enter OTP</h5>
                         <p class="center" id="resendOtp" style="display: none;"></p>
-                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <input type="hidden" id="userid"  value="<%=userId%>"  name="userid" >
                         <div class="row">          
                             <div class="input-field col s12 m12">
                                 <input type="text" name="emailOtp" id="emailOtp" placeholder="Enter OTP of Email"/>

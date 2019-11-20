@@ -410,11 +410,11 @@
             <hr>
 
             <div class="row">
-                <h6>The following devices marked as stolen has been recieved successfully.</h6>
+                <h6>The following devices marked as stolen has been received successfully.</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./stolenRecovery" class="modal-close btn" style="margin-left: 10px;">ok</a>
+                    <a onclick="redirectToViewStolenPage()" class="modal-close btn" style="margin-left: 10px;">ok</a>
                 </div>
             </div>
         </div>
@@ -791,7 +791,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a  href="./stolenRecovery" class="modal-close btn" style="margin-left: 10px;">ok</a>
+                    <a  onclick="redirectToViewStolenPage()" class="modal-close btn" style="margin-left: 10px;">ok</a>
                 </div>
             </div>
         </div>

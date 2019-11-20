@@ -59,7 +59,7 @@ public class StolenRecovery {
 		else if(userTypelist.size()==1)
 		{
 		log.info("role type is"+roletype);
-		session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+		session.setAttribute("selectedUserTypeId", roletype);
 		mv.setViewName("stolenRecovery");
 		}
 		}
@@ -76,13 +76,17 @@ public class StolenRecovery {
 //******************************************* multiple stolen recovery ************************************************************************88	
 	  @RequestMapping(value={"/multipleStolenRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
 	  RequestMethod.POST}) 
-	  public @ResponseBody GenricResponse markStolen(@RequestBody  StolenRecoveryModel stolen)
+	  public @ResponseBody GenricResponse markStolen(@RequestBody ArrayList<StolenRecoveryModel>  stolen)
 	  { 
 	  log.info("enter in multiple stolenRecovery controller");
-	  List<StolenRecoveryModel> request= new ArrayList<StolenRecoveryModel>();
-	  request.add(stolen);
-	  log.info("stolen request  passed to the multiple stolen ="+request);
-	  GenricResponse response=  feignCleintImplementation.multipleStolen(request);
+		
+		/*
+		 * List<StolenRecoveryModel> request= new ArrayList<StolenRecoveryModel>();
+		 * request.add(stolen);
+		 */
+		 
+	  log.info("stolen request  passed to the multiple stolen ="+stolen);
+	  GenricResponse response=  feignCleintImplementation.multipleStolen(stolen);
 	  log.info("response from multiple Stolen api=="+response);
 	  log.info(" multiple stolen recovery  exit point .");
 	  return response;

@@ -90,6 +90,7 @@
 
 					</div>
 				</div>
+				<div id="footerBtn"></div>
 			</div>
 		</div>
 		<!--end container-->
@@ -350,22 +351,7 @@
   </div>
   
   
-  <div id="confirmRejectConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6 id="disapproveSuccessMessage">The consignment has been marked as rejected.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
   
 
   <div id="ApproveConsignment" class="modal">
@@ -582,9 +568,42 @@
 						style="margin-left: 10px;">Cancel</button>
 				</div>
 			</div>
-
 		</div>
 	</div>
+	
+	   <div id="markAsMultipleStolen" class="modal">
+        <div class="modal-content">
+
+            <h6>Mark As Stolen</h6>
+            <hr>
+
+            <div class="row">
+                <h6>Do you want to mark the following transaction  as stolen?</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="openMulipleStolenPopUp()" class="modal-close modal-trigger btn">Yes</a>
+                    <button class="modal-close btn" style="margin-left: 10px;">no</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div id="markAsStolenDone" class="modal">
+        <div class="modal-content">
+            <h6>Mark As Stolen</h6>
+            <hr>
+            <div class="row">
+                <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
+                    <a onclick="redirectToViewPage()" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -623,5 +642,6 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
+		
 </body>
 </html>

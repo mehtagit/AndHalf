@@ -62,7 +62,7 @@ if(userTypelist.size()>1)
 else if(userTypelist.size()==1)
 {
 
-session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+session.setAttribute("selectedUserTypeId", session.getAttribute("usertype"));
 mv.setViewName("ViewStock");
 }
 }

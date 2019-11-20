@@ -1,4 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -133,7 +134,7 @@ public interface FeignCleintImplementation {
 
 
 	//********************************************  upload multiple Stolen and Recovery ***************************************************************88
-	@RequestMapping(value="/stakeholder/uploadMultiple/Stolen" ,method=RequestMethod.POST) 
+	@RequestMapping(value="/stakeholder/uploadMultiple/StolenAndRecovery" ,method=RequestMethod.POST) 
 	public GenricResponse multipleStolen(@RequestBody List<StolenRecoveryModel> request) ;
 
 
@@ -163,7 +164,11 @@ public interface FeignCleintImplementation {
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
-	public List<Dropdown> consignmentDropdownList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+	public List<Dropdown> consignmentStatusList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+
+	
+	@RequestMapping(value="system-config-list/{tag}" ,method=RequestMethod.GET) 
+	public List<Dropdown> taxPaidStatusList(@PathVariable("tag") String tag);
 
 	//**************************************************************** file Stolen type ***************************************************************************************************		
 

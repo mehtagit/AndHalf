@@ -23,9 +23,7 @@ public class LoginController {
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@Autowired
 	LoginService loginService;
-	
-	
-	
+
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView login(@ModelAttribute User user,HttpSession session){
 		if(user.getUsername()==null) {
@@ -33,16 +31,16 @@ public class LoginController {
 		}
 		else {
 			return loginService.checkLogin(user,session);
-		}
+		}           
 	} 
-	
+
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		return loginService.logout(session);
-		
+
 	}
-	
-	 
+
+
 
 	@RequestMapping(value = "/forgotPassword",method = RequestMethod.GET)
 	public ModelAndView forgotPassword(){ 
@@ -51,21 +49,17 @@ public class LoginController {
 		mv.setViewName("forgotPassword");
 		return mv;   
 	}
-	
+
 	@RequestMapping(value = "forgotPasswordRequest",method = RequestMethod.POST)
 	@ResponseBody
 	public  HttpResponse forgotPasswordRequest(@RequestBody ForgotPassword forgotPassword) {
-		log.info("forgot password data:  "+forgotPassword);
-		HttpResponse response=new HttpResponse();
-		return response;
-	}
-	
-	@RequestMapping(value = "newPassword",method = RequestMethod.POST)
+		return loginService.forgotPasswordRequest(forgotPassword);
+	} 
+
+	@RequestMapping(value = "updateNewPassword",method = RequestMethod.POST)
 	@ResponseBody
 	public  HttpResponse newPassword(@RequestBody Password password) {
-		log.info("new  password data:  "+password);
-		HttpResponse response=new HttpResponse();
-		return response; 
+		return loginService.updateNewPassword(password); 
 	}
-	
+
 }

@@ -80,7 +80,8 @@ public class StolenDatatableController {
 						: statusOfConsignment.equals("1") ? "Processing"
 								: statusOfConsignment.equals("2") ? "Success"
 										: statusOfConsignment.equals("3") ? "Error" : "Not Defined";
-				String source = " ";
+				String source =dataInsideList.getSourceType();
+				log.info("source type message="+source);
 				String requestType = dataInsideList.getRequestType();
 				int id = dataInsideList.getId();
 				String userStatus = (String) session.getAttribute("userStatus");

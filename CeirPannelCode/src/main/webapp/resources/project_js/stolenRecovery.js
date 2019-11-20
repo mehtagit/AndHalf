@@ -543,7 +543,7 @@ event.preventDefault();
    	      
    	      }
    	      
-  
+   
    function multipleStolenRecovery(){
 	   /*    			  
 	      	      	 var supplierId=$('#editSupplierId').val();
@@ -769,4 +769,17 @@ event.preventDefault();
 			
 		}
 	}
-   
+
+   function redirectToViewStolenPage()
+   {
+
+   	 var roleType = $("body").attr("data-roleType");
+   	 var userId = $("body").attr("data-userID");
+   	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+   	 var role = currentRoleType == null ? roleType : currentRoleType;
+   	 console.log(" userId="+userId+" role="+role);
+   	 console.log("./assignDistributor?userTypeId="+role);
+   	 window.location.href = "./stolenRecovery?userTypeId="+role;
+   	
+
+   }

@@ -18,6 +18,7 @@ public class StolenContent {
 	private String roleType;
 	private String blockingType;
 	private String blockingTimePeriod;
+	private String sourceType;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -97,14 +98,21 @@ public class StolenContent {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	public String getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
 	@Override
 	public String toString() {
 		return "StolenContent [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
 				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
 				+ ", requestType=" + requestType + ", source=" + source + ", roleType=" + roleType + ", blockingType="
-				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", additionalProperties="
-				+ additionalProperties + "]";
+				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
+				+ ", additionalProperties=" + additionalProperties + "]";
 	}
-
+	
+	
 
 }

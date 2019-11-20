@@ -31,10 +31,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-@Service
+
+import com.google.gson.Gson;
+@Service 
 public class RegistrationService {
+
 	@Value("${FilePath1}") 
 	String filePath; 
+
 	@Autowired
 	UserRegistrationFeignImpl registrationFeignImpl;
 	@Autowired
@@ -42,9 +46,10 @@ public class RegistrationService {
 	@Autowired
 	GenerateRandomDigits randomDigits;
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	public ModelAndView registrationView() {
+	public ModelAndView registrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
-		ModelAndView mv=new ModelAndView();
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();       
 		mv.setViewName("registration");
 		List<Usertype> usertypeList=registrationFeignImpl.userypeList();
 		List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();
@@ -53,80 +58,102 @@ public class RegistrationService {
 		log.info("view registration page ending point");
 		return mv;                
 	}
-	public ModelAndView saveRegistration(Registration registration, MultipartFile file,HttpSession session) throws IOException {
-		log.info("save registration page starting point");
-		//log.info("roles length:  "+registration.getRoles().length);
-		log.info("registration data:  "+registration); 
-		ModelAndView mv=new ModelAndView(); 
-		String validCaptcha=(String)session.getAttribute("captcha_security");
-		log.info("captch from session:  "+validCaptcha); 
-		if(registration.getCaptcha().equals(validCaptcha)) {
-		if(registration.getRePassword().equals(registration.getPassword())) {
-			String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
-			registration.setUsername(username);
-			StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
-			String finalPath=new String(combinedPath); 
-			if("Individual".equals(registration.getType())){
-				if(file.isEmpty()==true) { 
-					log.info("if file is empty");
-					mv.addObject("msg","please upload national information");
-					mv.setViewName("registration");
-				}     
-				else{ 
-					log.info("if user is individual  "); 
-					log.info("file name: " +file.getOriginalFilename());
-					log.info("finalPath:   "+finalPath);  
-					 File dir = new File(finalPath);
-					  if (!dir.exists()) dir.mkdirs();
-					byte barr[]=file.getBytes();
-					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(finalPath + "/" + file.getOriginalFilename()));
-					bout.write(barr);
-					bout.flush();
-					bout.close();
-					OtpResponse response=userRegistrationFeignImpl.registration(registration);
-					log.info("registration response:  "+response);
-					if(response.getStatusCode()==200) {
-					mv.addObject("msg",response.getResponse());
-					mv.addObject("userId",response.getUserId());
-					mv.setViewName("verifyOtp"); 
-					}
-					else {
-						mv.addObject("msg",response.getResponse());
-						mv.setViewName("registration");  
-					}
+
+	/*
+	 * public HttpResponse saveRegistration(String data,MultipartFile file) {
+	 * log.info("inside save registration controller ");
+	 * log.info("registratio data from form=  "+data);
+	 * log.info("file data from form :  "+file); Gson gson=new Gson(); Registration
+	 * registration=gson.fromJson(data, Registration.class); HttpResponse
+	 * response=new HttpResponse();
+	 * log.info("exit from save registration controller"); return response; }
+	 */
+		public OtpResponse saveRegistration(String data, MultipartFile file,HttpSession session) throws IOException {
+			Gson gson=new Gson();       
+			Registration registration=gson.fromJson(data, Registration.class);
+			log.info("save registration page starting point");
+			log.info("roles length:  "+registration.getRoles().length);
+			log.info("registration data:  "+registration); 
+			String validCaptcha=(String)session.getAttribute("captcha_security");
+			log.info("captch from session:  "+validCaptcha); 
+			if(registration.getCaptcha().equals(validCaptcha)) {
+		        log.info("if captcha match");
+			if(registration.getRePassword().equals(registration.getPassword())) {
+				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
+				registration.setUsername(username);
+				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
+				String finalPath=new String(combinedPath); 
+				if("Individual".equals(registration.getType())){
+					log.info("if user is individual");
+					if(file.isEmpty()==true) { 
+						log.info("if file is empty");
+						OtpResponse response=new OtpResponse();
+						response.setResponse("please upload national information");
+						return response;
+						//mv.addObject("msg","please upload national information");
+						//mv.setViewName("registration");
+					}     
+					else{ 
+						log.info("if user is individual  "); 
+						log.info("file name: " +file.getOriginalFilename());
+						log.info("finalPath:   "+finalPath);  
+						 File dir = new File(finalPath);
+						  if (!dir.exists()) dir.mkdirs();
+						byte barr[]=file.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(finalPath + "/" + file.getOriginalFilename()));
+						bout.write(barr);
+						bout.flush();
+						bout.close();
+						OtpResponse response=userRegistrationFeignImpl.registration(registration);
+						log.info("registration response:  "+response);
+						return response;
+						/*
+						 * if(response.getStatusCode()==200) {
+						 * mv.addObject("msg",response.getResponse());
+						 * mv.addObject("userId",response.getUserId()); mv.setViewName("verifyOtp"); }
+						 * else { mv.addObject("msg",response.getResponse());
+						 * mv.setViewName("registration"); }
+						 */
+					}  
 				}  
+				else { 
+					log.info("if user either company , organization or government");  
+					OtpResponse response=userRegistrationFeignImpl.registration(registration);
+					log.info("response from server:  "+response);
+					return response;
+					/*
+					 * if(response.getStatusCode()==200) {
+					 * mv.addObject("msg",response.getResponse());
+					 * mv.addObject("userId",response.getUserId()); mv.setViewName("verifyOtp"); }
+					 * else { mv.addObject("msg",response.getResponse());
+					 * mv.setViewName("registration"); }
+					 */
+				}
 			}  
-			else { 
-				OtpResponse response=userRegistrationFeignImpl.registration(registration);
-				if(response.getStatusCode()==200) {
-					mv.addObject("msg",response.getResponse());
-					mv.addObject("userId",response.getUserId());
-					mv.setViewName("verifyOtp"); 
-					}
-					else {
-						mv.addObject("msg",response.getResponse());
-						mv.setViewName("registration");  
-					}
+			else {
+				//mv.addObject("msg","Password and Re password must be same");
+				//mv.setViewName("registration");      
+				OtpResponse response=new OtpResponse();
+				log.info("confirm password is not same as password");
+				response.setResponse("Password and Confirm password must be same");
+				return response;
 			}
-			log.info("save registration page end point");
+			}
+			else {
+				log.info("if captcha not match");
+				//mv.setViewName("Please enter valid captcha");
+				//mv.setViewName("registration"); 
+				OtpResponse response=new OtpResponse();
+				response.setResponse("Please enter valid captcha");
+				return response;
+			}
 		}  
-		else {
-			mv.addObject("msg","Password and Re password must be same");
-			mv.setViewName("registration");      
-		}
-		}
-		else {
-			mv.setViewName("Please enter valid captcha");
-			mv.setViewName("registration"); 	
-		}
-		return mv;                 
-	}  
 
 	public String otpPage() {
 		log.info("inside verify otp page");
 		return "verifyOtp";  
 	} 
-   
+
 	public HttpResponse verifyOtp(Otp otp) {
 		log.info("inside verify otp controller");
 		log.info("otp data:  "+otp);    
@@ -135,7 +162,7 @@ public class RegistrationService {
 		log.info("exit from verify otp controller");
 		return response;
 	}
-	
+
 	public List<SecurityQuestion> securityQuestionList(){
 		log.info("inside security question controller");
 		List<SecurityQuestion> questionList =userRegistrationFeignImpl.securityQuestionList();
@@ -149,7 +176,7 @@ public class RegistrationService {
 		log.info("exit from resend otp controller");
 		return response;
 	}
-	
+
 	public void captcha(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
 		log.info("inside captcha controller");
 		response.setContentType("image/jpg");
