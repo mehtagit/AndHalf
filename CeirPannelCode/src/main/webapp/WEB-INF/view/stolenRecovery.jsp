@@ -466,6 +466,8 @@
                     <div class="col s12 m12 l12">
                         <form action="#">
                             <h5 class="center">
+                            <c:choose>
+                            <c:when test="${selectedUserTypeId=='Importer'}">
                                 <label>
                                     <input name="group1" class="chooseconsignment" type="radio" onclick="pickConsignment()" />
                                     <span class="checkboxFont"> Choose from consignment</span>
@@ -482,6 +484,21 @@
                                         class="modal-trigger modal-close" />
                                     <span class="checkboxFont"> Upload Bulk Devices</span>
                                 </label>
+                               </c:when>
+                                <c:otherwise>
+                                <label>
+                                    <input name="group1" type="radio" class="chooseStock"
+                                        onclick="pickConsignment()" />
+                                    <span class="checkboxFont"> Choose from the stock</span>
+                                </label>
+
+                                <label>
+                                    <input name="group1" type="radio" onclick="openFileStolenModal()"
+                                        class="modal-trigger modal-close" />
+                                    <span class="checkboxFont"> Upload Bulk Devices</span>
+                                </label>
+                                </c:otherwise>
+                                </c:choose>
                             </h5>
                         </form>
                     </div>
