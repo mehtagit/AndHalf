@@ -33,7 +33,7 @@ public class StockMgmt implements Serializable {
 
 	private String suplierName;
 
-	private Long supplierId;
+	private String supplierId;
 
 	@Column(length = 15)
 	private String invoiceNumber;
@@ -85,11 +85,11 @@ public class StockMgmt implements Serializable {
 		this.suplierName = suplierName;
 	}
 
-	public Long getSupplierId() {
+	public String getSupplierId() {
 		return supplierId;
 	}
 
-	public void setSupplierId(Long supplierId) {
+	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
 	}
 
