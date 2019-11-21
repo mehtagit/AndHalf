@@ -71,13 +71,13 @@ public class IconsState {
 
 		
 			
-		  if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Active".equals(userStatus)) {
+		  if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
 		  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 		  +disableErrorIcon+" aria-hidden=\"true\" title="
 		  +errorIconTitle+"  ></i></a>"; 
 		  }
 		  
-		  else if(("1".equals(status)) && "Active".equals(userStatus)) {
+		  else if(("1".equals(status)) && "Approved".equals(userStatus)) {
 			  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					  +disableErrorIcon+" aria-hidden=\"true\" title="
 					  +errorIconTitle+"  ></i></a>"; 
@@ -88,7 +88,7 @@ public class IconsState {
 						+disableDeletionIcon+" aria-hidden=\"true\" title="
 						+deleteIconTitle+"></i></a>";
 		  	}
-		   else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status))  && "Active".equals(userStatus)) {
+		   else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status))  && "Approved".equals(userStatus)) {
 			  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					  +disableErrorIcon+" aria-hidden=\"true\" title="
 					  +errorIconTitle+"  ></i></a>"; 
@@ -149,13 +149,13 @@ public class IconsState {
 												+deletionIcon+" aria-hidden=\"true\"  title="
 												+replyIconTitle+"></i></a>";
 
-		if(("0".equals(status))  && "Active".equals(userStatus)) {
+		if(("0".equals(status))  && "Approved".equals(userStatus)) {
 			  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 			  +disableErrorIcon+" aria-hidden=\"true\" title="
 			  +errorIconTitle+"  ></i></a>"; 
 			  }
 			  
-			  else if(("1".equals(status) || "3".equals(status)) && "Active".equals(userStatus)) {
+			  else if(("1".equals(status) || "3".equals(status)) && "Approved".equals(userStatus)) {
 				  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 						  +disableErrorIcon+" aria-hidden=\"true\" title="
 						  +errorIconTitle+"  ></i></a>"; 
@@ -207,7 +207,7 @@ public String stolenState(String fileName,String txnId ,String status,String use
 	+deleteIconTitle+"></i></a>"; 
 
 
-	 if("0".equals(status) || "1".equals(status) || "2".equals(status) && "Active".equals(userStatus) ) {
+	 if("0".equals(status) || "1".equals(status) || "2".equals(status) && "Approved".equals(userStatus) ) {
 		 error="<a href="+errorURL+" class="+disableIconClass+"><i class="
 				 +disableErrorIcon+" aria-hidden=\"true\" title="
 				 +errorIconTitle+"  ></i></a>"; 
@@ -216,7 +216,7 @@ public String stolenState(String fileName,String txnId ,String status,String use
 				 +editIconTitle+"></i></a>";
 	}
 	 
-	 if("2".equals(status) && "Active".equals(userStatus) ) {
+	 if("2".equals(status) && "Approved".equals(userStatus) ) {
 		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
 				 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 				 +deleteIconTitle+"></i></a>"; 
@@ -271,7 +271,7 @@ String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hid
 String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 
-if("5".equals(status) && "Active".equals(userStatus) ) {
+if("5".equals(status) && "Approved".equals(userStatus) ) {
  
  } 
 
@@ -320,18 +320,18 @@ String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light moda
 		+deleteIconTitle+"></i></a>";
 
 //Disable approves
-if( "5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Active".equals(userStatus) ) {
+if( "5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Approved".equals(userStatus) ) {
 	approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 			+approveIconTitle+" ></i></a>";
 }
 //Disable reject
-else if("4".equals(status) ||"5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Active".equals(userStatus) ) {
+else if("4".equals(status) ||"5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Approved".equals(userStatus) ) {
 	reject = "<a onclick="+rejectIcon+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
 			+rejectIconTitle+" ></i></a>";
 }
 
 //Disable Delete
-else if("6".equals(status) || "8".equals(status) || "9".equals(status) && "Active".equals(userStatus) ) {
+else if("6".equals(status) || "8".equals(status) || "9".equals(status) && "Approved".equals(userStatus) ) {
 	delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
 			 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 			 +deleteIconTitle+"></i></a>";  
