@@ -1,5 +1,7 @@
 $(document).ready(function(){
 $('.datepicker').datepicker();
+tableHeader();
+pageRendering()
 });
 
 $('.datepicker').on('mousedown',function(event){
@@ -217,7 +219,19 @@ function editUploadStock(){
     	 
      }
 
-     var role = currentRoleType == null ? roleType : currentRoleType;
+     var sourceType =localStorage.getItem("sourceType");
+     function tableHeader(){
+    	 if(sourceType !="viaStock" ){
+ 			Datatable('headers','stockData')
+ 		}else if(sourceType =="viaStock" ){
+ 			Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
+ 		}
+    	 localStorage.removeItem('sourceType');
+     } 
+     
+     
+     
+   var role = currentRoleType == null ? roleType : currentRoleType;
    var jsonObj = {
     	 "consignmentStatus": null,
     	 "endDate": "2019-11-11T10:53:37.289Z",
@@ -227,9 +241,10 @@ function editUploadStock(){
     	 "userId": userId
     	 };
   console.log("REQUEST JSON:::::::::::::::::::::"+jsonObj)
-    $(document).ready(function () {
-    	 $.ajax({
-	url: "headers",
+ 
+  function Datatable(url,dataUrl) {
+   $.ajax({
+	url: url,
 	type: 'POST',
 	dataType: "json",
 	success: function(result){
@@ -243,7 +258,7 @@ function editUploadStock(){
     			"bSearchable" : true,
 				ajax: {
 					type: 'POST',
-           		        url: 'stockData',           		        
+           		        url: dataUrl,           		        
            		    	data : function(d) {
           		    		d.filter = JSON.stringify(jsonObj);       		    		
            				}
@@ -252,10 +267,25 @@ function editUploadStock(){
             });
 	}
 					}); 
-    });				
+    }			
 		
- $.ajax({
-		url: "stock/pageRendering",
+ 
+  function pageRendering(){
+	  console.log("sourceType in render check" +sourceType);
+		if(sourceType !="viaStock" ){
+			pageButtons('./stock/pageRendering');
+		
+		}else if(sourceType ==="viaStock" ){
+			pageButtons('./stock/pageRendering?sourceType=viaStock');
+		}
+		localStorage.removeItem('sourceType');
+		
+	}
+  
+  
+function pageButtons(url){
+  $.ajax({
+		url: url,
 		type: 'POST',
 		dataType: "json",
 		success: function(data){
@@ -272,6 +302,9 @@ $("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
 		"<span	class='input-group-addon' style='color: #ff4081'>"+
 		"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 } 
+
+
+
 
 // dynamic dropdown portion
 var dropdown=data.dropdownList;
@@ -290,13 +323,29 @@ $("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
 		"</div>"+
 		"</div>");
 }
-
-$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>");
-for(i=0; i<button.length; i++){
+if(sourceType=="viaStock"){
+	$("#btnLink").css({display: "none"});
+	$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>");
+	for(i=0; i<button.length; i++){
 	$('#'+button[i].id).text(button[i].buttonTitle);
 	$('#'+button[i].id).attr("href", button[i].buttonURL);
 	}
+	
+	$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedstolen' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
+	for(i=0; i<button.length; i++){
+	$('#'+button[i].id).text(button[i].buttonTitle);
+	$('#'+button[i].id).attr("href", button[i].buttonURL);
+	}
+	
+}else{
+	$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>");
+	for(i=0; i<button.length; i++){
+	$('#'+button[i].id).text(button[i].buttonTitle);
+	$('#'+button[i].id).attr("href", button[i].buttonURL);
+	}
+}
 		}
 
 //$("#filterBtnDiv").append();
 }); 
+  } 

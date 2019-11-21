@@ -2445,6 +2445,83 @@ tr.group:hover {
 
 
 
+.error-icon {
+color: red;
+font-size: 20px !important;
+margin: 0 7px 0 7px;
+}
 
+.error-disable-icon {
+color: gray;
+font-size: 20px !important;
+margin: 0 7px 0 7px;
+cursor: not-allowed;
+}
 
+.download-icon {
+font-size: 20px !important;
+color: #2e8b57;
+margin: 0 7px 0 7px;
+}
 
+.download-disable-icon {
+font-size: 20px !important;
+color: gray;
+margin: 0 7px 0 7px;
+cursor: not-allowed;
+}
+
+.view-icon {
+font-size: 20px !important;
+margin: 0 7px 0 7px;
+}
+
+.edit-icon {
+font-size: 20px !important;
+margin: 0 7px 0 7px;
+color: #006994
+}
+
+.edit-disable-icon {
+font-size: 20px !important;
+margin: 0 7px 0 7px;
+color: gray;
+cursor: not-allowed;
+}
+
+.delete-icon {
+font-size: 20px !important;
+color: red;
+margin: 0 7px 0 7px;
+}
+
+.approve-icon {
+font-size: 20px !important;
+margin: 0 7px 0 7px;
+color: #006994
+}
+
+.reject-icon {
+font-size: 20px !important;
+color: red;
+margin: 0 7px 0 7px;
+}
+
+.reply-disable-icon {
+font-size: 20px !important;
+cursor: not-allowed;
+color: gray;
+margin: 0 7px;
+}
+
+.reply-icon {
+font-size: 20px !important;
+color: #006994;
+margin: 0 7px;
+}
+
+.pay-tax-icon {
+font-size: 20px !important;
+color: #2e568b;
+margin: 0 7px;
+}

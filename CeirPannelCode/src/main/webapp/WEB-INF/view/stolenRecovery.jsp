@@ -475,7 +475,7 @@
 
                                 <label>
                                     <input name="group1" type="radio" class="chooseStock"
-                                        onclick="pickConsignment()" />
+                                        onclick="pickstock()" />
                                     <span class="checkboxFont"> Choose from the stock</span>
                                 </label>
 
