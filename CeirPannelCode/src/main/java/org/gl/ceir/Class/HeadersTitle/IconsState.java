@@ -84,7 +84,7 @@ public class IconsState {
 			  edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 						+disableEditIcon+" aria-hidden=\"true\"  title="
 						+editIconTitle+"></i></a>"; 
-			  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+			  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 						+disableDeletionIcon+" aria-hidden=\"true\" title="
 						+deleteIconTitle+"></i></a>";
 		  	}
@@ -95,7 +95,7 @@ public class IconsState {
 			  edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 						+disableEditIcon+" aria-hidden=\"true\" title="
 						+editIconTitle+"></i></a>"; 
-			  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+			  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 						+disableDeletionIcon+" aria-hidden=\"true\" title="
 						+deleteIconTitle+"></i></a>";
 				}
@@ -109,7 +109,7 @@ public class IconsState {
 				edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 										+disableEditIcon+" aria-hidden=\"true\"  title="
 										+editIconTitle+"></i></a>"; 
-				delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+				delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 												+disableDeletionIcon+" aria-hidden=\"true\" title="
 												+deleteIconTitle+"></i></a>"; 			
 		  }
@@ -174,7 +174,7 @@ public class IconsState {
 					edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 											+disableEditIcon+" aria-hidden=\"true\"  title="
 											+editIconTitle+"></i></a>"; 
-					delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+					delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 													+disableDeletionIcon+" aria-hidden=\"true\"  title="
 													+deleteIconTitle+"></i></a>"; 			
 			  }
@@ -217,7 +217,7 @@ public String stolenState(String fileName,String txnId ,String status,String use
 	}
 	 
 	 if("2".equals(status) && "Approved".equals(userStatus) ) {
-		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 				 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 				 +deleteIconTitle+"></i></a>"; 
 	 } 
@@ -233,7 +233,7 @@ public String stolenState(String fileName,String txnId ,String status,String use
 		 edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 		 +disableEditIcon+" aria-hidden=\"true\"  title="
 		 +editIconTitle+"></i></a>"; 
-		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 		 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 		 +deleteIconTitle+"></i></a>"; 
 		 }
@@ -332,7 +332,7 @@ else if("4".equals(status) ||"5".equals(status) || "6".equals(status) || "7".equ
 
 //Disable Delete
 else if("6".equals(status) || "8".equals(status) || "9".equals(status) && "Approved".equals(userStatus) ) {
-	delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+	delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 			 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 			 +deleteIconTitle+"></i></a>";  
 }
@@ -344,7 +344,7 @@ else if("Disable".equals(userStatus)) {
 				+approveIconTitle+" ></i></a>";
 	 reject = "<a onclick="+rejectIcon+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
-	 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\" class="+disableIconClass+"><i class="
+	 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 			 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 			 +deleteIconTitle+"></i></a>"; 
 }
