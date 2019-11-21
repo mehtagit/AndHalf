@@ -89,6 +89,7 @@
 
 					</div>
 				</div>
+				<div id="footerBtn"></div>
 			</div>
 		</div>
 		<!--end container-->
@@ -510,7 +511,7 @@
                             <h5 class="center">
                                 <label>
                                     <input name="group1" type="radio"
-                                        onclick="location.href = 'markAsRecovery.html';" />
+                                        onclick="pickExistingRecovery();" />
                                     <span class="checkboxFont"> Choose from existing</span>
                                 </label>
 

@@ -100,65 +100,8 @@ function DeleteConsignmentRecord(txnId){
         	
         } 
        
-        
-        // **************************************************filter table**********************************************
-     
-        
-        function filterConsignment()
-        {
-       	 	var startdate=$('#startDate').val(); 
-        	var endDate=$('#endDate').val();
-        	var taxStatus=$('#taxPaidStatus').val();
-        	var consignmentStatus=$('#filterConsignmentStatus').val();
-        	var userId="1";
-        	
-        	var filterRequest={
-        	"consignmentStatus":consignmentStatus,
-        	"endDate":startdate,
-        	"startDate":endDate,
-        	"taxPaidStatus":taxStatus,
-        	"userId":userId
-        	};
-        	
-        	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
-        	console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
-        	
-	$.ajax({
-	url: "./headers?type=consignment",
-	type: 'POST',
-	dataType: "json",
-	success: function(result){
-			var table=	$("#consignmentLibraryTable").DataTable({
-    	  		destroy:true,
-                "serverSide": true,
-    			orderCellsTop : true,
-    			"aaSorting" : [],
-    			"bPaginate" : true,
-    			"bFilter" : true,
-    			"bInfo" : true,
-    			"bSearchable" : true,
-				ajax: {
-           		        url: './consignmentData',
-           		        type: 'POST',
-           		    	data : function(d) {
-          		    		d.filter = JSON.stringify(filterRequest);       		    		
-           				}
-           		    	
-         		},
-                "columns": result
-            });
-	},
-	error: function (jqXHR, textStatus, errorThrown) {
-    	console.log("error in ajax");
-    	}
-    	});
-        	}
-        	else{
-            	console.log("please fill select");
-            	}
-        	}
-
-        
+       
+   
         //******************************************************************************************************************************************************************888888
  //******************************************      ************************************************************************************************************************888888
  //******************************************************************************************************************************************************************888888   
@@ -307,6 +250,8 @@ function DeleteConsignmentRecord(txnId){
            
 $(document).ready(function(){
 $('.datepicker').datepicker();
+tableHeader();
+pageRendering();
 });
 
 $('.datepicker').on('mousedown',function(event){
@@ -349,8 +294,20 @@ event.preventDefault();
    		    	 "userId": userId
    		    	 };
    			 
-   			 $.ajax({
-   				url: "./headers?type=stolen",
+   		 var sourceType = localStorage.getItem("sourceType");	 
+   		 function tableHeader(){
+   			 if(sourceType !="viaExistingRecovery" ){
+   	 			Datatable('./headers?type=stolen','stolenData')
+   	 		}else if(sourceType =="viaExistingRecovery" ){
+   	 			Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
+   	 		}
+   	    	 localStorage.removeItem('sourceType');
+   		 }  
+   		   
+   		 
+   		function Datatable(url,dataUrl){
+   		    $.ajax({
+   				url: url,
    				type: 'POST',
    				dataType: "json",
    				success: function(result){
@@ -364,7 +321,7 @@ event.preventDefault();
    			    			"bInfo" : true,
    			    			"bSearchable" : true,
    							ajax: {
-   			           		        url: './stolenData',
+   			           		        url: dataUrl,
    			           		        type: 'POST',
    			           		  data : function(d) {
    	          		    		d.filter = null;       		    		
@@ -374,10 +331,25 @@ event.preventDefault();
    			            });
    				}
    								}); 
-   								
+   		    }				
    					
-   			 $.ajax({
-   					url: "./stolen/pageRendering",
+   		function pageRendering(){
+   		  console.log("sourceType in render check" +sourceType);
+   			if(sourceType !="viaExistingRecovery" ){
+   				pageElements('./stolen/pageRendering');
+   			
+   			}else if(sourceType ==="viaExistingRecovery" ){
+   				pageElements('./stolen/pageRendering?sourceType=viaExistingRecovery');
+   			}
+   			localStorage.removeItem('sourceType');
+   			
+   		}
+   		
+   		
+   		
+   		function pageElements(url){
+   		$.ajax({
+   					url: url,
    					type: 'POST',
    					dataType: "json",
    					success: function(data){
@@ -412,22 +384,49 @@ event.preventDefault();
    					"</div>"+
    					"</div>");
    			}
-
-   			$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+   			if(sourceType=="viaExistingRecovery"){
+   				$("#btnLink").css({display: "none"});
+   				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+   	   			for(i=0; i<button.length; i++){
+   	   				$('#'+button[i].id).text(button[i].buttonTitle);
+   	   				if(button[i].type === "HeaderButton"){
+   	   					$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
+   	   				}
+   	   				else{
+   	   					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+   	   				}
+   	   				}
+   	   			
+   	   		$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedRecovered' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
    			for(i=0; i<button.length; i++){
    				$('#'+button[i].id).text(button[i].buttonTitle);
-   				if(button[i].type === "HeaderButton"){
-   					$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
-   				}
-   				else{
+   				if(button[i].type === "FooterButton"){
    					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
    				}
+   				else{
+   					$('#'+button[i].id).attr("href", button[i].buttonURL);
+   					
    				}
-   					}
+   			}	
+   				
+   	}else{
+   				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+   	   			for(i=0; i<button.length; i++){
+   	   				$('#'+button[i].id).text(button[i].buttonTitle);
+   	   				if(button[i].type === "HeaderButton"){
+   	   					$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
+   	   				}
+   	   				else{
+   	   					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+   	   				}
+   	   				}
+   			}
+   			
+   		}
 
    			//$("#filterBtnDiv").append();
    			}); 
-   			 
+   		}	 
    	
    function fileStolenReport(){
     		
@@ -768,6 +767,13 @@ event.preventDefault();
 	   		window.location.href = url;
 	   		console.log(url);
 	}
+   
+   function pickExistingRecovery(){
+	   localStorage.setItem("sourceType", "viaExistingRecovery");
+	   var url =  "./stolenRecovery?userTypeId="+roleType;
+	   window.location.href = url;
+	   console.log(url)
+   }
 
    function redirectToViewStolenPage()
    {
@@ -782,3 +788,6 @@ event.preventDefault();
    	
 
    }
+   
+   
+  
