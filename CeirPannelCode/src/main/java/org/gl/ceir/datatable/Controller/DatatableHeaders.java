@@ -72,6 +72,17 @@ else if("stolenconsignment".equals(role)) {
 	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 }
 
+//stock headers
+else if("stockcheckHeaders".equals(role)) {
+	String[] headers = {HeadersTitle.blankHeader,HeadersTitle.creationDate,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus};		
+	for(String header : headers) {
+		dataTableInputs.add(new DatatableHeaderModel(header));
+	}
+	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+}
+
+
+
 
 //DEFAULT PORTION  
 else {

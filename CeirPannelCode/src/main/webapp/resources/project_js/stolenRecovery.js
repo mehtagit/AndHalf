@@ -760,14 +760,13 @@ event.preventDefault();
 		}
 	}
    
-   function pickConsignment(){
-		if($("input[name='chooseconsignment']:checked")){
-			var url="./Consignment/viewConsignment";
-			localStorage.setItem("sourceType", "viaStolen");
-				console.log(url);
-				window.location.href=url;
-			
-		}
+   
+   var roleType = $("body").attr("data-roleType");
+   function pickstock(){
+	   		localStorage.setItem("sourceType", "viaStock");
+	   		var url="./assignDistributor?userTypeId="+roleType;
+	   		window.location.href = url;
+	   		console.log(url);
 	}
 
    function redirectToViewStolenPage()

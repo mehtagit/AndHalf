@@ -46,7 +46,7 @@ public class StockDatatableController {
 	IconsState iconState;
 	
 	@PostMapping("stockData")
-	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role ,HttpServletRequest request,HttpSession session) {	 		
+	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
 				List<List<String>> finalList=new ArrayList<List<String>>();
 
@@ -58,6 +58,7 @@ public class StockDatatableController {
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				// TODO Convert header to an ENUM.
 				// list provided via Back-end process
+				
 				try {
 					
 				Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);
@@ -70,8 +71,12 @@ public class StockDatatableController {
 					datatableResponseModel.setData(Collections.emptyList());
 				}
 				else {
+				
+				if("viaStock".equals(sourceType)){	
+				//log.info("sourceType in stock controller 1--------"+sourceType);
 				for(StockContent dataInsideList : paginationContentList) 
 				{
+					String checboxes = "<input type=checkbox class=filled-in>";
 					String date= dataInsideList.getCreatedOn(); 
 					String txnId= dataInsideList.getTxnId(); 
 					String file= dataInsideList.getFileName();
@@ -82,13 +87,35 @@ public class StockDatatableController {
 						statusOfStock.equals("1") ? "Processing" :
 							statusOfStock.equals("2")  ? "Error" :
 								statusOfStock.equals("3") ?   "Success" : "Not Defined";
-					String userStatus = (String) session.getAttribute("userStatus");
-					String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-					String[] finalData={date,txnId,file,stockStatus,action}; 
+					//String userStatus = (String) session.getAttribute("userStatus");
+					//String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+					String[] finalData={checboxes,date,txnId,file,stockStatus}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 					}
+				}else{
+					//log.info("sourceType in stock controller 2--------"+sourceType);
+					for(StockContent dataInsideList : paginationContentList) 
+					{
+						String date= dataInsideList.getCreatedOn(); 
+						String txnId= dataInsideList.getTxnId(); 
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatus = null;
+						stockStatus = statusOfStock.equals("0") ? "INIT" : 
+							statusOfStock.equals("1") ? "Processing" :
+								statusOfStock.equals("2")  ? "Error" :
+									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						String[] finalData={date,txnId,file,stockStatus,action}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+						}
+				}
 				}
 				//data set on ModelClass
 				datatableResponseModel.setRecordsTotal(stockPaginationModel.getNumberOfElements());
@@ -110,7 +137,7 @@ public class StockDatatableController {
 	
 	@PostMapping
 	@RequestMapping("stock/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "stock",required = false) String role){
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
 
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
@@ -118,7 +145,9 @@ public class StockDatatableController {
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
+		
+		if("viaStock".equals(sourceType)){
+		log.info("sourceType render---1------" +sourceType);	
 		String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
 
 		for(int i=0; i< names.length ; i++) {
@@ -129,7 +158,22 @@ public class StockDatatableController {
 			i++;
 			button.setId(names[i]);
 			buttonList.add(button);
-		}	
+		}
+		
+		String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
+		for(int i=0; i< footerBtn.length ; i++) {
+			button = new Button();
+			button.setType(footerBtn[i]);
+			i++;
+			button.setButtonTitle(footerBtn[i]);
+			i++;
+			button.setButtonURL(footerBtn[i]);
+			i++;
+			button.setId(footerBtn[i]);
+			buttonList.add(button);
+		}			
+			/* pageElement.setButtonList(buttonList); */
+		
 		
 		//Dropdown items			
 		String[] selectParam= {"select","Stock Status","filterFileStatus",""};
@@ -158,6 +202,49 @@ public class StockDatatableController {
 			i++;
 			dateRelatedFields.setClassName(dateParam[i]);
 			inputTypeDateList.add(dateRelatedFields);
+		}
+		}else {
+			log.info("sourceType render---2------" +sourceType);	
+			String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}	
+			
+			//Dropdown items			
+			String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+			for(int i=0; i< selectParam.length; i++) {
+				inputFields= new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+			
+
+			//input type date list		
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
+			for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
 		}
 		pageElement.setPageTitle("View Stock");
 		pageElement.setButtonList(buttonList);

@@ -434,6 +434,7 @@ $.ajax({
 
 		
 	if(sourceType=="viaStolen"){
+		$("#btnLink").css({display: "none"});
 		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
 		for(i=0; i<button.length; i++){
 			$('#'+button[i].id).text(button[i].buttonTitle);
