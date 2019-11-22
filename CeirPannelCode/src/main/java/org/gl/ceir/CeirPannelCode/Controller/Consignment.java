@@ -339,7 +339,7 @@ public class Consignment {
 		request.setTxnId(consignmentUpdateRequest.getTxnId());
 		
 	    log.info(" request passed to the update consignment status="+request);
-		GenricResponse response=feignCleintImplementation.updateConsignmentStatus(consignmentUpdateRequest);
+		GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
 		log.info("response after update consignment status="+response);
 		return response;
 

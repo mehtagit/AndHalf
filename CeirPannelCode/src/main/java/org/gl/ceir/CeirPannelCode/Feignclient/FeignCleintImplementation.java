@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -177,8 +178,20 @@ public interface FeignCleintImplementation {
 		public GenricResponse updateFileStolen(@RequestBody StolenRecoveryModel request) ;
 
 
+		
+		
+//****************************************************************grievance api starts from here ***************************************************************************************************		
+		//View filter grievance  feign  controller
+		@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
+		public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
+				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 
 
+// ******************************************** save 	grievance api ********************************************************************************
+		@RequestMapping(value="/grievance/save" ,method=RequestMethod.POST) 
+		public GenricResponse saveGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
+		
 }
 
 

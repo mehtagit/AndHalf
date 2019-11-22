@@ -580,7 +580,8 @@ function disapproveSubmit(actiontype){
 		type : 'POST',
 		success : function(data) {
 			console.log(data)
-			$('#confirmRejectConsignment').openModal();
+			setTimeout(function(){ $('#confirmRejectConsignment').openModal()}, 200);
+			
 			if(data.errorCode==0){
 
 				$('#disapproveSuccessMessage').text('');
@@ -599,7 +600,7 @@ function disapproveSubmit(actiontype){
 
 
 function valuesPush(){
-	   var workOrderHeaders=[];
+	   var selectedMultipleConsignment=[];
 	   var roleType = $("body").attr("data-roleType");
 	   var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	   var role = currentRoleType == null ? roleType : currentRoleType;
@@ -614,10 +615,10 @@ function valuesPush(){
 			   	"requestType":requestType
 			   	};
 	   
-		   workOrderHeaders.push(json);
+		   selectedMultipleConsignment.push(json);
 	   });
-	   console.log(workOrderHeaders)
-	   return workOrderHeaders;
+	   console.log(selectedMultipleConsignment)
+	   return selectedMultipleConsignment;
 	   }
 
 

@@ -56,11 +56,8 @@ public class StolenDatatableController {
 		List<List<String>> finalList = new ArrayList<List<String>>();
 
 		// FilterRequest filterrequest = request.getParameter("FilterRequest");
-		//FilterRequest filterrequest = new FilterRequest();
-		String filter = request.getParameter("filter");
-		Gson gsonObject=new Gson();	
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		log.info("flter request=="+filterrequest);
+		FilterRequest filterrequest = new FilterRequest();
+
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 
@@ -149,7 +146,7 @@ public class StolenDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 
-		pageElement.setPageTitle("Stolen Recovery");
+		pageElement.setPageTitle("Stolen/Recovery");
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -190,7 +187,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 		
 //Dropdown items	
-		String[] selectParam = { "select", "Consignment Status", "filterConsignmentStatus", "", "select",
+		String[] selectParam = { "select", "Stock Status", "filterConsignmentStatus", "", "select",
 				"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
 		for (int i = 0; i < selectParam.length; i++) {
 			inputFields = new InputFields();
@@ -240,7 +237,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 		
 //Dropdown items	
-		String[] selectParam = { "select", "Consignment Status", "filterConsignmentStatus", "", "select",
+		String[] selectParam = { "select", "Status", "filterConsignmentStatus", "", "select",
 				"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
 		for (int i = 0; i < selectParam.length; i++) {
 			inputFields = new InputFields();
