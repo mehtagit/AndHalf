@@ -45,10 +45,8 @@ public class ConsignmentMgmt implements Serializable {
 	@CreationTimestamp
 	private LocalDateTime createdOn;
 
-
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
-
 
 	private Integer userId;
 
@@ -60,6 +58,8 @@ public class ConsignmentMgmt implements Serializable {
 
 	@Column(length = 3)
 	private int consignmentStatus;
+
+	private int previousConsignmentStatus;
 
 	private String organisationCountry;
 
@@ -77,9 +77,10 @@ public class ConsignmentMgmt implements Serializable {
 
 	private String remarks;
 
-	/*@OneToOne(cascade = CascadeType.ALL)
-	@JoinTable(name="user", joinColumns = @JoinColumn(name="id", insertable = false, updatable = false),
-	inverseJoinColumns = @JoinColumn(name="user_id"))*/
+	private int currency;
+
+	private Double totalPrice;
+
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
@@ -225,8 +226,8 @@ public class ConsignmentMgmt implements Serializable {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	
-	
+
+
 	public User getUser() {
 		return user;
 	}
@@ -235,15 +236,41 @@ public class ConsignmentMgmt implements Serializable {
 		this.user = user;
 	}
 
+	public int getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(int currency) {
+		this.currency = currency;
+	}
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+
+	public int getPreviousConsignmentStatus() {
+		return previousConsignmentStatus;
+	}
+
+	public void setPreviousConsignmentStatus(int previousConsignmentStatus) {
+		this.previousConsignmentStatus = previousConsignmentStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "ConsignmentMgmt [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
 				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
 				+ createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId + ", txnId=" + txnId + ", fileName="
-				+ fileName + ", consignmentStatus=" + consignmentStatus + ", organisationCountry=" + organisationCountry
+				+ fileName + ", consignmentStatus=" + consignmentStatus + ", previousConsignmentStatus="
+				+ previousConsignmentStatus + ", organisationCountry=" + organisationCountry
 				+ ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate=" + expectedArrivaldate
 				+ ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + ", remarks=" + remarks
-				+ ", user=" + user + "]";
+				+ ", currency=" + currency + ", totalPrice=" + totalPrice + ", user=" + user + "]";
 	}
 
 

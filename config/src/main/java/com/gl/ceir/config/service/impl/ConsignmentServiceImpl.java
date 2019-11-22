@@ -238,6 +238,7 @@ public class ConsignmentServiceImpl {
 					consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierld());
 					consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
 					consignmentInfo.setTaxPaidStatus(consignmentFileRequest.getTaxPaidStatus());
+					consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
 
 					if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " ")
 					{

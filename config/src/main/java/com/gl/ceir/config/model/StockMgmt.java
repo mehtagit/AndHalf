@@ -24,7 +24,6 @@ public class StockMgmt implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-
 	@CreationTimestamp
 	private Date createdOn;
 
@@ -52,6 +51,13 @@ public class StockMgmt implements Serializable {
 
 	@Column(length = 3)
 	private int stockStatus;
+
+	private int previousStockStatus;
+
+	private int currency;
+	private String userType;
+	private Double totalPrice;
+
 
 	public Long getId() {
 		return id;
@@ -147,6 +153,38 @@ public class StockMgmt implements Serializable {
 
 	public void setStockStatus(int stockStatus) {
 		this.stockStatus = stockStatus;
+	}
+
+	public int getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(int currency) {
+		this.currency = currency;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getPreviousStockStatus() {
+		return previousStockStatus;
+	}
+
+	public void setPreviousStockStatus(int previousStockStatus) {
+		this.previousStockStatus = previousStockStatus;
 	}
 
 

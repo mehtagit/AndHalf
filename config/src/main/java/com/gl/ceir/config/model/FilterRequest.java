@@ -12,9 +12,10 @@ public class FilterRequest {
 	private Integer consignmentStatus;
 	private String roleType;
 	private String requestType;
+	private String userType;
 
 
-	
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -58,6 +59,12 @@ public class FilterRequest {
 	}
 	public void setRequestType(String requestType) {
 		this.requestType = requestType;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	@Override
 	public String toString() {
