@@ -237,7 +237,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 		
 //Dropdown items	
-		String[] selectParam = { "select", "Consignment Status", "filterConsignmentStatus", "", "select",
+		String[] selectParam = { "select", "Status", "filterConsignmentStatus", "", "select",
 				"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
 		for (int i = 0; i < selectParam.length; i++) {
 			inputFields = new InputFields();

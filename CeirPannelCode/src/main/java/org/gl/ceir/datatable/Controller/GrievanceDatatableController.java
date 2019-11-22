@@ -83,8 +83,7 @@ public class GrievanceDatatableController {
 						   StatusofGrievance.equals("2") ? "Pending With User" :
 							   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.grievanceState(dataInsideList.getFileName(),txnId,grievanceStatus,userStatus);
-				   
+				   String action=iconState.grievanceState(dataInsideList.getFileName(),txnId,StatusofGrievance,userStatus);			   
 				   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

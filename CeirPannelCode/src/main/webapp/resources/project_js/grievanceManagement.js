@@ -37,7 +37,7 @@ function grievanceDataTable(){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"aaSorting" : [],
+				"ordering" : false,
 				"bPaginate" : true,
 				"bFilter" : true,
 				"bInfo" : true,
@@ -80,12 +80,20 @@ function pageRendering(){
 
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
+				if(date[i].type === "date"){
 				$("#greivanceTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
 						"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
 						"<label for='TotalPrice'>"+date[i].title
 						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
 						"<span	class='input-group-addon' style='color: #ff4081'>"+
 						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+				}
+				else if(date[i].type === "text"){
+					$("#greivanceTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					
+				}
+				
+				
 				
 			} 
 

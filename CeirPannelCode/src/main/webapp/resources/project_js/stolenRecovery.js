@@ -315,7 +315,7 @@ event.preventDefault();
    			    	  		destroy:true,
    			                "serverSide": true,
    			    			orderCellsTop : true,
-   			    			"aaSorting" : [],
+   			    			"ordering" : false,
    			    			"bPaginate" : true,
    			    			"bFilter" : true,
    			    			"bInfo" : true,

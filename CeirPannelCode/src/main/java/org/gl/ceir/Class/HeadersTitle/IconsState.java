@@ -37,7 +37,7 @@ public class IconsState {
 	String disableViewIcon="\"fa fa-eye view-icon disable\"";
 	String disableEditIcon="\"fa fa-pencil edit-icon disable\""; 
 	String disableDeletionIcon="\"fa fa-trash delete-icon disable\"";
-	String disableReplyIcon="\"fa fa-reply disable\""; 
+	String disableReplyIcon="\"fa fa-reply reply-icon disable\""; 
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableAejectIcon = "\"fa fa-user-times reject-icon disable\"";
 	
@@ -371,7 +371,7 @@ public String grievanceState(String fileName,String txnId ,String status,String 
 	
 
 	//Disable reply
-	if( "0".equals(status) || "1".equals(status) || "3".equals(status)  && "Approved".equals(userStatus) ) {
+	if( "0".equals(status) || "1".equals(status) || "3".equals(status)) {
 		reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
 		
