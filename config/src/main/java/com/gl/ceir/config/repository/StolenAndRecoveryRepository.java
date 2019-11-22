@@ -19,5 +19,8 @@ public interface StolenAndRecoveryRepository extends JpaRepository<StolenandReco
 
 	public StolenandRecoveryMgmt getByTxnId(String txnid);
 
+	public StolenandRecoveryMgmt getById(Long id);
+
+	public void deleteById(Long id);
 
 }

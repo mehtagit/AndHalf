@@ -12,7 +12,7 @@ public enum ConsignmentStatus {
 	
 	REJECTED_BY_CUSTOMS(7, "Rejected By Customs"), WITHDRAWN_BY_IMPORTER(8, "Withdrawn By Importer"),
 	
-	WITHDRAWN_BY_CEIR(9, "Withdrawn By CEIR");
+	WITHDRAWN_BY_CEIR(9, "Withdrawn By CEIR"),STOLEN(10,"Stolen"),RECOVERY(11,"Recovery");
 
 	private int code;
 	private String desc;

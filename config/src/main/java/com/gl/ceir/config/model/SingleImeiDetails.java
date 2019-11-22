@@ -3,13 +3,20 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class ImmegreationImeiDetails implements Serializable {
+public class SingleImeiDetails implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
@@ -17,17 +24,20 @@ public class ImmegreationImeiDetails implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	@CreationTimestamp
 	private Date createdOn;
-	private Date updatedOn;
-	private String name;
-	private String passportNumber;
+	@UpdateTimestamp
+	private Date modifiedOn;
+	
 	private String blockingType;
 	private String blockingTime;
-	private String imeiType;
 	private int processState;
 	public Long imei;
 
+	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
+	@JoinColumn(name = "txnId", nullable = false)
+	StolenandRecoveryMgmt sARm;
+	
 
 	public Long getId() {
 		return id;
@@ -41,18 +51,7 @@ public class ImmegreationImeiDetails implements Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getUpdatedOn() {
-		return updatedOn;
-	}
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
-	}
-	public String getPassportNumber() {
-		return passportNumber;
-	}
-	public void setPassportNumber(String passportNumber) {
-		this.passportNumber = passportNumber;
-	}
+
 	public String getBlockingType() {
 		return blockingType;
 	}
@@ -65,12 +64,7 @@ public class ImmegreationImeiDetails implements Serializable {
 	public void setBlockingTime(String blockingTime) {
 		this.blockingTime = blockingTime;
 	}
-	public String getImeiType() {
-		return imeiType;
-	}
-	public void setImeiType(String imeiType) {
-		this.imeiType = imeiType;
-	}
+
 	public int getProcessState() {
 		return processState;
 	}
@@ -83,14 +77,21 @@ public class ImmegreationImeiDetails implements Serializable {
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
-	public String getName() {
-		return name;
+	public Date getModifiedOn() {
+		return modifiedOn;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+	public StolenandRecoveryMgmt getsARm() {
+		return sARm;
+	}
+	public void setsARm(StolenandRecoveryMgmt sARm) {
+		this.sARm = sARm;
 	}
 
-
-
-
+	
+	
+	
+	
 }

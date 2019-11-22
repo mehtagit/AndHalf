@@ -2,16 +2,17 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -40,6 +41,15 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String blockingTimePeriod;
 	private String sourceType;
 
+	
+	@JsonIgnore
+	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
+	SingleImeiDetails singleImeiDetails;  
+	
+	@Transient
+	private Long imei;
+
+	
 	public Long getId() {
 		return id;
 	}
@@ -112,6 +122,18 @@ public class StolenandRecoveryMgmt implements Serializable {
 	}
 	public void setSourceType(String sourceType) {
 		this.sourceType = sourceType;
+	}
+	public SingleImeiDetails getSingleImeiDetails() {
+		return singleImeiDetails;
+	}
+	public void setSingleImeiDetails(SingleImeiDetails singleImeiDetails) {
+		this.singleImeiDetails = singleImeiDetails;
+	}
+	public Long getImei() {
+		return imei;
+	}
+	public void setImei(Long imei) {
+		this.imei = imei;
 	}
 	@Override
 	public String toString() {
