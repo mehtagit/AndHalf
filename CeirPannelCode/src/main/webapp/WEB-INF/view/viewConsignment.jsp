@@ -57,7 +57,7 @@
 
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">
+<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -553,7 +553,7 @@
 				</div>
 			</div>
 			<p>
-				<a href="#">Download Sample Format</a>
+				<a href="./sampleFileDownload/filetype=sample">Download Sample Format</a>
 			</p>
 
 			<span> Required Field are marked with <span class="star">*</span>

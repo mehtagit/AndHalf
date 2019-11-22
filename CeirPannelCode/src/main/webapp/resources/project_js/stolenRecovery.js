@@ -1,20 +1,23 @@
-function DeleteConsignmentRecord(txnId){
+function DeleteConsignmentRecord(txnId,id){
        		 $("#DeleteConsignment").openModal();
         	 $("#transID").text(txnId);
+        	 $("#setStolenRecoveyRowId").text(id);
         }
         
         
         function confirmantiondelete(){
         	var txnId = $("#transID").text();
+        	var id= $("#setStolenRecoveyRowId").text();
         	var roleType = $("body").attr("data-roleType");
        	    var userId = $("body").attr("data-userID");
-       	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+       	    var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
        	    var role = currentRoleType == null ? roleType : currentRoleType;
         	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
      		 var obj ={
         			 "txnId" : txnId,
         			 "roleType":role,
-        			 "userId":userId
+        			 "userId":userId,
+        			 "id":id
         			 
         	 }
         	 $.ajax({
@@ -100,65 +103,8 @@ function DeleteConsignmentRecord(txnId){
         	
         } 
        
-        
-        // **************************************************filter table**********************************************
-     
-        
-        function filterConsignment()
-        {
-       	 	var startdate=$('#startDate').val(); 
-        	var endDate=$('#endDate').val();
-        	var taxStatus=$('#taxPaidStatus').val();
-        	var consignmentStatus=$('#filterConsignmentStatus').val();
-        	var userId="1";
-        	
-        	var filterRequest={
-        	"consignmentStatus":consignmentStatus,
-        	"endDate":startdate,
-        	"startDate":endDate,
-        	"taxPaidStatus":taxStatus,
-        	"userId":userId
-        	};
-        	
-        	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
-        	console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
-        	
-	$.ajax({
-	url: "./headers?type=consignment",
-	type: 'POST',
-	dataType: "json",
-	success: function(result){
-			var table=	$("#consignmentLibraryTable").DataTable({
-    	  		destroy:true,
-                "serverSide": true,
-    			orderCellsTop : true,
-    			"aaSorting" : [],
-    			"bPaginate" : true,
-    			"bFilter" : true,
-    			"bInfo" : true,
-    			"bSearchable" : true,
-				ajax: {
-           		        url: './consignmentData',
-           		        type: 'POST',
-           		    	data : function(d) {
-          		    		d.filter = JSON.stringify(filterRequest);       		    		
-           				}
-           		    	
-         		},
-                "columns": result
-            });
-	},
-	error: function (jqXHR, textStatus, errorThrown) {
-    	console.log("error in ajax");
-    	}
-    	});
-        	}
-        	else{
-            	console.log("please fill select");
-            	}
-        	}
-
-        
+       
+   
         //******************************************************************************************************************************************************************888888
  //******************************************      ************************************************************************************************************************888888
  //******************************************************************************************************************************************************************888888   
@@ -307,6 +253,8 @@ function DeleteConsignmentRecord(txnId){
            
 $(document).ready(function(){
 $('.datepicker').datepicker();
+tableHeader();
+pageRendering();
 });
 
 $('.datepicker').on('mousedown',function(event){
@@ -336,7 +284,7 @@ event.preventDefault();
    		
    			var roleType = $("body").attr("data-roleType");
    			var userId = $("body").attr("data-userID");
-   			var currentRoleType = $("body").attr("data-selected-roleType");  
+   			var currentRoleType = $("body").attr("data-stolenselected-roleType");  
    			 
    			console.log("roleType=======" +roleType+"---------userId------"+userId+"-----------currentRoleType-----"+currentRoleType) 
    		   var role = currentRoleType == null ? roleType : currentRoleType;
@@ -349,8 +297,20 @@ event.preventDefault();
    		    	 "userId": userId
    		    	 };
    			 
-   			 $.ajax({
-   				url: "./headers?type=stolen",
+   		 var sourceType = localStorage.getItem("sourceType");	 
+   		 function tableHeader(){
+   			 if(sourceType !="viaExistingRecovery" ){
+   	 			Datatable('./headers?type=stolen','stolenData')
+   	 		}else if(sourceType =="viaExistingRecovery" ){
+   	 			Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
+   	 		}
+   	    	 localStorage.removeItem('sourceType');
+   		 }  
+   		   
+   		 
+   		function Datatable(url,dataUrl){
+   		    $.ajax({
+   				url: url,
    				type: 'POST',
    				dataType: "json",
    				success: function(result){
@@ -364,20 +324,35 @@ event.preventDefault();
    			    			"bInfo" : true,
    			    			"bSearchable" : true,
    							ajax: {
-   			           		        url: './stolenData',
+   			           		        url: dataUrl,
    			           		        type: 'POST',
    			           		  data : function(d) {
-   	          		    		d.filter = null;       		    		
+   	          		    		d.filter =JSON.stringify(jsonObj);       		    		
    	           				}
    			         		},
    			                "columns": result
    			            });
    				}
    								}); 
-   								
+   		    }				
    					
-   			 $.ajax({
-   					url: "./stolen/pageRendering",
+   		function pageRendering(){
+   		  console.log("sourceType in render check" +sourceType);
+   			if(sourceType !="viaExistingRecovery" ){
+   				pageElements('./stolen/pageRendering');
+   			
+   			}else if(sourceType ==="viaExistingRecovery" ){
+   				pageElements('./stolen/pageRendering?sourceType=viaExistingRecovery');
+   			}
+   			localStorage.removeItem('sourceType');
+   			
+   		}
+   		
+   		
+   		
+   		function pageElements(url){
+   		$.ajax({
+   					url: url,
    					type: 'POST',
    					dataType: "json",
    					success: function(data){
@@ -412,28 +387,55 @@ event.preventDefault();
    					"</div>"+
    					"</div>");
    			}
-
-   			$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+   			if(sourceType=="viaExistingRecovery"){
+   				$("#btnLink").css({display: "none"});
+   				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+   	   			for(i=0; i<button.length; i++){
+   	   				$('#'+button[i].id).text(button[i].buttonTitle);
+   	   				if(button[i].type === "HeaderButton"){
+   	   					$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
+   	   				}
+   	   				else{
+   	   					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+   	   				}
+   	   				}
+   	   			
+   	   		$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedRecovered' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
    			for(i=0; i<button.length; i++){
    				$('#'+button[i].id).text(button[i].buttonTitle);
-   				if(button[i].type === "HeaderButton"){
-   					$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
-   				}
-   				else{
+   				if(button[i].type === "FooterButton"){
    					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
    				}
+   				else{
+   					$('#'+button[i].id).attr("href", button[i].buttonURL);
+   					
    				}
-   					}
+   			}	
+   				
+   	}else{
+   				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+   	   			for(i=0; i<button.length; i++){
+   	   				$('#'+button[i].id).text(button[i].buttonTitle);
+   	   				if(button[i].type === "HeaderButton"){
+   	   					$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
+   	   				}
+   	   				else{
+   	   					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+   	   				}
+   	   				}
+   			}
+   			
+   		}
 
    			//$("#filterBtnDiv").append();
    			}); 
-   			 
+   		}	 
    	
    function fileStolenReport(){
     		
 	    var roleType = $("body").attr("data-roleType");
 	    var userId = $("body").attr("data-userID");
-	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	    var sourceType='file';
 	    var requestType='stolen';
 	    var role = currentRoleType == null ? roleType : currentRoleType;
@@ -491,7 +493,7 @@ event.preventDefault();
 	
 	    var roleType = $("body").attr("data-roleType");
 	    var userId = $("body").attr("data-userID");
-	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	    
 	   
 	    var sourceType='file';
@@ -544,60 +546,7 @@ event.preventDefault();
    	      }
    	      
    
-   function multipleStolenRecovery(){
-	   /*    			  
-	      	      	 var supplierId=$('#editSupplierId').val();
-	      	      	 var supplierName=$('#editSupplierName').val();
-	      	      	 var filename=$('#editcsvUploadFileName').val();
-	      	      	 var txnId=$('#editTransactionId').val();
-	      	      	 var quantity=$('#editQuantity').val();
-	      	      	 var InvoiceNumber=$('#editInvoiceNumber').val(); */
-	      	      	  
-	      	      	
-	      	      	 
-	      	      	 var stolenRecoverydata= 
-	      	      			[{
-	      	      		    
-	      	      		    "txnId": "C2019103113182217",
-	      	      		    "userId": 265
-	      	      		  },
-	      	      		  {
-	      	      		    
-	      	      		    "txnId": "C201910311318229976",
-	      	      		    "userId": 266
-	      	      		  }]
-	      	      	 
-	      	      	
-	      	      	 $.ajax({
-	      					url: './multipleStolenRecovery',
-	      					type: 'POST',
-	      					data: JSON.stringify(stolenRecoverydata),
-	      					dataType : 'json',
-	            			contentType : 'application/json; charset=utf-8',
-	            			success: function (data, textStatus, jqXHR) {
-	      						
-	      						 console.log(data);
-	      						/*  $('#editStockModal').closeModal();
-	      						 $('#successUpdateStockModal').modal();
-	      						  if(data.errorCode==200){
-	      						
-	      						$('#stockSucessMessage').text('');
-	      						 $('#stockSucessMessage').text('Operation is not allowed');
-	      							 }
-	      						 else{
-	      							 $('#stockSucessMessage').text('');
-	      			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
-	      						 } */
-	      					   // $('#updateConsignment').modal('open'); 
-	      						//alert("success");
-	      						
-	      					},
-	      					error: function (jqXHR, textStatus, errorThrown) {
-	      					console.log("error in ajax")
-	      					}
-	      				});
-	      	      
-	      	      }
+   
 	      	      
 	     
    function openStolenRecoveryModal(){
@@ -668,7 +617,7 @@ event.preventDefault();
 	 
 	    var roleType = $("body").attr("data-roleType");
 	    var userId = $("body").attr("data-userID");
-	    var currentRoleType = $("body").attr("data-selected-roleType"); 
+	    var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	    var sourceType='file';
 	    var requestType=$('#editFileStolenRequestType').val();
 	    var role = currentRoleType == null ? roleType : currentRoleType;
@@ -761,24 +710,101 @@ event.preventDefault();
 	}
    
    
-   var roleType = $("body").attr("data-roleType");
+   var roleType = $("body").attr("data-stolenselected-roleType");
    function pickstock(){
 	   		localStorage.setItem("sourceType", "viaStock");
 	   		var url="./assignDistributor?userTypeId="+roleType;
 	   		window.location.href = url;
 	   		console.log(url);
 	}
+   
+   function pickExistingRecovery(){
+	   localStorage.setItem("sourceType", "viaExistingRecovery");
+	   var url =  "./stolenRecovery?userTypeId="+roleType;
+	   window.location.href = url;
+	   console.log(url);
+   }
 
+   function valuesPush(){
+	   var multipleMarkedRequest=[];
+	   var roleType = $("body").attr("data-roleType");
+	   var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	   var role = currentRoleType == null ? roleType : currentRoleType;
+	   var requestType="recovery";
+	   console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
+	   $('#stolenLibraryTable tr td input:checkbox:checked').each(function() {
+	  
+		   var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
+			   	"userId":userId,
+			   	"sourceType":$(this).closest('tr').find('td:eq(5)').text(),
+			   	"roleType":role,
+			   	"requestType":requestType
+			   	};
+	   
+		   multipleMarkedRequest.push(json);
+	   });
+	   console.log(multipleMarkedRequest)
+	   return multipleMarkedRequest;
+	   }
+
+
+
+function markedRecovered(){
+	$('#markAsMultipleRecovery').openModal();
+	 
+	}
+
+function openMulipleStolenPopUp()
+{
+	   
+	   var stolenRecoverydata=JSON.stringify(valuesPush());
+	   console.log("release-------"+stolenRecoverydata);
+	   $.ajax({
+				url: './multipleStolenRecovery',
+				type: 'POST',
+				data: stolenRecoverydata,
+				dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+					
+					 console.log(data);
+					 $('#markAsRecoveryDone').openModal();
+					/*  $('#editStockModal').closeModal();
+					 $('#successUpdateStockModal').modal();
+					  if(data.errorCode==200){
+					
+					$('#stockSucessMessage').text('');
+					 $('#stockSucessMessage').text('Operation is not allowed');
+						 }
+					 else{
+						 $('#stockSucessMessage').text('');
+		 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+					 } */
+				   // $('#updateConsignment').modal('open'); 
+					//alert("success");
+					
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+				}
+			});
+	   
+}
+
+   
    function redirectToViewStolenPage()
    {
 
    	 var roleType = $("body").attr("data-roleType");
    	 var userId = $("body").attr("data-userID");
-   	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+   	 var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
    	 var role = currentRoleType == null ? roleType : currentRoleType;
    	 console.log(" userId="+userId+" role="+role);
-   	 console.log("./assignDistributor?userTypeId="+role);
+   	 console.log("./stolenRecovery?userTypeId="+role);
    	 window.location.href = "./stolenRecovery?userTypeId="+role;
    	
 
    }
+   
+   
+  

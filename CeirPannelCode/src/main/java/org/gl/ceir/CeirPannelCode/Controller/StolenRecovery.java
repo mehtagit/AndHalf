@@ -59,13 +59,13 @@ public class StolenRecovery {
 		else if(userTypelist.size()==1)
 		{
 		log.info("role type is"+roletype);
-		session.setAttribute("selectedUserTypeId", roletype);
+		session.setAttribute("stolenselectedUserTypeId", roletype);
 		mv.setViewName("stolenRecovery");
 		}
 		}
 		else {
 			log.info("selected role type in stolen and recovery  is = "+selectedUserTypeId);
-			session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+			session.setAttribute("stolenselectedUserTypeId", selectedUserTypeId);
 			mv.setViewName("stolenRecovery");		
 		
 		}
@@ -107,7 +107,7 @@ public class StolenRecovery {
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
-			stlnTxnNumber = "S"+stlnTxnNumber;
+			stlnTxnNumber = "L"+stlnTxnNumber;
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
@@ -160,7 +160,7 @@ public class StolenRecovery {
 		  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
-			stlnTxnNumber = "S"+stlnTxnNumber;
+			stlnTxnNumber = "L"+stlnTxnNumber;
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();

@@ -334,7 +334,7 @@ if(sourceType=="viaStock"){
 	$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedstolen' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
 	for(i=0; i<button.length; i++){
 	$('#'+button[i].id).text(button[i].buttonTitle);
-	$('#'+button[i].id).attr("href", button[i].buttonURL);
+	$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 	}
 	
 }else{
@@ -348,4 +348,85 @@ if(sourceType=="viaStock"){
 
 //$("#filterBtnDiv").append();
 }); 
-  } 
+  }
+
+
+function valuesPush(){
+	   var multipleMarkedRequest=[];
+	   var roleType = $("body").attr("data-roleType");
+	   var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	   var role = currentRoleType == null ? roleType : currentRoleType;
+	   var requestType="stolen";
+	   console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
+	   $('#stockTable tr td input:checkbox:checked').each(function() {
+	  
+		   var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
+			   	"userId":userId,
+			   	"sourceType":'stock',
+			   	"roleType":role,
+			   	"requestType":requestType
+			   	};
+	   
+		   multipleMarkedRequest.push(json);
+	   });
+	   console.log(multipleMarkedRequest)
+	   return multipleMarkedRequest;
+	   }
+
+
+
+function markedstolen(){
+	$('#markAsMultipleStolen').openModal();
+	 
+	}
+
+function openMulipleStolenPopUp()
+{
+	   
+	   var stolenRecoverydata=JSON.stringify(valuesPush());
+	   console.log("release-------"+stolenRecoverydata);
+	   $.ajax({
+				url: './multipleStolenRecovery',
+				type: 'POST',
+				data: stolenRecoverydata,
+				dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+					
+					 console.log(data);
+					 $('#markAsStolenDone').openModal();
+					/*  $('#editStockModal').closeModal();
+					 $('#successUpdateStockModal').modal();
+					  if(data.errorCode==200){
+					
+					$('#stockSucessMessage').text('');
+					 $('#stockSucessMessage').text('Operation is not allowed');
+						 }
+					 else{
+						 $('#stockSucessMessage').text('');
+		 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+					 } */
+				   // $('#updateConsignment').modal('open'); 
+					//alert("success");
+					
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+				}
+			});
+	   
+}
+
+function redirectToViewPage()
+{
+
+	 var roleType = $("body").attr("data-roleType");
+	 var userId = $("body").attr("data-userID");
+	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+	 var role = currentRoleType == null ? roleType : currentRoleType;
+	 console.log(" userId="+userId+" role="+role);
+	console.log("./stolenRecovery?userTypeId=="+role);
+	 window.location.href = "./stolenRecovery?userTypeId="+role;
+	
+
+}

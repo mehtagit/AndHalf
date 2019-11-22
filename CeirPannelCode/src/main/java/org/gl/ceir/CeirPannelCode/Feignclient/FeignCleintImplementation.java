@@ -83,7 +83,7 @@ public interface FeignCleintImplementation {
 
 
 	//download file(Error or Uploaded file) feign  controller
-	@RequestMapping(value="/stoke/Download/SampleFile" ,method=RequestMethod.GET) 
+	@RequestMapping(value="/Download/SampleFile" ,method=RequestMethod.GET) 
 	public @ResponseBody String downloadSampleFile(@RequestParam("samplFileType") String fileType);
 
 

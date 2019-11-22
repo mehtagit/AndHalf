@@ -374,17 +374,22 @@ public class RegisterController {
 	}
 	
 	
-	//************************************************ Download Sampmle file **************************************************
-	@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public  String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
-		System.out.println("inside file download method");
-		System.out.println(" fileType="+filetype);
-		String response=feignImpl.downloadSampleFile(filetype);
-		System.out.println("download response="+response);
-	
-		return "redirect:"+response;
-
-	}
+	/*
+	 * //************************************************ Download Sampmle file
+	 * **************************************************
+	 * 
+	 * @RequestMapping(value="/sampleFileDownload/{filetype}",method={org.
+	 * springframework.web.bind.annotation.RequestMethod.GET}) public String
+	 * downloadSampleFile(@PathVariable("filetype") String filetype) throws
+	 * IOException { System.out.println("inside file download method");
+	 * System.out.println(" fileType="+filetype); String
+	 * response=feignImpl.downloadSampleFile(filetype);
+	 * System.out.println("download response="+response);
+	 * 
+	 * return "redirect:"+response;
+	 * 
+	 * }
+	 */
 
 	//*************************************  upload stock *******************************************************************************************
 	/*

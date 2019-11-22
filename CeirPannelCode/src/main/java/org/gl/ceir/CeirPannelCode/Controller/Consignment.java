@@ -333,9 +333,10 @@ public class Consignment {
 		request.setAction(consignmentUpdateRequest.getAction());
 		request.setTxnId(consignmentUpdateRequest.getTxnId());
 		request.setRoleType((String) session.getAttribute("usertype"));
-		request.setRoleTypeUserId((int) session.getAttribute("primaryRoleId"));
+		request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
 		request.setUserId((int) session.getAttribute("userid"));
-		request.setRemark(consignmentUpdateRequest.getRemark());
+		request.setRemarks(consignmentUpdateRequest.getRemarks());
+		request.setTxnId(consignmentUpdateRequest.getTxnId());
 		
 	    log.info(" request passed to the update consignment status="+request);
 		GenricResponse response=feignCleintImplementation.updateConsignmentStatus(consignmentUpdateRequest);
@@ -423,5 +424,7 @@ public class Consignment {
 		return "redirect:"+response;
 
 	}
+	
+	
 
 }

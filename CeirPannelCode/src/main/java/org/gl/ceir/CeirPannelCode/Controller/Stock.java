@@ -124,7 +124,7 @@ else {
 		log.info("upload stock  entry point.");
 
 		String txnNumner=utildownload.getTxnId();
-		txnNumner = "C"+txnNumner;
+		txnNumner = "S"+txnNumner;
 		log.info("Random  genrated transaction number ="+txnNumner);
 
 		StockUploadModel stockUpload= new StockUploadModel();

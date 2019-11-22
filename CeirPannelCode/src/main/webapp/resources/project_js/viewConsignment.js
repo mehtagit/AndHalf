@@ -562,14 +562,14 @@ function openDisapprovePopup(txnId)
 }
 
 function disapproveSubmit(actiontype){
-	var txnId=$('#disaproveTxnId').val();
+	var txnId=$('#setDisapproveConsignmentTxnId').val();
 	var Remark=$('#dispproveRemarks').val();
 
 	console.log("txnId==="+txnId+"  Remark  "+Remark)
 	var approveRequest={
 		"action": actiontype,
 		"txnId":txnId,
-		"remark":Remark
+		"remarks":Remark
 	}
 	console.log(JSON.stringify(approveRequest));
 	$.ajax({
@@ -601,7 +601,7 @@ function disapproveSubmit(actiontype){
 function valuesPush(){
 	   var workOrderHeaders=[];
 	   var roleType = $("body").attr("data-roleType");
-	   var currentRoleType = $("body").attr("data-selected-roleType"); 
+	   var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	   var role = currentRoleType == null ? roleType : currentRoleType;
 	   var requestType="stolen";
 	   console.log("role++++"+role+"requestType++"+requestType);
@@ -668,10 +668,10 @@ function redirectToViewPage()
 
 	 var roleType = $("body").attr("data-roleType");
 	 var userId = $("body").attr("data-userID");
-	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+	 var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	 var role = currentRoleType == null ? roleType : currentRoleType;
 	 console.log(" userId="+userId+" role="+role);
-	console.log("./assignDistributor?userTypeId="+role);
+	console.log("./stolenRecovery?userTypeId="+role);
 	 window.location.href = "../stolenRecovery?userTypeId="+role;
 	 /*  $.ajax({
 	url : "./assignDistributor?userTypeId="+role,

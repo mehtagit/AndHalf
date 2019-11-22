@@ -82,6 +82,17 @@ else if("stockcheckHeaders".equals(role)) {
 }
 
 
+//stolen headers
+else if("stolenCheckHeaders".equals(role)) {
+	String[] headers = {HeadersTitle.blankHeader,HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType};		
+	for(String header : headers) {
+		dataTableInputs.add(new DatatableHeaderModel(header));
+	}
+	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+}
+
+
+
 
 
 //DEFAULT PORTION  

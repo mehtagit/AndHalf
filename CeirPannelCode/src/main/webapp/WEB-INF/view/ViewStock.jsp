@@ -54,7 +54,7 @@
 
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
-	data-selected-roleType="${selectedUserTypeId}">
+	data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -175,7 +175,7 @@
 					<br>
 					<br>
 					<p style="margin-left: 10px;">
-						<a href="#">Download Sample Format</a>
+						<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a>
 					</p>
 				</div>
 
@@ -310,6 +310,40 @@
 			</div>
 		</div>
 	</div>
+	
+	  <div id="markAsMultipleStolen" class="modal">
+        <div class="modal-content">
+
+            <h6>Mark As Stolen</h6>
+            <hr>
+
+            <div class="row">
+                <h6>Do you want to mark the following transaction  as stolen?</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="openMulipleStolenPopUp()" class="modal-close modal-trigger btn">Yes</a>
+                    <button class="modal-close btn" style="margin-left: 10px;">no</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div id="markAsStolenDone" class="modal">
+        <div class="modal-content">
+            <h6>Mark As Stolen</h6>
+            <hr>
+            <div class="row">
+                <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
+                    <a onclick="redirectToViewPage()" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<!-- Modal End -->
 	<!-- END MAIN -->
