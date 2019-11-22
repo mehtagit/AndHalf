@@ -85,6 +85,35 @@ public class StolenAndRecoveryController {
 		return genricResponse;
 	}
 
+	@ApiOperation(value = "Upload Stolen Details.", response = GenricResponse.class)
+	@RequestMapping(path = "v2/stakeholder/Stolen", method = RequestMethod.POST)
+	public GenricResponse v2uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails)
+	{
+		logger.info("Stolen upload Request="+stolenandRecoveryDetails);
+
+		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
+		mapping.setListType("BlackList");
+
+
+		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
+				stolenandRecoveryDetails.getBlockingType() == "") {
+
+			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
+			String newTime = utility.newDate(config.getGraceTimePeriod());
+
+			stolenandRecoveryDetails.setBlockingTimePeriod(newTime);
+			stolenandRecoveryDetails.setBlockingType("Default");
+		}
+
+		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.v2uploadDetails(stolenandRecoveryDetails);
+		logger.info("Stolen upload Response="+genricResponse);
+
+		return genricResponse;
+	}
+
+	
+	
+	
 
 	@ApiOperation(value = "Upload Multiple Stolen Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/uploadMultiple/StolenAndRecovery", method = RequestMethod.POST)

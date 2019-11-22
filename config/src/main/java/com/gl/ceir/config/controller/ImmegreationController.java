@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gl.ceir.config.model.ForeignerDetails;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ImmegreationFileDetails;
-import com.gl.ceir.config.model.ImmegreationImeiDetails;
+import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.service.impl.ForeignerServiceImpl;
 import com.gl.ceir.config.service.impl.ImmegreationServiceImpl;
 
@@ -48,7 +48,7 @@ public class ImmegreationController {
 	@ApiOperation(value = "Update imei Action Status ", response = GenricResponse.class)
 	@RequestMapping(path = "/immegreation/imeiAction", method = RequestMethod.POST)
 
-	public GenricResponse updateActionStatus(@RequestBody ImmegreationImeiDetails immegreationImeiDetails)
+	public GenricResponse updateActionStatus(@RequestBody SingleImeiDetails immegreationImeiDetails)
 	{
 		GenricResponse response = 	foreignerServiceImpl.updateImeiActionInfo(immegreationImeiDetails);
 		return response;

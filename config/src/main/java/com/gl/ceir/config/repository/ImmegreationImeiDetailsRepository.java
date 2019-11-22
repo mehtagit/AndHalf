@@ -2,11 +2,11 @@ package com.gl.ceir.config.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.ceir.config.model.ImmegreationImeiDetails;
+import com.gl.ceir.config.model.SingleImeiDetails;
 
-public interface ImmegreationImeiDetailsRepository extends JpaRepository<ImmegreationImeiDetails, Long> {
+public interface ImmegreationImeiDetailsRepository extends JpaRepository<SingleImeiDetails, Long> {
 
-	public ImmegreationImeiDetails save(ImmegreationImeiDetails immegreationImeiDetails);
+	public SingleImeiDetails save(SingleImeiDetails immegreationImeiDetails);
 
 
 }

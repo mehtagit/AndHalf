@@ -17,7 +17,7 @@ import com.gl.ceir.config.model.ForeignerImeiDetails;
 import com.gl.ceir.config.model.ForeignerRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ImeiInfo;
-import com.gl.ceir.config.model.ImmegreationImeiDetails;
+import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.repository.BlackListTrackDetailsRepository;
 import com.gl.ceir.config.repository.ForeignerDetailsRepository;
@@ -211,7 +211,7 @@ public class ForeignerServiceImpl {
 	}
 
 	@Transactional
-	public GenricResponse updateImeiActionInfo(ImmegreationImeiDetails immegreationImeiDetails) {
+	public GenricResponse updateImeiActionInfo(SingleImeiDetails immegreationImeiDetails) {
 
 
 		return null;
