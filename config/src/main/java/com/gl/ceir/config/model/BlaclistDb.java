@@ -27,17 +27,23 @@ public class BlaclistDb implements Serializable {
 	@JsonIgnore
 	@CreationTimestamp
 	private Date createdOn;
-
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;
 	private Long imei;
-
 	@Column(length = 15)
 	private String roleType;
-
-	
 	private Long userId;
+	private String deviceNumber;
+	private String deviceType;
+	private String deviceAction;
+	private String	 deviceStatus;
+	private String DeviceLaunchDate;
+	private String multipleSimStatus;
+	private String  deviceId;
+	private String imeiEsnMeid;
+	
+	
 	
 	public Long getId() {
 		return id;
@@ -85,6 +91,70 @@ public class BlaclistDb implements Serializable {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getDeviceNumber() {
+		return deviceNumber;
+	}
+
+	public void setDeviceNumber(String deviceNumber) {
+		this.deviceNumber = deviceNumber;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getDeviceAction() {
+		return deviceAction;
+	}
+
+	public void setDeviceAction(String deviceAction) {
+		this.deviceAction = deviceAction;
+	}
+
+	public String getDeviceStatus() {
+		return deviceStatus;
+	}
+
+	public void setDeviceStatus(String deviceStatus) {
+		this.deviceStatus = deviceStatus;
+	}
+
+	public String getDeviceLaunchDate() {
+		return DeviceLaunchDate;
+	}
+
+	public void setDeviceLaunchDate(String deviceLaunchDate) {
+		DeviceLaunchDate = deviceLaunchDate;
+	}
+
+	public String getMultipleSimStatus() {
+		return multipleSimStatus;
+	}
+
+	public void setMultipleSimStatus(String multipleSimStatus) {
+		this.multipleSimStatus = multipleSimStatus;
+	}
+
+	public String getDeviceId() {
+		return deviceId;
+	}
+
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public String getImeiEsnMeid() {
+		return imeiEsnMeid;
+	}
+
+	public void setImeiEsnMeid(String imeiEsnMeid) {
+		this.imeiEsnMeid = imeiEsnMeid;
 	}
 
 

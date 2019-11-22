@@ -20,6 +20,7 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
+import com.gl.ceir.config.model.SingleImeiHistoryDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
@@ -32,6 +33,8 @@ import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DistributerManagementRepository;
+import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
+import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
@@ -63,6 +66,12 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	ConsignmentRepository consignmentRepository;
+
+	@Autowired
+	SingleImeiHistoryDbRepository singleImeiHistoryDbRepository;
+
+	@Autowired
+	ImmegreationImeiDetailsRepository immegreationImeiDetailsRepository;
 
 
 	@Transactional
@@ -224,6 +233,20 @@ public class StolenAndRecoveryServiceImpl {
 				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
 				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
 
+				if("Single".equalsIgnoreCase(stolenandRecoveryMgmt.getSourceType())){
+
+					SingleImeiHistoryDb singleImeiHistoryDb = new SingleImeiHistoryDb();
+
+					singleImeiHistoryDb.setImei(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getImei());
+					singleImeiHistoryDb.setProcessState(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getProcessState());
+					singleImeiHistoryDb.setTxnId(stolenandRecoveryMgmt.getId());
+
+					singleImeiHistoryDbRepository.save(singleImeiHistoryDb);
+					//immegreationImeiDetailsRepository.deleteById(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getId());
+
+				}
+
+
 				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
 				stolenAndRecoveryRepository.deleteById(stolenandRecoveryMgmt.getId());
 
@@ -284,7 +307,7 @@ public class StolenAndRecoveryServiceImpl {
 	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
 
-			return 	stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
+			return 	stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
