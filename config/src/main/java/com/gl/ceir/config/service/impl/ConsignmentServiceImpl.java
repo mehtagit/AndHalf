@@ -352,7 +352,7 @@ public class ConsignmentServiceImpl {
 					}
 				}
 			}else {
-				if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentRepository.save(consignmentMgmt);

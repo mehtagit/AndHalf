@@ -18,7 +18,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class SingleImeiDetails implements Serializable {
+public class SingleImeiHistoryDb implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
@@ -30,15 +30,10 @@ public class SingleImeiDetails implements Serializable {
 	private Date createdOn;
 	@UpdateTimestamp
 	private Date modifiedOn;
-
 	private int processState;
 	public Long imei;
+	public Long txnId;
 
-	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
-	@JoinColumn(name = "txnId", nullable = false)
-	StolenandRecoveryMgmt sARm;
-	
 
 	public Long getId() {
 		return id;
@@ -71,15 +66,12 @@ public class SingleImeiDetails implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public StolenandRecoveryMgmt getsARm() {
-		return sARm;
+	public Long getTxnId() {
+		return txnId;
 	}
-	public void setsARm(StolenandRecoveryMgmt sARm) {
-		this.sARm = sARm;
+	public void setTxnId(Long txnId) {
+		this.txnId = txnId;
 	}
 
-	
-	
-	
-	
+
 }

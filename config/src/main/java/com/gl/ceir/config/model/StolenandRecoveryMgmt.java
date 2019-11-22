@@ -42,7 +42,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String sourceType;
 
 	
-	@JsonIgnore
+	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
 	
