@@ -7,7 +7,7 @@ public class ConsignmentUpdateRequest {
 	private int roleTypeUserId;
 	private String txnId;
 	private int userId;
-	private String remark;
+	private String remarks;
 	public int getAction() {
 		return action;
 	}
@@ -38,16 +38,16 @@ public class ConsignmentUpdateRequest {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getRemark() {
-		return remark;
+	public String getRemarks() {
+		return remarks;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	@Override
 	public String toString() {
 		return "ConsignmentUpdateRequest [action=" + action + ", roleType=" + roleType + ", roleTypeUserId="
-				+ roleTypeUserId + ", txnId=" + txnId + ", userId=" + userId + ", remark=" + remark + "]";
+				+ roleTypeUserId + ", txnId=" + txnId + ", userId=" + userId + ", remarks=" + remarks + "]";
 	}
 	
 	

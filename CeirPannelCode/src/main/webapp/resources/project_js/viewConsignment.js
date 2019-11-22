@@ -128,24 +128,24 @@ var filterRequest={
 var sourceType =localStorage.getItem("sourceType");
 function filterConsignment()
 {       	 	
-	
+
 
 	if( startdate !='' || endDate !='' || taxStatus != null || consignmentStatus != null ){
 		console.log("startdate="+startdate+" endDate="+endDate+" taxPaidstatus="+taxStatus+" consignmentStatus="+consignmentStatus)
-		
-	
+
+
 		if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
 			table('../headers?type=consignment','../consignmentData');
 		}
-		
+
 		else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
 			table('../headers?type=customConsignment','../consignmentData');
 		}
-		
+
 		else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
 			table('../headers?type=adminConsignment','../consignmentData');
 		}  
-		
+
 		else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
 			table('../headers?type=stolenconsignment','../consignmentData?sourceType=viaStolen');
 		}
@@ -170,7 +170,7 @@ function table(url,dataUrl){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"aaSorting" : [],
+				"ordering" : false,
 				"bPaginate" : true,
 				"bFilter" : true,
 				"bInfo" : true,
@@ -380,126 +380,126 @@ populateCountries
 function pageRendering(){
 	if(sourceType !="viaStolen" ){
 		pageButtons('../consignment/pageRendering');
-	
+
 	}else if(sourceType ==="viaStolen" ){
 		pageButtons('../consignment/pageRendering?sourceType=viaStolen');
-		
+
 	}
 	localStorage.removeItem('sourceType');
-	
+
 }
 
 
 function pageButtons(url){
-$.ajax({
-	url: url,
-	type: 'POST',
-	dataType: "json",
-	success: function(data){
-		data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: "json",
+		success: function(data){
+			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
 
 
-		var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
-		$("#pageHeader").append(elem);
-		var button=data.buttonList;
+			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
+			$("#pageHeader").append(elem);
+			var button=data.buttonList;
 
-		var date=data.inputTypeDateList;
-		for(i=0; i<date.length; i++){
-			$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-					"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
-					"<label for='TotalPrice'>"+date[i].title
-					+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
-					"<span	class='input-group-addon' style='color: #ff4081'>"+
-					"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-			
-		} 
+			var date=data.inputTypeDateList;
+			for(i=0; i<date.length; i++){
+				$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+						"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+						"<label for='TotalPrice'>"+date[i].title
+						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
+						"<span	class='input-group-addon' style='color: #ff4081'>"+
+						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
-		// dynamic dropdown portion
-		var dropdown=data.dropdownList;
-		for(i=0; i<dropdown.length; i++){
-			var dropdownDiv=
-				$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-						"<br>"+
-						"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-						"<span class='caret'>"+"</span>"+
-						"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+			} 
 
-						"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-						"<option>"+dropdown[i].title+
-						"</option>"+
-						"</select>"+
-						"</div>"+
-				"</div>");
+			// dynamic dropdown portion
+			var dropdown=data.dropdownList;
+			for(i=0; i<dropdown.length; i++){
+				var dropdownDiv=
+					$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+							"<br>"+
+							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+							"<span class='caret'>"+"</span>"+
+							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+							"<option>"+dropdown[i].title+
+							"</option>"+
+							"</select>"+
+							"</div>"+
+					"</div>");
+			}
+
+
+			if(sourceType=="viaStolen"){
+				$("#btnLink").css({display: "none"});
+				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+				for(i=0; i<button.length; i++){
+					$('#'+button[i].id).text(button[i].buttonTitle);
+					if(button[i].type === "HeaderButton"){
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+					}
+					else{
+						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+					}
+				}
+
+				$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedstolen' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
+				for(i=0; i<button.length; i++){
+					$('#'+button[i].id).text(button[i].buttonTitle);
+					if(button[i].type === "FooterButton"){
+						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+					}
+					else{
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+
+					}
+				}		
+
+			}else{
+				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+				for(i=0; i<button.length; i++){
+					$('#'+button[i].id).text(button[i].buttonTitle);
+					if(button[i].type === "HeaderButton"){
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+					}
+					else{
+						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+					}
+				}
+
+			}	
+
+
+			cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
+			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
+
+
+
+
+
+			$.getJSON('../getDropdownList/3/4', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].state).text(data[i].interp)
+					.appendTo('#filterConsignmentStatus');
+
+				}
+			});
+
+
+
+			//Tax paid status-----------dropdown
+			$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].state).text(data[i].interp)
+					.appendTo('#taxPaidStatus');
+				}
+			});
 		}
-
-		
-	if(sourceType=="viaStolen"){
-		$("#btnLink").css({display: "none"});
-		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
-		for(i=0; i<button.length; i++){
-			$('#'+button[i].id).text(button[i].buttonTitle);
-			if(button[i].type === "HeaderButton"){
-				$('#'+button[i].id).attr("href", button[i].buttonURL);
-			}
-			else{
-				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-			}
-		}
-		
-		$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedstolen' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
-		for(i=0; i<button.length; i++){
-			$('#'+button[i].id).text(button[i].buttonTitle);
-			if(button[i].type === "FooterButton"){
-				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-			}
-			else{
-				$('#'+button[i].id).attr("href", button[i].buttonURL);
-				
-			}
-		}		
-	
-	}else{
-		$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
-		for(i=0; i<button.length; i++){
-			$('#'+button[i].id).text(button[i].buttonTitle);
-			if(button[i].type === "HeaderButton"){
-				$('#'+button[i].id).attr("href", button[i].buttonURL);
-			}
-			else{
-				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-			}
-		}
-		
-	}	
-	
-		
-		cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
-		/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
-		
-		
-
-		
-		
-		$.getJSON('../getDropdownList/3/4', function(data) {
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].state).text(data[i].interp)
-				.appendTo('#filterConsignmentStatus');
-
-			}
-		});
-
-
-
-		//Tax paid status-----------dropdown
-		$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].state).text(data[i].interp)
-				.appendTo('#taxPaidStatus');
-			}
-		});
-	}
-//$("#filterBtnDiv").append();
-}); 
+//	$("#filterBtnDiv").append();
+	}); 
 };
 
 
@@ -562,14 +562,14 @@ function openDisapprovePopup(txnId)
 }
 
 function disapproveSubmit(actiontype){
-	var txnId=$('#disaproveTxnId').val();
+	var txnId=$('#setDisapproveConsignmentTxnId').val();
 	var Remark=$('#dispproveRemarks').val();
 
 	console.log("txnId==="+txnId+"  Remark  "+Remark)
 	var approveRequest={
 		"action": actiontype,
 		"txnId":txnId,
-		"remark":Remark
+		"remarks":Remark
 	}
 	console.log(JSON.stringify(approveRequest));
 	$.ajax({
@@ -580,7 +580,8 @@ function disapproveSubmit(actiontype){
 		type : 'POST',
 		success : function(data) {
 			console.log(data)
-			$('#confirmRejectConsignment').openModal();
+			setTimeout(function(){ $('#confirmRejectConsignment').openModal()}, 200);
+
 			if(data.errorCode==0){
 
 				$('#disapproveSuccessMessage').text('');
@@ -599,53 +600,53 @@ function disapproveSubmit(actiontype){
 
 
 function valuesPush(){
-	   var workOrderHeaders=[];
-	   var roleType = $("body").attr("data-roleType");
-	   var currentRoleType = $("body").attr("data-selected-roleType"); 
-	   var role = currentRoleType == null ? roleType : currentRoleType;
-	   var requestType="stolen";
-	   console.log("role++++"+role+"requestType++"+requestType);
-	   $('#consignmentLibraryTable tr td input:checkbox:checked').each(function() {
-	  
-		   var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
-			   	"userId":userId,
-			   	"sourceType":'consignment',
-			   	"roleType":role,
-			   	"requestType":requestType
-			   	};
-	   
-		   workOrderHeaders.push(json);
-	   });
-	   console.log(workOrderHeaders)
-	   return workOrderHeaders;
-	   }
+	var selectedMultipleConsignment=[];
+	var roleType = $("body").attr("data-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var role = currentRoleType == null ? roleType : currentRoleType;
+	var requestType="stolen";
+	console.log("role++++"+role+"requestType++"+requestType);
+	$('#consignmentLibraryTable tr td input:checkbox:checked').each(function() {
+
+		var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
+				"userId":userId,
+				"sourceType":'consignment',
+				"roleType":role,
+				"requestType":requestType
+		};
+
+		selectedMultipleConsignment.push(json);
+	});
+	console.log(selectedMultipleConsignment)
+	return selectedMultipleConsignment;
+}
 
 
 
 function markedstolen(){
 	$('#markAsMultipleStolen').openModal();
-	 
-	}
+
+}
 
 function openMulipleStolenPopUp()
 {
-	   
-	   var stolenRecoverydata=JSON.stringify(valuesPush());
-	   console.log("release-------"+stolenRecoverydata);
-	   $.ajax({
-				url: '../multipleStolenRecovery',
-				type: 'POST',
-				data: stolenRecoverydata,
-				dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			success: function (data, textStatus, jqXHR) {
-					
-					 console.log(data);
-					 $('#markAsStolenDone').openModal();
-					/*  $('#editStockModal').closeModal();
+
+	var stolenRecoverydata=JSON.stringify(valuesPush());
+	console.log("release-------"+stolenRecoverydata);
+	$.ajax({
+		url: '../multipleStolenRecovery',
+		type: 'POST',
+		data: stolenRecoverydata,
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		success: function (data, textStatus, jqXHR) {
+
+			console.log(data);
+			$('#markAsStolenDone').openModal();
+			/*  $('#editStockModal').closeModal();
 					 $('#successUpdateStockModal').modal();
 					  if(data.errorCode==200){
-					
+
 					$('#stockSucessMessage').text('');
 					 $('#stockSucessMessage').text('Operation is not allowed');
 						 }
@@ -653,34 +654,34 @@ function openMulipleStolenPopUp()
 						 $('#stockSucessMessage').text('');
 		 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 					 } */
-				   // $('#updateConsignment').modal('open'); 
-					//alert("success");
-					
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
-				}
-			});
-	   
+			// $('#updateConsignment').modal('open'); 
+			//alert("success");
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
+
 }
 function redirectToViewPage()
 {
 
-	 var roleType = $("body").attr("data-roleType");
-	 var userId = $("body").attr("data-userID");
-	 var currentRoleType = $("body").attr("data-selected-roleType"); 
-	 var role = currentRoleType == null ? roleType : currentRoleType;
-	 console.log(" userId="+userId+" role="+role);
-	console.log("./assignDistributor?userTypeId="+role);
-	 window.location.href = "../stolenRecovery?userTypeId="+role;
-	 /*  $.ajax({
+	var roleType = $("body").attr("data-roleType");
+	var userId = $("body").attr("data-userID");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var role = currentRoleType == null ? roleType : currentRoleType;
+	console.log(" userId="+userId+" role="+role);
+	console.log("./stolenRecovery?userTypeId="+role);
+	window.location.href = "../stolenRecovery?userTypeId="+role;
+	/*  $.ajax({
 	url : "./assignDistributor?userTypeId="+role,
 	dataType : 'json',
 	contentType : 'application/json; charset=utf-8',
 	type : 'GET',
 	success : function(data) {
 		console.log(data)
-		
+
 	},
 	error : function() {
 		alert("Failed");

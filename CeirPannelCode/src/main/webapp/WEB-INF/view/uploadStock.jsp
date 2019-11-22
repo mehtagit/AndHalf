@@ -186,7 +186,7 @@ opacity: 0;
                                                     <input class="file-path validate responsive-file-div" type="text">
                                                 </div>
                                             </div><br><br>
-                                            <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
+                                            <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a></p>
                                         </div>
 
                                         <span> Required Field are marked with </span><span class="star">*</span>
@@ -224,7 +224,7 @@ opacity: 0;
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./assignDistributor" class="btn">yes</a>
+                        <a onclick="redirectToViewPage()" class="btn">yes</a>
                         <button class="modal-close waves-effect waves-light btn" style="margin-left: 10px;">no</button>
                     </div>
                 </div>

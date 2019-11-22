@@ -17,7 +17,7 @@ public class IconsState {
 	String viewIcon="\"fa fa-eye teal-text view-icon\"";
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
-	String replyIcon="\"fa-reply\""; 
+	String replyIcon="\"fa fa-reply\""; 
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
 	String rejectIcon = "\"fa fa-user-times reject-icon\"";
 	
@@ -37,7 +37,7 @@ public class IconsState {
 	String disableViewIcon="\"fa fa-eye view-icon disable\"";
 	String disableEditIcon="\"fa fa-pencil edit-icon disable\""; 
 	String disableDeletionIcon="\"fa fa-trash delete-icon disable\"";
-	String disableReplyIcon="\"fa-reply\""; 
+	String disableReplyIcon="\"fa fa-reply reply-icon disable\""; 
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableAejectIcon = "\"fa fa-user-times reject-icon disable\"";
 	
@@ -155,7 +155,19 @@ public class IconsState {
 			  +errorIconTitle+"  ></i></a>"; 
 			  }
 			  
-			  else if(("1".equals(status) || "3".equals(status)) && "Approved".equals(userStatus)) {
+		else if(("1".equals(status))  && "Approved".equals(userStatus)) {
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					  +disableErrorIcon+" aria-hidden=\"true\" title="
+					  +errorIconTitle+"  ></i></a>"; 
+			 edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+						+disableEditIcon+" aria-hidden=\"true\" title="
+						+editIconTitle+"></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>";
+			}
+			  
+			  else if("3".equals(status) && "Approved".equals(userStatus)) {
 				  error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 						  +disableErrorIcon+" aria-hidden=\"true\" title="
 						  +errorIconTitle+"  ></i></a>"; 
@@ -192,7 +204,7 @@ public String stolenState(String fileName,String txnId ,String status,String use
 	String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";	
 	String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 	String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"')";
-	String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
+	String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 
 	// state related Code 
@@ -207,7 +219,7 @@ public String stolenState(String fileName,String txnId ,String status,String use
 	+deleteIconTitle+"></i></a>"; 
 
 
-	 if("0".equals(status) || "1".equals(status) || "2".equals(status) && "Approved".equals(userStatus) ) {
+	 if("0".equals(status) || "2".equals(status) && "Approved".equals(userStatus) ) {
 		 error="<a href="+errorURL+" class="+disableIconClass+"><i class="
 				 +disableErrorIcon+" aria-hidden=\"true\" title="
 				 +errorIconTitle+"  ></i></a>"; 
@@ -215,8 +227,19 @@ public String stolenState(String fileName,String txnId ,String status,String use
 				 +disableEditIcon+" aria-hidden=\"true\"  title="
 				 +editIconTitle+"></i></a>";
 	}
+	 else if( "1".equals(status) && "Approved".equals(userStatus)) {
+		 error="<a href="+errorURL+" class="+disableIconClass+"><i class="
+				 +disableErrorIcon+" aria-hidden=\"true\" title="
+				 +errorIconTitle+"  ></i></a>"; 
+		 edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+				 +disableEditIcon+" aria-hidden=\"true\"  title="
+				 +editIconTitle+"></i></a>"; 
+		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+				 +disableDeletionIcon+" aria-hidden=\"true\"  title="
+				 +deleteIconTitle+"></i></a>"; 
+	 }
 	 
-	 if("2".equals(status) && "Approved".equals(userStatus) ) {
+	 else  if("2".equals(status) && "Approved".equals(userStatus) ) {
 		 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 				 +disableDeletionIcon+" aria-hidden=\"true\"  title="
 				 +deleteIconTitle+"></i></a>"; 
@@ -296,8 +319,10 @@ public String adminState(String fileName,String txnId ,String status,String user
 // URL link 
 String emptyURL="JavaScript:void(0);"; 
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = null;
-String rejectAction = null;
+
+String approveAction = "openApprovePopUp('"+txnId+"')";
+String rejectAction = "openDisapprovePopup('"+txnId+"')";
+
 String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
 
 
@@ -313,7 +338,7 @@ String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hid
 		+approveIconTitle+" ></i></a>";   
 
 
-String reject = "<a onclick="+rejectIcon+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 
 String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
@@ -352,6 +377,40 @@ else if("Disable".equals(userStatus)) {
 
 String action=view.concat(approve).concat(reject).concat(delete);	
 return action;
+}
+
+/********************************** Icons for Grievance **********************************/ 
+
+public String grievanceState(String fileName,String txnId ,String status,String userStatus) {
+	
+	String replyAction = null;
+	String viewAction = null;
+		
+
+	// state related Code 
+	String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			+replyIconTitle+" ></i></a>";
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	
+	
+
+	//Disable reply
+	if( "0".equals(status) || "1".equals(status) || "3".equals(status)) {
+		reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		
+	}
+	else if("Disable".equals(userStatus)) {
+		 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+		
+	}
+
+
+	String action=reply.concat(view);
+	return action;
 }
 
 }

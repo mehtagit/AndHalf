@@ -132,8 +132,8 @@ public class ConsignmentDatatableController {
 						statusOfConsignment.equals("2")  ? "Rejected By System" :
 							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
 								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
-									statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
-										statusOfConsignment.equals("6") ?   "Approved" : 
+									statusOfConsignment.equals("5") ?   "Verification By Customs" :
+										statusOfConsignment.equals("6") ?   "Verified and Regularized by Customs" : 
 											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
 												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
 				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
@@ -158,7 +158,7 @@ public class ConsignmentDatatableController {
 				String companyName = userprofileModel.getCompanyName();		
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatus = null;
-				consignmentStatus = statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" : "Not Listed";
+				consignmentStatus = statusOfConsignment.equals("5") ?   " Verification By Customs " : "Not Listed";
 				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
@@ -181,8 +181,8 @@ public class ConsignmentDatatableController {
 				consignmentStatus = statusOfConsignment.equals("2")  ? "Rejected By System" :
 							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
 								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
-									statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
-										statusOfConsignment.equals("6") ?   "Approved" : 
+									statusOfConsignment.equals("5") ?   "Verification By Customs" :
+										statusOfConsignment.equals("6") ?   " Verified and Regularized by Customs" : 
 											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
 												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : 
 														statusOfConsignment.equals("9") ?   "Withdrawn by CEIR" : "Not Listed";
@@ -284,7 +284,7 @@ public class ConsignmentDatatableController {
 				}
 				pageElement.setDropdownList(dropdownList);
 				
-				//input type date list		
+				//input type date list		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqq11111111111111111111111111111111111111111111111111111
 				String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
 				for(int i=0; i< dateParam.length; i++) {
 					dateRelatedFields= new InputFields();

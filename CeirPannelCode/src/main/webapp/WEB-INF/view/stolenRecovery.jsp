@@ -56,7 +56,7 @@
 
 </head>
 
-<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">
+<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${stolenselectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -89,6 +89,7 @@
 
 					</div>
 				</div>
+				<div id="footerBtn"></div>
 			</div>
 		</div>
 		<!--end container-->
@@ -205,6 +206,7 @@
 					Are you sure you want to withdraw the consignment details for (<span
 						id="transID"></span>)
 				</h6>
+				<span id="setStolenRecoveyRowId" style="display: none;"></span>
 			</div>
 		<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
@@ -467,7 +469,7 @@
                         <form action="#">
                             <h5 class="center">
                             <c:choose>
-                            <c:when test="${selectedUserTypeId=='Importer'}">
+                            <c:when test="${stolenselectedUserTypeId=='Importer'}">
                                 <label>
                                     <input name="group1" class="chooseconsignment" type="radio" onclick="pickConsignment()" />
                                     <span class="checkboxFont"> Choose from consignment</span>
@@ -510,7 +512,7 @@
                             <h5 class="center">
                                 <label>
                                     <input name="group1" type="radio"
-                                        onclick="location.href = 'markAsRecovery.html';" />
+                                        onclick="pickExistingRecovery();" />
                                     <span class="checkboxFont"> Choose from existing</span>
                                 </label>
 
@@ -556,7 +558,7 @@
                     <input type="text" name="" class="form-control boxBorder boxHeight" readonly id="SavedFileName" />
                 </div>
             </div>
-            <a href="#" style="margin-left: 10px;">Download Sample Format</a><br><br>
+            <a href="./Consignment/sampleFileDownload/filetype=sample" style="margin-left: 10px;">Download Sample Format</a><br><br>
 
             <div class="row" id="samplefileDiv3" style="display: none;margin-left:05px;">
                 <div style="display: inline-flex">
@@ -642,7 +644,7 @@
                     <input type="text" name="" class="form-control boxBorder boxHeight" readonly id="SavedFileName" />
                 </div>
             </div>
-            <a href="#" style="margin-left: 10px;">Download Sample Format</a><br><br>
+            <a href="./Consignment/sampleFileDownload/filetype=sample" style="margin-left: 10px;">Download Sample Format</a><br><br>
 
             <div class="row" id="samplefileDiv3" style="display: none;margin-left:05px;">
                 <div style="display: inline-flex">
@@ -725,7 +727,7 @@
                                 id="SavedFileName" />
                         </div>
                     </div>
-                    <a href="#" style="margin-left: 10px;">Download Sample Format</a><br><br>
+                    <a href="./Consignment/sampleFileDownload/filetype=sample" style="margin-left: 10px;">Download Sample Format</a><br><br>
 
                     <div class="row" id="samplefileDiv12" style="display: none;margin-left:05px;">
                         <div style="display: inline-flex">
@@ -775,7 +777,7 @@
                                 id="SavedFileName" />
                         </div>
                     </div>
-                    <a href="#" style="margin-left: 10px;">Download Sample Format</a><br><br>
+                    <a href="./Consignment/sampleFileDownload/filetype=sample" style="margin-left: 10px;">Download Sample Format</a><br><br>
 
                     <div class="row" id="samplefileDiv12" style="display: none;margin-left:05px;">
                         <div style="display: inline-flex">
@@ -809,6 +811,39 @@
             <div class="row">
                 <div class="input-field col s12 center">
                     <a  onclick="redirectToViewStolenPage()" class="modal-close btn" style="margin-left: 10px;">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    	   <div id="markAsMultipleRecovery" class="modal">
+        <div class="modal-content">
+
+            <h6>Mark As Recover</h6>
+            <hr>
+
+            <div class="row">
+                <h6>Do you want to recover the devices for the following transaction ID ?</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="openMulipleStolenPopUp()" class="modal-close modal-trigger btn">Yes</a>
+                    <button class="modal-close btn" style="margin-left: 10px;">no</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div id="markAsRecoveryDone" class="modal">
+        <div class="modal-content">
+            <h6>Mark As Recover</h6>
+            <hr>
+            <div class="row">
+                <h6>The following Transaction ID (Tr12345678) devices marked as recovered..
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
+                    <a onclick="redirectToViewStolenPage()" class="btn">ok</a>
                 </div>
             </div>
         </div>

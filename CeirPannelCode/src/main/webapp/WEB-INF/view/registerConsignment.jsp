@@ -169,7 +169,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                                 <input class="file-path validate responsive-file-div" type="text">
                                             </div>
                                         </div><br><br>
-                                        <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p>
+                                        <p style="margin-left: 15px;"><a href="./sampleFileDownload/filetype=sample">Download Sample Format</a></p>
                                     </div>
                                    
 
