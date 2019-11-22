@@ -17,7 +17,7 @@ public class IconsState {
 	String viewIcon="\"fa fa-eye teal-text view-icon\"";
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
-	String replyIcon="\"fa-reply\""; 
+	String replyIcon="\"fa fa-reply\""; 
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
 	String rejectIcon = "\"fa fa-user-times reject-icon\"";
 	
@@ -37,7 +37,7 @@ public class IconsState {
 	String disableViewIcon="\"fa fa-eye view-icon disable\"";
 	String disableEditIcon="\"fa fa-pencil edit-icon disable\""; 
 	String disableDeletionIcon="\"fa fa-trash delete-icon disable\"";
-	String disableReplyIcon="\"fa-reply\""; 
+	String disableReplyIcon="\"fa fa-reply disable\""; 
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableAejectIcon = "\"fa fa-user-times reject-icon disable\"";
 	
@@ -352,6 +352,40 @@ else if("Disable".equals(userStatus)) {
 
 String action=view.concat(approve).concat(reject).concat(delete);	
 return action;
+}
+
+/********************************** Icons for Grievance **********************************/ 
+
+public String grievanceState(String fileName,String txnId ,String status,String userStatus) {
+	
+	String replyAction = null;
+	String viewAction = null;
+		
+
+	// state related Code 
+	String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			+replyIconTitle+" ></i></a>";
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	
+	
+
+	//Disable reply
+	if( "0".equals(status) || "1".equals(status) || "3".equals(status)  && "Approved".equals(userStatus) ) {
+		reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		
+	}
+	else if("Disable".equals(userStatus)) {
+		 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+		
+	}
+
+
+	String action=reply.concat(view);
+	return action;
 }
 
 }

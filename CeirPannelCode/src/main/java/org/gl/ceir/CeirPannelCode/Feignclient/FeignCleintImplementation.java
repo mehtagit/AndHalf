@@ -177,8 +177,14 @@ public interface FeignCleintImplementation {
 		public GenricResponse updateFileStolen(@RequestBody StolenRecoveryModel request) ;
 
 
+		//View filter grievance  feign  controller
+		@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
+		public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
+				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 
-
+		
+		
 }
 
 

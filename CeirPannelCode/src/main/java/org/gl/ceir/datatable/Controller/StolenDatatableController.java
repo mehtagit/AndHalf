@@ -146,7 +146,7 @@ public class StolenDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 
-		pageElement.setPageTitle("Stolen Recovery");
+		pageElement.setPageTitle("Stolen/Recovery");
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -187,7 +187,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 		
 //Dropdown items	
-		String[] selectParam = { "select", "Consignment Status", "filterConsignmentStatus", "", "select",
+		String[] selectParam = { "select", "Stock Status", "filterConsignmentStatus", "", "select",
 				"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
 		for (int i = 0; i < selectParam.length; i++) {
 			inputFields = new InputFields();

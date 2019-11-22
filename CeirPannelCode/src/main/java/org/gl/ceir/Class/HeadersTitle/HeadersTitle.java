@@ -14,6 +14,7 @@ public class HeadersTitle {
 	public static final String stockStatus ="Stock Status";
 	
 	//Stolen
+	public static final String requestDate = "Request Date";
 	public static final String Status = "Status";
 	public static final String source = "Source";
 	public static final String requestType = "Request Type";
@@ -26,4 +27,13 @@ public class HeadersTitle {
 	
 	//pick consignments from stolen
 	public static final String blankHeader = "";
+	
+	//Grievance
+	public static final String raisedDate = "Raised Date";
+	public static final String lastUpdateDate = "Last Update Date";
+	public static final String grievanceId = "Grievance ID";
+	public static final String recentStatus = "Recent Status";
+	
+		
+	
 }

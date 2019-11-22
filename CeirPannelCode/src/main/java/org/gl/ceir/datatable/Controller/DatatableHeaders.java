@@ -36,7 +36,7 @@ if("consignment".equals(role)) {
 
 //STOLEN DATATABLE HEADERS
 else if("stolen".equals(role)) {
-	String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType,HeadersTitle.action };		
+	String[] headers = {HeadersTitle.requestDate,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType,HeadersTitle.action };		
 	for(String header : headers) {
 		dataTableInputs.add(new DatatableHeaderModel(header));
 	}
@@ -84,7 +84,16 @@ else if("stockcheckHeaders".equals(role)) {
 
 //stolen headers
 else if("stolenCheckHeaders".equals(role)) {
-	String[] headers = {HeadersTitle.blankHeader,HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType};		
+	String[] headers = {HeadersTitle.blankHeader,HeadersTitle.requestDate,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType};		
+	for(String header : headers) {
+		dataTableInputs.add(new DatatableHeaderModel(header));
+	}
+	return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+}
+
+//Grievance Headers
+else if("grievanceHeaders".equals(role)) {
+	String[] headers = {HeadersTitle.raisedDate,HeadersTitle.lastUpdateDate,HeadersTitle.transactionID,HeadersTitle.grievanceId,HeadersTitle.recentStatus,HeadersTitle.action};		
 	for(String header : headers) {
 		dataTableInputs.add(new DatatableHeaderModel(header));
 	}
