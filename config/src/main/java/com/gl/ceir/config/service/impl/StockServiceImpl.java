@@ -17,6 +17,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.User;
@@ -237,6 +238,18 @@ public class StockServiceImpl {
 			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
+	
+	public RequestCountAndQuantity getStockCountAndQuantity( long userId, Integer stockStatus) {
+		try {
+			logger.info("Going to get  stock count and quantity.");
+			return distributerManagementRepository.getStockCountAndQuantity(userId, stockStatus);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+	
 }
 
 

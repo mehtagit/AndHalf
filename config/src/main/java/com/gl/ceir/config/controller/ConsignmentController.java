@@ -19,6 +19,7 @@ import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.service.impl.ConsignmentServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
@@ -210,6 +211,12 @@ public class ConsignmentController {
 	}
 
 
+	@ApiOperation(value = "Get total count and quantity.", response = RequestCountAndQuantity.class)
+	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.GET)
+	public MappingJacksonValue getConsignmentCountAndQuantity(Integer userId, Integer consignmentStatus) {
+		RequestCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(userId, consignmentStatus);
+		return new MappingJacksonValue(response);
+	}
 
 
 

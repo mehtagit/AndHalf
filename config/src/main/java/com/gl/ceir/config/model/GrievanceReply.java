@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model;
 
 public class GrievanceReply {
-	private Long grievanceId;
+	private String grievanceId;
 	private Integer userId ;
 	private String userType;
 	private Integer grievanceStatus;
@@ -9,10 +9,10 @@ public class GrievanceReply {
 	private int categoryId;
 	private String fileName;
 	private String reply;
-	public Long getGrievanceId() {
+	public String getGrievanceId() {
 		return grievanceId;
 	}
-	public void setGrievanceId(Long grievanceId) {
+	public void setGrievanceId(String grievanceId) {
 		this.grievanceId = grievanceId;
 	}
 	public Integer getUserId() {

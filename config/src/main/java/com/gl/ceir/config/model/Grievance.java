@@ -25,9 +25,9 @@ query = "select g from Grievance g where g.grievanceId = ?1")
 public class Grievance {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="grievance_id")
-	private Long grievanceId;
+	private String grievanceId;
 	
 	@Column(name="user_id")
 	private Integer userId ;
@@ -60,11 +60,11 @@ public class Grievance {
 	@JoinColumn(name="user_id",insertable = false, updatable = false)
 	private User user;
 	
-	public Long getGrievanceId() {
+	public String getGrievanceId() {
 		return grievanceId;
 	}
 
-	public void setGrievanceId(Long grievanceId) {
+	public void setGrievanceId(String grievanceId) {
 		this.grievanceId = grievanceId;
 	}
 

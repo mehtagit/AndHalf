@@ -18,6 +18,7 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.model.SingleImeiHistoryDb;
@@ -313,14 +314,16 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
-
-
-
 	}
 
-
-
-
+	public RequestCountAndQuantity getStolenAndRecoveryCount( long userId, Integer fileStatus, String requestType) {
+		try {
+			logger.info("Going to get StolenAndRecovery count.");
+			return stolenAndRecoveryRepository.getStolenandRecoveryCount(userId, fileStatus, requestType);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 }

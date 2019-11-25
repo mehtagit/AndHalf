@@ -18,6 +18,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.GrievanceMsg;
 import com.gl.ceir.config.model.GrievanceReply;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.model.GrievanceHistory;
@@ -110,7 +111,7 @@ public class GrievanceController {
 	/**This api will give all open grievances**/
 	@ApiOperation(value = "View all the list of grievance messages", response = Grievance.class)
 	@RequestMapping(path = "/grievance/msg", method = {RequestMethod.GET})
-	public MappingJacksonValue getGrievanceMessagesByGrievanceId(@RequestParam("userId") Integer userId,@RequestParam("grievanceId") Long grievanceId) {
+	public MappingJacksonValue getGrievanceMessagesByGrievanceId(@RequestParam("userId") Integer userId,@RequestParam("grievanceId") String grievanceId) {
 		logger.info("Request to view all messages of grievance="+userId+" and Grievance Id:["+grievanceId+"]");
 		List<GrievanceMsg>  msgs =  grievanceServiceImpl.getAllGrievanceMessagesByGrievanceId(grievanceId);
 		MappingJacksonValue response = new MappingJacksonValue(msgs);
@@ -129,6 +130,13 @@ public class GrievanceController {
 		MappingJacksonValue mapping = new MappingJacksonValue(grievance);
 		logger.info("Response of view filtered grievance history ="+mapping);
 		return mapping;
+	}
+	
+	@ApiOperation(value = "Get total count.", response = RequestCountAndQuantity.class)
+	@RequestMapping(path = "/grievance/count", method = RequestMethod.GET)
+	public MappingJacksonValue getgrievanceCount(Integer userId, Integer grievanceStatus) {
+		RequestCountAndQuantity response = grievanceServiceImpl.getGrievanceCount(userId, grievanceStatus);
+		return new MappingJacksonValue(response);
 	}
 	
 }

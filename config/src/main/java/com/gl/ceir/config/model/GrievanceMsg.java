@@ -24,7 +24,7 @@ public class GrievanceMsg {
 	private Long id;
 	
 	@Column(name="grievance_id")
-	private Long grievanceId;
+	private String grievanceId;
 	
 	@Column(name="user_id")
 	private Integer userId ;
@@ -55,11 +55,11 @@ public class GrievanceMsg {
 		this.id = id;
 	}
 
-	public Long getGrievanceId() {
+	public String getGrievanceId() {
 		return grievanceId;
 	}
 
-	public void setGrievanceId(Long grievanceId) {
+	public void setGrievanceId(String grievanceId) {
 		this.grievanceId = grievanceId;
 	}
 

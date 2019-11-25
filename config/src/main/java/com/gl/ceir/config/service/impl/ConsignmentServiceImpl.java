@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.dialect.Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.UserProfile;
@@ -398,12 +400,13 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-
-
-
-
-
-
-
-
+	public RequestCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer consignmentStatus) {
+		try {
+			logger.info("Going to get  Cosignment count and quantity.");
+			return consignmentRepository.getConsignmentCountAndQuantity(userId, consignmentStatus);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 }

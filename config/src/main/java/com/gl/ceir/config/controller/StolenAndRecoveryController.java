@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
@@ -207,6 +208,12 @@ public class StolenAndRecoveryController {
 
 	}
 
+	@ApiOperation(value = "Get total count.", response = RequestCountAndQuantity.class)
+	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.GET)
+	public MappingJacksonValue getStolenAndRecoveryCount(long userId, Integer fileStatus, String requestType) {
+		RequestCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount(userId, fileStatus, requestType);
+		return new MappingJacksonValue(response);
+	}
 
 
 
