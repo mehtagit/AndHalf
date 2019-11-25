@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GrievanceContentModel {
-	private Integer grievanceId;
+	private String grievanceId;
 	private Integer userId;
 	private String userType;
 	private Integer grievanceStatus;
@@ -19,12 +19,18 @@ public class GrievanceContentModel {
 	private String remarks;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-	public Integer getGrievanceId() {
-	return grievanceId;
+	
+
+	public String getGrievanceId() {
+		return grievanceId;
 	}
 
-	public void setGrievanceId(Integer grievanceId) {
-	this.grievanceId = grievanceId;
+	public void setGrievanceId(String grievanceId) {
+		this.grievanceId = grievanceId;
+	}
+
+	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+		this.additionalProperties = additionalProperties;
 	}
 
 	public Integer getUserId() {
@@ -107,4 +113,14 @@ public class GrievanceContentModel {
 	this.additionalProperties.put(name, value);
 	
 	}
+
+	@Override
+	public String toString() {
+		return "GrievanceContentModel [grievanceId=" + grievanceId + ", userId=" + userId + ", userType=" + userType
+				+ ", grievanceStatus=" + grievanceStatus + ", txnId=" + txnId + ", categoryId=" + categoryId
+				+ ", fileName=" + fileName + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", remarks="
+				+ remarks + ", additionalProperties=" + additionalProperties + "]";
+	}
+	
+	
 }

@@ -41,6 +41,8 @@ public class IconsState {
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableAejectIcon = "\"fa fa-user-times reject-icon disable\"";
 	
+	
+	
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
@@ -351,7 +353,7 @@ if( "5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals
 }
 //Disable reject
 else if("4".equals(status) ||"5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status) || "9".equals(status)  && "Approved".equals(userStatus) ) {
-	reject = "<a onclick="+rejectIcon+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
+	reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
 			+rejectIconTitle+" ></i></a>";
 }
 
@@ -367,7 +369,7 @@ else if("Disable".equals(userStatus)) {
 	 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 	 approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";
-	 reject = "<a onclick="+rejectIcon+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
+	 reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 	 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
 			 +disableDeletionIcon+" aria-hidden=\"true\"  title="
@@ -381,9 +383,8 @@ return action;
 
 /********************************** Icons for Grievance **********************************/ 
 
-public String grievanceState(String fileName,String txnId ,String status,String userStatus) {
-	
-	String replyAction = null;
+public String grievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+	String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 	String viewAction = null;
 		
 

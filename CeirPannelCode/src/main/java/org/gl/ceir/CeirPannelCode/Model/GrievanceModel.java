@@ -12,6 +12,7 @@ public class GrievanceModel {
 	private String remarks;
 	private String txnId;
 	private String userType;
+	private String reply;
 	public int getId() {
 		return id;
 	}
@@ -78,12 +79,18 @@ public class GrievanceModel {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	public String getReply() {
+		return reply;
+	}
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
 	@Override
 	public String toString() {
 		return "GrievanceModel [id=" + id + ", categoryId=" + categoryId + ", grievanceStatus=" + grievanceStatus
 				+ ", userId=" + userId + ", fileName=" + fileName + ", grievanceId=" + grievanceId + ", modifiedOn="
 				+ modifiedOn + ", createdOn=" + createdOn + ", remarks=" + remarks + ", txnId=" + txnId + ", userType="
-				+ userType + "]";
+				+ userType + ", reply=" + reply + "]";
 	}
 
 	

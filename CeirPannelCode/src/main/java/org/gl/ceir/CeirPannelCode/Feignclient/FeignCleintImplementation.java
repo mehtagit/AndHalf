@@ -192,6 +192,17 @@ public interface FeignCleintImplementation {
 		@RequestMapping(value="/grievance/save" ,method=RequestMethod.POST) 
 		public GenricResponse saveGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
 		
+		
+
+		// ******************************************** view 	grievance api ********************************************************************************
+				@RequestMapping(value="/grievance/msg" ,method=RequestMethod.GET) 
+				public GrievanceModel viewGrievance(@PathVariable("grievanceId") String  grievanceId,@PathVariable("userId") Integer userId) ;
+				
+				// ******************************************** save 	grievance api ********************************************************************************
+				@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 
+				public GenricResponse saveGrievanceMessage(@RequestBody GrievanceModel greGrievanceModel) ;
+						
+
 }
 
 

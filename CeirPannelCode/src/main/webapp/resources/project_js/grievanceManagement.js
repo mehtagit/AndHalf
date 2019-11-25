@@ -14,7 +14,7 @@ var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
 
 var filterRequest={
-		"consignmentStatus":consignmentStatus,
+		
 		"endDate":startdate,
 		"startDate":endDate,
 		"taxPaidStatus":taxStatus,
@@ -201,12 +201,140 @@ $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
 });
 
-populateCountries
-(   
-		"country"
-);
 
 
 
 
+function saveGrievance(){
+	
+	
+	 var category=$('#category').val();
+	 var txnId=$('#TransactionId').val();
+	 var remark=$('#Remark').val();
+	 var file=$('#myInput').val();
+	 
+	 console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
+	 var formData= new FormData();
+		formData.append('file', $('#myInput')[0].files[0]);
+	 	 formData.append('txnId',txnId);
+	 	formData.append('categoryId',category);
+	 	formData.append('remarks',remark);
+	 
+	 $.ajax({
+		url: './saveGrievance',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			
+			 console.log(data);
+			  $('#submitGrievance').openModal();
+			  if(data.errorCode=="0")
+				 {
+			 $('#greivanceId').text(data.txnId);
+			
+				 }
+			 else if(data.errorCode=="3")
+				 {
+				console.log("status code = 3"); 
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text("Grievnace number already exist");
+				 $('#errorCode').val(data.errorCode);
+				 }
+		   // $('#updateConsignment').modal('open'); 
+			//alert("success");
+			
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+		console.log("error in ajax")
+		}
+	});
+	
+	 return false;
+	 
+}
 
+function grievanceReply(userId,grievaneId,txnId)
+{
+	  $('#replyModal').openModal();
+	  console.log("************");
+	  $('#grievanceIdToSave').text(grievaneId);
+	  $('#grievanceTxnId').text(txnId);
+	 /*$.ajax({
+		url: './viewGrievance',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			
+			 console.log(data);
+			  $('#submitGrievance').openModal();
+			  if(data.errorCode=="0")
+				 {
+			 $('#greivanceId').text(data.txnId);
+			
+				 }
+			 else if(data.errorCode=="3")
+				 {
+				console.log("status code = 3"); 
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text("Grievnace number already exist");
+				 $('#errorCode').val(data.errorCode);
+				 }
+		   // $('#updateConsignment').modal('open'); 
+			//alert("success");
+			
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+		console.log("error in ajax")
+		}
+	});*/
+}
+
+function saveGrievanceReply()
+{
+	 var remark=$('#replyRemark').val();
+	 var replyFile=$('#replyFile').val();
+	var  grievanceIdToSave= $('#grievanceIdToSave').text();
+	var  grievanceTxnId=  $('#grievanceTxnId').text();
+	
+	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+" grievanceIdToSave="+grievanceIdToSave);
+	 var formData= new FormData();
+		 formData.append('file', $('#replyFile')[0].files[0]);
+	 	 formData.append('remark',remark);
+	 	 formData.append('grievanceId',grievanceIdToSave);
+	 	 formData.append('txnId',grievanceTxnId);
+	 	 
+	 	 $.ajax({
+	 		url: './saveGrievanceMessage',
+	 		type: 'POST',
+	 		data: formData,
+	 		processData: false,
+	 		contentType: false,
+	 		success: function (data, textStatus, jqXHR) {
+	 			
+	 			 console.log(data);
+	 			  $('#replyMsg').openModal();
+	 			  if(data.errorCode=="0")
+	 				 {
+	 				 $('#showReplyResponse').text('');
+	 			     $('#showReplyResponse').text(data.message);
+	 			
+	 				 }
+	 			 else if(data.errorCode=="3")
+	 				 {
+	 				 console.log("status code = 3"); 
+	 				 $('#showReplyResponse').text('');
+	 			     $('#showReplyResponse').text(data.message);
+	 				 }
+	 		   // $('#updateConsignment').modal('open'); 
+	 			//alert("success");
+	 			
+	 		},
+	 		error: function (jqXHR, textStatus, errorThrown) {
+	 		console.log("error in ajax")
+	 		}
+	 	});
+}

@@ -95,515 +95,66 @@
 		</div>
 		<!--end container-->
 	</section>
-
-	<!--viewModal Modal start   -->
-
-	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
-		<div class="modal-content">
-
-			<h6>View Consignment</h6>
-			<hr>
-
-
-			<div class="row myRow">
-				<div class="input-field col s12 m6">
-					<input type="text" name="name" id="supplierId"
-						placeholder="Supplier/Manufacturer ID" readonly="readonly" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="name" id="supplierName"
-						placeholder="Supplier/Manufacturer Name" readonly="readonly" />
-					<label for="Name" class="center-align">Supplier/Manufacturer
-						Name</label>
-				</div>
-				<div class="input-field col s12 m6">
-					<input type="text" name="name" id="consignmentNumber"
-						placeholder="Consignment Number" readonly="readonly" /> <label
-						for="Name" class="center-align">Consignment Number</label>
-				</div>
-
-				<div class="input-field col s12 m6" style="color: #c4c4c4;">
-					<p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
-						Arival Date</p>
-					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-					<input type="date" id="expectedArrivaldate"
-						placeholder="Expected Arival Date" readonly="readonly"> <span
-						class="input-group-addon" style="color: #ff4081"><i
-						class="fa fa-calendar" aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<input type="text" id="countryview" class="browser-default"
-						readonly="readonly" class="mySelect"
-						placeholder="Device Origination Counrty*"> <label
-						for="Name" class="center-align"> Origination Country</label> <label
-						for="countryview" class="center-align"></label>
-				</div>
-
-
-				<div class="input-field col s12 m6">
-					<p class="input-text-date" style="color: #c4c4c4;">Expected
-						Dispatch Date</p>
-					<!-- <label for="Name">Expected arrival Date</label> -->
-					<input type="date" id="expectedDispatcheDate"
-						placeholder="Expected Dispatch Date" readonly="readonly">
-					<span class="input-group-addon" style="color: #ff4081"><i
-						class="fa fa-calendar" aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
-					<input type="text" id="expectedArrivalPort" readonly="readonly"
-						placeholder="Arrival port"> <label for="Name"
-						class="center-align">Expected Arrival Port</label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="Quantity" placeholder="Quantity"
-						id="Quantity" readonly="readonly" /> <label for="Quantity"
-						class="center-align">Quantity</label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="TransactionId"
-						placeholder="Transaction ID" id="TransactionId"
-						readonly="readonly" maxlength="15" /> <label for="TransactionId"
-						class="center-align">Transaction ID</label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<textarea id="remark" class="materialize-textarea"
-						style="height: 0px;" readonly="readonly"></textarea>
-					<label for="remark" class="">Remarks</label>
-
-					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
-                                               <label for="TransactionId" class="center-align">Remark</label> -->
-				</div>
-			</div>
-
-			<div class="row" style="padding: 20px 0 100px 0;">
-				<div class="input-field col s12 center">
-					<button class="btn" onclick="closeViewModal()"
-						class="modal-close btn" id="add_user">Cancel</button>
-				</div>
-			</div>
-
-
-		</div>
-	</div>
-	<!-- Modal End -->
-
-
-	<!--Delete Modal start   -->
-
-	<div id="DeleteConsignment" class="modal">
-		<div class="modal-content">
-
-			<h6>Delete Consignment</h6>
-			<hr>
-
-			<div class="row">
-				<h6>
-					Are you sure you want to withdraw the consignment details for (<span
-						id="transID"></span>)
-				</h6>
-			</div>
-
-			<div class="row">
-				<div class="input-field col s12 m12">
-					<textarea id="textarea1" class="materialize-textarea"></textarea>
-					<label for="textarea1">Remarks</label>
-				</div>
-			</div>
-			<input type="text" id="popupTransactionId" maxlength="15" hidden />
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a class="btn" onclick="confirmantiondelete()">ok</a>
-						<button class="modal-close btn" onclick="closeUpdateModal()"
-							style="margin-left: 10px;">No</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-	<!-- END CONTENT -->
-
-
-
-
-	<!-- Modal 1 start   -->
-
-	<div id="updateConsignment" class="modal">
-		<div class="modal-content">
-			<h6>Update Consignment</h6>
-			<hr>
-
-			<div class="row">
-				<h6 id="sucessMessage"></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="${context}/Consignment/viewConsignment" class="btn">ok</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-
-
-	<!-- Delete confirmation Modal start   -->
-
-	<div id="confirmDeleteConsignment" class="modal">
-		<div class="modal-content">
-
-			<h6>Delete Consignment</h6>
-			<hr>
-			<!-- <h4 class="header2 pb-2">User Info</h4> -->
-
-			<div class="row">
-				<h6 id=consignmentText></h6>
-			</div>
-
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment" class="btn">ok</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-<!-- -----------------------------------------------------------------Approved Model------------------------------------------------------------------------------ -->
-
-
-  <div id="ApproveConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6>The tax against the consignment with (Importer/Company name) having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
-          successfully paid.</h6>
-      </div>
-      <div class="row">
-        <h6>Do you approve the consignment?</h6>
-        <input type="text" id="setApproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="approveSubmit(0)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div id="confirmApproveConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a  href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-    <div id="RejectConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6>Do you really want to mark the consignment (Importer/Company name) having Transaction ID: <span id="disaproveTxnId"></span> as
-          rejected.</h6>
-            <input type="text" id="setDisapproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 m12" style="margin-left: -10px;">
-          <textarea id="dispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
-          <label for="textarea1">Remarks <span class="star">*</span></label>
-        </div>
-        <p>Required Field are marked with <span class="star">*</span></p>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="disapproveSubmit(1)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-
-  
-
-  <div id="ApproveConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6>The tax against the consignment with (Importer/Company name) having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
-          successfully paid.</h6>
-      </div>
-      <div class="row">
-        <h6>Do you approve the consignment?</h6>
-        <input type="text" id="setApproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="approveSubmit(0)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div id="confirmApproveConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a  href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-    <div id="RejectConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6>Do you really want to mark the consignment (Importer/Company name) having Transaction ID: <span id="disaproveTxnId"></span> as
-          rejected.</h6>
-            <input type="text" id="setDisapproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 m12" style="margin-left: -10px;">
-          <textarea id="dispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
-          <label for="textarea1">Remarks <span class="star">*</span></label>
-        </div>
-        <p>Required Field are marked with <span class="star">*</span></p>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="disapproveSubmit(1)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div id="confirmRejectConsignment" class="modal">
-    <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
-      <div class="row">
-        <h6 id="disapproveSuccessMessage">The consignment has been marked as rejected.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-	<!-- Update Modal Start -->
-	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
-		<div class="modal-content">
-
-			<h6>Edit Consignment</h6>
-			<hr>
-
-
-			<div class="row myRow">
-				<div class="input-field col s12 m6">
-					<input type="text" name="supplierId" id="supplierIdEdit"
-						pattern="[A-Za-z0-9]{0,15}"
-						title="Please enter alphabets and numbers upto 15 characters only"
-						placeholder="Supplier/Manufacturer ID" maxlength="15" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="supplierName" id="supplierNameEdit"
-						pattern="[A-Za-z]{0,50}"
-						title="Please enter alphabets  upto 50 characters only"
-						maxlength="50" placeholder="Supplier/Manufacturer Name" required />
-					<label for="Name" class="center-align">Supplier/Manufacturer
-						Name <span class="star">*</span>
-					</label>
-				</div>
-				<div class="input-field col s12 m6">
-					<input type="text" name="consignmentNumber"
-						id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}"
-						placeholder="Consignment Number" maxlength="15" /> <label
-						for="Name" class="center-align">Consignment Number</label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
-                                                Arrival Date <span class="star">*</span></p> -->
-					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-					<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
-						required="required" placeholder="Expected Dispatch Date "
-						type="text" onfocus="(this.type='date')"
-						onfocusout="(this.type='text')"> <label for="dispatchDate"
-						class="center-align">Expected Dispatch Date <span
-						class="star">*</span></label> <span class="input-group-addon"
-						style="color: #ff4081"><i class="fa fa-calendar"
-						aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
-					<select id="country" name="organisationcountry" required="required"
-						class="browser-default" class="mySelect" required></select> <label
-						for="country" class="center-align"></label>
-				</div>
-
-
-				<div class="input-field col s12 m6">
-					<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
-					<!-- <label for="Name">Expected arrival Date</label> -->
-					<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
-						required="required" placeholder="Expected Arrival  Date"
-						type="text" onfocus="(this.type='date')"
-						onfocusout="(this.type='text')"> <label for="dispatchDate"
-						class="center-align">Expected Arrival Date <span
-						class="star">*</span></label> <span class="input-group-addon"
-						style="color: #ff4081"><i class="fa fa-calendar"
-						aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
-					<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
-					<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
-						class="browser-default" required>
-						<option value="" disabled selected>Expected arrival port
-							*</option>
-						<option value="Air">Air</option>
-						<option value="Land">Land</option>
-						<option value="Water">Water</option>
-					</select>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="quantity" id="QuantityEdit"
-						pattern="[0-9]{0,7}"
-						title="Please enter numbers upto 7 characters only" maxlength="7"
-						placeholder="Quantity" required /> <label for="Quantity"
-						class="center-align">Quantity <span class="star">*</span></label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="txnId" id="TransactionIdEdit"
-						placeholder="Transaction ID" value="" readonly maxlength="15" />
-					<label for="TransactionId" class="center-align">Transaction
-						ID</label>
-				</div>
-			</div>
-
-
-			<div class="row myRow">
-				<div class="file-field input-field col s12 m6"
-					style="margin-top: 5px;">
-					<h6 class="file-upload-heading" style="margin-left: 0;">
-						Upload Bulk Devices Information <span class="star">*</span>
-					</h6>
-					<div class="btn">
-						<span>Select File</span> <input type="file" name="file"
-							id="csvUploadFile" accept=".csv">
-					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate responsive-file-div"
-							id="fileNameEdit" type="text">
-					</div>
-				</div>
-			</div>
-			<p>
-				<a href="#">Download Sample Format</a>
-			</p>
-
-			<span> Required Field are marked with <span class="star">*</span>
-			</span>
-
-
-			<div class="row">
-				<div class="input-field col s12 center">
-					<button class="waves-effect waves-light modal-trigger btn"
-						type="button" onclick="editRegisterConsignment()">Update</button>
-					<button class="modal-close btn" onclick="closeUpdateModal()"
-						style="margin-left: 10px;">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	
-	   <div id="markAsMultipleStolen" class="modal">
+	<div id="replyModal" class="modal">
+        <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
         <div class="modal-content">
-
-            <h6>Mark As Stolen</h6>
-            <hr>
-
             <div class="row">
-                <h6>Do you want to mark the following transaction  as stolen?</h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a onclick="openMulipleStolenPopUp()" class="modal-close modal-trigger btn">Yes</a>
-                    <button class="modal-close btn" style="margin-left: 10px;">no</button>
+                <div class="col s12 m12">
+                    <h6 style="font-weight: bold;">Grievance ID: <span id="grievanceIdToSave"></span></h6>
+                    <span id="grievanceTxnId" style="display: none;"></span>
+                    <hr>
+                </div>
+
+                <div class="col s12 m12">
+                    <h6 style="float: left; font-weight: bold;">You : </h6>
+                    <h6 style="float: left;">&nbsp; Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry.</h6><span style="float:right;">10/02/2019 11:00</span>
+                </div>
+                <div class="col s12 m12">
+                    <h6 style="float: left; font-weight: bold;">Admin : </h6>
+                    <h6 style="float: left;">&nbsp; Need more clearification</h6><span style="float:right;">10/02/2019
+                        11:24</span>
+                </div>
+                <div class="col s12 m12">
+                    <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark"></textarea>
+                    <h6 style="color: #000;">Upload Supporting Document</h6>
+                </div>
+                <div class="file-field col s12 m12">
+                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" multiple></div>
+                    <div class="file-path-wrapper"><input class="file-path validate" type="text"
+                            placeholder="Upload one or more files">
+                        <div>
+                            <p id="myFiles"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col s12 m12 center">
+                    <a onclick="saveGrievanceReply()" class="modal-close modal-trigger waves-effect waves-green btn right">Reply</a>
                 </div>
             </div>
         </div>
     </div>
-     <div id="markAsStolenDone" class="modal">
-        <div class="modal-content">
-            <h6>Mark As Stolen</h6>
-            <hr>
-            <div class="row">
-                <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
-                </h6>
-            </div>
-            <div class="row">
+    
+    <div id="replyMsg" class="modal">
+    <div class="modal-content">
+        <h6>Grievance Reply</h6>
+        <hr>
+        <div class="row">
+            <h6 id="showReplyResponse">Your reply successfully sent to admin</h6>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 center">
                 <div class="input-field col s12 center">
-                    <!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
-                    <a onclick="redirectToViewPage()" class="btn">ok</a>
+                    <a href="./grievanceManagement" class="modal-close btn">ok</a>
                 </div>
             </div>
         </div>
     </div>
+</div>
+	
+
+
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.jsf.FacesContextUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,7 +44,7 @@ public class GrievanceController {
 		ModelAndView mv = new ModelAndView();
 		 
 		log.info(" view Grievance entry point."); 
-		 mv.setViewName("grievanceManagement");
+	    mv.setViewName("grievanceManagement");
 		log.info(" view Grievance exit point."); 
 		return mv; 
 	}
@@ -53,7 +55,7 @@ public class GrievanceController {
 			,@RequestParam(name="remarks",required = false) String remarks,@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
 
 		int userId= (int) session.getAttribute("userid");
-		String roletype=session.getAttribute("usertype").toString();
+		String roletype=(String) session.getAttribute("usertype");
 
 		
 		log.info("save grievance  entry point.");
@@ -90,6 +92,9 @@ public class GrievanceController {
 		grievance.setCategoryId(categoryId);
 		grievance.setRemarks(remarks);
 		grievance.setTxnId(txnId);
+		grievance.setUserId(userId);
+		grievance.setUserType(roletype);
+		grievance.setGrievanceId(grevnceId);
 		
 		log.info("grievance form parameters passed to save grievance api "+grievance);
 		response = feignCleintImplementation.saveGrievance(grievance);
@@ -100,5 +105,61 @@ public class GrievanceController {
 
 	}
 
+//***************************************** open save greivance *********************************
+	@RequestMapping(value="/openGrievanceForm",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public ModelAndView openRegisterConsignmentForm(@RequestParam(name="reqType") String reqType)
+	{
+		ModelAndView mv= new ModelAndView();
+		if(reqType.equals("formPage"))
+		{
+			log.info("open save  Grievance form");
+			mv.setViewName("saveGrievance");
+		}
+
+		return mv;
+}
+
+
+	//***************************************** view Grievance controller *********************************
+		@RequestMapping(value="/viewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		public @ResponseBody GrievanceModel viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session)
+		{
+			log.info("entery point in view grievance.");
+			int userId= (int) session.getAttribute("userid");
+			GrievanceModel grievanceModel=new GrievanceModel();
+			log.info("Request pass to the view grievance api ="+grievanceId+"  userId= "+userId);
+			grievanceModel=feignCleintImplementation.viewGrievance(grievanceId, userId);
+			log.info("Response from  view grievance api = "+grievanceModel);
+			return grievanceModel;
+	}
+		
+		
+		
+		//***************************************** view Grievance controller *********************************
+				@RequestMapping(value="/saveGrievanceMessage",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
+				public @ResponseBody GenricResponse saveGrievance(@RequestParam(name="grievanceId",required = false) String grievanceId,@RequestParam(name="remark",required = false) String remark,
+						@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="file",required = false) MultipartFile file,HttpSession session)
+				{
+					log.info("***********************");
+
+				//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
+					int userId= (int) session.getAttribute("userid"); 
+					String roletype=(String) session.getAttribute("usertype");
+				    log.info("userid*******="+userId+" roletype="+roletype);
+					GrievanceModel grievanceModel=new GrievanceModel();
+				
+				
+				grievanceModel.setFileName(file.getOriginalFilename());
+				grievanceModel.setTxnId(txnId);
+				grievanceModel.setReply(remark);
+				grievanceModel.setGrievanceId(grievanceId);
+				grievanceModel.setUserId(userId);
+				grievanceModel.setUserType(roletype);
+				
+				log.info("request passed to the save grievance method="+grievanceModel);
+				response= feignCleintImplementation.saveGrievanceMessage(grievanceModel);
+				log.info("response  from   save grievance method="+response);	
+				return response;
+			}
 }
 
