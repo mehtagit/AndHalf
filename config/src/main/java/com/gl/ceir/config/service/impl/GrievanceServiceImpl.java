@@ -20,6 +20,7 @@ import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsg;
 import com.gl.ceir.config.model.GrievanceReply;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.SearchCriteria;
@@ -63,7 +64,7 @@ public class GrievanceServiceImpl{
 			grievance.setGrievanceStatus( GrievanceStatus.NEW.getCode() );
 			grievanceRepository.save(grievance);
 			webActionDbRepository.save(webActionDb);
-			return new GenricResponse(0,"Grievance registered successfuly",grievance.getTxnId());
+			return new GenricResponse(0,"Grievance registered successfuly",grievance.getGrievanceId());
 
 		}catch (Exception e) {
 			logger.error("Grievance Registration failed="+e.getMessage());
@@ -121,7 +122,7 @@ public class GrievanceServiceImpl{
 				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
 			else
 				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
-			if(Objects.nonNull(grievance.getGrievanceId()) && (grievance.getGrievanceId() != -1 && grievance.getGrievanceId() != 0))
+			if(Objects.nonNull(grievance.getGrievanceId()))
 				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -150,7 +151,7 @@ public class GrievanceServiceImpl{
 				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
 			else
 				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
-			if(Objects.nonNull(grievance.getGrievanceId()) && (grievance.getGrievanceId() != -1 && grievance.getGrievanceId() != 0))
+			if(Objects.nonNull(grievance.getGrievanceId()))
 				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -212,7 +213,7 @@ public class GrievanceServiceImpl{
 			grievanceMsgRepository.save(grievanceMsg);
 			if( grievanceHistory != null )
 				grievanceHistoryRepository.save(grievanceHistory);
-			return new GenricResponse(0,"Grievance Message saved successfuly.",grievance.getTxnId());
+			return new GenricResponse(0,"Grievance Message saved successfuly.",grievance.getGrievanceId());
 
 		}catch (Exception e) {
 			logger.error("Grievance Message update failed"+e.getMessage());
@@ -221,7 +222,7 @@ public class GrievanceServiceImpl{
 		}
 	}
 	
-	public List<GrievanceMsg> getAllGrievanceMessagesByGrievanceId( Long grievanceId ){
+	public List<GrievanceMsg> getAllGrievanceMessagesByGrievanceId( String grievanceId ){
 		try {
 			logger.info("Going to get All grievance Messages List ");
 			return grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
@@ -241,7 +242,7 @@ public class GrievanceServiceImpl{
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 			if(Objects.nonNull(grievance.getEndDate()))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getGrievanceId()) && (grievance.getGrievanceId() != -1 && grievance.getGrievanceId() != 0))
+			if(Objects.nonNull(grievance.getGrievanceId()))
 				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -252,6 +253,16 @@ public class GrievanceServiceImpl{
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
+	}
+	
+	public RequestCountAndQuantity getGrievanceCount( Integer userId, Integer grievanceStatus) {
+		try {
+			logger.info("Going to get Grievance count.");
+			return grievanceRepository.getGrievanceCount(userId, grievanceStatus);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 }

@@ -9,5 +9,5 @@ import com.gl.ceir.config.model.GrievanceMsg;
 
 public interface GrievanceMsgRepository extends JpaRepository<GrievanceMsg, Long>, JpaSpecificationExecutor<GrievanceMsg> {
 	public GrievanceMsg save( GrievanceMsg grievanceMsg );
-	public List<GrievanceMsg> getGrievanceMsgByGrievanceId( Long grievanceId );
+	public List<GrievanceMsg> getGrievanceMsgByGrievanceId( String grievanceId );
 }

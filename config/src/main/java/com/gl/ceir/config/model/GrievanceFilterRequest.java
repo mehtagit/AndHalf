@@ -7,7 +7,7 @@ public class GrievanceFilterRequest {
 	public LocalDateTime startDate;
 	public LocalDateTime endDate;
 	public String txnId;
-	public Long grievanceId;
+	public String grievanceId;
 	private int grievanceStatus;
 	public Integer getUserId() {
 		return userId;
@@ -33,10 +33,10 @@ public class GrievanceFilterRequest {
 	public void setTransactionId(String txnId) {
 		this.txnId = txnId;
 	}
-	public Long getGrievanceId() {
+	public String getGrievanceId() {
 		return grievanceId;
 	}
-	public void setGrievanceId(Long grievanceId) {
+	public void setGrievanceId(String grievanceId) {
 		this.grievanceId = grievanceId;
 	}
 	public int getGrievanceStatus() {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.service.impl.StockServiceImpl;
 import io.swagger.annotations.ApiOperation;
 
@@ -128,7 +129,12 @@ public class StockController {
 	}
 
 
-
+	@ApiOperation(value = "Get total count and quantity.", response = RequestCountAndQuantity.class)
+	@RequestMapping(path = "/stock/countAndQuantity", method = RequestMethod.GET)
+	public MappingJacksonValue getConsignmentCountAndQuantity(long userId, Integer stockStatus) {
+		RequestCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity(userId, stockStatus);
+		return new MappingJacksonValue(response);
+	}
 
 
 

@@ -19,6 +19,7 @@ import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.service.impl.ConsignmentServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
@@ -134,6 +135,7 @@ public class ConsignmentController {
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
+
 	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
 
 		logger.info("View Request only Single Record="+txnId);
@@ -203,14 +205,19 @@ public class ConsignmentController {
 
 		logger.info("Request to update the consignmentStatus="+consignmentUpdateRequest);
 
-		GenricResponse genricResponse = consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
+		GenricResponse genricResponse	=consignmentServiceImpl.updateConsignmentStatus(consignmentUpdateRequest);
 
 		return genricResponse ;
 
 	}
 
 
-
+	@ApiOperation(value = "Get total count and quantity.", response = RequestCountAndQuantity.class)
+	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.GET)
+	public MappingJacksonValue getConsignmentCountAndQuantity(Integer userId, Integer consignmentStatus) {
+		RequestCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(userId, consignmentStatus);
+		return new MappingJacksonValue(response);
+	}
 
 
 }
