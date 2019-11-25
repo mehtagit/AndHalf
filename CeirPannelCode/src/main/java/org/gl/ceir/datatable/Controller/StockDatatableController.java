@@ -48,6 +48,11 @@ public class StockDatatableController {
 	@PostMapping("stockData")
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
+	
+			
+				log.info("session value user Type=="+session.getAttribute("usertype"));
+				String userType = (String) session.getAttribute("usertype");
+		
 				List<List<String>> finalList=new ArrayList<List<String>>();
 
 				//FilterRequest filterrequest = request.getParameter("FilterRequest");
@@ -72,8 +77,8 @@ public class StockDatatableController {
 				}
 				else {
 				
-				if("viaStock".equals(sourceType)){	
-				//log.info("sourceType in stock controller 1--------"+sourceType);
+				if("viaStock".equals(sourceType) && "Importer".equals(userType)){	
+				log.info("userType in stock controller 1--------"+userType);
 				for(StockContent dataInsideList : paginationContentList) 
 				{
 					String checboxes = "<input type=checkbox class=filled-in>";
@@ -94,8 +99,8 @@ public class StockDatatableController {
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 					}
-				}else{
-					//log.info("sourceType in stock controller 2--------"+sourceType);
+				}else if("Importer".equals(userType)){
+					log.info("sourceuserTypeType in stock controller 2--------"+userType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
@@ -115,8 +120,30 @@ public class StockDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 						}
+				}else if("Custom".equals(userType)) {
+					for(StockContent dataInsideList : paginationContentList) 
+					{
+						String date= dataInsideList.getCreatedOn(); 
+						String assignedTo = "";
+						String txnId= dataInsideList.getTxnId(); 
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatus = null;
+						stockStatus = statusOfStock.equals("0") ? "INIT" : 
+							statusOfStock.equals("1") ? "Processing" :
+								statusOfStock.equals("2")  ? "Error" :
+									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						String[] finalData={date,assignedTo,txnId,file,stockStatus,action}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
 				}
-				}
+			}
+				
+	}
 				//data set on ModelClass
 				datatableResponseModel.setRecordsTotal(stockPaginationModel.getNumberOfElements());
 				datatableResponseModel.setRecordsFiltered(stockPaginationModel.getTotalElements());
@@ -138,7 +165,7 @@ public class StockDatatableController {
 	@PostMapping
 	@RequestMapping("stock/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
-
+		String userType = (String) session.getAttribute("usertype");
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
@@ -205,8 +232,20 @@ public class StockDatatableController {
 		}
 		}else {
 			log.info("sourceType render---2------" +sourceType);	
-			String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+			if("Custom".equals(userType)) {
+				String[] names= {"Assign Stock","./assignStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
 
+				for(int i=0; i< names.length ; i++) {
+					button = new Button();
+					button.setButtonTitle(names[i]);
+					i++;
+					button.setButtonURL(names[i]);
+					i++;
+					button.setId(names[i]);
+					buttonList.add(button);
+				}
+			}else{
+			String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setButtonTitle(names[i]);
@@ -215,7 +254,8 @@ public class StockDatatableController {
 				i++;
 				button.setId(names[i]);
 				buttonList.add(button);
-			}	
+			}
+			}
 			
 			//Dropdown items			
 			String[] selectParam= {"select","Stock Status","filterFileStatus",""};

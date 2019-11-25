@@ -100,6 +100,16 @@ public class DatatableHeaders {
 			}
 			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
+			
+			
+			//customStock Headers
+			else if("customStockHeaders".equals(role)) {
+			String[] headers = {HeadersTitle.date,HeadersTitle.assignto,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};	
+			for(String header : headers) {
+			dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
 
 
 			//DEFAULT PORTION  

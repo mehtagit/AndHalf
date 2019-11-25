@@ -12,6 +12,7 @@ public class HeadersTitle {
 	public static final String date ="Date";
 	public static final String fileName ="File Name";	
 	public static final String stockStatus ="Stock Status";
+	public static final String assignto = "Assigned To";
 	
 	//Stolen
 	public static final String requestDate = "Request Date";
