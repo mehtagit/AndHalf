@@ -1,9 +1,11 @@
 package com.gl.ceir.config.specificationsbuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,10 +24,12 @@ public class ConsignmentMgmtSpecificationBuilder {
 
 	private final List<SearchCriteria> params;
 	private final String dialect;
+	private List<Specification<ConsignmentMgmt>> specifications;
 
 
 	public ConsignmentMgmtSpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
+		specifications = new LinkedList<>();
 		this.dialect = dialect;
 	}
 
@@ -34,12 +38,14 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return this;
 	}
 
+
+
 	public Specification<ConsignmentMgmt> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
 		Specification<ConsignmentMgmt> finalSpecification = null;
 
-		List<Specification<ConsignmentMgmt>> specifications = createSpecifications();
+		createSpecifications();
 
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
@@ -52,8 +58,15 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return finalSpecification;
 	}
 
+
+
+	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
+		specifications.add(specification);
+	}
+
+
 	private List<Specification<ConsignmentMgmt>> createSpecifications(){
-		List<Specification<ConsignmentMgmt>> specifications = new ArrayList<Specification<ConsignmentMgmt>>();
+		//	List<Specification<ConsignmentMgmt>> specifications = new ArrayList<Specification<ConsignmentMgmt>>();
 		// Path<Tuple> tuple = null;
 
 		try {
@@ -94,10 +107,12 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return specifications;
 	}
 
-	/*
-	private Predicate toPredicate(SearchOperation searchOperation, String value) {
+	public Specification<ConsignmentMgmt> joinWithUserIN(SearchCriteria searchCriteria,List<Integer> consignmentStatus){
+		return (root, query, cb) -> {
+			//root.in(consignmentStatus);
+			logger.info("In query save ");
+			return cb.in(root.get(searchCriteria.getKey())).value(consignmentStatus);
+		};
 
-		return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 	}
-	 */
 }

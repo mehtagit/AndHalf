@@ -31,25 +31,38 @@ public class DeviceDb  implements Serializable{
 	@UpdateTimestamp
 	private Date modifiedOn;
 
+	private String manufatureDate;
 	private String deviceNumber;
-
 	private String deviceType;
-	private String txnId;
 	private String deviceAction;
+
 	private Long  importerUserId;
 	private Long distributerUserId;
 	private Long retailerUserId;
+
+
 	private String importerTxnId;
 	private String distributerTxnId;
 	private String retalierTxnId;        
-	private String	 deviceStatus;
 
+	private Date importerDate;
+	private Date distributerDate;
+	private Date retailerDate;
+
+	private int importerDeviceStatus;
+	private int distributerDeviceStatus;
+	private int retailerDeviceStatus;
+
+	private int previousImporterDeviceStatus;
+	private int previousDistributerDeviceStatus;
+	private int previousRetailerDeviceStatus;
+
+	private String deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
-
 	private String  deviceId;
 	private String imeiEsnMeid;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -80,13 +93,7 @@ public class DeviceDb  implements Serializable{
 	public void setDeviceType(String deviceType) {
 		this.deviceType = deviceType;
 	}
-	public String getTxnId() {
-		return txnId;
-	}
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
-	
+
 	public Long getImporterUserId() {
 		return importerUserId;
 	}
@@ -160,17 +167,66 @@ public class DeviceDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-
-
-
-
-
-
-
-
-
-
-
+	public String getManufatureDate() {
+		return manufatureDate;
+	}
+	public void setManufatureDate(String manufatureDate) {
+		this.manufatureDate = manufatureDate;
+	}
+	public Date getImporterDate() {
+		return importerDate;
+	}
+	public void setImporterDate(Date importerDate) {
+		this.importerDate = importerDate;
+	}
+	public Date getDistributerDate() {
+		return distributerDate;
+	}
+	public void setDistributerDate(Date distributerDate) {
+		this.distributerDate = distributerDate;
+	}
+	public Date getRetailerDate() {
+		return retailerDate;
+	}
+	public void setRetailerDate(Date retailerDate) {
+		this.retailerDate = retailerDate;
+	}
+	public int getImporterDeviceStatus() {
+		return importerDeviceStatus;
+	}
+	public void setImporterDeviceStatus(int importerDeviceStatus) {
+		this.importerDeviceStatus = importerDeviceStatus;
+	}
+	public int getDistributerDeviceStatus() {
+		return distributerDeviceStatus;
+	}
+	public void setDistributerDeviceStatus(int distributerDeviceStatus) {
+		this.distributerDeviceStatus = distributerDeviceStatus;
+	}
+	public int getRetailerDeviceStatus() {
+		return retailerDeviceStatus;
+	}
+	public void setRetailerDeviceStatus(int retailerDeviceStatus) {
+		this.retailerDeviceStatus = retailerDeviceStatus;
+	}
+	public int getPreviousImporterDeviceStatus() {
+		return previousImporterDeviceStatus;
+	}
+	public void setPreviousImporterDeviceStatus(int previousImporterDeviceStatus) {
+		this.previousImporterDeviceStatus = previousImporterDeviceStatus;
+	}
+	public int getPreviousDistributerDeviceStatus() {
+		return previousDistributerDeviceStatus;
+	}
+	public void setPreviousDistributerDeviceStatus(int previousDistributerDeviceStatus) {
+		this.previousDistributerDeviceStatus = previousDistributerDeviceStatus;
+	}
+	public int getPreviousRetailerDeviceStatus() {
+		return previousRetailerDeviceStatus;
+	}
+	public void setPreviousRetailerDeviceStatus(int previousRetailerDeviceStatus) {
+		this.previousRetailerDeviceStatus = previousRetailerDeviceStatus;
+	}
 
 
 }
