@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
@@ -77,6 +79,10 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	MessageConfigurationDbRepository messageConfigurationDbRepository;
+
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
+
 
 	@Transactional
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
@@ -177,12 +183,22 @@ public class ConsignmentServiceImpl {
 			if(Objects.nonNull(consignmentMgmt.getEndDate()))
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
-			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
 				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
+				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			}else {
+				List<Integer> consignmentStatus=new ArrayList<Integer>();
+				List<StateMgmtDb> featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+
+				for(StateMgmtDb stateDb : featureList ) {
+					consignmentStatus.add(stateDb.getState());
+				}
+				logger.info("Array list to add is ="+consignmentStatus);
+				cmsb.addSpecification(cmsb.joinWithUserIN(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
+			}
 			return consignmentRepository.findAll(cmsb.build(), pageable);
 
 		} catch (Exception e) {

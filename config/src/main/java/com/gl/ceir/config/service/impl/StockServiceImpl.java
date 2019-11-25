@@ -67,7 +67,7 @@ public class StockServiceImpl {
 
 			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
 
-				User user =	userRepository.getByUserName(stackholderRequest.getSupplierId());
+				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
 
 				stackholderRequest.setUserId(new Long(user.getId()));
 			}
