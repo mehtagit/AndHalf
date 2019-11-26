@@ -127,8 +127,8 @@ public class StockServiceImpl {
 			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getRoleType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
-				smsb.with(new SearchCriteria("userType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
+				smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
 			return distributerManagementRepository.findAll(smsb.build(), pageable);

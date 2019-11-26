@@ -190,14 +190,19 @@ public class ConsignmentServiceImpl {
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}else {
-				List<Integer> consignmentStatus=new ArrayList<Integer>();
-				List<StateMgmtDb> featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
-				for(StateMgmtDb stateDb : featureList ) {
-					consignmentStatus.add(stateDb.getState());
+				if(consignmentMgmt.getFeatureId() != null && consignmentMgmt.getUserTypeId()!= null) {
+
+					List<Integer> consignmentStatus=new ArrayList<Integer>();
+					List<StateMgmtDb> featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+					if(featureList != null) {
+						for(StateMgmtDb stateDb : featureList ) {
+							consignmentStatus.add(stateDb.getState());
+						}
+						logger.info("Array list to add is ="+consignmentStatus);
+						cmsb.addSpecification(cmsb.joinWithUserIN(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
+					}
 				}
-				logger.info("Array list to add is ="+consignmentStatus);
-				cmsb.addSpecification(cmsb.joinWithUserIN(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
 			}
 			return consignmentRepository.findAll(cmsb.build(), pageable);
 
