@@ -39,23 +39,34 @@ public class DeviceDb  implements Serializable{
 	private Long  importerUserId;
 	private Long distributerUserId;
 	private Long retailerUserId;
-
+	private Long customUserId;
+	private String endUserUserId;
 
 	private String importerTxnId;
 	private String distributerTxnId;
 	private String retalierTxnId;        
+	private String customTxnId;
+	private String endUserTxnId;   
 
 	private Date importerDate;
 	private Date distributerDate;
 	private Date retailerDate;
+	private Date customDate;
+	private Date endUserDate;
 
 	private int importerDeviceStatus;
 	private int distributerDeviceStatus;
 	private int retailerDeviceStatus;
+	private int customDeviceStatus;
+	private int endUserDeviceStatus;
 
 	private int previousImporterDeviceStatus;
 	private int previousDistributerDeviceStatus;
 	private int previousRetailerDeviceStatus;
+	private int previousCustomDeviceStatus;
+	private int previousEndUserDeviceStatus;
+
+	private String endUserCountry;
 
 	private String deviceStatus;
 	private String DeviceLaunchDate;
@@ -226,6 +237,72 @@ public class DeviceDb  implements Serializable{
 	}
 	public void setPreviousRetailerDeviceStatus(int previousRetailerDeviceStatus) {
 		this.previousRetailerDeviceStatus = previousRetailerDeviceStatus;
+	}
+	public Long getCustomUserId() {
+		return customUserId;
+	}
+	public void setCustomUserId(Long customUserId) {
+		this.customUserId = customUserId;
+	}
+	public String getEndUserUserId() {
+		return endUserUserId;
+	}
+	public void setEndUserUserId(String endUserUserId) {
+		this.endUserUserId = endUserUserId;
+	}
+	public String getCustomTxnId() {
+		return customTxnId;
+	}
+	public void setCustomTxnId(String customTxnId) {
+		this.customTxnId = customTxnId;
+	}
+	public String getEndUserTxnId() {
+		return endUserTxnId;
+	}
+	public void setEndUserTxnId(String endUserTxnId) {
+		this.endUserTxnId = endUserTxnId;
+	}
+	public Date getCustomDate() {
+		return customDate;
+	}
+	public void setCustomDate(Date customDate) {
+		this.customDate = customDate;
+	}
+	public Date getEndUserDate() {
+		return endUserDate;
+	}
+	public void setEndUserDate(Date endUserDate) {
+		this.endUserDate = endUserDate;
+	}
+	public int getCustomDeviceStatus() {
+		return customDeviceStatus;
+	}
+	public void setCustomDeviceStatus(int customDeviceStatus) {
+		this.customDeviceStatus = customDeviceStatus;
+	}
+	public int getEndUserDeviceStatus() {
+		return endUserDeviceStatus;
+	}
+	public void setEndUserDeviceStatus(int endUserDeviceStatus) {
+		this.endUserDeviceStatus = endUserDeviceStatus;
+	}
+	public int getPreviousCustomDeviceStatus() {
+		return previousCustomDeviceStatus;
+	}
+	public void setPreviousCustomDeviceStatus(int previousCustomDeviceStatus) {
+		this.previousCustomDeviceStatus = previousCustomDeviceStatus;
+	}
+	public int getPreviousEndUserDeviceStatus() {
+		return previousEndUserDeviceStatus;
+	}
+	public void setPreviousEndUserDeviceStatus(int previousEndUserDeviceStatus) {
+		this.previousEndUserDeviceStatus = previousEndUserDeviceStatus;
+	}
+	public String getEndUserCountry() {
+		return endUserCountry;
+	}
+	public void setEndUserCountry(String endUserCountry) {
+		this.endUserCountry = endUserCountry;
 	}
 
 

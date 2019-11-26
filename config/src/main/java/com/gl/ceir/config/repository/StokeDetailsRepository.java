@@ -18,13 +18,14 @@ public interface StokeDetailsRepository extends JpaRepository<DeviceDb, Long> {
 
 	//public void deleteByTxnId(String txnId);
 
-
+	public List<DeviceDb> getByDeviceNumber(String serialNumber);
 
 	public DeviceDb getByImeiEsnMeid(String device);
 
+	public List<DeviceDb> getByEndUserUserId(String endUserId);
 
 
-	
+
 
 
 }
