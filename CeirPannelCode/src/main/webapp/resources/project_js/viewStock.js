@@ -9,7 +9,6 @@ event.preventDefault();
 });
 
 
-
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
@@ -220,11 +219,14 @@ function editUploadStock(){
      }
 
      var sourceType =localStorage.getItem("sourceType");
+     var currentRoleType = $("body").attr("data-selected-roleType"); 
      function tableHeader(){
-    	 if(sourceType !="viaStock" ){
- 			Datatable('headers','stockData')
- 		}else if(sourceType =="viaStock" ){
+    	 if(currentRoleType=="Importer" && sourceType !="viaStock"  ){
+    		 Datatable('headers','stockData')
+ 		}else if(currentRoleType=="Importer" && sourceType =="viaStock" ){
  			Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
+ 		}else if(currentRoleType=="Custom"){
+ 			Datatable('./headers?type=customStockHeaders','stockData')
  		}
     	 localStorage.removeItem('sourceType');
      } 
@@ -238,9 +240,10 @@ function editUploadStock(){
     	 "roleType": role,
     	 "startDate": "2019-11-11T10:53:37.290Z",
     	 "taxPaidStatus": null,
-    	 "userId": userId
-    	 };
-  console.log("REQUEST JSON:::::::::::::::::::::"+jsonObj)
+    	 "userId": userId,
+    	 "userType" : role
+    	};
+  console.log("REQUEST JSON:::::::::::::::::::::"+JSON.stringify(jsonObj))
  
   function Datatable(url,dataUrl) {
    $.ajax({
@@ -338,6 +341,7 @@ if(sourceType=="viaStock"){
 	}
 	
 }else{
+	
 	$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>");
 	for(i=0; i<button.length; i++){
 	$('#'+button[i].id).text(button[i].buttonTitle);
@@ -348,7 +352,9 @@ if(sourceType=="viaStock"){
 
 //$("#filterBtnDiv").append();
 }); 
-  }
+  
+  setAllDropdowns() 
+ }
 
 
 function valuesPush(){
@@ -429,4 +435,14 @@ function redirectToViewPage()
 	 window.location.href = "./stolenRecovery?userTypeId="+role;
 	
 
+}
+
+function setAllDropdowns(){
+$.getJSON('./getDropdownList/4/4', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].state).text(data[i].interp)
+		.appendTo('#filterFileStatus');
+
+	}
+});
 }

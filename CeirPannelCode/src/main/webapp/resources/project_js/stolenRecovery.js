@@ -429,6 +429,8 @@ event.preventDefault();
 
    			//$("#filterBtnDiv").append();
    			}); 
+   		
+   		setAllDropdowns();
    		}	 
    	
    function fileStolenReport(){
@@ -804,6 +806,34 @@ function openMulipleStolenPopUp()
    	 window.location.href = "./stolenRecovery?userTypeId="+role;
    	
 
+   }
+   
+   
+   function setAllDropdowns(){
+		//Request Type status-----------dropdown
+		$.getJSON('./getDropdownList/STOLEN_REQ_TYPE', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#requestType');
+			}
+		});
+		
+		//Source Type-----------dropdown
+		$.getJSON('./getDropdownList/STOLEN_SOURCE_TYPE', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#taxPaidStatus');
+			}
+		});
+		
+		
+		//Stolen Status-----------dropdown
+		$.getJSON('./getDropdownList/STOLEN_STATUS_TYPE', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#filterConsignmentStatus');
+			}
+		});
    }
    
    
