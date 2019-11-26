@@ -43,7 +43,7 @@ function grievanceDataTable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : 'grievanceData',
+					url : 'registrationData',
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {

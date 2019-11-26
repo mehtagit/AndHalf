@@ -185,7 +185,7 @@ public interface FeignCleintImplementation {
 		@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
 		public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
 				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
 
 
 // ******************************************** save 	grievance api ********************************************************************************
@@ -201,7 +201,14 @@ public interface FeignCleintImplementation {
 				// ******************************************** save 	grievance api ********************************************************************************
 				@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 
 				public GenricResponse saveGrievanceMessage(@RequestBody GrievanceModel greGrievanceModel) ;
-						
+			
+
+//****************************************************************Admin Registration api starts from here ***************************************************************************************************		
+				//View admin registration  feign  controller
+				@RequestMapping(value="/userProfile/record" ,method=RequestMethod.POST) 
+				public Object registrationRequest(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;				
 
 }
 

@@ -217,22 +217,31 @@ function editUploadStock(){
     	 $(".lean-overlay").remove();
     	 
      }
-
+    
+    
      var sourceType =localStorage.getItem("sourceType");
      var currentRoleType = $("body").attr("data-selected-roleType"); 
+     //alert("sourceType<><><><>"+sourceType);
+     //alert("currentRoleType<><><><>"+currentRoleType);
      function tableHeader(){
-    	 if(currentRoleType=="Importer" && sourceType !="viaStock"  ){
+    	 if(currentRoleType=="Importer"  && sourceType !="viaStock"  ){
     		 Datatable('headers','stockData')
- 		}else if(currentRoleType=="Importer" && sourceType =="viaStock" ){
+ 		}else if(currentRoleType==="Distributor"  && sourceType ==="viaStock"){
+ 			Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
+ 		}else if(currentRoleType=="Distributor"){
+ 			 Datatable('headers','stockData')
+ 		}else if(currentRoleType=="Importer" || currentRoleType=="Distributor"  && sourceType =="viaStock" ){
  			Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
  		}else if(currentRoleType=="Custom"){
  			Datatable('./headers?type=customStockHeaders','stockData')
+ 		}else if(currentRoleType=="CEIRAdmin"){
+ 			Datatable('./headers?type=adminStockHeaders','stockData')
  		}
     	 localStorage.removeItem('sourceType');
      } 
      
      
-     
+   var featureId = 4  
    var role = currentRoleType == null ? roleType : currentRoleType;
    var jsonObj = {
     	 "consignmentStatus": null,
@@ -241,7 +250,8 @@ function editUploadStock(){
     	 "startDate": "2019-11-11T10:53:37.290Z",
     	 "taxPaidStatus": null,
     	 "userId": userId,
-    	 "userType" : role
+    	 "userType" : role,
+    	 "featureId": featureId
     	};
   console.log("REQUEST JSON:::::::::::::::::::::"+JSON.stringify(jsonObj))
  
@@ -263,7 +273,8 @@ function editUploadStock(){
 					type: 'POST',
            		        url: dataUrl,           		        
            		    	data : function(d) {
-          		    		d.filter = JSON.stringify(jsonObj);       		    		
+          		    		d.filter = JSON.stringify(jsonObj); 
+          		    		console.log(JSON.stringify(jsonObj));
            				}
          		},
                 "columns": result
@@ -341,13 +352,15 @@ if(sourceType=="viaStock"){
 	}
 	
 }else{
-	
 	$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>");
 	for(i=0; i<button.length; i++){
 	$('#'+button[i].id).text(button[i].buttonTitle);
 	$('#'+button[i].id).attr("href", button[i].buttonURL);
 	}
 }
+
+	currentRoleType=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
+	
 		}
 
 //$("#filterBtnDiv").append();

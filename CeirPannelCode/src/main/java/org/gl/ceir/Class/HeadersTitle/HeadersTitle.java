@@ -25,6 +25,10 @@ public class HeadersTitle {
 	
 	//Admin
 	public static final String submissionDate = "Submission Date";
+	public static final String userId = "User ID";
+	public static final String roll = "Role Type";
+	public static final String asType = "As Type";
+	
 	
 	//pick consignments from stolen
 	public static final String blankHeader = "";

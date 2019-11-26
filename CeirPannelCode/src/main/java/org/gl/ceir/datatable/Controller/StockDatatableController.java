@@ -78,7 +78,7 @@ public class StockDatatableController {
 				else {
 				
 				if("viaStock".equals(sourceType) && "Importer".equals(userType)){	
-				log.info("userType in stock controller 1--------"+userType);
+				log.info("userType in stock controller 1--------"+userType); 
 				for(StockContent dataInsideList : paginationContentList) 
 				{
 					String checboxes = "<input type=checkbox class=filled-in>";
@@ -141,7 +141,30 @@ public class StockDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 				}
+			}else if("CEIRAdmin".equals(userType)) {
+				log.info("<><><><<<<<<><><><><><> userType in Admin" +userType);
+				for(StockContent dataInsideList : paginationContentList) 
+				{
+					String date= dataInsideList.getCreatedOn(); 
+					String txnId= dataInsideList.getTxnId(); 
+					String userId = "";
+					String roll = "";
+					String file= dataInsideList.getFileName();
+					// if API provide me consignmentStatusName
+					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+					String stockStatus = null;
+					stockStatus = statusOfStock.equals("0") ? "INIT" : 
+						statusOfStock.equals("1") ? "Processing" :
+							statusOfStock.equals("2")  ? "Error" :
+								statusOfStock.equals("3") ?   "Success" : "Not Defined";
+					String userStatus = (String) session.getAttribute("userStatus");
+					String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
+					String[] finalData={date,txnId,userId,roll,file,stockStatus,action}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 			}
+		}
 				
 	}
 				//data set on ModelClass
@@ -231,7 +254,6 @@ public class StockDatatableController {
 			inputTypeDateList.add(dateRelatedFields);
 		}
 		}else {
-			log.info("sourceType render---2------" +sourceType);	
 			if("Custom".equals(userType)) {
 				String[] names= {"Assign Stock","./assignStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
 
