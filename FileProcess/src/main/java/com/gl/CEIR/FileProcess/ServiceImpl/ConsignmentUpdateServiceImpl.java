@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gl.CEIR.FileProcess.Repository.ConsignmentRepository;
-import com.gl.CEIR.FileProcess.Repository.StokeDetailsRepository;
-import com.gl.CEIR.FileProcess.Repository.WebActionDbRepository;
+
 import com.gl.CEIR.FileProcess.Utility.Util;
-import com.gl.CEIR.FileProcess.model.ConsignmentMgmt;
-import com.gl.CEIR.FileProcess.model.DeviceDb;
-import com.gl.CEIR.FileProcess.model.DeviceDbHistory;
-import com.gl.CEIR.FileProcess.model.WebActionDb;
+import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.DeviceDb;
+import com.gl.ceir.config.model.DeviceDbHistory;
+import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.WebActionDbRepository;
+
 
 @Service
 public class ConsignmentUpdateServiceImpl {
@@ -57,7 +59,7 @@ public class ConsignmentUpdateServiceImpl {
 
 				DeviceDb device =util.parseDevice(content);
 				device.setImporterTxnId(webActionDb.getTxnId());
-				device.setImporterUserId(consignmentMgmt.getUserId());
+				device.setImporterUserId(1L);
 
 				devices.add(device);
 			}

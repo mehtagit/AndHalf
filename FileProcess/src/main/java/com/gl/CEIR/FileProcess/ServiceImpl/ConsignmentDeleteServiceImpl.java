@@ -5,15 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gl.CEIR.FileProcess.Repository.ConsignmentRepository;
-import com.gl.CEIR.FileProcess.Repository.StockDetailsOperationRepository;
-import com.gl.CEIR.FileProcess.Repository.StokeDetailsRepository;
-import com.gl.CEIR.FileProcess.Repository.WebActionDbRepository;
+
 import com.gl.CEIR.FileProcess.Utility.Validation;
-import com.gl.CEIR.FileProcess.model.ConsignmentMgmt;
-import com.gl.CEIR.FileProcess.model.DeviceDb;
-import com.gl.CEIR.FileProcess.model.DeviceDbHistory;
-import com.gl.CEIR.FileProcess.model.WebActionDb;
+import com.gl.ceir.config.model.DeviceDb;
+import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.DeviceDbHistory;
+import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.StockDetailsOperationRepository;
+import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.WebActionDbRepository;
+
 
 
 @Service
@@ -48,7 +50,7 @@ public class ConsignmentDeleteServiceImpl {
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(webActionDb.getTxnId());
 
 
-			List<DeviceDb> deviceList =stokeDetailsRepository.getByImporterTxnId(webActionDb.getTxnId());
+			List<DeviceDb> deviceList = stokeDetailsRepository.getByImporterTxnId(webActionDb.getTxnId());
 
 			boolean result = validation.deivceExistValidator(deviceList);
 
@@ -76,7 +78,7 @@ public class ConsignmentDeleteServiceImpl {
 					deviceDbHistory.setOperation(1);
 					deviceDbHistory.setRoleType(webActionDb.getFeature());
 					deviceDbHistory.setTxnId(webActionDb.getTxnId());
-					deviceDbHistory.setUserId(consignmentMgmt.getUserId());
+					deviceDbHistory.setUserId(1L);
 
 					stockDetailsOperationRepository.save(deviceDbHistory);
 				}
