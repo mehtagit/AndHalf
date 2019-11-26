@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 public class Registration {
-	private Integer id;
+	private long id;
 	private String firstName;
 	private String middleName;
 	private String lastName;
@@ -177,10 +177,10 @@ public class Registration {
 		public void setCaptcha(String captcha) {
 			this.captcha = captcha;
 		}
-		public Integer getId() {
+		public long getId() {
 			return id;
 		}
-		public void setId(Integer id) {
+		public void setId(long id) {
 			this.id = id;
 		}
 		@Override

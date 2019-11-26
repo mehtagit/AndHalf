@@ -1,7 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 public class ForgotPassword {
 	private String username;
-	private int questionId;
+	private long questionId;
 	private String answer;
 	public String getUsername() {
 		return username;
@@ -9,10 +9,10 @@ public class ForgotPassword {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public int getQuestionId() {
+	public long getQuestionId() {
 		return questionId;
 	}
-	public void setQuestionId(int questionId) {
+	public void setQuestionId(long questionId) {
 		this.questionId = questionId;
 	}
 	public String getAnswer() {

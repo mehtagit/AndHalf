@@ -1,5 +1,3 @@
-
-
 function verifyOtp(){
 	var obj="";
 	$("#verifyOtpForm").each(function(key, val){
@@ -12,6 +10,7 @@ function verifyOtp(){
 					userid: val.find('#userid').val()
 			} 
 		}
+		
 	});
 	$.ajax({
 		type : 'POST',
@@ -202,3 +201,4 @@ return false;
 
 
 
+	

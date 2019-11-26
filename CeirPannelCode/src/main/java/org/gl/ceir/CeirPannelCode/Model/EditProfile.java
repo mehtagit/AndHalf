@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 import java.util.Date;
 import java.util.List;
 public class EditProfile {
-	private Integer id;     
+	private long id;     
 	private String firstName;  
 	private String middleName;
 	private String lastName;
@@ -21,10 +21,10 @@ public class EditProfile {
 	private List<QuestionPair> questionList ; 
 	private Integer[] roles;     
 	private Integer usertypeId; 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getFirstName() {

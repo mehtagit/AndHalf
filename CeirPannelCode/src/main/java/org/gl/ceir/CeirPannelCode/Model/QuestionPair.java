@@ -1,10 +1,10 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class QuestionPair{ 
-	  private Integer questionId;
+	  private long questionId;
 	  private String question;
 	  private String answer;
-	  private Integer id;
+	  private long id;
 	            
 	  public QuestionPair(){};
 	  
@@ -25,19 +25,19 @@ public class QuestionPair{
 	}
 	
 
-	public Integer getQuestionId() {
+	public long getQuestionId() {
 		return questionId;
 	}
 
-	public void setQuestionId(Integer questionId) {
+	public void setQuestionId(long questionId) {
 		this.questionId = questionId;
 	} 
 	
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
