@@ -200,6 +200,8 @@ public class ConsignmentServiceImpl {
 
 					List<Integer> consignmentStatus=new ArrayList<Integer>();
 					List<StateMgmtDb> featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+					logger.debug(featureList);
+					
 					if(featureList != null) {
 						for(StateMgmtDb stateDb : featureList ) {
 							consignmentStatus.add(stateDb.getState());
