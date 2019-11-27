@@ -12,6 +12,7 @@ public class FileStorageProperties {
 	private String actionUploadDir;
 	private String downloadDir;
 	private String immegreationUploadDir;
+	private String grievanceDownloadDir;
 
 
 	public String getUploadDir() {
@@ -62,8 +63,12 @@ public class FileStorageProperties {
 		this.immegreationUploadDir = immegreationUploadDir;
 	}
 
+	public String getGrievanceDownloadDir() {
+		return grievanceDownloadDir;
+	}
 
-
-
-
+	public void setGrievanceDownloadDir(String grievanceDownloadDir) {
+		this.grievanceDownloadDir = grievanceDownloadDir;
+	}
+	
 }
