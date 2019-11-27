@@ -1,6 +1,12 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -14,27 +20,33 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
+import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsg;
 import com.gl.ceir.config.model.GrievanceReply;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
-import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.GrievanceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
-import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
 import com.gl.ceir.config.repository.GrievanceHistoryRepository;
 import com.gl.ceir.config.repository.GrievanceMsgRepository;
 import com.gl.ceir.config.repository.GrievanceRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class GrievanceServiceImpl{
@@ -52,9 +64,11 @@ public class GrievanceServiceImpl{
 	PropertiesReader propertiesReader;
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
+	@Autowired
+	FileStorageProperties fileStorageProperties;
 	
 	@Transactional
-	public GenricResponse save(Grievance grievance) {
+	public GrievanceGenricResponse save(Grievance grievance) {
 		try {
 
 			WebActionDb webActionDb = new WebActionDb();
@@ -64,7 +78,7 @@ public class GrievanceServiceImpl{
 			grievance.setGrievanceStatus( GrievanceStatus.NEW.getCode() );
 			grievanceRepository.save(grievance);
 			webActionDbRepository.save(webActionDb);
-			return new GenricResponse(0,"Grievance registered successfuly",grievance.getGrievanceId());
+			return new GrievanceGenricResponse(0,"Grievance registered successfuly",grievance.getGrievanceId());
 
 		}catch (Exception e) {
 			logger.error("Grievance Registration failed="+e.getMessage());
@@ -164,8 +178,58 @@ public class GrievanceServiceImpl{
 
 	}
 	
+	public FileDetails getFilterGrievancesInFile(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
+		String fileName = null;
+		Writer writer   = null;
+		//String[] columns = new String[]{"grievanceId","userId","userType","grievanceStatus","txnId","categoryId","fileName","createdOn","modifiedOn","remarks"};
+		String filePath  = fileStorageProperties.getGrievanceDownloadDir();
+		StatefulBeanToCsvBuilder<Grievance> builder = null;
+		StatefulBeanToCsv<Grievance> csvWriter = null;
+		//ColumnPositionMappingStrategy<Grievance> mapStrategy = null;
+		HeaderColumnNameTranslateMappingStrategy<Grievance> mapStrategy = null;
+		try {
+			List<Grievance> grievances = this.getFilterPaginationGrievances(grievance, pageNo, pageSize).getContent();
+			fileName = "User_"+grievance.getUserId()+"_Grievances.csv";
+			if( grievances.size() > 0 ) {
+				Map<String, String> columnMapping = new HashMap<String, String>();
+				columnMapping.put("grievanceId", "grievanceId");
+				columnMapping.put("userId", "userId");
+				columnMapping.put("userType", "userType");
+				columnMapping.put("grievanceStatus", "grievanceStatus");
+				columnMapping.put("txnId", "txnId");
+				columnMapping.put("categoryId", "categoryId");
+				columnMapping.put("fileName", "fileName");
+				columnMapping.put("createdOn", "createdOn");
+				columnMapping.put("modifiedOn", "modifiedOn");
+				columnMapping.put("remarks", "remarks");
+				//mapStrategy = new ColumnPositionMappingStrategy<Grievance>();
+				mapStrategy = new HeaderColumnNameTranslateMappingStrategy<Grievance>();
+				mapStrategy.setType( Grievance.class );
+				mapStrategy.setColumnMapping(columnMapping);
+				writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+				builder = new StatefulBeanToCsvBuilder<>(writer);
+				csvWriter = builder.withMappingStrategy(mapStrategy)
+	                    .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
+	                    .build();
+				
+				csvWriter.write(grievances);
+			}
+			return new FileDetails( fileName, filePath ); 
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+				writer.close();
+			} catch (IOException e) {}
+		}
+
+	}
+	
 	@Transactional
-	public GenricResponse saveGrievanceMsg(GrievanceReply grievanceReply) {
+	public GrievanceGenricResponse saveGrievanceMsg(GrievanceReply grievanceReply) {
 		GrievanceMsg grievanceMsg = null;
 		GrievanceHistory grievanceHistory = null;
 		try {
@@ -213,7 +277,7 @@ public class GrievanceServiceImpl{
 			grievanceMsgRepository.save(grievanceMsg);
 			if( grievanceHistory != null )
 				grievanceHistoryRepository.save(grievanceHistory);
-			return new GenricResponse(0,"Grievance Message saved successfuly.",grievance.getGrievanceId());
+			return new GrievanceGenricResponse(0,"Grievance Message saved successfuly.",grievance.getGrievanceId());
 
 		}catch (Exception e) {
 			logger.error("Grievance Message update failed"+e.getMessage());
@@ -222,10 +286,14 @@ public class GrievanceServiceImpl{
 		}
 	}
 	
-	public List<GrievanceMsg> getAllGrievanceMessagesByGrievanceId( String grievanceId ){
+	public List<GrievanceMsg> getAllGrievanceMessagesByGrievanceId( String grievanceId, Integer recordLimit ){
 		try {
 			logger.info("Going to get All grievance Messages List ");
-			return grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
+			if( recordLimit == -1) {
+				return grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
+			}else {
+				return grievanceMsgRepository.getGrievanceMsgByGrievanceIdOrderByIdDesc(grievanceId, new PageRequest(0, recordLimit) );
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

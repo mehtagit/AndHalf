@@ -9,6 +9,12 @@ public class GrievanceFilterRequest {
 	public String txnId;
 	public String grievanceId;
 	private int grievanceStatus;
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
@@ -26,12 +32,6 @@ public class GrievanceFilterRequest {
 	}
 	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
-	}
-	public String getTxnId() {
-		return txnId;
-	}
-	public void setTransactionId(String txnId) {
-		this.txnId = txnId;
 	}
 	public String getGrievanceId() {
 		return grievanceId;
