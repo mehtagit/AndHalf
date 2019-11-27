@@ -143,137 +143,135 @@ public class StolenDatatableController {
 	
 	@PostMapping("stolen/pageRendering")
 	public ResponseEntity<?> pageRendering(
-			@RequestParam(name = "type", defaultValue = "consignment", required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,
-			HttpSession session) {
-		String userStatus = (String) session.getAttribute("userStatus");
-		InputFields inputFields = new InputFields();
-		InputFields dateRelatedFields;
+	@RequestParam(name = "type", defaultValue = "consignment", required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,
+	HttpSession session) {
+	String userStatus = (String) session.getAttribute("userStatus");
+	InputFields inputFields = new InputFields();
+	InputFields dateRelatedFields;
 
-		pageElement.setPageTitle("Stolen/Recovery");
+	pageElement.setPageTitle("Stolen/Recovery");
 
-		List<Button> buttonList = new ArrayList<>();
-		List<InputFields> dropdownList = new ArrayList<>();
-		List<InputFields> inputTypeDateList = new ArrayList<>();
-		
-		if("viaExistingRecovery".equals(sourceType)) {
-			//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
-			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", "filter", "filterConsignment()", "submitFilter" };
-			for (int i = 0; i < names.length; i++) {
-				button = new Button();
-				
-				button.setType(names[i]);
-				i++;
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}
-			pageElement.setButtonList(buttonList);
-			
-			
-			String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","cancel()","cancel"};
-			for (int i = 0; i < names.length; i++) {
-				button = new Button();
-				
-				button.setType(footerBtn[i]);
-				i++;
-				button.setButtonTitle(footerBtn[i]);
-				i++;
-				button.setButtonURL(footerBtn[i]);
-				i++;
-				button.setId(footerBtn[i]);
-				buttonList.add(button);
-			}
-			pageElement.setButtonList(buttonList);
-		
-//Dropdown items	
-		String[] selectParam = { "select", "Stock Status", "filterConsignmentStatus", "", "select",
-				"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
+	List<Button> buttonList = new ArrayList<>();
+	List<InputFields> dropdownList = new ArrayList<>();
+	List<InputFields> inputTypeDateList = new ArrayList<>();
 
-//input type date list	
-		String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "" };
-		for (int i = 0; i < dateParam.length; i++) {
-			dateRelatedFields = new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
-		}
-			
-			
-			
-		}else {
-			//log.info("if sourceType in stolen Render controller 2--------"+sourceType);
-			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", "filter", "filterConsignment()", "submitFilter" };
-			for (int i = 0; i < names.length; i++) {
-				button = new Button();
-				
-				button.setType(names[i]);
-				i++;
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}
-			pageElement.setButtonList(buttonList);
-		
-//Dropdown items	
-		String[] selectParam = { "select", "Status", "filterConsignmentStatus", "", "select",
-				"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
+	if("viaExistingRecovery".equals(sourceType)) {
+	//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
+	String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
+	"btnLink", "FilterButton", "filter", "filterConsignment()", "submitFilter" };
+	for (int i = 0; i < names.length; i++) {
+	button = new Button();
 
-//input type date list	
-		String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "" };
-		for (int i = 0; i < dateParam.length; i++) {
-			dateRelatedFields = new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
-		}
+	button.setType(names[i]);
+	i++;
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
+	}
+	pageElement.setButtonList(buttonList);
+
+
+	String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","cancel()","cancel"};
+	for (int i = 0; i < names.length; i++) {
+	button = new Button();
+
+	button.setType(footerBtn[i]);
+	i++;
+	button.setButtonTitle(footerBtn[i]);
+	i++;
+	button.setButtonURL(footerBtn[i]);
+	i++;
+	button.setId(footerBtn[i]);
+	buttonList.add(button);
+	}
+	pageElement.setButtonList(buttonList);
+
+	//Dropdown items	
+	String[] selectParam = { "select", "Stock Status", "filterConsignmentStatus", "", "select",
+	"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
+	for (int i = 0; i < selectParam.length; i++) {
+	inputFields = new InputFields();
+	inputFields.setType(selectParam[i]);
+	i++;
+	inputFields.setTitle(selectParam[i]);
+	i++;
+	inputFields.setId(selectParam[i]);
+	i++;
+	inputFields.setClassName(selectParam[i]);
+	dropdownList.add(inputFields);
+	}
+	pageElement.setDropdownList(dropdownList);
+
+	//input type date list	
+	String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "","text","Transaction ID","transactionID",""};
+	for (int i = 0; i < dateParam.length; i++) {
+	dateRelatedFields = new InputFields();
+	dateRelatedFields.setType(dateParam[i]);
+	i++;
+	dateRelatedFields.setTitle(dateParam[i]);
+	i++;
+	dateRelatedFields.setId(dateParam[i]);
+	i++;
+	dateRelatedFields.setClassName(dateParam[i]);
+	inputTypeDateList.add(dateRelatedFields);
 	}
 
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK);
-	}
-	
 
+
+	}else {
+	//log.info("if sourceType in stolen Render controller 2--------"+sourceType);
+	String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
+	"btnLink", "FilterButton", "filter", "filterConsignment()", "submitFilter" };
+	for (int i = 0; i < names.length; i++) {
+	button = new Button();
+
+	button.setType(names[i]);
+	i++;
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
+	}
+	pageElement.setButtonList(buttonList);
+
+	//Dropdown items	
+	String[] selectParam = { "select", "Status", "filterConsignmentStatus", "", "select",
+	"Source", "taxPaidStatus", "","select", "Request Type", "requestType","" };	
+	for (int i = 0; i < selectParam.length; i++) {
+	inputFields = new InputFields();
+	inputFields.setType(selectParam[i]);
+	i++;
+	inputFields.setTitle(selectParam[i]);
+	i++;
+	inputFields.setId(selectParam[i]);
+	i++;
+	inputFields.setClassName(selectParam[i]);
+	dropdownList.add(inputFields);
+	}
+	pageElement.setDropdownList(dropdownList);
+
+	//input type date list	
+	String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "","text","Transaction ID","transactionID","" };
+	for (int i = 0; i < dateParam.length; i++) {
+	dateRelatedFields = new InputFields();
+	dateRelatedFields.setType(dateParam[i]);
+	i++;
+	dateRelatedFields.setTitle(dateParam[i]);
+	i++;
+	dateRelatedFields.setId(dateParam[i]);
+	i++;
+	dateRelatedFields.setClassName(dateParam[i]);
+	inputTypeDateList.add(dateRelatedFields);
+	}
+	}
+
+	pageElement.setInputTypeDateList(inputTypeDateList);
+	pageElement.setUserStatus(userStatus);
+	return new ResponseEntity<>(pageElement, HttpStatus.OK);
+	}
 }

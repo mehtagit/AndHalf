@@ -14,7 +14,7 @@ var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
 
 var filterRequest={
-		
+
 		"endDate":startdate,
 		"startDate":endDate,
 		"taxPaidStatus":taxStatus,
@@ -81,20 +81,20 @@ function pageRendering(){
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-				$("#greivanceTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-						"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
-						"<label for='TotalPrice'>"+date[i].title
-						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
-						"<span	class='input-group-addon' style='color: #ff4081'>"+
-						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$("#greivanceTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+							"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+							"<label for='TotalPrice'>"+date[i].title
+							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
+							"<span	class='input-group-addon' style='color: #ff4081'>"+
+							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
 				else if(date[i].type === "text"){
 					$("#greivanceTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
-					
+
 				}
-				
-				
-				
+
+
+
 			} 
 
 			// dynamic dropdown portion
@@ -114,7 +114,7 @@ function pageRendering(){
 							"</div>"+
 					"</div>");
 			}
-			
+
 			$("#greivanceTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
@@ -130,7 +130,7 @@ function pageRendering(){
 		}
 
 	}); 
-	};
+};
 
 
 
@@ -206,173 +206,148 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function saveGrievance(){
-	
-	
-	 var category=$('#category').val();
-	 var txnId=$('#TransactionId').val();
-	 var remark=$('#Remark').val();
-	 var file=$('#myInput').val();
-	 
-	 console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
-	 var formData= new FormData();
-		formData.append('file', $('#myInput')[0].files[0]);
-	 	 formData.append('txnId',txnId);
-	 	formData.append('categoryId',category);
-	 	formData.append('remarks',remark);
-	 
-	 $.ajax({
+
+
+	var category=$('#category').val();
+	var txnId=$('#TransactionId').val();
+	var remark=$('#Remark').val();
+	var file=$('#myInput').val();
+
+	console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
+	var formData= new FormData();
+	formData.append('file', $('#myInput')[0].files[0]);
+	formData.append('txnId',txnId);
+	formData.append('categoryId',category);
+	formData.append('remarks',remark);
+
+	$.ajax({
 		url: './saveGrievance',
 		type: 'POST',
 		data: formData,
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-			
-			 console.log(data);
-			  $('#submitGrievance').openModal();
-			  if(data.errorCode=="0")
-				 {
-			 $('#greivanceId').text(data.txnId);
-			
-				 }
-			 else if(data.errorCode=="3")
-				 {
+
+			console.log(data);
+			$('#submitGrievance').openModal();
+			if(data.errorCode=="0")
+			{
+				$('#greivanceId').text(data.txnId);
+
+			}
+			else if(data.errorCode=="3")
+			{
 				console.log("status code = 3"); 
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text("Grievnace number already exist");
-				 $('#errorCode').val(data.errorCode);
-				 }
-		   // $('#updateConsignment').modal('open'); 
+				$('#errorCode').val(data.errorCode);
+			}
+			// $('#updateConsignment').modal('open'); 
 			//alert("success");
-			
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-		console.log("error in ajax")
+			console.log("error in ajax")
 		}
 	});
-	
-	 return false;
-	 
+
+	return false;
+
 }
 
-function grievanceReply(userId,grievaneId,txnId)
+function grievanceReply(userId,grievanceId,txnId)
 {
-	  $('#replyModal').openModal();
-	  console.log("************");
-	  $('#grievanceIdToSave').text(grievaneId);
-	  $('#grievanceTxnId').text(txnId);
-	 /*$.ajax({
-		url: './viewGrievance',
+	$.ajax({
+		url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
+		type: 'GET',
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+
+			console.log(JSON.stringify(data));
+			$('#replyModal').openModal();
+			$('#grievanceIdToSave').text(grievanceId);
+			$('#grievanceTxnId').text(txnId);
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
+}
+
+function saveGrievanceReply()
+{
+	var remark=$('#replyRemark').val();
+	var replyFile=$('#replyFile').val();
+	var  grievanceIdToSave= $('#grievanceIdToSave').text();
+	var  grievanceTxnId=  $('#grievanceTxnId').text();
+
+	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+" grievanceIdToSave="+grievanceIdToSave);
+	var formData= new FormData();
+	formData.append('file', $('#replyFile')[0].files[0]);
+	formData.append('remark',remark);
+	formData.append('grievanceId',grievanceIdToSave);
+	formData.append('txnId',grievanceTxnId);
+
+	$.ajax({
+		url: './saveGrievanceMessage',
 		type: 'POST',
 		data: formData,
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
-			
-			 console.log(data);
-			  $('#submitGrievance').openModal();
-			  if(data.errorCode=="0")
-				 {
-			 $('#greivanceId').text(data.txnId);
-			
-				 }
-			 else if(data.errorCode=="3")
-				 {
+
+			console.log(data);
+			$('#replyMsg').openModal();
+			if(data.errorCode=="0")
+			{
+				$('#showReplyResponse').text('');
+				$('#showReplyResponse').text(data.message);
+
+			}
+			else if(data.errorCode=="3")
+			{
 				console.log("status code = 3"); 
-				$('#sucessMessage').text('');
-				$('#sucessMessage').text("Grievnace number already exist");
-				 $('#errorCode').val(data.errorCode);
-				 }
-		   // $('#updateConsignment').modal('open'); 
+				$('#showReplyResponse').text('');
+				$('#showReplyResponse').text(data.message);
+			}
+			// $('#updateConsignment').modal('open'); 
 			//alert("success");
-			
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-		console.log("error in ajax")
+			console.log("error in ajax")
 		}
-	});*/
+	});
 }
 
-function saveGrievanceReply()
-{
-	 var remark=$('#replyRemark').val();
-	 var replyFile=$('#replyFile').val();
-	var  grievanceIdToSave= $('#grievanceIdToSave').text();
-	var  grievanceTxnId=  $('#grievanceTxnId').text();
-	
-	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+" grievanceIdToSave="+grievanceIdToSave);
-	 var formData= new FormData();
-		 formData.append('file', $('#replyFile')[0].files[0]);
-	 	 formData.append('remark',remark);
-	 	 formData.append('grievanceId',grievanceIdToSave);
-	 	 formData.append('txnId',grievanceTxnId);
-	 	 
-	 	 $.ajax({
-	 		url: './saveGrievanceMessage',
-	 		type: 'POST',
-	 		data: formData,
-	 		processData: false,
-	 		contentType: false,
-	 		success: function (data, textStatus, jqXHR) {
-	 			
-	 			 console.log(data);
-	 			  $('#replyMsg').openModal();
-	 			  if(data.errorCode=="0")
-	 				 {
-	 				 $('#showReplyResponse').text('');
-	 			     $('#showReplyResponse').text(data.message);
-	 			
-	 				 }
-	 			 else if(data.errorCode=="3")
-	 				 {
-	 				 console.log("status code = 3"); 
-	 				 $('#showReplyResponse').text('');
-	 			     $('#showReplyResponse').text(data.message);
-	 				 }
-	 		   // $('#updateConsignment').modal('open'); 
-	 			//alert("success");
-	 			
-	 		},
-	 		error: function (jqXHR, textStatus, errorThrown) {
-	 		console.log("error in ajax")
-	 		}
-	 	});
-}
- 
 function viewGrievanceHistory(grievanceId)
- {
-	
+{
+
 	$.ajax({
- 		url: './viewGrievance?grievanceId='+grievanceId,
- 		type: 'GET',
- 		processData: false,
- 		contentType: false,
- 		success: function (data, textStatus, jqXHR) {
- 			
- 			console.log(JSON.stringify(data));
- 			
- 			$('#manageAccount').openModal();
- 			for(var i=0; i<data.length; ++i)
- 				{
- 			console.log("*****");
- 			console.log(data[i].reply);
- 		/*	$('#timeHistory').text('');
- 			$('#userTypehistory').text('');
- 			$('#messageHistory').text('');*/
- 			
- 			 var sp='<span>'+data[i].reply+'</span><hr>';
- 			$('#live-chat').append(sp);
- 			/*$('#timeHistory').text(data[i].createdOn);
- 			$('#userTypehistory').text(data[i].userId);
- 			$('#messageHistory').text(data[i].reply);
- 		*/
- 				}
- 		},
- 		error: function (jqXHR, textStatus, errorThrown) {
- 		console.log("error in ajax")
- 		}
- 	});
- }
+		url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
+		type: 'GET',
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+
+			console.log(JSON.stringify(data));
+			$('#chatMsg').empty();
+			$('#manageAccount').openModal();
+			for(var i=0; i<data.length; ++i)
+			{
+				
+				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userId+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
+				
+				
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
+}
 
 
 

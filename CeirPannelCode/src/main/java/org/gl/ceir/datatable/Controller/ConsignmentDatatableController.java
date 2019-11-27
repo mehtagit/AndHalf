@@ -221,133 +221,133 @@ public class ConsignmentDatatableController {
 	
 	@PostMapping("consignment/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
-		
-		String userType = (String) session.getAttribute("usertype");
-		String userStatus = (String) session.getAttribute("userStatus");
-		
-		InputFields inputFields = new InputFields();
-		InputFields dateRelatedFields;
-		
-		pageElement.setPageTitle("Consignment");
-		
-		List<Button> buttonList = new ArrayList<>();
-		List<InputFields> dropdownList = new ArrayList<>();
-		List<InputFields> inputTypeDateList = new ArrayList<>();
-			log.info("USER STATUS:::::::::"+userStatus);
-			log.info("session value user Type=="+session.getAttribute("usertype"));
-			log.info("sourceType in rendering $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" +sourceType);
-			
-			if("Importer".equals(userType) && "viaStolen".equals(sourceType)){
-				String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
-				for(int i=0; i< names.length ; i++) {
-					button = new Button();
-					button.setType(names[i]);
-					i++;
-					button.setButtonTitle(names[i]);
-					i++;
-					button.setButtonURL(names[i]);
-					i++;
-					button.setId(names[i]);
-					buttonList.add(button);
-				}			
-				pageElement.setButtonList(buttonList);
-				
-				
-				String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
-				for(int i=0; i< footerBtn.length ; i++) {
-					button = new Button();
-					button.setType(footerBtn[i]);
-					i++;
-					button.setButtonTitle(footerBtn[i]);
-					i++;
-					button.setButtonURL(footerBtn[i]);
-					i++;
-					button.setId(footerBtn[i]);
-					buttonList.add(button);
-				}			
-				pageElement.setButtonList(buttonList);
-				
-		
-				
-				//Dropdown items			
-				String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
-				for(int i=0; i< selectParam.length; i++) {
-					inputFields= new InputFields();
-					inputFields.setType(selectParam[i]);
-					i++;
-					inputFields.setTitle(selectParam[i]);
-					i++;
-					inputFields.setId(selectParam[i]);
-					i++;
-					inputFields.setClassName(selectParam[i]);
-					dropdownList.add(inputFields);
-				}
-				pageElement.setDropdownList(dropdownList);
-				
-				//input type date list		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqq11111111111111111111111111111111111111111111111111111
-				String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
-				for(int i=0; i< dateParam.length; i++) {
-					dateRelatedFields= new InputFields();
-					dateRelatedFields.setType(dateParam[i]);
-					i++;
-					dateRelatedFields.setTitle(dateParam[i]);
-					i++;
-					dateRelatedFields.setId(dateParam[i]);
-					i++;
-					dateRelatedFields.setClassName(dateParam[i]);
-					inputTypeDateList.add(dateRelatedFields);
-				}
-			}else {
-				String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
-				for(int i=0; i< names.length ; i++) {
-					button = new Button();
-					button.setType(names[i]);
-					i++;
-					button.setButtonTitle(names[i]);
-					i++;
-					button.setButtonURL(names[i]);
-					i++;
-					button.setId(names[i]);
-					buttonList.add(button);
-				}			
-				pageElement.setButtonList(buttonList);
-				
-				//Dropdown items			
-				String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
-				for(int i=0; i< selectParam.length; i++) {
-					inputFields= new InputFields();
-					inputFields.setType(selectParam[i]);
-					i++;
-					inputFields.setTitle(selectParam[i]);
-					i++;
-					inputFields.setId(selectParam[i]);
-					i++;
-					inputFields.setClassName(selectParam[i]);
-					dropdownList.add(inputFields);
-				}
-				pageElement.setDropdownList(dropdownList);
-				
-				//input type date list		
-				String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
-				for(int i=0; i< dateParam.length; i++) {
-					dateRelatedFields= new InputFields();
-					dateRelatedFields.setType(dateParam[i]);
-					i++;
-					dateRelatedFields.setTitle(dateParam[i]);
-					i++;
-					dateRelatedFields.setId(dateParam[i]);
-					i++;
-					dateRelatedFields.setClassName(dateParam[i]);
-					inputTypeDateList.add(dateRelatedFields);
-				}
-				
-				
-			}
-			
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		pageElement.setUserStatus(userStatus);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK); 	
-		}
+
+	String userType = (String) session.getAttribute("usertype");
+	String userStatus = (String) session.getAttribute("userStatus");
+
+	InputFields inputFields = new InputFields();
+	InputFields dateRelatedFields;
+
+	pageElement.setPageTitle("Consignment");
+
+	List<Button> buttonList = new ArrayList<>();
+	List<InputFields> dropdownList = new ArrayList<>();
+	List<InputFields> inputTypeDateList = new ArrayList<>();
+	log.info("USER STATUS:::::::::"+userStatus);
+	log.info("session value user Type=="+session.getAttribute("usertype"));
+	log.info("sourceType in rendering $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" +sourceType);
+
+	if("Importer".equals(userType) && "viaStolen".equals(sourceType)){
+	String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
+	for(int i=0; i< names.length ; i++) {
+	button = new Button();
+	button.setType(names[i]);
+	i++;
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
+	}	
+	pageElement.setButtonList(buttonList);
+
+
+	String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
+	for(int i=0; i< footerBtn.length ; i++) {
+	button = new Button();
+	button.setType(footerBtn[i]);
+	i++;
+	button.setButtonTitle(footerBtn[i]);
+	i++;
+	button.setButtonURL(footerBtn[i]);
+	i++;
+	button.setId(footerBtn[i]);
+	buttonList.add(button);
+	}	
+	pageElement.setButtonList(buttonList);
+
+
+
+	//Dropdown items	
+	String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
+	for(int i=0; i< selectParam.length; i++) {
+	inputFields= new InputFields();
+	inputFields.setType(selectParam[i]);
+	i++;
+	inputFields.setTitle(selectParam[i]);
+	i++;
+	inputFields.setId(selectParam[i]);
+	i++;
+	inputFields.setClassName(selectParam[i]);
+	dropdownList.add(inputFields);
+	}
+	pageElement.setDropdownList(dropdownList);
+
+	//input type date list	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqq11111111111111111111111111111111111111111111111111111
+	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+	for(int i=0; i< dateParam.length; i++) {
+	dateRelatedFields= new InputFields();
+	dateRelatedFields.setType(dateParam[i]);
+	i++;
+	dateRelatedFields.setTitle(dateParam[i]);
+	i++;
+	dateRelatedFields.setId(dateParam[i]);
+	i++;
+	dateRelatedFields.setClassName(dateParam[i]);
+	inputTypeDateList.add(dateRelatedFields);
+	}
+	}else {
+	String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
+	for(int i=0; i< names.length ; i++) {
+	button = new Button();
+	button.setType(names[i]);
+	i++;
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
+	}	
+	pageElement.setButtonList(buttonList);
+
+	//Dropdown items	
+	String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
+	for(int i=0; i< selectParam.length; i++) {
+	inputFields= new InputFields();
+	inputFields.setType(selectParam[i]);
+	i++;
+	inputFields.setTitle(selectParam[i]);
+	i++;
+	inputFields.setId(selectParam[i]);
+	i++;
+	inputFields.setClassName(selectParam[i]);
+	dropdownList.add(inputFields);
+	}
+	pageElement.setDropdownList(dropdownList);
+
+	//input type date list	
+	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+	for(int i=0; i< dateParam.length; i++) {
+	dateRelatedFields= new InputFields();
+	dateRelatedFields.setType(dateParam[i]);
+	i++;
+	dateRelatedFields.setTitle(dateParam[i]);
+	i++;
+	dateRelatedFields.setId(dateParam[i]);
+	i++;
+	dateRelatedFields.setClassName(dateParam[i]);
+	inputTypeDateList.add(dateRelatedFields);
+	}
+
+
+	}
+
+	pageElement.setInputTypeDateList(inputTypeDateList);
+	pageElement.setUserStatus(userStatus);
+	return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+	}
 	}
 	
 

@@ -5,7 +5,7 @@
 
 	<groupId>org.gl.ceir</groupId>
 	<artifactId>CeirPannelCode</artifactId>
-<!-- 	<artifactId>jiten</artifactId> -->
+	<!-- <artifactId>jiten</artifactId> -->
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -40,14 +40,11 @@
 			<version>${spring.boot.version}</version>
 		</dependency>
 
-	
 
 
-		<!-- 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency> -->
+
+		<!-- <dependency> <groupId>com.h2database</groupId> <artifactId>h2</artifactId> 
+			<scope>runtime</scope> </dependency> -->
 
 
 		<dependency>
@@ -99,7 +96,7 @@
 		<!-- <dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-core</artifactId> 
 			<version>2.9.6</version> </dependency> -->
 
-	
+
 		<dependency>
 			<groupId>org.springframework.ws</groupId>
 			<artifactId>spring-ws-core</artifactId>

@@ -158,7 +158,7 @@ function filterConsignment()
 //**************************************************filter table**********************************************
 
 function table(url,dataUrl){
-	
+
 	var filterRequest={
 			"consignmentStatus":$('#filterConsignmentStatus').val(),
 			"endDate":$('#endDate').val(),
@@ -167,7 +167,7 @@ function table(url,dataUrl){
 			"userId":userId,
 			"featureId":featureId
 	}
-	
+
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -189,7 +189,7 @@ function table(url,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
-						
+
 						console.log(JSON.stringify(filterRequest));
 					}
 
@@ -409,13 +409,17 @@ function pageButtons(url){
 
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
-				$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-						"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
-						"<label for='TotalPrice'>"+date[i].title
-						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+">"+
-						"<span	class='input-group-addon' style='color: #ff4081'>"+
-						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+				if(date[i].type === "date"){
+					$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+							"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+							"<label for='TotalPrice'>"+date[i].title
+							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+">"+
+							"<span	class='input-group-addon' style='color: #ff4081'>"+
+							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
+				}else if(date[i].type === "text"){
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+				}
 			} 
 
 			// dynamic dropdown portion
@@ -497,7 +501,7 @@ function pageButtons(url){
 			//Tax paid status-----------dropdown
 			$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].state).text(data[i].interp)
+					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
 				}
 			});
