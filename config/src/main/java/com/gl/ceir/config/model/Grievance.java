@@ -148,6 +148,11 @@ public class Grievance {
 		this.user = user;
 	}*/
 	
-	
+	@Override
+	public String toString() {
+		return "Grievance:{grievanceId:"+grievanceId+",userId:"+userId+",userType:"+userType+",grievanceStatus"+grievanceStatus+","
+				+ "txnId:"+txnId+",categoryId:"+categoryId+",fileName"+fileName+",createdOn"+createdOn+",modifiedOn:"+modifiedOn+","
+						+ "remarks"+remarks+"}";
+	}
 	
 }

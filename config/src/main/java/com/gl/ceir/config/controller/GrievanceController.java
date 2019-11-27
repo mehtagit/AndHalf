@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.GrievanceMsg;
 import com.gl.ceir.config.model.GrievanceReply;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
-import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.service.impl.GrievanceServiceImpl;
@@ -38,11 +39,11 @@ public class GrievanceController {
 	@Autowired
 	Utility utility;
 	
-	@ApiOperation(value = "Add new grievance.", response = GenricResponse.class)
+	@ApiOperation(value = "Add new grievance.", response = GrievanceGenricResponse.class)
 	@RequestMapping(path = "/grievance/save", method = {RequestMethod.POST})
-	public GenricResponse uploadFile(@RequestBody Grievance grievance) {
+	public GrievanceGenricResponse uploadFile(@RequestBody Grievance grievance) {
 		logger.info("New Grievance Request="+grievance);
-		GenricResponse genricResponse = grievanceServiceImpl.save(grievance);
+		GrievanceGenricResponse genricResponse = grievanceServiceImpl.save(grievance);
 		logger.info("New Grievance Response="+genricResponse);
 		return genricResponse;
 	}
@@ -90,20 +91,26 @@ public class GrievanceController {
 	@PostMapping("v2/filter/grievance")
 	public MappingJacksonValue withPaginationGrievances(@RequestBody GrievanceFilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+		MappingJacksonValue mapping = null;
 		logger.info("Request to view filtered grievance = " + filterRequest);
-		Page<Grievance>  grievance =  grievanceServiceImpl.getFilterPaginationGrievances(filterRequest, pageNo, pageSize);
-		MappingJacksonValue mapping = new MappingJacksonValue(grievance);
+		if( file == 0) {
+			Page<Grievance>  grievance =  grievanceServiceImpl.getFilterPaginationGrievances(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(grievance);
+		}else {
+			FileDetails fileDetails = grievanceServiceImpl.getFilterGrievancesInFile(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(fileDetails);
+		}
 		logger.info("Response of view filtered Grievances ="+mapping);
 		return mapping;
 	}
 	
-	@ApiOperation(value = "Add new grievance Message", response = GenricResponse.class)
+	@ApiOperation(value = "Add new grievance Message", response = GrievanceGenricResponse.class)
 	@RequestMapping(path = "/grievance/saveMessage", method = {RequestMethod.POST})
-	public GenricResponse saveGrievanceMessage(@RequestBody GrievanceReply grievanceReply) {
+	public GrievanceGenricResponse saveGrievanceMessage(@RequestBody GrievanceReply grievanceReply) {
 		logger.info("New Grievance message Request="+grievanceReply);
-		GenricResponse genricResponse = grievanceServiceImpl.saveGrievanceMsg(grievanceReply);
+		GrievanceGenricResponse genricResponse = grievanceServiceImpl.saveGrievanceMsg(grievanceReply);
 		logger.info("New Grievance Response="+genricResponse);
 		return genricResponse;
 	}
@@ -111,9 +118,10 @@ public class GrievanceController {
 	/**This api will give all open grievances**/
 	@ApiOperation(value = "View all the list of grievance messages", response = Grievance.class)
 	@RequestMapping(path = "/grievance/msg", method = {RequestMethod.GET})
-	public MappingJacksonValue getGrievanceMessagesByGrievanceId(@RequestParam("userId") Integer userId,@RequestParam("grievanceId") String grievanceId) {
-		logger.info("Request to view all messages of grievance="+userId+" and Grievance Id:["+grievanceId+"]");
-		List<GrievanceMsg>  msgs =  grievanceServiceImpl.getAllGrievanceMessagesByGrievanceId(grievanceId);
+	public MappingJacksonValue getGrievanceMessagesByGrievanceId(@RequestParam("userId") Integer userId,@RequestParam("grievanceId") String grievanceId
+			,@RequestParam("recordLimit") Integer recordLimit) {
+		logger.info("Request to view all messages of grievance="+userId+", Grievance Id:["+grievanceId+"] and Record Limit:["+recordLimit+"]");
+		List<GrievanceMsg>  msgs =  grievanceServiceImpl.getAllGrievanceMessagesByGrievanceId(grievanceId, recordLimit);
 		MappingJacksonValue response = new MappingJacksonValue(msgs);
 		logger.info("Response of view all messages of grievance ="+response);
 		return response;
