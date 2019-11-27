@@ -5,6 +5,7 @@
 
 	<groupId>org.gl.ceir</groupId>
 	<artifactId>CeirPannelCode</artifactId>
+<!-- 	<artifactId>jiten</artifactId> -->
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
