@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
@@ -71,7 +72,7 @@ public class ConsignmentRegisterServiceImpl {
 
 				String value =	chm.get(device.getImeiEsnMeid());
 
-				if(value == null ) {
+				if(Objects.isNull(value)) {
 
 					chm.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
 				}else {
@@ -90,12 +91,12 @@ public class ConsignmentRegisterServiceImpl {
 			consignmentMgmt.setConsignmentStatus(3);
 			consignmentRepository.save(consignmentMgmt);
 
-			return true;
+			return Boolean.TRUE;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.info("Exception found ="+e);
-			return false;
+			return Boolean.FALSE;
 		}
 
 	}

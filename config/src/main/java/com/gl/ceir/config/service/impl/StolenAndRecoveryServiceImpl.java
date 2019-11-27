@@ -146,6 +146,9 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(stolenandRecoveryMgmt.getUserId()))
 				str.with(new SearchCriteria("userId", stolenandRecoveryMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(stolenandRecoveryMgmt.getTxnId()))
+				str.with(new SearchCriteria("txnId", stolenandRecoveryMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+
 			if(Objects.nonNull(stolenandRecoveryMgmt.getRoleType()))
 				str.with(new SearchCriteria("roleType", stolenandRecoveryMgmt.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 

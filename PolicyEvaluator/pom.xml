@@ -69,7 +69,7 @@
 		<dependency>
 			<groupId>com.gl.ceir</groupId>
 			<artifactId>config</artifactId>
-			<version>1.0</version>
+			<version>1.0.7</version>
 			<classifier>import-lib</classifier>
 			<exclusions>
 				<exclusion>

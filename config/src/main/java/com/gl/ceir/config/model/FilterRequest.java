@@ -6,8 +6,9 @@ import java.util.Date;
 public class FilterRequest {
 
 	public Integer userId;
-	public LocalDateTime  startDate;
-	public LocalDateTime   endDate;
+	private String txnId;
+	public String startDate;
+	public String endDate;
 	public String taxPaidStatus;
 	private Integer consignmentStatus;
 	private String roleType;
@@ -16,24 +17,28 @@ public class FilterRequest {
 	private Integer featureId;
 	private Integer userTypeId;
 
-
-
 	public Integer getUserId() {
 		return userId;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public LocalDateTime getStartDate() {
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	public String getTaxPaidStatus() {

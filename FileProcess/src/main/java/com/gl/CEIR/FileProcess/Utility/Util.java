@@ -23,7 +23,7 @@ public class Util {
 			File tmpDir = new File(fileName);
 			boolean exists = tmpDir.exists();
 
-			if(true == exists) {
+			if(exists) {
 
 				tmpDir.renameTo(new File(nameFIleLocation));
 

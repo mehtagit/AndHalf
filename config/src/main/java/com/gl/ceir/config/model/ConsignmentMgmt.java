@@ -77,7 +77,7 @@ public class ConsignmentMgmt implements Serializable {
 
 	private String remarks;
 
-	private int currency;
+	private Integer currency;
 
 	private Double totalPrice;
 

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.gl.CEIR.FileProcess.Utility.Validation;
 import com.gl.ceir.config.model.DeviceDb;
 import com.gl.ceir.config.model.ConsignmentMgmt;
@@ -16,11 +15,8 @@ import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
-
-
 @Service
 public class ConsignmentDeleteServiceImpl {
-
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
@@ -54,9 +50,9 @@ public class ConsignmentDeleteServiceImpl {
 
 			boolean result = validation.deivceExistValidator(deviceList);
 
-			if(result == false) {
+			if(result) {
 
-				stokeDetailsRepository.deleteByTxnId(webActionDb.getTxnId());
+				// stokeDetailsRepository.deleteByTxnId(webActionDb.getTxnId());
 
 				deviceDbHistory.setFileName(consignmentMgmt.getFileName());
 				deviceDbHistory.setFilePath("");
@@ -91,10 +87,10 @@ public class ConsignmentDeleteServiceImpl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;		
+			return Boolean.FALSE;		
 
 		}
-		return true;
+		return Boolean.TRUE;
 
 
 	}
