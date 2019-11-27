@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Grievance</title>
+<title>Dashboard</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -53,8 +53,6 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-	<link rel="stylesheet"
-	href="${context}/resources/css/grievance.css">
 
 
 
@@ -75,9 +73,9 @@
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/Grievance/grievanceManagement"
+							<form action="${context}/registrationRequest"
 								method="post">
-								<div class="col s12 m12 l12" id="greivanceTableDiv"
+								<div class="col s12 m12 l12" id="registrationTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -85,7 +83,7 @@
 									</div>
 								</div>
 							</form>
-							<table id="grivanceLibraryTable"
+							<table id="registrationLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -97,90 +95,18 @@
 		</div>
 		<!--end container-->
 	</section>
-	
-	<div id="replyModal" class="modal">
-        <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-        <div class="modal-content">
-            <div class="row">
-                <div class="col s12 m12">
-                    <h6 style="font-weight: bold;">Grievance ID: <span id="grievanceIdToSave"></span></h6>
-                    <span id="grievanceTxnId" style="display: none;"></span>
-                    <hr>
-                </div>
 
-                <div class="col s12 m12">
-                    <h6 style="float: left; font-weight: bold;">You : </h6>
-                    <h6 style="float: left;">&nbsp; Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry.</h6><span style="float:right;">10/02/2019 11:00</span>
-                </div>
-                <div class="col s12 m12">
-                    <h6 style="float: left; font-weight: bold;">Admin : </h6>
-                    <h6 style="float: left;">&nbsp; Need more clearification</h6><span style="float:right;">10/02/2019
-                        11:24</span>
-                </div>
-                <div class="col s12 m12">
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark"></textarea>
-                    <h6 style="color: #000;">Upload Supporting Document</h6>
-                </div>
-                <div class="file-field col s12 m12">
-                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" multiple></div>
-                    <div class="file-path-wrapper"><input class="file-path validate" type="text"
-                            placeholder="Upload one or more files">
-                        <div>
-                            <p id="myFiles"></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col s12 m12 center">
-                    <a onclick="saveGrievanceReply()" class="modal-close modal-trigger waves-effect waves-green btn right">Reply</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="replyMsg" class="modal">
-    <div class="modal-content">
-        <h6>Grievance Reply</h6>
-        <hr>
-        <div class="row">
-            <h6 id="showReplyResponse">Your reply successfully sent to admin</h6>
-        </div>
-        <div class="row">
-            <div class="input-field col s12 center">
-                <div class="input-field col s12 center">
-                    <a href="./grievanceManagement" class="modal-close btn">ok</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="manageAccount" class="modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-<div class="modal-content">
-<h5 style="margin-left: 10%;">Grievance history</h5>
-<hr>
-<div id="live-chat" style="margin-left: 5%;">
-<div class="chat">
-<div class="chat-history">
-<div class="chat-message clearfix">
-<div class="chat-message-content clearfix">
-<span class="chat-time" id="timeHistory"></span>
-<h5 id="userTypehistory"></h5>
-<p id="messageHistory"></p>
-</div> <!-- end chat-message-content -->
-</div> <!-- end chat-message -->
-<hr>
-
-</div>
-</div>
-</div>
-</div>
-</div>  
-
+   
 	
 
 
+	
+	
+	
+	
+	
+	
+	
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -218,7 +144,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js"></script>
+		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
 		
 </body>
 </html>

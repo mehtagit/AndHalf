@@ -338,3 +338,48 @@ function saveGrievanceReply()
 	 		}
 	 	});
 }
+ 
+function viewGrievanceHistory(grievanceId)
+ {
+	
+	$.ajax({
+ 		url: './viewGrievance?grievanceId='+grievanceId,
+ 		type: 'GET',
+ 		processData: false,
+ 		contentType: false,
+ 		success: function (data, textStatus, jqXHR) {
+ 			
+ 			console.log(JSON.stringify(data));
+ 			
+ 			$('#manageAccount').openModal();
+ 			for(var i=0; i<data.length; ++i)
+ 				{
+ 			console.log("*****");
+ 			console.log(data[i].reply);
+ 		/*	$('#timeHistory').text('');
+ 			$('#userTypehistory').text('');
+ 			$('#messageHistory').text('');*/
+ 			
+ 			 var sp='<span>'+data[i].reply+'</span><hr>';
+ 			$('#live-chat').append(sp);
+ 			/*$('#timeHistory').text(data[i].createdOn);
+ 			$('#userTypehistory').text(data[i].userId);
+ 			$('#messageHistory').text(data[i].reply);
+ 		*/
+ 				}
+ 		},
+ 		error: function (jqXHR, textStatus, errorThrown) {
+ 		console.log("error in ajax")
+ 		}
+ 	});
+ }
+
+
+
+
+
+
+
+
+
+

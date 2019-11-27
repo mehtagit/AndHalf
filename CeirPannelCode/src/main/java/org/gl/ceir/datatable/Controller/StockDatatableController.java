@@ -57,15 +57,16 @@ public class StockDatatableController {
 
 				//FilterRequest filterrequest = request.getParameter("FilterRequest");
 				String filter = request.getParameter("filter");
-				Gson gsonObject=new Gson();	
+				Gson gsonObject=new Gson();
 				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+				
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				// TODO Convert header to an ENUM.
 				// list provided via Back-end process
 				
 				try {
-					
+					log.info("request passed to the filter api  ="+filterrequest);
 				Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);
 				Gson gson= new Gson(); 
 				String apiResponse = gson.toJson(response);
@@ -141,7 +142,30 @@ public class StockDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 				}
+			}else if("CEIRAdmin".equals(userType)) {
+				log.info("<><><><<<<<<><><><><><> userType in Admin" +userType);
+				for(StockContent dataInsideList : paginationContentList) 
+				{
+					String date= dataInsideList.getCreatedOn(); 
+					String txnId= dataInsideList.getTxnId(); 
+					String userId = "";
+					String roll = "";
+					String file= dataInsideList.getFileName();
+					// if API provide me consignmentStatusName
+					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+					String stockStatus = null;
+					stockStatus = statusOfStock.equals("0") ? "INIT" : 
+						statusOfStock.equals("1") ? "Processing" :
+							statusOfStock.equals("2")  ? "Error" :
+								statusOfStock.equals("3") ?   "Success" : "Not Defined";
+					String userStatus = (String) session.getAttribute("userStatus");
+					String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
+					String[] finalData={date,txnId,userId,roll,file,stockStatus,action}; 
+					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 			}
+		}
 				
 	}
 				//data set on ModelClass

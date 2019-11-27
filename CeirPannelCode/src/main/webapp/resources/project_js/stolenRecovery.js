@@ -288,13 +288,15 @@ event.preventDefault();
    			 
    			console.log("roleType=======" +roleType+"---------userId------"+userId+"-----------currentRoleType-----"+currentRoleType) 
    		   var role = currentRoleType == null ? roleType : currentRoleType;
+   			var featureId="5";
    		   var jsonObj = {
    		    	 "consignmentStatus": null,
    		    	 "endDate": "2019-11-11T10:53:37.289Z",
    		    	 "roleType": role,
    		    	 "startDate": "2019-11-11T10:53:37.290Z",
    		    	 "taxPaidStatus": null,
-   		    	 "userId": userId
+   		    	 "userId": userId,
+   		    	 "featureId":featureId
    		    	 };
    			 
    		 var sourceType = localStorage.getItem("sourceType");	 
@@ -327,7 +329,8 @@ event.preventDefault();
    			           		        url: dataUrl,
    			           		        type: 'POST',
    			           		  data : function(d) {
-   	          		    		d.filter =JSON.stringify(jsonObj);       		    		
+   	          		    		d.filter =JSON.stringify(jsonObj); 
+   	          		    		console.log(JSON.stringify(jsonObj));
    	           				}
    			         		},
    			                "columns": result

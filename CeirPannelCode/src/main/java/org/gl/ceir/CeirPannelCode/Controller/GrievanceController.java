@@ -3,6 +3,8 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -122,11 +124,11 @@ public class GrievanceController {
 
 	//***************************************** view Grievance controller *********************************
 		@RequestMapping(value="/viewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody GrievanceModel viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session)
+		public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session)
 		{
 			log.info("entery point in view grievance.");
 			int userId= (int) session.getAttribute("userid");
-			GrievanceModel grievanceModel=new GrievanceModel();
+			List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
 			log.info("Request pass to the view grievance api ="+grievanceId+"  userId= "+userId);
 			grievanceModel=feignCleintImplementation.viewGrievance(grievanceId, userId);
 			log.info("Response from  view grievance api = "+grievanceModel);

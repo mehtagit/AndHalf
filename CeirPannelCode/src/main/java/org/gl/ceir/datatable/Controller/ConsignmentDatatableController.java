@@ -75,7 +75,7 @@ public class ConsignmentDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
-		
+		log.info("request send to the filter api ="+filterrequest);
 		Object response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);

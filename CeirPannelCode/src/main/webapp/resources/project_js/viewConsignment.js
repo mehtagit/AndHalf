@@ -116,13 +116,14 @@ var endDate=$('#endDate').val();
 var taxStatus=$('#taxPaidStatus').val();
 var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
-
+var featureId="3";
 var filterRequest={
 		"consignmentStatus":consignmentStatus,
 		"endDate":startdate,
 		"startDate":endDate,
 		"taxPaidStatus":taxStatus,
 		"userId":userId,
+		"featureId":featureId
 };
 
 var sourceType =localStorage.getItem("sourceType");
@@ -181,6 +182,7 @@ function table(url,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
+						
 						console.log(JSON.stringify(filterRequest));
 					}
 

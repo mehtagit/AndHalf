@@ -158,51 +158,56 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/stakeholder/Recovery" ,method=RequestMethod.POST) 
 	public GenricResponse fileRecovery(@RequestBody StolenRecoveryModel request) ;
 
-	
-//delete stolen recovery feign  controller
-	    @RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
-	    public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
+
+	//delete stolen recovery feign  controller
+	@RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
+	public @ResponseBody GenricResponse deleteStolenRecovery(StolenRecoveryModel stolenRecoveryModel) ;
 	/************* DROPDOWN *****************/
 
 	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
 	public List<Dropdown> consignmentStatusList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
 
-	
+
 	@RequestMapping(value="system-config-list/{tag}" ,method=RequestMethod.GET) 
 	public List<Dropdown> taxPaidStatusList(@PathVariable("tag") String tag);
 
 	//**************************************************************** file Stolen type ***************************************************************************************************		
 
 
-		@RequestMapping(value="/stakeholder/update" ,method=RequestMethod.PUT) 
-		public GenricResponse updateFileStolen(@RequestBody StolenRecoveryModel request) ;
+	@RequestMapping(value="/stakeholder/update" ,method=RequestMethod.PUT) 
+	public GenricResponse updateFileStolen(@RequestBody StolenRecoveryModel request) ;
 
 
-		
-		
-//****************************************************************grievance api starts from here ***************************************************************************************************		
-		//View filter grievance  feign  controller
-		@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
-		public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
-				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 
 
-// ******************************************** save 	grievance api ********************************************************************************
-		@RequestMapping(value="/grievance/save" ,method=RequestMethod.POST) 
-		public GenricResponse saveGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
-		
-		
+	//****************************************************************grievance api starts from here ***************************************************************************************************		
+	//View filter grievance  feign  controller
+	@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
+	public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 
-		// ******************************************** view 	grievance api ********************************************************************************
-				@RequestMapping(value="/grievance/msg" ,method=RequestMethod.GET) 
-				public GrievanceModel viewGrievance(@PathVariable("grievanceId") String  grievanceId,@PathVariable("userId") Integer userId) ;
-				
-				// ******************************************** save 	grievance api ********************************************************************************
-				@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 
-				public GenricResponse saveGrievanceMessage(@RequestBody GrievanceModel greGrievanceModel) ;
-						
 
+	// ******************************************** save 	grievance api ********************************************************************************
+	@RequestMapping(value="/grievance/save" ,method=RequestMethod.POST) 
+	public GenricResponse saveGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
+
+
+
+	// ******************************************** view 	grievance api ********************************************************************************
+	@RequestMapping(value="/grievance/msg" ,method=RequestMethod.GET) 
+	public List<GrievanceModel> viewGrievance(@RequestParam("grievanceId") String  grievanceId,@RequestParam("userId") Integer userId) ;
+
+	// ******************************************** save 	grievance api ********************************************************************************
+	@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 
+	public GenricResponse saveGrievanceMessage(@RequestBody GrievanceModel greGrievanceModel) ;
+
+	//****************************************************************Admin Registration api starts from here ***************************************************************************************************		
+	//View admin registration  feign  controller
+	@RequestMapping(value="/userProfile/record" ,method=RequestMethod.POST) 
+	public Object registrationRequest(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 }
 
 

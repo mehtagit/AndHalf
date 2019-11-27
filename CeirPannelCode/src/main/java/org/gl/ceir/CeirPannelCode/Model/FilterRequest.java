@@ -8,6 +8,8 @@ public class FilterRequest {
 	private Integer consignmentStatus;
 	private String roleType;
 	private String requestType;
+	private int featureId;
+	private int usertTypeId;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -50,11 +52,25 @@ public class FilterRequest {
 	public void setRequestType(String requestType) {
 		this.requestType = requestType;
 	}
+	public int getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(int featureId) {
+		this.featureId = featureId;
+	}
+	public int getUsertTypeId() {
+		return usertTypeId;
+	}
+	public void setUsertTypeId(int usertTypeId) {
+		this.usertTypeId = usertTypeId;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
-				+ roleType + ", requestType=" + requestType + "]";
+				+ roleType + ", requestType=" + requestType + ", featureId=" + featureId + ", usertTypeId="
+				+ usertTypeId + "]";
 	}
+	
 	
 }

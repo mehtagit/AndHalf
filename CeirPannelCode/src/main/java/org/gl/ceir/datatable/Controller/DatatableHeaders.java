@@ -110,6 +110,26 @@ public class DatatableHeaders {
 			}
 			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
+			
+			
+			//AdminStock Headers
+			else if("adminStockHeaders".equals(role)) {
+			String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.userId,HeadersTitle.roll,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};	
+			for(String header : headers) {
+			dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
+			//AdminRegistration Headers
+			else if("adminRegistration".equals(role)) {
+			String[] headers = {HeadersTitle.date,HeadersTitle.userId,HeadersTitle.asType,HeadersTitle.roll,HeadersTitle.Status,HeadersTitle.action};	
+			for(String header : headers) {
+			dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+
 
 
 			//DEFAULT PORTION  

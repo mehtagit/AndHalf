@@ -220,13 +220,21 @@ function editUploadStock(){
 
      var sourceType =localStorage.getItem("sourceType");
      var currentRoleType = $("body").attr("data-selected-roleType"); 
+     //alert("sourceType<><><><>"+sourceType);
+     //alert("currentRoleType<><><><>"+currentRoleType);
      function tableHeader(){
-    	 if(currentRoleType=="Importer" && sourceType !="viaStock"  ){
+    	 if(currentRoleType=="Importer"  && sourceType !="viaStock"  ){
     		 Datatable('headers','stockData')
- 		}else if(currentRoleType=="Importer" && sourceType =="viaStock" ){
+ 		}else if(currentRoleType==="Distributor"  && sourceType ==="viaStock"){
+ 			Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
+ 		}else if(currentRoleType=="Distributor"){
+ 			 Datatable('headers','stockData')
+ 		}else if(currentRoleType=="Importer" || currentRoleType=="Distributor"  && sourceType =="viaStock" ){
  			Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
  		}else if(currentRoleType=="Custom"){
  			Datatable('./headers?type=customStockHeaders','stockData')
+ 		}else if(currentRoleType=="CEIRAdmin"){
+ 			Datatable('./headers?type=adminStockHeaders','stockData')
  		}
     	 localStorage.removeItem('sourceType');
      } 
@@ -234,6 +242,8 @@ function editUploadStock(){
      
      
    var role = currentRoleType == null ? roleType : currentRoleType;
+   var featureId="4";
+   var usertypeId=7;
    var jsonObj = {
     	 "consignmentStatus": null,
     	 "endDate": "2019-11-11T10:53:37.289Z",
@@ -241,9 +251,11 @@ function editUploadStock(){
     	 "startDate": "2019-11-11T10:53:37.290Z",
     	 "taxPaidStatus": null,
     	 "userId": userId,
-    	 "userType" : role
+    	 "userType" : role,
+    	 "featureId":featureId,
+    	 "usertTypeId":usertypeId
     	};
-  console.log("REQUEST JSON:::::::::::::::::::::"+JSON.stringify(jsonObj))
+  
  
   function Datatable(url,dataUrl) {
    $.ajax({
@@ -263,7 +275,8 @@ function editUploadStock(){
 					type: 'POST',
            		        url: dataUrl,           		        
            		    	data : function(d) {
-          		    		d.filter = JSON.stringify(jsonObj);       		    		
+          		    		d.filter = JSON.stringify(jsonObj);  
+          		    		console.log("REQUEST JSON:::::::::::::::::::::"+JSON.stringify(jsonObj))
            				}
          		},
                 "columns": result
@@ -348,6 +361,9 @@ if(sourceType=="viaStock"){
 	$('#'+button[i].id).attr("href", button[i].buttonURL);
 	}
 }
+
+	currentRoleType=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
+	
 		}
 
 //$("#filterBtnDiv").append();
