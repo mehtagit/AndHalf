@@ -163,14 +163,10 @@
 <div id="live-chat" style="margin-left: 5%;">
 <div class="chat">
 <div class="chat-history">
-<div class="chat-message clearfix">
-<div class="chat-message-content clearfix">
-<span class="chat-time" id="timeHistory"></span>
-<h5 id="userTypehistory"></h5>
-<p id="messageHistory"></p>
-</div> <!-- end chat-message-content -->
+<div class="chat-message clearfix" id="chatMsg">
+
 </div> <!-- end chat-message -->
-<hr>
+
 
 </div>
 </div>

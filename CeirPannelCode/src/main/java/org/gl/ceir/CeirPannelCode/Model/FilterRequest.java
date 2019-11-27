@@ -10,6 +10,8 @@ public class FilterRequest {
 	private String requestType;
 	private int featureId;
 	private int usertTypeId;
+	private String userType;
+	private String txnId;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -64,13 +66,23 @@ public class FilterRequest {
 	public void setUsertTypeId(int usertTypeId) {
 		this.usertTypeId = usertTypeId;
 	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
 				+ roleType + ", requestType=" + requestType + ", featureId=" + featureId + ", usertTypeId="
-				+ usertTypeId + "]";
+				+ usertTypeId + ", userType=" + userType + ", txnId=" + txnId + "]";
 	}
-	
-	
-}
+	}

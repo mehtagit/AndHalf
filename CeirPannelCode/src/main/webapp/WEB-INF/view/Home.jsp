@@ -76,11 +76,13 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                 <div class="col s12 m12">
 
                                     <div class="col s12 m12 info-div center" style="margin-top: 30px;">
+                                       <c:choose>
+                                       <c:when test="${roletype=='Importer'}">
                                         <div class="round-circle-center-responsive">
                                             <div class="round-circle">
                                                 <h6 class="right">Consignment</h6>
-                                                <p class="circle-para right"><b>25</b> Messages</p>
-                                                <p class="center view-div-info"><a href="consignment.html" class=""><i
+                                                <p class="circle-para right"><b>${consignmentNoticationDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./Consignment/viewConsignment" class=""><i
                                                             class="fa fa-eye teal-text" title="view"></i></a></p>
                                             </div>
                                             <div class="icon-div center" style="background-color: #fc950c;">
@@ -89,9 +91,20 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         </div>
                                         <div class="round-circle-center-responsive">
                                             <div class="round-circle">
+                                                <h6 class="right">Total Device in <br> Transit</h6>
+                                                <p class="circle-para right"><b>${consignmentNoticationDetails.quantity}</b> </p>
+                                                <p class="center view-div-info"><a href="./Consignment/viewConsignment" class=""><i
+                                                            class="fa fa-eye teal-text" title="view"></i></a></p>
+                                            </div>
+                                            <div class="icon-div center" style="background-color: #57a85c;">
+                                                <i class="fa fa-tablet test-icon" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                        <div class="round-circle-center-responsive">
+                                            <div class="round-circle">
                                                 <h6 class="right">Stock</h6>
-                                                <p class="circle-para right"><b>25</b> Messages</p>
-                                                <p class="center view-div-info"><a href="stockManagement.html"
+                                                <p class="circle-para right"><b>${stockDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./assignDistributor"
                                                         class=""><i class="fa fa-eye teal-text" title="view"></i></a>
                                                 </p>
                                             </div>
@@ -99,11 +112,23 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                                 <i class="fa fa-th-list test-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
+                                        
+                                        <div class="round-circle-center-responsive">
+                                            <div class="round-circle">
+                                                <h6 class="right">Total Device <br> Waiting For Upload</h6>
+                                                <p class="circle-para right"><b>${stockDetails.quantity}</b> </p>
+                                                <p class="center view-div-info"><a href="./assignDistributor" class=""><i
+                                                            class="fa fa-eye teal-text" title="view"></i></a></p>
+                                            </div>
+                                            <div class="icon-div center" style="background-color: #e83c38;">
+                                                <i class="fa fa-tablet test-icon" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
                                         <div class="round-circle-center-responsive">
                                             <div class="round-circle">
                                                 <h6 class="right"> Stolen/Recovery</h6>
-                                                <p class="circle-para right"><b>25</b> Messages</p>
-                                                <p class="center view-div-info"><a href="stolenRecoveryView.html"
+                                                <p class="circle-para right"><b>${stolenRecoveryDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./stolenRecovery"
                                                         class=""><i class="fa fa-eye teal-text" title="view"></i></a>
                                                 </p>
                                             </div>
@@ -115,41 +140,72 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         <div class="round-circle-center-responsive">
                                             <div class="round-circle">
                                                 <h6 class="right">Grievance</h6>
-                                                <p class="circle-para right"><b>25</b> Messages</p>
-                                                <p class="center view-div-info"><a href="grievance.html" class=""><i
+                                                <p class="circle-para right"><b>${grievanceDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./grievanceManagement" class=""><i
                                                             class="fa fa-eye teal-text" title="view"></i></a></p>
                                             </div>
                                             <div class="icon-div center" style="background-color: #fc950c;">
                                                 <i class="fa fa-file-text-o test-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
+                                        </c:when>
+                                        <c:otherwise>
                                         <div class="round-circle-center-responsive">
                                             <div class="round-circle">
-                                                <h6 class="right">Total Device in <br> Transit</h6>
-                                                <p class="circle-para right"><b>25</b> Messages</p>
-                                                <p class="center view-div-info"><a href="#" class=""><i
-                                                            class="fa fa-eye teal-text" title="view"></i></a></p>
+                                                <h6 class="right">Stock</h6>
+                                                <p class="circle-para right"><b>${stockDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./assignDistributor"
+                                                        class=""><i class="fa fa-eye teal-text" title="view"></i></a>
+                                                </p>
                                             </div>
                                             <div class="icon-div center" style="background-color: #57a85c;">
-                                                <i class="fa fa-tablet test-icon" aria-hidden="true"></i>
+                                                <i class="fa fa-th-list test-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
+                                        
                                         <div class="round-circle-center-responsive">
                                             <div class="round-circle">
                                                 <h6 class="right">Total Device <br> Waiting For Upload</h6>
-                                                <p class="circle-para right"><b>25</b> Messages</p>
-                                                <p class="center view-div-info"><a href="" class=""><i
+                                                <p class="circle-para right"><b>${stockDetails.quantity}</b> </p>
+                                                <p class="center view-div-info"><a href="./assignDistributor" class=""><i
                                                             class="fa fa-eye teal-text" title="view"></i></a></p>
                                             </div>
                                             <div class="icon-div center" style="background-color: #e83c38;">
                                                 <i class="fa fa-tablet test-icon" aria-hidden="true"></i>
                                             </div>
                                         </div>
+                                        <div class="round-circle-center-responsive">
+                                            <div class="round-circle">
+                                                <h6 class="right"> Stolen/Recovery</h6>
+                                                <p class="circle-para right"><b>${stolenRecoveryDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./stolenRecovery"
+                                                        class=""><i class="fa fa-eye teal-text" title="view"></i></a>
+                                                </p>
+                                            </div>
+                                            <div class="icon-div center" style="background-color: #e83c38;">
+                                                <i class="fa fa-hand-o-right test-icon" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="round-circle-center-responsive">
+                                            <div class="round-circle">
+                                                <h6 class="right">Grievance</h6>
+                                                <p class="circle-para right"><b>${grievanceDetails.count}</b> </p>
+                                                <p class="center view-div-info"><a href="./grievanceManagement" class=""><i
+                                                            class="fa fa-eye teal-text" title="view"></i></a></p>
+                                            </div>
+                                            <div class="icon-div center" style="background-color: #fc950c;">
+                                                <i class="fa fa-file-text-o test-icon" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                                                                
+                                        </c:otherwise>
+                                       </c:choose> 
                                     </div>
                                     <div class="col s12 m12" style="padding-bottom: 40px;">
                                         <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
                                             Notification Info</h4>
-                                        <table class="responsive-table striped display" id="data-table-simple"
+                                        <table class="responsive-table striped display" id="notificationTable"
                                             cellspacing="0">
                                             <thead>
                                                 <tr>

@@ -44,61 +44,63 @@ public class StockDatatableController {
 	StockPaginationModel stockPaginationModel;
 	@Autowired
 	IconsState iconState;
-	
+
 	@PostMapping("stockData")
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
-	
-			
-				log.info("session value user Type=="+session.getAttribute("usertype"));
-				String userType = (String) session.getAttribute("usertype");
-		
-				List<List<String>> finalList=new ArrayList<List<String>>();
 
-				//FilterRequest filterrequest = request.getParameter("FilterRequest");
-				String filter = request.getParameter("filter");
-				Gson gsonObject=new Gson();
-				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-				
-				Integer pageSize = Integer.parseInt(request.getParameter("length"));
-				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-				// TODO Convert header to an ENUM.
-				// list provided via Back-end process
-				
-				try {
-					log.info("request passed to the filter api  ="+filterrequest);
-				Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);
-				Gson gson= new Gson(); 
-				String apiResponse = gson.toJson(response);
-				stockPaginationModel = gson.fromJson(apiResponse, StockPaginationModel.class);
-				List<StockContent> paginationContentList = stockPaginationModel.getContent();
-				log.info("-----after response-  paginationContentList------" + paginationContentList);
-				if(paginationContentList.isEmpty()) {
-					datatableResponseModel.setData(Collections.emptyList());
-				}
-				else {
-				
+
+		log.info("session value user Type=="+session.getAttribute("usertype"));
+		String userType = (String) session.getAttribute("usertype");
+
+		List<List<String>> finalList=new ArrayList<List<String>>();
+
+		//FilterRequest filterrequest = request.getParameter("FilterRequest");
+		String filter = request.getParameter("filter");
+		Gson gsonObject=new Gson();
+		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+
+		Integer pageSize = Integer.parseInt(request.getParameter("length"));
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		// TODO Convert header to an ENUM.
+		// list provided via Back-end process
+
+
+		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);
+		log.info("request passed to the filter api  ="+filterrequest);
+		log.info("response::::::::::::::::"+response);
+		try {		
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			stockPaginationModel = gson.fromJson(apiResponse, StockPaginationModel.class);
+			List<StockContent> paginationContentList = stockPaginationModel.getContent();
+			log.info("-----after response-  paginationContentList------" + paginationContentList);
+			if(paginationContentList.isEmpty()) {
+				datatableResponseModel.setData(Collections.emptyList());
+			}
+			else {
+
 				if("viaStock".equals(sourceType) && "Importer".equals(userType)){	
-				log.info("userType in stock controller 1--------"+userType);
-				for(StockContent dataInsideList : paginationContentList) 
-				{
-					String checboxes = "<input type=checkbox class=filled-in>";
-					String date= dataInsideList.getCreatedOn(); 
-					String txnId= dataInsideList.getTxnId(); 
-					String file= dataInsideList.getFileName();
-					// if API provide me consignmentStatusName
-					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-					String stockStatus = null;
-					stockStatus = statusOfStock.equals("0") ? "INIT" : 
-						statusOfStock.equals("1") ? "Processing" :
-							statusOfStock.equals("2")  ? "Error" :
-								statusOfStock.equals("3") ?   "Success" : "Not Defined";
-					//String userStatus = (String) session.getAttribute("userStatus");
-					//String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-					String[] finalData={checboxes,date,txnId,file,stockStatus}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);
+					log.info("userType in stock controller 1--------"+userType);
+					for(StockContent dataInsideList : paginationContentList) 
+					{
+						String checboxes = "<input type=checkbox class=filled-in>";
+						String date= dataInsideList.getCreatedOn(); 
+						String txnId= dataInsideList.getTxnId(); 
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatus = null;
+						stockStatus = statusOfStock.equals("0") ? "INIT" : 
+							statusOfStock.equals("1") ? "Processing" :
+								statusOfStock.equals("2")  ? "Error" :
+									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						//String userStatus = (String) session.getAttribute("userStatus");
+						//String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						String[] finalData={checboxes,date,txnId,file,stockStatus}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
 					}
 				}else if("Importer".equals(userType)){
 					log.info("sourceuserTypeType in stock controller 2--------"+userType);
@@ -120,8 +122,9 @@ public class StockDatatableController {
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
-						}
+					}
 				}else if("Custom".equals(userType)) {
+					log.info("userType:::::::::::::::::::::::"+userType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
@@ -141,179 +144,179 @@ public class StockDatatableController {
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
+					}
+				}else if("CEIRAdmin".equals(userType)) {
+					log.info("<><><><<<<<<><><><><><> userType in Admin" +userType);
+					for(StockContent dataInsideList : paginationContentList) 
+					{
+						String date= dataInsideList.getCreatedOn(); 
+						String txnId= dataInsideList.getTxnId(); 
+						String userId = "";
+						String roll = "";
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatus = null;
+						stockStatus = statusOfStock.equals("0") ? "INIT" : 
+							statusOfStock.equals("1") ? "Processing" :
+								statusOfStock.equals("2")  ? "Error" :
+									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
+						String[] finalData={date,txnId,userId,roll,file,stockStatus,action}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
 				}
-			}else if("CEIRAdmin".equals(userType)) {
-				log.info("<><><><<<<<<><><><><><> userType in Admin" +userType);
-				for(StockContent dataInsideList : paginationContentList) 
-				{
-					String date= dataInsideList.getCreatedOn(); 
-					String txnId= dataInsideList.getTxnId(); 
-					String userId = "";
-					String roll = "";
-					String file= dataInsideList.getFileName();
-					// if API provide me consignmentStatusName
-					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-					String stockStatus = null;
-					stockStatus = statusOfStock.equals("0") ? "INIT" : 
-						statusOfStock.equals("1") ? "Processing" :
-							statusOfStock.equals("2")  ? "Error" :
-								statusOfStock.equals("3") ?   "Success" : "Not Defined";
-					String userStatus = (String) session.getAttribute("userStatus");
-					String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-					String[] finalData={date,txnId,userId,roll,file,stockStatus,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);
+
 			}
+			//data set on ModelClass
+			datatableResponseModel.setRecordsTotal(stockPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(stockPaginationModel.getTotalElements());
+			log.info("------------datatableModel::::::::"+datatableResponseModel);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+
 		}
-				
+		catch(Exception e) {
+			datatableResponseModel.setRecordsTotal(null);
+			datatableResponseModel.setRecordsFiltered(null);
+			datatableResponseModel.setData(Collections.emptyList());
+			log.error(e.getMessage(),e);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		}
 	}
-				//data set on ModelClass
-				datatableResponseModel.setRecordsTotal(stockPaginationModel.getNumberOfElements());
-				datatableResponseModel.setRecordsFiltered(stockPaginationModel.getTotalElements());
-				log.info("------------datatableModel::::::::"+datatableResponseModel);
-				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-				
-				}
-				catch(Exception e) {
-					datatableResponseModel.setRecordsTotal(null);
-					datatableResponseModel.setRecordsFiltered(null);
-					datatableResponseModel.setData(Collections.emptyList());
-					return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-				}
-	}
-	
-	
-	
+
 	
 	@PostMapping
 	@RequestMapping("stock/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
-		String userType = (String) session.getAttribute("usertype");
-		InputFields inputFields = new InputFields();
-		InputFields dateRelatedFields;
-		
-		List<Button> buttonList = new ArrayList<>();
-		List<InputFields> dropdownList = new ArrayList<>();
-		List<InputFields> inputTypeDateList = new ArrayList<>();
-		
-		if("viaStock".equals(sourceType)){
-		log.info("sourceType render---1------" +sourceType);	
-		String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+	String userType = (String) session.getAttribute("usertype");
+	InputFields inputFields = new InputFields();
+	InputFields dateRelatedFields;
 
-		for(int i=0; i< names.length ; i++) {
-			button = new Button();
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		
-		String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
-		for(int i=0; i< footerBtn.length ; i++) {
-			button = new Button();
-			button.setType(footerBtn[i]);
-			i++;
-			button.setButtonTitle(footerBtn[i]);
-			i++;
-			button.setButtonURL(footerBtn[i]);
-			i++;
-			button.setId(footerBtn[i]);
-			buttonList.add(button);
-		}			
-			/* pageElement.setButtonList(buttonList); */
-		
-		
-		//Dropdown items			
-		String[] selectParam= {"select","Stock Status","filterFileStatus",""};
-		for(int i=0; i< selectParam.length; i++) {
-			inputFields= new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		
+	List<Button> buttonList = new ArrayList<>();
+	List<InputFields> dropdownList = new ArrayList<>();
+	List<InputFields> inputTypeDateList = new ArrayList<>();
 
-		//input type date list		
-		String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
-		for(int i=0; i< dateParam.length; i++) {
-			dateRelatedFields= new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
-		}
-		}else {
-			log.info("sourceType render---2------" +sourceType);	
-			if("Custom".equals(userType)) {
-				String[] names= {"Assign Stock","./assignStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+	if("viaStock".equals(sourceType)){
+	log.info("sourceType render---1------" +sourceType);	
+	String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
 
-				for(int i=0; i< names.length ; i++) {
-					button = new Button();
-					button.setButtonTitle(names[i]);
-					i++;
-					button.setButtonURL(names[i]);
-					i++;
-					button.setId(names[i]);
-					buttonList.add(button);
-				}
-			}else{
-			String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
-			for(int i=0; i< names.length ; i++) {
-				button = new Button();
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}
-			}
-			
-			//Dropdown items			
-			String[] selectParam= {"select","Stock Status","filterFileStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			
-
-			//input type date list		
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
-		}
-		pageElement.setPageTitle("View Stock");
-		pageElement.setButtonList(buttonList);
-		pageElement.setDropdownList(dropdownList);
-		pageElement.setInputTypeDateList(inputTypeDateList);
-		return new ResponseEntity<>(pageElement, HttpStatus.OK); 	
+	for(int i=0; i< names.length ; i++) {
+	button = new Button();
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
 	}
+
+	String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
+	for(int i=0; i< footerBtn.length ; i++) {
+	button = new Button();
+	button.setType(footerBtn[i]);
+	i++;
+	button.setButtonTitle(footerBtn[i]);
+	i++;
+	button.setButtonURL(footerBtn[i]);
+	i++;
+	button.setId(footerBtn[i]);
+	buttonList.add(button);
+	}	
+	//Dropdown items	
+	String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+	for(int i=0; i< selectParam.length; i++) {
+	inputFields= new InputFields();
+	inputFields.setType(selectParam[i]);
+	i++;
+	inputFields.setTitle(selectParam[i]);
+	i++;
+	inputFields.setId(selectParam[i]);
+	i++;
+	inputFields.setClassName(selectParam[i]);
+	dropdownList.add(inputFields);
+	}
+
+
+	//input type date list	
+	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+	for(int i=0; i< dateParam.length; i++) {
+	dateRelatedFields= new InputFields();
+	dateRelatedFields.setType(dateParam[i]);
+	i++;
+	dateRelatedFields.setTitle(dateParam[i]);
+	i++;
+	dateRelatedFields.setId(dateParam[i]);
+	i++;
+	dateRelatedFields.setClassName(dateParam[i]);
+	inputTypeDateList.add(dateRelatedFields);
+	}
+	}else {
+	log.info("sourceType render---2------" +sourceType);	
+	if("Custom".equals(userType)) {
+	String[] names= {"Assign Stock","./assignStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+
+	for(int i=0; i< names.length ; i++) {
+	button = new Button();
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
+	}
+	}else{
+	String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+	for(int i=0; i< names.length ; i++) {
+	button = new Button();
+	button.setButtonTitle(names[i]);
+	i++;
+	button.setButtonURL(names[i]);
+	i++;
+	button.setId(names[i]);
+	buttonList.add(button);
+	}
+	}
+
+	//Dropdown items	
+	String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+	for(int i=0; i< selectParam.length; i++) {
+	inputFields= new InputFields();
+	inputFields.setType(selectParam[i]);
+	i++;
+	inputFields.setTitle(selectParam[i]);
+	i++;
+	inputFields.setId(selectParam[i]);
+	i++;
+	inputFields.setClassName(selectParam[i]);
+	dropdownList.add(inputFields);
+	}
+
+
+	//input type date list	
+	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+	for(int i=0; i< dateParam.length; i++) {
+	dateRelatedFields= new InputFields();
+	dateRelatedFields.setType(dateParam[i]);
+	i++;
+	dateRelatedFields.setTitle(dateParam[i]);
+	i++;
+	dateRelatedFields.setId(dateParam[i]);
+	i++;
+	dateRelatedFields.setClassName(dateParam[i]);
+	inputTypeDateList.add(dateRelatedFields);
+	}
+	}
+	pageElement.setPageTitle("View Stock");
+	pageElement.setButtonList(buttonList);
+	pageElement.setDropdownList(dropdownList);
+	pageElement.setInputTypeDateList(inputTypeDateList);
+	return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+	}
+
+
+
+	
 }

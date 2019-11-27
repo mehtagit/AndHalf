@@ -124,13 +124,13 @@ public class GrievanceController {
 
 	//***************************************** view Grievance controller *********************************
 		@RequestMapping(value="/viewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session)
+		public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit )
 		{
 			log.info("entery point in view grievance.");
 			int userId= (int) session.getAttribute("userid");
 			List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
 			log.info("Request pass to the view grievance api ="+grievanceId+"  userId= "+userId);
-			grievanceModel=feignCleintImplementation.viewGrievance(grievanceId, userId);
+			grievanceModel=feignCleintImplementation.viewGrievance(grievanceId, userId,recordLimit);
 			log.info("Response from  view grievance api = "+grievanceModel);
 			return grievanceModel;
 	}

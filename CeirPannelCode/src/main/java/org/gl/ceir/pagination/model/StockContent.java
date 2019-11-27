@@ -3,12 +3,14 @@ package org.gl.ceir.pagination.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+@Component
 public class StockContent {
 	private Integer id;
 	private String createdOn;
 	private String modifiedOn;
 	private String suplierName;
-	private Integer supplierId;
+	private String supplierId;
 	private String invoiceNumber;
 	private String txnId;
 	private String fileName;
@@ -41,10 +43,10 @@ public class StockContent {
 	public void setSuplierName(String suplierName) {
 		this.suplierName = suplierName;
 	}
-	public Integer getSupplierId() {
+	public String getSupplierId() {
 		return supplierId;
 	}
-	public void setSupplierId(Integer supplierId) {
+	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
 	}
 	public String getInvoiceNumber() {
@@ -102,5 +104,5 @@ public class StockContent {
 				+ ", fileName=" + fileName + ", userId=" + userId + ", roleType=" + roleType + ", quantity=" + quantity
 				+ ", stockStatus=" + stockStatus + ", additionalProperties=" + additionalProperties + "]";
 	}
-
+	
 }

@@ -1,6 +1,18 @@
+$(document).ready(function(){
+	$('.datepicker').datepicker();
+	filterConsignment();
+	pageRendering();
+
+});
 
 var cierRoletype = sessionStorage.getItem("cierRoletype");
-/* 	alert(cierRoletype);	 */
+var startdate=$('#startDate').val(); 
+var endDate=$('#endDate').val();
+var taxStatus=$('#taxPaidStatus').val();
+var consignmentStatus=$('#filterConsignmentStatus').val();
+var userId = $("body").attr("data-userID");
+var featureId="3";
+
 
 function DeleteConsignmentRecord(txnId){
 	$("#DeleteConsignment").openModal();
@@ -111,20 +123,6 @@ function setEditPopupData(data){
 } 
 
 
-var startdate=$('#startDate').val(); 
-var endDate=$('#endDate').val();
-var taxStatus=$('#taxPaidStatus').val();
-var consignmentStatus=$('#filterConsignmentStatus').val();
-var userId = $("body").attr("data-userID");
-var featureId="3";
-var filterRequest={
-		"consignmentStatus":consignmentStatus,
-		"endDate":startdate,
-		"startDate":endDate,
-		"taxPaidStatus":taxStatus,
-		"userId":userId,
-		"featureId":featureId
-};
 
 var sourceType =localStorage.getItem("sourceType");
 function filterConsignment()
@@ -160,7 +158,16 @@ function filterConsignment()
 //**************************************************filter table**********************************************
 
 function table(url,dataUrl){
-
+	
+	var filterRequest={
+			"consignmentStatus":$('#filterConsignmentStatus').val(),
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"taxPaidStatus":$('#taxPaidStatus').val(),
+			"userId":userId,
+			"featureId":featureId
+	}
+	
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -348,12 +355,7 @@ function arrivalDateValidation(){
 
 
 
-$(document).ready(function(){
-	$('.datepicker').datepicker();
-	filterConsignment();
-	pageRendering();
 
-});
 
 $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
@@ -410,7 +412,7 @@ function pageButtons(url){
 				$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
 						"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
 						"<label for='TotalPrice'>"+date[i].title
-						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
+						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+">"+
 						"<span	class='input-group-addon' style='color: #ff4081'>"+
 						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
@@ -437,7 +439,7 @@ function pageButtons(url){
 
 			if(sourceType=="viaStolen"){
 				$("#btnLink").css({display: "none"});
-				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter'/></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -461,7 +463,7 @@ function pageButtons(url){
 				}		
 
 			}else{
-				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
