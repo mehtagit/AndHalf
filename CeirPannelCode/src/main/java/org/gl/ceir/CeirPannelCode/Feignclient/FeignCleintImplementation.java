@@ -8,6 +8,7 @@ import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
+import org.gl.ceir.CeirPannelCode.Model.RequestCountAndQuantity;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -208,6 +209,45 @@ public interface FeignCleintImplementation {
 	public Object registrationRequest(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+
+
+	
+	
+	
+	
+	
+	
+	
+//********************************************* Notification fiegn implementation ************************************************************************
+
+
+
+
+		//countAndQuantity  feign  controller
+		@RequestMapping(value="/consignment/countAndQuantity" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "consignmentStatus") Integer consignmentStatus) ;
+
+		//stock/countAndQuantity  feign  controller
+		@RequestMapping(value="/stock/countAndQuantity" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity stockNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "stockStatus") Integer stockStatus) ;
+
+		//stock/countAndQuantity  feign  controller
+		@RequestMapping(value="/stakeholder/count" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity stolenRecoveryNotification(@RequestParam(value = "userId") Integer userId,
+				@RequestParam(value = "requestType") String requestType,@RequestParam(value = "fileStatus") Integer fileStatus);
+
+
+		//stock/countAndQuantity  feign  controller
+		@RequestMapping(value="/grievance/count" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "grievanceStatus") Integer grievanceStatus);
+
+
+
+
+
+
+
+
 }
 
 

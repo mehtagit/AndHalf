@@ -418,6 +418,7 @@ public class Consignment {
 	@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 	public  String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
 		log.info("request send to the  sample file download  api="+filetype);
+		
 		String response=feignCleintImplementation.downloadSampleFile(filetype);
 		log.info("response from sample file download file "+response);
 
