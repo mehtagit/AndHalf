@@ -39,7 +39,7 @@ public class Validation {
 			if("IMEI".equalsIgnoreCase(deviceIDtype)) {
 
 				boolean  result =	alfaNumricChecck(iMEIESNMEID);
-				if(result == true) {
+				if(result) {
 					return "fail";
 				}
 			}
@@ -133,11 +133,10 @@ public class Validation {
 
 			if(deivceDetails.getRetalierTxnId() != null || deivceDetails.getDistributerTxnId() != null) {
 
-				return true;
+				return Boolean.TRUE;
 			}
 		}
-		return false;		
-
+		return Boolean.FALSE;		
 
 	}
 

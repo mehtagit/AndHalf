@@ -70,7 +70,7 @@ public class FileActionControlling  implements Runnable{
 					}else if("Stock".equalsIgnoreCase(webActionDb.getFeature())) {
 
 						if("Upload".equalsIgnoreCase(webActionDb.getSubFeature())) {
-							stockUploadServiceImpl.saveStockProcess(webActionDb);
+							// stockUploadServiceImpl.saveStockProcess(webActionDb);
 
 
 						}else if("Update".equalsIgnoreCase(webActionDb.getSubFeature())) {

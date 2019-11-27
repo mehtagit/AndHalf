@@ -179,6 +179,9 @@ public class ConsignmentServiceImpl {
 			if(Objects.nonNull(consignmentMgmt.getUserId()))
 				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(consignmentMgmt.getTxnId()))
+				cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			if(Objects.nonNull(consignmentMgmt.getStartDate()))
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 

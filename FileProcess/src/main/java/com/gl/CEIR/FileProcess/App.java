@@ -11,7 +11,7 @@ import com.gl.CEIR.FileProcess.Controller.FileActionControlling;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-@ComponentScan({"com.gl.CEIR.FileProcess"})
+@ComponentScan({"com.gl.CEIR.FileProcess", "com.gl.ceir.config"})
 public class App 
 {
 

@@ -16,11 +16,11 @@ public class StockDeleteServiceImpl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return Boolean.FALSE;
 
 		}
 
-		return true;
+		return Boolean.TRUE;
 
 	}
 

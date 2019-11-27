@@ -1,7 +1,6 @@
 package com.gl.ceir.config.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -11,14 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity 
 public class UserProfile {
 	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private long id;     
 	private String firstName;  
 	private String middleName;
 	private String lastName;
@@ -29,16 +28,24 @@ public class UserProfile {
 	private String propertyLocation;
 	private String street;
 	private String locality;
-	private String province;
+	private String province;   
 	private String country;
 	private String passportNo;
 	private String email;
 	private String phoneNo;
 	private Date createdOn;
 	private Date modifiedOn;
-	private String phoneOtp;
+	private String phoneOtp;  
 	private String emailOtp;
-	private Integer status=0;
+    private String displayName;
+    
+    private String employeeId;
+    private String natureOfEmployment;
+    private String designation;
+    private String authorityName;
+    private String authorityEmail;
+    private String authorityPhoneNo;
+    private String operatorType;
 
 	/*@Transient
 	private String username;
@@ -87,10 +94,10 @@ public class UserProfile {
 	public static void setSerialVersionUID(long serialVersionUID) {
 		UserProfile.serialVersionUID = serialVersionUID;
 	}
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(Long	 id) {
 		this.id = id;
 	}
 	public String getFirstName() {
@@ -207,13 +214,126 @@ public class UserProfile {
 	public void setEmailOtp(String emailOtp) {
 		this.emailOtp = emailOtp;
 	}
-	public Integer getStatus() {
-		return status;
+	public String getDisplayName() {
+		return displayName;
 	}
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
-	
-	
+	public String getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getNatureOfEmployment() {
+		return natureOfEmployment;
+	}
+	public void setNatureOfEmployment(String natureOfEmployment) {
+		this.natureOfEmployment = natureOfEmployment;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	public String getAuthorityName() {
+		return authorityName;
+	}
+	public void setAuthorityName(String authorityName) {
+		this.authorityName = authorityName;
+	}
+	public String getAuthorityEmail() {
+		return authorityEmail;
+	}
+	public void setAuthorityEmail(String authorityEmail) {
+		this.authorityEmail = authorityEmail;
+	}
+	public String getAuthorityPhoneNo() {
+		return authorityPhoneNo;
+	}
+	public void setAuthorityPhoneNo(String authorityPhoneNo) {
+		this.authorityPhoneNo = authorityPhoneNo;
+	}
+	public String getOperatorType() {
+		return operatorType;
+	}
+	public void setOperatorType(String operatorType) {
+		this.operatorType = operatorType;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserProfile [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", vatStatus=");
+		builder.append(vatStatus);
+		builder.append(", vatNo=");
+		builder.append(vatNo);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", passportNo=");
+		builder.append(passportNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", phoneOtp=");
+		builder.append(phoneOtp);
+		builder.append(", emailOtp=");
+		builder.append(emailOtp);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append(", employeeId=");
+		builder.append(employeeId);
+		builder.append(", natureOfEmployment=");
+		builder.append(natureOfEmployment);
+		builder.append(", designation=");
+		builder.append(designation);
+		builder.append(", authorityName=");
+		builder.append(authorityName);
+		builder.append(", authorityEmail=");
+		builder.append(authorityEmail);
+		builder.append(", authorityPhoneNo=");
+		builder.append(authorityPhoneNo);
+		builder.append(", operatorType=");
+		builder.append(operatorType);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }
