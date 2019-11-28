@@ -1,6 +1,7 @@
 package com.gl.ceir.config.service.impl;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,11 +28,13 @@ import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
@@ -84,7 +87,9 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
-
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
 	@Transactional
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
@@ -107,7 +112,7 @@ public class ConsignmentServiceImpl {
 			webActionDb.setTxnId(consignmentFileRequest.getTxnId());
 
 
-			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.UPLOADING.getCode());
+			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.INIT.getCode());
 			webActionDbRepository.save(webActionDb);
 
 			consignmentRepository.save(consignmentFileRequest);
@@ -166,22 +171,25 @@ public class ConsignmentServiceImpl {
 
 	}
 
+	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
+			Integer pageSize) {
 
-
-
-
-	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, Integer pageSize) {
+		List<StateMgmtDb> featureList = null;
+		List<SystemConfigListDb> customTaxStatusList = null;
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
 			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder(propertiesReader.dialect);
 
-			if(Objects.nonNull(consignmentMgmt.getUserId()))
-				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType())) {
+				if(Objects.nonNull(consignmentMgmt.getUserId()))
+					cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
 
-			if(Objects.nonNull(consignmentMgmt.getTxnId()))
+			if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
 				cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -197,11 +205,11 @@ public class ConsignmentServiceImpl {
 
 				if(consignmentMgmt.getFeatureId() != null && consignmentMgmt.getUserTypeId()!= null) {
 
-					List<Integer> consignmentStatus=new ArrayList<Integer>();
-					List<StateMgmtDb> featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+					List<Integer> consignmentStatus = new LinkedList<Integer>();
+					featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 					logger.debug(featureList);
-					
-					if(featureList != null) {
+
+					if(Objects.nonNull(featureList)) {
 						for(StateMgmtDb stateDb : featureList ) {
 							consignmentStatus.add(stateDb.getState());
 						}
@@ -210,7 +218,26 @@ public class ConsignmentServiceImpl {
 					}
 				}
 			}
-			return consignmentRepository.findAll(cmsb.build(), pageable);
+
+			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
+			customTaxStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
+					
+			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
+
+				for(StateMgmtDb stateMgmtDb : featureList) {
+					if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
+						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
+					} 
+				}
+				
+				for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
+					if(consignmentMgmt2.getTaxPaidStatus() == systemConfigListDb.getValue()) {
+						consignmentMgmt2.setTaxInterp(systemConfigListDb.getInterp()); 
+					} 
+				}
+			}
+
+			return page;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -218,7 +245,6 @@ public class ConsignmentServiceImpl {
 		}
 
 	}
-
 
 	public ConsignmentMgmt getRecordInfo(String txnId) {
 		try {
@@ -230,8 +256,6 @@ public class ConsignmentServiceImpl {
 		}
 
 	}
-
-
 
 	@Transactional
 	public GenricResponse updateConsignment(ConsignmentMgmt consignmentFileRequest) {
@@ -269,7 +293,7 @@ public class ConsignmentServiceImpl {
 
 					if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " ")
 					{
-						consignmentInfo.setConsignmentStatus(ConsignmentStatus.UPLOADING.getCode());	
+						consignmentInfo.setConsignmentStatus(ConsignmentStatus.INIT.getCode());	
 						consignmentInfo.setFileName(consignmentFileRequest.getFileName());
 					}
 
@@ -296,8 +320,6 @@ public class ConsignmentServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	} 
-
-
 
 	@Transactional
 	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest) {

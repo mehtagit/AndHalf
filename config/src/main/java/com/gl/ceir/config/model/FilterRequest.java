@@ -85,14 +85,33 @@ public class FilterRequest {
 	}
 	@Override
 	public String toString() {
-		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
-				+ roleType + ", requestType=" + requestType + ", userType=" + userType + ", featureId=" + featureId
-				+ ", userTypeId=" + userTypeId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("FilterRequest [userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append("]");
+		return builder.toString();
 	}
-
-
-
+	
 
 }
 

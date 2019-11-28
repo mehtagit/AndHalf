@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -80,6 +81,12 @@ public class ConsignmentMgmt implements Serializable {
 	private Integer currency;
 
 	private Double totalPrice;
+	
+	@Transient
+	private String stateInterp;
+	
+	@Transient
+	private String taxInterp;
 
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
@@ -259,6 +266,22 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setPreviousConsignmentStatus(int previousConsignmentStatus) {
 		this.previousConsignmentStatus = previousConsignmentStatus;
+	}
+
+	public String getStateInterp() {
+		return stateInterp;
+	}
+
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+
+	public String getTaxInterp() {
+		return taxInterp;
+	}
+
+	public void setTaxInterp(String taxInterp) {
+		this.taxInterp = taxInterp;
 	}
 
 	@Override
