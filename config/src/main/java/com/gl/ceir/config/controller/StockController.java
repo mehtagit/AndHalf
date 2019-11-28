@@ -21,13 +21,10 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class StockController {
 
-
 	private static final Logger logger = LogManager.getLogger(StockController.class);
 
 	@Autowired
 	StockServiceImpl stackholderServiceImpl;
-
-
 
 	@ApiOperation(value = "Add Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/upload", method = RequestMethod.POST)
@@ -44,8 +41,6 @@ public class StockController {
 
 	}
 
-
-
 	@ApiOperation(value = "Update Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/update", method = RequestMethod.POST)
 
@@ -58,8 +53,6 @@ public class StockController {
 		return genricResponse;
 
 	}
-
-
 
 	@ApiOperation(value = "View Retailer And Distributer All  Info.", response = StockMgmt.class)
 	@RequestMapping(path = "v1/stock/record", method = RequestMethod.POST)
@@ -76,26 +69,22 @@ public class StockController {
 		return mapping;
 	}
 
-
 	@ApiOperation(value = "Filter View Retailer And Distributer All  Info.", response = StockMgmt.class)
 	@RequestMapping(path = "/stock/record", method = RequestMethod.POST)
 	public MappingJacksonValue findAllFilteredData(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-		logger.info("Stock View filter Details Request="+filterRequest);
+		logger.info("Stock View filter Details Request= " + filterRequest);
 
 		Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize);
+		
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
-
 		logger.info("Response Filtered Record Details="+mapping);
 
 		return mapping;
 
 	}
-
-
-
 
 	@ApiOperation(value = "View Retailer And Distributer Record of TxnId.", response = StockMgmt.class)
 	@RequestMapping(path = "/stock/view", method = RequestMethod.POST)

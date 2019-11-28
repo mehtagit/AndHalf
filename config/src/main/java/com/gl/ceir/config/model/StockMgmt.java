@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,8 +12,6 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class StockMgmt implements Serializable {
@@ -25,10 +24,10 @@ public class StockMgmt implements Serializable {
 	private Long id;
 
 	@CreationTimestamp
-	private Date createdOn;
+	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 
 	private String suplierName;
 
@@ -55,9 +54,10 @@ public class StockMgmt implements Serializable {
 	private int previousStockStatus;
 
 	private int currency;
+	
 	private String userType;
+	
 	private Double totalPrice;
-
 
 	public Long getId() {
 		return id;
@@ -67,19 +67,19 @@ public class StockMgmt implements Serializable {
 		this.id = id;
 	}
 
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
 
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 

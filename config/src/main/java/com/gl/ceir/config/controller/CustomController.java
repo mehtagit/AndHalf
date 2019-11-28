@@ -63,7 +63,7 @@ public class CustomController {
 
 		logger.info("Update Custom taxPaid info Info request TxnId="+userCustomDb);
 
-		UserCustomDb  response =customServiceImpl.viewStatus(userCustomDb);
+		UserCustomDb response =customServiceImpl.viewStatus(userCustomDb);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response); 
 		return mapping;

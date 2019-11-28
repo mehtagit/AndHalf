@@ -17,14 +17,8 @@ public class StackholderPolicyMappingServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StackholderPolicyMappingServiceImpl.class);
 
-
-
 	@Autowired
 	StackholderPolicyMappingRepository stackholderPolicyMappingRepository;
-
-
-
-
 
 	public StackholderPolicyMapping getPocessListConfigDetails(StackholderPolicyMapping StackholderPolicyMapping) {
 		try {
@@ -36,8 +30,6 @@ public class StackholderPolicyMappingServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
-
 
 	public GenricResponse updateProcessPolicy(StackholderPolicyMapping StackholderPolicyMapping) {
 		try {
@@ -51,13 +43,11 @@ public class StackholderPolicyMappingServiceImpl {
 		}
 	}
 
-
 	public List<StackholderPolicyMapping> getFileControllingDetails(){
 
 		return 	stackholderPolicyMappingRepository.findByListTypeOrListType("BlackList", "GreyList");
 
 
 	}	
-
 
 }

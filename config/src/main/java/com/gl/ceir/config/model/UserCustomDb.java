@@ -31,7 +31,7 @@ public class UserCustomDb implements Serializable {
 	private Long secondImei;
 	private Long thirdImei;
 	private Long fourthImei;
-	private int taxPaidStatus;
+	private Integer taxPaidStatus;
 	private String deviceType;
 	private String multiSimStatus;
 	private String country;
@@ -109,11 +109,11 @@ public class UserCustomDb implements Serializable {
 		this.fourthImei = fourthImei;
 	}
 
-	public int getTaxPaidStatus() {
+	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
 
-	public void setTaxPaidStatus(int taxPaidStatus) {
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 

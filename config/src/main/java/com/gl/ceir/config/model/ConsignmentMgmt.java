@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,7 +40,7 @@ public class ConsignmentMgmt implements Serializable {
 	private String consignmentNumber;
 
 	@Column(length = 10)
-	private String taxPaidStatus;
+	private Integer taxPaidStatus;
 
 
 	@CreationTimestamp
@@ -80,6 +81,12 @@ public class ConsignmentMgmt implements Serializable {
 	private Integer currency;
 
 	private Double totalPrice;
+	
+	@Transient
+	private String stateInterp;
+	
+	@Transient
+	private String taxInterp;
 
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
@@ -118,11 +125,11 @@ public class ConsignmentMgmt implements Serializable {
 		this.consignmentNumber = consignmentNumber;
 	}
 
-	public String getTaxPaidStatus() {
+	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
 
-	public void setTaxPaidStatus(String taxPaidStatus) {
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 
@@ -261,21 +268,69 @@ public class ConsignmentMgmt implements Serializable {
 		this.previousConsignmentStatus = previousConsignmentStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "ConsignmentMgmt [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
-				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
-				+ createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId + ", txnId=" + txnId + ", fileName="
-				+ fileName + ", consignmentStatus=" + consignmentStatus + ", previousConsignmentStatus="
-				+ previousConsignmentStatus + ", organisationCountry=" + organisationCountry
-				+ ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate=" + expectedArrivaldate
-				+ ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + ", remarks=" + remarks
-				+ ", currency=" + currency + ", totalPrice=" + totalPrice + ", user=" + user + "]";
+	public String getStateInterp() {
+		return stateInterp;
 	}
 
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
 
+	public String getTaxInterp() {
+		return taxInterp;
+	}
 
+	public void setTaxInterp(String taxInterp) {
+		this.taxInterp = taxInterp;
+	}
 
-
-
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConsignmentMgmt [id=");
+		builder.append(id);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", consignmentNumber=");
+		builder.append(consignmentNumber);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", previousConsignmentStatus=");
+		builder.append(previousConsignmentStatus);
+		builder.append(", organisationCountry=");
+		builder.append(organisationCountry);
+		builder.append(", expectedDispatcheDate=");
+		builder.append(expectedDispatcheDate);
+		builder.append(", expectedArrivaldate=");
+		builder.append(expectedArrivaldate);
+		builder.append(", expectedArrivalPort=");
+		builder.append(expectedArrivalPort);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

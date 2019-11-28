@@ -95,6 +95,7 @@ public class GrievanceController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 		MappingJacksonValue mapping = null;
 		logger.info("Request to view filtered grievance = " + filterRequest);
+		
 		if( file == 0) {
 			Page<Grievance>  grievance =  grievanceServiceImpl.getFilterPaginationGrievances(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(grievance);
@@ -103,6 +104,7 @@ public class GrievanceController {
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		logger.info("Response of view filtered Grievances ="+mapping);
+		
 		return mapping;
 	}
 	

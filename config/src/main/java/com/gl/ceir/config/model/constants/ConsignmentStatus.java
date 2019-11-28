@@ -2,7 +2,7 @@ package com.gl.ceir.config.model.constants;
 
 public enum ConsignmentStatus {
 	
-	UPLOADING(0, "Uploading"), PROCESSING(1, "Processing"), REJECTED_BY_SYSTEM(2, "Rejected By System"), 
+	INIT(0, "INIT"), PROCESSING(1, "Processing"), REJECTED_BY_SYSTEM(2, "Rejected By System"), 
 	
 	PENDING_APPROVAL_FROM_CEIR_AUTHORITY(3, "Pending Approval From CEIR Authority"), 
 	

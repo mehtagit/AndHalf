@@ -112,10 +112,6 @@ public class StolenAndRecoveryController {
 		return genricResponse;
 	}
 
-	
-	
-	
-
 	@ApiOperation(value = "Upload Multiple Stolen Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/uploadMultiple/StolenAndRecovery", method = RequestMethod.POST)
 	public GenricResponse uploadMultipleStolenDetails(@RequestBody List<StolenandRecoveryMgmt> stolenandRecoveryDetails)
@@ -146,8 +142,6 @@ public class StolenAndRecoveryController {
 		return mapping;
 	}
 
-
-
 	@ApiOperation(value = "Delete Stolen and  Recovery Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/Delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
@@ -162,8 +156,6 @@ public class StolenAndRecoveryController {
 
 
 	}
-
-
 
 	@ApiOperation(value = "Update Stolen and  Recovery Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/update", method = RequestMethod.PUT)
@@ -182,17 +174,13 @@ public class StolenAndRecoveryController {
 			stolenandRecoveryRequest.setBlockingType("Default");
 		}
 
-
-
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.updateRecord(stolenandRecoveryRequest);
 
-		logger.info("Response send="+genricResponse);
+		logger.info("Response send= " + genricResponse);
 
 		return genricResponse;
 
 	}
-
-
 
 	@ApiOperation(value = "View Stolen and  Recovery Details.", response = StolenandRecoveryMgmt.class)
 	@RequestMapping(path = "/stakeholder/view", method = RequestMethod.POST)
@@ -201,7 +189,7 @@ public class StolenAndRecoveryController {
 		logger.info("view Stolen and recovery request="+stolenandRecoveryRequest);
 
 		StolenandRecoveryMgmt mgmt = stolenAndRecoveryServiceImpl.viewRecord(stolenandRecoveryRequest);
-		logger.info("View details Response send ="+mgmt);
+		logger.info("View details Response send =" + mgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(mgmt);
 		return mapping;
@@ -214,7 +202,5 @@ public class StolenAndRecoveryController {
 		RequestCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount(userId, fileStatus, requestType);
 		return new MappingJacksonValue(response);
 	}
-
-
 
 }

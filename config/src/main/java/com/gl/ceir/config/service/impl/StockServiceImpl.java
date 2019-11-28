@@ -28,7 +28,7 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
-import com.gl.ceir.config.repository.DistributerManagementRepository;
+import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserRepository;
@@ -38,9 +38,7 @@ import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
 @Service
 public class StockServiceImpl {
 
-
 	private static final Logger logger = LogManager.getLogger(StockServiceImpl.class);
-
 
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
@@ -49,7 +47,7 @@ public class StockServiceImpl {
 	FileStorageProperties fileStorageProperties;
 
 	@Autowired
-	DistributerManagementRepository distributerManagementRepository;
+	StockManagementRepository stockManagementRepository;
 
 
 	@Autowired
@@ -67,13 +65,11 @@ public class StockServiceImpl {
 			stackholderRequest.setStockStatus(StockStatus.UPLOADING.getCode());
 
 			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
-
 				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
-
 				stackholderRequest.setUserId(new Long(user.getId()));
 			}
 
-			distributerManagementRepository.save(stackholderRequest);
+			stockManagementRepository.save(stackholderRequest);
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
@@ -92,26 +88,19 @@ public class StockServiceImpl {
 		}
 	}
 
-
-
-
-
-
 	public List<StockMgmt> getAllData(StockMgmt stockMgmt){
 		try {
 
-			return distributerManagementRepository.findByRoleTypeAndUserId(stockMgmt.getInvoiceNumber(), stockMgmt.getUserId());
+			return stockManagementRepository.findByRoleTypeAndUserId(stockMgmt.getInvoiceNumber(), stockMgmt.getUserId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
-
 	}
 
-
-	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest,Integer pageNo, Integer pageSize){
+	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
@@ -121,21 +110,27 @@ public class StockServiceImpl {
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
-			
+
+			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+				smsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+				smsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+
 			if(Objects.nonNull(filterRequest.getTxnId()))
 				smsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getUserId()))
 				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
-				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
 			if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
 				smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
 
-			return distributerManagementRepository.findAll(smsb.build(), pageable);
+			return stockManagementRepository.findAll(smsb.build(), pageable);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -143,37 +138,28 @@ public class StockServiceImpl {
 		}
 
 	}
-
-
-
-
 
 	public StockMgmt view(StockMgmt stockMgmt) {
 		try {
 
-			return distributerManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
+			return stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
-
 
 	@Transactional
 	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt) {
 		try {
 
-			StockMgmt txnRecord	=	distributerManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
+			StockMgmt txnRecord	=	stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
-			if(txnRecord == null) {
-
+			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.",stockMgmt.getTxnId());
 			}else {
-				/*
-				if(0 == stockMgmt.getStockStatus()||2 == stockMgmt.getStockStatus()) {
-				 */
+
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
@@ -181,11 +167,6 @@ public class StockServiceImpl {
 				webActionDb.setTxnId(stockMgmt.getTxnId());
 
 				webActionDbRepository.save(webActionDb);
-
-				/*else {
-
-					return new GenricResponse(200, "Operation Not Allowed.",stockMgmt.getTxnId());
-				}*/
 			}
 
 			return new GenricResponse(0, "Delete In Progress.",stockMgmt.getTxnId());
@@ -196,21 +177,16 @@ public class StockServiceImpl {
 		}
 	}
 
-
-
 	@Transactional
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
 
-		StockMgmt stackHolderInfo=	distributerManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
+		StockMgmt stackHolderInfo=	stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
 
-		if(stackHolderInfo == null) {
-
+		if(Objects.isNull(stackHolderInfo)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
 
 		}else {
 
-			/*if(3 == stackHolderInfo.getStockStatus()) {
-			 */
 			stackHolderInfo.setInvoiceNumber(distributerManagement.getInvoiceNumber());
 			stackHolderInfo.setQuantity(distributerManagement.getQuantity());
 			stackHolderInfo.setSuplierName(distributerManagement.getSuplierName());
@@ -222,7 +198,7 @@ public class StockServiceImpl {
 				stackHolderInfo.setFileName(distributerManagement.getFileName());
 			}
 
-			distributerManagementRepository.save(stackHolderInfo);
+			stockManagementRepository.save(stackHolderInfo);
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
@@ -240,23 +216,17 @@ public class StockServiceImpl {
 			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
-	
+
 	public RequestCountAndQuantity getStockCountAndQuantity( long userId, Integer stockStatus) {
 		try {
 			logger.info("Going to get  stock count and quantity.");
-			return distributerManagementRepository.getStockCountAndQuantity(userId, stockStatus);
+			return stockManagementRepository.getStockCountAndQuantity(userId, stockStatus);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			// logger.error(e.getMessage(), e);
+			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			
+			return new RequestCountAndQuantity(0,0);
 		}
 
-	}
-	
+	}	
 }
-
-
-
-
-
-
-

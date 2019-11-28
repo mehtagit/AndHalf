@@ -9,6 +9,7 @@ public class GrievanceFilterRequest {
 	public String txnId;
 	public String grievanceId;
 	private int grievanceStatus;
+	
 	public String getTxnId() {
 		return txnId;
 	}
@@ -45,4 +46,23 @@ public class GrievanceFilterRequest {
 	public void setGrievanceStatus(int grievanceStatus) {
 		this.grievanceStatus = grievanceStatus;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GrievanceFilterRequest [userId=");
+		builder.append(userId);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", grievanceId=");
+		builder.append(grievanceId);
+		builder.append(", grievanceStatus=");
+		builder.append(grievanceStatus);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }
