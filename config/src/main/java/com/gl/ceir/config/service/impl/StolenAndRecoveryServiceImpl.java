@@ -33,7 +33,7 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.DistributerManagementRepository;
+import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
@@ -63,7 +63,7 @@ public class StolenAndRecoveryServiceImpl {
 	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
 
 	@Autowired
-	DistributerManagementRepository distributerManagementRepository;
+	StockManagementRepository distributerManagementRepository;
 
 	@Autowired
 	ConsignmentRepository consignmentRepository;
@@ -310,9 +310,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
-
 			return 	stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
-
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -324,8 +322,10 @@ public class StolenAndRecoveryServiceImpl {
 			logger.info("Going to get StolenAndRecovery count.");
 			return stolenAndRecoveryRepository.getStolenandRecoveryCount(userId, fileStatus, requestType);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			// logger.error(e.getMessage(), e);
+			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			
+			return new RequestCountAndQuantity(0,0);
 		}
 	}
 

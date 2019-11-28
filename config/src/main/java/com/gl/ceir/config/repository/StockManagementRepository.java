@@ -10,9 +10,7 @@ import org.springframework.data.repository.query.Param;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.StockMgmt;
 
-public interface DistributerManagementRepository extends JpaRepository<StockMgmt, Long>, JpaSpecificationExecutor<StockMgmt> {
-
-
+public interface StockManagementRepository extends JpaRepository<StockMgmt, Long>, JpaSpecificationExecutor<StockMgmt> {
 
 	public StockMgmt save(StockMgmt distributerManagement);
 

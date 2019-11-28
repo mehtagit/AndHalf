@@ -1,6 +1,5 @@
 package com.gl.ceir.config.service.impl;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -9,11 +8,11 @@ import javax.transaction.Transactional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.dialect.Dialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
@@ -87,7 +86,7 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
-	
+
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
@@ -176,9 +175,11 @@ public class ConsignmentServiceImpl {
 
 		List<StateMgmtDb> featureList = null;
 		List<SystemConfigListDb> customTaxStatusList = null;
-		
+
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
 			ConsignmentMgmtSpecificationBuilder cmsb = new ConsignmentMgmtSpecificationBuilder(propertiesReader.dialect);
 
@@ -206,14 +207,15 @@ public class ConsignmentServiceImpl {
 				if(consignmentMgmt.getFeatureId() != null && consignmentMgmt.getUserTypeId()!= null) {
 
 					List<Integer> consignmentStatus = new LinkedList<Integer>();
-					featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+					// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 					logger.debug(featureList);
 
-					if(Objects.nonNull(featureList)) {
+					if(Objects.nonNull(featureList)) {	
 						for(StateMgmtDb stateDb : featureList ) {
 							consignmentStatus.add(stateDb.getState());
 						}
-						logger.info("Array list to add is ="+consignmentStatus);
+						logger.info("Array list to add is = " + consignmentStatus);
+
 						cmsb.addSpecification(cmsb.joinWithUserIN(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
 					}
 				}
@@ -221,7 +223,7 @@ public class ConsignmentServiceImpl {
 
 			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
 			customTaxStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
-					
+
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
 				for(StateMgmtDb stateMgmtDb : featureList) {
@@ -229,7 +231,7 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
 					} 
 				}
-				
+
 				for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
 					if(consignmentMgmt2.getTaxPaidStatus() == systemConfigListDb.getValue()) {
 						consignmentMgmt2.setTaxInterp(systemConfigListDb.getInterp()); 
@@ -266,20 +268,13 @@ public class ConsignmentServiceImpl {
 
 			logger.info("ConsignmentInfo="+consignmentInfo.toString());
 
-			if(consignmentInfo == null) {
-
+			if(Objects.isNull(consignmentInfo)) {
 				return new GenricResponse(4,"Consignment Does Not exist.", consignmentFileRequest.getTxnId());
-
 			}
 			else {
-				/*if(0 == consignmentInfo.getConsignmentStatus() ||2== consignmentInfo.getConsignmentStatus())
-				{*/
-				if(consignmentInfo.getConsignmentNumber() == consignmentFileRequest.getConsignmentNumber())
-				{
-					return new GenricResponse(3,"Consignment Already Exist",consignmentFileRequest.getTxnId());	
-
+				if(consignmentInfo.getConsignmentNumber() == consignmentFileRequest.getConsignmentNumber()){
+					return new GenricResponse(3, "Consignment Already Exist", consignmentFileRequest.getTxnId());	
 				}else {
-
 					consignmentInfo.setConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
 					consignmentInfo.setExpectedArrivaldate(consignmentFileRequest.getExpectedArrivaldate());
 					consignmentInfo.setExpectedArrivalPort(consignmentFileRequest.getExpectedArrivalPort());
@@ -290,9 +285,9 @@ public class ConsignmentServiceImpl {
 					consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
 					consignmentInfo.setTaxPaidStatus(consignmentFileRequest.getTaxPaidStatus());
 					consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
+					consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
 
-					if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " ")
-					{
+					if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " "){
 						consignmentInfo.setConsignmentStatus(ConsignmentStatus.INIT.getCode());	
 						consignmentInfo.setFileName(consignmentFileRequest.getFileName());
 					}
@@ -307,13 +302,8 @@ public class ConsignmentServiceImpl {
 
 					webActionDbRepository.save(webActionDb);
 
-					return new GenricResponse(0,"Consignment Update in Processing.",consignmentFileRequest.getTxnId());
+					return new GenricResponse(0,"Consignment Update in Processing.", consignmentFileRequest.getTxnId());
 				}				
-				/*
-				}else {
-
-					return new GenricResponse(200,"Operation NOt Allowed.",consignmentFileRequest.getTxnId());
-				}*/
 			}
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -366,38 +356,34 @@ public class ConsignmentServiceImpl {
 
 			ConsignmentMgmt  consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 
+			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {
 
-				if(consignmentMgmt == null) {
-
+				if(Objects.isNull(consignmentMgmt)) {
 					return new GenricResponse(4, "TxnId Does not Exist", consignmentUpdateRequest.getTxnId());
 				}else {
-
-
 					UserProfile userProfile =	userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
 
-					if("CEIR".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
-						MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Success_CEIRAuthority_Email_Message");
+					if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+						MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag("Consignment_Success_CEIRAuthority_Email_Message");
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
 						consignmentRepository.save(consignmentMgmt);	
-						//mail send to user and Custom 
 
-
-
+						// mail send to user and Custom 
 						logger.info("Email sending to user to accept ceir");
-						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
+						emailUtil.sendEmail("atulcsakg@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentRepository.save(consignmentMgmt);
 
-						MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Approved_CustomImporter_Email_Message");
+						MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag("Consignment_Approved_CustomImporter_Email_Message");
 
 						//send mail to user and CEIR
 						logger.info("Email sending to user accpet custom");
-						emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
+						emailUtil.sendEmail("atulcsakg@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 
 					}
 				}
@@ -406,25 +392,27 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentRepository.save(consignmentMgmt);
+					
 					//mail send to user and custom
-					MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Reject_CEIRAuthority_Email_Message");
-
+					MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag("Consignment_Reject_CEIRAuthority_Email_Message");
 					logger.info("Email sending to user reject ceir");
-					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
+					emailUtil.sendEmail("atulcsakg@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
+				
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					MessageConfigurationDb messageDB= messageConfigurationDbRepository.getByTag("Consignment_Rejected_Custom_Email_Message");
+					MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag("Consignment_Rejected_Custom_Email_Message");
 
 					consignmentRepository.save(consignmentMgmt);
 					//send mail to user and CEIR
 					logger.info("Email sending to user reject custom");
-					emailUtil.sendEmail("pardeepjangra695@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
+					emailUtil.sendEmail("atulcsakg@gmail.com", "jangrapardeep695@gmail.com", "TEST", messageDB.getValue());
 
 				}
 			}
-			return new GenricResponse(0, "Consignment Update SuccessFully",consignmentUpdateRequest.getTxnId());
+			
+			return new GenricResponse(0, "Consignment Update SuccessFully", consignmentUpdateRequest.getTxnId());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -436,8 +424,10 @@ public class ConsignmentServiceImpl {
 			logger.info("Going to get  Cosignment count and quantity.");
 			return consignmentRepository.getConsignmentCountAndQuantity(userId, consignmentStatus);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			// logger.error(e.getMessage(), e);
+			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			
+			return new RequestCountAndQuantity(0,0);
 		}
 	}
 }

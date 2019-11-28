@@ -47,12 +47,8 @@ public class ConsignmentController {
 	@Autowired
 	Utility utility;
 
-
-
 	@ApiOperation(value = "Add new consignment.", response = GenricResponse.class)
-
 	@RequestMapping(path = "/consignment/register", method = RequestMethod.POST)
-
 	public GenricResponse uploadFile(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
 		logger.info("Consignment Register Request="+consignmentUploadRequest);
@@ -77,7 +73,6 @@ public class ConsignmentController {
 		return genricResponse;
 
 	}
-
 
 	@ApiOperation(value = "View all the list of consignment", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/Record", method = RequestMethod.GET)
@@ -112,8 +107,6 @@ public class ConsignmentController {
 		return mapping;
 	}
 
-
-
 	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
 	@PostMapping("v2/filter/consignment")
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
@@ -122,7 +115,7 @@ public class ConsignmentController {
 
 		logger.info("Request TO view filtered consignment = " + filterRequest);
 
-		Page<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
+		Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 
@@ -130,8 +123,6 @@ public class ConsignmentController {
 
 		return mapping;
 	}
-
-
 
 	@ApiOperation(value = "View the Particular consignment info.", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/view", method = RequestMethod.GET)
@@ -146,10 +137,8 @@ public class ConsignmentController {
 		return mapping;
 	}
 
-
 	@ApiOperation(value = "Download Sample Stoke File.", response = String.class)
 	@RequestMapping(path = "/Download/SampleFile", method = RequestMethod.GET)
-
 	public String downloadSampleFile(String samplFileType) {
 
 		String directoryPath=fileStorageProperties.getDownloadDir();
@@ -162,12 +151,7 @@ public class ConsignmentController {
 		}
 	}
 
-
-
-
-
 	@ApiOperation(value = "Download Stoke upload File.", response = String.class)
-
 	@RequestMapping(path = "/Download/uploadFile", method = RequestMethod.GET)
 	public String downloadStrokeFile(String fileName,String txnId,String fileType) {
 

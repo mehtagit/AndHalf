@@ -132,17 +132,17 @@ public class CustomServiceImpl {
 		try {
 
 			UserCustomDb  userDetails = userCustomDbRepository.getByDeviceSerialNumber(UserCustomDb.getDeviceSerialNumber());
-			if(userDetails !=null) {
+			if(userDetails != null) {
 				return userDetails;
 			}else {
 
 				UserCustomDb deviceDbFetchDetails = new  UserCustomDb();
 				List<DeviceDb> deviceDb=	stokeDetailsRepository.getByDeviceNumber(UserCustomDb.getDeviceSerialNumber());
 
-				for(int i =0 ;i < deviceDb.size();i++) {
+				for(int i=0;i < deviceDb.size();i++) {
 
 
-					if(i ==0) {
+					if(i == 0) {
 						deviceDbFetchDetails.setFirstImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 						deviceDbFetchDetails.setMultiSimStatus(deviceDb.get(i).getMultipleSimStatus());
 						deviceDbFetchDetails.setNid(deviceDb.get(i).getEndUserUserId());

@@ -28,7 +28,7 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
-import com.gl.ceir.config.repository.DistributerManagementRepository;
+import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserRepository;
@@ -49,7 +49,7 @@ public class StockServiceImpl {
 	FileStorageProperties fileStorageProperties;
 
 	@Autowired
-	DistributerManagementRepository distributerManagementRepository;
+	StockManagementRepository distributerManagementRepository;
 
 
 	@Autowired
@@ -92,11 +92,6 @@ public class StockServiceImpl {
 		}
 	}
 
-
-
-
-
-
 	public List<StockMgmt> getAllData(StockMgmt stockMgmt){
 		try {
 
@@ -106,12 +101,10 @@ public class StockServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
-
 	}
 
-
 	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
@@ -121,7 +114,7 @@ public class StockServiceImpl {
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
-			
+
 			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 				smsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -134,12 +127,12 @@ public class StockServiceImpl {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
-				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
 			if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
 				smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
 
 			return distributerManagementRepository.findAll(smsb.build(), pageable);
 
@@ -149,10 +142,6 @@ public class StockServiceImpl {
 		}
 
 	}
-
-
-
-
 
 	public StockMgmt view(StockMgmt stockMgmt) {
 		try {
@@ -165,21 +154,16 @@ public class StockServiceImpl {
 		}
 	}
 
-
-
 	@Transactional
 	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt) {
 		try {
 
 			StockMgmt txnRecord	=	distributerManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
-			if(txnRecord == null) {
-
+			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.",stockMgmt.getTxnId());
 			}else {
-				/*
-				if(0 == stockMgmt.getStockStatus()||2 == stockMgmt.getStockStatus()) {
-				 */
+
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
@@ -187,11 +171,6 @@ public class StockServiceImpl {
 				webActionDb.setTxnId(stockMgmt.getTxnId());
 
 				webActionDbRepository.save(webActionDb);
-
-				/*else {
-
-					return new GenricResponse(200, "Operation Not Allowed.",stockMgmt.getTxnId());
-				}*/
 			}
 
 			return new GenricResponse(0, "Delete In Progress.",stockMgmt.getTxnId());
@@ -202,21 +181,16 @@ public class StockServiceImpl {
 		}
 	}
 
-
-
 	@Transactional
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
 
 		StockMgmt stackHolderInfo=	distributerManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
 
-		if(stackHolderInfo == null) {
-
+		if(Objects.isNull(stackHolderInfo)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
 
 		}else {
 
-			/*if(3 == stackHolderInfo.getStockStatus()) {
-			 */
 			stackHolderInfo.setInvoiceNumber(distributerManagement.getInvoiceNumber());
 			stackHolderInfo.setQuantity(distributerManagement.getQuantity());
 			stackHolderInfo.setSuplierName(distributerManagement.getSuplierName());
@@ -246,23 +220,17 @@ public class StockServiceImpl {
 			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
-	
+
 	public RequestCountAndQuantity getStockCountAndQuantity( long userId, Integer stockStatus) {
 		try {
 			logger.info("Going to get  stock count and quantity.");
 			return distributerManagementRepository.getStockCountAndQuantity(userId, stockStatus);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			// logger.error(e.getMessage(), e);
+			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			
+			return new RequestCountAndQuantity(0,0);
 		}
 
-	}
-	
+	}	
 }
-
-
-
-
-
-
-
