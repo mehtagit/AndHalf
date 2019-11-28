@@ -535,6 +535,25 @@ public String adminRegistrationRequest(String Id ,String status,String userStatu
 
 
 
+/********************************** Icons for DashBoard Notification **********************************/ 
+
+
+public String dashboardIcon(String userStatus) {
+	// URL link 
+	String viewAction=""; 
+	
+	// state related Code 
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+							+viewIconTitle+" ></i></a>";
+	String action=view;		  
+	return action;
+	 
+}
+
+
+
+
+
 
 
 }

@@ -40,6 +40,11 @@ public class HeadersTitle {
 	public static final String grievanceId = "Grievance ID";
 	public static final String recentStatus = "Recent Status";
 	
+	//Dashboard Notification Table
+	public static final String sNo = "S.No.";
+	public static final String feature = "Feature";
+	public static final String message = "Message";
+	
 		
 	
 }

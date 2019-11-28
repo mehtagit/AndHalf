@@ -129,6 +129,15 @@ public class DatatableHeaders {
 			}
 			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
+			
+			//DashBoard dataTable Headers
+			else if("dashboardNotification".equals(role)) {
+			String[] headers = {HeadersTitle.sNo,HeadersTitle.date,HeadersTitle.feature,HeadersTitle.message,HeadersTitle.action};	
+			for(String header : headers) {
+			dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
 
 
 
