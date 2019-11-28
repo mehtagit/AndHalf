@@ -8,11 +8,7 @@ public class Dropdown {
 	private Integer userTypeId;
 	private Integer state;
 	private String interp;
-	@Override
-	public String toString() {
-		return "Dropdown [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", featureId="
-				+ featureId + ", userTypeId=" + userTypeId + ", state=" + state + ", interp=" + interp + "]";
-	}
+	private String value;
 	public Integer getId() {
 		return id;
 	}
@@ -54,6 +50,18 @@ public class Dropdown {
 	}
 	public void setInterp(String interp) {
 		this.interp = interp;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	@Override
+	public String toString() {
+		return "Dropdown [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", featureId="
+				+ featureId + ", userTypeId=" + userTypeId + ", state=" + state + ", interp=" + interp + ", value="
+				+ value + "]";
 	}
 	
 }

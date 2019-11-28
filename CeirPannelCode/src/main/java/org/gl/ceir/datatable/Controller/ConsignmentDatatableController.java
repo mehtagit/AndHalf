@@ -66,8 +66,9 @@ public class ConsignmentDatatableController {
 		// Data set on this List
 		List<List<String>> finalList=new ArrayList<List<String>>();
 
-		//FilterRequest filterrequest = request.getParameter("FilterRequest"); 
-		FilterRequest filterrequest = new FilterRequest();
+		String filter = request.getParameter("filter");
+		Gson gsonObject=new Gson();
+		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
@@ -77,6 +78,7 @@ public class ConsignmentDatatableController {
 		try {
 		log.info("request send to the filter api ="+filterrequest);
 		Object response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+		log.info("response:::::::::::::"+response);
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		consignmentPaginationModel = gson.fromJson(apiResponse, ConsignmentPaginationModel.class);
@@ -155,7 +157,7 @@ public class ConsignmentDatatableController {
 				UserProfileModel userprofileModel = userModel.getUserProfile();
 				String createdOn= dataInsideList.getCreatedOn();
 				String txnId = dataInsideList.getTxnId(); 
-				String companyName = userprofileModel.getCompanyName();		
+				String displayName = userprofileModel.getDisplayName();		
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatus = null;
 				consignmentStatus = statusOfConsignment.equals("5") ?   " Verification By Customs " : "Not Listed";
@@ -163,7 +165,7 @@ public class ConsignmentDatatableController {
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
-				String[] finalData={createdOn,txnId,companyName,consignmentStatus,taxPaidStatus,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatus,taxPaidStatus,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -212,6 +214,7 @@ public class ConsignmentDatatableController {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
+			log.error(e.getMessage(),e);
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 		}
 		

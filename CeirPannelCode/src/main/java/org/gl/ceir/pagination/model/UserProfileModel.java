@@ -10,16 +10,26 @@ public class UserProfileModel {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	@Override
-	public String toString() {
-		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus=" + vatStatus + ", vatNo="
-				+ vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
-				+ ", province=" + province + ", country=" + country + ", passportNo=" + passportNo + ", email=" + email
-				+ ", phoneNo=" + phoneNo + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", phoneOtp="
-				+ phoneOtp + ", emailOtp=" + emailOtp + ", status=" + status + ", additionalProperties="
-				+ additionalProperties + "]";
-	}
+	private String displayName;
+	private String companyName;
+	private String type;
+	private Integer vatStatus;
+	private String vatNo;
+	private String propertyLocation;
+	private String street;
+	private String locality;
+	private String province;
+	private String country;
+	private String passportNo;
+	private String email;
+	private String phoneNo;
+	private String createdOn;
+	private String modifiedOn;
+	private String phoneOtp;
+	private String emailOtp;
+	private Integer status;
+	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
 	public Integer getId() {
 		return id;
 	}
@@ -35,8 +45,30 @@ public class UserProfileModel {
 	public String getMiddleName() {
 		return middleName;
 	}
+	@Override
+	public String toString() {
+		return "UserProfileModel [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", displayName=" + displayName + ", companyName=" + companyName + ", type=" + type
+				+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", propertyLocation=" + propertyLocation
+				+ ", street=" + street + ", locality=" + locality + ", province=" + province + ", country=" + country
+				+ ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", createdOn="
+				+ createdOn + ", modifiedOn=" + modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp
+				+ ", status=" + status + ", additionalProperties=" + additionalProperties + "]";
+	}
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 	public String getCompanyName() {
 		return companyName;
@@ -146,22 +178,4 @@ public class UserProfileModel {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	private String companyName;
-	private String type;
-	private Integer vatStatus;
-	private String vatNo;
-	private String propertyLocation;
-	private String street;
-	private String locality;
-	private String province;
-	private String country;
-	private String passportNo;
-	private String email;
-	private String phoneNo;
-	private String createdOn;
-	private String modifiedOn;
-	private String phoneOtp;
-	private String emailOtp;
-	private Integer status;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-}
+	}

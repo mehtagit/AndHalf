@@ -21,13 +21,14 @@ public class HeadersTitle {
 	public static final String requestType = "Request Type";
 	
 	//Custom
-	public static final String ImporterCompanyName = "Importer/Company Name";
 	
+	public static final String ImporterCompanyName = "Display name";
 	//Admin
 	public static final String submissionDate = "Submission Date";
 	public static final String userId = "User ID";
 	public static final String roll = "Role Type";
 	public static final String asType = "As Type";
+	public static final String requestOn = "Request On";
 	
 	
 	//pick consignments from stolen

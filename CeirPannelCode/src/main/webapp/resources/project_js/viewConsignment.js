@@ -11,6 +11,7 @@ var endDate=$('#endDate').val();
 var taxStatus=$('#taxPaidStatus').val();
 var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
+
 var featureId="3";
 
 
@@ -160,12 +161,14 @@ function filterConsignment()
 function table(url,dataUrl){
 
 	var filterRequest={
-			"consignmentStatus":$('#filterConsignmentStatus').val(),
+			"consignmentStatus":parseInt($('#filterConsignmentStatus').val()),
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":$('#taxPaidStatus').val(),
-			"userId":userId,
-			"featureId":featureId
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID"))
+
 	}
 
 	$.ajax({

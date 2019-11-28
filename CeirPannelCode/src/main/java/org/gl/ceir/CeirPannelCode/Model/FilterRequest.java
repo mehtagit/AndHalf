@@ -12,6 +12,9 @@ public class FilterRequest {
 	private int usertTypeId;
 	private String userType;
 	private String txnId;
+	
+	
+	
 	public Integer getUserId() {
 		return userId;
 	}

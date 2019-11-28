@@ -154,6 +154,22 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                             <input type="text" name="quantity" id="quantity"  pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required />
                                             <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
+                                        
+                                        
+                                            <div class="input-field col s12 m6">
+                                                <input type="text" name="totalPrice" id="totalPrice" maxlength="7"
+                                                    required />
+                                                <label for="totalPrice" class="center-align">Total Price</label>
+                                            </div>
+
+                                            <div class="col s12 m6">
+                                                <label for="Currency">Currency</label>
+                                                <select id="currency" class="browser-default">
+                                                    <option value="" disabled selected>Currency</option>
+                                                    <option value="">$</option>
+                                                    <option value="">$</option>
+                                                </select>
+                                            </div>
                                     </div>
 
 
@@ -266,8 +282,6 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
        
           <script type="text/javascript">
          function registerConsignment(){
-        	
-     			
         	 var supplierId=$('#supplierId').val();
         	 var supplierName=$('#supplierName').val();
         	 var consignmentNumber=$('#consignmentNumber').val();
@@ -275,13 +289,12 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
         	 var expectedDispatcheDate=$('#expectedDispatcheDate').val();
         	 var expectedArrivalPort=$('#expectedArrivalPort').val();
         	 var organisationcountry=$('#country').val();
-        	
+        	 var currency=$('#currency').val();
+        	 var totalPrice=$('#totalPrice').val();
         	 var quantity=$('#quantity').val();
-        	 
-        	 
         	 var formData= new FormData();
         		formData.append('file', $('#file')[0].files[0]);
-        	 	 formData.append('supplierId',supplierId);
+        	 	formData.append('supplierId',supplierId);
         	 	formData.append('supplierName',supplierName);
         	 	formData.append('consignmentNumber',consignmentNumber);
         	 	formData.append('expectedArrivaldate',expectedArrivalDate);
@@ -289,6 +302,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
         	 	formData.append('expectedArrivalPort',expectedArrivalPort);
         	 	formData.append('organisationcountry',organisationcountry);
         		formData.append('quantity',quantity);
+        		formData.append('currency',currency);
+        		formData.append('totalPrice',totalPrice);
         	 	
         	 $.ajax({
  				url: '${context}/Consignment/registerConsignment',
@@ -303,7 +318,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  					 if(data.errorCode=="0")
  						 {
  						 console.log("status code = 0");
- 						$('#sucessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is');
+ 					 $('#sucessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is');
  					 $('#sucessMessage').append(data.txnId);
  					 $('#errorCode').val(data.errorCode);
  						 }
@@ -312,7 +327,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  						console.log("status code = 3"); 
  						$('#sucessMessage').text('');
  						$('#sucessMessage').text("consignment number already exist");
- 						 $('#errorCode').val(data.errorCode);
+ 						$('#errorCode').val(data.errorCode);
  						 }
  				   // $('#updateConsignment').modal('open'); 
  					//alert("success");
