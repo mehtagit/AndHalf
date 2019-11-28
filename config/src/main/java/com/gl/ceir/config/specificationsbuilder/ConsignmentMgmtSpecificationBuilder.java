@@ -50,7 +50,7 @@ public class ConsignmentMgmtSpecificationBuilder {
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
 
-			for(int i = 1; i<specifications.size() ;i++) {
+			for(int i = 1; i<specifications.size(); i++) {
 				finalSpecification = finalSpecification.and(specifications.get(i));
 			}
 		}

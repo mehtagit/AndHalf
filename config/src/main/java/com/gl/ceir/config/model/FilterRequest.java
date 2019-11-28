@@ -1,15 +1,12 @@
 package com.gl.ceir.config.model;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 public class FilterRequest {
 
 	public Integer userId;
 	private String txnId;
 	public String startDate;
 	public String endDate;
-	public String taxPaidStatus;
+	public Integer taxPaidStatus;
 	private Integer consignmentStatus;
 	private String roleType;
 	private String requestType;
@@ -41,10 +38,10 @@ public class FilterRequest {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public String getTaxPaidStatus() {
+	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
-	public void setTaxPaidStatus(String taxPaidStatus) {
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 

@@ -91,9 +91,9 @@ public class ConsignmentServiceImpl {
 
 		try {
 
-			if(consignmentFileRequest.getConsignmentNumber() !=null || consignmentFileRequest.getConsignmentNumber() != " ") {
+			if(consignmentFileRequest.getConsignmentNumber() != null || consignmentFileRequest.getConsignmentNumber() != " ") {
 
-				ConsignmentMgmt consignmentMgmt	=consignmentRepository.getByConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
+				ConsignmentMgmt consignmentMgmt	= consignmentRepository.getByConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
 
 				if(consignmentMgmt != null) {
 
@@ -151,10 +151,10 @@ public class ConsignmentServiceImpl {
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
 				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
+			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			List<ConsignmentMgmt> data =consignmentRepository.findByUser_id(consignmentMgmt.getUserId());
+			List<ConsignmentMgmt> data = consignmentRepository.findByUser_id(consignmentMgmt.getUserId());
 			logger.info("Data to be fetch in db using jioin ="+data);
 
 			return consignmentRepository.findAll(cmsb.build(), pageable).getContent();
@@ -182,14 +182,13 @@ public class ConsignmentServiceImpl {
 			if(Objects.nonNull(consignmentMgmt.getTxnId()))
 				cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 			
-			if(Objects.nonNull(consignmentMgmt.getStartDate()))
+			if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
-			if(Objects.nonNull(consignmentMgmt.getEndDate()))
+			if(Objects.nonNull(consignmentMgmt.getEndDate()) && !consignmentMgmt.getEndDate().isEmpty())
 				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
-
-			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()) && !" ".equals(consignmentMgmt.getTaxPaidStatus()) && !consignmentMgmt.getTaxPaidStatus().isEmpty())
+			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
