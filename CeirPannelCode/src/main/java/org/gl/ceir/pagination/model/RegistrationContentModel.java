@@ -35,7 +35,7 @@ public class RegistrationContentModel {
 	private Object roles;
 	private Object usertypeId;
 	private Object password;
-	private User user;
+	private RegistrationUser user;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -193,10 +193,10 @@ public class RegistrationContentModel {
 	public void setPassword(Object password) {
 		this.password = password;
 	}
-	public User getUser() {
+	public RegistrationUser getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(RegistrationUser user) {
 		this.user = user;
 	}
 	public Map<String, Object> getAdditionalProperties() {
@@ -214,7 +214,7 @@ public class RegistrationContentModel {
 				+ passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", createdOn=" + createdOn
 				+ ", modifiedOn=" + modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", status="
 				+ status + ", username=" + username + ", questionList=" + questionList + ", roles=" + roles
-				+ ", usertypeId=" + usertypeId + ", password=" + password + ", additionalProperties="
+				+ ", usertypeId=" + usertypeId + ", password=" + password + ", user=" + user + ", additionalProperties="
 				+ additionalProperties + "]";
 	}
 	

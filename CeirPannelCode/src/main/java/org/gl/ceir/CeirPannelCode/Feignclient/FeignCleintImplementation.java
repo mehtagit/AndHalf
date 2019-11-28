@@ -1,5 +1,4 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -202,12 +201,7 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 
 	public GenricResponse saveGrievanceMessage(@RequestBody GrievanceModel greGrievanceModel) ;
 
-	//****************************************************************Admin Registration api starts from here ***************************************************************************************************		
-	//View admin registration  feign  controller
-	@RequestMapping(value="/userProfile/record" ,method=RequestMethod.POST) 
-	public Object registrationRequest(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+
 }
 
 

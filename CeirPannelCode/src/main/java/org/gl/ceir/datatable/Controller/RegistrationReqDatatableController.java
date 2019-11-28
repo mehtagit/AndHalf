@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -45,12 +46,14 @@ public class RegistrationReqDatatableController {
 	RegistrationContentModel registrationcontentmodel;
 	@Autowired
 	RegistrationPaginationModel registrationpaginationmodel;
+	@Autowired
+	UserProfileFeignImpl userProfileFeignImpl;
 	
 	@PostMapping("registrationData")
 	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",defaultValue = "registration",required = false) String role, HttpServletRequest request,HttpSession session) {
-		log.info("session value user Type admin registration Controller 1==");
+	
 		String userType = (String) session.getAttribute("usertype");
-		int userId=(int) session.getAttribute("userid");
+		int userId=	(int) session.getAttribute("userid");
 		
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
 		
@@ -59,29 +62,28 @@ public class RegistrationReqDatatableController {
 		FilterRequest filterrequest = new FilterRequest();
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-		Object response = feignCleintImplementation.registrationRequest(filterrequest,pageNo,pageSize);
-		log.info("response in datatable"+response);
-		Gson gson= new Gson(); 
-		String apiResponse = gson.toJson(response);
+		
 		
 		try {
-			
-			
+			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize);
+			log.info("response in datatable"+response);
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
 			registrationpaginationmodel = gson.fromJson(apiResponse, RegistrationPaginationModel.class);
 			List<RegistrationContentModel> paginationContentList = registrationpaginationmodel.getContent();
-
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
+				
 			}
 			else {
+			
 				for(RegistrationContentModel dataInsideList : paginationContentList) 
 				{
 				   String createdOn = (String) dataInsideList.getCreatedOn();
 				   String Id = String.valueOf(dataInsideList.getId());
 				   String type = dataInsideList.getType();
-				   String roles = (String) dataInsideList.getRoles();
+				   String roles =  (String) dataInsideList.getRoles();
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
 				   String grievanceStatus = null;
 				   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
