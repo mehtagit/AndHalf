@@ -158,6 +158,7 @@ else {
 		stockUpload.setFileName(file.getOriginalFilename());
 		stockUpload.setUserId(userId);
 		stockUpload.setRoleType(selectedRoletype);
+		stockUpload.setUserType(roletype);
 		log.info("consignment form parameters passed to register consignment api "+stockUpload);
 		GenricResponse response = feignCleintImplementation.uploadStock(stockUpload);
 		log.info("response from register consignment api"+response);
@@ -213,7 +214,7 @@ else {
 	log.info("entry point in update Stock * *.");
 	StockUploadModel stockUpload= new StockUploadModel();
 
-	String roletypesession=String.valueOf(session.getAttribute("usertype"));
+	String roleType=String.valueOf(session.getAttribute("usertype"));
 	String userName=session.getAttribute("username").toString();
 	int userId=(int) session.getAttribute("userid"); 
 	String name=session.getAttribute("name").toString();
@@ -229,7 +230,7 @@ else {
 	stockUpload.setInvoiceNumber(invoiceNumber);
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
-
+	stockUpload.setUserType(roleType);
 	}
 	else {
 	
@@ -280,6 +281,7 @@ else {
 	stockUpload.setFileName(file.getOriginalFilename());
 	stockUpload.setUserId(userId);
 	stockUpload.setRoleType(selectedRoletype);
+	stockUpload.setUserType(roleType);
 }
 	log.info("Request passed to the update register consignment="+stockUpload);
 	response = feignCleintImplementation.updateStock(stockUpload);
