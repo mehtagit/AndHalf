@@ -54,9 +54,10 @@ public class StockMgmt implements Serializable {
 	private int previousStockStatus;
 
 	private int currency;
+	
 	private String userType;
+	
 	private Double totalPrice;
-
 
 	public Long getId() {
 		return id;

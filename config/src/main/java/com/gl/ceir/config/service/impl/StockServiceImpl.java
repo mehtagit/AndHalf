@@ -38,9 +38,7 @@ import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
 @Service
 public class StockServiceImpl {
 
-
 	private static final Logger logger = LogManager.getLogger(StockServiceImpl.class);
-
 
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
@@ -49,7 +47,7 @@ public class StockServiceImpl {
 	FileStorageProperties fileStorageProperties;
 
 	@Autowired
-	StockManagementRepository distributerManagementRepository;
+	StockManagementRepository stockManagementRepository;
 
 
 	@Autowired
@@ -67,13 +65,11 @@ public class StockServiceImpl {
 			stackholderRequest.setStockStatus(StockStatus.UPLOADING.getCode());
 
 			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
-
 				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
-
 				stackholderRequest.setUserId(new Long(user.getId()));
 			}
 
-			distributerManagementRepository.save(stackholderRequest);
+			stockManagementRepository.save(stackholderRequest);
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
@@ -95,7 +91,7 @@ public class StockServiceImpl {
 	public List<StockMgmt> getAllData(StockMgmt stockMgmt){
 		try {
 
-			return distributerManagementRepository.findByRoleTypeAndUserId(stockMgmt.getInvoiceNumber(), stockMgmt.getUserId());
+			return stockManagementRepository.findByRoleTypeAndUserId(stockMgmt.getInvoiceNumber(), stockMgmt.getUserId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -134,7 +130,7 @@ public class StockServiceImpl {
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
 
-			return distributerManagementRepository.findAll(smsb.build(), pageable);
+			return stockManagementRepository.findAll(smsb.build(), pageable);
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -146,7 +142,7 @@ public class StockServiceImpl {
 	public StockMgmt view(StockMgmt stockMgmt) {
 		try {
 
-			return distributerManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
+			return stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -158,7 +154,7 @@ public class StockServiceImpl {
 	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt) {
 		try {
 
-			StockMgmt txnRecord	=	distributerManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
+			StockMgmt txnRecord	=	stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
 			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.",stockMgmt.getTxnId());
@@ -184,7 +180,7 @@ public class StockServiceImpl {
 	@Transactional
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
 
-		StockMgmt stackHolderInfo=	distributerManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
+		StockMgmt stackHolderInfo=	stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
 
 		if(Objects.isNull(stackHolderInfo)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
@@ -202,7 +198,7 @@ public class StockServiceImpl {
 				stackHolderInfo.setFileName(distributerManagement.getFileName());
 			}
 
-			distributerManagementRepository.save(stackHolderInfo);
+			stockManagementRepository.save(stackHolderInfo);
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
@@ -224,7 +220,7 @@ public class StockServiceImpl {
 	public RequestCountAndQuantity getStockCountAndQuantity( long userId, Integer stockStatus) {
 		try {
 			logger.info("Going to get  stock count and quantity.");
-			return distributerManagementRepository.getStockCountAndQuantity(userId, stockStatus);
+			return stockManagementRepository.getStockCountAndQuantity(userId, stockStatus);
 		} catch (Exception e) {
 			// logger.error(e.getMessage(), e);
 			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
