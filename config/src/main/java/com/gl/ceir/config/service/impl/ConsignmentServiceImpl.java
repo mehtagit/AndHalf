@@ -45,6 +45,7 @@ import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
+import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
@@ -124,8 +125,8 @@ public class ConsignmentServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentFileRequest.getTxnId());
 
-
 			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.INIT.getCode());
+			consignmentFileRequest.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 			webActionDbRepository.save(webActionDb);
 
 			consignmentRepository.save(consignmentFileRequest);
