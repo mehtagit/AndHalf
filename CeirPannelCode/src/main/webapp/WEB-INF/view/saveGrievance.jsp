@@ -99,11 +99,11 @@
                                         </div>
 
                                         <div class="row">
-                                            <h6 style="color: #000; margin-left: 10px;">Upload Supporting Document</h6>
+                                            <h6 style="color: #000; margin-left: 10px;">Upload Supporting Document*</h6>
                                             <div class="file-field col s12 m6">
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input id="myInput" type="file" multiple>
+                                                    <input id="myInput" type="file" accept=".csv"  multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate" type="text" multiple
@@ -114,8 +114,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
+                                        <div class="col s12 m12">  <p>
+				<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a>
+			</p>
 
+			<span> Required Field are marked with <span class="star">*</span></span>
+			
+                </div>
                                         <div class="center" style="margin-top: 50px;">
                                             <button class="waves-effect waves-light modal-trigger btn"
                                                  type="button" onclick="saveGrievance()">Submit</button>

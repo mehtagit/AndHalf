@@ -37,6 +37,7 @@ public class RegistrationContentModel {
 	private Object password;
 	private RegistrationUser user;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String stateInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -205,6 +206,12 @@ public class RegistrationContentModel {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
 	@Override
 	public String toString() {
 		return "RegistrationContentModel [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName
@@ -215,8 +222,7 @@ public class RegistrationContentModel {
 				+ ", modifiedOn=" + modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", status="
 				+ status + ", username=" + username + ", questionList=" + questionList + ", roles=" + roles
 				+ ", usertypeId=" + usertypeId + ", password=" + password + ", user=" + user + ", additionalProperties="
-				+ additionalProperties + "]";
+				+ additionalProperties + ", stateInterp=" + stateInterp + "]";
 	}
-	
-	
+
 }

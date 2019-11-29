@@ -157,17 +157,16 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         
                                         
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="totalPrice" id="totalPrice" maxlength="7"
-                                                    required />
+                                                <input type="text" name="totalPrice"  id="totalPrice" maxlength="7"
+                                                     />
                                                 <label for="totalPrice" class="center-align">Total Price</label>
                                             </div>
 
                                             <div class="col s12 m6">
-                                                <label for="Currency">Currency</label>
-                                                <select id="currency" class="browser-default">
+                                                <label for="Currency">Currency<span class="star">*</span></label>
+                                                <select id="currency" class="browser-default" required="required">
                                                     <option value="" disabled selected>Currency</option>
-                                                    <option value="">$</option>
-                                                    <option value="">$</option>
+                                                   
                                                 </select>
                                             </div>
                                     </div>
@@ -186,6 +185,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                             </div>
                                         </div><br><br>
                                         <p style="margin-left: 15px;"><a href="./sampleFileDownload/filetype=sample">Download Sample Format</a></p>
+                                        <span> Required Field are marked with  <span class="star">*</span></span>
                                     </div>
                                    
 
@@ -474,6 +474,35 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
         		  /// $('#submitConsignment').modal('hide');
         		   }
            }
+           
+           
+           function ConsignmentCurrency()
+           {
+        		var currency="currency";
+      		 	 $.ajax({
+     				url: '${context}/Consignment/consignmentCurency?currency='+currency,
+     				type: 'GET',
+     				processData: false,
+     				contentType: false,
+     				success: function (data, textStatus, jqXHR) {
+     					 console.log(data);
+     					 
+     			    	$('#currency').empty();
+     			    	$('#currency').append('<option value="">Select Currency</option>');
+     			    	for (i = 0; i < data.length; i++){
+     			    		
+     			    		var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+     						//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
+     						$('#currency').append(html);	
+     						}
+     			    	/* $('#currency').val($("#langid").val()); */
+     					
+     				},
+     				error: function (jqXHR, textStatus, errorThrown) {
+     				console.log("error in ajax")
+     				}
+     			});
+           }
           </script> 
           
     
@@ -482,6 +511,14 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
    			 (   
      			 "country"
    			 );
+   			 
+   			 
+   			 
+   			$(document).ready(function(){
+   				
+   				ConsignmentCurrency();
+   			});
+
   </script>
 
 </body>

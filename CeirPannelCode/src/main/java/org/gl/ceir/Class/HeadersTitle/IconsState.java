@@ -397,14 +397,19 @@ public String grievanceState(String fileName,String txnId ,String grievanceId,St
 
 	//Disable reply
 	if( "0".equals(status) || "1".equals(status) || "3".equals(status)) {
-		reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
 		
+	}else if("0".equals(status)) {
+		view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
 	}
 	else if("Disable".equals(userStatus)) {
 		 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
+			view="<a onclick="+viewAction+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
 		
 	}
 
@@ -412,6 +417,79 @@ public String grievanceState(String fileName,String txnId ,String grievanceId,St
 	String action=reply.concat(view);
 	return action;
 }
+
+/********************************** Icons for Custom Grievance **********************************/ 
+
+public String customGrievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+	String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+	String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
+	
+	// state related Code 
+	String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			+replyIconTitle+" ></i></a>";
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	
+	
+
+	//Disable reply
+	if( "2".equals(status) || "3".equals(status)) {
+		reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		
+	}else if("0".equals(status)) {
+		view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+	}
+	else if("Disable".equals(userStatus)) {
+		 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+			view="<a onclick="+viewAction+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
+		
+	}
+
+
+	String action=reply.concat(view);
+	return action;
+}
+
+
+/********************************* Icons for Admin Grievance *********************************/ 
+
+public String adminGrievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
+
+// state related Code 
+String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
++replyIconTitle+" ></i></a>";
+String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
++viewIconTitle+" ></i></a>";
+
+
+
+//Disable reply
+if( "2".equals(status) || "3".equals(status)) {
+
+}else if("0".equals(status)) {
+
+}
+else if("Disable".equals(userStatus)) {
+log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
++replyIconTitle+" ></i></a>";
+view="<a onclick="+viewAction+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
++viewIconTitle+" ></i></a>";
+
+}
+
+
+String action=reply.concat(view);
+return action;
+}
+
 
 
 
@@ -478,7 +556,7 @@ public String adminStockState(String fileName,String txnId ,String status,String
 
 /********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-public String adminRegistrationRequest(String Id ,String status,String userStatus) {
+public String adminRegistrationRequest(String Id ,String status,String userStatus,String grievanceStatusName) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
 	String approveAction = "";
@@ -500,30 +578,20 @@ public String adminRegistrationRequest(String Id ,String status,String userStatu
 	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 	
-	
-
-		
-	  if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
-	 
-	  }
-	  
-	  else if(("1".equals(status)) && "Approved".equals(userStatus)) {
-		
+	if("Approved".equals(grievanceStatusName) || "Reject".equals(grievanceStatusName)  && "Approved".equals(userStatus)) {
 		  approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
-	  	}
-	   else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status))  && "Approved".equals(userStatus)) {
-		
-			 reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
-						+rejectIconTitle+" ></i></a>";
-			
-			}
+		  reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+	  
+	  }
+	
 	  else if("Disable".equals(userStatus)) {
 		  log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 		
 		  approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
-			 reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
+		  reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableAejectIcon+" aria-hidden=\"true\" title="
 						+rejectIconTitle+" ></i></a>";
 				
 	  }

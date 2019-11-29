@@ -301,7 +301,6 @@ var jsonObj = {
 
 var sourceType = localStorage.getItem("sourceType");	 
 function tableHeader(){
-	alert(sourceType)
 	if(sourceType !="viaExistingRecovery" ){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){
@@ -376,7 +375,7 @@ function pageElements(url){
 				}else if(date[i].type === "text"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
 				}
-				} 
+			} 
 
 			// dynamic dropdown portion
 			var dropdown=data.dropdownList;

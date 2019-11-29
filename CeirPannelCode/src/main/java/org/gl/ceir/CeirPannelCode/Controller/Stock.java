@@ -159,7 +159,7 @@ else {
 		stockUpload.setUserId(userId);
 		stockUpload.setRoleType(selectedRoletype);
 		stockUpload.setUserType(roletype);
-		log.info("consignment form parameters passed to register consignment api "+stockUpload);
+		log.info("stock form parameters passed to register consignment api "+stockUpload);
 		GenricResponse response = feignCleintImplementation.uploadStock(stockUpload);
 		log.info("response from register consignment api"+response);
 		log.info("upload stock  exit point.");

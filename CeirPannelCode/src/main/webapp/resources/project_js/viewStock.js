@@ -366,7 +366,9 @@ function pageButtons(url){
 			}
 
 			sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-			
+			if(currentRoleType=="CEIRAdmin"){
+				$("#btnLink").css({display: "none"});
+				}
 		}
 
 	//$("#filterBtnDiv").append();

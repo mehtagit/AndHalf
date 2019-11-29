@@ -8429,7 +8429,7 @@ nav .input-field label.active {
   border: none;
   border-radius: 2px;
   display: inline-block;
-  height: 63px;
+  height: 20px;
   line-height: 36px;
   outline: 0;
   padding: 0 1rem;
@@ -8989,7 +8989,8 @@ a.waves-effect .waves-ripple {
 }
 
 .modal .modal-content {
-  padding: 24px;
+/*   padding: 24px; */
+    padding: 0 24px 24px 24px;
 }
 
 .modal .modal-close {

@@ -52,6 +52,12 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
+<style type="text/css">
+ #starColor {
+            color: red;
+        }
+</style>
+
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
@@ -128,19 +134,20 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierId" id="editSupplierId"
 							placeholder="ABCD12345" maxlength="15" /> <label
-							for="SupplierId" class="center-align">Supplier ID</label>
+							for="SupplierId" class="center-align">Supplier ID
+							<span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierName" id="editSupplierName"
 							placeholder="Abcd" maxlength="15" /> <label for="SupplierName"
-							class="center-align">Supplier Name </label>
+							class="center-align">Supplier Name <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
 							placeholder="120" maxlength="7" required /> <label
-							for="Quantity" class="center-align">Quantity </label>
+							for="Quantity" class="center-align">Quantity <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">

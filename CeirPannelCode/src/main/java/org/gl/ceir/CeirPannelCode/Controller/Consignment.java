@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Service.ConsignmentService;
@@ -202,7 +204,7 @@ consignment.setQuantity(quantity);
 consignment.setTxnId(txnNumner);
 consignment.setFileName(file.getOriginalFilename());
 consignment.setUserId(Long.valueOf(userId));
-consignment.setTaxPaidStatus("Not Paid");
+
 consignment.setCurrency(currency);
 consignment.setTotalPrice(totalPrice);
 log.info("consignment form parameters passed to register consignment api "+consignment.toString());
@@ -222,7 +224,9 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) String expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity, HttpSession session,
-@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId) {
+@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId,
+@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) int currency) 
+{
 ConsignmentModel consignment = new ConsignmentModel();
 
 String userName=session.getAttribute("username").toString();
@@ -245,7 +249,9 @@ consignment.setQuantity(quantity);
 consignment.setTxnId(txnId);
 consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(userId));
-consignment.setTaxPaidStatus("Not Paid");
+consignment.setCurrency(currency);
+consignment.setTotalPrice(totalPrice);
+
 
 }
 else {
@@ -295,7 +301,9 @@ consignment.setQuantity(quantity);
 consignment.setTxnId(txnId);
 consignment.setFileName(filename);
 consignment.setUserId(Long.valueOf(1));
-consignment.setTaxPaidStatus("Not Paid");
+consignment.setCurrency(currency);
+
+consignment.setTotalPrice(totalPrice);
 }
 
 log.info("Request passed to the update register consignment="+consignment.toString());
@@ -427,6 +435,16 @@ return "redirect:"+response;
 
 }
 
+//***********************************************cuurency controller *************************************************
+@RequestMapping(value="/consignmentCurency",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("currency") String currency)  {
+log.info("request send to the currency  api="+currency);
+List<Dropdown> response= new ArrayList<Dropdown>();
+response=feignCleintImplementation.taxPaidStatusList(currency);
+log.info("response from currency api "+response);
+return response;
+
+}
 
 
 }

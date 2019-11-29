@@ -441,8 +441,9 @@
 	
 
     <div id="stoleRecoveryModal" class="modal">
+    <button type="button" class=" modal-action modal-close  btn-flat right" data-dismiss="modal">&times;</button>
         <div class="row" style="padding-bottom: 20px;" id="stolenRecoveryDivPage">
-        <button type="button" class=" modal-action modal-close  btn-flat right" data-dismiss="modal">×</button>
+        
             <div class="col s12 m12 modal-content">
                 <h6>Report Stolen/Recovery</h6>
                 <hr>
