@@ -1,5 +1,4 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
@@ -234,7 +233,15 @@ public interface FeignCleintImplementation {
 		@RequestMapping(value="/grievance/count" ,method=RequestMethod.GET) 
 		public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "grievanceStatus") Integer grievanceStatus);
 
-		}
+		
+		//Dashboard/Datatable Feign
+		@RequestMapping(value="/history/Notification" ,method=RequestMethod.GET) 
+		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;	
+}
+
+
 
 
 

@@ -4,17 +4,14 @@ public class FilterRequest {
 	public Integer userId;
 	public String  startDate;
 	public String   endDate;
-	public String taxPaidStatus;
+	public Integer taxPaidStatus;
 	private Integer consignmentStatus;
 	private String roleType;
 	private String requestType;
 	private int featureId;
-	private int usertTypeId;
+	private int userTypeId;
 	private String userType;
 	private String txnId;
-	
-	
-	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -33,10 +30,10 @@ public class FilterRequest {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public String getTaxPaidStatus() {
+	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
-	public void setTaxPaidStatus(String taxPaidStatus) {
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 	public Integer getConsignmentStatus() {
@@ -63,11 +60,11 @@ public class FilterRequest {
 	public void setFeatureId(int featureId) {
 		this.featureId = featureId;
 	}
-	public int getUsertTypeId() {
-		return usertTypeId;
+	public int getUserTypeId() {
+		return userTypeId;
 	}
-	public void setUsertTypeId(int usertTypeId) {
-		this.usertTypeId = usertTypeId;
+	public void setUserTypeId(int userTypeId) {
+		this.userTypeId = userTypeId;
 	}
 	public String getUserType() {
 		return userType;
@@ -85,7 +82,7 @@ public class FilterRequest {
 	public String toString() {
 		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
-				+ roleType + ", requestType=" + requestType + ", featureId=" + featureId + ", usertTypeId="
-				+ usertTypeId + ", userType=" + userType + ", txnId=" + txnId + "]";
+				+ roleType + ", requestType=" + requestType + ", featureId=" + featureId + ", userTypeId=" + userTypeId
+				+ ", userType=" + userType + ", txnId=" + txnId + "]";
 	}
-	}
+}

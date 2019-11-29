@@ -13,6 +13,7 @@ public class StockUploadModel {
 	private int stockStatus;
 	private String supplierId;
 	private int userId;
+	private String userType;
 	public String getFileName() {
 		return fileName;
 	}
@@ -74,16 +75,21 @@ public class StockUploadModel {
 	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
 	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 	@Override
 	public String toString() {
 		return "StockUploadModel [fileName=" + fileName + ", id=" + id + ", invoiceNumber=" + invoiceNumber
 				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
-				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId + "]";
+				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId
+				+ ", userType=" + userType + "]";
 	}
 	
-	
-	
-	
+
 	
 
 }

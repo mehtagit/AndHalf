@@ -99,21 +99,10 @@ public class ConsignmentDatatableController {
 				String supplierName= dataInsideList.getSupplierName(); 
 				// if API provide me consignmentStatusName
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
-				String consignmentStatus = null;
-				consignmentStatus = statusOfConsignment.equals("0") ? "INIT" : 
-					statusOfConsignment.equals("1") ? "Processing" :
-						statusOfConsignment.equals("2")  ? "Rejected By System" :
-							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
-								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
-									statusOfConsignment.equals("5") ?   "Pending Approvals from Customs" :
-										statusOfConsignment.equals("6") ?   "Approved" : 
-											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
-												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
-				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
-			//	String userStatus = (String) session.getAttribute("userStatus");
-				//String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
-				
-				String[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus}; 
+				String consignmentStatusName = dataInsideList.getStateInterp();
+				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
+				String taxPaidStatusName=dataInsideList.getTaxInterp();
+				String[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -128,21 +117,13 @@ public class ConsignmentDatatableController {
 				String supplierName= dataInsideList.getSupplierName(); 
 				// if API provide me consignmentStatusName
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
-				String consignmentStatus = null;
-				consignmentStatus = statusOfConsignment.equals("0") ? "INIT" : 
-					statusOfConsignment.equals("1") ? "Processing" :
-						statusOfConsignment.equals("2")  ? "Rejected By System" :
-							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
-								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
-									statusOfConsignment.equals("5") ?   "Verification By Customs" :
-										statusOfConsignment.equals("6") ?   "Verified and Regularized by Customs" : 
-											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
-												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : "Withdrawn by CEIR";
-				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+				String consignmentStatusName = dataInsideList.getStateInterp();
+				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
+				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
-				String[] finalData={createdOn,txnId,supplierName,consignmentStatus,taxPaidStatus,action}; 
+				String[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -159,13 +140,13 @@ public class ConsignmentDatatableController {
 				String txnId = dataInsideList.getTxnId(); 
 				String displayName = userprofileModel.getDisplayName();		
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
-				String consignmentStatus = null;
-				consignmentStatus = statusOfConsignment.equals("5") ?   " Verification By Customs " : "Not Listed";
-				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+				String consignmentStatusName = dataInsideList.getStateInterp();
+				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
+				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
-				String[] finalData={createdOn,txnId,displayName,consignmentStatus,taxPaidStatus,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -179,21 +160,14 @@ public class ConsignmentDatatableController {
 				String txnId = dataInsideList.getTxnId(); 
 				String companyName = userprofileModel.getCompanyName();		
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
-				String consignmentStatus = null;
-				consignmentStatus = statusOfConsignment.equals("2")  ? "Rejected By System" :
-							statusOfConsignment.equals("3") ?   "Pending Approval from CEIR Authority" : 
-								statusOfConsignment.equals("4") ?   "Rejected By CEIR Authority" :
-									statusOfConsignment.equals("5") ?   "Verification By Customs" :
-										statusOfConsignment.equals("6") ?   " Verified and Regularized by Customs" : 
-											statusOfConsignment.equals("7") ?   "Rejected by Customs" :
-												statusOfConsignment.equals("8") ?   "Withdrawn by Importer" : 
-														statusOfConsignment.equals("9") ?   "Withdrawn by CEIR" : "Not Listed";
-				String taxPaidStatus= dataInsideList.getTaxPaidStatus();
+				String consignmentStatusName = dataInsideList.getStateInterp();
+				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
+				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
 				
-				String[] finalData={createdOn,txnId,companyName,consignmentStatus,taxPaidStatus,action}; 
+				String[] finalData={createdOn,txnId,companyName,consignmentStatusName,taxPaidStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);

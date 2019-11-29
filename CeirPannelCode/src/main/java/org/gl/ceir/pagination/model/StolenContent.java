@@ -20,17 +20,13 @@ public class StolenContent {
 	private String blockingTimePeriod;
 	private String sourceType;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String stateInterp;
+	private String taxInterp;
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public String getSource() {
-		return source;
-	}
-	public void setSource(String source) {
-		this.source = source;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -74,6 +70,12 @@ public class StolenContent {
 	public void setRequestType(String requestType) {
 		this.requestType = requestType;
 	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
 	public String getRoleType() {
 		return roleType;
 	}
@@ -92,17 +94,29 @@ public class StolenContent {
 	public void setBlockingTimePeriod(String blockingTimePeriod) {
 		this.blockingTimePeriod = blockingTimePeriod;
 	}
+	public String getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(String sourceType) {
+		this.sourceType = sourceType;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	public String getSourceType() {
-		return sourceType;
+	public String getStateInterp() {
+		return stateInterp;
 	}
-	public void setSourceType(String sourceType) {
-		this.sourceType = sourceType;
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	public String getTaxInterp() {
+		return taxInterp;
+	}
+	public void setTaxInterp(String taxInterp) {
+		this.taxInterp = taxInterp;
 	}
 	@Override
 	public String toString() {
@@ -110,9 +124,8 @@ public class StolenContent {
 				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
 				+ ", requestType=" + requestType + ", source=" + source + ", roleType=" + roleType + ", blockingType="
 				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
-				+ ", additionalProperties=" + additionalProperties + "]";
+				+ ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + ", taxInterp="
+				+ taxInterp + "]";
 	}
 	
-	
-
 }

@@ -2,7 +2,6 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class GenricResponse {
 
-	
 	private String errorCode;
 	private String txnId;
 	private String  message;

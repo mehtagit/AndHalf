@@ -19,6 +19,8 @@ public class StockContent {
 	private Integer quantity;
 	private Integer stockStatus;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String stateInterp;
+	private String taxInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -97,12 +99,24 @@ public class StockContent {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	public String getTaxInterp() {
+		return taxInterp;
+	}
+	public void setTaxInterp(String taxInterp) {
+		this.taxInterp = taxInterp;
+	}
 	@Override
 	public String toString() {
 		return "StockContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", suplierName="
 				+ suplierName + ", supplierId=" + supplierId + ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId
 				+ ", fileName=" + fileName + ", userId=" + userId + ", roleType=" + roleType + ", quantity=" + quantity
-				+ ", stockStatus=" + stockStatus + ", additionalProperties=" + additionalProperties + "]";
+				+ ", stockStatus=" + stockStatus + ", additionalProperties=" + additionalProperties + ", stateInterp="
+				+ stateInterp + ", taxInterp=" + taxInterp + "]";
 	}
-	
-}
+	}

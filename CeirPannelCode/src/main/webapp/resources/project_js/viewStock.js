@@ -246,15 +246,15 @@ var featureId="4";
 var usertypeId=7;
 var jsonObj = {
 		"consignmentStatus": null,
-		"endDate": "2019-11-11T10:53:37.289Z",
+		"endDate":$('#endDate').val(),
+		"startDate":$('#startDate').val(),
 		"roleType": role,
-		"startDate": "2019-11-11T10:53:37.290Z",
-		"taxPaidStatus": null,
+		"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
 		"userId": userId,
 		"userType" : role,
 		"featureId":featureId,
 		"usertTypeId":usertypeId,
-		"txnId":null
+		"txnId":$('#transactionID').val(),
 };
 
 
@@ -365,8 +365,8 @@ function pageButtons(url){
 				}
 			}
 
-			currentRoleType=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-
+			sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
+			
 		}
 
 	//$("#filterBtnDiv").append();

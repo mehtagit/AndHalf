@@ -205,57 +205,11 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                     <div class="col s12 m12" style="padding-bottom: 40px;">
                                         <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
                                             Notification Info</h4>
-                                        <table class="responsive-table striped display" id="notificationTable"
+                                        
+                                        <table class="responsive-table striped display" id="notificationLibraryTable"
                                             cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 25px;">S.No.</th>
-                                                    <th>Date</th>
-                                                    <th>Feature</th>
-                                                    <th>Message</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
+                                           
 
-                                            <tbody>
-                                                <tr>
-                                                    <td style="width: 25px;">1</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Consignment</td>
-                                                    <td>ghjh</td>
-                                                    <td style="width: 100px;">
-                                                        <a href="consignment.html" class="mr-3"><i class="fa fa-eye teal-text"
-                                                                style="font-size: 20px;" title="view"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>10/10/2019</td>
-                                                    <td>Stock</td>
-                                                    <td>hgyr</td>
-                                                    <td><a href="stockManagement.html" class="mr-3"><i class="fa fa-eye teal-text"
-                                                                style="font-size: 20px;" title="view"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Stolen/Recovery</td>
-                                                    <td>gjsd</td>
-                                                    <td><a href="stolenRecoveryView.html" class="mr-3"><i class="fa fa-eye teal-text"
-                                                                style="font-size: 20px;" title="view"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>11/10/2019</td>
-                                                    <td>Grievance</td>
-                                                    <td>hkjhkd</td>
-                                                    <td><a href="grievance.html" class="mr-3"><i class="fa fa-eye teal-text"
-                                                                style="font-size: 20px;" title="view"></i></a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
                                         </table>
                                     </div>
 
@@ -279,6 +233,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/dashboard.js"></script>
 	
 </body>
 </html>

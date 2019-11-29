@@ -290,17 +290,18 @@ console.log("roleType=======" +roleType+"---------userId------"+userId+"--------
 var role = currentRoleType == null ? roleType : currentRoleType;
 var featureId="5";
 var jsonObj = {
-		"consignmentStatus": null,
-		"endDate": "2019-11-11T10:53:37.289Z",
+		"consignmentStatus":parseInt($('#filterConsignmentStatus').val()),
+		"endDate":$('#endDate').val(),
+		"startDate":$('#startDate').val(),
 		"roleType": role,
-		"startDate": "2019-11-11T10:53:37.290Z",
-		"taxPaidStatus": null,
+		"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
 		"userId": userId,
 		"featureId":featureId
 };
 
 var sourceType = localStorage.getItem("sourceType");	 
 function tableHeader(){
+	alert(sourceType)
 	if(sourceType !="viaExistingRecovery" ){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){

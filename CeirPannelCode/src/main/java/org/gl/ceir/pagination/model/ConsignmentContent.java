@@ -7,21 +7,25 @@ public class ConsignmentContent {
 	private String supplierId;
 	private String supplierName;
 	private String consignmentNumber;
-	private String taxPaidStatus;
+	private Integer taxPaidStatus;
 	private String createdOn;
 	private String modifiedOn;
 	private Integer userId;
 	private String txnId;
 	private String fileName;
 	private Integer consignmentStatus;
+	private Integer previousConsignmentStatus;
 	private String organisationCountry;
 	private String expectedDispatcheDate;
 	private String expectedArrivaldate;
 	private String expectedArrivalPort;
 	private Integer quantity;
-	private Object remarks;
+	private String remarks;
+	private Integer currency;
+	private Object totalPrice;
+	private String stateInterp;
+	private String taxInterp;
 	private UserModel user;
-
 	private String supplierld;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
@@ -48,10 +52,10 @@ public class ConsignmentContent {
 	public void setConsignmentNumber(String consignmentNumber) {
 		this.consignmentNumber = consignmentNumber;
 	}
-	public String getTaxPaidStatus() {
+	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
-	public void setTaxPaidStatus(String taxPaidStatus) {
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 	public String getCreatedOn() {
@@ -90,6 +94,12 @@ public class ConsignmentContent {
 	public void setConsignmentStatus(Integer consignmentStatus) {
 		this.consignmentStatus = consignmentStatus;
 	}
+	public Integer getPreviousConsignmentStatus() {
+		return previousConsignmentStatus;
+	}
+	public void setPreviousConsignmentStatus(Integer previousConsignmentStatus) {
+		this.previousConsignmentStatus = previousConsignmentStatus;
+	}
 	public String getOrganisationCountry() {
 		return organisationCountry;
 	}
@@ -120,11 +130,35 @@ public class ConsignmentContent {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	public Object getRemarks() {
+	public String getRemarks() {
 		return remarks;
 	}
-	public void setRemarks(Object remarks) {
+	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public Integer getCurrency() {
+		return currency;
+	}
+	public void setCurrency(Integer currency) {
+		this.currency = currency;
+	}
+	public Object getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Object totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	public String getTaxInterp() {
+		return taxInterp;
+	}
+	public void setTaxInterp(String taxInterp) {
+		this.taxInterp = taxInterp;
 	}
 	public UserModel getUser() {
 		return user;
@@ -149,10 +183,13 @@ public class ConsignmentContent {
 		return "ConsignmentContent [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
 				+ ", consignmentNumber=" + consignmentNumber + ", taxPaidStatus=" + taxPaidStatus + ", createdOn="
 				+ createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId + ", txnId=" + txnId + ", fileName="
-				+ fileName + ", consignmentStatus=" + consignmentStatus + ", organisationCountry=" + organisationCountry
+				+ fileName + ", consignmentStatus=" + consignmentStatus + ", previousConsignmentStatus="
+				+ previousConsignmentStatus + ", organisationCountry=" + organisationCountry
 				+ ", expectedDispatcheDate=" + expectedDispatcheDate + ", expectedArrivaldate=" + expectedArrivaldate
 				+ ", expectedArrivalPort=" + expectedArrivalPort + ", quantity=" + quantity + ", remarks=" + remarks
-				+ ", user=" + user + ", supplierld=" + supplierld + ", additionalProperties=" + additionalProperties
-				+ "]";
+				+ ", currency=" + currency + ", totalPrice=" + totalPrice + ", stateInterp=" + stateInterp
+				+ ", taxInterp=" + taxInterp + ", user=" + user + ", supplierld=" + supplierld
+				+ ", additionalProperties=" + additionalProperties + "]";
 	}
+	
 }

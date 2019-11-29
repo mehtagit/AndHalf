@@ -57,12 +57,15 @@ public class GrievanceDatatableController {
 		
 		// Data set on this List
 				List<List<String>> finalList=new ArrayList<List<String>>();
-				FilterRequest filterrequest = new FilterRequest();
+				String filter = request.getParameter("filter");
+				Gson gsonObject=new Gson();
+				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		
+		log.info("filterrequest::::::::::::"+filterrequest);
 		try {
 			Object response = feignCleintImplementation.grievanceFilter(filterrequest,pageNo,pageSize);
+			log.info("response::::::::::::::"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			grievancepaginationmodel = gson.fromJson(apiResponse, GrievancePaginationModel.class);

@@ -90,14 +90,8 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatus = null;
-						stockStatus = statusOfStock.equals("0") ? "INIT" : 
-							statusOfStock.equals("1") ? "Processing" :
-								statusOfStock.equals("2")  ? "Error" :
-									statusOfStock.equals("3") ?   "Success" : "Not Defined";
-						//String userStatus = (String) session.getAttribute("userStatus");
-						//String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={checboxes,date,txnId,file,stockStatus}; 
+						String stockStatusName=dataInsideList.getTaxInterp();
+						String[] finalData={checboxes,date,txnId,file,stockStatusName}; 
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -111,14 +105,10 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatus = null;
-						stockStatus = statusOfStock.equals("0") ? "INIT" : 
-							statusOfStock.equals("1") ? "Processing" :
-								statusOfStock.equals("2")  ? "Error" :
-									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						String stockStatusName=dataInsideList.getTaxInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,txnId,file,stockStatus,action}; 
+						String[] finalData={date,txnId,file,stockStatusName,action}; 
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -133,14 +123,10 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatus = null;
-						stockStatus = statusOfStock.equals("0") ? "INIT" : 
-							statusOfStock.equals("1") ? "Processing" :
-								statusOfStock.equals("2")  ? "Error" :
-									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						String stockStatusName=dataInsideList.getTaxInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,assignedTo,txnId,file,stockStatus,action}; 
+						String[] finalData={date,assignedTo,txnId,file,stockStatusName,action}; 
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -156,14 +142,10 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatus = null;
-						stockStatus = statusOfStock.equals("0") ? "INIT" : 
-							statusOfStock.equals("1") ? "Processing" :
-								statusOfStock.equals("2")  ? "Error" :
-									statusOfStock.equals("3") ?   "Success" : "Not Defined";
+						String stockStatusName=dataInsideList.getTaxInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,txnId,userId,roll,file,stockStatus,action}; 
+						String[] finalData={date,txnId,userId,roll,file,stockStatusName,action}; 
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -187,136 +169,136 @@ public class StockDatatableController {
 		}
 	}
 
-	
+
 	@PostMapping
 	@RequestMapping("stock/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
-	String userType = (String) session.getAttribute("usertype");
-	InputFields inputFields = new InputFields();
-	InputFields dateRelatedFields;
+		String userType = (String) session.getAttribute("usertype");
+		InputFields inputFields = new InputFields();
+		InputFields dateRelatedFields;
 
-	List<Button> buttonList = new ArrayList<>();
-	List<InputFields> dropdownList = new ArrayList<>();
-	List<InputFields> inputTypeDateList = new ArrayList<>();
+		List<Button> buttonList = new ArrayList<>();
+		List<InputFields> dropdownList = new ArrayList<>();
+		List<InputFields> inputTypeDateList = new ArrayList<>();
 
-	if("viaStock".equals(sourceType)){
-	log.info("sourceType render---1------" +sourceType);	
-	String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+		if("viaStock".equals(sourceType)){
+			log.info("sourceType render---1------" +sourceType);	
+			String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
 
-	for(int i=0; i< names.length ; i++) {
-	button = new Button();
-	button.setButtonTitle(names[i]);
-	i++;
-	button.setButtonURL(names[i]);
-	i++;
-	button.setId(names[i]);
-	buttonList.add(button);
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}
+
+			String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
+			for(int i=0; i< footerBtn.length ; i++) {
+				button = new Button();
+				button.setType(footerBtn[i]);
+				i++;
+				button.setButtonTitle(footerBtn[i]);
+				i++;
+				button.setButtonURL(footerBtn[i]);
+				i++;
+				button.setId(footerBtn[i]);
+				buttonList.add(button);
+			}	
+			//Dropdown items	
+			String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+			for(int i=0; i< selectParam.length; i++) {
+				inputFields= new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+
+
+			//input type date list	
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+			for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+		}else {
+			log.info("sourceType render---2------" +sourceType);	
+			if("Custom".equals(userType)) {
+				String[] names= {"Assign Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+
+				for(int i=0; i< names.length ; i++) {
+					button = new Button();
+					button.setButtonTitle(names[i]);
+					i++;
+					button.setButtonURL(names[i]);
+					i++;
+					button.setId(names[i]);
+					buttonList.add(button);
+				}
+			}else{
+				String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+				for(int i=0; i< names.length ; i++) {
+					button = new Button();
+					button.setButtonTitle(names[i]);
+					i++;
+					button.setButtonURL(names[i]);
+					i++;
+					button.setId(names[i]);
+					buttonList.add(button);
+				}
+			}
+
+			//Dropdown items	
+			String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+			for(int i=0; i< selectParam.length; i++) {
+				inputFields= new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+
+
+			//input type date list	
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+			for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+		}
+		pageElement.setPageTitle("View Stock");
+		pageElement.setButtonList(buttonList);
+		pageElement.setDropdownList(dropdownList);
+		pageElement.setInputTypeDateList(inputTypeDateList);
+		return new ResponseEntity<>(pageElement, HttpStatus.OK); 
 	}
 
-	String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
-	for(int i=0; i< footerBtn.length ; i++) {
-	button = new Button();
-	button.setType(footerBtn[i]);
-	i++;
-	button.setButtonTitle(footerBtn[i]);
-	i++;
-	button.setButtonURL(footerBtn[i]);
-	i++;
-	button.setId(footerBtn[i]);
-	buttonList.add(button);
-	}	
-	//Dropdown items	
-	String[] selectParam= {"select","Stock Status","filterFileStatus",""};
-	for(int i=0; i< selectParam.length; i++) {
-	inputFields= new InputFields();
-	inputFields.setType(selectParam[i]);
-	i++;
-	inputFields.setTitle(selectParam[i]);
-	i++;
-	inputFields.setId(selectParam[i]);
-	i++;
-	inputFields.setClassName(selectParam[i]);
-	dropdownList.add(inputFields);
-	}
-
-
-	//input type date list	
-	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
-	for(int i=0; i< dateParam.length; i++) {
-	dateRelatedFields= new InputFields();
-	dateRelatedFields.setType(dateParam[i]);
-	i++;
-	dateRelatedFields.setTitle(dateParam[i]);
-	i++;
-	dateRelatedFields.setId(dateParam[i]);
-	i++;
-	dateRelatedFields.setClassName(dateParam[i]);
-	inputTypeDateList.add(dateRelatedFields);
-	}
-	}else {
-	log.info("sourceType render---2------" +sourceType);	
-	if("Custom".equals(userType)) {
-	String[] names= {"Assign Stock","./assignStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
-
-	for(int i=0; i< names.length ; i++) {
-	button = new Button();
-	button.setButtonTitle(names[i]);
-	i++;
-	button.setButtonURL(names[i]);
-	i++;
-	button.setId(names[i]);
-	buttonList.add(button);
-	}
-	}else{
-	String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
-	for(int i=0; i< names.length ; i++) {
-	button = new Button();
-	button.setButtonTitle(names[i]);
-	i++;
-	button.setButtonURL(names[i]);
-	i++;
-	button.setId(names[i]);
-	buttonList.add(button);
-	}
-	}
-
-	//Dropdown items	
-	String[] selectParam= {"select","Stock Status","filterFileStatus",""};
-	for(int i=0; i< selectParam.length; i++) {
-	inputFields= new InputFields();
-	inputFields.setType(selectParam[i]);
-	i++;
-	inputFields.setTitle(selectParam[i]);
-	i++;
-	inputFields.setId(selectParam[i]);
-	i++;
-	inputFields.setClassName(selectParam[i]);
-	dropdownList.add(inputFields);
-	}
-
-
-	//input type date list	
-	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
-	for(int i=0; i< dateParam.length; i++) {
-	dateRelatedFields= new InputFields();
-	dateRelatedFields.setType(dateParam[i]);
-	i++;
-	dateRelatedFields.setTitle(dateParam[i]);
-	i++;
-	dateRelatedFields.setId(dateParam[i]);
-	i++;
-	dateRelatedFields.setClassName(dateParam[i]);
-	inputTypeDateList.add(dateRelatedFields);
-	}
-	}
-	pageElement.setPageTitle("View Stock");
-	pageElement.setButtonList(buttonList);
-	pageElement.setDropdownList(dropdownList);
-	pageElement.setInputTypeDateList(inputTypeDateList);
-	return new ResponseEntity<>(pageElement, HttpStatus.OK); 
-	}
 
 
 
-	
 }
