@@ -53,6 +53,8 @@ public class LoginService {
 				session.setAttribute("name", response.getName());   
 				session.setAttribute("userStatus", response.getStatus());
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
+				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
+				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
 				mv.setViewName("redirect:/importerDashboard");  
 				return mv;      
 			}      
@@ -66,7 +68,7 @@ public class LoginService {
 			log.info("if captcha not match");
 			ModelAndView mv=new ModelAndView();
 			mv.setViewName("login");
-			mv.addObject("msg","Please enter valid captcha");
+			mv.addObject("msg","You have entered the wrong Captcha. Please enter the correct value");
 			return mv; 
 		}
 	}
@@ -129,8 +131,16 @@ public class LoginService {
 	public HttpResponse updateNewPassword(Password password) {
 		log.info("inside update new password controller");
 		log.info("password data is :  "+password);
-		HttpResponse response=new HttpResponse();            
-		response=userLoginFeignImpl.updateNewPassword(password);
-		return response;
+		if(password.getPassword().equals(password.getConfirmPassword())) {
+			HttpResponse response=new HttpResponse();            
+			response=userLoginFeignImpl.updateNewPassword(password);
+			return response;
+		}
+		else {
+			HttpResponse response=new HttpResponse(); 
+			response.setResponse("Both Passwords do the match");      
+			return response;
+		}
+		
 	}
 }

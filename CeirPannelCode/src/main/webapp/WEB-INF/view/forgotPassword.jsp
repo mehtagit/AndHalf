@@ -100,25 +100,28 @@ var contextpath='${context}';
                     <div class="section">
                         <div class="row card-panel" style="width: 40%;  margin: auto; margin-top: 10vh;">
                             <div class="col s12 m12 l12">
-                                <form  id="forgotPassword" >
+                                <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                                    <h5 style="text-align: -webkit-center;">Forgot Password</h5> <hr style="margin-bottom: 30px;">
+                                               
+                                    <h5 style="text-align: -webkit-center;">Forgot Password</h5>
+                   <span style="text-align: center;color: red;" id="errorMsg"></span>                          
+                                     <hr style="margin-bottom: 30px;">
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="username" class="right">Please enter your User ID</label>
+                                            <label for="username" class="right">Please enter your User ID <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="username" id="username" maxlength="15" />
+                                            <input type="text" name="username" required="required" id="username" maxlength="10" />
                                         </div>
                                     </div>
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="questionId">Please select your security question, provide at the time of registration</label>
+                                            <label for="questionId">Please select your security question, provide at the time of registration <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -136,18 +139,18 @@ var contextpath='${context}';
                                     <div class="row myRow" style="margin-top: 20px;">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="answer" class="center-align">Provide answer to the question</label>
+                                            <label for="answer" class="center-align">Provide answer to the question <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="answer" id="answer" maxlength="50" />
+                                            <input type="text" name="answer" required="required" id="answer" maxlength="50" />
                                         </div>
                                     </div>
                                     
                                 </div>
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
-                                        <button onclick="forgotPassword();"  type="button" class="btn">submit</button>
+                                        <button   type="submit" class="btn">submit</button>
                                         <a href="${context}/login" class="btn" style="margin-left: 10px;">cancel</a>
                                     </div>
                                 </div>
@@ -173,11 +176,11 @@ var contextpath='${context}';
     
 
 <div id="changePassword" class="modal" style="width: 40%;">
-		<div class="modal-content">
-		<form>
-			<div class="row">
+		<div class="modal-content">  
+		<form onsubmit="return udapteNewPassword()">
+			<div class="row">   
 				<h5 style="text-align: -webkit-center;">New Password</h5>
-
+  <span style="text-align: center;color: red;" id="errorMsg"></span>
 				<div class="col s1">
 					<i class="fa fa-lock" aria-hidden="true"
 						style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
@@ -192,25 +195,28 @@ var contextpath='${context}';
 				<div class="input-field col s11">
                     <input type="hidden" id="usernamedata">
 					<label for="password" style="color: #000; font-size: 12px;">New
-						Password</label> <input type="text" id="password" class=""
-						maxlength="10" />
-				</div>
+						Password</label> <input type="password" id="password" class=""
+						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+									required="required"/>
+				</div>           
 
 				<div class="col s1">
 					<i class="fa fa-check-square-o" aria-hidden="true"
 						style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
-				</div>
+				</div>   
 				<div class="input-field col s11">
-
-					<label for="confirmPassword" style="color: #000; font-size: 12px;">Confirm
-						Password</label> <input type="text" class="" id="confirmPassword"
-						maxlength="10" />
+					<label for="confirm_password" style="color: #000; font-size: 12px;">Confirm
+						Password</label> <input type="password" class="" id="confirm_password"
+						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+									required="required"/>
 				</div>
-			</div>
+			</div>  
 			<div class="row" style="margin-top: 30px;">
 				<div class="input-field col s12 m12 l12 center">
-					<button  onclick="udapteNewPassword();"
-						class="btn" type="button" id="save"
+					<button  
+						class="btn" type="submit" id="save"
 						style="width: 100%;">Save</button>
 				</div>
 			</div>
@@ -276,6 +282,20 @@ var contextpath='${context}';
             //$('.modal').openModal();
             questionData();
         });
+        
+        var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+        function validatePassword(){
+        if(password.value != confirm_password.value) {
+          confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+          confirm_password.setCustomValidity('');
+        }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
 
         // $('.dropdown-trigger').dropdown();
     </script>

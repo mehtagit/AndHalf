@@ -97,6 +97,41 @@ var contextpath = "${context}";
 </script>
 </head>
 <body>
+
+<!-- Modal End -->
+	<!-- ================================================
+    Scripts
+    ================================================ -->
+	 <!-- jQuery Library -->
+    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
+  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+      <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+    <!--materialize js-->
+    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
+    <!-- Compiled and minified JavaScript -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
+    <!--prism
+    <script type="text/javascript" src="js/prism/prism.js"></script>-->
+    <!--scrollbar-->
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- chartist -->
+    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
+
+    <!-- data-tables -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <!--<script type="text/javascript" src="js/plugins.js"></script>-->
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
@@ -113,7 +148,7 @@ var contextpath = "${context}";
 							<h5>Registration</h5>
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
-
+               <input type="hidden" id="usertypeId" value="${usertypeId}">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -187,8 +222,8 @@ var contextpath = "${context}";
 											style="margin-top: 5px; padding-left: 0;">
 											<div class="btn">
 												<span>Select File</span> <input name="file" type="file"
-													id="file" accept=".pfg">
-											</div>
+													id="file" accept=".pdf">
+											</div>  
 											<div class="file-path-wrapper">
 												<input class="file-path validate responsive-file-div"
 													type="text">
@@ -224,7 +259,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight" id="phoneNo"
 										pattern="[0-9]{8,20}"
 										title="Please enter phone number between 8 to 20 characters only"
-										required="required"> <label for="phone">Phone
+										required="required"> <label for="phoneNo">Phone
 										Number <span class="star">*</span>
 									</label>
 								</div>
@@ -247,7 +282,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight"
 										title="Please enter alphanumeric with special character upto 200 characters only"
 										id="propertyLocation" required="required"> <label
-										for="address">Address(Property Location) <span
+										for="propertyLocation">Address(Property Location) <span
 										class="star">*</span></label>
 								</div>
 
@@ -417,18 +452,18 @@ var contextpath = "${context}";
 							<div class="input-field col s12 m6 l6">
 								<input type="password" name="password"
 									class="form-control boxBorder boxHeight" id="password"
-									pattern="[A-Za-z0-9\s]{0,10}" maxlength="10"
-									title="Please enter alphanumeric with special character upto 10 characters only"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"> <label for="password">Password
 									<span class="star">*</span>
-								</label>
+								</label>  
 							</div>
 
 							<div class="input-field col s12 m6 l6">
-								<input type="password" name="rePassword"
-									title="Please enter alphanumeric with special character upto 10 characters only"
+								<input type="password" name="rePassword" 
+										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									class="form-control boxBorder boxHeight" id="confirm_password"
-									pattern="[A-Za-z0-9\s]{0,10}" maxlength="10"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"  maxlength="10" min="8"
 									required="required"> <label for="confirm_password">Retype
 									Password <span class="star">*</span>
 								</label>
@@ -541,11 +576,11 @@ var contextpath = "${context}";
 							<button style="background: none; border: none; outline: none;"
 									type="button" onclick="refreshCaptcha('captchaImage')">
 									<i class="fa fa-refresh"></i>
-								</button>: <%-- <img src="${context}/captcha"" id="captchaImage">
+								</button> <%-- <img src="${context}/captcha"" id="captchaImage">
 						 <br>
                            <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
 								<div class="input-field col s12 m6 l12">
-									<input type="text" name="captcha"
+									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
 										required="required"> <label for="address">Enter
 										your captcha <span class="star">*</span>
@@ -597,7 +632,7 @@ var contextpath = "${context}";
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="otpVerification.html" class="btn">Verify OTP</a>
+					<a href="otpVerification.html" class="btn waves-effect waves-light btn modal-trigger">Verify OTP</a>
 				</div>
 			</div>
 		</div>
@@ -653,45 +688,90 @@ var contextpath = "${context}";
 			</div>
 		</div>
 	</div>
-	<!-- Modal End -->
-	<!-- ================================================
-    Scripts
-    ================================================ -->
-	<!-- jQuery Library -->
-	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js"></script>
+	
+	
+	
+	 <!-- START MAIN -->
+    <div id="">
+        <!-- START WRAPPER -->
+        <div class="wrapper">
+            <!-- START CONTENT -->
+            <section id="content">
+                <!--start container-->
+                <div class="container">
+                    <div class="section">
+                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+                            <h5 class="center">Verify OTP</h5>
+                            <!-- <img src="images/otpImage.png" class=""
+                                style="width: 80px; display: block; margin:auto;"> -->
+                            <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
+                            <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
 
-	<!--materialize js-->
-	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
-	<!-- Compiled and minified JavaScript -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
-	<!--prism
-    <script type="text/javascript" src="js/prism/prism.js"></script>-->
-	<!--scrollbar-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
+                            <a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 
-	<!-- data-tables -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+                        </div>
+                    </div>
+                </div>
+                <!--end container-->
+            </section>
+            <!-- END CONTENT -->
+        </div>
+    </div>
+    
+    <div id="otpMessage" class="modal">
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <div class="modal-content">
+            <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
-	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js"></script>
+            <div class="row">  
+                <h6 id="otpResponse"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="${context}/login" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <!-- modal start -->
+
+    <div id="otpVerification" class="modal" style="width: 40%;">
+        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button> -->
+        <div class="modal-content">  
+                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+                        <h5 class="center">Enter OTP</h5>  
+                        <p class="center" id="resendOtp" style="display: none;"></p>
+                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <div class="row">          
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="emailOtp" maxlength="6"
+                               
+										title="Please enter number characters only"
+                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                            </div> 
+                   
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="phoneOtp" maxlength="6" 
+                                
+										title="Please enter number characters only" 
+                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                            </div>
+                        </div>
+
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+
+                        <button type="submit"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+                    </form>
+        </div>
+    </div>
+    
+	
 	<script> 
         $(document).ready(function () {
             $('.modal').modal();
@@ -701,8 +781,8 @@ var contextpath = "${context}";
            
           //  $('select').formSelect();
         }); 
-        populateCountries("country", "");
-
+        populateCountries("country", "Cambodia");
+    
         var password = document.getElementById("password")
         , confirm_password = document.getElementById("confirm_password");
 
@@ -726,10 +806,15 @@ var contextpath = "${context}";
                 document.getElementById("uploadFile").style.display = "block";
                 document.getElementById("passportNumberDiv").style.display = "block";
                 document.getElementById("companyNames").style.display = "none";
+                $("#passportNo").prop('required',true);
+                $("#file").prop('required',true);
+                
             } else {
                 document.getElementById("uploadFile").style.display = "none";
                 document.getElementById("passportNumberDiv").style.display = "none";
                 document.getElementById("companyNames").style.display = "block";
+                $("#passportNo").prop('required',false);
+                $("#file").prop('required',false);
             }
             
 

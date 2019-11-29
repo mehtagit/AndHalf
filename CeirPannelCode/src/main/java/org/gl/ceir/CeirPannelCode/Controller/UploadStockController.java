@@ -1,6 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 import java.util.List;
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UploadStockController {
 
 	@Autowired
-	FeignCleintImplementation feignImpl;
+	FeignClientImplementation feignImpl;
 	
 
 	@RequestMapping(value= {"/selectModuleType"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 

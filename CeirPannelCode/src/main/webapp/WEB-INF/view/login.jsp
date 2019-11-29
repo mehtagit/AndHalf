@@ -139,11 +139,11 @@ var contextpath = "${context}";
 													color: black;"
 													type="button" onclick="refreshCaptcha('captchaImage')">
 													<i class="fa fa-refresh"></i>
-												</button>: <%-- <img src="${context}/captcha"" id="captchaImage">
+												</button> <%-- <img src="${context}/captcha"" id="captchaImage">
 						 <br>
                            <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
 												<div class="input-field col s12 m6 l12">
-													<input type="text" name="captcha"
+													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
 														required="required"> <label for="captcha">Enter
 														your captcha <span class="star">*</span>

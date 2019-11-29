@@ -12,7 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class RegisterController {
 
 	@Autowired
-	FeignCleintImplementation feignImpl;
+	FeignClientImplementation feignImpl;
 	/*
 	 * @Autowired LoginServices loginserviceIndexpage;
 	 */

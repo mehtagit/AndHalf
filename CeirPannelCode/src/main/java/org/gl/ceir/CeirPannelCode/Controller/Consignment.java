@@ -7,7 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -38,7 +38,7 @@ public class Consignment {
 
 	@Autowired
 	
-	FeignCleintImplementation feignCleintImplementation;
+	FeignClientImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
 	/*

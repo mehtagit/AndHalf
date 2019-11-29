@@ -6,22 +6,27 @@ function changePassword(){
 			obj =  
 			{  
 					oldPassword:val.find('#oldPassword').val(),
-					password:val.find('#newPassword').val(),
-					confirmPassword: val.find('#confirmPassword').val()
+					password:val.find('#password').val(),
+					confirmPassword: val.find('#confirm_password').val()
 			}    
 		}
 	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/changePassword',
-		contentType : "application/json",
-		dataType : 'html',
 		data : JSON.stringify(obj),
+		contentType : "application/json",
+		dataType : 'html', 
 		success : function(data) {
 			var resp=JSON.parse(data);
+			if(resp.statusCode=='200'){
 			$("#changePasswordMessage h6").text(resp.response);
-			$("#changePasswordMessage").openModal();
-		}, 
+			$("#changePasswordMessage").openModal();   
+			}
+			else{
+				$("#changePassword #errorMsg").text(resp.response);
+			}
+		},  
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
 
@@ -30,11 +35,12 @@ function changePassword(){
 }
 
 function updateUSerStatus(){
-	var obj="";
+	var obj="";  
 	obj={
-			userStatus:$("input[name='status']:checked").val()
+			status:$("input[name='status']:checked").val()
 
 	};
+	console.log("user status: "+JSON.stringify(obj));
 	$.ajax({ 
 		type : 'POST',
 		url : contextpath+'/updateUserStatus',
@@ -43,8 +49,13 @@ function updateUSerStatus(){
 		data : JSON.stringify(obj),
 		success : function(data) { 
 			var resp=JSON.parse(data);
+			if(resp.statusCode=='200'){
 			$("#manageAccountSubmit h6").text(resp.response);
-			$("#manageAccountSubmit").openModal();
+			$("#manageAccountSubmit").openModal();   
+			}
+			else{  
+				$("#userStatusForm #errorMsg").text(resp.response);
+			}   
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
@@ -212,7 +223,7 @@ function updateProfile(){
 			else if(response.userstatus=='OTP Verification Pending'){
 				$("#userid").val(response.userId);
 				window.location.href='#otpMsgModal';
-				$("#otpMsgModal").openModal();   
+				$("#otpMsgModal").openModal();     
 				$("#otpMsg").text(response.response);
 			}
 			else{

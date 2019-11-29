@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Service
-@FeignClient(url = "http://13.127.239.247:8085/CEIRCode",value = "featureUrls" )
+@FeignClient(url = "${apiUrl1}",value = "featureUrls" )
 public interface FeatureFeignImpl { 
 
 	@PostMapping("/featureList/{userid}")

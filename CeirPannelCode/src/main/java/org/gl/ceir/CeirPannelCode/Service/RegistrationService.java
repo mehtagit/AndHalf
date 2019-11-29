@@ -10,12 +10,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
@@ -49,42 +47,109 @@ public class RegistrationService {
 	public ModelAndView registrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
 		log.info("usertypeId from registration page:  "+usertypeId);
-		ModelAndView mv=new ModelAndView();       
+		ModelAndView mv=new ModelAndView();   
+		mv.addObject("usertypeId", usertypeId);              
 		mv.setViewName("registration");
-		List<Usertype> usertypeList=registrationFeignImpl.userypeList();
-		List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();
-		mv.addObject("usertypes",usertypeList);
-		mv.addObject("questions",securityQuestionList);
+		//	List<Usertype> usertypeList=registrationFeignImpl.userypeList();
+		//List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();
+		//	mv.addObject("usertypes",usertypeList);
+		//mv.addObject("questions",securityQuestionList);
 		log.info("view registration page ending point");
 		return mv;                
 	}
 
-	/*
-	 * public HttpResponse saveRegistration(String data,MultipartFile file) {
-	 * log.info("inside save registration controller ");
-	 * log.info("registratio data from form=  "+data);
-	 * log.info("file data from form :  "+file); Gson gson=new Gson(); Registration
-	 * registration=gson.fromJson(data, Registration.class); HttpResponse
-	 * response=new HttpResponse();
-	 * log.info("exit from save registration controller"); return response; }
-	 */
-		public OtpResponse saveRegistration(String data, MultipartFile file,HttpSession session) throws IOException {
-			Gson gson=new Gson();       
-			Registration registration=gson.fromJson(data, Registration.class);
-			log.info("save registration page starting point");
-			log.info("roles length:  "+registration.getRoles().length);
-			log.info("registration data:  "+registration); 
-			String validCaptcha=(String)session.getAttribute("captcha_security");
-			log.info("captch from session:  "+validCaptcha); 
-			if(registration.getCaptcha().equals(validCaptcha)) {
-		        log.info("if captcha match");
+	public ModelAndView customRegistrationView(Integer usertypeId) {
+		log.info("view registration page starting point");
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();       
+		mv.addObject("usertypeId", usertypeId);             
+		mv.setViewName("customRegistration");
+		log.info("view registration page ending point");
+		return mv;                
+	}                                                 
+
+	public ModelAndView operatorRegistrationView(Integer usertypeId) {
+		log.info("view registration page starting point");
+		log.info("usertypeId from registration page:  "+usertypeId);
+		ModelAndView mv=new ModelAndView();    
+		mv.addObject("usertypeId", usertypeId);             
+		mv.setViewName("operatorRegistration");
+		log.info("view registration page ending point");
+		return mv;                
+	}                    
+
+	public OtpResponse saveRegistration(String data, MultipartFile file,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session) throws IOException {
+		Gson gson=new Gson();                       
+		Registration registration=gson.fromJson(data, Registration.class);
+		log.info("save registration page starting point");
+		
+		log.info("registration data:  "+registration);        
+		String validCaptcha=(String)session.getAttribute("captcha_security");      
+		log.info("captcha from session:  "+validCaptcha); 
+		if(registration.getCaptcha().equals(validCaptcha)) {
+			log.info("if captcha match");  
 			if(registration.getRePassword().equals(registration.getPassword())) {
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
 				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
-				String finalPath=new String(combinedPath); 
+				String nationalIdPath=new String(combinedPath+"/NID");  
+				String photoPath=new String(combinedPath+"/photo");
+				String idCardPath=new String(combinedPath+"/IDCard");          
+				if(registration.getType()==null) {
+					  
+					if(nationalIdImage.isEmpty()==false) {
+						log.info("if user is individual  "); 
+						log.info("file name: " +nationalIdImage.getOriginalFilename());
+						log.info("finalPath:   "+nationalIdPath);  
+						File dir = new File(nationalIdPath);
+						if (!dir.exists()) dir.mkdirs();
+						byte barr[]=nationalIdImage.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + nationalIdImage.getOriginalFilename()));
+						bout.write(barr);
+						bout.flush();
+						bout.close(); 
+						registration.setNidFilename(nationalIdImage.getOriginalFilename());
+					} 
+					
+					if(photo.isEmpty()==false) {
+						log.info("if user is individual  "); 
+						log.info("file name: " +photo.getOriginalFilename());
+						log.info("finalPath:   "+photoPath);  
+						File dir = new File(photoPath);
+						if (!dir.exists()) dir.mkdirs();
+						byte barr[]=photo.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(photoPath + "/" + photo.getOriginalFilename()));
+						bout.write(barr);
+						bout.flush();
+						bout.close();  
+						registration.setPhotoFilename(photo.getOriginalFilename());
+					} 
+
+					if(idCard.isEmpty()==false) {
+						log.info("if user is individual  "); 
+						log.info("file name: " +idCard.getOriginalFilename());
+						log.info("finalPath:   "+idCardPath);  
+                        log.info("going to save id card file in server");
+                        File dir = new File(idCardPath);   
+						if (!dir.exists()) dir.mkdirs();
+						byte barr[]=idCard.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(idCardPath + "/" + idCard.getOriginalFilename()));
+						bout.write(barr);
+						bout.flush();
+						bout.close(); 
+						registration.setIdCardFilename(idCard.getOriginalFilename());
+						log.info("id card file save in server");
+					} 
+					
+					log.info("now going to call registration api");
+					OtpResponse response=userRegistrationFeignImpl.registration(registration);
+					log.info("registration response:  "+response);
+					return response;
+					
+				}
+				else {
 				if("Individual".equals(registration.getType())){
-					log.info("if user is individual");
+					log.info("if user is individual");       
 					if(file.isEmpty()==true) { 
 						log.info("if file is empty");
 						OtpResponse response=new OtpResponse();
@@ -96,24 +161,19 @@ public class RegistrationService {
 					else{ 
 						log.info("if user is individual  "); 
 						log.info("file name: " +file.getOriginalFilename());
-						log.info("finalPath:   "+finalPath);  
-						 File dir = new File(finalPath);
-						  if (!dir.exists()) dir.mkdirs();
+						log.info("finalPath:   "+nationalIdPath);  
+						File dir = new File(nationalIdPath);
+						if (!dir.exists()) dir.mkdirs();
 						byte barr[]=file.getBytes();
-						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(finalPath + "/" + file.getOriginalFilename()));
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + file.getOriginalFilename()));
 						bout.write(barr);
 						bout.flush();
-						bout.close();
+						bout.close();   
+						registration.setNidFilename(file.getOriginalFilename());
 						OtpResponse response=userRegistrationFeignImpl.registration(registration);
 						log.info("registration response:  "+response);
 						return response;
-						/*
-						 * if(response.getStatusCode()==200) {
-						 * mv.addObject("msg",response.getResponse());
-						 * mv.addObject("userId",response.getUserId()); mv.setViewName("verifyOtp"); }
-						 * else { mv.addObject("msg",response.getResponse());
-						 * mv.setViewName("registration"); }
-						 */
+
 					}  
 				}  
 				else { 
@@ -121,33 +181,26 @@ public class RegistrationService {
 					OtpResponse response=userRegistrationFeignImpl.registration(registration);
 					log.info("response from server:  "+response);
 					return response;
-					/*
-					 * if(response.getStatusCode()==200) {
-					 * mv.addObject("msg",response.getResponse());
-					 * mv.addObject("userId",response.getUserId()); mv.setViewName("verifyOtp"); }
-					 * else { mv.addObject("msg",response.getResponse());
-					 * mv.setViewName("registration"); }
-					 */
+
 				}
+				}
+				
 			}  
 			else {
-				//mv.addObject("msg","Password and Re password must be same");
-				//mv.setViewName("registration");      
+
 				OtpResponse response=new OtpResponse();
 				log.info("confirm password is not same as password");
 				response.setResponse("Password and Confirm password must be same");
 				return response;
 			}
-			}
-			else {
-				log.info("if captcha not match");
-				//mv.setViewName("Please enter valid captcha");
-				//mv.setViewName("registration"); 
-				OtpResponse response=new OtpResponse();
-				response.setResponse("Please enter valid captcha");
-				return response;
-			}
-		}  
+		}
+		else {
+			log.info("if captcha not match");
+			OtpResponse response=new OtpResponse();
+			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
+			return response;
+		}
+	}  
 
 	public String otpPage() {
 		log.info("inside verify otp page");

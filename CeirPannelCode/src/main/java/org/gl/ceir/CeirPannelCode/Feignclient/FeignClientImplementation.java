@@ -6,8 +6,11 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentFilterPojo;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +24,7 @@ import feign.Headers;
 
 @Service
 @FeignClient(url = "http://13.233.39.58:9090/CEIR",value = "dsj" )
-public interface FeignCleintImplementation {
+public interface FeignClientImplementation {
 	 
 	
 	//View all Consignment  feign  controller
@@ -79,7 +82,9 @@ public interface FeignCleintImplementation {
 		@RequestMapping(value="/stoke/Download/SampleFile" ,method=RequestMethod.GET) 
 			public @ResponseBody String downloadSampleFile(@RequestParam("samplFileType") String fileType);
 
-		
+		@GetMapping("/system-config-list/{tag}")    
+		public List<Operator> operatorList(@PathVariable("tag")String tag);       
+		     
 	/*
 	 * @PostMapping("/MobileOperators/") public void saveOperator(@RequestBody
 	 * Operator operator);

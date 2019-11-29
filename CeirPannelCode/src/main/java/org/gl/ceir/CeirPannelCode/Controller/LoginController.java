@@ -51,7 +51,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "forgotPasswordRequest",method = RequestMethod.POST)
-	@ResponseBody
+	@ResponseBody 
 	public  HttpResponse forgotPasswordRequest(@RequestBody ForgotPassword forgotPassword) {
 		return loginService.forgotPasswordRequest(forgotPassword);
 	} 

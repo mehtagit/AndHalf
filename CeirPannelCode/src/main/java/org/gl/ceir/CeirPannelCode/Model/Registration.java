@@ -1,15 +1,11 @@
 package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 public class Registration {
 	private long id;
 	private String firstName;
 	private String middleName;
-	private String lastName;
+	private String lastName;  
 	private String passportNo; 
 	private String email;
 	private String phoneNo;
@@ -28,13 +24,27 @@ public class Registration {
 	private String username;
 	private int[] roles;
 	private String captcha;
+	private long usertypeId;
+
+	private String employeeId;
+	private String natureOfEmployment;
+	private String designation;
+	private String authorityName;
+	private String authorityEmail;
+	private String authorityPhoneNo;
+	private String operatorTypeName;
+    private Integer operatorTypeId;
+	private String nidFilename;
+	private String photoFilename;
+	private String idCardFilename;
+
 	public Registration() {};
 	public ArrayList<QuestionPair> getQuestionList() {
-			return questionList;
-		}
-		public void setQuestionList(ArrayList<QuestionPair> questionList) {
-			this.questionList = questionList;
-		}
+		return questionList;
+	}
+	public void setQuestionList(ArrayList<QuestionPair> questionList) {
+		this.questionList = questionList;
+	}
 
 	/*
 	 * public class QuestionPair{ private Integer question; private String answer;
@@ -53,7 +63,7 @@ public class Registration {
 	 * 
 	 * }
 	 */
-	 	public String getFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
@@ -138,60 +148,141 @@ public class Registration {
 		this.email = email;
 	}
 
-		public String getPassword() {
+	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-		public int[] getRoles() {
+	public int[] getRoles() {
 		return roles;
 	}
 	public void setRoles(int[] roles) {
 		this.roles = roles;
 	}
-	
-	
-		public String getRePassword() {
+
+
+	public String getRePassword() {
 		return rePassword;
 	}
 	public void setRePassword(String rePassword) {
 		this.rePassword = rePassword;
 	}
-		public String getPhoneNo() {
-			return phoneNo;
-		}
-		public void setPhoneNo(String phoneNo) {
-			this.phoneNo = phoneNo;
-		}
-		
-		public String getUsername() {
-			return username;
-		}
-		public void setUsername(String username) {
-			this.username = username;
-		}
-		public String getCaptcha() {
-			return captcha;
-		}
-		public void setCaptcha(String captcha) {
-			this.captcha = captcha;
-		}
-		public long getId() {
-			return id;
-		}
-		public void setId(long id) {
-			this.id = id;
-		}
-		@Override
-		public String toString() {
-			return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-					+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo
-					+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
-					+ ", locality=" + locality + ", province=" + province + ", country=" + country + ", type=" + type
-					+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password="
-					+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + Arrays.toString(roles)
-					+ ", captcha=" + captcha + "]";
-		}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getCaptcha() {
+		return captcha;
+	}
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public String getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getNatureOfEmployment() {
+		return natureOfEmployment;
+	}
+	public void setNatureOfEmployment(String natureOfEmployment) {
+		this.natureOfEmployment = natureOfEmployment;
+	}
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	public String getAuthorityName() {
+		return authorityName;
+	}
+	public void setAuthorityName(String authorityName) {
+		this.authorityName = authorityName;
+	}
+	public String getAuthorityEmail() {
+		return authorityEmail;
+	}
+	public void setAuthorityEmail(String authorityEmail) {
+		this.authorityEmail = authorityEmail;
+	}
+	public String getAuthorityPhoneNo() {
+		return authorityPhoneNo;
+	}
+	public void setAuthorityPhoneNo(String authorityPhoneNo) {
+		this.authorityPhoneNo = authorityPhoneNo;
+	}
+	
+
+	public String getOperatorTypeName() {
+		return operatorTypeName;
+	}
+	public void setOperatorTypeName(String operatorTypeName) {
+		this.operatorTypeName = operatorTypeName;
+	}
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
+	public long getUsertypeId() {
+		return usertypeId;
+	}
+	public void setUsertypeId(long usertypeId) {
+		this.usertypeId = usertypeId;
+	}
+
+	public String getNidFilename() {
+		return nidFilename;
+	}
+	public void setNidFilename(String nidFilename) {
+		this.nidFilename = nidFilename;
+	}
+	public String getPhotoFilename() {
+		return photoFilename;
+	}
+	public void setPhotoFilename(String photoFilename) {
+		this.photoFilename = photoFilename;
+	}
+	public String getIdCardFilename() {
+		return idCardFilename;
+	}
+	public void setIdCardFilename(String idCardFilename) {
+		this.idCardFilename = idCardFilename;
+	}
+	@Override
+	public String toString() {
+		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo
+				+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
+				+ ", locality=" + locality + ", province=" + province + ", country=" + country + ", type=" + type
+				+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password="
+				+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + roles + ", captcha="
+				+ captcha + ", usertypeId=" + usertypeId + ", employeeId=" + employeeId + ", natureOfEmployment="
+				+ natureOfEmployment + ", designation=" + designation + ", authorityName=" + authorityName
+				+ ", authorityEmail=" + authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo
+				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename="
+				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename + "]";
+	}
+	
+
 
 }
