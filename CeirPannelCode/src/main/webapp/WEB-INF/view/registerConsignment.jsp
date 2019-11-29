@@ -157,8 +157,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         
                                         
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="totalPrice" id="totalPrice" maxlength="7"
-                                                    required />
+                                                <input type="text" name="totalPrice"  id="totalPrice" maxlength="7"
+                                                     />
                                                 <label for="totalPrice" class="center-align">Total Price</label>
                                             </div>
 
