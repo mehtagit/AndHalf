@@ -24,36 +24,32 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
+import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsg;
 import com.gl.ceir.config.model.GrievanceMsgWithUser;
 import com.gl.ceir.config.model.GrievanceReply;
-import com.gl.ceir.config.model.ResponseCountAndQuantity;
-import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
-import com.gl.ceir.config.model.FileDetails;
-import com.gl.ceir.config.model.Grievance;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.GrievanceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
-import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
-
-import com.gl.ceir.config.opencsv.custom.CustomMappingStrategy;
-
-import com.opencsv.CSVWriter;
-import com.opencsv.bean.ColumnPositionMappingStrategy;
-import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.gl.ceir.config.repository.GrievanceHistoryRepository;
 import com.gl.ceir.config.repository.GrievanceMsgRepository;
 import com.gl.ceir.config.repository.GrievanceRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class GrievanceServiceImpl{
