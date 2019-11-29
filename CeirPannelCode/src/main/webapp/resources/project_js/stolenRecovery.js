@@ -1,3 +1,18 @@
+var roleType = $("body").attr("data-roleType");
+var userId = $("body").attr("data-userID");
+var currentRoleType = $("body").attr("data-stolenselected-roleType");  
+var role = currentRoleType == null ? roleType : currentRoleType;
+var featureId="5";
+
+
+$(document).ready(function(){
+	$('.datepicker').datepicker();
+	filterStolen();
+	pageRendering();
+});
+
+
+
 function DeleteConsignmentRecord(txnId,id){
 	$("#DeleteConsignment").openModal();
 	$("#transID").text(txnId);
@@ -251,11 +266,7 @@ function arrivalDateValidation(){
 
 
 
-$(document).ready(function(){
-	$('.datepicker').datepicker();
-	tableHeader();
-	pageRendering();
-});
+
 
 $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
@@ -282,25 +293,10 @@ populateCountries
 );
 
 
-var roleType = $("body").attr("data-roleType");
-var userId = $("body").attr("data-userID");
-var currentRoleType = $("body").attr("data-stolenselected-roleType");  
 
-console.log("roleType=======" +roleType+"---------userId------"+userId+"-----------currentRoleType-----"+currentRoleType) 
-var role = currentRoleType == null ? roleType : currentRoleType;
-var featureId="5";
-var jsonObj = {
-		"consignmentStatus":parseInt($('#filterConsignmentStatus').val()),
-		"endDate":$('#endDate').val(),
-		"startDate":$('#startDate').val(),
-		"roleType": role,
-		"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
-		"userId": userId,
-		"featureId":featureId
-};
 
 var sourceType = localStorage.getItem("sourceType");	 
-function tableHeader(){
+function filterStolen(){
 	if(sourceType !="viaExistingRecovery" ){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){
@@ -311,6 +307,20 @@ function tableHeader(){
 
 
 function Datatable(url,dataUrl){
+	var filterRequest={
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"txnId":$('#transactionID').val(),
+			"fileStatus":parseInt($('#status').val()),
+			"requestType":parseInt($('#requestType').val()),
+			"sourceType":parseInt($('#sourceStatus').val()),
+			"roleType": role,
+			"userId": userId,
+			"featureId":featureId,
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+	}
+
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -329,8 +339,8 @@ function Datatable(url,dataUrl){
 					url: dataUrl,
 					type: 'POST',
 					data : function(d) {
-						d.filter =JSON.stringify(jsonObj); 
-						console.log(JSON.stringify(jsonObj));
+						d.filter =JSON.stringify(filterRequest); 
+						console.log(JSON.stringify(filterRequest));
 					}
 				},
 				"columns": result
@@ -373,7 +383,7 @@ function pageElements(url){
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}else if(date[i].type === "text"){
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
 				}
 			} 
 
@@ -820,7 +830,7 @@ function setAllDropdowns(){
 	//Request Type status-----------dropdown
 	$.getJSON('./getDropdownList/STOLEN_REQ_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].state).text(data[i].interp)
+			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#requestType');
 		}
 	});
@@ -828,17 +838,17 @@ function setAllDropdowns(){
 	//Source Type-----------dropdown
 	$.getJSON('./getDropdownList/STOLEN_SOURCE_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].state).text(data[i].interp)
-			.appendTo('#taxPaidStatus');
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#sourceStatus');
 		}
 	});
 
 
 	//Stolen Status-----------dropdown
-	$.getJSON('./getDropdownList/STOLEN_STATUS_TYPE', function(data) {
+	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].state).text(data[i].interp)
-			.appendTo('#filterConsignmentStatus');
+			.appendTo('#status');
 		}
 	});
 }

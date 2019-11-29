@@ -1,23 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
-	public Integer userId;
-	public String  startDate;
-	public String   endDate;
-	public Integer taxPaidStatus;
-	private Integer consignmentStatus;
-	private String roleType;
-	private String requestType;
-	private int featureId;
-	private int userTypeId;
-	private String userType;
-	private String txnId;
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	public String  startDate,endDate,roleType,userType,txnId;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -30,41 +15,11 @@ public class FilterRequest {
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
-	public Integer getTaxPaidStatus() {
-		return taxPaidStatus;
-	}
-	public void setTaxPaidStatus(Integer taxPaidStatus) {
-		this.taxPaidStatus = taxPaidStatus;
-	}
-	public Integer getConsignmentStatus() {
-		return consignmentStatus;
-	}
-	public void setConsignmentStatus(Integer consignmentStatus) {
-		this.consignmentStatus = consignmentStatus;
-	}
 	public String getRoleType() {
 		return roleType;
 	}
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
-	}
-	public String getRequestType() {
-		return requestType;
-	}
-	public void setRequestType(String requestType) {
-		this.requestType = requestType;
-	}
-	public int getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(int featureId) {
-		this.featureId = featureId;
-	}
-	public int getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(int userTypeId) {
-		this.userTypeId = userTypeId;
 	}
 	public String getUserType() {
 		return userType;
@@ -78,11 +33,61 @@ public class FilterRequest {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getTaxPaidStatus() {
+		return taxPaidStatus;
+	}
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
+		this.taxPaidStatus = taxPaidStatus;
+	}
+	public Integer getConsignmentStatus() {
+		return consignmentStatus;
+	}
+	public void setConsignmentStatus(Integer consignmentStatus) {
+		this.consignmentStatus = consignmentStatus;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public Integer getFileStatus() {
+		return fileStatus;
+	}
+	public void setFileStatus(Integer fileStatus) {
+		this.fileStatus = fileStatus;
+	}
+	public Integer getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(Integer requestType) {
+		this.requestType = requestType;
+	}
+	public Integer getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(Integer sourceType) {
+		this.sourceType = sourceType;
+	}
 	@Override
 	public String toString() {
-		return "FilterRequest [userId=" + userId + ", startDate=" + startDate + ", endDate=" + endDate
-				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", roleType="
-				+ roleType + ", requestType=" + requestType + ", featureId=" + featureId + ", userTypeId=" + userTypeId
-				+ ", userType=" + userType + ", txnId=" + txnId + "]";
+		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
+				+ ", userType=" + userType + ", txnId=" + txnId + ", userId=" + userId + ", taxPaidStatus="
+				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
+				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
+				+ ", sourceType=" + sourceType + "]";
 	}
+	
 }

@@ -2525,3 +2525,12 @@ font-size: 20px !important;
 color: #2e568b;
 margin: 0 7px;
 }
+
+
+
+input[type='search'] {
+      background-image: url(../../resources/images/search-512.jpg) !important;
+      background-position: 95% 7px !important;
+      background-repeat: no-repeat !important;
+      color: #444 !important;
+    }
