@@ -1,25 +1,20 @@
 package com.gl.ceir.config.model;
 
+import java.util.List;
+
 public class RequestCountAndQuantity {
-	private long count;
-	private long quantity;
-	public RequestCountAndQuantity( long count) {
-		this.count = count;
+	private Integer userId;
+	private List<Integer> status;
+	public Integer getUserId() {
+		return userId;
 	}
-	public RequestCountAndQuantity( long count, long quantity) {
-		this.count = count;
-		this.quantity = quantity;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
-	public long getCount() {
-		return count;
+	public List<Integer> getStatus() {
+		return status;
 	}
-	public void setCount(long count) {
-		this.count = count;
-	}
-	public long getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(long quantity) {
-		this.quantity = quantity;
+	public void setStatus(List<Integer> status) {
+		this.status = status;
 	}
 }

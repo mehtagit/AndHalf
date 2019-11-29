@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
@@ -86,6 +87,35 @@ public class StolenAndRecoveryController {
 		return genricResponse;
 	}
 
+	@ApiOperation(value = "Upload Stolen Details.", response = GenricResponse.class)
+	@RequestMapping(path = "v2/stakeholder/Stolen", method = RequestMethod.POST)
+	public GenricResponse v2uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails)
+	{
+		logger.info("Stolen upload Request="+stolenandRecoveryDetails);
+
+		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
+		mapping.setListType("BlackList");
+
+
+		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
+				stolenandRecoveryDetails.getBlockingType() == "") {
+
+			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
+			String newTime = utility.newDate(config.getGraceTimePeriod());
+
+			stolenandRecoveryDetails.setBlockingTimePeriod(newTime);
+			stolenandRecoveryDetails.setBlockingType("Default");
+		}
+
+		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.v2uploadDetails(stolenandRecoveryDetails);
+		logger.info("Stolen upload Response="+genricResponse);
+
+		return genricResponse;
+	}
+
+	
+	
+	
 
 	@ApiOperation(value = "Upload Multiple Stolen Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/uploadMultiple/StolenAndRecovery", method = RequestMethod.POST)
@@ -141,6 +171,20 @@ public class StolenAndRecoveryController {
 	public GenricResponse updateRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 		logger.info("Record update request="+stolenandRecoveryRequest);
 
+		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
+		mapping.setListType("BlackList");
+		if(stolenandRecoveryRequest.getBlockingType() == null || stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
+				stolenandRecoveryRequest.getBlockingType() == "") {
+
+			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
+			String newTime = utility.newDate(config.getGraceTimePeriod());
+
+			stolenandRecoveryRequest.setBlockingTimePeriod(newTime);
+			stolenandRecoveryRequest.setBlockingType("Default");
+		}
+
+
+
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.updateRecord(stolenandRecoveryRequest);
 
 		logger.info("Response send="+genricResponse);
@@ -165,12 +209,13 @@ public class StolenAndRecoveryController {
 
 	}
 
-	@ApiOperation(value = "Get total count.", response = RequestCountAndQuantity.class)
-	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.GET)
-	public MappingJacksonValue getStolenAndRecoveryCount(long userId, Integer fileStatus, String requestType) {
-		RequestCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount(userId, fileStatus, requestType);
+	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
+	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.POST)
+	public MappingJacksonValue getStolenAndRecoveryCount( @RequestBody RequestCountAndQuantityWithLongUserId request, @RequestParam(value = "requestType") String requestType) {
+		ResponseCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount( request, requestType);
 		return new MappingJacksonValue(response);
 	}
+
 
 
 }

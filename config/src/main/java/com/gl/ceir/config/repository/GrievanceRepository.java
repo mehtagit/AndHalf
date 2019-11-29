@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import com.gl.ceir.config.model.Grievance;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 
 import io.lettuce.core.dynamic.annotation.Param;
 
@@ -20,7 +20,7 @@ public interface GrievanceRepository extends JpaRepository<Grievance, Long>, Jpa
 	public List<Grievance> getAllGrievanceStatusNotClosed( Integer userId, Integer grievanceStatus );
 	public List<Grievance> getAllGrievanceStatusNotClosedForAdmin( Integer grievanceStatus );
 	
-	@Query(value="select new com.gl.ceir.config.model.RequestCountAndQuantity(count(g.id) as count) from Grievance g "
-			+ "where g.userId =:userId and g.grievanceStatus =:grievanceStatus")
-	public RequestCountAndQuantity getGrievanceCount( @Param("userId") Integer userId, @Param("grievanceStatus") Integer grievanceStatus);
+	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(g.id) as count) from Grievance g "
+			+ "where g.userId =:userId and g.grievanceStatus in (:grievanceStatus)")
+	public ResponseCountAndQuantity getGrievanceCount( @Param("userId") Integer userId, @Param("grievanceStatus") List< Integer > grievanceStatus);
 }

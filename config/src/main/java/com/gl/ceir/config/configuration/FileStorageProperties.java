@@ -13,7 +13,16 @@ public class FileStorageProperties {
 	private String downloadDir;
 	private String immegreationUploadDir;
 	private String grievanceDownloadDir;
+	private String grievanceDownloadLink;
 
+
+	public String getGrievanceDownloadLink() {
+		return grievanceDownloadLink;
+	}
+
+	public void setGrievanceDownloadLink(String grievanceDownloadLink) {
+		this.grievanceDownloadLink = grievanceDownloadLink;
+	}
 
 	public String getUploadDir() {
 		return uploadDir;

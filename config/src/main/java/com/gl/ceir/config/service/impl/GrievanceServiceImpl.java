@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,30 +24,36 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.FileDetails;
-import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
-import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsg;
+import com.gl.ceir.config.model.GrievanceMsgWithUser;
 import com.gl.ceir.config.model.GrievanceReply;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
+import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.GrievanceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
+import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
+
+import com.gl.ceir.config.opencsv.custom.CustomMappingStrategy;
+
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.ColumnPositionMappingStrategy;
+import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.gl.ceir.config.repository.GrievanceHistoryRepository;
 import com.gl.ceir.config.repository.GrievanceMsgRepository;
 import com.gl.ceir.config.repository.GrievanceRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
-import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
-import com.opencsv.CSVWriter;
-import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class GrievanceServiceImpl{
@@ -214,7 +221,7 @@ public class GrievanceServiceImpl{
 				
 				csvWriter.write(grievances);
 			}
-			return new FileDetails( fileName, filePath ); 
+			return new FileDetails( fileName, filePath, fileStorageProperties.getGrievanceDownloadLink()+fileName ); 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -286,18 +293,48 @@ public class GrievanceServiceImpl{
 		}
 	}
 	
-	public List<GrievanceMsg> getAllGrievanceMessagesByGrievanceId( String grievanceId, Integer recordLimit ){
+	public List<GrievanceMsgWithUser> getAllGrievanceMessagesByGrievanceId( String grievanceId, Integer recordLimit, Integer userId ){
+		List<GrievanceMsg> messages = null;
+		List<GrievanceMsgWithUser> messagesWithUser = null;
 		try {
 			logger.info("Going to get All grievance Messages List ");
 			if( recordLimit == -1) {
-				return grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
+				messages = grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
 			}else {
-				return grievanceMsgRepository.getGrievanceMsgByGrievanceIdOrderByIdDesc(grievanceId, new PageRequest(0, recordLimit) );
+				messages =  grievanceMsgRepository.getGrievanceMsgByGrievanceIdOrderByIdDesc(grievanceId, new PageRequest(0, recordLimit) );
+			}
+			messagesWithUser = new ArrayList<GrievanceMsgWithUser>();
+			if( messages.size() > 0 ) {
+				GrievanceMsgWithUser msgWithUser = null;
+				for( GrievanceMsg msg : messages ) {
+					msgWithUser = new GrievanceMsgWithUser();
+					msgWithUser.setId(msg.getId());
+					msgWithUser.setGrievance( msg.getGrievance());
+					msgWithUser.setGrievanceId(msg.getGrievanceId());
+					msgWithUser.setCreatedOn(msg.getCreatedOn());
+					msgWithUser.setModifiedOn(msg.getModifiedOn());
+					msgWithUser.setFileName(msg.getFileName());
+					msgWithUser.setReply(msg.getReply());
+					msgWithUser.setUserId(msg.getUserId());
+					msgWithUser.setUserType(msg.getUserType());
+					if( messages.get(0).getGrievance().getUserId() == userId ) {
+						if( msg.getUserId() == userId )
+							msgWithUser.setUserDisplayName("You");
+						else
+							msgWithUser.setUserDisplayName("Admin");
+					}else {
+						if( msg.getUserId() == userId )
+							msgWithUser.setUserDisplayName("You");
+						else
+							msgWithUser.setUserDisplayName("User");
+					}
+				}
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+		return messagesWithUser;
 	}
 	
 	public Page<GrievanceHistory> getFilterPaginationGrievanceHistory(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
@@ -323,13 +360,15 @@ public class GrievanceServiceImpl{
 
 	}
 	
-	public RequestCountAndQuantity getGrievanceCount( Integer userId, Integer grievanceStatus) {
+	public ResponseCountAndQuantity getGrievanceCount( RequestCountAndQuantity request ) {
+		ResponseCountAndQuantity cq = null;
 		try {
 			logger.info("Going to get Grievance count.");
-			return grievanceRepository.getGrievanceCount(userId, grievanceStatus);
+			return grievanceRepository.getGrievanceCount( request.getUserId(), request.getStatus());
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			//logger.error(e.getMessage(), e);
+			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			return new ResponseCountAndQuantity(0,0);
 		}
 	}
 

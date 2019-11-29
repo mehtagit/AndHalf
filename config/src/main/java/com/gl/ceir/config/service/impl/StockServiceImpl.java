@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +17,11 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -31,6 +32,7 @@ import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.DistributerManagementRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
 
@@ -57,10 +59,20 @@ public class StockServiceImpl {
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
 
+	@Autowired
+	UserRepository userRepository;
+
 	public GenricResponse uploadStock(StockMgmt stackholderRequest) {
 
 		try {
 			stackholderRequest.setStockStatus(StockStatus.UPLOADING.getCode());
+
+			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
+
+				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
+
+				stackholderRequest.setUserId(new Long(user.getId()));
+			}
 
 			distributerManagementRepository.save(stackholderRequest);
 
@@ -106,14 +118,19 @@ public class StockServiceImpl {
 
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler();
 
-			if(Objects.nonNull(filterRequest.getUserId()))
-				smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if( !"Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+				if(Objects.nonNull(filterRequest.getUserId()) )
+					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
 
 			if(Objects.nonNull(filterRequest.getUserId()))
 				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			if(Objects.nonNull(filterRequest.getRoleType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
+				smsb.with(new SearchCriteria("userType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
 
 
 			return distributerManagementRepository.findAll(smsb.build(), pageable);
@@ -192,42 +209,45 @@ public class StockServiceImpl {
 		}else {
 
 			/*if(3 == stackHolderInfo.getStockStatus()) {
-*/
-				stackHolderInfo.setInvoiceNumber(distributerManagement.getInvoiceNumber());
-				stackHolderInfo.setQuantity(distributerManagement.getQuantity());
-				stackHolderInfo.setSuplierName(distributerManagement.getSuplierName());
-				stackHolderInfo.setSupplierId(distributerManagement.getSupplierId());
+			 */
+			stackHolderInfo.setInvoiceNumber(distributerManagement.getInvoiceNumber());
+			stackHolderInfo.setQuantity(distributerManagement.getQuantity());
+			stackHolderInfo.setSuplierName(distributerManagement.getSuplierName());
+			stackHolderInfo.setSupplierId(distributerManagement.getSupplierId());
+			stackHolderInfo.setTotalPrice(distributerManagement.getTotalPrice());
 
-				if(distributerManagement.getFileName() != null || distributerManagement.getFileName() != " ") {
-					stackHolderInfo.setStockStatus(StockStatus.PROCESSING.getCode());
-					stackHolderInfo.setFileName(distributerManagement.getFileName());
-				}
+			if(distributerManagement.getFileName() != null || distributerManagement.getFileName() != " ") {
+				stackHolderInfo.setStockStatus(StockStatus.PROCESSING.getCode());
+				stackHolderInfo.setFileName(distributerManagement.getFileName());
+			}
 
-				distributerManagementRepository.save(stackHolderInfo);
+			distributerManagementRepository.save(stackHolderInfo);
 
-				WebActionDb webActionDb = new WebActionDb();
-				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
-				webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
-				webActionDb.setState(WebActionDbState.INIT.getCode());
-				webActionDb.setTxnId(distributerManagement.getTxnId());
+			WebActionDb webActionDb = new WebActionDb();
+			webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
+			webActionDb.setState(WebActionDbState.INIT.getCode());
+			webActionDb.setTxnId(distributerManagement.getTxnId());
 
-				webActionDbRepository.save(webActionDb);
+			webActionDbRepository.save(webActionDb);
 
 			/*}else {
 
 				return new GenricResponse(200, "Operation Not Allowed.",distributerManagement.getTxnId());
 			}*/
+
 			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
 	
-	public RequestCountAndQuantity getStockCountAndQuantity( long userId, Integer stockStatus) {
+	public ResponseCountAndQuantity getStockCountAndQuantity( RequestCountAndQuantityWithLongUserId request ) {
 		try {
 			logger.info("Going to get  stock count and quantity.");
-			return distributerManagementRepository.getStockCountAndQuantity(userId, stockStatus);
+			return distributerManagementRepository.getStockCountAndQuantity(request.getUserId(), request.getStatus());
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			//logger.error(e.getMessage(), e);
+			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			return new ResponseCountAndQuantity(0,0);
 		}
 
 	}
