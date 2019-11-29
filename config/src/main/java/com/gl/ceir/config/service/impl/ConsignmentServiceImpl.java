@@ -110,15 +110,20 @@ public class ConsignmentServiceImpl {
 
 		try {
 
-			if(consignmentFileRequest.getConsignmentNumber() != null || consignmentFileRequest.getConsignmentNumber() != " ") {
-
-				ConsignmentMgmt consignmentMgmt	= consignmentRepository.getByConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
-
-				if(consignmentMgmt != null) {
-
-					return new GenricResponse(3,"Consignment Already Exist",consignmentFileRequest.getTxnId());
-				}
-			}
+			/*
+			 * if(consignmentFileRequest.getConsignmentNumber() != null ||
+			 * consignmentFileRequest.getConsignmentNumber() != " ") {
+			 * 
+			 * ConsignmentMgmt consignmentMgmt =
+			 * consignmentRepository.getByConsignmentNumber(consignmentFileRequest.
+			 * getConsignmentNumber());
+			 * 
+			 * if(consignmentMgmt != null) {
+			 * 
+			 * return new
+			 * GenricResponse(3,"Consignment Already Exist",consignmentFileRequest.getTxnId(
+			 * )); } }
+			 */
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.CONSIGNMENT_REGISTER.getName());
