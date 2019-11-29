@@ -21,61 +21,40 @@ public class UserProfile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;     
-	
 	private String firstName;  
-	
 	private String middleName;
-	
 	private String lastName;
-	
 	private String companyName;
-	
 	private String type;
-	
-	private Integer vatStatus;
-	
+	private Integer vatStatus;  
 	private String vatNo;
-	
 	private String propertyLocation;
-	
 	private String street;
-	
 	private String locality;
-	
 	private String province;   
-	
 	private String country;
-	
 	private String passportNo;
-	
 	private String email;
-	
 	private String phoneNo;
-	
 	private Date createdOn;
-	
 	private Date modifiedOn;
-	
 	private String phoneOtp;  
-	
 	private String emailOtp;
-    
-	private String displayName;
+    private String displayName;
     
     private String employeeId;
-    
     private String natureOfEmployment;
-    
     private String designation;
-    
     private String authorityName;
-    
     private String authorityEmail;
-    
     private String authorityPhoneNo;
+	private String operatorTypeName;
+    private Integer operatorTypeId;
     
-    private String operatorType;
- 
+    private String nidFilename;
+    private String photoFilename;
+    private String idCardFilename;
+    
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
@@ -249,12 +228,6 @@ public class UserProfile {
 	public void setAuthorityPhoneNo(String authorityPhoneNo) {
 		this.authorityPhoneNo = authorityPhoneNo;
 	}
-	public String getOperatorType() {
-		return operatorType;
-	}
-	public void setOperatorType(String operatorType) {
-		this.operatorType = operatorType;
-	}
 	public User getUser() {
 		return user;
 	}
@@ -263,6 +236,37 @@ public class UserProfile {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getOperatorTypeName() {
+		return operatorTypeName;
+	}
+	public void setOperatorTypeName(String operatorTypeName) {
+		this.operatorTypeName = operatorTypeName;
+	}
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
+	public String getNidFilename() {
+		return nidFilename;
+	}
+	public void setNidFilename(String nidFilename) {
+		this.nidFilename = nidFilename;
+	}
+	public String getPhotoFilename() {
+		return photoFilename;
+	}
+	public void setPhotoFilename(String photoFilename) {
+		this.photoFilename = photoFilename;
+	}
+	public String getIdCardFilename() {
+		return idCardFilename;
+	}
+	public void setIdCardFilename(String idCardFilename) {
+		this.idCardFilename = idCardFilename;
 	}
 	@Override
 	public String toString() {
@@ -321,8 +325,6 @@ public class UserProfile {
 		builder.append(authorityEmail);
 		builder.append(", authorityPhoneNo=");
 		builder.append(authorityPhoneNo);
-		builder.append(", operatorType=");
-		builder.append(operatorType);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append("]");
