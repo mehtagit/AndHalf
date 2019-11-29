@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
-
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
@@ -46,7 +44,6 @@ public class StolenAndRecoveryController {
 	@Autowired
 	Utility utility;
 
-
 	@ApiOperation(value = "Upload Recovery Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/Recovery", method = RequestMethod.POST)
 	public GenricResponse uploadFileAction(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
@@ -58,7 +55,6 @@ public class StolenAndRecoveryController {
 
 		return genricResponse;
 	}
-
 
 	@ApiOperation(value = "Upload Stolen Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/Stolen", method = RequestMethod.POST)

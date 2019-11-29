@@ -153,7 +153,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getTxnId()))
 				srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
@@ -163,11 +163,9 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(filterRequest.getRequestType()))
 				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			/*
-			 * if(Objects.nonNull(filterRequest.getSourceType())) srsb.with(new
-			 * SearchCriteria("sourceType", filterRequest.getRequestType(),
-			 * SearchOperation.EQUALITY, Datatype.STRING));
-			 */
+			if(Objects.nonNull(filterRequest.getSourceType())) 
+				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
+
 			return 	stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
 
 		} catch (Exception e) {
