@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Service
-@FeignClient(url = "http://13.233.39.58:9090/CEIR",value = "dsj" )
+@FeignClient(url = "http://13.127.239.247:9090/CEIR",value = "dsj" )
 public interface FeignCleintImplementation {
 
 
@@ -216,7 +216,7 @@ public interface FeignCleintImplementation {
 
 
 		//countAndQuantity  feign  controller
-		@RequestMapping(value="/consignment/countAndQuantity" ,method=RequestMethod.GET) 
+		@RequestMapping(value="/consignment/countAndQuantity" ,method=RequestMethod.POST) 
 		public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "consignmentStatus") Integer consignmentStatus) ;
 
 		//stock/countAndQuantity  feign  controller

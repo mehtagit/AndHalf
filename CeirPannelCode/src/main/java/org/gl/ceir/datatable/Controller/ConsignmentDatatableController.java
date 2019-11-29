@@ -144,7 +144,8 @@ public class ConsignmentDatatableController {
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
-				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
+				
+				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));

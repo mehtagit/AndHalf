@@ -100,7 +100,7 @@ public class GrievanceController {
 		
 		log.info("grievance form parameters passed to save grievance api "+grievance);
 		response = feignCleintImplementation.saveGrievance(grievance);
-		response.setTxnId(txnId);
+		response.setTxnId(grevnceId);
 		
 		log.info("response from register consignment api"+response);
 		log.info("upload stock  exit point.");
@@ -126,7 +126,7 @@ public class GrievanceController {
 
 	//***************************************** view Grievance controller *********************************
 		@RequestMapping(value="/viewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit )
+		public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit)
 		{
 			log.info("entery point in view grievance.");
 			int userId= (int) session.getAttribute("userid");
@@ -142,14 +142,15 @@ public class GrievanceController {
 		//***************************************** view Grievance controller *********************************
 				@RequestMapping(value="/saveGrievanceMessage",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
 				public @ResponseBody GenricResponse saveGrievance(@RequestParam(name="grievanceId",required = false) String grievanceId,@RequestParam(name="remark",required = false) String remark,
-						@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="file",required = false) MultipartFile file,HttpSession session)
+						@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="file",required = false) MultipartFile file,
+						HttpSession session,@RequestParam(name="grievanceStatus") Integer grievanceTicketStatus)
 				{
-					log.info("***********************");
+				
 
 				//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
 					int userId= (int) session.getAttribute("userid"); 
 					String roletype=(String) session.getAttribute("usertype");
-				    log.info("userid*******="+userId+" roletype="+roletype);
+				    log.info("userid=="+userId+" roletype="+roletype);
 					GrievanceModel grievanceModel=new GrievanceModel();
 				
 				
@@ -159,6 +160,7 @@ public class GrievanceController {
 				grievanceModel.setGrievanceId(grievanceId);
 				grievanceModel.setUserId(userId);
 				grievanceModel.setUserType(roletype);
+				grievanceModel.setGrievanceStatus(grievanceTicketStatus);
 				
 				log.info("request passed to the save grievance method="+grievanceModel);
 				response= feignCleintImplementation.saveGrievanceMessage(grievanceModel);

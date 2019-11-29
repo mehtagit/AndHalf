@@ -1,5 +1,6 @@
 package org.gl.ceir.Class.HeadersTitle;
 
+import javax.management.Query;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -271,14 +272,15 @@ public String stolenState(String fileName,String txnId ,String status,String use
 
 /********************************** Icons for custom **********************************/ 
 
-public String customState(String fileName,String txnId ,String status,String userStatus) {
+public String customState(String fileName,String txnId ,String status,String userStatus,String displayName) {
 // URL link 
+	
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = "openApprovePopUp('"+txnId+"')";
-String rejectAction = "openDisapprovePopup('"+txnId+"')";
-
+String approveAction = "openApprovePopUp('" + txnId + "','"+(displayName)+ "')";
+		/* String escapedString = queryParser.escape(approveAction); */
+String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName+"')";
 
 
 // state related Code 

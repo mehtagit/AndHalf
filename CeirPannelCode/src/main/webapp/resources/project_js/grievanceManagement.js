@@ -257,6 +257,8 @@ function saveGrievance(){
 
 function grievanceReply(userId,grievanceId,txnId)
 {
+	
+	
 	$.ajax({
 		url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
 		type: 'GET',
@@ -268,6 +270,18 @@ function grievanceReply(userId,grievanceId,txnId)
 			$('#replyModal').openModal();
 			$('#grievanceIdToSave').text(grievanceId);
 			$('#grievanceTxnId').text(txnId);
+			var usertype = $("body").attr("data-roleType");
+			console.log("usertype=="+usertype);
+			if(usertype=='CEIRAdmin')
+				{
+				$("#closeTicketCheckbox").css("display","block");
+				console.log("block");
+				}
+			else{
+				$("#closeTicketCheckbox").css("display","none");	
+				console.log("none");
+			}
+			
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -278,17 +292,28 @@ function grievanceReply(userId,grievanceId,txnId)
 
 function saveGrievanceReply()
 {
+	var grievanceTicketStatus;
+	if ($('#closeTicketCheck').is(":checked"))
+	{
+		grievanceTicketStatus=1;
+		
+	}
+	else{
+		grievanceTicketStatus=2;
+	}
 	var remark=$('#replyRemark').val();
 	var replyFile=$('#replyFile').val();
 	var  grievanceIdToSave= $('#grievanceIdToSave').text();
 	var  grievanceTxnId=  $('#grievanceTxnId').text();
 
-	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+" grievanceIdToSave="+grievanceIdToSave);
+	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="
+			+grievanceTicketStatus);
 	var formData= new FormData();
 	formData.append('file', $('#replyFile')[0].files[0]);
 	formData.append('remark',remark);
 	formData.append('grievanceId',grievanceIdToSave);
 	formData.append('txnId',grievanceTxnId);
+	formData.append('grievanceStatus',grievanceTicketStatus);
 
 	$.ajax({
 		url: './saveGrievanceMessage',
