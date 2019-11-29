@@ -9,7 +9,8 @@ public class FilterRequest {
 	public Integer taxPaidStatus;
 	private Integer consignmentStatus;
 	private String roleType;
-	private String requestType;
+	private Integer requestType;
+	private Integer sourceType;
 	private String userType;
 	private Integer featureId;
 	private Integer userTypeId;
@@ -44,7 +45,12 @@ public class FilterRequest {
 	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
-
+	public Integer getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(Integer sourceType) {
+		this.sourceType = sourceType;
+	}
 	public String getRoleType() {
 		return roleType;
 	}
@@ -58,10 +64,10 @@ public class FilterRequest {
 	public void setConsignmentStatus(Integer consignmentStatus) {
 		this.consignmentStatus = consignmentStatus;
 	}
-	public String getRequestType() {
+	public Integer getRequestType() {
 		return requestType;
 	}
-	public void setRequestType(String requestType) {
+	public void setRequestType(Integer requestType) {
 		this.requestType = requestType;
 	}
 	public String getUserType() {
