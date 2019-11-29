@@ -71,26 +71,51 @@ public class GrievanceDatatableController {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else {
-				for(GrievanceContentModel dataInsideList : paginationContentList) 
-				{
-				   String createdOn = dataInsideList.getCreatedOn();
-				   String modifiedOn = dataInsideList.getModifiedOn();
-				   String txnId = dataInsideList.getTxnId();
-				   String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
-				   String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
-				   String grievanceStatus = null;
-				   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
-					   StatusofGrievance.equals("1") ? "Pending With Admin" :
-						   StatusofGrievance.equals("2") ? "Pending With User" :
-							   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
-				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.grievanceState(dataInsideList.getFileName(),txnId,grievanceId,StatusofGrievance,userStatus,userId);			   
-				   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);	
-			}
-			
+				if("Importer".equals(userType)) {
+					log.info("<><><><> in Importer Controller");
+					for(GrievanceContentModel dataInsideList : paginationContentList) 
+					{
+					   String createdOn = dataInsideList.getCreatedOn();
+					   String modifiedOn = dataInsideList.getModifiedOn();
+					   String txnId = dataInsideList.getTxnId();
+					   String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+					   String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+					   String grievanceStatus = null;
+					   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
+						   StatusofGrievance.equals("1") ? "Pending With Admin" :
+							   StatusofGrievance.equals("2") ? "Pending With User" :
+								   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
+					   String userStatus = (String) session.getAttribute("userStatus");
+					   String action=iconState.grievanceState(dataInsideList.getFileName(),txnId,grievanceId,StatusofGrievance,userStatus,userId);			   
+					   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);	
+				}
+				}else if("Custom".equals(userType)) {
+					log.info("<><><><> in Custom Controller");
+					for(GrievanceContentModel dataInsideList : paginationContentList) 
+					{
+					   String createdOn = dataInsideList.getCreatedOn();
+					   String modifiedOn = dataInsideList.getModifiedOn();
+					   String txnId = dataInsideList.getTxnId();
+					   String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+					   String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+					   String grievanceStatus = null;
+					   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
+						   StatusofGrievance.equals("1") ? "Pending With Admin" :
+							   StatusofGrievance.equals("2") ? "Pending With User" :
+								   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
+					   String userStatus = (String) session.getAttribute("userStatus");
+					   String action=iconState.customGrievanceState(dataInsideList.getFileName(),txnId,grievanceId,StatusofGrievance,userStatus,userId);			   
+					   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);	
+				}
+					
+				}
+				
 			}
 			//data set on ModelClass
 			datatableResponseModel.setRecordsTotal(grievancepaginationmodel.getNumberOfElements());

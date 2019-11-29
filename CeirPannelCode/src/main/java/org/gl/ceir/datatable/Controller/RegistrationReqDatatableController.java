@@ -85,14 +85,10 @@ public class RegistrationReqDatatableController {
 				   String type = dataInsideList.getType();
 				   String roles =  (String) dataInsideList.getRoles();
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
-				   String grievanceStatus = null;
-				   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
-					   StatusofGrievance.equals("1") ? "Pending With Admin" :
-						   StatusofGrievance.equals("2") ? "Pending With User" :
-							   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
+				   String grievanceStatusName = dataInsideList.getStateInterp();
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus);			   
-				   String[] finalData={createdOn,Id,type,roles,grievanceStatus,action}; 
+				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName);			   
+				   String[] finalData={createdOn,Id,type,roles,grievanceStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
