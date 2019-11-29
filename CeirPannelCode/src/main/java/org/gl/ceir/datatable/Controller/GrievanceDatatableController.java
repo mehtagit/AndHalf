@@ -62,6 +62,7 @@ public class GrievanceDatatableController {
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
 		try {
+			log.info("request parameters send to view grievance api="+filterrequest);
 			Object response = feignCleintImplementation.grievanceFilter(filterrequest,pageNo,pageSize);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);

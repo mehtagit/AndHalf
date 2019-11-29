@@ -51,12 +51,13 @@ public interface FeignCleintImplementation {
 	@PostMapping(value="/consignment/register")
 	public GenricResponse addConsignment(ConsignmentModel consignment); 
 
-
+	
+	
 	//***************************************************** update consignment feign ******************************************************************/ 
 	@PostMapping(value="/consignment/update")
 	public GenricResponse updateConsignment(ConsignmentModel consignment) ;
 
-
+	
 
 
 

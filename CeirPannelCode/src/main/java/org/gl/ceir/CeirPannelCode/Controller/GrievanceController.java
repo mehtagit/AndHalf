@@ -100,6 +100,8 @@ public class GrievanceController {
 		
 		log.info("grievance form parameters passed to save grievance api "+grievance);
 		response = feignCleintImplementation.saveGrievance(grievance);
+		response.setTxnId(txnId);
+		
 		log.info("response from register consignment api"+response);
 		log.info("upload stock  exit point.");
 		return response;

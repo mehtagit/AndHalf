@@ -59,7 +59,8 @@ function EditConsignmentDetails(txnId){
 		type : 'GET',
 		success : function(data) {
 			console.log(data)
-			setEditPopupData(data) 
+			setEditPopupData(data); 
+			ConsignmentCurrency()
 		},
 		error : function() {
 			alert("Failed");
@@ -69,6 +70,57 @@ function EditConsignmentDetails(txnId){
 	$("#updateModal").openModal();
 }
 
+function ConsignmentCurrency()
+{
+		var currency="currency";
+	 	 $.ajax({
+			url: './consignmentCurency?currency='+currency,
+			type: 'GET',
+			processData: false,
+			contentType: false,
+			success: function (data, textStatus, jqXHR) {
+				 console.log(data);
+				 
+		    	$('#currency').empty();
+		    	for (i = 0; i < data.length; i++){
+		    		var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+					//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
+					$('#currency').append(html);	
+					}
+		    	 $('#currency').val($("#hideCurrency").val()); 
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+			}
+		});
+}
+
+function viewConsignmentCurrency()
+{
+		var currency="currency";
+	 	 $.ajax({
+			url: './consignmentCurency?currency='+currency,
+			type: 'GET',
+			processData: false,
+			contentType: false,
+			success: function (data, textStatus, jqXHR) {
+				 console.log(data);
+				 
+		    	$('#viewcurrency').empty();
+		    	for (i = 0; i < data.length; i++){
+		    		var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+					//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
+					$('#viewcurrency').append(html);	
+					}
+		    	 $('#viewcurrency').val($("#viewhideCurrency").val()); 
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+			}
+		});
+}
 
 function viewConsignmentDetails(txnId){
 
@@ -81,6 +133,7 @@ function viewConsignmentDetails(txnId){
 		success : function(data) {
 			console.log(data)
 			setViewPopupData(data);
+			viewConsignmentCurrency();
 		},
 		error : function() {
 			alert("Failed");
@@ -103,6 +156,9 @@ function setViewPopupData(data){
 	$("#TransactionId").val(data.txnId);
 	$("#remark").val(data.remarks);
 	$("#fileName").val(data.fileName); 
+	$("#viewcurrency").val(data.currency);
+	$("#viewtotalPrice").val(data.totalPrice);
+	$("#viewhideCurrency").val(data.currency);
 
 
 }
@@ -118,7 +174,12 @@ function setEditPopupData(data){
 	$("#expectedArrivalPortEdit").val(data.expectedArrivalPort);
 	$("#QuantityEdit").val(data.quantity);
 	$("#TransactionIdEdit").val(data.txnId);
-	$("#fileNameEdit").val(data.fileName); 
+	$("#fileNameEdit").val(data.fileName);
+	$("#currency").val(data.currency);
+	$("#totalPrice").val(data.totalPrice);
+	$("#hideCurrency").val(data.currency);
+	
+	
 
 
 } 
@@ -229,6 +290,8 @@ function editRegisterConsignment(){
 	var filename=$('#fileNameEdit').val();
 	var txnId=$('#TransactionIdEdit').val();
 	var quantity=$('#QuantityEdit').val();
+	var currency=$('#currency').val();
+	var totalPrice=$('#totalPrice').val();
 	console.log(supplierName,consignmentNumber,expectedArrivalDate,txnId,filename)
 
 
@@ -244,6 +307,8 @@ function editRegisterConsignment(){
 	formData.append('quantity',quantity);
 	formData.append('txnId',txnId);
 	formData.append('filename',filename);
+	formData.append('currency',currency);
+	formData.append('totalPrice',totalPrice);
 
 	console.log(JSON.stringify(formData));
 	console.log("*********");

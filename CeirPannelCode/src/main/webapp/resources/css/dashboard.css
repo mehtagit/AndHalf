@@ -119,7 +119,7 @@ textarea.materialize-textarea {
 }
 
 .test-icon {
-    font-size: 25px;
+    font-size: 25px !important;
     color: #fff;
     margin-top: 15px;
 }

@@ -6,6 +6,7 @@ public class GenricResponse {
 	private String errorCode;
 	private String txnId;
 	private String  message;
+	
 	public String getErrorCode() {
 		return errorCode;
 	}

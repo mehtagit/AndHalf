@@ -120,10 +120,10 @@
                 </div>
                 <div class="col s12 m12">
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark"></textarea>
-                    <h6 style="color: #000;">Upload Supporting Document</h6>
+                    <h6 style="color: #000;">Upload Supporting Document *</h6>
                 </div>
                 <div class="file-field col s12 m12">
-                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" multiple></div>
+                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" multiple></div>
                     <div class="file-path-wrapper"><input class="file-path validate" type="text"
                             placeholder="Upload one or more files">
                         <div>

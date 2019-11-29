@@ -62,17 +62,42 @@ public class ConsignmentDatatableController {
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
-		
+
+         
 		// Data set on this List
 		List<List<String>> finalList=new ArrayList<List<String>>();
-
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		
+		session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+        session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+        session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+        session.setAttribute("consignmentSaxPaidStatus",filterrequest.getTaxPaidStatus());
+        
+      
+        String startDate=(String) session.getAttribute("consignmentStartDate");
+        String endDate= (String) session.getAttribute("consignmentEndDate");
+        int consignmentstatus= (Integer) session.getAttribute("consignmentStatus");
+        int taxPaidStatusession= (Integer) session.getAttribute("consignmentTaxPaidStatus");
+        
+        
+        if(session.getAttribute("consignmentStartDate")!=null
+       		 ||session.getAttribute("consignmentEndDate")!=null||
+       		 session.getAttribute("consignmentStatus")!=null ||
+       		 session.getAttribute("consignmentTaxPaidStatus")!=null ) {
+        	log.info("session values is empty");
+        	log.info("startDate=="+startDate+"  endDate=="+endDate+" consignmentstatus=="+consignmentstatus+" taxPaidStatus=="+taxPaidStatusession );
+        }
+        else {
+        	log.info("session values is not empty");
+        	log.info("startDate=="+startDate+"  endDate=="+endDate+" consignmentstatus=="+consignmentstatus+" taxPaidStatus=="+taxPaidStatusession );
 
+        }
+       
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {

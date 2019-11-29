@@ -171,7 +171,24 @@
 						class="center-align">Transaction ID</label>
 				</div>
 
-				<div class="input-field col s12 m6">
+				
+				 <div class="input-field col s12 m6">
+                                                <input type="text" name="totalPrice" placeholder="" disabled="disabled"  id="viewtotalPrice" maxlength="7"
+                                                    required />
+                                                <label for="totalPrice" class="center-align">Total Price</label>
+                                            </div>
+
+                                            <div class="col s12 m6">
+                                                <label for="Currency">Currency</label>
+                                                <select id="viewcurrency" class="browser-default" disabled="disabled">
+                                                    <option value="" disabled selected>Currency</option>
+                                                    <option value="">$</option>
+                                                    <option value="">$</option>
+                                                </select>
+                                                <!-- <input type="text" id="viewcurrency" placeholder="" disabled="disabled"> -->
+                                                <input type="text" id="viewhideCurrency"  style="display: none;">
+                                              </div>
+                                              <div class="input-field col s12 m6">
 					<textarea id="remark" class="materialize-textarea"
 						style="height: 0px;" readonly="readonly"></textarea>
 					<label for="remark" class="">Remarks</label>
@@ -533,13 +550,27 @@
 					<label for="TransactionId" class="center-align">Transaction
 						ID</label>
 				</div>
-			</div>
+				
+				
+                                            <div class="input-field col s12 m6">
+                                                <input type="text" name="totalPrice" id="totalPrice" maxlength="7"
+                                                    required placeholder="" />
+                                                <label for="totalPrice" class="center-align">Total Price</label>
+                                            </div>
 
-
-			<div class="row myRow">
+                                            <div class="col s12 m6">
+                                                <label for="Currency">Currency</label>
+                                                <select id="currency" class="browser-default">
+                                                    <option value="" disabled selected>Currency</option>
+                                                    <option value="">$</option>
+                                                    <option value="">$</option>
+                                                </select>
+                                                  <input type="text" id="hideCurrency"  style="display: none;">
+                                            </div>
+			
 				<div class="file-field input-field col s12 m6"
 					style="margin-top: 5px;">
-					<h6 class="file-upload-heading" style="margin-left: 0;">
+					<h6 class="file-upload-heading" style="margin-top: -5px;">
 						Upload Bulk Devices Information <span class="star">*</span>
 					</h6>
 					<div class="btn">
@@ -552,6 +583,7 @@
 					</div>
 				</div>
 			</div>
+
 			<p>
 				<a href="./sampleFileDownload/filetype=sample">Download Sample Format</a>
 			</p>

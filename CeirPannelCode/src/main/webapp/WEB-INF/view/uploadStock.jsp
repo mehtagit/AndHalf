@@ -168,7 +168,7 @@ opacity: 0;
                                             </div>
 
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="invoiceNumber" id="invoiceNumber" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers  upto 15 characters only" maxlength="15" required />
+                                                <input type="text" name="invoiceNumber" id="invoiceNumber"  maxlength="15" required />
                                                 <label for="InvoiceNumber" class="center-align">Invoice Number</label>
                                             </div>
                                         </div>

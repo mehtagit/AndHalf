@@ -49,12 +49,8 @@ return supplierName;
 public void setSupplierName(String supplierName) {
 this.supplierName = supplierName;
 }
-public String getTaxPaidStatus() {
-return taxPaidStatus;
-}
-public void setTaxPaidStatus(String taxPaidStatus) {
-this.taxPaidStatus = taxPaidStatus;
-}
+
+
 public String getCreatedOn() {
 return createdOn;
 }
@@ -69,6 +65,12 @@ this.modifiedOn = modifiedOn;
 }
 public int getImporterId() {
 return importerId;
+}
+public String getTaxPaidStatus() {
+	return taxPaidStatus;
+}
+public void setTaxPaidStatus(String taxPaidStatus) {
+	this.taxPaidStatus = taxPaidStatus;
 }
 public void setImporterId(int importerId) {
 this.importerId = importerId;
@@ -189,17 +191,21 @@ this.currency = currency;
 }
 @Override
 public String toString() {
-return "ConsignmentModel [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
-+ ", taxPaidStatus=" + taxPaidStatus + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-+ ", importerId=" + importerId + ", consignmentNumber=" + consignmentNumber + ", expectedArrivalDate="
-+ expectedArrivalDate + ", expectedArrivaldate=" + expectedArrivaldate + ", expectedDispatcheDate="
-+ expectedDispatcheDate + ", expectedArrivalPort=" + expectedArrivalPort + ", organisationcountry="
-+ organisationcountry + ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId="
-+ txnId + ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
-+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity
-+ ", userId=" + userId + ", remarks=" + remarks + ", roleType=" + roleType + ", currency=" + currency
-+ "]";
+	return "ConsignmentModel [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
+			+ ", taxPaidStatus=" + taxPaidStatus + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
+			+ ", importerId=" + importerId + ", consignmentNumber=" + consignmentNumber + ", expectedArrivalDate="
+			+ expectedArrivalDate + ", expectedArrivaldate=" + expectedArrivaldate + ", expectedDispatcheDate="
+			+ expectedDispatcheDate + ", expectedArrivalPort=" + expectedArrivalPort + ", organisationcountry="
+			+ organisationcountry + ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId="
+			+ txnId + ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
+			+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity
+			+ ", userId=" + userId + ", remarks=" + remarks + ", roleType=" + roleType + ", currency=" + currency + "]";
 }
+
+
+
+
+
 
 
 }
