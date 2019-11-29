@@ -131,6 +131,13 @@
                         </div>
                     </div>
                 </div>
+              <div class="col s12 m12">  <p>
+				<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a>
+			</p>
+
+			<span> Required Field are marked with <span class="star">*</span></span>
+			
+                </div>
                 <div class="col s12 m12 center">
                     <a onclick="saveGrievanceReply()" class="modal-close modal-trigger waves-effect waves-green btn right">Reply</a>
                 </div>

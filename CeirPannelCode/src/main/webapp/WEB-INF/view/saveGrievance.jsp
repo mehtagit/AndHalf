@@ -114,8 +114,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
+                                        <div class="col s12 m12">  <p>
+				<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a>
+			</p>
 
+			<span> Required Field are marked with <span class="star">*</span></span>
+			
+                </div>
                                         <div class="center" style="margin-top: 50px;">
                                             <button class="waves-effect waves-light modal-trigger btn"
                                                  type="button" onclick="saveGrievance()">Submit</button>
