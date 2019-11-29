@@ -447,7 +447,7 @@ function setAllDropdowns(){
 	$.getJSON('./getDropdownList/4/4', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].state).text(data[i].interp)
-			.appendTo('#filterFileStatus');
+			.appendTo('#StockStatus');
 
 		}
 	});
