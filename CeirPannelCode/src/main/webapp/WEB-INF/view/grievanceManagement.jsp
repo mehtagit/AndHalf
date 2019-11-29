@@ -139,6 +139,12 @@
 			
                 </div>
                 <div class="col s12 m12 center">
+                 <p id="closeTicketCheckbox" style="float: left; display: none;">
+                        <label>
+                            <span>Do you want to close this ticket?</span>
+                            <input type="checkbox" id="closeTicketCheck" />
+                        </label>
+                    </p>
                     <a onclick="saveGrievanceReply()" class="modal-close modal-trigger waves-effect waves-green btn right">Reply</a>
                 </div>
             </div>

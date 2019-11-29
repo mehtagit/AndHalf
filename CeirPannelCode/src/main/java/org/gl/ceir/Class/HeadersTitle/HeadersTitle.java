@@ -22,7 +22,7 @@ public class HeadersTitle {
 	
 	//Custom
 	
-	public static final String ImporterCompanyName = "Display name";
+	public static final String ImporterCompanyName = "Importer/CompanyName";
 	//Admin
 	public static final String submissionDate = "Submission Date";
 	public static final String userId = "User ID";

@@ -168,7 +168,7 @@ opacity: 0;
                                             </div>
 
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="invoiceNumber" id="invoiceNumber"  maxlength="15" required />
+                                                <input type="text" name="invoiceNumber" id="invoiceNumber"  maxlength="15"/>
                                                 <label for="InvoiceNumber" class="center-align">Invoice Number</label>
                                             </div>
                                         </div>

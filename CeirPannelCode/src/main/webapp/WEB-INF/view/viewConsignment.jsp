@@ -303,7 +303,7 @@
       <h6>Approve Consignment</h6>
       <hr>
       <div class="row">
-        <h6>The tax against the consignment with (Importer/Company name) having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
+        <h6>The tax against the consignment with <span id="displayname"></span> having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
           successfully paid.</h6>
       </div>
       <div class="row">
@@ -344,7 +344,7 @@
       <h6>Reject Consignment</h6>
       <hr>
       <div class="row">
-        <h6>Do you really want to mark the consignment (Importer/Company name) having Transaction ID: <span id="disaproveTxnId"></span> as
+        <h6>Do you really want to mark the consignment (<span id="disapprovedDisplayname"></span> having Transaction ID: <span id="disaproveTxnId"></span> as
           rejected.</h6>
             <input type="text" id="setDisapproveConsignmentTxnId" style="display: none">
       </div>

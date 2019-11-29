@@ -530,11 +530,12 @@ function pageButtons(url){
 
 
 
-function openApprovePopUp(txnId)
+function openApprovePopUp(txnId,displayName)
 {
 	$('#ApproveConsignment').openModal();
 	$('#ApproveConsignmentTxnid').text(txnId);
 	$('#setApproveConsignmentTxnId').val(txnId);
+	$('#displayname').text(displayName);
 
 
 
@@ -569,12 +570,12 @@ function approveSubmit(actiontype){
 	});
 }
 
-function openDisapprovePopup(txnId)
+function openDisapprovePopup(txnId,displayName)
 {
 	$('#RejectConsignment').openModal();
 	$('#disaproveTxnId').text(txnId);
 	$('#setDisapproveConsignmentTxnId').val(txnId);
-
+	$('#disapprovedDisplayname').text(displayName);
 
 
 }

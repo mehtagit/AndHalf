@@ -97,7 +97,6 @@ public class StockDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}else if("Importer".equals(userType)){
-					log.info("sourceuserTypeType in stock controller 2--------"+userType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
@@ -114,7 +113,6 @@ public class StockDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}else if("Custom".equals(userType)) {
-					log.info("userType:::::::::::::::::::::::"+userType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
@@ -125,14 +123,13 @@ public class StockDatatableController {
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
 						String stockStatusName=dataInsideList.getTaxInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						String action = iconState.customStockState(file,txnId,statusOfStock,userStatus);
 						String[] finalData={date,assignedTo,txnId,file,stockStatusName,action}; 
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
 				}else if("CEIRAdmin".equals(userType)) {
-					log.info("<><><><<<<<<><><><><><> userType in Admin" +userType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
@@ -208,7 +205,7 @@ public class StockDatatableController {
 				buttonList.add(button);
 			}	
 			//Dropdown items	
-			String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+			String[] selectParam= {"select","Stock Status","StockStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -263,7 +260,7 @@ public class StockDatatableController {
 			}
 
 			//Dropdown items	
-			String[] selectParam= {"select","Stock Status","filterFileStatus",""};
+			String[] selectParam= {"select","Stock Status","StockStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);

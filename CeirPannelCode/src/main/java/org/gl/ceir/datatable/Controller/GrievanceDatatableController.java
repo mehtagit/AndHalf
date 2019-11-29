@@ -84,11 +84,7 @@ public class GrievanceDatatableController {
 					   String txnId = dataInsideList.getTxnId();
 					   String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 					   String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
-					   String grievanceStatus = null;
-					   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
-						   StatusofGrievance.equals("1") ? "Pending With Admin" :
-							   StatusofGrievance.equals("2") ? "Pending With User" :
-								   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
+					   String grievanceStatus = dataInsideList.getStateInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   String action=iconState.grievanceState(dataInsideList.getFileName(),txnId,grievanceId,StatusofGrievance,userStatus,userId);			   
 					   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
@@ -105,11 +101,7 @@ public class GrievanceDatatableController {
 					   String txnId = dataInsideList.getTxnId();
 					   String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 					   String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
-					   String grievanceStatus = null;
-					   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
-						   StatusofGrievance.equals("1") ? "Pending With Admin" :
-							   StatusofGrievance.equals("2") ? "Pending With User" :
-								   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
+					   String grievanceStatus = dataInsideList.getStateInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   String action=iconState.customGrievanceState(dataInsideList.getFileName(),txnId,grievanceId,StatusofGrievance,userStatus,userId);			   
 					   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
@@ -127,11 +119,7 @@ public class GrievanceDatatableController {
 					   String txnId = dataInsideList.getTxnId();
 					   String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 					   String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
-					   String grievanceStatus = null;
-					   grievanceStatus = StatusofGrievance.equals("0") ? "New" : 
-						   StatusofGrievance.equals("1") ? "Pending With Admin" :
-							   StatusofGrievance.equals("2") ? "Pending With User" :
-								   StatusofGrievance.equals("3") ? "Closed" :"Not Listed";
+					   String grievanceStatus = dataInsideList.getStateInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   String action=iconState.adminGrievanceState(dataInsideList.getFileName(),txnId,grievanceId,StatusofGrievance,userStatus,userId);			   
 					   String[] finalData={createdOn,modifiedOn,txnId,grievanceId,grievanceStatus,action}; 
