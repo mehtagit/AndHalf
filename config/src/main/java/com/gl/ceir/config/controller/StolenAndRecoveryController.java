@@ -50,13 +50,10 @@ public class StolenAndRecoveryController {
 
 		logger.info("Upload Recovery Details="+stolenandRecoveryRequest);
 
-
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadDetails(stolenandRecoveryRequest);
-
 		logger.info("Upload recovery details response="+genricResponse);
 
 		return genricResponse;
-
 	}
 
 
@@ -68,7 +65,6 @@ public class StolenAndRecoveryController {
 
 		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
 		mapping.setListType("BlackList");
-
 
 		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
 				stolenandRecoveryDetails.getBlockingType() == "") {
@@ -119,10 +115,9 @@ public class StolenAndRecoveryController {
 		logger.info("Multiple Stolen Upload Request="+stolenandRecoveryDetails);
 
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadMultipleStolen(stolenandRecoveryDetails);
-
 		logger.info("Muliple Stolen Upload Response ="+genricResponse);
+		
 		return genricResponse;
-
 	}
 
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
@@ -134,9 +129,7 @@ public class StolenAndRecoveryController {
 		logger.info("Record request to Stolen And Recovery Info="+stolenandRecoveryDetails);
 
 		Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize);
-
 		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
-
 		logger.info("Record Response of Stolen And Recovery Info="+mapping);
 
 		return mapping;
@@ -147,14 +140,11 @@ public class StolenAndRecoveryController {
 	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
 		logger.info("Record Delete request ="+stolenandRecoveryRequest);
-
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
 
 		logger.info("Response send ="+genricResponse);
 
 		return genricResponse;
-
-
 	}
 
 	@ApiOperation(value = "Update Stolen and  Recovery Details.", response = GenricResponse.class)

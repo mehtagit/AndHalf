@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
@@ -33,9 +34,9 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
+import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
@@ -133,34 +134,36 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
-
 	}
 
-
-	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest stolenandRecoveryMgmt,Integer pageNo, Integer pageSize){
+	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			StolenAndRecoverySpecificationBuilder str =  new StolenAndRecoverySpecificationBuilder();
+			StolenAndRecoverySpecificationBuilder srsb = new StolenAndRecoverySpecificationBuilder();
 
-			if(Objects.nonNull(stolenandRecoveryMgmt.getUserId()))
-				str.with(new SearchCriteria("userId", stolenandRecoveryMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(filterRequest.getUserId()))
+				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(stolenandRecoveryMgmt.getTxnId()))
-				str.with(new SearchCriteria("txnId", stolenandRecoveryMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+				srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
-			if(Objects.nonNull(stolenandRecoveryMgmt.getRoleType()))
-				str.with(new SearchCriteria("roleType", stolenandRecoveryMgmt.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+				srsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
-			if(Objects.nonNull(stolenandRecoveryMgmt.getConsignmentStatus()))
-				str.with(new SearchCriteria("fileStatus", stolenandRecoveryMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(filterRequest.getTxnId()))
+				srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			if(Objects.nonNull(filterRequest.getRoleType()))
+				srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(stolenandRecoveryMgmt.getRequestType()))
-				str.with(new SearchCriteria("requestType", stolenandRecoveryMgmt.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
+				srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getRequestType()))
+				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			return 	stolenAndRecoveryRepository.findAll(str.build(), pageable);
-
+			return 	stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
 
 		} catch (Exception e) {
 
@@ -168,7 +171,6 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
-
 
 	@Transactional
 	public GenricResponse uploadMultipleStolen(List<StolenandRecoveryMgmt> stolenandRecoveryMgmt) {
@@ -240,7 +242,6 @@ public class StolenAndRecoveryServiceImpl {
 				if("Single".equalsIgnoreCase(stolenandRecoveryMgmt.getSourceType())){
 
 					SingleImeiHistoryDb singleImeiHistoryDb = new SingleImeiHistoryDb();
-
 					singleImeiHistoryDb.setImei(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getImei());
 					singleImeiHistoryDb.setProcessState(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getProcessState());
 					singleImeiHistoryDb.setTxnId(stolenandRecoveryMgmt.getId());
@@ -249,7 +250,6 @@ public class StolenAndRecoveryServiceImpl {
 					//immegreationImeiDetailsRepository.deleteById(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getId());
 
 				}
-
 
 				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
 				stolenAndRecoveryRepository.deleteById(stolenandRecoveryMgmt.getId());
@@ -293,8 +293,6 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setFileName(stolenandRecoveryMgmt.getFileName());
 				stolenandRecoveryMgmtInfo.setFileStatus(0);
 
-
-
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
@@ -310,7 +308,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
-			return 	stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
+			return stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

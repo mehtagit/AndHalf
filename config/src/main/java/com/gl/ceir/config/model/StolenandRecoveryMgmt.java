@@ -2,6 +2,7 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,21 +12,23 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Long userId;
+	
 	private String fileName;
+	
 	private Integer fileStatus;
 
 	@NotNull	
@@ -33,15 +36,19 @@ public class StolenandRecoveryMgmt implements Serializable {
 
 	@CreationTimestamp
 	private Date createdOn;
+	
 	@UpdateTimestamp
 	private Date modifiedOn;
-	private String requestType;
-	private String roleType;
-	private String blockingType;
-	private String blockingTimePeriod;
-	private String sourceType;
-
 	
+	private String requestType;
+	
+	private String roleType;
+	
+	private String blockingType;
+	
+	private String blockingTimePeriod;
+	
+	private String sourceType;
 	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
@@ -49,7 +56,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private Long imei;
 
-	
 	public Long getId() {
 		return id;
 	}
@@ -68,7 +74,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
 	public Integer getFileStatus() {
 		return fileStatus;
 	}
@@ -137,14 +142,38 @@ public class StolenandRecoveryMgmt implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "StolenandRecoveryMgmt [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
-				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", requestType=" + requestType + ", roleType=" + roleType + ", blockingType=" + blockingType
-				+ ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StolenandRecoveryMgmt [id=");
+		builder.append(id);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", fileStatus=");
+		builder.append(fileStatus);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", blockingType=");
+		builder.append(blockingType);
+		builder.append(", blockingTimePeriod=");
+		builder.append(blockingTimePeriod);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append(", singleImeiDetails=");
+		builder.append(singleImeiDetails);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append("]");
+		return builder.toString();
 	}
 
-
-
-
-
+	
 }
