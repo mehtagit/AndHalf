@@ -81,7 +81,7 @@ public class StolenAndRecoveryServiceImpl {
 
 		try {
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stolenandRecoveryDetails.getRequestType());
+			webActionDb.setFeature(Integer.toString(stolenandRecoveryDetails.getRequestType()));
 			webActionDb.setSubFeature("upload");
 			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
 			webActionDb.setState(0);
@@ -96,8 +96,6 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
-
 	}
 
 
@@ -106,7 +104,6 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
-
 			if("Single".equalsIgnoreCase(stolenandRecoveryDetails.getSourceType())){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
 				singleImeiDetails.setImei(stolenandRecoveryDetails.getImei());
@@ -162,6 +159,9 @@ public class StolenAndRecoveryServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getRequestType()))
 				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			if(Objects.nonNull(filterRequest.getSourceType()))
+				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			return 	stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
 

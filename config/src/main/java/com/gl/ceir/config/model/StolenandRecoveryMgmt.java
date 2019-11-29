@@ -40,7 +40,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@UpdateTimestamp
 	private Date modifiedOn;
 	
-	private String requestType;
+	private Integer requestType;
 	
 	private String roleType;
 	
@@ -48,7 +48,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	
 	private String blockingTimePeriod;
 	
-	private String sourceType;
+	private Integer sourceType;
 	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
@@ -92,10 +92,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public String getRequestType() {
+	public Integer getRequestType() {
 		return requestType;
 	}
-	public void setRequestType(String requestType) {
+	public void setRequestType(Integer requestType) {
 		this.requestType = requestType;
 	}
 	public String getRoleType() {
@@ -122,10 +122,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	public String getSourceType() {
+	public Integer getSourceType() {
 		return sourceType;
 	}
-	public void setSourceType(String sourceType) {
+	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
 	}
 	public SingleImeiDetails getSingleImeiDetails() {

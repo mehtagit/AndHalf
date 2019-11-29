@@ -126,7 +126,7 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-		logger.info("Record request to Stolen And Recovery Info="+stolenandRecoveryDetails);
+		logger.info("Record request to Stolen And Recovery Info=" +  stolenandRecoveryDetails);
 
 		Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize);
 		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
