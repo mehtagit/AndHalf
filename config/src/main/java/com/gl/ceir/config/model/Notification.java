@@ -12,23 +12,42 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 public class Notification  implements Serializable{
 
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@CreationTimestamp
 	private LocalDateTime createdOn;
+	
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
 	private String channelType;
-	private String message ;
+	
+	private String message;
+	
 	private Long userId;
+	
 	private Long featureId;
+	
 	private String featureName;
+	
 	private String subFeature;
+	
+	public Notification() {
+
+	}
+	
+	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature) {
+		this.channelType = channelType;
+		this.message = message;
+		this.userId = userId;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+	}
 	
 	public Long getId() {
 		return id;

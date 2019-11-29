@@ -127,9 +127,6 @@ public class ConfigurationController {
 		return GenricResponse;
 	}
 
-
-
-
 	@ApiOperation(value = "Policy Config view  Data by Tag", response = PolicyConfigurationDb.class)
 	@RequestMapping(path = "/policy/viewTag", method = RequestMethod.POST)
 	public MappingJacksonValue findPolicyDetailsByTag(@RequestBody PolicyConfigurationDb messageConfigurationDb) {
@@ -137,13 +134,10 @@ public class ConfigurationController {
 		logger.info("Details Get by Message config="+messageConfigurationDb);
 
 		PolicyConfigurationDb  pocessDetails = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(messageConfigurationDb);
-
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
-
 		logger.info("Response to send="+pocessDetails);
 
 		return mapping;
-
 	}
 
 

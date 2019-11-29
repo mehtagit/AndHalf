@@ -31,7 +31,7 @@ public class StockController {
 
 	public GenricResponse uploadStock(@RequestBody StockMgmt stockMgmt){
 
-		logger.info("Upload Stock Request ="+stockMgmt.toString());
+		logger.info("Upload Stock Request =" + stockMgmt);
 
 		GenricResponse genricResponse =	stackholderServiceImpl.uploadStock(stockMgmt);
 

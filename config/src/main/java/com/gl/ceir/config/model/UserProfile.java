@@ -12,82 +12,75 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity 
 public class UserProfile {
+	
 	private static long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;     
+	
 	private String firstName;  
+	
 	private String middleName;
+	
 	private String lastName;
+	
 	private String companyName;
+	
 	private String type;
+	
 	private Integer vatStatus;
+	
 	private String vatNo;
+	
 	private String propertyLocation;
+	
 	private String street;
+	
 	private String locality;
+	
 	private String province;   
+	
 	private String country;
+	
 	private String passportNo;
+	
 	private String email;
+	
 	private String phoneNo;
+	
 	private Date createdOn;
+	
 	private Date modifiedOn;
+	
 	private String phoneOtp;  
+	
 	private String emailOtp;
-    private String displayName;
+    
+	private String displayName;
     
     private String employeeId;
+    
     private String natureOfEmployment;
+    
     private String designation;
+    
     private String authorityName;
+    
     private String authorityEmail;
+    
     private String authorityPhoneNo;
+    
     private String operatorType;
-
-	/*@Transient
-	private String username;
-	@Transient
-	private List<QuestionPair> questionList ; 
-	@Transient 
-	private Integer[] roles;
-	@Transient
-	private Integer usertypeId;
-	@Transient
-	private String password;    */
  
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user; 
 	
-/*
-	public Integer[] getRoles() {
-		return roles;
-	}
-	public void setRoles(Integer[] roles) {
-		this.roles = roles;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Integer getUsertypeId() {
-		return usertypeId;
-	}
-	public void setUsertypeId(Integer usertypeId) {
-		this.usertypeId = usertypeId;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}*/
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}

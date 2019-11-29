@@ -1,6 +1,7 @@
 package com.gl.ceir.config.service.impl;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
@@ -33,7 +34,6 @@ import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 @Service
 public class ConfigurationManagementServiceImpl {
 
-
 	private static final Logger logger = LogManager.getLogger(ConfigurationManagementServiceImpl.class);
 
 	@Autowired
@@ -53,7 +53,7 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
-	
+
 	@Autowired
 	SystemConfigListRepository systemConfigListRepository;
 
@@ -63,67 +63,47 @@ public class ConfigurationManagementServiceImpl {
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
 
-
-
-
 	public List<SystemConfigurationDb> getAllInfo(){
 		try {
-
 			return systemConfigurationDbRepository.findAll();
-
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
-
-
 
 	public SystemConfigurationDb findByTag(SystemConfigurationDb systemConfigurationDb){
 		try {
-
 			return systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
-
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
 
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
 
-			SystemConfigurationDb idDetails = systemConfigurationDbRepository.getById(systemConfigurationDb.getId());
+			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getById(systemConfigurationDb.getId());
 
-			if(idDetails == null) {
-
+			if(Objects.isNull(systemConfigurationDb2)) {
 				return new GenricResponse(15, "This Id does not exist", "");
 			}
 
-			SystemConfigurationHistoryDb syc = new SystemConfigurationHistoryDb();
-			syc.setDescription(idDetails.getDescription());
-			syc.setTag(idDetails.getTag());
-			syc.setValue(idDetails.getValue());
-
-
-			systemConfigurationHistoryDbRepository.save(syc);
-
-			systemConfigurationDb.setTag(idDetails.getTag());
-			systemConfigurationDb.setCreatedOn(idDetails.getCreatedOn());
-			systemConfigurationDbRepository.save(systemConfigurationDb);
+			systemConfigurationHistoryDbRepository.save(
+					new SystemConfigurationHistoryDb(systemConfigurationDb2.getTag(), systemConfigurationDb2.getValue(), systemConfigurationDb2.getDescription()
+							));
+			
+			systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 			return new GenricResponse(0, "System configuration update Sucessfully", "");
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info("Exception found= " + e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
 		}
 	}
-
-
 
 	public List<MessageConfigurationDb> getMessageConfigAllDetails(){
 
@@ -137,8 +117,6 @@ public class ConfigurationManagementServiceImpl {
 		}	
 
 	}
-
-
 
 	public MessageConfigurationDb getMessageConfigDetailsByTag(MessageConfigurationDb messageConfigurationDb){
 		try {
@@ -179,8 +157,6 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-
-
 	public PolicyConfigurationDb getPolicyConfigDetailsByTag(PolicyConfigurationDb messageConfigurationDb){
 		try {
 
@@ -192,7 +168,6 @@ public class ConfigurationManagementServiceImpl {
 		}	
 	}
 
-
 	public List<PolicyConfigurationDb> getPolicyConfigDetails(){
 		try {
 
@@ -203,7 +178,6 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
-
 
 	@Transactional
 	public GenricResponse updatePolicyInfo(PolicyConfigurationDb policyConfigurationDb) {
@@ -235,8 +209,6 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-
-
 	@Transactional
 	public GenricResponse saveAudit(AuditTrail auditTrail) {
 		try {
@@ -250,27 +222,35 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-
-
-	@Transactional
 	public GenricResponse saveNotification(Notification notification) {
 		try {
-
+			
 			notificationRepository.save(notification);
+			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
+			
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature) {
+		try {
 
-			return new GenricResponse(0, "Notification save Sucess fully", "");
+			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, subFeature));
+
+			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
-
 	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tag);
-			
+
 			return systemConfigListRepository.findByTag(tag);
 
 		} catch (Exception e) {
@@ -278,6 +258,5 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
 
 }

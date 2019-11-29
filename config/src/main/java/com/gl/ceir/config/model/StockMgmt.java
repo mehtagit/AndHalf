@@ -187,11 +187,42 @@ public class StockMgmt implements Serializable {
 		this.previousStockStatus = previousStockStatus;
 	}
 
-
-
-
-
-
-
-
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("StockMgmt [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", suplierName=");
+		builder.append(suplierName);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", invoiceNumber=");
+		builder.append(invoiceNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", previousStockStatus=");
+		builder.append(previousStockStatus);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice);
+		builder.append("]");
+		return builder.toString();
+	}
 }
