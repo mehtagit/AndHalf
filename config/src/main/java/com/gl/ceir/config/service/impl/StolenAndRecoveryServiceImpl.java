@@ -104,7 +104,7 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
-			if("Single".equalsIgnoreCase(stolenandRecoveryDetails.getSourceType())){
+			if("Single".equalsIgnoreCase(""/*stolenandRecoveryDetails.getSourceType()*/)){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
 				singleImeiDetails.setImei(stolenandRecoveryDetails.getImei());
 				singleImeiDetails.setsARm(stolenandRecoveryDetails);
@@ -113,7 +113,7 @@ public class StolenAndRecoveryServiceImpl {
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(stolenandRecoveryDetails.getRequestType());
+			webActionDb.setFeature(""/*stolenandRecoveryDetails.getRequestType() */);
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
@@ -178,18 +178,18 @@ public class StolenAndRecoveryServiceImpl {
 
 			for(StolenandRecoveryMgmt  request:stolenandRecoveryMgmt) {
 
-				if("Consignment".equalsIgnoreCase(request.getSourceType())){
+				if("Consignment".equalsIgnoreCase("" /* request.getSourceType() */ )){
 					ConsignmentMgmt consignmentMgmt =	consignmentRepository.getByTxnId(request.getTxnId());
-					if("Stolen".equalsIgnoreCase(request.getRequestType())) {
+					if("Stolen".equalsIgnoreCase("" /*request.getRequestType() */ )) {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.STOLEN.getCode());
 					}else {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.RECOVERY.getCode());
 					}
 					consignmentRepository.save(consignmentMgmt);
-				}else if("STOCK".equalsIgnoreCase(request.getSourceType())) {
+				}else if("STOCK".equalsIgnoreCase("" /* request.getSourceType() */)) {
 
 					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(),request.getTxnId());
-					if("Stolen".equalsIgnoreCase(request.getRequestType())) {
+					if("Stolen".equalsIgnoreCase("" /* request.getRequestType() */)) {
 						stockMgmt.setStockStatus(StockStatus.STOLEN.getCode());
 					}else {
 						stockMgmt.setStockStatus(StockStatus.RECOVERY.getCode());
@@ -199,7 +199,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setState(0);
-				webActionDb.setFeature(request.getRequestType());				
+				webActionDb.setFeature("" /* request.getRequestType() */ );				
 				webActionDb.setSubFeature("Upload");
 				webActionDb.setData(request.getTxnId());
 
@@ -230,16 +230,16 @@ public class StolenAndRecoveryServiceImpl {
 			else {
 				StolenAndRecoveryHistoryMgmt historyMgmt = new  StolenAndRecoveryHistoryMgmt();
 				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
-				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
+				historyMgmt.setBlockingType("" /* stolenandRecoveryMgmtInfo.getBlockingType() */);
 				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
 				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
-				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
+				historyMgmt.setRequestType("" /* stolenandRecoveryMgmtInfo.getRequestType() */);
 				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
 				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
 				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
-				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
+				historyMgmt.setSourceType("" /* stolenandRecoveryMgmtInfo.getSourceType() */);
 
-				if("Single".equalsIgnoreCase(stolenandRecoveryMgmt.getSourceType())){
+				if ("Single".equalsIgnoreCase("" /* stolenandRecoveryMgmt.getSourceType() */)){
 
 					SingleImeiHistoryDb singleImeiHistoryDb = new SingleImeiHistoryDb();
 					singleImeiHistoryDb.setImei(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getImei());
@@ -278,15 +278,15 @@ public class StolenAndRecoveryServiceImpl {
 				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
 				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
 				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
-				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
+				historyMgmt.setRequestType("" /* stolenandRecoveryMgmtInfo.getRequestType() */);
 				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
 				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
 				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
-				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
+				historyMgmt.setSourceType("" /* stolenandRecoveryMgmtInfo.getSourceType() */);
 
 				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
 
-				if("Stolen".equalsIgnoreCase(stolenandRecoveryMgmt.getRequestType())){
+				if ("Stolen".equalsIgnoreCase("" /* stolenandRecoveryMgmt.getRequestType() */)){
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
 					stolenandRecoveryMgmtInfo.setBlockingType(stolenandRecoveryMgmt.getBlockingType());
 				}
