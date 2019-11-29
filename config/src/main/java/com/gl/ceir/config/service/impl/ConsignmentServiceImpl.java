@@ -369,7 +369,8 @@ public class ConsignmentServiceImpl {
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT,
-								SubFeatures.ACCEPT);
+								SubFeatures.ACCEPT,
+								consignmentUpdateRequest.getTxnId());
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -380,7 +381,8 @@ public class ConsignmentServiceImpl {
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT, 
-								SubFeatures.ACCEPT);
+								SubFeatures.ACCEPT,
+								consignmentUpdateRequest.getTxnId());
 
 					}
 				}
@@ -395,7 +397,8 @@ public class ConsignmentServiceImpl {
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
-							SubFeatures.REJECT);
+							SubFeatures.REJECT,
+							consignmentUpdateRequest.getTxnId());
 
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -407,7 +410,8 @@ public class ConsignmentServiceImpl {
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
-							SubFeatures.REJECT);
+							SubFeatures.REJECT, 
+							consignmentUpdateRequest.getTxnId());
 				}
 			}
 
@@ -431,7 +435,7 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	private boolean sendMessageAndSaveNotification(@NonNull String tag, UserProfile userProfile, long featureId, String featureName, String subFeature) {
+	private boolean sendMessageAndSaveNotification(@NonNull String tag, UserProfile userProfile, long featureId, String featureName, String subFeature, String featureTxnId) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag(tag);
 
@@ -440,7 +444,7 @@ public class ConsignmentServiceImpl {
 				logger.info("Email to user have been sent successfully.");
 
 				// Save email in notification table.
-				configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), userProfile.getUser().getId(), featureId, featureName, subFeature);
+				configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId);
 
 			}else {
 				logger.info("Email to user have been failed.");

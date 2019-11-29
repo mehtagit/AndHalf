@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.gl.ceir.config.model.constants.NotificationStatus;
+
 @Entity
 public class Notification  implements Serializable{
 
@@ -32,21 +34,27 @@ public class Notification  implements Serializable{
 	
 	private Long featureId;
 	
+	private String featureTxnId;
+	
 	private String featureName;
 	
 	private String subFeature;
+	
+	private Integer status;
 	
 	public Notification() {
 
 	}
 	
-	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature) {
+	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature, String featureTxnId) {
 		this.channelType = channelType;
 		this.message = message;
 		this.userId = userId;
 		this.featureId = featureId;
 		this.featureName = featureName;
 		this.subFeature = subFeature;
+		this.featureTxnId = featureTxnId;
+		status = NotificationStatus.INIT.getCode();
 	}
 	
 	public Long getId() {
@@ -103,10 +111,47 @@ public class Notification  implements Serializable{
 	public void setSubFeature(String subFeature) {
 		this.subFeature = subFeature;
 	}
-	
-	
-	
-	
-	
+	public String getFeatureTxnId() {
+		return featureTxnId;
+	}
+	public void setFeatureTxnId(String featureTxnId) {
+		this.featureTxnId = featureTxnId;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Notification [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", channelType=");
+		builder.append(channelType);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureTxnId=");
+		builder.append(featureTxnId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

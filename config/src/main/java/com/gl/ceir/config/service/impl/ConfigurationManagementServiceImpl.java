@@ -234,10 +234,10 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 	
-	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature) {
+	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature, String featureTxnId) {
 		try {
 
-			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, subFeature));
+			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, subFeature, featureTxnId));
 
 			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
 		} catch (Exception e) {
