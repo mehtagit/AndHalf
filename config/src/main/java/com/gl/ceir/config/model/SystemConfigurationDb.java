@@ -26,9 +26,13 @@ public class SystemConfigurationDb implements Serializable {
 
 	@UpdateTimestamp
 	private Date modifiedOn;
+	
 	private String tag;
+	
 	private String value;
+	
 	private String description;
+	
 	public Long getId() {
 		return id;
 	}

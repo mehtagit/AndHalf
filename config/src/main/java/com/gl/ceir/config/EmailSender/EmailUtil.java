@@ -1,8 +1,8 @@
 package com.gl.ceir.config.EmailSender;
 
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailParseException;
@@ -12,10 +12,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Component
 public class EmailUtil {
-	//private Logger logger = (Logger) LogManager.getLogger(EmailUtil.class);
-	
+
+	private Logger logger = (Logger) LogManager.getLogger(EmailUtil.class);
+
 	@Autowired
 	MailSender mailSender; 
 
@@ -33,11 +37,11 @@ public class EmailUtil {
 		try {
 			mailSender.send(simpleMailMessage);
 		}catch (Exception e) {
-			//	logger.error(e);
-			return false;
+			logger.error(e.getMessage(), e);
+			return Boolean.FALSE;
 		}
 
-		return true;
+		return Boolean.TRUE;
 	}
 
 	public void sendEmailWithAttactment(String toAddress, String fromAddress, String subject, String msgBody, String attachment) {

@@ -2,13 +2,13 @@ package com.gl.ceir.config.model;
 
 import java.util.List;
 
-public class RequestCountAndQuantity {
-	private Integer userId;
+public class RequestCountAndQuantityWithLongUserId {
+	private long userId;
 	private List<Integer> status;
-	public Integer getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	public List<Integer> getStatus() {
@@ -17,4 +17,5 @@ public class RequestCountAndQuantity {
 	public void setStatus(List<Integer> status) {
 		this.status = status;
 	}
+	
 }

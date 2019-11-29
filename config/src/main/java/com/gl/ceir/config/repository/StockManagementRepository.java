@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.StockMgmt;
 
 public interface StockManagementRepository extends JpaRepository<StockMgmt, Long>, JpaSpecificationExecutor<StockMgmt> {
@@ -22,8 +22,8 @@ public interface StockManagementRepository extends JpaRepository<StockMgmt, Long
 
 	public void deleteByTxnId(String txnId);
 
-	@Query(value="select new com.gl.ceir.config.model.RequestCountAndQuantity(count(sm.id) as count, sum(sm.quantity) as quantity) from StockMgmt sm "
-			+ "where sm.userId =:userId and sm.stockStatus =:stockStatus")
-	public RequestCountAndQuantity getStockCountAndQuantity( @Param("userId") long userId, @Param("stockStatus") Integer stockStatus);
+	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(sm.id) as count, sum(sm.quantity) as quantity) from StockMgmt sm "
+			+ "where sm.userId =:userId and sm.stockStatus in(:stockStatus)")
+	public ResponseCountAndQuantity getStockCountAndQuantity( @Param("userId") long userId, @Param("stockStatus") List<Integer> stockStatus);
 	
 }

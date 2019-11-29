@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
@@ -18,6 +19,9 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.User;
@@ -102,14 +106,22 @@ public class StockServiceImpl {
 	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
+			if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
+				filterRequest.setUserType("Custom");
+			}
+			
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler();
 
-			if( !"Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || "Distributor".equalsIgnoreCase(filterRequest.getUserType())) {
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
+				
+				if(Objects.nonNull(filterRequest.getUserId()))
+					smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			} 
 
 			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 				smsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -119,9 +131,6 @@ public class StockServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getTxnId()))
 				smsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getUserId()))
-				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
 				smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -217,16 +226,17 @@ public class StockServiceImpl {
 		}
 	}
 
-	public RequestCountAndQuantity getStockCountAndQuantity( long userId, Integer stockStatus) {
+	public ResponseCountAndQuantity getStockCountAndQuantity( RequestCountAndQuantityWithLongUserId request ) {
 		try {
 			logger.info("Going to get  stock count and quantity.");
-			return stockManagementRepository.getStockCountAndQuantity(userId, stockStatus);
+			return stockManagementRepository.getStockCountAndQuantity(request.getUserId(), request.getStatus());
 		} catch (Exception e) {
-			// logger.error(e.getMessage(), e);
-			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-			
-			return new RequestCountAndQuantity(0,0);
+			//logger.error(e.getMessage(), e);
+			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			return new ResponseCountAndQuantity(0,0);
 		}
 
-	}	
+	}
+
+	
 }

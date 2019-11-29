@@ -14,7 +14,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 public class SystemConfigurationHistoryDb implements Serializable {
 
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,9 +25,23 @@ public class SystemConfigurationHistoryDb implements Serializable {
 
 	@UpdateTimestamp
 	private Date modifiedOn;
+	
 	private String tag;
+	
 	private String value;
+	
 	private String description;
+
+	public SystemConfigurationHistoryDb() {
+
+	}
+	
+	public SystemConfigurationHistoryDb(String tag, String value, String description) {
+		this.tag = tag;
+		this.value = value;
+		this.description = description;
+	}
+	
 	public Long getId() {
 		return id;
 	}

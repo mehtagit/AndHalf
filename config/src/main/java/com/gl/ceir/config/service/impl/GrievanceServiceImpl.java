@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,10 @@ import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsg;
+import com.gl.ceir.config.model.GrievanceMsgWithUser;
 import com.gl.ceir.config.model.GrievanceReply;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
@@ -75,12 +78,10 @@ public class GrievanceServiceImpl{
 			webActionDb.setFeature(WebActionDbFeature.GRIEVANCE.getName());
 			webActionDb.setState(GrievanceStatus.NEW.getCode());
 			webActionDb.setTxnId(grievance.getTxnId());
-			
 			grievance.setGrievanceStatus( GrievanceStatus.NEW.getCode() );
 			grievanceRepository.save(grievance);
 			webActionDbRepository.save(webActionDb);
-			
-			return new GrievanceGenricResponse(0, "Grievance registered successfuly", grievance.getGrievanceId());
+			return new GrievanceGenricResponse(0,"Grievance registered successfuly",grievance.getGrievanceId());
 
 		}catch (Exception e) {
 			logger.error("Grievance Registration failed="+e.getMessage());
@@ -157,25 +158,20 @@ public class GrievanceServiceImpl{
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "grievanceId"));
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
-			
 			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
 				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
-			
 			if(Objects.nonNull(grievance.getStartDate()))
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 			if(Objects.nonNull(grievance.getEndDate()))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			
 			if(Objects.nonNull(grievance.getGrievanceStatus()) && grievance.getGrievanceStatus() != -1)
 				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
 			else
 				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
-			
 			if(Objects.nonNull(grievance.getGrievanceId()))
 				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-			
 			return grievanceRepository.findAll(gsb.build(), pageable);
 
 		} catch (Exception e) {
@@ -221,7 +217,7 @@ public class GrievanceServiceImpl{
 				
 				csvWriter.write(grievances);
 			}
-			return new FileDetails( fileName, filePath ); 
+			return new FileDetails( fileName, filePath, fileStorageProperties.getGrievanceDownloadLink()+fileName ); 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -293,18 +289,48 @@ public class GrievanceServiceImpl{
 		}
 	}
 	
-	public List<GrievanceMsg> getAllGrievanceMessagesByGrievanceId( String grievanceId, Integer recordLimit ){
+	public List<GrievanceMsgWithUser> getAllGrievanceMessagesByGrievanceId( String grievanceId, Integer recordLimit, Integer userId ){
+		List<GrievanceMsg> messages = null;
+		List<GrievanceMsgWithUser> messagesWithUser = null;
 		try {
 			logger.info("Going to get All grievance Messages List ");
 			if( recordLimit == -1) {
-				return grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
+				messages = grievanceMsgRepository.getGrievanceMsgByGrievanceId(grievanceId );
 			}else {
-				return grievanceMsgRepository.getGrievanceMsgByGrievanceIdOrderByIdDesc(grievanceId, new PageRequest(0, recordLimit) );
+				messages =  grievanceMsgRepository.getGrievanceMsgByGrievanceIdOrderByIdDesc(grievanceId, new PageRequest(0, recordLimit) );
+			}
+			messagesWithUser = new ArrayList<GrievanceMsgWithUser>();
+			if( messages.size() > 0 ) {
+				GrievanceMsgWithUser msgWithUser = null;
+				for( GrievanceMsg msg : messages ) {
+					msgWithUser = new GrievanceMsgWithUser();
+					msgWithUser.setId(msg.getId());
+					msgWithUser.setGrievance( msg.getGrievance());
+					msgWithUser.setGrievanceId(msg.getGrievanceId());
+					msgWithUser.setCreatedOn(msg.getCreatedOn());
+					msgWithUser.setModifiedOn(msg.getModifiedOn());
+					msgWithUser.setFileName(msg.getFileName());
+					msgWithUser.setReply(msg.getReply());
+					msgWithUser.setUserId(msg.getUserId());
+					msgWithUser.setUserType(msg.getUserType());
+					if( messages.get(0).getGrievance().getUserId() == userId ) {
+						if( msg.getUserId() == userId )
+							msgWithUser.setUserDisplayName("You");
+						else
+							msgWithUser.setUserDisplayName("Admin");
+					}else {
+						if( msg.getUserId() == userId )
+							msgWithUser.setUserDisplayName("You");
+						else
+							msgWithUser.setUserDisplayName("User");
+					}
+				}
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+		return messagesWithUser;
 	}
 	
 	public Page<GrievanceHistory> getFilterPaginationGrievanceHistory(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
@@ -330,15 +356,15 @@ public class GrievanceServiceImpl{
 
 	}
 	
-	public RequestCountAndQuantity getGrievanceCount( Integer userId, Integer grievanceStatus) {
+	public ResponseCountAndQuantity getGrievanceCount( RequestCountAndQuantity request ) {
+		ResponseCountAndQuantity cq = null;
 		try {
 			logger.info("Going to get Grievance count.");
-			return grievanceRepository.getGrievanceCount(userId, grievanceStatus);
+			return grievanceRepository.getGrievanceCount( request.getUserId(), request.getStatus());
 		} catch (Exception e) {
-			// logger.error(e.getMessage(), e);
-			// throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-			
-			return new RequestCountAndQuantity(0,0);
+			//logger.error(e.getMessage(), e);
+			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			return new ResponseCountAndQuantity(0,0);
 		}
 	}
 

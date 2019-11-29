@@ -12,9 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity 
 public class UserProfile {
+	
 	private static long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;     
@@ -23,7 +26,7 @@ public class UserProfile {
 	private String lastName;
 	private String companyName;
 	private String type;
-	private Integer vatStatus;
+	private Integer vatStatus;  
 	private String vatNo;
 	private String propertyLocation;
 	private String street;
@@ -45,49 +48,18 @@ public class UserProfile {
     private String authorityName;
     private String authorityEmail;
     private String authorityPhoneNo;
-    private String operatorType;
-
-	/*@Transient
-	private String username;
-	@Transient
-	private List<QuestionPair> questionList ; 
-	@Transient 
-	private Integer[] roles;
-	@Transient
-	private Integer usertypeId;
-	@Transient
-	private String password;    */
- 
+	private String operatorTypeName;
+    private Integer operatorTypeId;
+    
+    private String nidFilename;
+    private String photoFilename;
+    private String idCardFilename;
+    
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user; 
 	
-/*
-	public Integer[] getRoles() {
-		return roles;
-	}
-	public void setRoles(Integer[] roles) {
-		this.roles = roles;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	public Integer getUsertypeId() {
-		return usertypeId;
-	}
-	public void setUsertypeId(Integer usertypeId) {
-		this.usertypeId = usertypeId;
-	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}*/
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
@@ -256,12 +228,6 @@ public class UserProfile {
 	public void setAuthorityPhoneNo(String authorityPhoneNo) {
 		this.authorityPhoneNo = authorityPhoneNo;
 	}
-	public String getOperatorType() {
-		return operatorType;
-	}
-	public void setOperatorType(String operatorType) {
-		this.operatorType = operatorType;
-	}
 	public User getUser() {
 		return user;
 	}
@@ -270,6 +236,37 @@ public class UserProfile {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getOperatorTypeName() {
+		return operatorTypeName;
+	}
+	public void setOperatorTypeName(String operatorTypeName) {
+		this.operatorTypeName = operatorTypeName;
+	}
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
+	public String getNidFilename() {
+		return nidFilename;
+	}
+	public void setNidFilename(String nidFilename) {
+		this.nidFilename = nidFilename;
+	}
+	public String getPhotoFilename() {
+		return photoFilename;
+	}
+	public void setPhotoFilename(String photoFilename) {
+		this.photoFilename = photoFilename;
+	}
+	public String getIdCardFilename() {
+		return idCardFilename;
+	}
+	public void setIdCardFilename(String idCardFilename) {
+		this.idCardFilename = idCardFilename;
 	}
 	@Override
 	public String toString() {
@@ -328,8 +325,6 @@ public class UserProfile {
 		builder.append(authorityEmail);
 		builder.append(", authorityPhoneNo=");
 		builder.append(authorityPhoneNo);
-		builder.append(", operatorType=");
-		builder.append(operatorType);
 		builder.append(", user=");
 		builder.append(user);
 		builder.append("]");

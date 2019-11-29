@@ -17,6 +17,9 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
+import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
+import com.gl.ceir.config.model.ResponseCountAndQuantity;
+
 import com.gl.ceir.config.model.StackholderPolicyMapping;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.service.impl.DeviceSnapShotServiceImpl;
@@ -50,13 +53,10 @@ public class StolenAndRecoveryController {
 
 		logger.info("Upload Recovery Details="+stolenandRecoveryRequest);
 
-
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadDetails(stolenandRecoveryRequest);
-
 		logger.info("Upload recovery details response="+genricResponse);
 
 		return genricResponse;
-
 	}
 
 
@@ -68,7 +68,6 @@ public class StolenAndRecoveryController {
 
 		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
 		mapping.setListType("BlackList");
-
 
 		if(stolenandRecoveryDetails.getBlockingType() == null || stolenandRecoveryDetails.getBlockingType().equalsIgnoreCase("Default") ||
 				stolenandRecoveryDetails.getBlockingType() == "") {
@@ -119,10 +118,9 @@ public class StolenAndRecoveryController {
 		logger.info("Multiple Stolen Upload Request="+stolenandRecoveryDetails);
 
 		GenricResponse genricResponse =	stolenAndRecoveryServiceImpl.uploadMultipleStolen(stolenandRecoveryDetails);
-
 		logger.info("Muliple Stolen Upload Response ="+genricResponse);
+		
 		return genricResponse;
-
 	}
 
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
@@ -131,12 +129,10 @@ public class StolenAndRecoveryController {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
 
-		logger.info("Record request to Stolen And Recovery Info="+stolenandRecoveryDetails);
+		logger.info("Record request to Stolen And Recovery Info=" +  stolenandRecoveryDetails);
 
 		Page<StolenandRecoveryMgmt>	stolenandRecoveryDetailsResponse = stolenAndRecoveryServiceImpl.getAllInfo(stolenandRecoveryDetails,pageNo,pageSize);
-
 		MappingJacksonValue mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
-
 		logger.info("Record Response of Stolen And Recovery Info="+mapping);
 
 		return mapping;
@@ -147,14 +143,11 @@ public class StolenAndRecoveryController {
 	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
 		logger.info("Record Delete request ="+stolenandRecoveryRequest);
-
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
 
 		logger.info("Response send ="+genricResponse);
 
 		return genricResponse;
-
-
 	}
 
 	@ApiOperation(value = "Update Stolen and  Recovery Details.", response = GenricResponse.class)
@@ -196,10 +189,10 @@ public class StolenAndRecoveryController {
 
 	}
 
-	@ApiOperation(value = "Get total count.", response = RequestCountAndQuantity.class)
-	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.GET)
-	public MappingJacksonValue getStolenAndRecoveryCount(long userId, Integer fileStatus, String requestType) {
-		RequestCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount(userId, fileStatus, requestType);
+	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
+	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.POST)
+	public MappingJacksonValue getStolenAndRecoveryCount( @RequestBody RequestCountAndQuantityWithLongUserId request, @RequestParam(value = "requestType") String requestType) {
+		ResponseCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount( request, requestType);
 		return new MappingJacksonValue(response);
 	}
 
