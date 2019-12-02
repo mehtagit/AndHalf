@@ -1,4 +1,4 @@
-
+var featureId = 8;
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 $(document).ready(function(){
 	$('.datepicker').datepicker();
@@ -13,20 +13,25 @@ var taxStatus=$('#taxPaidStatus').val();
 var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
 
-var filterRequest={
 
-		"endDate":startdate,
-		"startDate":endDate,
-		"taxPaidStatus":taxStatus,
-		"userId":userId,
-};
 
 
 
 //**************************************************Grievance table**********************************************
 
 function grievanceDataTable(){
+	var filterRequest={
 
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"recentStatus":parseInt($('#recentStatus').val()),
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"txnId":$('#transactionID').val(),
+			"grievanceID":$('#grievanceID').val(),
+			"userType":$("body").attr("data-roleType")
+	}
 	$.ajax({
 		url: 'headers?type=grievanceHeaders',
 		type: 'POST',
@@ -115,7 +120,7 @@ function pageRendering(){
 					"</div>");
 			}
 
-			$("#greivanceTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+			$("#greivanceTableDiv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' id='submitFilter' value='filter'></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -257,8 +262,8 @@ function saveGrievance(){
 
 function grievanceReply(userId,grievanceId,txnId)
 {
-	
-	
+
+
 	$.ajax({
 		url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
 		type: 'GET',
@@ -273,15 +278,15 @@ function grievanceReply(userId,grievanceId,txnId)
 			var usertype = $("body").attr("data-roleType");
 			console.log("usertype=="+usertype);
 			if(usertype=='CEIRAdmin')
-				{
+			{
 				$("#closeTicketCheckbox").css("display","block");
 				console.log("block");
-				}
+			}
 			else{
 				$("#closeTicketCheckbox").css("display","none");	
 				console.log("none");
 			}
-			
+
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -296,7 +301,7 @@ function saveGrievanceReply()
 	if ($('#closeTicketCheck').is(":checked"))
 	{
 		grievanceTicketStatus=1;
-		
+
 	}
 	else{
 		grievanceTicketStatus=2;
@@ -362,10 +367,10 @@ function viewGrievanceHistory(grievanceId)
 			$('#manageAccount').openModal();
 			for(var i=0; i<data.length; ++i)
 			{
-				
+
 				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userId+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
-				
-				
+
+
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {

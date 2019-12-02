@@ -163,7 +163,7 @@ public class GrievanceDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"HeaderButton","Report Grievance","./openGrievanceForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
+			String[] names= {"HeaderButton","Report Grievance","./openGrievanceForm?reqType=formPage","btnLink","FilterButton", "filter","grievanceDataTable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

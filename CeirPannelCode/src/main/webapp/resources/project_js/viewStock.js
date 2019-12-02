@@ -1,9 +1,9 @@
 $(document).ready(function(){
 	$('.datepicker').datepicker();
-	tableHeader();
+	filter();
 	pageRendering()
 });
-
+/*$('li .active a').attr("data-featureid")*/
 $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
 });
@@ -222,7 +222,7 @@ var sourceType =localStorage.getItem("sourceType");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 //alert("sourceType<><><><>"+sourceType);
 //alert("currentRoleType<><><><>"+currentRoleType);
-function tableHeader(){
+function filter(){
 	if(currentRoleType=="Importer"  && sourceType !="viaStock"  ){
 		Datatable('headers','stockData')
 	}else if(currentRoleType==="Distributor"  && sourceType ==="viaStock"){
@@ -244,27 +244,28 @@ function tableHeader(){
 var role = currentRoleType == null ? roleType : currentRoleType;
 var featureId="4";
 var usertypeId=7;
-var jsonObj = {
-		"consignmentStatus": null,
-		"endDate":$('#endDate').val(),
-		"startDate":$('#startDate').val(),
-		"roleType": role,
-		"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
-		"userId": userId,
-		"userType" : role,
-		"featureId":featureId,
-		"usertTypeId":usertypeId,
-		"txnId":$('#transactionID').val(),
-};
+
 
 
 function Datatable(url,dataUrl) {
+	var jsonObj = {
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"roleType": role,
+			"userId": userId,
+			"userType" : role,
+			"featureId":featureId,
+			"usertTypeId":usertypeId,
+			"txnId":$('#transactionID').val(),
+			"stockStatus":parseInt($('#StockStatus').val())
+	}
 	$.ajax({
 		url: url,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
 			var table=	$("#stockTable").DataTable({
+				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
 				"ordering": false,
@@ -321,7 +322,7 @@ function pageButtons(url){
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				} 
 				else if(date[i].type === "text"){
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
 
 				}
 			}
@@ -361,7 +362,7 @@ function pageButtons(url){
 				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
-					$('#'+button[i].id).attr("href", button[i].buttonURL);
+					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 				}
 			}
 

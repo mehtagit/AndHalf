@@ -34,6 +34,10 @@
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+	<script>
+var contextpath = "${context}";
+<%String usertype=(String)session.getAttribute("usertype");%>
+</script>
 </head>
 
 <body>
@@ -56,9 +60,15 @@
 					<ul class="left">
 						<li>
 							<h1 class="logo-wrapper">
-									<a href="index.html" class="brand-logo darken-1" >CEIR -
-									<span id="cierRoletype"><%=(String)session.getAttribute("usertype")%></span> Portal</a> <span class="logo-text">Materialize</span>
-								
+							
+								<a href="#" class="brand-logo darken-1">CEIR -
+									<%=usertype%> Portal 
+									<span id="cierRoletype"><%=(String)session.getAttribute("usertype")%></span> 
+									<%if("Operator".equalsIgnoreCase(usertype)){%>
+									-	<%=session.getAttribute("operatorTypeName") %>
+									<%}else{}%>   
+										
+									</a> <span class="logo-text">Materialize</span>
 							</h1> 
 						</li>
 					</ul>
@@ -70,7 +80,7 @@
 								class="mdi-action-account-circle"
 								style="color: #fff; font-size: 40px;"></i></a>
 							<ul id="profile-dropdown" class="dropdown-content">
-								<li><a href="${context}/editProfile" target="mainArea"><i
+								<li><a href="${context}/editProfile"  target="mainArea"><i
 										class="fa fa-pencil dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor">Edit Info</span></a></li>
 								<li class="divider"></li>
@@ -114,7 +124,9 @@
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 20px; margin-top: 2px;">
-									welcome <%=(String)session.getAttribute("name") %></p>
+									welcome <%=(String)session.getAttribute("name") %>
+									(<%=(String)session.getAttribute("username")%>) 
+									</p>
 							</div>
 
 						</div>
@@ -136,7 +148,7 @@
 					
 					
 					<li>
-					<ul>
+					<ul class="navData">
 					<c:forEach items="${features}"  var="feature">
 							<li class="bold"><a href="${feature.link}" target="mainArea"
 								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
@@ -221,36 +233,49 @@
 
 			</div>
 		</div>
-	</footer>
+	</footer> 	
 
 	<!-- END FOOTER -->
 	<div id="manageAccount" class="modal">
 		<div class="modal-content">
+		<form id="userStatusForm"  onsubmit="return updateUSerStatus()">
 			<h6>Manage Account</h6>
-			<hr>
+			 <span style="text-align: center;color: red;" id="errorMsg"></span> 
+			<hr> 
+			 
 			<p>Request CEIR ADMIN to</p>
 			<div class="row" style="height: 30px;">
+			
 				<p>
-					<label style="margin-right: 50px"> <input type="radio"
-						onclick="document.getElementById('calender').style.display = 'none';"
-						name="stolen"><span> Deactivate</span></label>Permanently delete
+					<label style="margin-right: 50px"> <input  type="radio"
+						name="status" value="Deactivate" required="required" ><span> Deactivate</span></label>Permanently delete
 					the account, you will not login into the portal.
-				</p>
+				</p>                        
 			</div>
+			<%String status=(String)session.getAttribute("userStatus");%>
+			<%if(status.equalsIgnoreCase("Approved")){ %>
 			<div class="row" style="height: 30px;">
-				<p>
-					<label style="margin-right: 67px"> <input type="radio"
-						onclick="document.getElementById('calender').style.display = 'block';"
-						name="stolen"><span> Disable</span></label>All the action will be
+				<p>                
+					<label style="margin-right: 67px"> <input type="radio" value="Disable"
+						name="status" required="required"><span> Disable</span></label>All the action will be
 					disabled, only view option will be available
+				</p> 
+			</div>
+			<%} else if(status.equalsIgnoreCase("Disable")){ %>
+                    <div class="row" style="height: 30px;">
+				<p>            
+					<label style="margin-right: 67px"> <input type="radio" value="Approved"
+						name="status" required="required"><span> Enable</span></label>All the action will be
+					Enable 
 				</p>
 			</div>
 
+<%} else {} %>
 			<div class="input-field col s12 center">
-				<button class="btn modal-trigger modal-close"
-					data-target="manageAccountSubmit">Submit</button>
-				<a href="consignment.html" class="btn" style="margin-left: 10px;">Cancel</a>
+				<button class="btn" id="updateStatusBtn">Submit</button>
+				<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
 			</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -262,13 +287,13 @@
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<div class="modal-content">
-			<h6>The request has been successfully registered with CEIR
+			<h6><!-- The request has been successfully registered with CEIR
 				Admin. Please find confirmation over registered mail in 2 to 3
-				working days.</h6>
+				working days. --></h6>
 
-
+ 
 			<div class="input-field col s12 center">
-				<button class="btn modal-close">ok</button>
+				<a href="${context}/logout" class="btn modal-close">ok</a>
 			</div>
 		</div>
 	</div>
@@ -278,15 +303,21 @@
 
 	<div id="changePassword" class="modal" style="width: 40%;">
 		<div class="modal-content">
+		<form onsubmit="return changePassword()">
 			<div class="row">
+			 
 				<h5 style="text-align: -webkit-center;">Change Password</h5>
-
+<span style="text-align: center;color: red;" id="errorMsg"></span>   
 				<div class="col s1">
 					<i class="fa fa-lock" aria-hidden="true"
 						style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
 				</div>
 				<div class="input-field col s11">
-					<input type="text" id="oldPassword" class="validate" maxlength="10" />
+					<input type="password" id="oldPassword" class="validate" 
+						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+									required="required"
+					 />
 					<label for="oldPassword" class="center-align"
 						style="color: #000; font-size: 12px;"> Old Password </label>
 					<div class="password"></div>
@@ -302,8 +333,12 @@
 				<div class="input-field col s11">
 
 					<label for="newPassword" style="color: #000; font-size: 12px;">New
-						Password</label> <input type="text" id="newPassword" class=""
-						maxlength="10" />
+						Password</label> <input type="password"
+								pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+									required="required"
+						 id="password" class=""
+					 />
 				</div>
 
 				<div class="col s1">
@@ -312,18 +347,22 @@
 				</div>
 				<div class="input-field col s11">
 
-					<label for="confirmPassword" style="color: #000; font-size: 12px;">Confirm
-						Password</label> <input type="text" class="" id="confirmPassword"
-						maxlength="10" />
+					<label for="confirm_password" style="color: #000; font-size: 12px;">Confirm
+						Password</label> <input type="password" class="" id="confirm_password"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+									required="required"
+						 />
 				</div>
 			</div>
 			<div class="row" style="margin-top: 30px;">
 				<div class="input-field col s12 m12 l12 center">
-					<a href="#changePasswordMessage"
-						class="btn modal-trigger modal-close" type="button" id="save"
-						style="width: 100%;">Save</a>
+					<button 
+						class="btn" type="submit" id="changePassBtn"
+						style="width: 100%;">Save</button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 
@@ -388,12 +427,12 @@
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Your Password has been changed</h6>
+				<h6></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="#" class="btn modal-close">ok</a>
+						<a href="" class="btn">ok</a>
 					</div>
 				</div>
 			</div>
@@ -407,10 +446,12 @@
     ================================================ -->
 
 
-
 	<!-- jQuery Library -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -427,17 +468,30 @@
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
+<script type="text/javascript">
+var password = document.getElementById("password")
+, confirm_password = document.getElementById("confirm_password");
 
-
-		
- <script type="text/javascript">
-	    
-   console.log($("#cierRoletype").text());
-   var cierRoletype = $("#cierRoletype").text()
-   sessionStorage.setItem("cierRoletype", cierRoletype);
-	     
- </script>
+function validatePassword(){
+if(password.value != confirm_password.value) {
+  confirm_password.setCustomValidity("Passwords Don't Match");
+} else {
+  confirm_password.setCustomValidity('');
+}
+}   
+password.onchange = validatePassword;
+confirm_password.onkeyup = validatePassword;
+console.log($("#cierRoletype").text());
+var cierRoletype = $("#cierRoletype").text()
+sessionStorage.setItem("cierRoletype", cierRoletype);
+$('.navData li').on('click', function() {
+$('.navData li:not(.inactive)').addClass("inactive");
+$('.navData li').removeClass("active");
+$(this).removeClass("inactive");
+$(this).addClass("active"); 
+});
+</script>
 
 </body>
 
-</html>
+</html> 	

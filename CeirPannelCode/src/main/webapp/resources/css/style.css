@@ -622,11 +622,11 @@ ul.side-nav.leftside-navigation li {
 }
 
 ul.side-nav.leftside-navigation li:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0, 0, 0, 0.09);
 }
 
 ul.side-nav.leftside-navigation li.active {
-  background-color: rgba(0, 0, 0, 0.04);
+  background-color: rgba(0, 0, 0, 0.09);
 }
 
 ul.side-nav.leftside-navigation li a {

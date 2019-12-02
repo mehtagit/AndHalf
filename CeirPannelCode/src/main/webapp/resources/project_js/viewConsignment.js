@@ -496,9 +496,7 @@ function pageButtons(url){
 					}
 				}
 
-			}	
-
-
+			}
 			sourceType=="viaStolen"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 			if(cierRoletype=="CEIRAdmin"){ 
 				$("#btnLink").css({display: "none"}); 
