@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
@@ -34,6 +35,8 @@ public class GrievanceController {
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 	
 	GrievanceModel grievance= new GrievanceModel();
 	GenricResponse response = new GenricResponse();
@@ -99,7 +102,7 @@ public class GrievanceController {
 		grievance.setGrievanceId(grevnceId);
 		
 		log.info("grievance form parameters passed to save grievance api "+grievance);
-		response = feignCleintImplementation.saveGrievance(grievance);
+		response = grievanceFeignClient.saveGrievance(grievance);
 		response.setTxnId(grevnceId);
 		
 		log.info("response from register consignment api"+response);
@@ -132,7 +135,7 @@ public class GrievanceController {
 			int userId= (int) session.getAttribute("userid");
 			List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
 			log.info("Request pass to the view grievance api ="+grievanceId+"  userId= "+userId);
-			grievanceModel=feignCleintImplementation.viewGrievance(grievanceId, userId,recordLimit);
+			grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
 			log.info("Response from  view grievance api = "+grievanceModel);
 			return grievanceModel;
 	}
@@ -163,7 +166,7 @@ public class GrievanceController {
 				grievanceModel.setGrievanceStatus(grievanceTicketStatus);
 				
 				log.info("request passed to the save grievance method="+grievanceModel);
-				response= feignCleintImplementation.saveGrievanceMessage(grievanceModel);
+				response= grievanceFeignClient.saveGrievanceMessage(grievanceModel);
 				log.info("response  from   save grievance method="+response);	
 				return response;
 			}

@@ -1,6 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.DashboardFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.RequestCountAndQuantity;
 import org.gl.ceir.CeirPannelCode.Service.LoginService;
@@ -16,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class Dashboard {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
-
 	FeignCleintImplementation feignCleintImplementation;
+	
+	@Autowired
+	DashboardFeignClient dashBoardclient;
 	
 	@Autowired
 	LoginService loginService;
@@ -38,17 +41,18 @@ public class Dashboard {
 	log.info(" home  page entry point");
 	int userId= (int) session.getAttribute("userid");
 	String roletype=(String) session.getAttribute("usertype");
+	int roletypeId=(Integer) session.getAttribute("usertypeId");
 	int consignmentStatus=1;
 	int stockStatus=1;
 	int fileStatus=0;
 	String requestType="stolen";
 	int grievanceStatus=0;
-	log.info("request send to the  count api."+consignmentStatus);
+	log.info("request send to the  count api."+consignmentStatus+"  roletypeId========="+roletypeId);
 	
-	consignmentNoticationDetails=feignCleintImplementation.consignmentNotification(userId, consignmentStatus);
-	stockDetails=feignCleintImplementation.stockNotification(userId, stockStatus);
-	stolenRecoveryDetails=feignCleintImplementation.stolenRecoveryNotification(userId, requestType, fileStatus);
-	grievanceDetails=feignCleintImplementation.grievanceNotification(userId, grievanceStatus);
+	consignmentNoticationDetails=dashBoardclient.consignmentNotification(userId, consignmentStatus,roletypeId);
+	stockDetails=dashBoardclient.stockNotification(userId, stockStatus,roletypeId);
+	stolenRecoveryDetails=dashBoardclient.stolenRecoveryNotification(userId, requestType, fileStatus,roletypeId);
+	grievanceDetails=dashBoardclient.grievanceNotification(userId, grievanceStatus,roletypeId);
 	
 	log.info("consignmentNoticationDetails="+consignmentNoticationDetails+"     stockDetails=="+stockDetails+"   stolenRecoveryDetails "+stolenRecoveryDetails+
 			"  grievanceDetails=="+grievanceDetails);

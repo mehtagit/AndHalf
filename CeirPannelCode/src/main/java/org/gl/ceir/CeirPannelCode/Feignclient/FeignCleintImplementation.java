@@ -180,61 +180,12 @@ public interface FeignCleintImplementation {
 
 
 
-	//****************************************************************grievance api starts from here ***************************************************************************************************		
-	//View filter grievance  feign  controller
-	@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
-	public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
-
-
-	// ******************************************** save 	grievance api ********************************************************************************
-	@RequestMapping(value="/grievance/save" ,method=RequestMethod.POST) 
-	public GenricResponse saveGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
-
-
-
-	// ******************************************** view 	grievance api ********************************************************************************
-	@RequestMapping(value="/grievance/msg" ,method=RequestMethod.GET) 
-	public List<GrievanceModel> viewGrievance(@RequestParam("grievanceId") String  grievanceId,@RequestParam("userId") Integer userId,@RequestParam("recordLimit") Integer recordLimit) ;
-
-	// ******************************************** save 	grievance api ********************************************************************************
-	@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 
-	public GenricResponse saveGrievanceMessage(@RequestBody GrievanceModel greGrievanceModel) ;
-
-
 	
 	
 	
 	
 	
-	
-	
-//********************************************* Notification fiegn implementation ************************************************************************
-
-
-
-
-		//countAndQuantity  feign  controller
-		@RequestMapping(value="/consignment/countAndQuantity" ,method=RequestMethod.GET) 
-		public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "consignmentStatus") Integer consignmentStatus) ;
-
-		//stock/countAndQuantity  feign  controller
-		@RequestMapping(value="/stock/countAndQuantity" ,method=RequestMethod.GET) 
-		public RequestCountAndQuantity stockNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "stockStatus") Integer stockStatus) ;
-
-		//stock/countAndQuantity  feign  controller
-		@RequestMapping(value="/stakeholder/count" ,method=RequestMethod.GET) 
-		public RequestCountAndQuantity stolenRecoveryNotification(@RequestParam(value = "userId") Integer userId,
-				@RequestParam(value = "requestType") String requestType,@RequestParam(value = "fileStatus") Integer fileStatus);
-
-
-		//stock/countAndQuantity  feign  controller
-		@RequestMapping(value="/grievance/count" ,method=RequestMethod.GET) 
-		public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "grievanceStatus") Integer grievanceStatus);
-
-		
-		//Dashboard/Datatable Feign
+	//Dashboard/Datatable Feign
 		@RequestMapping(value="/history/Notification" ,method=RequestMethod.GET) 
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -46,6 +47,8 @@ public class GrievanceDatatableController {
 	IconsState iconState;
 	@Autowired
 	GrievancePaginationModel grievancepaginationmodel;
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 	
 	
 	@PostMapping("grievanceData")
@@ -65,7 +68,7 @@ public class GrievanceDatatableController {
 		log.info("filterrequest::::::::::::"+filterrequest);
 		try {
 			log.info("request parameters send to view grievance api="+filterrequest);
-			Object response = feignCleintImplementation.grievanceFilter(filterrequest,pageNo,pageSize);
+			Object response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize);
 			log.info("response::::::::::::::"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -111,7 +114,7 @@ public class GrievanceDatatableController {
 				}
 					
 				}else if("CEIRAdmin".equals(userType)) {
-					log.info("<><><><> in Custom Controller");
+					log.info("<><><><> in CEIRAdmin Controller");
 					for(GrievanceContentModel dataInsideList : paginationContentList) 
 					{
 					   String createdOn = dataInsideList.getCreatedOn();

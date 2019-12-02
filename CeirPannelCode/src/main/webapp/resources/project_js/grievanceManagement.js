@@ -272,6 +272,13 @@ function grievanceReply(userId,grievanceId,txnId)
 			$('#grievanceTxnId').text(txnId);
 			var usertype = $("body").attr("data-roleType");
 			console.log("usertype=="+usertype);
+			for(var i=0; i<data.length; ++i)
+			{
+				
+				$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+				
+				
+			}
 			if(usertype=='CEIRAdmin')
 				{
 				$("#closeTicketCheckbox").css("display","block");
@@ -295,11 +302,11 @@ function saveGrievanceReply()
 	var grievanceTicketStatus;
 	if ($('#closeTicketCheck').is(":checked"))
 	{
-		grievanceTicketStatus=1;
+		grievanceTicketStatus=3;
 		
 	}
 	else{
-		grievanceTicketStatus=2;
+		grievanceTicketStatus=0;
 	}
 	var remark=$('#replyRemark').val();
 	var replyFile=$('#replyFile').val();
@@ -363,7 +370,7 @@ function viewGrievanceHistory(grievanceId)
 			for(var i=0; i<data.length; ++i)
 			{
 				
-				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userId+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
+				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
 				
 				
 			}
