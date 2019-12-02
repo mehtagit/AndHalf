@@ -605,21 +605,34 @@ public String adminStockState(String fileName,String txnId ,String status,String
 	String emptyURL="JavaScript:void(0);"; 
 	String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 	String viewAction="viewConsignmentDetails('"+txnId+"')"; 
+	String approveAction = null;
+	String rejectAction = null;
 	String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
 
 
 	// state related Code 
 
 	String download="<a href="+downloadURL+" download=\"download\"><i class="
-					+downloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+			+downloadIcon+" aria-hidden=\"true\"  title="
+			+downloadIconTitle+" download=\"download\"></i></a>"; 
+			
 	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-							+viewIconTitle+" ></i></a>";
-	
+					+viewIconTitle+" ></i></a>";				
+
+
+	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";   
+
+
+	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+
+
+
+
 	String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
-									+deletionIcon+" aria-hidden=\"true\"  title="
-									+deleteIconTitle+"></i></a>"; 
-	
+							+deletionIcon+" aria-hidden=\"true\"  title="
+							+deleteIconTitle+"></i></a>"; 			
 
 	
 		
@@ -651,7 +664,7 @@ public String adminStockState(String fileName,String txnId ,String status,String
 											+deleteIconTitle+"></i></a>"; 			
 	  }
 	  
-	  String action=download.concat(view).concat(delete);		  
+	  String action=download.concat(view).concat(approve).concat(reject).concat(delete);		  
 	return action;
 	 
 }

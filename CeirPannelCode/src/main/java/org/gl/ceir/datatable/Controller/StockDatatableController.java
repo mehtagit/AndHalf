@@ -147,6 +147,23 @@ public class StockDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
+				}else if("Retailer".equals(userType)) {
+					log.info("<><><><>userType in retailer<><><>" +userType);
+					for(StockContent dataInsideList : paginationContentList) 
+					{
+						String date= dataInsideList.getCreatedOn(); 
+						String txnId= dataInsideList.getTxnId(); 
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatusName=dataInsideList.getTaxInterp();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						String[] finalData={date,txnId,file,stockStatusName,action}; 
+						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
 				}
 
 			}
