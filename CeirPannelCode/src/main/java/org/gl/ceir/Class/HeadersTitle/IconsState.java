@@ -362,7 +362,10 @@ public String customState(String fileName,String txnId ,String status,String use
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = "openApprovePopUp('" + txnId + "','"+(displayName)+ "')";
+String shh="xuz impoters";
+
+String approveAction = "openApprovePopUp('" + txnId + "','"+shh+"')";
+
 		/* String escapedString = queryParser.escape(approveAction); */
 String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName+"')";
 
@@ -374,11 +377,11 @@ String download="<a href="+downloadURL+" download=\"download\"><i class="
 
 String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 		+viewIconTitle+" ></i></a>";
+	
+String approve = "<a onclick='"+approveAction+"'><i class="+approveIcon+" aria-hidden=\"true\" title="
+		+approveIconTitle+" ></i></a>";   	
 
-String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
-		+approveIconTitle+" ></i></a>";   
-
-
+log.info("***************************&&&&&&&&&&***********"+approve);
 String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 

@@ -65,10 +65,11 @@ public class GrievanceDatatableController {
 				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+				Integer file=0;
 		log.info("filterrequest::::::::::::"+filterrequest);
 		try {
 			log.info("request parameters send to view grievance api="+filterrequest);
-			Object response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize);
+			Object response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
 			log.info("response::::::::::::::"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);

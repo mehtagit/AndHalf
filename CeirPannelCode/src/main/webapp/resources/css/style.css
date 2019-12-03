@@ -2534,3 +2534,11 @@ input[type='search'] {
       background-repeat: no-repeat !important;
       color: #444 !important;
     }
+    
+    
+    .modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: -25px -24px 1rem -24px;
+}

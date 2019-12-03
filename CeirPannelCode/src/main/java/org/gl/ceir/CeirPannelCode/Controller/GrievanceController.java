@@ -6,11 +6,14 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
@@ -170,5 +173,33 @@ public class GrievanceController {
 				log.info("response  from   save grievance method="+response);	
 				return response;
 			}
+
+				//***************************************** Export Grievance controller *********************************
+						@RequestMapping(value="/exportGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+						public String exportToExcel(@RequestParam(name="grievanceStartDate",required = false) String grievanceStartDate,@RequestParam(name="grievanceEndDate",required = false) String grievanceEndDate,
+								@RequestParam(name="grievancetxnId",required = false) String grievancetxnId,@RequestParam(name="grievanceId") String grievanceId,HttpServletRequest request,
+								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo)
+						{
+						
+
+							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
+							int userId= (int) session.getAttribute("userid"); 
+							int file=1;
+							FileExportResponse fileExportResponse;
+							FilterRequest filterRequest= new FilterRequest();
+							filterRequest.setStartDate(grievanceStartDate);
+							filterRequest.setEndDate(grievanceEndDate);
+							filterRequest.setTxnId(grievancetxnId);
+							filterRequest.setGrievanceStatus(0);
+							filterRequest.setGrievanceId(grievanceId);
+							filterRequest.setUserId(userId);
+							
+							
+							log.info("filterRequest=="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
+							fileExportResponse=(FileExportResponse) grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
+							log.info("response  from   export grievance  method="+fileExportResponse);	
+							
+							return "redirect:fileExportResponse.getUrl()";
+					}
 }
 

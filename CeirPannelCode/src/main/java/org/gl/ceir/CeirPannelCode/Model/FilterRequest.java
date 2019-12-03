@@ -1,7 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
-	public String  startDate,endDate,roleType,userType,txnId;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId;
 	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus;
 	public String getStartDate() {
 		return startDate;
@@ -32,6 +32,12 @@ public class FilterRequest {
 	}
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
+	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -81,19 +87,29 @@ public class FilterRequest {
 	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
 	}
-	@Override
-	public String toString() {
-		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
-				+ ", userType=" + userType + ", txnId=" + txnId + ", userId=" + userId + ", taxPaidStatus="
-				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
-				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
-				+ ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus + "]";
-	}
 	public Integer getGrievanceStatus() {
 		return grievanceStatus;
 	}
 	public void setGrievanceStatus(Integer grievanceStatus) {
 		this.grievanceStatus = grievanceStatus;
 	}
+	public String getGrievanceId() {
+		return grievanceId;
+	}
+	public void setGrievanceId(String grievanceId) {
+		this.grievanceId = grievanceId;
+	}
+	@Override
+	public String toString() {
+		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
+				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
+				+ grievanceId + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus="
+				+ consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus="
+				+ fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus="
+				+ grievanceStatus + "]";
+	}
+	
+	
+	
 	
 }

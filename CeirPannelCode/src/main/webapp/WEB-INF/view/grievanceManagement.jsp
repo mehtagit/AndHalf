@@ -82,7 +82,7 @@
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>
-										<div class="right" style="margin-top: 25px;"><a href="#" type="button" class="boton right">Export to excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a></div>
+										<div class="right" style="margin-top: 25px;"><a onclick="exportData()" type="button" class="boton right">Export to excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a></div>
 							
 								</div>
 							</form>
