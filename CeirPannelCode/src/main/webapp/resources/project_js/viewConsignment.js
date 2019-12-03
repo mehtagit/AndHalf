@@ -12,6 +12,9 @@ $(document).ready(function(){
 	$('.datepicker').datepicker();
 	filterConsignment();
 	pageRendering();
+	/*var x = '19 December, 2019'; 
+	var formattedDate = moment(x).format('YYYY-MM-DD h:mm:ss');
+*/
 
 });
 
