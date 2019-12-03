@@ -92,7 +92,7 @@ public class LoginService {
 	}
 
 
-	public ModelAndView Dashboard(HttpSession session) {
+	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");

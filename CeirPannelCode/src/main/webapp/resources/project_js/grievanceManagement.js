@@ -59,6 +59,13 @@ function grievanceDataTable(){
 				},
 				"columns": result
 			});
+			
+			$('#grivanceLibraryTable input').unbind();
+		    $('#grivanceLibraryTable input').bind('keyup', function (e) {
+		        if (e.keyCode == 13) {
+		            table.search(this.value).draw();
+		        }
+		    });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
