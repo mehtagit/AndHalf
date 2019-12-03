@@ -86,13 +86,16 @@ var contextpath = "${context}";
 										class="mdi-action-settings dropdownColor" style="float: left"></i><span
 										style="float: left" class="dropdownColor">Change
 											Password</span></a></li>
+									
 								<li class="divider"></li>
-								<li><a href="${context}/logout" id=""><i
+								<li><a href="#manageAccount" class="modal-trigger"><i class="fa fa-sign-out dropdownColor"></i><span
+										class="dropdownColor"> Activate/Deactivate Account</span></a></li>			
+								<li class="divider"></li>
+								
+								<li><a href="${context}/" id=""><i style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
-										class="dropdownColor"> Logout</span></a></li>
-								<li class="divider"></li>
-								<li><a href="#manageAccount" class="modal-trigger"> <span
-										class="dropdownColor"> Activate/Deactivate Account</span></a></li>
+										class="dropdownColor"> </span></a></li>
+								
 							</ul></li>
 					</ul>
 				</div>
@@ -121,8 +124,8 @@ var contextpath = "${context}";
 							<div class="col col s4 m4 l4">
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
-									style="width: 180px; text-align: center; color: #fff; font-size: 20px; margin-top: 2px;">
-									welcome <%=(String)session.getAttribute("name") %>
+									style="width: 180px; text-align: center; color: #fff; font-size:16px; margin-top: 2px;">
+									Welcome <%=(String)session.getAttribute("name") %>
 									(<%=(String)session.getAttribute("username")%>) 
 									</p>
 							</div>
@@ -146,10 +149,10 @@ var contextpath = "${context}";
 					
 					
 					<li>
-					<ul>
+					<ul class="navData" >
 					<c:forEach items="${features}"  var="feature">
 							<li class="bold"><a href="${feature.link}" target="mainArea"
-								class="waves-effect waves-cyan"><i class="${feature.logo}"></i>
+class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 									 ${feature.name}</a></li>
 					</c:forEach>
 					</ul>
@@ -270,7 +273,7 @@ var contextpath = "${context}";
 
 <%} else {} %>
 			<div class="input-field col s12 center">
-				<button class="btn">Submit</button>
+				<button class="btn" id="updateStatusBtn">Submit</button>
 				<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
 			</div>
 			</form>
@@ -291,7 +294,7 @@ var contextpath = "${context}";
 
  
 			<div class="input-field col s12 center">
-				<a href="${context}/logout" class="btn modal-close">ok</a>
+				<a href="${context}/" class="btn modal-close">ok</a>
 			</div>
 		</div>
 	</div>
@@ -356,7 +359,7 @@ var contextpath = "${context}";
 			<div class="row" style="margin-top: 30px;">
 				<div class="input-field col s12 m12 l12 center">
 					<button 
-						class="btn" type="submit" id="save"
+						class="btn" type="submit" id="changePassBtn"
 						style="width: 100%;">Save</button>
 				</div>
 			</div>
@@ -477,12 +480,18 @@ if(password.value != confirm_password.value) {
   confirm_password.setCustomValidity('');
 }
 }   
-
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
 
+$('.navData li').on('click', function() {
+$('.navData li:not(.inactive)').addClass("inactive");
+$('.navData li').removeClass("active");
+$(this).removeClass("inactive");
+$(this).addClass("active"); 
+
+});
 </script>
 
 </body>
 
-</html>
+</html> 	

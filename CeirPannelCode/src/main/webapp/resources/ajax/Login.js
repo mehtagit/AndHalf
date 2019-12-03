@@ -1,4 +1,5 @@
 function forgotPassword(){
+	$("#forgotPasswordBtn").prop('disabled', true);
 	var obj="";
 	var username=document.getElementById("username").value;
 	$("#forgotPassword").each(function(key, val){
@@ -29,10 +30,11 @@ function forgotPassword(){
 			else{
 				$("#forgotPassword #errorMsg").text(resp.response);
 			}
+			$("#forgotPasswordBtn").prop('disabled', false);
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
-		}
-
+			$("#forgotPasswordBtn").prop('disabled', false);
+		} 
 	});
 	return false;
 } 

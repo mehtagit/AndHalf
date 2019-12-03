@@ -17,6 +17,7 @@ function openRegistrationPage(){
 }
 
 function verifyOtp(){
+	$("#otpVerifyBtn").prop('disabled', true);
 	var obj="";
 	$("#verifyOtpForm").each(function(key, val){
 		val = $(this);
@@ -40,7 +41,7 @@ function verifyOtp(){
 			console.log(data);	
 			var resp=JSON.parse(data);
 			if(resp.statusCode=="200"){
-				window.location.href='#otpMessage';
+				//window.location.href='#otpMessage';
 				$("#otpVerification").closeModal();
 				$('#otpVerification').closeModal();   
 				$('#otpMessage').openModal();   
@@ -50,8 +51,10 @@ function verifyOtp(){
 			else{
 
 			}
+			$("#otpVerifyBtn").prop('disabled', false);
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
+			$("#otpVerifyBtn").prop('disabled', false);
 		}
 
 	});
@@ -90,7 +93,8 @@ function usertypeData(){
 		type : 'GET',
 		url : contextpath + '/usertypeList/',
 		contentType : "application/json",
-		dataType : 'html', 
+		dataType : 'html',
+		async:false,
 		success : function(data) {
 			var response=JSON.parse(data);                                    
 			var usertypeDropdown=$("#usertypes");  
@@ -106,8 +110,8 @@ function usertypeData(){
 			setTimeout(function(){ 
 				$('.dropdown-trigger').dropdown();
 				$('select').formSelect();
-			}, 1000);   
-		},    
+			}, 1000);      
+		},      
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
 	});
@@ -188,6 +192,8 @@ function questionData(){
 
 
 function saveRegistration(){ 
+	$("#btnSave").prop('disabled', true);
+
 	var obj="";
 	var oj2=""; 
 	var questionData=[];
@@ -240,11 +246,14 @@ function saveRegistration(){
 	formData.append( 'file', $( '#file' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));
 	console.log("data=  "+formData);
-	registrationAjax(formData)
+	registrationAjax(formData);
+	//$("#btnSave").prop('disabled', true);
+  
 	return false;
 }
 
 function saveCustomRegistration(){ 
+	$("#btnSave").prop('disabled', true);
 	var obj="";
 	var oj2=""; 
 	var questionData=[];
@@ -306,10 +315,11 @@ function saveCustomRegistration(){
 	console.log("data=  "+formData);
 	registrationAjax(formData);
 	return false;
-}
+}   
 
 
 function saveOperatorRegistration(){ 
+	$("#btnSave").prop('disabled', true);
 	var obj="";
 	var oj2=""; 
 	var questionData=[];
@@ -389,17 +399,19 @@ function registrationAjax(obj){
 				//window.location.href='./verifyOtpPage/?userid='+respData.userId;
 				
 				$("#userid").val(response.userId);
-				window.location.href='#otpMsgModal';
+				//window.location.href='#otpMsgModal';
 				$("#otpMsgModal").openModal();
 				$("#otpMsg").text(response.response);
-				
+				 
 				
 			}
 			else{
 				$("#registrationForm #msg").text(respData.response);
 			}
+			$("#btnSave").prop('disabled', false);
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
+			$("#btnSave").prop('disabled', false);
 		}
 
 	});

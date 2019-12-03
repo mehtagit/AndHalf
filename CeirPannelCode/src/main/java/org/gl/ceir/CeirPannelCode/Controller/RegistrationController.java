@@ -45,7 +45,7 @@ public class RegistrationController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
 		return mv;      
-	}        
+	}         
 
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  

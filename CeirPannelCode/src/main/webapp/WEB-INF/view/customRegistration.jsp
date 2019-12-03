@@ -85,7 +85,37 @@ var contextpath = "${context}";
 </head>
 
 <body>
+<!--  Scripts
+    ================================================ --> 
+	 <!-- jQuery Library -->
+    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
+  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+      <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+    <!--materialize js-->
+    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
+    <!-- Compiled and minified JavaScript -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
+    <!--prism
+    <script type="text/javascript" src="js/prism/prism.js"></script>-->
+    <!--scrollbar-->
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- chartist -->
+    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
+    <!-- data-tables -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <!--<script type="text/javascript" src="js/plugins.js"></script>-->
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+    
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
     <!-- START CONTENT -->
@@ -412,7 +442,7 @@ var contextpath = "${context}";
                             <div class="input-field col s12 center">
                             	<button class="btn" id="btnSave" 
 									type="submit" style="margin-left: 10px;">submit</button>
-								<button class="btn" style="margin-left: 10px;">cancel</button>
+									<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
                             </div> 
                         </div>
                   </div>
@@ -499,49 +529,92 @@ var contextpath = "${context}";
             </div>
         </div>
     </div>
+    <!-- START MAIN -->
+    <div id="">
+        <!-- START WRAPPER -->
+        <div class="wrapper">
+            <!-- START CONTENT -->
+            <section id="content">
+                <!--start container-->
+                <div class="container">
+                    <div class="section">
+                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+                            <h5 class="center">Verify OTP</h5>
+                            <!-- <img src="images/otpImage.png" class=""
+                                style="width: 80px; display: block; margin:auto;"> -->
+                            <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
+                            <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
+
+                            <a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
+
+                        </div>
+                    </div>
+                </div>
+                <!--end container-->
+            </section>
+            <!-- END CONTENT -->
+        </div>
+    </div>
+    
+    <div id="otpMessage" class="modal">
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <div class="modal-content">
+            <!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+            <div class="row">  
+                <h6 id="otpResponse"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="${context}/login" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <!-- modal start -->
+
+    <div id="otpVerification" class="modal" style="width: 40%;">
+        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button> -->
+        <div class="modal-content">  
+                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+                        <h5 class="center">Enter OTP</h5>  
+                        <p class="center" id="resendOtp" style="display: none;"></p>
+                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <div class="row">          
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="emailOtp" maxlength="6"
+                               
+										title="Please enter number characters only"
+                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                            </div> 
+                   
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="phoneOtp" maxlength="6" 
+                                
+										title="Please enter number characters only" 
+                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                            </div>
+                        </div>
+
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+
+                        <button type="submit" id="otpVerifyBtn" class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+                    </form>
+        </div>
+    </div>
+    
     <!-- Modal End -->
     <!-- ================================================
     Scripts
     ================================================ -->
 <!-- Modal End -->
-	<!-- ================================================
-    Scripts
-    ================================================ -->
-	<!-- jQuery Library -->
-	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js"></script>
 
-	<!--materialize js-->
-	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
-	<!-- Compiled and minified JavaScript -->
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
-	<!--prism
-    <script type="text/javascript" src="js/prism/prism.js"></script>-->
-	<!--scrollbar-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
-
-	<!-- data-tables -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
-	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js"></script>
 
 
 

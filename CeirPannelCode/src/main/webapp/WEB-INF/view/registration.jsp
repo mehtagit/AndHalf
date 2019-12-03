@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
@@ -98,7 +98,7 @@ var contextpath = "${context}";
 </head>
 <body>
 
-<!-- Modal End -->
+<!-- Modal End --> 
 	<!-- ================================================
     Scripts
     ================================================ -->
@@ -596,7 +596,7 @@ var contextpath = "${context}";
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn" id="btnSave" 
 									type="submit" style="margin-left: 10px;">submit</button>
-								<button class="btn" style="margin-left: 10px;">cancel</button>
+								<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
 							</div>
 						</div>
 					</div>
@@ -766,7 +766,7 @@ var contextpath = "${context}";
 
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
 
-                        <button type="submit"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
                     </form>
         </div>
     </div>

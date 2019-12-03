@@ -150,7 +150,7 @@ var contextpath='${context}';
                                 </div>
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
-                                        <button   type="submit" class="btn">submit</button>
+                                        <button id="forgotPasswordBtn"   type="submit" class="btn">submit</button>
                                         <a href="${context}/login" class="btn" style="margin-left: 10px;">cancel</a>
                                     </div>
                                 </div>

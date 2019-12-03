@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Registration {
 	private long id;
@@ -22,7 +23,7 @@ public class Registration {
 	private String password;
 	private String  rePassword;
 	private String username;
-	private int[] roles;
+	private Long[] roles;
 	private String captcha;
 	private long usertypeId;
 
@@ -154,14 +155,14 @@ public class Registration {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int[] getRoles() {
+	
+
+	public Long[] getRoles() {
 		return roles;
 	}
-	public void setRoles(int[] roles) {
+	public void setRoles(Long[] roles) {
 		this.roles = roles;
 	}
-
-
 	public String getRePassword() {
 		return rePassword;
 	}
@@ -275,11 +276,11 @@ public class Registration {
 				+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
 				+ ", locality=" + locality + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password="
-				+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + roles + ", captcha="
+				+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + Arrays.toString(roles) + ", captcha="
 				+ captcha + ", usertypeId=" + usertypeId + ", employeeId=" + employeeId + ", natureOfEmployment="
 				+ natureOfEmployment + ", designation=" + designation + ", authorityName=" + authorityName
 				+ ", authorityEmail=" + authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo
-				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename="
+				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename=" 
 				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename + "]";
 	}
 	

@@ -137,13 +137,14 @@ var contextpath = "${context}";
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<form id="registrationForm"  onsubmit="return updateProfile()" >
+				<form id="registrationForm"  onsubmit="return passwordPopup()" >
 					<div class="card-panel">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
 							<h5>Edit Information</h5>
+								 <span style="text-align: center;color: red;" id="errorMsg"></span>
 							<hr> 
 					<span style="color: red;">${msg}</span>		
 							
@@ -390,9 +391,8 @@ var contextpath = "${context}";
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Role Type <span class="star">*</span>
 									</p> 
-									<select multiple required name="roles" id="usertypes"  >
-										<option value="" disabled>Role Type <span
-							 					class="star"></span></option>
+									<select multiple  name="roles" id="usertypes" required="required"  >
+										<option value="" disabled>Role Type </span></option>
 								                   
 								</select>  
 								</div>
@@ -581,9 +581,9 @@ var contextpath = "${context}";
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn"  id="btnSave" type="submit"
+								<button class="btn"  id="btnSave" type="submit" 
 									style="margin-left: 10px;">submit</button>
-								<button class="btn" style="margin-left: 10px;">cancel</button>
+								<a href="${context}/importerDashboard" target="_parent"  class="btn" style="margin-left: 10px;">cancel</a>
 							</div>
 						</div>
 						</div>
@@ -597,6 +597,10 @@ var contextpath = "${context}";
 	<!-- END CONTENT -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
                                                 
+ 
+                
+           
+                                                               
 	<!-- Modal 1 start   -->
 
 	<div id="submitForm" class="modal">
@@ -639,7 +643,7 @@ var contextpath = "${context}";
                             <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
                                  
 
-                            <a href="#otpVerification" class="btn modal-trigger"
+                            <a href="#otpVerification" class="btn modal-trigger modal-close"
                                 style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 
                         </div>
@@ -662,7 +666,24 @@ var contextpath = "${context}";
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a target="mainArea" href="${context}/importerDashboard" class="btn">ok</a>
+                    <a target="_parent"  href="${context}/importerDashboard" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="profileResponse" class="modal">
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <div class="modal-content">
+            <!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+            <div class="row">  
+                <h6></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a target="_parent"  href="${context}/importerDashboard" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -672,7 +693,7 @@ var contextpath = "${context}";
 
     <!-- modal start -->
 
-    <div id="otpVerification" class="modal" style="width: 40%;">
+    <div id="otpVerification" class="modal" onsubmit="return verifyOtp()" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
         <div class="modal-content">
@@ -692,10 +713,34 @@ var contextpath = "${context}";
 
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
 
-                        <a onclick="verifyOtp();"   class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
+                        <button  id="otpVerifyBtn"   class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
                     </form>
         </div>
     </div>
+    
+    
+         <div id="passwordModal"  class="modal" style="width: 40%; z-index: 1003;  opacity: 1; transform: scaleX(1); top: 10%;">
+            <div class="modal-content" >
+<form  onsubmit="return updateProfile()">
+                    <div class="row">
+                        
+                            <h5 class="center">Please Enter Your password</h5>
+                            <div class="input-field col s12">
+
+                                <label for="confirmPassword" style="color: #000; font-size: 12px;">Password</label>
+                                <input required="required"  type="password" class="" id="confirmPassword" maxlength="10">
+                            </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 center">
+                            <button type="submit" id="passwordBtn" class="btn">Submit</button>
+                            <button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                            </div>
 
 	<!-- Modal End -->
 
@@ -754,16 +799,14 @@ var contextpath = "${context}";
     <script> 
         $(document).ready(function () {
         	questionDataByCategory();
-        	usertypeData();
-        	editProfile();         
+        //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
+        	usertypeData();  
+        		editProfile();
             $('.modal').modal();
-           
             /* $('.dropdown-trigger').dropdown();
             $('select').formSelect(); */
-            
         }); 
         populateCountries("country", "");
-     
         function myFunction() { 
             var x = document.getElementById("type").value;
             if (x == 'Individual') {
@@ -771,8 +814,7 @@ var contextpath = "${context}";
                 document.getElementById("passportNumberDiv").style.display = "block";
                 document.getElementById("companyNames").style.display = "none";
                 $('#companyNames').style.display = "none";
-            } else {  
-                      
+            } else {    
                 document.getElementById("uploadFile").style.display = "none";
                 document.getElementById("passportNumberDiv").style.display = "none";
             }
@@ -781,12 +823,9 @@ var contextpath = "${context}";
                 document.getElementById("companyNames").style.display = "block";
             } else {
 
-                document.getElementById("companyNames").style.display = "none";
+                 document.getElementById("companyNames").style.display = "none";
             }
         }
-        
-        
-        
         
     </script>
 
