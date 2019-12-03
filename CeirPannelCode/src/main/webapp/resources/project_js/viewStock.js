@@ -223,20 +223,14 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 //alert("sourceType<><><><>"+sourceType);
 //alert("currentRoleType<><><><>"+currentRoleType);
 function filter(){
-	if(currentRoleType=="Importer" && sourceType !="viaStock" ){
+	if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType !="viaStock" ){
 	Datatable('headers','stockData')
-	}else if(currentRoleType==="Distributor" && sourceType ==="viaStock"){
-	Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
-	}else if(currentRoleType=="Distributor"){
-	Datatable('headers','stockData')
-	}else if(currentRoleType=="Importer" || currentRoleType=="Distributor" && sourceType =="viaStock" ){
-	Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
 	}else if(currentRoleType=="Custom"){
 	Datatable('./headers?type=customStockHeaders','stockData')
 	}else if(currentRoleType=="CEIRAdmin"){
 	Datatable('./headers?type=adminStockHeaders','stockData')
-	}else if(currentRoleType=="Retailer" || currentRoleType=="Distributor"){
-	Datatable('headers','stockData')
+	}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType =="viaStock"){
+	Datatable('./headers?type=stockcheckHeaders','stockData?sourceType=viaStock')
 	}
 	localStorage.removeItem('sourceType');
 }
