@@ -598,62 +598,79 @@ return action;
 
 
 
-/********************************** Icons for Admin **********************************/ 
+
+
+/********************************* Icons for Admin *********************************/ 
 
 public String adminStockState(String fileName,String txnId ,String status,String userStatus) {
 	// URL link 
-	String emptyURL="JavaScript:void(0);"; 
-	String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
-	String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-	String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
+		String emptyURL="JavaScript:void(0);"; 
+		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";
+		String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
+		String viewAction="viewUploadedStockDetails('"+txnId+"')";  
+		String approveAction = null;
+		String rejectAction = null;
+		String deleteAction ="DeleteStockRecord('"+txnId+"')";
+// state related Code 
+
+String download="<a href="+downloadURL+" download=\"download\"><i class="
++downloadIcon+" aria-hidden=\"true\" title="
++downloadIconTitle+" download=\"download\"></i></a>"; 
+
+String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
++errorIconTitle+"></i></a>";
+
+String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
++viewIconTitle+" ></i></a>";	
 
 
-	// state related Code 
+String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
++approveIconTitle+" ></i></a>"; 
 
-	String download="<a href="+downloadURL+" download=\"download\"><i class="
-					+downloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-							+viewIconTitle+" ></i></a>";
-	
-	String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
-									+deletionIcon+" aria-hidden=\"true\"  title="
-									+deleteIconTitle+"></i></a>"; 
-	
 
-	
-		
-	  if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
-	 
-	  }
-	  
-	  else if(("1".equals(status)) && "Approved".equals(userStatus)) {
-		
-		  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>";
-	  	}
-	   else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status))  && "Approved".equals(userStatus)) {
-		
-		  delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>";
-			}
-	  else if("Disable".equals(userStatus)) {
-		  log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-		
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
-							+disableDownloadIcon+" aria-hidden=\"true\"  title="
-							+downloadIconTitle+" download=\"download\"></i></a>"; 
-			
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
-											+disableDeletionIcon+" aria-hidden=\"true\" title="
-											+deleteIconTitle+"></i></a>"; 			
-	  }
-	  
-	  String action=download.concat(view).concat(delete);		  
-	return action;
-	 
+String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
++rejectIconTitle+" ></i></a>";
+
+
+
+
+String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
++deletionIcon+" aria-hidden=\"true\" title="
++deleteIconTitle+"></i></a>"; 
+
+
+
+if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+
+}
+
+else if(("1".equals(status)) && "Approved".equals(userStatus)) {
+
+delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
++disableDeletionIcon+" aria-hidden=\"true\" title="
++deleteIconTitle+"></i></a>";
+}
+else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
+
+delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
++disableDeletionIcon+" aria-hidden=\"true\" title="
++deleteIconTitle+"></i></a>";
+}
+else if("Disable".equals(userStatus)) {
+log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+
+download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
++disableDownloadIcon+" aria-hidden=\"true\" title="
++downloadIconTitle+" download=\"download\"></i></a>"; 
+
+delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
++disableDeletionIcon+" aria-hidden=\"true\" title="
++deleteIconTitle+"></i></a>"; 
+}
+
+String action=download.concat(error).concat(view).concat(approve).concat(reject).concat(delete);	
+return action;
+
 }
 
 

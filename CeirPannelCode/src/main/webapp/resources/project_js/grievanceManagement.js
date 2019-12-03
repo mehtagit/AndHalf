@@ -21,7 +21,7 @@ var userId = $("body").attr("data-userID");
 
 function grievanceDataTable(){
 	var filterRequest={
-
+			"grievanceStatus": -1,
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"recentStatus":parseInt($('#recentStatus').val()),
@@ -94,7 +94,7 @@ function pageRendering(){
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
 				else if(date[i].type === "text"){
-					$("#greivanceTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					$("#greivanceTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
 
 				}
 
@@ -130,6 +130,10 @@ function pageRendering(){
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 				}
 			}
+			
+			if(cierRoletype=="CEIRAdmin"){
+				$("#btnLink").css({display: "none"});
+				}
 			//cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
 		}
@@ -277,6 +281,14 @@ function grievanceReply(userId,grievanceId,txnId)
 			$('#grievanceTxnId').text(txnId);
 			var usertype = $("body").attr("data-roleType");
 			console.log("usertype=="+usertype);
+			$("#viewPreviousMessage").empty();
+			for(var i=0; i<data.length; ++i)
+			{
+				
+				$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+				
+				
+			}
 			if(usertype=='CEIRAdmin')
 			{
 				$("#closeTicketCheckbox").css("display","block");
@@ -300,11 +312,11 @@ function saveGrievanceReply()
 	var grievanceTicketStatus;
 	if ($('#closeTicketCheck').is(":checked"))
 	{
-		grievanceTicketStatus=1;
-
+		grievanceTicketStatus=3;
+		
 	}
 	else{
-		grievanceTicketStatus=2;
+		grievanceTicketStatus=0;
 	}
 	var remark=$('#replyRemark').val();
 	var replyFile=$('#replyFile').val();
@@ -368,7 +380,7 @@ function viewGrievanceHistory(grievanceId)
 			for(var i=0; i<data.length; ++i)
 			{
 
-				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userId+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
+				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
 
 
 			}

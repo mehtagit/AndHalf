@@ -81,9 +81,9 @@
 								<div class="col s12 m12 l12" id="greivanceTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
 									</div>
+										<div class="right" style="margin-top: 25px;"><a href="#" type="button" class="boton right">Export to excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a></div>
+							
 								</div>
 							</form>
 							<table id="grivanceLibraryTable"
@@ -109,16 +109,12 @@
                     <hr>
                 </div>
 
-                <div class="col s12 m12">
-                    <h6 style="float: left; font-weight: bold;">You : </h6>
-                    <h6 style="float: left;">&nbsp; Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry.</h6><span style="float:right;">10/02/2019 11:00</span>
+                <div class="col s12 m12" id="viewPreviousMessage">
+                   <!--  <h6 style="float: left; font-weight: bold;" id="mesageUserType"> </h6>
+                    <h6 style="float: left;"></h6>
+                        <span style="float:right;"></span> -->
                 </div>
-                <div class="col s12 m12">
-                    <h6 style="float: left; font-weight: bold;">Admin : </h6>
-                    <h6 style="float: left;">&nbsp; Need more clearification</h6><span style="float:right;">10/02/2019
-                        11:24</span>
-                </div>
+               
                 <div class="col s12 m12">
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark"></textarea>
                     <h6 style="color: #000;">Upload Supporting Document *</h6>
@@ -172,9 +168,9 @@
 <div id="manageAccount" class="modal">
 <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
 <div class="modal-content">
-<h5 style="margin-left: 10%;">Grievance history</h5>
+<h5>Grievance history</h5>
 <hr>
-<div id="live-chat" style="margin-left: 5%;">
+<div id="live-chat">
 <div class="chat">
 <div class="chat-history">
 <div class="chat-message clearfix" id="chatMsg">

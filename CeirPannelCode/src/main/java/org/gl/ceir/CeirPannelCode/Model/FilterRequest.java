@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
 	public String  startDate,endDate,roleType,userType,txnId;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -87,7 +87,13 @@ public class FilterRequest {
 				+ ", userType=" + userType + ", txnId=" + txnId + ", userId=" + userId + ", taxPaidStatus="
 				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
 				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
-				+ ", sourceType=" + sourceType + "]";
+				+ ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus + "]";
+	}
+	public Integer getGrievanceStatus() {
+		return grievanceStatus;
+	}
+	public void setGrievanceStatus(Integer grievanceStatus) {
+		this.grievanceStatus = grievanceStatus;
 	}
 	
 }

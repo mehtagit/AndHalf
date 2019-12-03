@@ -50,9 +50,9 @@ function setViewPopupData(data){
 }
 
 
-//******************************************* end View Pop up data *************************************************************************************************
+//***************************************** end View Pop up data ***********************************************************************************************
 
-//******************************************* start edit Pop up data *************************************************************************************************
+//***************************************** start edit Pop up data ***********************************************************************************************
 
 function EditUploadedStockDetails(txnId){ 
 
@@ -89,7 +89,7 @@ function setEditPopupData(data){
 
 
 //********************************************************************************************************************************************************
-//********************************************************* update Stock function ****************************************************************************
+//******************************************************* update Stock function **************************************************************************
 
 function editUploadStock(){
 
@@ -134,8 +134,8 @@ function editUploadStock(){
 				$('#stockSucessMessage').text('');
 				$('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
-			// $('#updateConsignment').modal('open'); 
-			//alert("success");
+//			$('#updateConsignment').modal('open'); 
+//			alert("success");
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -147,10 +147,10 @@ function editUploadStock(){
 
 
 
-//*************************************************************** End update Stock function *********************************************************
+//************************************************************* End update Stock function *******************************************************
 
 
-//****************************************************** Delete Stock Modal ***************************************************************************
+//**************************************************** Delete Stock Modal *************************************************************************
 
 function DeleteStockRecord(txnId){
 	$("#DeleteStockconfirmationModal").openModal();
@@ -188,8 +188,8 @@ function confirmantiondelete(){
 	$("#DeleteStockconfirmationModal").closeModal();
 
 	$("#closeDeleteModal").openModal();
-	/*  
-  		 $(".lean-overlay").remove(); */ 
+	/* 
+$(".lean-overlay").remove(); */ 
 
 }
 
@@ -198,11 +198,11 @@ function confirmantiondelete(){
 
 
 
-/*  function closeDeleteModal(){
-    	 $("#DeleteStockconfirmationModal").closeModal();
-    	// $('#updateModal').closeModal();
-    	 $(".lean-overlay").remove();
-     } */
+/* function closeDeleteModal(){
+$("#DeleteStockconfirmationModal").closeModal();
+// $('#updateModal').closeModal();
+$(".lean-overlay").remove();
+} */
 
 function closeViewModal()
 {
@@ -223,21 +223,23 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 //alert("sourceType<><><><>"+sourceType);
 //alert("currentRoleType<><><><>"+currentRoleType);
 function filter(){
-	if(currentRoleType=="Importer"  && sourceType !="viaStock"  ){
-		Datatable('headers','stockData')
-	}else if(currentRoleType==="Distributor"  && sourceType ==="viaStock"){
-		Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
+	if(currentRoleType=="Importer" && sourceType !="viaStock" ){
+	Datatable('headers','stockData')
+	}else if(currentRoleType==="Distributor" && sourceType ==="viaStock"){
+	Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
 	}else if(currentRoleType=="Distributor"){
-		Datatable('headers','stockData')
-	}else if(currentRoleType=="Importer" || currentRoleType=="Distributor"  && sourceType =="viaStock" ){
-		Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
+	Datatable('headers','stockData')
+	}else if(currentRoleType=="Importer" || currentRoleType=="Distributor" && sourceType =="viaStock" ){
+	Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
 	}else if(currentRoleType=="Custom"){
-		Datatable('./headers?type=customStockHeaders','stockData')
+	Datatable('./headers?type=customStockHeaders','stockData')
 	}else if(currentRoleType=="CEIRAdmin"){
-		Datatable('./headers?type=adminStockHeaders','stockData')
+	Datatable('./headers?type=adminStockHeaders','stockData')
+	}else if(currentRoleType=="Retailer" || currentRoleType=="Distributor"){
+	Datatable('headers','stockData')
 	}
 	localStorage.removeItem('sourceType');
-} 
+}
 
 
 
@@ -265,6 +267,7 @@ function Datatable(url,dataUrl) {
 		dataType: "json",
 		success: function(result){
 			var table=	$("#stockTable").DataTable({
+				bAutoWidth: false,
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
@@ -275,17 +278,17 @@ function Datatable(url,dataUrl) {
 				"bSearchable" : true,
 				ajax: {
 					type: 'POST',
-					url: dataUrl,           		        
+					url: dataUrl, 
 					data : function(d) {
-						d.filter = JSON.stringify(jsonObj);  
-						console.log("REQUEST JSON:::::::::::::::::::::"+JSON.stringify(jsonObj))
+						d.filter = JSON.stringify(jsonObj); 
 					}
 				},
-				"columns": result
+				"columns": result,
+				"columnDefs": [{ "width": "220px", "targets":result.length - 1 }]
 			});
 		}
 	}); 
-}			
+}	
 
 
 function pageRendering(){
@@ -326,7 +329,7 @@ function pageButtons(url){
 
 				}
 			}
-			// dynamic dropdown portion
+//			dynamic dropdown portion
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
@@ -362,17 +365,24 @@ function pageButtons(url){
 				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
-					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+					/*$('#'+button[i].id).attr("onclick", button[i].buttonURL);*/
+
+					if(button[i].buttonTitle === "Upload Stock"){
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+					}
+					else{
+						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+					}
 				}
 			}
 
 			sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 			if(currentRoleType=="CEIRAdmin"){
 				$("#btnLink").css({display: "none"});
-				}
+			}
 		}
 
-	//$("#filterBtnDiv").append();
+//	$("#filterBtnDiv").append();
 	});
 	setAllDropdowns(); 
 }

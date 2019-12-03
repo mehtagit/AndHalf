@@ -62,8 +62,8 @@ var contextpath = "${context}";
 							<h1 class="logo-wrapper">
 							
 								<a href="#" class="brand-logo darken-1">CEIR -
-									<%=usertype%> Portal 
-									<span id="cierRoletype"><%=(String)session.getAttribute("usertype")%></span> 
+									<span id="cierRoletype"><%=usertype%></span> Portal 
+									 
 									<%if("Operator".equalsIgnoreCase(usertype)){%>
 									-	<%=session.getAttribute("operatorTypeName") %>
 									<%}else{}%>   

@@ -13,6 +13,7 @@ public class GrievanceModel {
 	private String txnId;
 	private String userType;
 	private String reply;
+	private String userDisplayName;
 	public int getId() {
 		return id;
 	}
@@ -85,13 +86,21 @@ public class GrievanceModel {
 	public void setReply(String reply) {
 		this.reply = reply;
 	}
+	public String getUserDisplayName() {
+		return userDisplayName;
+	}
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
+	}
 	@Override
 	public String toString() {
 		return "GrievanceModel [id=" + id + ", categoryId=" + categoryId + ", grievanceStatus=" + grievanceStatus
 				+ ", userId=" + userId + ", fileName=" + fileName + ", grievanceId=" + grievanceId + ", modifiedOn="
 				+ modifiedOn + ", createdOn=" + createdOn + ", remarks=" + remarks + ", txnId=" + txnId + ", userType="
-				+ userType + ", reply=" + reply + "]";
+				+ userType + ", reply=" + reply + ", userDisplayName=" + userDisplayName + "]";
 	}
+	
+	
 
 	
 }
