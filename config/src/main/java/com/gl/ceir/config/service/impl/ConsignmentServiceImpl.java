@@ -25,14 +25,8 @@ import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
-import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
-import com.gl.ceir.config.model.SearchCriteria;
-import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.UserProfile;
-import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
@@ -46,10 +40,6 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
-import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
-import com.gl.ceir.config.repository.StockDetailsOperationRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
@@ -234,7 +224,7 @@ public class ConsignmentServiceImpl {
 						}
 						logger.info("Array list to add is = " + consignmentStatus);
 
-						cmsb.addSpecification(cmsb.joinWithUserIN(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
+						cmsb.addSpecification(cmsb.in(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
 					}
 				}
 			}

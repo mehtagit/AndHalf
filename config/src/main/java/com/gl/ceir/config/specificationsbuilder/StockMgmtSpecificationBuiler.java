@@ -1,27 +1,30 @@
 package com.gl.ceir.config.specificationsbuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.constants.SearchOperation;
 
 public class StockMgmtSpecificationBuiler {
 
-
-
-
 	private static final Logger logger = LogManager.getLogger(StockMgmtSpecificationBuiler.class);
 
 	private final List<SearchCriteria> params;
+	private final String dialect;
+	private List<Specification<ConsignmentMgmt>> specifications;
 
-	public StockMgmtSpecificationBuiler() {
+	public StockMgmtSpecificationBuiler(String dialect) {
 		params = new ArrayList<>();
+		specifications = new LinkedList<>();
+		this.dialect = dialect;
 	}
 
 	public final StockMgmtSpecificationBuiler with(SearchCriteria criteria) { 
@@ -29,6 +32,10 @@ public class StockMgmtSpecificationBuiler {
 		return this;
 	}
 
+	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
+		specifications.add(specification);
+	}
+	
 	public Specification<StockMgmt> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
@@ -66,6 +73,13 @@ public class StockMgmtSpecificationBuiler {
 		}
 
 		return specifications;
+	}
+
+	public Specification<ConsignmentMgmt> in(SearchCriteria searchCriteria, List<Integer> status){
+		return (root, query, cb) -> {
+			logger.info("In query save ");
+			return cb.in(root.get(searchCriteria.getKey())).value(status);
+		};
 	}
 }
 

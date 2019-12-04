@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FilterRequest;
@@ -59,6 +61,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+	
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@Autowired
 	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
@@ -143,11 +148,14 @@ public class StolenAndRecoveryServiceImpl {
 		List<SystemConfigListDb> sourceTypes = null;
 		List<SystemConfigListDb> requestTypes = null;
 		List<StateMgmtDb> stateInterpList = null;
+		List<StateMgmtDb> statusList = null;
 		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			StolenAndRecoverySpecificationBuilder srsb = new StolenAndRecoverySpecificationBuilder();
+			StolenAndRecoverySpecificationBuilder srsb = new StolenAndRecoverySpecificationBuilder(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getUserId()))
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -164,15 +172,32 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getConsignmentStatus()))
-				srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
 			if(Objects.nonNull(filterRequest.getRequestType()))
 				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getSourceType())) 
 				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+				srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			}else {
+				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
+
+					List<Integer> configuredStatus = new LinkedList<Integer>();
+					// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+					logger.debug(statusList);
+
+					if(Objects.nonNull(statusList)) {	
+						for(StateMgmtDb stateDb : statusList ) {
+							configuredStatus.add(stateDb.getState());
+						}
+						logger.info("Array list to add is = " + configuredStatus);
+
+						srsb.addSpecification(srsb.in(new SearchCriteria("consignmentStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT), configuredStatus));
+					}
+				}
+			}
+			
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			

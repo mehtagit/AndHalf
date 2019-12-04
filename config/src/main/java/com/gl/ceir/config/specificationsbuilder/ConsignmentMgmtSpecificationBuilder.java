@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +25,6 @@ public class ConsignmentMgmtSpecificationBuilder {
 	private final String dialect;
 	private List<Specification<ConsignmentMgmt>> specifications;
 
-
 	public ConsignmentMgmtSpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
 		specifications = new LinkedList<>();
@@ -37,8 +35,6 @@ public class ConsignmentMgmtSpecificationBuilder {
 		params.add(criteria);
 		return this;
 	}
-
-
 
 	public Specification<ConsignmentMgmt> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
@@ -58,12 +54,9 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return finalSpecification;
 	}
 
-
-
 	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
 		specifications.add(specification);
 	}
-
 
 	private List<Specification<ConsignmentMgmt>> createSpecifications(){
 		//	List<Specification<ConsignmentMgmt>> specifications = new ArrayList<Specification<ConsignmentMgmt>>();
@@ -107,12 +100,10 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return specifications;
 	}
 
-	public Specification<ConsignmentMgmt> joinWithUserIN(SearchCriteria searchCriteria,List<Integer> consignmentStatus){
+	public Specification<ConsignmentMgmt> in(SearchCriteria searchCriteria, List<Integer> status){
 		return (root, query, cb) -> {
-			//root.in(consignmentStatus);
 			logger.info("In query save ");
-			return cb.in(root.get(searchCriteria.getKey())).value(consignmentStatus);
+			return cb.in(root.get(searchCriteria.getKey())).value(status);
 		};
-
 	}
 }
