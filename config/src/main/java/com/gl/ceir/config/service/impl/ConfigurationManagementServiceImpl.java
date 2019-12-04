@@ -143,7 +143,7 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			MessageConfigurationDb mcd = messageConfigurationDbRepository.getById(messageConfigurationDb.getId());
-			if(Objects.nonNull(mcd)) {
+			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
 			MessageConfigurationHistoryDb mshb = new MessageConfigurationHistoryDb();
@@ -193,7 +193,7 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getById(policyConfigurationDb.getId());
-			if(Objects.nonNull(mcd)) {
+			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
 
