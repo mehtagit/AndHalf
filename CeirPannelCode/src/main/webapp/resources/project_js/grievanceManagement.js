@@ -407,7 +407,7 @@ function exportData()
 
 	var table = $('#grivanceLibraryTable').DataTable();
 	var info = table.page.info(); 
-   var pageSize=info.page;
+   var pageSize=info.page+1;
     var pageNo=info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
 	console.log(" grievanceStartDate  ="+grievanceStartDate+"  grievanceEndDate=="+grievanceEndDate+"  grievancetxnId="+grievancetxnId+" grievanceId ="+grievanceId+"grievanceStatus  "+grievanceStatus)

@@ -21,7 +21,22 @@ public class GrievancePaginationModel {
 	private Integer size;
 	private Integer number;
 	private Boolean empty;
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	private String filePath , url;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	
+	
 	public List<GrievanceContentModel> getContent() {
 		return content;
 	}
@@ -93,6 +108,14 @@ public class GrievancePaginationModel {
 	}
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
+	}
+	@Override
+	public String toString() {
+		return "GrievancePaginationModel [content=" + content + ", pageable=" + pageable + ", totalPages=" + totalPages
+				+ ", totalElements=" + totalElements + ", last=" + last + ", first=" + first + ", sort=" + sort
+				+ ", numberOfElements=" + numberOfElements + ", size=" + size + ", number=" + number + ", empty="
+				+ empty + ", filePath=" + filePath + ", url=" + url + ", additionalProperties=" + additionalProperties
+				+ "]";
 	}
 
 	

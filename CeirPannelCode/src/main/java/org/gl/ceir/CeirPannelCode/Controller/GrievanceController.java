@@ -18,6 +18,7 @@ import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
+import org.gl.ceir.pagination.model.GrievancePaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.jsf.FacesContextUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class GrievanceController {
@@ -180,8 +183,6 @@ public class GrievanceController {
 								@RequestParam(name="grievancetxnId",required = false) String grievancetxnId,@RequestParam(name="grievanceId") String grievanceId,HttpServletRequest request,
 								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo)
 						{
-						
-
 							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
 							int userId= (int) session.getAttribute("userid"); 
 							int file=1;
@@ -193,13 +194,15 @@ public class GrievanceController {
 							filterRequest.setGrievanceStatus(0);
 							filterRequest.setGrievanceId(grievanceId);
 							filterRequest.setUserId(userId);
-							
-							
 							log.info("filterRequest=="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
-							fileExportResponse=(FileExportResponse) grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
-							log.info("response  from   export grievance  method="+fileExportResponse);	
+						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
+						
+						Gson gson= new Gson(); 
+						String apiResponse = gson.toJson(response);
+						fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+							log.info("response  from   export grievance  method="+fileExportResponse);
 							
-							return "redirect:fileExportResponse.getUrl()";
+							return "redirect:"+fileExportResponse.getUrl();
 					}
 }
 
