@@ -47,4 +47,12 @@ public class ProfileController {
 	public  UpdateProfileResponse updateProfile(@RequestBody Registration registration,HttpSession session) {
 		return profileService.updateProfile(registration, session);
 	} 
+	
+	@RequestMapping(value ="adminApproval",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse adminApproval(@RequestBody UserStatus userStatus,HttpSession session) {
+		return profileService.adminApprovalService(userStatus,session);
+		
+	}
+	
 }

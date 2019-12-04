@@ -676,12 +676,12 @@ return action;
 
 /********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-public String adminRegistrationRequest(String Id ,String status,String userStatus,String grievanceStatusName) {
+public String adminRegistrationRequest(String Id ,String status,String userStatus,String grievanceStatusName,String createdOn) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
-	String approveAction = "";
+	String approveAction = "userApprovalPopup("+Id+","+createdOn+")";
 	String viewAction=""; 
-	String rejectAction = "";
+	String rejectAction = "userRejectPopup("+Id+","+createdOn+")";
 	
 
 

@@ -207,9 +207,82 @@ $('.datepicker').on('mousedown',function(event){
 
 
 
+function userApprovalPopup(userId,registrationDate){
+	$('#approveInformation').openModal();
+	$("#userId").text(userId)
+}
+
+function confirmApproveInformation(){
+	$('#approveInformation').closeModal();
+	$('#confirmApproveInformation').openModal();
+	$("#registrationDate").text(registrationDate);
+}
 
 
+function aprroveUser(userId){
+	var userid= $("#userId").text();
+	var approveRequest={
+			"userid": userid,
+			"status" : "Approved",
+			"remarks": $("#Reason").val()	
+	}
+	
+	$.ajax({
+		url : './adminApproval',
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			confirmApproveInformation();
+			
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+	
+	
+}
 
+function userRejectPopup(userId,registrationDate){
+	$('#rejectInformation').openModal();
+	console.log("Reject userId is---->"+userId+"------registrationDate----------->"+registrationDate);
+	$("#userId").text(userId)
+}
 
+function confirmRejectInformation(){
+	$('#rejectInformation').closeModal();
+	$('#confirmRejectInformation').openModal();
+	$("#registrationDate").text(registrationDate);
+
+}
+
+function rejectUser(userId){
+	var userid= $("#userId").text();
+	var rejectRequest={
+			"userid": userid,
+			"status" : "Approved",
+			"remarks": $("#Reason").val()	
+	}
+	
+	$.ajax({
+		url : './adminApproval',
+		data : JSON.stringify(rejectRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log("rejectRequest----->"+JSON.stringify(rejectRequest));
+			confirmRejectInformation();
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+	
+	
+}
 
 

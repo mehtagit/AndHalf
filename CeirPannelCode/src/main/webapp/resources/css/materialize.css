@@ -8748,8 +8748,13 @@ input[type=text] {
 
 @media only screen and (max-width: 425px) {
   .selectDropdwn {
-    margin-top: -35px;
     padding: 0 0.25rem !important;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .filterfield {
+    margin-top: 0px;
   }
 }
 
