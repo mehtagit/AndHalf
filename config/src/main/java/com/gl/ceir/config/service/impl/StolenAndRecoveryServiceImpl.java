@@ -24,6 +24,7 @@ import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.model.SingleImeiHistoryDb;
+import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
@@ -49,10 +50,6 @@ import com.gl.ceir.config.specificationsbuilder.StolenAndRecoverySpecificationBu
 public class StolenAndRecoveryServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryServiceImpl.class);
-
-
-
-	private final static String NUMERIC_STRING = "0123456789";
 
 	@Autowired
 	FileStorageProperties fileStorageProperties;
@@ -80,6 +77,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
+	
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
 
 	@Transactional
 	public GenricResponse uploadDetails( StolenandRecoveryMgmt stolenandRecoveryDetails) {
@@ -142,6 +142,7 @@ public class StolenAndRecoveryServiceImpl {
 		
 		List<SystemConfigListDb> sourceTypes = null;
 		List<SystemConfigListDb> requestTypes = null;
+		List<StateMgmtDb> stateInterpList = null;
 		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -173,6 +174,7 @@ public class StolenAndRecoveryServiceImpl {
 				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
+			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {
 				sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
@@ -190,6 +192,13 @@ public class StolenAndRecoveryServiceImpl {
 						stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp());
 					}
 					break;
+				}
+				
+				for(StateMgmtDb stateMgmtDb : stateInterpList) {
+					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
+						stolenandRecoveryMgmt.setStateInterp(stateMgmtDb.getInterp()); 
+						break;
+					}
 				}
 			}
 			

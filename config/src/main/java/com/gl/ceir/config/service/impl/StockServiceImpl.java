@@ -16,14 +16,17 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
@@ -62,6 +65,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
 
 	public GenricResponse uploadStock(StockMgmt stackholderRequest) {
 
@@ -105,6 +111,8 @@ public class StockServiceImpl {
 
 	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		
+		List<StateMgmtDb> stateInterpList = null;
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
@@ -139,6 +147,16 @@ public class StockServiceImpl {
 			}
 			
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
+			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+ 			
+			for(StockMgmt stockMgmt : page.getContent()) {
+				for(StateMgmtDb stateMgmtDb : stateInterpList) {
+					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
+						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
+						break;
+					}
+				}
+			}
 			
 			return page;
 

@@ -56,6 +56,9 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private String sourceTypeInterp;
 	
+	@Transient
+	private String stateInterp;
+	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
 	
@@ -162,6 +165,13 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
