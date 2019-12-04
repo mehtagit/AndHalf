@@ -3290,6 +3290,7 @@ th {
   table.responsive-table th {
     display: block;
     text-align: right;
+    width: auto !important;
   }
 
   table.responsive-table td {
