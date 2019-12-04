@@ -70,6 +70,15 @@ public class ProfileService {
 		return response;    
 	}
 	
-	
+	public HttpResponse adminApprovalService(UserStatus userStatus,HttpSession session) {
+		log.info("inside update userStatus controller");
+		Integer userid=(Integer)session.getAttribute("userid");
+		log.info("userid from session:  "+userid);
+		userStatus.setUserId(userid); 
+		log.info("userStatus data is :  "+userStatus);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.adminUserApproval(userStatus);
+		return response;  
+	} 
 	
 }

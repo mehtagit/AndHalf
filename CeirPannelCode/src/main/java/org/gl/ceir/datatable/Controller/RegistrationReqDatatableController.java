@@ -87,7 +87,7 @@ public class RegistrationReqDatatableController {
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
 				   String grievanceStatusName = dataInsideList.getStateInterp();
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName);			   
+				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName,createdOn);			   
 				   String[] finalData={createdOn,Id,type,roles,grievanceStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

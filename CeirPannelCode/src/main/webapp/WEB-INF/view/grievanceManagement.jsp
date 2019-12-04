@@ -134,9 +134,9 @@
                             <span>Do you want to close this ticket?</span>
                             <input type="checkbox" id="closeTicketCheck" />
                         </label>
-                    </p>
-				<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a>
-			</p>
+                    </p> <br>
+				<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br>
+			
 
 			<span> Required Field are marked with <span class="star">*</span></span>
 			
