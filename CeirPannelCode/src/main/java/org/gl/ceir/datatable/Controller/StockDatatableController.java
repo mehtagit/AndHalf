@@ -80,7 +80,7 @@ public class StockDatatableController {
 			}
 			else {
 
-				if("viaStock".equals(sourceType) && "Importer".equals(userType)){	
+				if( ("Importer".equals(userType) || "Retailer".equals(userType) || "Distributor".equals(userType)) && "viaStock".equals(sourceType)){	
 					log.info("userType in stock controller 1--------"+userType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{

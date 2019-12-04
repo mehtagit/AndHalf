@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@FeignClient(url="http://13.127.239.247:8085/CEIRCode",value = "registrationUrls")
+@FeignClient(url="${apiUrl1}",value = "registrationUrls")
 public interface UserRegistrationFeignImpl {
   
 	@PostMapping("/userRegistration/getUsertypes")
@@ -30,8 +30,7 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/userRegistration/validate")
 	public HttpResponse  otpValidate(@RequestBody Otp otp);
 	
-	@PostMapping("/userRegistration/resendOtp/{userid}")   
-	public HttpResponse otpResend(@PathVariable("userid") Integer userid);
-	
-	
+	@PostMapping("/userRegistration/resendOtp/{userid}")                                                                                         
+	public HttpResponse otpResend(@PathVariable("userid") Integer userid);  
+                                                                          	
 }

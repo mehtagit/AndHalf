@@ -1,4 +1,5 @@
 function changePassword(){
+	$("#changePassBtn").prop('disabled', true);
 	var obj="";
 	$("#changePassword").each(function(key, val){
 		val = $(this);
@@ -6,35 +7,45 @@ function changePassword(){
 			obj =  
 			{  
 					oldPassword:val.find('#oldPassword').val(),
-					password:val.find('#newPassword').val(),
-					confirmPassword: val.find('#confirmPassword').val()
+					password:val.find('#password').val(),
+					confirmPassword: val.find('#confirm_password').val()
 			}    
 		}
 	});
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/changePassword',
-		contentType : "application/json",
-		dataType : 'html',
 		data : JSON.stringify(obj),
+		contentType : "application/json",
+		dataType : 'html', 
 		success : function(data) {
 			var resp=JSON.parse(data);
+			if(resp.statusCode=='200'){
 			$("#changePasswordMessage h6").text(resp.response);
-			$("#changePasswordMessage").openModal();
-		}, 
+			$("#changePasswordMessage").openModal();   
+			}
+			else{
+				$("#changePassword #errorMsg").text(resp.response);
+			}
+			$("#changePassBtn").prop('disabled', false);
+		},  
 		error: function (xhr, ajaxOptions, thrownError) {
-		}
-
+			$("#changePassBtn").prop('disabled', false);
+		} 
+ 
 	});
 	return false;
 }
 
 function updateUSerStatus(){
-	var obj="";
+	
+	$("#updateStatusBtn").prop('disabled', true);
+	var obj="";  
 	obj={
-			userStatus:$("input[name='status']:checked").val()
+			status:$("input[name='status']:checked").val()
 
 	};
+	console.log("user status: "+JSON.stringify(obj));
 	$.ajax({ 
 		type : 'POST',
 		url : contextpath+'/updateUserStatus',
@@ -43,11 +54,19 @@ function updateUSerStatus(){
 		data : JSON.stringify(obj),
 		success : function(data) { 
 			var resp=JSON.parse(data);
+			if(resp.statusCode=='200'){
 			$("#manageAccountSubmit h6").text(resp.response);
-			$("#manageAccountSubmit").openModal();
+			$("#manageAccountSubmit").openModal();   
+			
+			}
+			else{  
+				$("#userStatusForm #errorMsg").text(resp.response);
+			}
+			$("#updateStatusBtn").prop('disabled', true);
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
-		}
+			$("#updateStatusBtn").prop('disabled', true);
+		} 
 
 	});
 	return false;
@@ -122,9 +141,9 @@ function editProfile(){
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
 			$("#registrationForm #country").val(resp.country);  
-			$("#questionId1 #country").val(resp.country);  
+			$("#questionId1 #country").val(resp.country);
 			$("#registrationForm #usertypes").val(resp.roles); 
-
+            
 			var arr=[];    
 			arr=resp.roles;
 			for (var i = 0; i < arr.length; i++) {
@@ -132,6 +151,8 @@ function editProfile(){
 			}
 
 
+			
+			
 			//$("#").val(resp[i].); 
 			var questionData=resp.questionList;
 			for(var i=0;i<questionData.length;i++){
@@ -151,10 +172,11 @@ function editProfile(){
 }	
 
 function updateProfile(){
+	$("#passwordBtn").prop('disabled', true);
 	$('#registrationForm #usertypes option').attr('disabled', false);
 	console.log($('select#usertypes').val());
-	var obj="";
-	var oj2=""; 
+	var obj=""; 
+	var oj2="";  
 	var questionData=[];
 	$("#registrationForm .securityQuestionDiv").each(function(key, val){
 		val = $(this);
@@ -164,13 +186,12 @@ function updateProfile(){
 					questionId:parseInt(val.find('.questionId').val()),
 					answer:val.find('.answer').val(),    
 					id:val.find('.id').val()
-
-			}  
+			}   
 			questionData.push(obj2);
 		}
 	});
 
-
+  var password=document.getElementById("confirmPassword").value;
 	$("#registrationForm").each(function(key, val){
 		val = $(this);  
 		if(val.html() !== "") {
@@ -190,9 +211,10 @@ function updateProfile(){
 					passportNo:val.find('#passportNo').val(),
 					country:val.find('#country').val(),
 					roles:val.find('#usertypes').val(),
-					questionList:questionData
+					questionList:questionData,
+					password:password
 			}    
-		} 
+		}  
 	});
 	console.log("question data:  "+JSON.stringify(obj));
 
@@ -206,24 +228,39 @@ function updateProfile(){
 		success : function(data) {
 
 			var response=JSON.parse(data);
+			if(response.statusCode=='200'){
 			if(response.userstatus=='Approved'){
-
-			}
+				$("#passwordModal").closeModal();
+				$("#profileResponse h6").text(response.response); 
+				$('#profileResponse').openModal();    
+			} 
 			else if(response.userstatus=='OTP Verification Pending'){
 				$("#userid").val(response.userId);
-				window.location.href='#otpMsgModal';
-				$("#otpMsgModal").openModal();   
+				$("#passwordModal").closeModal();
+				$("#otpMsgModal").openModal();     
 				$("#otpMsg").text(response.response);
 			}
 			else{
-
 			}
+			}
+			else{
+				$("#registrationForm #errorMsg").text(response.response);
+				$("#passwordModal").closeModal();
+			}
+			$("#passwordBtn").prop('disabled', false);
+			$("#btnSave").prop('disabled', false);
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
+			$("#passwordBtn").prop('disabled', false);
+			$("#btnSave").prop('disabled', false);
 		}
-
 	});
 	return false;
+} 
 
+function passwordPopup(){
+	$("#btnSave").prop('disabled', true);
+	$("#passwordModal").openModal();
+	return false;
 }
 

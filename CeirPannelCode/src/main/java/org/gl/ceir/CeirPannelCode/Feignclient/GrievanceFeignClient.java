@@ -24,7 +24,8 @@ public interface GrievanceFeignClient {
 	@RequestMapping(value="/v2/filter/grievance" ,method=RequestMethod.GET) 
 	public Object grievanceFilter(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) ;
 
 
 	// ******************************************** save 	grievance api ********************************************************************************
@@ -43,4 +44,5 @@ public interface GrievanceFeignClient {
 
 
 
+	
 }

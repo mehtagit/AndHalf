@@ -15,7 +15,22 @@ public class LoginResponse {
 	private String primaryRole;
 	private Integer primaryRoleId; 
 	private String status;
+	private String operatorTypeName;
+    private Integer operatorTypeId;
     
+    
+	public String getOperatorTypeName() {
+		return operatorTypeName;
+	}
+	public void setOperatorTypeName(String operatorTypeName) {
+		this.operatorTypeName = operatorTypeName;
+	}
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
 	public String getResponse() {
 		return response;
 	}
@@ -78,6 +93,7 @@ public class LoginResponse {
 	public String toString() {
 		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
-				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + "]";
+				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
+				+ ", operatorTypeId=" + operatorTypeId + "]";
 	}
 }

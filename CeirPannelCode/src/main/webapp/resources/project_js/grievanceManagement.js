@@ -96,7 +96,7 @@ function pageRendering(){
 					$("#greivanceTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
 							"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
 							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
+							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+">"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
@@ -403,7 +403,23 @@ function viewGrievanceHistory(grievanceId)
 
 
 
+//**********************************************************Export Excel file************************************************************************
+function exportData()
+{
+	var grievanceStartDate=$('#startDate').val();
+	var grievanceEndDate=$('#endDate').val();
+	var grievancetxnId=$('#transactionID').val();
+	var grievanceId=$('#grievanceID').val();
+	var grievanceStatus=$('#recentStatus').val();
 
+	var table = $('#grivanceLibraryTable').DataTable();
+	var info = table.page.info(); 
+   var pageNo=info.page;
+    var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log(" grievanceStartDate  ="+grievanceStartDate+"  grievanceEndDate=="+grievanceEndDate+"  grievancetxnId="+grievancetxnId+" grievanceId ="+grievanceId+"grievanceStatus  "+grievanceStatus)
+	window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+}
 
 
 

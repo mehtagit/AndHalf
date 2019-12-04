@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
-@FeignClient(url="http://13.127.239.247:8085/CEIRCode",value = "profileUrls")
+@FeignClient(url="${apiUrl1}",value = "profileUrls")
 public interface UserProfileFeignImpl {
 
 	@PostMapping("/userProfile/changePassword")
@@ -32,12 +32,11 @@ public interface UserProfileFeignImpl {
 	@PostMapping("/userProfile/updateProfile") 
     public UpdateProfileResponse updateUserProfile(Registration registration);
 	
-	
-	//****************************************************************Admin Registration api starts from here ***************************************************************************************************		
-	//View admin registration  feign  controller
+	//****************************************************************Admin Registration api starts from here ***************************************************************************************************	
+	//View admin registration feign controller
 	@RequestMapping(value="/userProfile/record" ,method=RequestMethod.POST) 
 	public Object registrationRequest(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 } 
 

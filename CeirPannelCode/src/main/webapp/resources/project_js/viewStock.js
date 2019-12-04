@@ -223,20 +223,14 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 //alert("sourceType<><><><>"+sourceType);
 //alert("currentRoleType<><><><>"+currentRoleType);
 function filter(){
-	if(currentRoleType=="Importer" && sourceType !="viaStock" ){
+	if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType !="viaStock" ){
 	Datatable('headers','stockData')
-	}else if(currentRoleType==="Distributor" && sourceType ==="viaStock"){
-	Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
-	}else if(currentRoleType=="Distributor"){
-	Datatable('headers','stockData')
-	}else if(currentRoleType=="Importer" || currentRoleType=="Distributor" && sourceType =="viaStock" ){
-	Datatable('./headers?type=stockcheckHeaders', 'stockData?sourceType=viaStock')
 	}else if(currentRoleType=="Custom"){
 	Datatable('./headers?type=customStockHeaders','stockData')
 	}else if(currentRoleType=="CEIRAdmin"){
 	Datatable('./headers?type=adminStockHeaders','stockData')
-	}else if(currentRoleType=="Retailer" || currentRoleType=="Distributor"){
-	Datatable('headers','stockData')
+	}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType =="viaStock"){
+	Datatable('./headers?type=stockcheckHeaders','stockData?sourceType=viaStock')
 	}
 	localStorage.removeItem('sourceType');
 }
@@ -348,7 +342,8 @@ function pageButtons(url){
 			}
 			if(sourceType=="viaStock"){
 				$("#btnLink").css({display: "none"});
-				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					$('#'+button[i].id).attr("href", button[i].buttonURL);
@@ -362,7 +357,8 @@ function pageButtons(url){
 
 			}else{
 
-				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					/*$('#'+button[i].id).attr("onclick", button[i].buttonURL);*/

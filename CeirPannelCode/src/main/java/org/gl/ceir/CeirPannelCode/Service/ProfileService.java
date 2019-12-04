@@ -27,9 +27,18 @@ public class ProfileService {
 		Integer userid=(Integer)session.getAttribute("userid");
 		log.info("userid from session:  "+userid);
 		password.setUserid(userid);      
-		HttpResponse response=new HttpResponse();             
-		response=userProfileFeignImpl.changePassword(password);
-		return response;   
+		if(password.getPassword().equals(password.getConfirmPassword())) {
+			HttpResponse response=new HttpResponse();             
+			response=userProfileFeignImpl.changePassword(password);
+			log.info("response got:  "+response);
+			return response; 	
+		}
+		else {    
+			HttpResponse response=new HttpResponse();             
+            response.setResponse("Both Passwords do the match");
+			return response; 
+		}
+		  
 	} 
 	
 	public HttpResponse updateUSerStatus(UserStatus userStatus,HttpSession session) {

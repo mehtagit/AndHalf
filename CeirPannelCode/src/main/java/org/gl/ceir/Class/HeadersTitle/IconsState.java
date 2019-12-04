@@ -1,7 +1,5 @@
 package org.gl.ceir.Class.HeadersTitle;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -17,7 +15,7 @@ public class IconsState {
 	String viewIcon="\"fa fa-eye teal-text view-icon\"";
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
-	String replyIcon="\"fa fa-reply\""; 
+	String replyIcon="\"fa fa-reply reply-icon\""; 
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
 	String rejectIcon = "\"fa fa-user-times reject-icon\"";
 	

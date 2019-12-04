@@ -72,37 +72,37 @@ var contextpath = "${context}";
 							</h1> 
 						</li>
 					</ul>
-					<ul id="chat-out" class="right hide-on-med-and-down"
-						style="overflow: inherit !important;">
-						<li><a
-							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
-							href="#" data-activates="profile-dropdown" style="height: 65px;"><i
-								class="mdi-action-account-circle"
-								style="color: #fff; font-size: 40px;"></i></a>
-							<ul id="profile-dropdown" class="dropdown-content">
-								<li><a href="${context}/editProfile"  target="mainArea"><i
-										class="fa fa-pencil dropdownColor" style="float: left"></i><span
-										style="float: left" class="dropdownColor">Edit Info</span></a></li>
-								<li class="divider"></li>
-								<li><a data-target="changePassword" class="modal-trigger"><i
-										class="mdi-action-settings dropdownColor" style="float: left"></i><span
-										style="float: left" class="dropdownColor">Change
-											Password</span></a></li>
-								<li class="divider"></li>
-								<li><a href="${context}/logout" id=""><i
-										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
-										class="dropdownColor"> Logout</span></a></li>
-								<li class="divider"></li>
-								<li><a href="#manageAccount" class="modal-trigger"> <span
-										class="dropdownColor"> Activate/Deactivate Account</span></a></li>
-							</ul></li>
-					</ul>
+				<ul id="chat-out" class="right hide-on-med-and-down"
+style="overflow: inherit !important;">
+<li><a
+class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
+href="#" data-activates="profile-dropdown" style="height: 65px;"><i
+class="mdi-action-account-circle"
+style="color: #fff; font-size: 40px;"></i></a>
+<ul id="profile-dropdown" class="dropdown-content">
+<li><a href="${context}/editProfile" target="mainArea"><i
+class="fa fa-pencil dropdownColor" style="float: left"></i><span
+style="float: left" class="dropdownColor">Edit Info</span></a></li>
+<li class="divider"></li>
+<li><a data-target="changePassword" class="modal-trigger"><i
+class="mdi-action-settings dropdownColor" style="float: left"></i><span
+style="float: left" class="dropdownColor">Change
+Password</span></a></li>
+
+<li class="divider"></li>
+<li><a href="#manageAccount" class="modal-trigger"><i class="fa fa-sign-out dropdownColor"></i><span
+class="dropdownColor"> Activate/Deactivate Account</span></a></li>	
+<li class="divider"></li>
+
+<li><a href="${context}/logout" id=""><i style="float: left;"
+class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
+class="dropdownColor"> Logout</span></a></li>
+
+</ul></li>
+</ul>
 				</div>
 			</nav>
-
-
-			}
-		</div>
+</div>
 
 		<!-- end header nav-->
 	</header>
@@ -123,8 +123,8 @@ var contextpath = "${context}";
 							<div class="col col s4 m4 l4">
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
-									style="width: 180px; text-align: center; color: #fff; font-size: 20px; margin-top: 2px;">
-									welcome <%=(String)session.getAttribute("name") %>
+									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
+									Welcome <%=(String)session.getAttribute("name") %>
 									(<%=(String)session.getAttribute("username")%>) 
 									</p>
 							</div>

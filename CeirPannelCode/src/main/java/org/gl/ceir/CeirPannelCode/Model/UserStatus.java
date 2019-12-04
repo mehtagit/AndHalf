@@ -1,25 +1,25 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class UserStatus {
-
-	private String userStatus;
+	private String status;
 	private Integer userId;
-	public String getUserStatus() {
-		return userStatus;
-	}
-	public void setUserStatus(String userStatus) {
-		this.userStatus = userStatus;
-	}
 	public Integer getUserId() {
 		return userId;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "UserStatus [userStatus=" + userStatus + ", userId=" + userId + "]";
-	}              
-	   
-	  
+		return "UserStatusRequest [status=" + status + ", userId=" + userId + "]";
+	}
+
+
+
 }

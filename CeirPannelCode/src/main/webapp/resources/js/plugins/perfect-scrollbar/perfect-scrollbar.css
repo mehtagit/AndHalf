@@ -1,5 +1,5 @@
 .ps-container.ps-active-x > .ps-scrollbar-x-rail, .ps-container.ps-active-y > .ps-scrollbar-y-rail {
-  display: block; }
+  display: none; } 
 .ps-container.ps-in-scrolling {
   pointer-events: none; }
   .ps-container.ps-in-scrolling > .ps-scrollbar-x-rail {
@@ -80,6 +80,7 @@
     -o-transition: background-color 0.2s linear;
     transition: background-color 0.2s linear;
     right: 0;
+    display: none;
     /* there must be 'right' for ps-scrollbar-y */
     width: 5px; }
 .ps-container:hover.ps-in-scrolling {

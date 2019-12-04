@@ -106,7 +106,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="supplierName" id="supplierName" pattern="[A-Za-z]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" required />
+                                            <input type="text" name="supplierName" id="supplierName" pattern="[A-Za-z  ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" required />
                                             <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                     </div>

@@ -8653,7 +8653,7 @@ button.btn-floating {
   position: absolute;
   z-index: 999;
   will-change: width, height;
-  width: 140px !important;
+   width: 200px !important;
   top: 40px !important;
 }
 
@@ -8797,6 +8797,7 @@ input[type=text] {
   height: inherit;
   line-height: inherit;
   margin-right: 5px;
+    font-size: 14px;
 }
 
 /*!

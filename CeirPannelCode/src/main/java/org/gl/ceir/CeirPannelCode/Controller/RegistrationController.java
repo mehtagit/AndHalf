@@ -6,7 +6,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -34,7 +36,8 @@ public class RegistrationController {
 	RegistrationService registrationService;
 	@Autowired
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
-
+    @Autowired
+    FeignClientImplementation feignImplementation;
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
 	public ModelAndView index(){
@@ -42,7 +45,7 @@ public class RegistrationController {
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
 		return mv;      
-	}        
+	}         
 
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  
@@ -50,22 +53,45 @@ public class RegistrationController {
 		List<Usertype> response =userRegistrationFeignImpl.userypeList();
 		return response;          
 	} 
+	
+	@RequestMapping(value = "/operatorList/{tag}",method = {RequestMethod.GET})
+	@ResponseBody  
+	public List<Operator> operatorList(@PathVariable String tag){ 
+		List<Operator> response =feignImplementation.operatorList(tag);
+		return response;            
+	} 
 
 	@RequestMapping(value = "/registration",method = {RequestMethod.GET})
 	public ModelAndView registration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
-			ModelAndView mv=registrationService.registrationView(usertypeId);
-			return mv; 
-	}  
-	    
+		ModelAndView mv=registrationService.registrationView(usertypeId);
+		
+		return mv; 
+	} 
+	@RequestMapping(value = "/customRegistration",method = {RequestMethod.GET})
+	public ModelAndView customRegistration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
+		ModelAndView mv=registrationService.customRegistrationView(usertypeId);
+		return mv; 
+	} 
+
+	@RequestMapping(value = "/operatorRegistration",method = {RequestMethod.GET})
+	public ModelAndView operatorRegistration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
+		ModelAndView mv=registrationService.operatorRegistrationView(usertypeId);
+		return mv; 
+	} 
+
 	@RequestMapping(value = "/saveRegistration",method = {RequestMethod.POST})
 	@ResponseBody     
 	public OtpResponse saveRegistration(@RequestParam(name = "data",required = true) String data,
-			@RequestParam(name = "file",required = false)MultipartFile file,HttpSession session) throws IOException{
-		OtpResponse response =registrationService.saveRegistration(data, file,session);  
+			@RequestParam(name = "file",required = false)MultipartFile file,
+			@RequestParam(name = "photo",required = false)MultipartFile photo,
+			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
+			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
+			HttpSession session) throws IOException{
+		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,session);  
 		return response;             
 	}
-	
-	
+
+
 
 	@RequestMapping(value = "/verifyOtpPage",method = {RequestMethod.GET})
 	public ModelAndView verifyOtpPage(){

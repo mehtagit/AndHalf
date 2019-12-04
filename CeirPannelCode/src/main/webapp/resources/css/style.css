@@ -618,7 +618,7 @@ ul.side-nav.leftside-navigation hr {
 }
 
 ul.side-nav.leftside-navigation li {
-  line-height: 44px;
+    line-height: 18px;
 }
 
 ul.side-nav.leftside-navigation li:hover {
@@ -641,7 +641,7 @@ ul.side-nav.leftside-navigation li.user-details {
   -o-background-size: cover;
   background-size: cover;
   margin-bottom: 15px;
-  padding: 15px 0 0 15px;
+    padding: 10px 0 0 15px;
 }
 
 ul.side-nav.leftside-navigation li.user-details #profile-dropdown a {
@@ -2534,3 +2534,31 @@ input[type='search'] {
       background-repeat: no-repeat !important;
       color: #444 !important;
     }
+    
+    
+    
+ .export-to-excel {
+color: #2979a5;
+float: right;
+border: solid 1px rgba(33, 167, 201, 0.774);
+padding: 4px 10px;
+border-radius: 2px;
+font-size: 14px;
+background-color: #fff;
+margin-top: 26px;
+} 
+
+
+
+.modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: -25px -24px 1rem -24px;
+}
+
+
+
+.navData:hover {
+background-color: #fff;
+}
