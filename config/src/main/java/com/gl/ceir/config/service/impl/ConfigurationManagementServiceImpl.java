@@ -253,7 +253,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	@Cacheable
+	@Cacheable("system_config_list")
 	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
 		try {
 
@@ -267,7 +267,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	@Cacheable
+	@Cacheable("system_config_list")
 	public List<SystemConfigListDb> getSystemConfigListByTagAndUserType(String tagId, int userTypeId){
 		try {
 

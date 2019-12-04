@@ -120,7 +120,6 @@ public class StockServiceImpl {
 				
 				if(Objects.nonNull(filterRequest.getUserId()))
 					smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
-
 			} 
 
 			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
@@ -138,8 +137,10 @@ public class StockServiceImpl {
 			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
-
-			return stockManagementRepository.findAll(smsb.build(), pageable);
+			
+			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
+			
+			return page;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
