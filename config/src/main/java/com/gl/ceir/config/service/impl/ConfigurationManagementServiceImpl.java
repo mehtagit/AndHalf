@@ -1,6 +1,5 @@
 package com.gl.ceir.config.service.impl;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +9,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -20,8 +20,6 @@ import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
-import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.StatesInterpretationDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -255,6 +253,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
+	@Cacheable
 	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
 		try {
 
@@ -268,6 +267,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
+	@Cacheable
 	public List<SystemConfigListDb> getSystemConfigListByTagAndUserType(String tagId, int userTypeId){
 		try {
 

@@ -19,21 +19,21 @@ import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
-
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
 import com.gl.ceir.config.model.SingleImeiHistoryDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
+import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -78,6 +78,8 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired
 	ImmegreationImeiDetailsRepository immegreationImeiDetailsRepository;
 
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
 
 	@Transactional
 	public GenricResponse uploadDetails( StolenandRecoveryMgmt stolenandRecoveryDetails) {
@@ -137,6 +139,10 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		
+		List<SystemConfigListDb> sourceTypes = null;
+		List<SystemConfigListDb> requestTypes = null;
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
@@ -166,7 +172,28 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(filterRequest.getSourceType())) 
 				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			return 	stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
+			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
+			
+			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {
+				sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
+				requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
+				
+				for(SystemConfigListDb configListDb : sourceTypes) {
+					if(stolenandRecoveryMgmt.getSourceType() == configListDb.getValue()) {
+						stolenandRecoveryMgmt.setSourceTypeInterp(configListDb.getInterp());
+					}
+					break;
+				}
+				
+				for(SystemConfigListDb configListDb : requestTypes) {
+					if(stolenandRecoveryMgmt.getRequestType() == configListDb.getValue()) {
+						stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp());
+					}
+					break;
+				}
+			}
+			
+			return stolenandRecoveryMgmtPage;
 
 		} catch (Exception e) {
 

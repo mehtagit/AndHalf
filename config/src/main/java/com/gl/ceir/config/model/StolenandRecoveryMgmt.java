@@ -42,6 +42,9 @@ public class StolenandRecoveryMgmt implements Serializable {
 	
 	private Integer requestType;
 	
+	@Transient
+	private String requestTypeInterp;
+	
 	private String roleType;
 	
 	private String blockingType;
@@ -49,6 +52,9 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String blockingTimePeriod;
 	
 	private Integer sourceType;
+	
+	@Transient
+	private String sourceTypeInterp;
 	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
@@ -139,6 +145,22 @@ public class StolenandRecoveryMgmt implements Serializable {
 	}
 	public void setImei(Long imei) {
 		this.imei = imei;
+	}
+	
+	public String getRequestTypeInterp() {
+		return requestTypeInterp;
+	}
+	public void setRequestTypeInterp(String requestTypeInterp) {
+		this.requestTypeInterp = requestTypeInterp;
+	}
+	public String getSourceTypeInterp() {
+		return sourceTypeInterp;
+	}
+	public void setSourceTypeInterp(String sourceTypeInterp) {
+		this.sourceTypeInterp = sourceTypeInterp;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	@Override
 	public String toString() {
