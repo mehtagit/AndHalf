@@ -191,7 +191,7 @@ public class GrievanceController {
 							filterRequest.setStartDate(grievanceStartDate);
 							filterRequest.setEndDate(grievanceEndDate);
 							filterRequest.setTxnId(grievancetxnId);
-							filterRequest.setGrievanceStatus(0);
+							filterRequest.setGrievanceStatus(-1);
 							filterRequest.setGrievanceId(grievanceId);
 							filterRequest.setUserId(userId);
 							log.info("filterRequest=="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);

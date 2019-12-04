@@ -1,7 +1,18 @@
 
 $(document).ready(function(){
+	$.ajax({
+		url: './dashboard/box?userTypeId=4',
+		type: 'GET',
+		success: function(data){
+			for (i = 0; i < data.length; i++) {
+				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right'>"+data[i].name+"</h6><p class='circle-para right'><b></b> </p><p class='center view-div-info'><a href='"+data[i].url+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center' style='background-color: #fc950c;'><i class='fa fa-list-alt test-icon' aria-hidden='true'></i></div></div>");
+	
+			}
+		}
+		});
 	notificationDatatable();
 });
+
 
 
 //**************************************************Notification Data table**********************************************

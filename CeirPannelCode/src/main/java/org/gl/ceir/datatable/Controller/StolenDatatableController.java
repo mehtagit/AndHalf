@@ -105,9 +105,9 @@ public class StolenDatatableController {
 						String fileName = dataInsideList.getFileName();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceType();
+						String source =dataInsideList.getSourceTypeInterp();
 						log.info("source type message="+source);
-						String requestType = dataInsideList.getRequestType();
+						String requestType = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stolenState(dataInsideList.getFileName(), dataInsideList.getTxnId(),

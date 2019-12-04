@@ -536,16 +536,18 @@ function pageButtons(url){
 
 function openApprovePopUp(txnId,displayName)
 {
+	displayName=displayName.replace("+20"," " );
 	$('#ApproveConsignment').openModal();
 	$('#ApproveConsignmentTxnid').text(txnId);
 	$('#setApproveConsignmentTxnId').val(txnId);
 	$('#displayname').text(displayName);
-
+	console.log(displayName);
 
 
 }
 function approveSubmit(actiontype){
 	var txnId=$('#setApproveConsignmentTxnId').val();
+	
 	var approveRequest={
 			"action": actiontype,
 			"txnId":txnId
@@ -576,6 +578,7 @@ function approveSubmit(actiontype){
 
 function openDisapprovePopup(txnId,displayName)
 {
+	displayName=displayName.replace("+20"," " );
 	$('#RejectConsignment').openModal();
 	$('#disaproveTxnId').text(txnId);
 	$('#setDisapproveConsignmentTxnId').val(txnId);

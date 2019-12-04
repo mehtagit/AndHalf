@@ -22,6 +22,8 @@ public class StolenContent {
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private String stateInterp;
 	private String taxInterp;
+	private String requestTypeInterp;
+	private String sourceTypeInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -125,7 +127,20 @@ public class StolenContent {
 				+ ", requestType=" + requestType + ", source=" + source + ", roleType=" + roleType + ", blockingType="
 				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
 				+ ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + ", taxInterp="
-				+ taxInterp + "]";
+				+ taxInterp + ", requestTypeInterp=" + requestTypeInterp + ", sourceTypeInterp=" + sourceTypeInterp
+				+ "]";
+	}
+	public String getRequestTypeInterp() {
+		return requestTypeInterp;
+	}
+	public void setRequestTypeInterp(String requestTypeInterp) {
+		this.requestTypeInterp = requestTypeInterp;
+	}
+	public String getSourceTypeInterp() {
+		return sourceTypeInterp;
+	}
+	public void setSourceTypeInterp(String sourceTypeInterp) {
+		this.sourceTypeInterp = sourceTypeInterp;
 	}
 	
 }

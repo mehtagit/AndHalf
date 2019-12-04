@@ -73,13 +73,15 @@ public class LoginService {
 		}
 	}
 
-	public  ModelAndView logout(HttpSession session){
+	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");
 		HttpResponse response=new HttpResponse();
 		Integer userid=(Integer)session.getAttribute("userid");
-		log.info("userid from session:  "+userid);
+		log.info("userid from session: "+userid);
+		if(userid!=null) {
 		response=userLoginFeignImpl.sessionTracking(userid);
-		log.info("response got:  "+response);
+		log.info("response got: "+response);
+		} 
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 
 		session.removeAttribute("usertypeList");
@@ -88,11 +90,11 @@ public class LoginService {
 		session.removeAttribute("userStatus");
 		session.invalidate(); 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/login");
+		mv.addObject("msg","you have been logged out sucessfully");
+		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
-	}
-
+		}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
