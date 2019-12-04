@@ -1,5 +1,8 @@
 package org.gl.ceir.Class.HeadersTitle;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -360,9 +363,11 @@ public String customState(String fileName,String txnId ,String status,String use
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String approveAction = "openApprovePopUp('" + txnId + "','"+(displayName)+ "')";
+String dd="xyz impoters";
+String approveAction = "openApprovePopUp('" + txnId + "','"+dd.replaceAll( " ", "+20")+ "')";
+
 		/* String escapedString = queryParser.escape(approveAction); */
-String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName+"')";
+String rejectAction = "openDisapprovePopup('"+txnId+"','"+dd.replaceAll( " ", "+20")+"')";
 
 
 // state related Code 

@@ -194,7 +194,7 @@ class="dropdownColor"> Logout</span></a></li>
 
 
 				<!--start container-->
-				<div class="container">
+				<div class="">
 					<div class="section">
 
 						<iframe name="mainArea" class="embed-responsive-item"
