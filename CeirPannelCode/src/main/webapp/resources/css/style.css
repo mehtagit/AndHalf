@@ -48,6 +48,7 @@ select {
     height: 2.1rem;
     border-bottom: 1px solid #9e9e9e;
     font-size: 12px;
+    margin-top: 25px;
   }
 }
 
@@ -2516,7 +2517,7 @@ margin: 0 7px;
 
 .reply-icon {
 font-size: 20px !important;
-color: #006994;
+color: #00bcd4;
 margin: 0 7px;
 }
 
@@ -2549,7 +2550,19 @@ background-color: #fff;
 margin-top: 26px;
 } 
     
-    
+ @media only screen and (max-width: 425px){
+ .export-to-excel {
+color: #2979a5;
+float: right;
+border: solid 1px rgba(33, 167, 201, 0.774);
+padding: 4px 10px;
+border-radius: 2px;
+font-size: 14px;
+background-color: #fff;
+margin-top: -32px;
+} 
+ 
+ }   
     
     
     

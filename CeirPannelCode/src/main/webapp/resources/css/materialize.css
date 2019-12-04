@@ -3290,6 +3290,7 @@ th {
   table.responsive-table th {
     display: block;
     text-align: right;
+    width: auto !important;
   }
 
   table.responsive-table td {
@@ -8725,6 +8726,7 @@ input[type=text] {
   color: #fff;
   line-height: 0;
   float: left;
+  padding-left: 10px;
 }
 
 .botton {
@@ -9268,6 +9270,7 @@ label {
     line-height: 30px;
     font-size: 10px;
     width: 70px;
+    margin-top: 10px;
   }
 }
 
@@ -10194,7 +10197,7 @@ input[type=checkbox]:not(:disabled)~.lever:active:after {
     font-size: 12px;
     margin: 0 0 15px 0;
     padding: 0;
-    display: block;
+    display: none;
   }
 }
 
