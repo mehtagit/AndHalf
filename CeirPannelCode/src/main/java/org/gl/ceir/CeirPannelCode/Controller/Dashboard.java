@@ -93,7 +93,14 @@ public class Dashboard {
 	@ResponseBody
 	public ResponseEntity<?> initialDashBoard(@RequestParam(value = "userTypeId") Integer userTypeId) {
 	List<NumberOfBox> response= dashboardFeignClient.dashBoardDBConf(userTypeId);
-	log.info("response:::::::::::"+response);
 	return new ResponseEntity<>(response, HttpStatus.OK); 
 	}
+	
+	@GetMapping("getConsignmetnCountAndQuantity")
+	public ResponseEntity<?> getConsignmetnCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
+		RequestCountAndQuantity response = dashboardFeignClient.consignmentNotification(userId, featureId, userTypeId);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	
 } 

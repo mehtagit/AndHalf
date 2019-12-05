@@ -1,4 +1,3 @@
-
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 $(document).ready(function(){
 	$('.datepicker').datepicker();
@@ -224,7 +223,7 @@ function aprroveUser(userId){
 	var approveRequest={
 			"userid": userid,
 			"status" : "Approved",
-			"remarks": $("#Reason").val()	
+			"remark": $("#Reason").val()	
 	}
 	
 	$.ajax({
@@ -264,7 +263,7 @@ function rejectUser(userId){
 	var rejectRequest={
 			"userid": userid,
 			"status" : "Approved",
-			"remarks": $("#Reason").val()	
+			"remark": $("#Reason").val()	
 	}
 	
 	$.ajax({
