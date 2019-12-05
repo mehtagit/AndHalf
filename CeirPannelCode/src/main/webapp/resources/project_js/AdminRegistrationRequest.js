@@ -222,9 +222,9 @@ function confirmApproveInformation(){
 function aprroveUser(userId){
 	var userid= $("#userId").text();
 	var approveRequest={
-			"userid": userid,
+			"userid": parseInt(userid),
 			"status" : "Approved",
-			"remarks": $("#Reason").val()	
+			"remark": $("#Reason").val()	
 	}
 	
 	$.ajax({
@@ -262,9 +262,9 @@ function confirmRejectInformation(){
 function rejectUser(userId){
 	var userid= $("#userId").text();
 	var rejectRequest={
-			"userid": userid,
+			"userid": parseInt(userid),
 			"status" : "Approved",
-			"remarks": $("#Reason").val()	
+			"remark": $("#Reason").val()	
 	}
 	
 	$.ajax({
