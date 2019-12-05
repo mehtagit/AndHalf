@@ -66,7 +66,7 @@ public interface FeignCleintImplementation {
 
 	//delete Consignment feign  controller
 	@RequestMapping(value="/consigment/delete" ,method=RequestMethod.DELETE) 
-	public @ResponseBody GenricResponse deleteConsignment(ConsignmentModel consignmentModel) ;
+	public @ResponseBody GenricResponse deleteConsignment(ConsignmentModel consignmentModel,@RequestParam("userType") String userType) ;
 
 	//delete Consignment feign  controller
 	@RequestMapping(value="/update/consigmentStatus" ,method=RequestMethod.PUT) 

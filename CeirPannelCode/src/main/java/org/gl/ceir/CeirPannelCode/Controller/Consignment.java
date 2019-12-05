@@ -320,11 +320,12 @@ return response;
 //************************************************ delete consignment record page********************************************************************************/
 
 @RequestMapping(value= {"/deleteConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-public @ResponseBody GenricResponse deleteConsignment(@RequestBody ConsignmentModel consignmentModel) {
+public @ResponseBody GenricResponse deleteConsignment(@RequestBody ConsignmentModel consignmentModel,HttpSession session) {
 
 log.info("enter in delete consignment.");
+String userType=(String) session.getAttribute("usertype");
 log.info("request passed to the deleteConsignment Api="+consignmentModel);
-GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel);
+GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel,userType);
 log.info("response after delete consignment."+response);
 return response;
 
@@ -340,11 +341,12 @@ ConsignmentUpdateRequest request= new ConsignmentUpdateRequest ();
 log.info("enter in update consignment status ."+consignmentUpdateRequest);
 
 
+
 request.setAction(consignmentUpdateRequest.getAction());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
 request.setRoleType((String) session.getAttribute("usertype"));
 request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
-request.setUserId((Long) session.getAttribute("userid"));
+request.setUserId((int) session.getAttribute("userid"));
 request.setRemarks(consignmentUpdateRequest.getRemarks());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
 
