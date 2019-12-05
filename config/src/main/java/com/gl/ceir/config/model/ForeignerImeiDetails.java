@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class ForeignerImeiDetails implements Serializable {
 
@@ -21,7 +23,7 @@ public class ForeignerImeiDetails implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	private Date updatedOn;
 	private Long firstImei;
@@ -29,8 +31,6 @@ public class ForeignerImeiDetails implements Serializable {
 	private Long secondImei;
 	private Long secondMsidn;
 	private String passportNumber;
-
-	
 	
 	private String status;
 

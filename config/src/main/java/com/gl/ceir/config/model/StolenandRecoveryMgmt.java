@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class StolenandRecoveryMgmt implements Serializable {
 
@@ -35,6 +37,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String txnId;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	
 	@UpdateTimestamp

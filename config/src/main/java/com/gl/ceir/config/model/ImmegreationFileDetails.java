@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class ImmegreationFileDetails implements Serializable {
 
@@ -18,7 +20,8 @@ public class ImmegreationFileDetails implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	private Date updatedOn;
 	private String passportNumber;

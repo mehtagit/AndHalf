@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.Period;
 
@@ -33,6 +34,8 @@ public class DeviceSnapShot implements Serializable {
 	private int lastpPolicyBreached;
 	private Date lastpPolicyBreachedDate;
 	private Period period;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	private String remarks;
 	private int duplicateCount;

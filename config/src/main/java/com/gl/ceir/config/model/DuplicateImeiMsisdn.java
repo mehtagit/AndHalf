@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.ImeiStatus;
 
 import io.swagger.annotations.ApiModel;
@@ -32,7 +33,9 @@ public class DuplicateImeiMsisdn implements Serializable {
 
 	private String mobileOperator;
 
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
+	
 	private boolean regulizedByUser;
 
 	private ImeiStatus imeiStatus;

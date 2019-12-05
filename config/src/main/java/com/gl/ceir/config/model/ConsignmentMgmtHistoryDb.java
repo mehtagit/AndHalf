@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class ConsignmentMgmtHistoryDb implements Serializable{
 
@@ -28,8 +30,11 @@ public class ConsignmentMgmtHistoryDb implements Serializable{
 	private String consignmentNumber;
 	@Column(length = 10)
 	private String taxPaidStatus;
+	
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
+	
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 	private Integer userId;

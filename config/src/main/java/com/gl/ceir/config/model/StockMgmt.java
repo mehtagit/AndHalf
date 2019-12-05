@@ -14,6 +14,8 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class StockMgmt implements Serializable {
 
@@ -25,6 +27,7 @@ public class StockMgmt implements Serializable {
 	private Long id;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp

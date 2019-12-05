@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,6 +25,7 @@ public class DeviceDbHistory implements Serializable {
 
 	@JsonIgnore
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 
 	@JsonIgnore

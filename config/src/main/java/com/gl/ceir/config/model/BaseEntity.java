@@ -11,6 +11,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
@@ -19,6 +20,7 @@ public class BaseEntity {
 
 	@JsonIgnore
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
 	@JsonIgnore

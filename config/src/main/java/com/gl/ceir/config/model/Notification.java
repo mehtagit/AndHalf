@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.NotificationStatus;
 
 @Entity
@@ -21,6 +22,7 @@ public class Notification  implements Serializable{
 	private Long id;
 	
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 	
 	@UpdateTimestamp
