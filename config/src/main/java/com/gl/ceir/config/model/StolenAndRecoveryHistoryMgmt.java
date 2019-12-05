@@ -32,10 +32,15 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	private Date createdOn;
 	@UpdateTimestamp
 	private Date modifiedOn;
+	
 	private String requestType;
+	
 	private String roleType;
+	
 	private String blockingType;
+	
 	private String blockingTimePeriod;
+	
 	private String sourceType;
 
 	public Long getId() {

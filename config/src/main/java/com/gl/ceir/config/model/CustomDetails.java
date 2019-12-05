@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class CustomDetails implements Serializable{
 
@@ -17,7 +19,9 @@ public class CustomDetails implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
+	
 	private Date updatedOn;
 	private Long imei;
 	private String sourceType;

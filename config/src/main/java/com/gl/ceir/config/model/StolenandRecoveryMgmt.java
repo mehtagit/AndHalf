@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class StolenandRecoveryMgmt implements Serializable {
 
@@ -35,12 +37,16 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String txnId;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	
 	@UpdateTimestamp
 	private Date modifiedOn;
 	
 	private Integer requestType;
+	
+	@Transient
+	private String requestTypeInterp;
 	
 	private String roleType;
 	
@@ -49,6 +55,12 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String blockingTimePeriod;
 	
 	private Integer sourceType;
+	
+	@Transient
+	private String sourceTypeInterp;
+	
+	@Transient
+	private String stateInterp;
 	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
@@ -140,6 +152,29 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
+	
+	public String getRequestTypeInterp() {
+		return requestTypeInterp;
+	}
+	public void setRequestTypeInterp(String requestTypeInterp) {
+		this.requestTypeInterp = requestTypeInterp;
+	}
+	public String getSourceTypeInterp() {
+		return sourceTypeInterp;
+	}
+	public void setSourceTypeInterp(String sourceTypeInterp) {
+		this.sourceTypeInterp = sourceTypeInterp;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

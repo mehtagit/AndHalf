@@ -14,7 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class StateMgmtDb implements Serializable {
+public class SystemConfigUserwiseDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,13 +29,13 @@ public class StateMgmtDb implements Serializable {
 	private LocalDateTime modifiedOn;
 
 	@NotNull
-	private Integer featureId;
+	private String tagId;
 
 	@NotNull
 	private Integer userTypeId;
 	
 	@NotNull
-	private Integer state;
+	private Integer value;
 	
 	@Transient
 	private String interp;
@@ -64,12 +64,12 @@ public class StateMgmtDb implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Integer getFeatureId() {
-		return featureId;
+	public String getTagId() {
+		return tagId;
 	}
 
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
 	}
 
 	public Integer getUserTypeId() {
@@ -80,12 +80,12 @@ public class StateMgmtDb implements Serializable {
 		this.userTypeId = userTypeId;
 	}
 
-	public Integer getState() {
-		return state;
+	public Integer getValue() {
+		return value;
 	}
 
-	public void setState(Integer state) {
-		this.state = state;
+	public void setValue(Integer value) {
+		this.value = value;
 	}
 
 	public static long getSerialversionuid() {
@@ -103,18 +103,18 @@ public class StateMgmtDb implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("StateMgmtDb [id=");
+		builder.append("SystemConfigUserwiseDb [id=");
 		builder.append(id);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", featureId=");
-		builder.append(featureId);
+		builder.append(", tagId=");
+		builder.append(tagId);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
-		builder.append(", state=");
-		builder.append(state);
+		builder.append(", value=");
+		builder.append(value);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -30,7 +30,7 @@ public class User {
 	
     private Integer previousStatus;
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	UserProfile userProfile;
 	
 	public Long getId() {      

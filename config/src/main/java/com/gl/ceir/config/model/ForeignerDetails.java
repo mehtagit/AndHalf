@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class ForeignerDetails implements Serializable  {
@@ -26,6 +28,8 @@ public class ForeignerDetails implements Serializable  {
 	private String visaExpireDate;
 	private String emailId;
 	private String country;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	private Date updatedOn;
 

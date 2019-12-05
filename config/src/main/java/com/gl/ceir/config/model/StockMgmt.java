@@ -9,9 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class StockMgmt implements Serializable {
@@ -24,6 +27,7 @@ public class StockMgmt implements Serializable {
 	private Long id;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
@@ -58,6 +62,9 @@ public class StockMgmt implements Serializable {
 	private String userType;
 	
 	private Double totalPrice;
+	
+	@Transient
+	private String stateInterp; 
 
 	public Long getId() {
 		return id;
@@ -185,6 +192,14 @@ public class StockMgmt implements Serializable {
 
 	public void setPreviousStockStatus(int previousStockStatus) {
 		this.previousStockStatus = previousStockStatus;
+	}
+
+	public String getStateInterp() {
+		return stateInterp;
+	}
+
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
 	}
 
 	@Override

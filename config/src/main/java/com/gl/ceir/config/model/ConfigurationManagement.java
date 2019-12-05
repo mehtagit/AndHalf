@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class ConfigurationManagement  implements Serializable{
 
@@ -17,10 +19,13 @@ public class ConfigurationManagement  implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
+	
 	private Date updatedOn;
 	private String name;
 	private String value;
+	
 	public Long getId() {
 		return id;
 	}

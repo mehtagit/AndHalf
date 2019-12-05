@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -19,6 +21,7 @@ import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.repository.AuditTrailRepository;
@@ -28,6 +31,7 @@ import com.gl.ceir.config.repository.NotificationRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationDbRepository;
 import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.SystemConfigListRepository;
+import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 
@@ -56,6 +60,9 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	SystemConfigListRepository systemConfigListRepository;
+
+	@Autowired
+	SystemConfigUserwiseRepository systemConfigUserwiseRepository;
 
 	@Autowired
 	NotificationRepository notificationRepository;
@@ -94,7 +101,7 @@ public class ConfigurationManagementServiceImpl {
 			systemConfigurationHistoryDbRepository.save(
 					new SystemConfigurationHistoryDb(systemConfigurationDb2.getTag(), systemConfigurationDb2.getValue(), systemConfigurationDb2.getDescription()
 							));
-			
+
 			systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 			return new GenricResponse(0, "System configuration update Sucessfully", "");
@@ -134,7 +141,7 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			MessageConfigurationDb mcd = messageConfigurationDbRepository.getById(messageConfigurationDb.getId());
-			if(mcd == null) {
+			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
 			MessageConfigurationHistoryDb mshb = new MessageConfigurationHistoryDb();
@@ -184,7 +191,7 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getById(policyConfigurationDb.getId());
-			if(mcd == null) {
+			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
 
@@ -224,16 +231,16 @@ public class ConfigurationManagementServiceImpl {
 
 	public GenricResponse saveNotification(Notification notification) {
 		try {
-			
+
 			notificationRepository.save(notification);
 			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
-			
+
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature, String featureTxnId) {
 		try {
 
@@ -246,6 +253,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
+	@Cacheable("system_config_list")
 	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
 		try {
 
@@ -254,7 +262,37 @@ public class ConfigurationManagementServiceImpl {
 			return systemConfigListRepository.findByTag(tag);
 
 		} catch (Exception e) {
-			logger.info("Exception found = " + e.getMessage());
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@Cacheable("system_config_list")
+	public List<SystemConfigListDb> getSystemConfigListByTagAndUserType(String tagId, int userTypeId){
+		try {
+
+			logger.debug("getSystemConfigListByTag : " + tagId);
+
+			List<SystemConfigListDb> systemConfigListDbResult = new LinkedList<>();
+			
+			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findByTag(tagId);
+			List<SystemConfigUserwiseDb> systemConfigUserwiseDbs = systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId);
+
+			for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
+
+				for(SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
+					
+					if(systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
+						systemConfigListDbResult.add(systemConfigListDb);
+						break;
+					}
+				}
+			}
+			
+			return systemConfigListDbResult;
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}

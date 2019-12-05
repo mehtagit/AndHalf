@@ -35,7 +35,7 @@ public class BlacklistDbHistory implements Serializable {
 	private String deviceNumber;
 	private String deviceType;
 	private String deviceAction;
-	private String	 deviceStatus;
+	private String deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
 	private String  deviceId;
