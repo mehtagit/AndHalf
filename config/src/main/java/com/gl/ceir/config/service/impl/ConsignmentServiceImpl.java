@@ -320,7 +320,7 @@ public class ConsignmentServiceImpl {
 	} 
 
 	@Transactional
-	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest) {
+	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest, String userType) {
 		try {
 			ConsignmentMgmt consignment = consignmentRepository.getByTxnId(consignmentRequest.getTxnId());
 
@@ -328,7 +328,13 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(4, "Consignment Does not Exist",consignmentRequest.getTxnId());
 			}
 
-			consignment.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
+			if("CEIRADMIN".equalsIgnoreCase(userType))
+				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
+			else if("IMPORTER".equalsIgnoreCase(userType))
+				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
+			else
+				return new GenricResponse(1, "userType is invalid.", consignmentRequest.getTxnId());
+			
 			consignment.setRemarks(consignmentRequest.getRemarks());
 
 			consignmentRepository.save(consignment);

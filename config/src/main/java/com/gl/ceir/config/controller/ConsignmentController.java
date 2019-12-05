@@ -163,11 +163,12 @@ public class ConsignmentController {
 
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
-	public GenricResponse deleteConsigment(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
+	public GenricResponse deleteConsigment(@RequestBody ConsignmentMgmt consignmentUploadRequest,
+			@RequestParam(value = "userType", required = false) String userType) {
 
 		logger.info("Consignment Withdraw Request ="+consignmentUploadRequest);
 		
-		GenricResponse genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUploadRequest);
+		GenricResponse genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUploadRequest, userType);
 		logger.info("Response of Delete Request="+genricResponse);
 
 		return genricResponse;
