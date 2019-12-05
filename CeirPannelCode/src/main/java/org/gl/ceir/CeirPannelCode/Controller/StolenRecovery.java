@@ -98,8 +98,8 @@ public class StolenRecovery {
 	  @RequestMapping(value={"/fileTypeStolen"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
 			  RequestMethod.POST}) 
 	  public @ResponseBody GenricResponse FileTypeStolen(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
-			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
-			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
+			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
+			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId)
 	  {	
 		  log.info(" file stolen entry point .");
@@ -151,8 +151,8 @@ public class StolenRecovery {
 	  
 	  @RequestMapping(value={"/fileTypeRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
 			  RequestMethod.POST}) 
-	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
-			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
+	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
+			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId)
 	  {	
 		  
@@ -222,8 +222,8 @@ public class StolenRecovery {
 			  @RequestMapping(value={"/updateFileTypeStolenRecovery"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
 					  RequestMethod.POST}) 
 			  public @ResponseBody GenricResponse updateFileTypeStolenRecovery(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
-					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) String requestType,
-					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) String sourceType,
+					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
+					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) int id)
 			  {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();

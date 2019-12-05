@@ -344,7 +344,7 @@ request.setAction(consignmentUpdateRequest.getAction());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
 request.setRoleType((String) session.getAttribute("usertype"));
 request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
-request.setUserId((int) session.getAttribute("userid"));
+request.setUserId((Long) session.getAttribute("userid"));
 request.setRemarks(consignmentUpdateRequest.getRemarks());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
 

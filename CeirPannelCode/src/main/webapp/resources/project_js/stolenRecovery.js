@@ -457,8 +457,8 @@ function fileStolenReport(){
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
-	var sourceType='file';
-	var requestType='stolen';
+	var sourceType='2';
+	var requestType='0';
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var blockType=$('input[name=stolenBlockPeriod]:checked').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
@@ -517,8 +517,8 @@ function fileRecoveryReport(){
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 
 
-	var sourceType='file';
-	var requestType='recovery';
+	var sourceType='2';
+	var requestType='1';
 	var role = currentRoleType == null ? roleType : currentRoleType;
 
 	var blockType=$('input[name=stolenBlockPeriod]:checked').val();
@@ -616,7 +616,7 @@ function closeRecoveryModalModal()
 function openFileStolenUpdate(txnId,requestType,id)
 {
 	console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
-	if(requestType=='recovery'){
+	if(requestType=='1'){
 		$('#editRecoveryFileModal').openModal(); 
 		$('#editFileRecoveryTxnId').text(txnId)
 		$('#editFileRecoveryId').val(id);
@@ -639,7 +639,7 @@ function updatefileStolenReport(){
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
-	var sourceType='file';
+	var sourceType=2;
 	var requestType=$('#editFileStolenRequestType').val();
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var blockType=$('input[name=editStolenBlockPeriod]:checked').val();
@@ -647,7 +647,7 @@ function updatefileStolenReport(){
 	var txnId=$('#editFileStolenTxnId').text();
 	console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType+" txnId ="+txnId);
 	var formData= new FormData();
-	if(requestType=='recovery'){
+	if(requestType=='1'){
 		formData.append('file', $('#editRecoveryCsvUploadFile')[0].files[0]);
 		formData.append('blockingType','');
 		formData.append('blockingTimePeriod','');
@@ -680,7 +680,7 @@ function updatefileStolenReport(){
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
-			if(requestType=='recovery'){
+			if(requestType=='1'){
 				console.log("close recovery model.");
 				$('#editFileStolenModal').closeModal();
 			}
@@ -751,7 +751,7 @@ function valuesPush(){
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	var requestType="recovery";
+	var requestType="1";
 	console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 	$('#stolenLibraryTable tr td input:checkbox:checked').each(function() {
 

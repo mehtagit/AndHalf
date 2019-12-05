@@ -389,13 +389,13 @@ function valuesPush(){
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	var requestType="stolen";
+	var requestType="0";
 	console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 	$('#stockTable tr td input:checkbox:checked').each(function() {
 
 		var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
 				"userId":userId,
-				"sourceType":'stock',
+				"sourceType":'1',
 				"roleType":role,
 				"requestType":requestType
 		};
