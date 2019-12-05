@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
-@FeignClient(url = "${grievanceFeignClientPath}",value = "grievance" )
+@FeignClient(url = "${dashBoardfeignClientPath}",value = "grievance" )
 
 
 public interface GrievanceFeignClient {
