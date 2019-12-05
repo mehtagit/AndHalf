@@ -251,7 +251,7 @@ function Datatable(url,dataUrl) {
 			"userId": userId,
 			"userType" : role,
 			"featureId":featureId,
-			"usertTypeId":usertypeId,
+			"userTypeId":usertypeId,
 			"txnId":$('#transactionID').val(),
 			"stockStatus":parseInt($('#StockStatus').val())
 	}
