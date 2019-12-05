@@ -103,4 +103,24 @@ public class Dashboard {
 	}
 	
 	
+	@GetMapping("getStockCountAndQuantity")
+	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
+		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("getStolen_RecoveryCountAndQuantity")
+	public ResponseEntity<?> getStolen_RecoveryCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
+		RequestCountAndQuantity response = dashboardFeignClient.stolenRecoveryNotification(requestType, userId, featureId, userTypeId);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("getGrievanceNotificationCountAndQuantity")
+	public ResponseEntity<?> getGrievanceNotificationCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
+		RequestCountAndQuantity response = dashboardFeignClient.grievanceNotification(userId, featureId, userTypeId);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
 } 

@@ -90,7 +90,7 @@ public class LoginService {
 		session.removeAttribute("userStatus");
 		session.invalidate(); 
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("msg","you have been logged out sucessfully");
+		mv.addObject("msg","you have been logged out successfully");
 		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;

@@ -51,7 +51,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 </style>
 </head>
 
-<body>
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 <!-- 
 <section id="content">
@@ -110,7 +110,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 			<script type="text/javascript"
-		src="${context}/resources/project_js/dashboard.js"></script>
+		src="${context}/resources/project_js/home.js"></script>
 
 </body>
 

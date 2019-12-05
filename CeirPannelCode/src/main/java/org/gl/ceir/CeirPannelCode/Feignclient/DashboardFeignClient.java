@@ -21,21 +21,20 @@ public interface DashboardFeignClient {
 
 	//countAndQuantity  feign  controller
 	@RequestMapping(value="/consignment/countAndQuantity" ,method=RequestMethod.GET) 
-	public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) ;
+	public RequestCountAndQuantity consignmentNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId) ;
 
 	//stock/countAndQuantity  feign  controller
 	@RequestMapping(value="/stock/countAndQuantity" ,method=RequestMethod.GET) 
-	public RequestCountAndQuantity stockNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "stockStatus") Integer stockStatus,@RequestParam(value = "userTypeId") Integer userTypeId) ;
+	public RequestCountAndQuantity stockNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId) ;
 
-	//stock/countAndQuantity  feign  controller
+	//stolen/recovery countAndQuantity  feign  controller
 	@RequestMapping(value="/stakeholder/count" ,method=RequestMethod.GET) 
-	public RequestCountAndQuantity stolenRecoveryNotification(@RequestParam(value = "userId") Integer userId,
-			@RequestParam(value = "requestType") String requestType,@RequestParam(value = "fileStatus") Integer fileStatus,@RequestParam(value = "userTypeId") Integer userTypeId);
+	public RequestCountAndQuantity stolenRecoveryNotification(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId);
 
 
 	//stock/countAndQuantity  feign  controller
 	@RequestMapping(value="/grievance/count" ,method=RequestMethod.GET) 
-	public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "grievanceStatus") Integer grievanceStatus,@RequestParam(value = "userTypeId") Integer userTypeId);
+	public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId);
 
 	//dashboard/dbConf  controller
 		@RequestMapping(value="/dashboard/dbConf" ,method=RequestMethod.GET) 
