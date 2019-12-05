@@ -42,7 +42,6 @@ public class ConsignmentMgmt implements Serializable {
 	@Column(length = 10)
 	private Integer taxPaidStatus;
 
-
 	@CreationTimestamp
 	private LocalDateTime createdOn;
 
@@ -91,7 +90,6 @@ public class ConsignmentMgmt implements Serializable {
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
-
 
 	public Long getId() {
 		return id;

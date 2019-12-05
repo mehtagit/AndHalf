@@ -13,8 +13,11 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.ActionConfigDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StatesInterpretationDb;
+import com.gl.ceir.config.model.TableActions;
+import com.gl.ceir.config.repository.ActionConfigRepository;
 import com.gl.ceir.config.repository.StateMgmtRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
 import com.gl.ceir.config.util.Utility;
@@ -30,6 +33,9 @@ public class StateMgmtServiceImpl {
 
 	@Autowired
 	private StatesInterpretaionRepository statesInterpretaionRepository; 
+
+	@Autowired 
+	ActionConfigRepository actionConfigRepository;
 
 	@Autowired
 	FileStorageProperties fileStorageProperties;
@@ -50,19 +56,16 @@ public class StateMgmtServiceImpl {
 	public List<StateMgmtDb> getByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId) {
 		try {
 			List<StateMgmtDb> stateMgmtDbsResult = new ArrayList<StateMgmtDb>();
-			
+
 			logger.info("Going to get states by featureId and usertypeId ");
 
 			List<StateMgmtDb> stateMgmtDbs = stateMgmtRepository.getByFeatureIdAndUserTypeId(featureId, userTypeId);
-			logger.debug(stateMgmtDbs);
-			logger.debug("Instance of Linked List : " + (stateMgmtDbs instanceof LinkedList<?>));
-			logger.debug("Instance of Array List : " + (stateMgmtDbs instanceof ArrayList<?>));
-			
+
 			List<StatesInterpretationDb> statesInterpretationDbs = statesInterpretaionRepository.findByFeatureId(featureId);
 			logger.debug(statesInterpretationDbs);
-			
+
 			for(StatesInterpretationDb statesInterpretationDb : statesInterpretationDbs) {
-				
+
 				for(StateMgmtDb stateMgmtDb : stateMgmtDbs) {
 					if(stateMgmtDb.getState().equals(statesInterpretationDb.getState())) {
 						stateMgmtDb.setInterp(statesInterpretationDb.getInterp());
@@ -72,7 +75,63 @@ public class StateMgmtServiceImpl {
 			}
 
 			return stateMgmtDbsResult;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	/*
+	 * 
+	 */
+	public List<TableActions> getTableActionsByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId) {
+		try {
 			
+			List<ActionConfigDb> actionConfigDbs = null;
+			
+			TableActions tableActions = null;
+			List<TableActions> tableActionsList = new LinkedList<>();
+
+			logger.info("Going to get states by featureId and usertypeId ");
+
+			List<StateMgmtDb> stateMgmtDbs = stateMgmtRepository.getByFeatureIdAndUserTypeId(featureId, userTypeId);
+
+			for(StateMgmtDb stateMgmtDb : stateMgmtDbs) {
+
+				actionConfigDbs = actionConfigRepository.getByStateId(stateMgmtDb.getId());
+				tableActions = new TableActions();
+
+				for(ActionConfigDb actionConfigDb : actionConfigDbs) {
+
+					switch(actionConfigDb.getAction()) {
+					case "VIEW":
+						tableActions.setView(actionConfigDb.getIsEnable());
+						break;
+					case "DOWNLOAD_ERROR_FILE":
+						tableActions.setDownloadErrorFile(actionConfigDb.getIsEnable());
+						break;
+					case "EDIT":
+						tableActions.setEdit(actionConfigDb.getIsEnable());
+						break;
+					case "DOWNLOAD_FILE":
+						tableActions.setDownloadFile(actionConfigDb.getIsEnable());
+						break;
+					case "DELETE":
+						tableActions.setDelete(actionConfigDb.getIsEnable());
+						break;
+					case "APPROVE":
+						tableActions.setApprove(actionConfigDb.getIsEnable());
+						break;
+					case "REJECT":
+						tableActions.setReject(actionConfigDb.getIsEnable());
+						break;
+					}
+				}
+			}
+
+			return tableActionsList;
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

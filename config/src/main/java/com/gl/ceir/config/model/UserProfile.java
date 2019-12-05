@@ -56,7 +56,7 @@ public class UserProfile {
     private String idCardFilename;
     
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user; 
 	

@@ -59,9 +59,7 @@ public class ConsignmentMgmtSpecificationBuilder {
 	}
 
 	private List<Specification<ConsignmentMgmt>> createSpecifications(){
-		//	List<Specification<ConsignmentMgmt>> specifications = new ArrayList<Specification<ConsignmentMgmt>>();
-		// Path<Tuple> tuple = null;
-
+		
 		try {
 			for(SearchCriteria searchCriteria : params) {
 				specifications.add((root, query, cb)-> {

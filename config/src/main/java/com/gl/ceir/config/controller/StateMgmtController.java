@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.TableActions;
 import com.gl.ceir.config.service.impl.StateMgmtServiceImpl;
 import com.gl.ceir.config.util.Utility;
 
@@ -42,6 +43,23 @@ public class StateMgmtController {
 		MappingJacksonValue mapping = new MappingJacksonValue(states);
 
 		logger.info("state_mgmt_db ByFeatureIdAndUserTypeId = " + mapping);
+
+		return mapping;
+	}
+	
+	
+	@ApiOperation(value = "View list of state by feature_id and user_type_id", response = StateMgmtDb.class)
+	@GetMapping("/table-actions/{featureId}/{userTypeId}")
+	public MappingJacksonValue getTableActionsByFeatureIdAndUserTypeId(@PathVariable("featureId") Integer featureId, 
+			@PathVariable("userTypeId") Integer userTypeId) {
+
+		logger.info("Request TO view list of state by feature_id = " + featureId + " and userTypeId = "+ userTypeId);
+
+		List<TableActions> tableActions = stateMgmtServiceImpl.getTableActionsByFeatureIdAndUserTypeId(featureId, userTypeId);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(tableActions);
+
+		logger.info("TableActions getTableActionsByFeatureIdAndUserTypeId = " + mapping);
 
 		return mapping;
 	}
