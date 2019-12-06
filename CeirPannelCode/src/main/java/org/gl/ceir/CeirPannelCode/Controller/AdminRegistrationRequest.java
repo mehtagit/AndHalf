@@ -37,12 +37,36 @@ public class AdminRegistrationRequest {
 		{"/trcInformation"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam int id) {
+	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam(name="id") int id, @RequestParam(name="roles") String roles,@RequestParam(name="type") String asType) {
 		ModelAndView mv = new ModelAndView();
+		//log.info("ID----------------->"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
+		
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
 		mv.addObject("registration", registration);
-		 log.info(" view trcInformation entry point."+registration); 
-		 mv.setViewName("trcInformation");
+		log.info(" view trcInformation entry point."+registration); 
+		
+	
+		if("TRC".equals(roles)) {
+			log.info("-------------------->1");
+			mv.setViewName("trcInformation");
+		
+		}else if("Operator".equals(roles)){
+			log.info("-------------------->2");
+			mv.setViewName("viewOperator");
+		
+		}else if("Custom".equals(roles)){
+			log.info("-------------------->3");
+			mv.setViewName("viewCustom");
+			
+		}else if("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles) && "Company".equals(asType)){
+			log.info("-------------------->4");
+			mv.setViewName("viewCompany");
+			
+		}else if("Individual".equals(asType) && "Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles) ){
+			log.info("-------------------->5");
+			mv.setViewName("viewIndividual");
+		}
+		
 		log.info(" view trcInformation  exit point."); 
 		return mv; 
 	}

@@ -1,4 +1,5 @@
 var cierRoletype = sessionStorage.getItem("cierRoletype");
+var featureId = 8;
 $(document).ready(function(){
 	$('.datepicker').datepicker();
 	registrationDatatable();
@@ -131,10 +132,36 @@ function pageRendering(){
 		
 			cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
+		
+			
 		}
 
 	}); 
-	};
+	
+	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].state).text(data[i].interp)
+			.appendTo('#recentStatus');
+		}
+	});
+	
+
+	$.getJSON('./registrationUserType', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].state).text(data[i].usertypeName)
+			.appendTo('#role');
+		}
+	});
+	
+	
+	$.getJSON('./getTypeDropdownList/AS_TYPE/'+$("body").attr("data-userTypeID"), function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#asType');
+		}
+	});
+	
+};
 
 
 
@@ -287,22 +314,6 @@ function rejectUser(userId){
 
 
 
-function viewFormData(){
-	
-	$.ajax({
-		url : './viewProfile/65',
-		dataType : 'json',
-		contentType : 'application/json; charset=utf-8',
-		type : 'POST',
-		success : function(data) {
-			console.log("ID----->"+JSON.stringify(data));
-			
-		},
-		error : function() {
-			alert("Failed");
-		}
-	});
-}
 
 
 function setFormData(){

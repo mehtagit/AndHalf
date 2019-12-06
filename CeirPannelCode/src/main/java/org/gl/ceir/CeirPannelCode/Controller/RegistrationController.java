@@ -141,5 +141,11 @@ public class RegistrationController {
 
 		registrationService.captcha(request, response, session);
 	} 
-
+	
+	@RequestMapping(value = "/registrationUserType",method = {RequestMethod.POST,RequestMethod.GET})
+	@ResponseBody  
+	public List<Usertype> userTypeDropdown(){ 
+		List<Usertype> response =userRegistrationFeignImpl.userRegistrationDropdown();
+		return response;          
+	} 
 }

@@ -62,15 +62,12 @@
 
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
-
-	<!-- START CONTENT -->
-	<!-- START CONTENT -->
-	<section id="content">
+<section id="content">
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <form action="${context}/trcInformation" method="post" >
-							<div class="card-panel">
+                        <form action="" id="registrationForm">
+                            <div class="card-panel">
                                 <div class="row">
                                     <div class="col s12 m12">
                                         <h5>View Information</h5>
@@ -82,7 +79,7 @@
                                             </div>
 
                                             <div class="input-field col s12 m4 l4">
-                                                <input type="text" name="middleName" id="middleName" maxlength="20" value="${registration.middleName}"  disabled="" placeholder="">	
+                                                <input type="text" name="middleName" id="middleName" maxlength="20" value="${registration.middleName}"  disabled="" placeholder="">
                                                 <label for="middleName" class="active">Middle Name</label>
                                             </div>
 
@@ -91,6 +88,10 @@
                                                 <label for="lastName" class="active">Last Name <span class="star">*</span></label>
                                             </div>
 
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" name="operatorType" id="operatorType" maxlength="20" value="${registration.operatorTypeName}" disabled="" placeholder="">
+                                                <label for="operatorType" class="active">Operator Type <span class="star">*</span></label>
+                                            </div>
                                         </div>
 
                                         <div class="row">
@@ -127,12 +128,12 @@
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="uploadNationalId" id="uploadNationalId" maxlength="30" value="${registration.nidFilename}" disabled="">
-                                                <label for="uploadNationalId" class="active">Upload National ID <span class="star">*</span></label>
+                                                <input type="text" name="uploadnationalId" id="uploadnationalId" value="${registration.nidFilename}" maxlength="30" download="download" disabled="">
+                                                <label for="uploadnationalId" class="active">Upload National ID <span class="star">*</span></label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="uploadPhoto" id="uploadPhoto" maxlength="30" value="${registration.photoFilename}" disabled="">
+                                                <input type="text" name="uploadPhoto" id="uploadPhoto" value="${registration.photoFilename}" maxlength="30" disabled="">
                                                 <label for="uploadPhoto" class="active">Upload Photo <span class="star">*</span></label>
                                             </div>
 
@@ -142,8 +143,8 @@
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="uploadIdCard" id="uploadIdCard" maxlength="30" value="${registration.idCardFilename}" disabled="">
-                                                <label for="uploadIdCard" class="active">Upload ID Card <span class="star">*</span></label>
+                                                <input type="text" name="uploadIDCard" id="uploadIDCard" value="${registration.idCardFilename}"  maxlength="30" disabled="">
+                                                <label for="uploadIDCard" class="active">Upload ID Card <span class="star">*</span></label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -164,7 +165,7 @@
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="reportingAuthorityEmail" id="reportingAuthorityEmail" maxlength="30" value="${registration.authorityEmail}" disabled="" placeholder="">
+                                                <input type="text" name="reportingAuthorityEmail" id="reportingAuthorityEmail" maxlength="30" value="${registration.authorityEmail}" disabled="" placeholder="mail@mail.com">
                                                 <label for="reportingAuthorityEmail" class="active">Reporting Authority Email
                                                     ID</label>
                                             </div>
@@ -193,7 +194,7 @@
                                         <span> Required Field are marked with <span class="star">*</span></span>
                                         <div class="input-field col s12 center">
                                             <!-- <a href="index.html" class="btn" id="btnSave"> Submit</a> -->
-                                             <a class="btn modal-close" href="./registrationRequest">cancel</a>
+                                            <a href="registratoinRequest.html" class="btn">Cancel</a>
                                         </div>
                                     </div>
                                 </div>
@@ -204,7 +205,19 @@
                 <!--end container-->
             </div></section>
 
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
