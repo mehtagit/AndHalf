@@ -838,7 +838,7 @@
             <h6>Mark As Recover</h6>
             <hr>
             <div class="row">
-                <h6>The following Transaction ID (Tr12345678) devices marked as recovered..
+                <h6>The following Transaction ID's devices marked as recovered..
                 </h6>
             </div>
             <div class="row">

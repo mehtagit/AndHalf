@@ -1,9 +1,10 @@
 var userTypeId = parseInt($("body").attr("data-userTypeID"));
 var userType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
-var featureId="1";
+var featureId="3";
 var requestType="stolen";
 $(document).ready(function(){
+	var url,finalID;
 	$.ajax({
 		url: './dashboard/box?userTypeId='+userTypeId,
 		type: 'GET',
@@ -11,19 +12,23 @@ $(document).ready(function(){
 			for (i = 0; i < data.length; i++) {
 				var id=data[i].name;
 				var finalID=id.replace (/\//g, "");
-
-				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+finalID+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].url+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center' style='background-color: #fc950c;'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+				 url= data[i].url.split("?"); 
+				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].featureId+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].view+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center' style='background-color: #fc950c;'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+				finalID =data[i].featureId;
+				console.log("finalID:"+finalID);
+				$.ajax({
+					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId,
+					type: 'GET',
+					success: function(data){
+						console.log(data.count+"::::::finalID::::::::::"+finalID);
+						$('#'+finalID+'count').text(data.count);	
+					}
+				});
 			}
 
-			$.ajax({
-				url: './getConsignmetnCountAndQuantity?featureId='+featureId+'&userId='+userId+'&userTypeId='+userTypeId,
-				type: 'GET',
-				success: function(data){
-					$('#Consignmentcount').text(data.count);	
-				}
-			});
+			
 
-
+/*
 			$.ajax({
 				url: './getStockCountAndQuantity?featureId='+featureId+'&userId='+userId+'&userTypeId='+userTypeId,
 				type: 'GET',
@@ -49,7 +54,7 @@ $(document).ready(function(){
 				success: function(data){
 					$('#Grievancecount').text(data.count);	
 				}
-			});
+			});*/
 		}
 	});
 	notificationDatatable();

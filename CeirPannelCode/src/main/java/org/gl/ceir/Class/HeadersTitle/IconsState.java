@@ -360,11 +360,10 @@ public String customState(String fileName,String txnId ,String status,String use
 String emptyURL="JavaScript:void(0);"; 
 String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-String dd="xyz impoters";
-String approveAction = "openApprovePopUp('" + txnId + "','"+dd.replaceAll( " ", "+20")+ "')";
+String approveAction = "openApprovePopUp('" + txnId + "','"+displayName.replaceAll( " ", "+20")+ "')";
 
 		/* String escapedString = queryParser.escape(approveAction); */
-String rejectAction = "openDisapprovePopup('"+txnId+"','"+dd.replaceAll( " ", "+20")+"')";
+String rejectAction = "openDisapprovePopup('"+txnId+"','"+displayName.replaceAll( " ", "+20")+"')";
 
 
 // state related Code 
@@ -383,18 +382,18 @@ String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden
 		+rejectIconTitle+" ></i></a>";
 
 if("5".equals(status) || "7".equals(status) || "8".equals(status) && "Approved".equals(userStatus) ) {
-	approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+	approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 			+approveIconTitle+" ></i></a>";
-	 reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+	 reject = "<a onclick="+rejectAction+" class="+disableIconClass+"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 		
 	
  }
 else if("Disable".equals(userStatus)) {
 	 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-	 approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+	 approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";
-	 reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+	 reject = "<a onclick="+rejectAction+" class="+disableIconClass+"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
 			
 	 download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="

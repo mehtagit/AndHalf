@@ -155,7 +155,7 @@ opacity: 0;
                                             </div>
 
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="supplierName" id="supplierName" pattern="[A-Za-z]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" required />
+                                                <input type="text" name="supplierName" id="supplierName" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" required />
                                                 <label for="SupplierName" class="center-align">Supplier Name <span class="star">*</span></label>
                                             </div>
                                         </div>

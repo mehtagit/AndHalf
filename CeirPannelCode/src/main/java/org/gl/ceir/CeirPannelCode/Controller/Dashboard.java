@@ -96,28 +96,28 @@ public class Dashboard {
 	return new ResponseEntity<>(response, HttpStatus.OK); 
 	}
 	
-	@GetMapping("getConsignmetnCountAndQuantity")
+	@GetMapping("/consignment/countAndQuantity")
 	public ResponseEntity<?> getConsignmetnCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
 		RequestCountAndQuantity response = dashboardFeignClient.consignmentNotification(userId, featureId, userTypeId);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
-	@GetMapping("getStockCountAndQuantity")
+	@GetMapping("/stock/countAndQuantity")
 	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
 		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
-	@GetMapping("getStolen_RecoveryCountAndQuantity")
+	@GetMapping("/stakeholder/count")
 	public ResponseEntity<?> getStolen_RecoveryCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
 		RequestCountAndQuantity response = dashboardFeignClient.stolenRecoveryNotification(requestType, userId, featureId, userTypeId);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
-	@GetMapping("getGrievanceNotificationCountAndQuantity")
+	@GetMapping("/grievance/count")
 	public ResponseEntity<?> getGrievanceNotificationCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
 		RequestCountAndQuantity response = dashboardFeignClient.grievanceNotification(userId, featureId, userTypeId);
 	return new ResponseEntity<>(response, HttpStatus.OK);

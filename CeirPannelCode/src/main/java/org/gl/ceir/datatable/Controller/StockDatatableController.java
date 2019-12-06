@@ -90,7 +90,7 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatusName=dataInsideList.getTaxInterp();
+						String stockStatusName=dataInsideList.getStateInterp();
 						String[] finalData={checboxes,date,txnId,file,stockStatusName}; 
 						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
@@ -104,7 +104,7 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatusName=dataInsideList.getTaxInterp();
+						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
 						String[] finalData={date,txnId,file,stockStatusName,action}; 
@@ -121,7 +121,7 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatusName=dataInsideList.getTaxInterp();
+						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.customStockState(file,txnId,statusOfStock,userStatus);
 						String[] finalData={date,assignedTo,txnId,file,stockStatusName,action}; 
@@ -139,7 +139,7 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatusName=dataInsideList.getTaxInterp();
+						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
 						String[] finalData={date,txnId,userId,roll,file,stockStatusName,action}; 
@@ -155,7 +155,7 @@ public class StockDatatableController {
 					String file= dataInsideList.getFileName();
 					// if API provide me consignmentStatusName
 					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-					String stockStatusName=dataInsideList.getTaxInterp();
+					String stockStatusName=dataInsideList.getStateInterp();
 					String userStatus = (String) session.getAttribute("userStatus");
 					String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
 					String[] finalData={date,txnId,file,stockStatusName,action}; 
@@ -172,7 +172,7 @@ public class StockDatatableController {
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-						String stockStatusName=dataInsideList.getTaxInterp();
+						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
 						String[] finalData={date,txnId,file,stockStatusName,action}; 

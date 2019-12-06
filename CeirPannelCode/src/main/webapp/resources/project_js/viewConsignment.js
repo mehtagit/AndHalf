@@ -15,6 +15,7 @@ $(document).ready(function(){
 	/*var x = '19 December, 2019'; 
 	var formattedDate = moment(x).format('YYYY-MM-DD h:mm:ss');
 */
+
 });
 
 
@@ -626,12 +627,12 @@ function valuesPush(){
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	var requestType="stolen";
+	var requestType=0;
 	$('#consignmentLibraryTable tr td input:checkbox:checked').each(function() {
 
 		var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
 				"userId":userId,
-				"sourceType":'consignment',
+				"sourceType":'0',
 				"roleType":role,
 				"requestType":requestType
 		};

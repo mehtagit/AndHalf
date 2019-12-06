@@ -1,4 +1,4 @@
-var featureId = 8;
+var featureId = 6;
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 $(document).ready(function(){
 	$('.datepicker').datepicker();
@@ -141,6 +141,13 @@ function pageRendering(){
 			if(cierRoletype=="CEIRAdmin"){
 				$("#btnLink").css({display: "none"});
 				}
+			
+			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].state).text(data[i].interp)
+					.appendTo('#recentStatus');
+				}
+			});
 			//cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
 		}

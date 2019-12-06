@@ -138,7 +138,7 @@ public class ConsignmentDatatableController {
 				UserProfileModel userprofileModel = userModel.getUserProfile();
 				String createdOn= dataInsideList.getCreatedOn();
 				String txnId = dataInsideList.getTxnId(); 
-				String displayName = userprofileModel.getDisplayName();		
+				String displayName = userprofileModel.getCompanyName();		
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatusName = dataInsideList.getStateInterp();
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());

@@ -14,6 +14,7 @@ public class NumberOfBox {
 	private String url;
 	private String outParam;
 	private String view;
+	private String featureId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -85,7 +86,14 @@ public class NumberOfBox {
 	public String toString() {
 		return "NumberOfBox [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userTypeId="
 				+ userTypeId + ", name=" + name + ", icon=" + icon + ", txt=" + txt + ", url=" + url + ", outParam="
-				+ outParam + ", view=" + view + ", additionalProperties=" + additionalProperties + "]";
+				+ outParam + ", view=" + view + ", featureId=" + featureId + ", additionalProperties="
+				+ additionalProperties + "]";
+	}
+	public String getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(String featureId) {
+		this.featureId = featureId;
 	}
 	
 }

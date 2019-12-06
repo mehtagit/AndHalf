@@ -9,11 +9,11 @@ public class StolenRecoveryModel {
 	private String fileName;
 	private int fileStatus;
 	private int id;
-	private String requestType;
+	private int requestType;
 	private String roleType;
 	private String  txnId;
 	private int userId;
-	private String sourceType;
+	private int sourceType;
 	
 	public String getBlockingTimePeriod() {
 		return blockingTimePeriod;
@@ -45,10 +45,11 @@ public class StolenRecoveryModel {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getRequestType() {
+	
+	public int getRequestType() {
 		return requestType;
 	}
-	public void setRequestType(String requestType) {
+	public void setRequestType(int requestType) {
 		this.requestType = requestType;
 	}
 	public String getRoleType() {
@@ -69,10 +70,13 @@ public class StolenRecoveryModel {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getSourceType() {
+
+	
+	
+	public int getSourceType() {
 		return sourceType;
 	}
-	public void setSourceType(String sourceType) {
+	public void setSourceType(int sourceType) {
 		this.sourceType = sourceType;
 	}
 	@Override

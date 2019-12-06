@@ -107,12 +107,13 @@ public class StolenDatatableController {
 						String stolenStatusName = dataInsideList.getStateInterp();
 						String source =dataInsideList.getSourceTypeInterp();
 						log.info("source type message="+source);
-						String requestType = dataInsideList.getRequestTypeInterp();
+						String requestType = dataInsideList.getRequestType(); 
+						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stolenState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id);
-						String[] finalData = { createdOn,txnId,fileName, stolenStatusName,source, requestType, action };
+						String[] finalData = { createdOn,txnId,fileName, stolenStatusName,source, requestTypeName, action };
 						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);

@@ -251,9 +251,9 @@ function Datatable(url,dataUrl) {
 			"userId": userId,
 			"userType" : role,
 			"featureId":featureId,
-			"usertTypeId":usertypeId,
+			"userTypeId":usertypeId,
 			"txnId":$('#transactionID').val(),
-			"stockStatus":parseInt($('#StockStatus').val())
+			"consignmentStatus":parseInt($('#StockStatus').val())
 	}
 	$.ajax({
 		url: url,
@@ -389,13 +389,13 @@ function valuesPush(){
 	var roleType = $("body").attr("data-roleType");
 	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-	var requestType="stolen";
+	var requestType="0";
 	console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 	$('#stockTable tr td input:checkbox:checked').each(function() {
 
 		var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
 				"userId":userId,
-				"sourceType":'stock',
+				"sourceType":'1',
 				"roleType":role,
 				"requestType":requestType
 		};

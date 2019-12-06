@@ -50,6 +50,4 @@ public class ConsignmentUpdateRequest {
 				+ roleTypeUserId + ", txnId=" + txnId + ", userId=" + userId + ", remarks=" + remarks + "]";
 	}
 	
-	
-
 }
