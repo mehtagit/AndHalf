@@ -214,7 +214,7 @@ public class ConfigurationController {
 	}
 	
 	@ApiOperation(value = "System Config List DB - view All Data", response = SystemConfigListDb.class)
-	@GetMapping("/system-config-list/by-tag-and-usertype{tagId}/{userTypeId}")
+	@GetMapping("/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}")
 	public MappingJacksonValue findSystemConfigListByTagAndUserType(@PathVariable("tagId") String tagId, 
 			@PathVariable("userTypeId") int userTypeId) {
 
