@@ -9,6 +9,7 @@ import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.hibernate.validator.internal.util.privilegedactions.GetInstancesFromServiceLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ public class ProfileService {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	
-	private final Logger log = LoggerFactory.getLogger(getClass());	
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	private Integer id;	
 	
 	public HttpResponse changePassword(Password password,HttpSession session) {
 		log.info("inside change password controller");
@@ -79,6 +82,14 @@ public class ProfileService {
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.adminUserApproval(userStatus);
 		return response;  
+	} 
+	
+	public Registration ViewAdminUserService(HttpSession session, long id) {
+		log.info("inside View AdminStatus controller-------------->"+id);
+		Integer userid=(Integer)session.getAttribute("userid");
+		Registration response=new Registration();             
+		response=userProfileFeignImpl.ViewAdminUser(id);
+		return response; 
 	} 
 	
 }

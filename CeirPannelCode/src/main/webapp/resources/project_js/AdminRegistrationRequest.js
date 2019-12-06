@@ -3,6 +3,7 @@ $(document).ready(function(){
 	$('.datepicker').datepicker();
 	registrationDatatable();
 	pageRendering();
+	
 });
 
 
@@ -285,3 +286,25 @@ function rejectUser(userId){
 }
 
 
+
+function viewFormData(){
+	
+	$.ajax({
+		url : './viewProfile/65',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log("ID----->"+JSON.stringify(data));
+			
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+
+function setFormData(){
+	
+}

@@ -12,10 +12,13 @@ import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import jdk.internal.jline.internal.Log;
 
 @Controller
 public class ProfileController {
@@ -54,5 +57,13 @@ public class ProfileController {
 		return profileService.adminApprovalService(userStatus,session);
 		
 	}
+	
+	@RequestMapping(value = "viewProfile/{id}",method = RequestMethod.POST)
+	@ResponseBody 
+	public  Registration ViewAdminUserService(HttpSession session, @PathVariable ("id") long id) {
+	return profileService.ViewAdminUserService(session, id);
+
+	} 
+	
 	
 }
