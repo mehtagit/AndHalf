@@ -1,7 +1,6 @@
 var featureId = 6;
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 $(document).ready(function(){
-	$('.datepicker').datepicker();
 	grievanceDataTable();
 	pageRendering();
 });
@@ -151,7 +150,6 @@ function pageRendering(){
 			//cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
 			$('.datepicker').datepicker({
-				showAnim: "fold",
 			    dateFormat: "yy-mm-dd"
 			    });
 		}

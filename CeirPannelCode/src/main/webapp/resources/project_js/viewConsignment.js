@@ -11,13 +11,25 @@ var featureId="3";
 $(document).ready(function(){
 	filterConsignment();
 	pageRendering();
-
-	
 	/*var x = '19 December, 2019'; 
 	var formattedDate = moment(x).format('YYYY-MM-DD h:mm:ss');
 */
 
 });
+
+
+/*$('body').on('click',".datepicker", function(){
+    $(this).datepicker({
+            	dateFormat: "yy-mm-dd"});
+});*/
+/*$('#startDate').datepicker({
+showAnim: "fold",
+dateFormat: "yy-mm-dd"
+});
+$('.datepicker').datepicker({
+showAnim: "fold",
+dateFormat: "yy-mm-dd"
+});*/
 
 
 
@@ -534,10 +546,8 @@ function pageButtons(url){
 			});
 			
 			$('.datepicker').datepicker({
-				showAnim: "fold",
-			    dateFormat: "yy-mm-dd"
-			    });
-			
+				dateFormat: "yy-mm-dd"
+				});
 		}
 	}); 	
 }

@@ -1,7 +1,6 @@
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var featureId = 8;
 $(document).ready(function(){
-	$('.datepicker').datepicker();
 	registrationDatatable();
 	pageRendering();
 	
@@ -92,9 +91,9 @@ function pageRendering(){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
 				$("#registrationTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-						"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+						"<div id='enddatepicker' class='input-group date'>"+
 						"<label for='TotalPrice'>"+date[i].title
-						+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
+						+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 						"<span	class='input-group-addon' style='color: #ff4081'>"+
 						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
@@ -129,6 +128,10 @@ function pageRendering(){
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 			
 			}
+			
+			$('.datepicker').datepicker({
+				dateFormat: "yy-mm-dd"
+				});
 		
 			cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/

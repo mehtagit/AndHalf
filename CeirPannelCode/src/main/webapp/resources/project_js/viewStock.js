@@ -381,7 +381,6 @@ function pageButtons(url){
 			
 		
 			$('.datepicker').datepicker({
-				showAnim: "fold",
 			    dateFormat: "yy-mm-dd"
 			    });
 		}

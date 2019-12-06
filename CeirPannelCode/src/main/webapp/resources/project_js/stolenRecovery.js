@@ -443,7 +443,6 @@ function pageElements(url){
 				}
 			}
 			$('.datepicker').datepicker({
-				showAnim: "fold",
 			    dateFormat: "yy-mm-dd"
 			    });
 		}
