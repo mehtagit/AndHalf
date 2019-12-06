@@ -1,8 +1,13 @@
 package org.gl.ceir.CeirPannelCode.Model.constants;
 public enum UserStatus {
-	INIT(0, "Init"), OTP_VERIFICATION_PENDING(1, "OTP Verification Pending"), 
-	PENDING_ADMIN_APPROVAL(2, "Pending Admin Approval"), APPROVED(3, "Approved"),
-	REJECTED(4, "Rejected"), DISABLE(5, "Disable"), DEACTIVATE(6, "Deactivate");
+	INIT(0, "Init"), 
+	OTP_VERIFICATION_PENDING(1, "OTP Verification Pending"), 
+	PENDING_ADMIN_APPROVAL(2, "Pending Admin Approval"),
+	APPROVED(3, "Approved"),
+	REJECTED(4, "Rejected"), 
+	DISABLE(5, "Disable"), 
+	DEACTIVATE(6, "Deactivate"),
+	NL(null,null);
 	private Integer code;
 	private String description;
 
@@ -30,6 +35,7 @@ public enum UserStatus {
 	}
 	
 	public static UserStatus getUserStatusByDesc(String desc) {
+		System.out.println("inside:::::::::::::::::::");
 		for (UserStatus userStatus : UserStatus.values()) {
 			if (userStatus.getDescription().equals(desc))
 				return userStatus;

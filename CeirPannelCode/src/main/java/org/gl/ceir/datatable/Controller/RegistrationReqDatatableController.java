@@ -88,11 +88,13 @@ public class RegistrationReqDatatableController {
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
 				   String grievanceStatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
 				   String userStatus = (String) session.getAttribute("userStatus");
+				   log.info("----Id------"+Id+"-------StatusofGrievance----------------"+StatusofGrievance+"--userStatus----"+userStatus+"--grievanceStatusName----"+grievanceStatusName+"----createdOn--"+createdOn+"---roles---"+roles+"---type---"+type);
 				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName,createdOn,roles,type);			   
 				   String[] finalData={createdOn,Id,type,roles,grievanceStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
+					
 			}
 		}
 			//data set on ModelClass
@@ -103,6 +105,7 @@ public class RegistrationReqDatatableController {
 		datatableResponseModel.setRecordsTotal(null);
 		datatableResponseModel.setRecordsFiltered(null);
 		datatableResponseModel.setData(Collections.emptyList());
+		log.error(e.getMessage(),e);
 		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 		}
 	}
