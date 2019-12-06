@@ -86,6 +86,7 @@ public class ConsignmentMgmt implements Serializable {
 	@Transient
 	private String taxInterp;
 
+	@NotNull
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
