@@ -9,14 +9,21 @@ var userType=$("body").attr("data-roleType");
 var featureId="3";
 
 $(document).ready(function(){
-	$('.datepicker').datepicker();
 	filterConsignment();
 	pageRendering();
+
+	
 	/*var x = '19 December, 2019'; 
 	var formattedDate = moment(x).format('YYYY-MM-DD h:mm:ss');
 */
 
 });
+
+
+
+
+
+
 
 
 
@@ -432,9 +439,9 @@ function pageButtons(url){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
 					$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-							"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+							"<div id='enddatepicker' class='input-group'>"+
 							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+">"+
+							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
@@ -525,8 +532,14 @@ function pageButtons(url){
 					.appendTo('#taxPaidStatus');
 				}
 			});
+			
+			$('.datepicker').datepicker({
+				showAnim: "fold",
+			    dateFormat: "yy-mm-dd"
+			    });
+			
 		}
-	}); 
+	}); 	
 }
 
 

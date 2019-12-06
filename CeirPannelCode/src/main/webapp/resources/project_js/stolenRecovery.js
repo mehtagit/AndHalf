@@ -6,7 +6,6 @@ var featureId="5";
 
 
 $(document).ready(function(){
-	$('.datepicker').datepicker();
 	filterStolen();
 	pageRendering();
 });
@@ -377,9 +376,9 @@ function pageElements(url){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){	
 					$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-							"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+							"<div id='enddatepicker' class='input-group date'>"+
 							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+"/>"+
+							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}else if(date[i].type === "text"){
@@ -443,7 +442,10 @@ function pageElements(url){
 					}
 				}
 			}
-
+			$('.datepicker').datepicker({
+				showAnim: "fold",
+			    dateFormat: "yy-mm-dd"
+			    });
 		}
 
 	//$("#filterBtnDiv").append();

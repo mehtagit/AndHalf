@@ -52,6 +52,10 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
+
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+ 
 <style type="text/css">
  #starColor {
             color: red;
@@ -353,12 +357,7 @@
 	<!-- Modal End -->
 	<!-- END MAIN -->
 
-
-
-	<!--materialize js-->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
 
@@ -366,8 +365,8 @@
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+
+	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -377,6 +376,8 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/Validator.js"></script>
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -386,6 +387,7 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
 </body>

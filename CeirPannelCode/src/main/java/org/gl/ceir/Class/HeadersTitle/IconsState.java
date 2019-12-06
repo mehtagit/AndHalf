@@ -729,10 +729,10 @@ public String adminRegistrationRequest(String Id ,String status,String userStatu
 
 public String dashboardIcon(String userStatus) {
 	// URL link 
-	String viewAction=""; 
+	String viewAction="./Consignment/viewConsignment"; 
 	
 	// state related Code 
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+	String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 							+viewIconTitle+" ></i></a>";
 	String action=view;		  
 	return action;

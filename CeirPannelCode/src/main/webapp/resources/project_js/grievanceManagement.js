@@ -24,12 +24,12 @@ function grievanceDataTable(){
 			"grievanceStatus": -1,
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
-			"recentStatus":parseInt($('#recentStatus').val()),
+			"grievanceStatus":parseInt($('#recentStatus').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"txnId":$('#transactionID').val(),
-			"grievanceID":$('#grievanceID').val(),
+			"grievanceId":$('#grievanceID').val(),
 			"userType":$("body").attr("data-roleType")
 	}
 	$.ajax({
@@ -94,9 +94,9 @@ function pageRendering(){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
 					$("#greivanceTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-							"<div id='enddatepicker' class='input-group date' data-date-format='yyyy-mm-dd'>"+
+							"<div id='enddatepicker' class='input-group date'>"+
 							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control' type="+date[i].type+" id="+date[i].id+">"+
+							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
@@ -150,6 +150,10 @@ function pageRendering(){
 			});
 			//cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
+			$('.datepicker').datepicker({
+				showAnim: "fold",
+			    dateFormat: "yy-mm-dd"
+			    });
 		}
 
 	}); 

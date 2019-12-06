@@ -2,33 +2,32 @@ var userTypeId = parseInt($("body").attr("data-userTypeID"));
 var userType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var featureId="3";
-var requestType="stolen";
+var requestType="0";
 $(document).ready(function(){
-	var url,finalID;
+	var url;
 	$.ajax({
 		url: './dashboard/box?userTypeId='+userTypeId,
 		type: 'GET',
 		success: function(data){
 			for (i = 0; i < data.length; i++) {
 				var id=data[i].name;
-				var finalID=id.replace (/\//g, "");
-				 url= data[i].url.split("?"); 
-				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].featureId+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].view+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center' style='background-color: #fc950c;'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
-				finalID =data[i].featureId;
-				console.log("finalID:"+finalID);
+				/*var finalID=id.replace (/\//g, "");*/
+				url= data[i].url.split("?"); 
+				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].featureId+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].view+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+				var finalID = data[i].featureId;
 				$.ajax({
-					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId,
+					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType,
+					'async': false,
 					type: 'GET',
 					success: function(data){
-						console.log(data.count+"::::::finalID::::::::::"+finalID);
 						$('#'+finalID+'count').text(data.count);	
 					}
 				});
 			}
 
-			
 
-/*
+
+			/*
 			$.ajax({
 				url: './getStockCountAndQuantity?featureId='+featureId+'&userId='+userId+'&userTypeId='+userTypeId,
 				type: 'GET',

@@ -139,5 +139,5 @@ h6 {
 }
 
 .teal-text {
-    font-size: 25px;
+    font-size: 25px !important;
 }
