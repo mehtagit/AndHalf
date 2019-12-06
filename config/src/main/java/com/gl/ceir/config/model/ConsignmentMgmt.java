@@ -46,6 +46,7 @@ public class ConsignmentMgmt implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
+	@NotNull
 	private Integer userId;
 
 	@NotNull
