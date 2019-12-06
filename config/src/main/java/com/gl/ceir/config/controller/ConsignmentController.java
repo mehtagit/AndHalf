@@ -163,12 +163,11 @@ public class ConsignmentController {
 
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)
-	public GenricResponse deleteConsigment(@RequestBody ConsignmentMgmt consignmentUploadRequest,
-			@RequestParam(value = "userType", required = false) String userType) {
+	public GenricResponse deleteConsigment(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
 		logger.info("Consignment Withdraw Request ="+consignmentUploadRequest);
 		
-		GenricResponse genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUploadRequest, userType);
+		GenricResponse genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUploadRequest);
 		logger.info("Response of Delete Request="+genricResponse);
 
 		return genricResponse;
@@ -188,10 +187,10 @@ public class ConsignmentController {
 	}
 
 
-	@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.POST)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantity request ) {
 		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(request);
 		return new MappingJacksonValue(response);
-	}
+	}*/
 }

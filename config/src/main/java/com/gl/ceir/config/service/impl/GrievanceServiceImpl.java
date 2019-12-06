@@ -26,15 +26,17 @@ import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.Grievance;
+import com.gl.ceir.config.model.GrievanceFileModel;
 import com.gl.ceir.config.model.GrievanceFilterRequest;
 import com.gl.ceir.config.model.GrievanceGenricResponse;
 import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsg;
 import com.gl.ceir.config.model.GrievanceMsgWithUser;
 import com.gl.ceir.config.model.GrievanceReply;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.GrievanceStatus;
@@ -46,10 +48,14 @@ import com.gl.ceir.config.repository.GrievanceRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GrievanceHistorySpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.GrievanceSpecificationBuilder;
+
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Service
 public class GrievanceServiceImpl{
@@ -69,6 +75,8 @@ public class GrievanceServiceImpl{
 	StateMgmtServiceImpl stateMgmtServiceImpl;
 	@Autowired
 	FileStorageProperties fileStorageProperties;
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 	
 	@Transactional
 	public GrievanceGenricResponse save(Grievance grievance) {
@@ -126,22 +134,28 @@ public class GrievanceServiceImpl{
 	
 	public List<Grievance> getFilterGrievances(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "grievanceId"));
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "createdOn"));
 			System.out.println("dialect : " + propertiesReader.dialect);
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
+			
 			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
 				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
-			if(Objects.nonNull(grievance.getStartDate()))
+			
+			if(Objects.nonNull(grievance.getStartDate()) && !grievance.getStartDate().equals(""))
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getEndDate()))
+			
+			if(Objects.nonNull(grievance.getEndDate()) && !grievance.getEndDate().equals(""))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+			
 			if(Objects.nonNull(grievance.getGrievanceStatus()) && grievance.getGrievanceStatus() != -1)
 				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
 			else
 				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
-			if(Objects.nonNull(grievance.getGrievanceId()))
-				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
-			if(Objects.nonNull(grievance.getTxnId()))
+			
+			if(Objects.nonNull(grievance.getGrievanceId()) && !grievance.getGrievanceId().equals(""))
+				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			if(Objects.nonNull(grievance.getTxnId()) && !grievance.getTxnId().equals(""))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 			//List<Grievance> data = grievanceRepository.getGrievanceByUserId(grievance.getUserId());
 			//logger.info("Data to be fetch in db using jioin ="+data);
@@ -156,22 +170,36 @@ public class GrievanceServiceImpl{
 	
 	public Page<Grievance> getFilterPaginationGrievances(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "grievanceId"));
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "createdOn"));
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
+			
 			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
 				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
-			if(Objects.nonNull(grievance.getStartDate()))
+			
+			if(Objects.nonNull(grievance.getStartDate()) && !grievance.getStartDate().equals(""))
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getEndDate()))
+			
+			if(Objects.nonNull(grievance.getEndDate()) && !grievance.getEndDate().equals(""))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+			
 			if(Objects.nonNull(grievance.getGrievanceStatus()) && grievance.getGrievanceStatus() != -1)
 				gsb.with(new SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(), SearchOperation.EQUALITY, Datatype.INT));
 			else
 				gsb.with(new SearchCriteria("grievanceStatus", GrievanceStatus.CLOSED.getCode(), SearchOperation.NEGATION, Datatype.INT));
-			if(Objects.nonNull(grievance.getGrievanceId()))
-				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
-			if(Objects.nonNull(grievance.getTxnId()))
+			
+			if(Objects.nonNull(grievance.getGrievanceId()) && !grievance.getGrievanceId().equals(""))
+				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			if(Objects.nonNull(grievance.getTxnId()) && !grievance.getTxnId().equals(""))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			if(Objects.nonNull(grievance.getSearchString()) && !grievance.getSearchString().equals("")){
+				//gsb.orSearch(new SearchCriteria("createdOn", grievance.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				//gsb.orSearch(new SearchCriteria("modifiedOn", grievance.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				gsb.orSearch(new SearchCriteria("grievanceId", grievance.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				//gsb.orSearch(new SearchCriteria("grievanceStatus", grievance.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				gsb.orSearch(new SearchCriteria("txnId", grievance.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			}
 			return grievanceRepository.findAll(gsb.build(), pageable);
 
 		} catch (Exception e) {
@@ -185,37 +213,71 @@ public class GrievanceServiceImpl{
 		String fileName = null;
 		Writer writer   = null;
 		//String[] columns = new String[]{"grievanceId","userId","userType","grievanceStatus","txnId","categoryId","fileName","createdOn","modifiedOn","remarks"};
+		GrievanceFileModel gfm = null;
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String filePath  = fileStorageProperties.getGrievanceDownloadDir();
-		StatefulBeanToCsvBuilder<Grievance> builder = null;
-		StatefulBeanToCsv<Grievance> csvWriter = null;
+		StatefulBeanToCsvBuilder<GrievanceFileModel> builder = null;
+		StatefulBeanToCsv<GrievanceFileModel> csvWriter      = null;
+		List< GrievanceFileModel> fileRecords       = null;
 		//ColumnPositionMappingStrategy<Grievance> mapStrategy = null;
-		HeaderColumnNameTranslateMappingStrategy<Grievance> mapStrategy = null;
+		HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<Grievance> grievances = this.getFilterPaginationGrievances(grievance, pageNo, pageSize).getContent();
-			fileName = "User_"+grievance.getUserId()+"_Grievances.csv";
 			if( grievances.size() > 0 ) {
-				Map<String, String> columnMapping = new HashMap<String, String>();
-				columnMapping.put("grievanceId", "grievanceId");
-				columnMapping.put("userId", "userId");
-				columnMapping.put("userType", "userType");
-				columnMapping.put("grievanceStatus", "grievanceStatus");
-				columnMapping.put("txnId", "txnId");
-				columnMapping.put("categoryId", "categoryId");
-				columnMapping.put("fileName", "fileName");
-				columnMapping.put("createdOn", "createdOn");
-				columnMapping.put("modifiedOn", "modifiedOn");
-				columnMapping.put("remarks", "remarks");
-				//mapStrategy = new ColumnPositionMappingStrategy<Grievance>();
-				mapStrategy = new HeaderColumnNameTranslateMappingStrategy<Grievance>();
-				mapStrategy.setType( Grievance.class );
-				mapStrategy.setColumnMapping(columnMapping);
-				writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-				builder = new StatefulBeanToCsvBuilder<>(writer);
-				csvWriter = builder.withMappingStrategy(mapStrategy)
-	                    .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
-	                    .build();
-				
-				csvWriter.write(grievances);
+				if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_"+grievances.get(0).getUser().getUsername()+"_Grievances.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Grievances.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Grievances.csv";
+			}
+			/*Map<String, String> columnMapping = new HashMap<String, String>();
+			columnMapping.put("grievanceId", "grievanceId");
+			columnMapping.put("userId", "userId");
+			columnMapping.put("userType", "userType");
+			columnMapping.put("grievanceStatus", "grievanceStatus");
+			columnMapping.put("txnId", "txnId");
+			columnMapping.put("categoryId", "categoryId");
+			columnMapping.put("fileName", "fileName");
+			columnMapping.put("createdOn", "createdOn");
+			columnMapping.put("modifiedOn", "modifiedOn");
+			columnMapping.put("remarks", "remarks");
+			//mapStrategy = new ColumnPositionMappingStrategy<Grievance>();
+			mapStrategy = new HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel>();
+			mapStrategy.setType( GrievanceFileModel.class );
+			mapStrategy.setColumnMapping(columnMapping);
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy)
+                    .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
+                    .build();*/
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<GrievanceFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			if( grievances.size() > 0 ) {
+				List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
+				fileRecords = new ArrayList<GrievanceFileModel>(); 
+				for( Grievance gr : grievances ) {
+					gfm = new GrievanceFileModel();
+					gfm.setGrievanceId( gr.getGrievanceId() );
+					gfm.setGrievanceStatus( gr.getStateInterp());
+					for( SystemConfigListDb config : systemConfigListDbs ) {
+						if( config.getValue().equals( (Integer)gr.getCategoryId()) ) {
+							gfm.setCategoryId( config.getInterp());
+						}
+					}
+					gfm.setTxnId( gr.getTxnId());
+					gfm.setUser( gr.getUser().getUsername());
+					gfm.setUserType( gr.getUserType());
+					gfm.setCreatedOn(gr.getCreatedOn().format(dtf));
+					gfm.setModifiedOn( gr.getModifiedOn().format(dtf));
+					gfm.setFileName( gr.getFileName());
+					gfm.setRemarks( gr.getRemarks());
+					System.out.println(gfm.toString());
+					fileRecords.add(gfm);
+				}
+				csvWriter.write(fileRecords);
 			}
 			return new FileDetails( fileName, filePath, fileStorageProperties.getGrievanceDownloadLink()+fileName ); 
 		} catch (Exception e) {
@@ -299,8 +361,10 @@ public class GrievanceServiceImpl{
 			}else {
 				messages =  grievanceMsgRepository.getGrievanceMsgByGrievanceIdOrderByIdDesc(grievanceId, new PageRequest(0, recordLimit) );
 			}
+			//logger.info("Going to get All grievance Messages List size:["+messages.size()+"]");
 			messagesWithUser = new ArrayList<GrievanceMsgWithUser>();
 			if( messages.size() > 0 ) {
+				//logger.info("Grievance user Id:["+messages.get(0).getGrievance().getUserId()+"] and request user id:["+userId+"] and Equals:["+(messages.get(0).getGrievance().getUserId().equals(userId))+"]");
 				GrievanceMsgWithUser msgWithUser = null;
 				for( GrievanceMsg msg : messages ) {
 					msgWithUser = new GrievanceMsgWithUser();
@@ -313,17 +377,18 @@ public class GrievanceServiceImpl{
 					msgWithUser.setReply(msg.getReply());
 					msgWithUser.setUserId(msg.getUserId());
 					msgWithUser.setUserType(msg.getUserType());
-					if( messages.get(0).getGrievance().getUserId() == userId ) {
-						if( msg.getUserId() == userId )
+					if( messages.get(0).getGrievance().getUserId().equals(userId ) ) {
+						if( msg.getUserId().equals( userId ) )
 							msgWithUser.setUserDisplayName("You");
 						else
 							msgWithUser.setUserDisplayName("Admin");
 					}else {
-						if( msg.getUserId() == userId )
+						if( msg.getUserId().equals(userId ) )
 							msgWithUser.setUserDisplayName("You");
 						else
 							msgWithUser.setUserDisplayName("User");
 					}
+					messagesWithUser.add(msgWithUser);
 				}
 			}
 		} catch (Exception e) {
@@ -337,16 +402,22 @@ public class GrievanceServiceImpl{
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "id"));
 			GrievanceHistorySpecificationBuilder gsb = new GrievanceHistorySpecificationBuilder(propertiesReader.dialect);
+			
 			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
 				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
-			if(Objects.nonNull(grievance.getStartDate()))
+			
+			if(Objects.nonNull(grievance.getStartDate()) && !grievance.getStartDate().equals(""))
 				gsb.with(new SearchCriteria("createdOn", grievance.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getEndDate()))
+			
+			if(Objects.nonNull(grievance.getEndDate()) && !grievance.getEndDate().equals(""))
 				gsb.with(new SearchCriteria("createdOn",grievance.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			if(Objects.nonNull(grievance.getGrievanceId()))
-				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
-			if(Objects.nonNull(grievance.getTxnId()))
+			
+			if(Objects.nonNull(grievance.getGrievanceId()) && !grievance.getGrievanceId().equals(""))
+				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			if(Objects.nonNull(grievance.getTxnId()) && !grievance.getTxnId().equals(""))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			return grievanceHistoryRepository.findAll(gsb.build(), pageable);
 
 		} catch (Exception e) {
@@ -356,11 +427,19 @@ public class GrievanceServiceImpl{
 
 	}
 	
-	public ResponseCountAndQuantity getGrievanceCount( RequestCountAndQuantity request ) {
-		ResponseCountAndQuantity cq = null;
+	public ResponseCountAndQuantity getGrievanceCount( Integer userId, Integer userTypeId, Integer featureId ) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get Grievance count.");
-			return grievanceRepository.getGrievanceCount( request.getUserId(), request.getStatus());
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					if( !GrievanceStatus.CLOSED.getCode().equals( stateDb.getState() ))
+						status.add(stateDb.getState());
+				}
+			}
+			return grievanceRepository.getGrievanceCount( userId, status);
 		} catch (Exception e) {
 			//logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

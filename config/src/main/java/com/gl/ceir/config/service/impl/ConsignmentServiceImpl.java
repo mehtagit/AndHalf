@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -25,8 +26,14 @@ import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
+import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
+import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
@@ -40,6 +47,10 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
+import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
+import com.gl.ceir.config.repository.StockDetailsOperationRepository;
+import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
@@ -320,7 +331,7 @@ public class ConsignmentServiceImpl {
 	} 
 
 	@Transactional
-	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest, String userType) {
+	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest) {
 		try {
 			ConsignmentMgmt consignment = consignmentRepository.getByTxnId(consignmentRequest.getTxnId());
 
@@ -328,13 +339,7 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(4, "Consignment Does not Exist",consignmentRequest.getTxnId());
 			}
 
-			if("CEIRADMIN".equalsIgnoreCase(userType))
-				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
-			else if("IMPORTER".equalsIgnoreCase(userType))
-				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
-			else
-				return new GenricResponse(1, "userType is invalid.", consignmentRequest.getTxnId());
-			
+			consignment.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
 			consignment.setRemarks(consignmentRequest.getRemarks());
 
 			consignmentRepository.save(consignment);
@@ -434,10 +439,18 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getConsignmentCountAndQuantity( RequestCountAndQuantity request ) {
+	public ResponseCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer userTypeId, Integer featureId ) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get  Cosignment count and quantity.");
-			return consignmentRepository.getConsignmentCountAndQuantity(request.getUserId(), request.getStatus());
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					status.add(stateDb.getState());
+				}
+			}
+			return consignmentRepository.getConsignmentCountAndQuantity( userId, status);
 		} catch (Exception e) {
 			//logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
