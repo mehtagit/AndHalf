@@ -157,7 +157,7 @@ public class StockDatatableController {
 					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
 					String stockStatusName=dataInsideList.getStateInterp();
 					String userStatus = (String) session.getAttribute("userStatus");
-					String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
+					String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
 					String[] finalData={date,txnId,file,stockStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

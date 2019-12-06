@@ -31,6 +31,9 @@ public interface UserRegistrationFeignImpl {
 	public HttpResponse  otpValidate(@RequestBody Otp otp);
 	
 	@PostMapping("/userRegistration/resendOtp/{userid}")                                                                                         
-	public HttpResponse otpResend(@PathVariable("userid") Integer userid);  
+	public HttpResponse otpResend(@PathVariable("userid") Integer userid); 
+	
+	@PostMapping("/userRegistration/getUsertypes")                                                                                         
+	public List<Usertype> userRegistrationDropdown(); 
                                                                           	
 }

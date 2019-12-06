@@ -677,19 +677,19 @@ return action;
 
 /********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-public String adminRegistrationRequest(String Id ,String status,String userStatus,String grievanceStatusName,String createdOn) {
+public String adminRegistrationRequest(String Id ,String status,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
 	String approveAction = "userApprovalPopup("+Id+","+createdOn+")";
-	String viewAction=""; 
+	String viewAction="trcInformation?id="+Id+"&roles="+roles+"&type="+type;
 	String rejectAction = "userRejectPopup("+Id+","+createdOn+")";
 	
-
+	log.info("status---->"+status+"-------userStatus---->"+userStatus+"-------AdminCurrentStatus------>"+AdminCurrentStatus);
 
 	// state related Code 
 
 	
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+	String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 							+viewIconTitle+" ></i></a>";
 
 	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
@@ -699,10 +699,12 @@ public String adminRegistrationRequest(String Id ,String status,String userStatu
 	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 	
-	if("3".equals(status) || "4".equals(status)  && "Approved".equals(status)) {
-		  approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+
+	
+	if("Approved".equals(AdminCurrentStatus) || "Rejected".equals(AdminCurrentStatus)  && "Approved".equals(status)) {
+		  approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
-		  reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+		  reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
 	  
 	  }

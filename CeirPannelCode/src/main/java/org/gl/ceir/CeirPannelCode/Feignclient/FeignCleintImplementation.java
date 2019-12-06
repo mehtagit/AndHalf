@@ -190,8 +190,17 @@ public interface FeignCleintImplementation {
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;	
-}
+		
+		
+		
+		
 
+		//***************************************************Admin Registration as Type Dropdown********************************
+
+
+		@RequestMapping(value="/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}" ,method=RequestMethod.GET) 
+		public List<Dropdown> asTypeList(@PathVariable("tagId") String tag, @PathVariable("userTypeId") Integer userTypeId);
+}
 
 
 
