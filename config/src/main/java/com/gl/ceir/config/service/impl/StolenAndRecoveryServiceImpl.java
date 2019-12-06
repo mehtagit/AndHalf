@@ -36,6 +36,7 @@ import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
+import com.gl.ceir.config.model.constants.StolenStatus;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
@@ -242,18 +243,24 @@ public class StolenAndRecoveryServiceImpl {
 
 			for(StolenandRecoveryMgmt  request:stolenandRecoveryMgmt) {
 
-				if("Consignment".equalsIgnoreCase("" /* request.getSourceType() */ )){
+				// Consignment = 0
+				// Stock = 1
+				if(request.getSourceType() == 0){
 					ConsignmentMgmt consignmentMgmt =	consignmentRepository.getByTxnId(request.getTxnId());
-					if("Stolen".equalsIgnoreCase("" /*request.getRequestType() */ )) {
+					
+					// Stolen = 0
+					if(request.getRequestType() == 0) {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.STOLEN.getCode());
 					}else {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.RECOVERY.getCode());
 					}
+					
 					consignmentRepository.save(consignmentMgmt);
-				}else if("STOCK".equalsIgnoreCase("" /* request.getSourceType() */)) {
+				}else if(request.getSourceType() == 1) {
 
 					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(),request.getTxnId());
-					if("Stolen".equalsIgnoreCase("" /* request.getRequestType() */)) {
+					
+					if(request.getRequestType() == 0) {
 						stockMgmt.setStockStatus(StockStatus.STOLEN.getCode());
 					}else {
 						stockMgmt.setStockStatus(StockStatus.RECOVERY.getCode());
@@ -297,13 +304,14 @@ public class StolenAndRecoveryServiceImpl {
 				historyMgmt.setBlockingType("" /* stolenandRecoveryMgmtInfo.getBlockingType() */);
 				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
 				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
-				historyMgmt.setRequestType("" /* stolenandRecoveryMgmtInfo.getRequestType() */);
+				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
 				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
 				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
 				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
-				historyMgmt.setSourceType("" /* stolenandRecoveryMgmtInfo.getSourceType() */);
-
-				if ("Single".equalsIgnoreCase("" /* stolenandRecoveryMgmt.getSourceType() */)){
+				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
+				
+				// 4 = Single
+				if (stolenandRecoveryMgmt.getSourceType() == 4){
 
 					SingleImeiHistoryDb singleImeiHistoryDb = new SingleImeiHistoryDb();
 					singleImeiHistoryDb.setImei(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getImei());
@@ -331,7 +339,7 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse updateRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
-			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo =stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
+			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
 			if(stolenandRecoveryMgmtInfo == null) {
 
 				return new GenricResponse(4,"TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
@@ -342,20 +350,22 @@ public class StolenAndRecoveryServiceImpl {
 				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
 				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
 				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
-				historyMgmt.setRequestType("" /* stolenandRecoveryMgmtInfo.getRequestType() */);
+				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
 				historyMgmt.setRoleType(stolenandRecoveryMgmtInfo.getRoleType());
 				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
 				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
-				historyMgmt.setSourceType("" /* stolenandRecoveryMgmtInfo.getSourceType() */);
+				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
 
 				stolenAndRecoveryHistoryMgmtRepository.save(historyMgmt);
 
-				if ("Stolen".equalsIgnoreCase("" /* stolenandRecoveryMgmt.getRequestType() */)){
+				// 0 = Stolen
+				if (stolenandRecoveryMgmt.getRequestType() == 0){
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
 					stolenandRecoveryMgmtInfo.setBlockingType(stolenandRecoveryMgmt.getBlockingType());
 				}
+				
 				stolenandRecoveryMgmtInfo.setFileName(stolenandRecoveryMgmt.getFileName());
-				stolenandRecoveryMgmtInfo.setFileStatus(0);
+				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 

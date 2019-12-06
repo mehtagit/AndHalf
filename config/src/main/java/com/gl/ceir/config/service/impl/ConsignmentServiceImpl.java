@@ -280,39 +280,40 @@ public class ConsignmentServiceImpl {
 				return new GenricResponse(4,"Consignment Does Not exist.", consignmentFileRequest.getTxnId());
 			}
 			else {
+				/*
 				if(consignmentInfo.getConsignmentNumber() == consignmentFileRequest.getConsignmentNumber()){
 					return new GenricResponse(3, "Consignment Already Exist", consignmentFileRequest.getTxnId());	
-				}else {
-					consignmentInfo.setConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
-					consignmentInfo.setExpectedArrivaldate(consignmentFileRequest.getExpectedArrivaldate());
-					consignmentInfo.setExpectedArrivalPort(consignmentFileRequest.getExpectedArrivalPort());
-					consignmentInfo.setExpectedDispatcheDate(consignmentFileRequest.getExpectedDispatcheDate());
-					consignmentInfo.setOrganisationCountry(consignmentFileRequest.getOrganisationCountry());
-					consignmentInfo.setQuantity(consignmentFileRequest.getQuantity());
-					consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierld());
-					consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
-					consignmentInfo.setTaxPaidStatus(consignmentFileRequest.getTaxPaidStatus());
-					consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
-					consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
+				}else { */
+				consignmentInfo.setConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
+				consignmentInfo.setExpectedArrivaldate(consignmentFileRequest.getExpectedArrivaldate());
+				consignmentInfo.setExpectedArrivalPort(consignmentFileRequest.getExpectedArrivalPort());
+				consignmentInfo.setExpectedDispatcheDate(consignmentFileRequest.getExpectedDispatcheDate());
+				consignmentInfo.setOrganisationCountry(consignmentFileRequest.getOrganisationCountry());
+				consignmentInfo.setQuantity(consignmentFileRequest.getQuantity());
+				consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierld());
+				consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
+				consignmentInfo.setTaxPaidStatus(consignmentFileRequest.getTaxPaidStatus());
+				consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
+				consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
 
-					if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " "){
-						consignmentInfo.setConsignmentStatus(ConsignmentStatus.INIT.getCode());	
-						consignmentInfo.setFileName(consignmentFileRequest.getFileName());
-					}
+				if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " "){
+					consignmentInfo.setConsignmentStatus(ConsignmentStatus.INIT.getCode());	
+					consignmentInfo.setFileName(consignmentFileRequest.getFileName());
+				}
 
-					consignmentRepository.save(consignmentInfo);
+				consignmentRepository.save(consignmentInfo);
 
-					WebActionDb webActionDb = new WebActionDb();
-					webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
-					webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
-					webActionDb.setState(WebActionDbState.INIT.getCode());
-					webActionDb.setTxnId(consignmentFileRequest.getTxnId());
+				WebActionDb webActionDb = new WebActionDb();
+				webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
+				webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
+				webActionDb.setState(WebActionDbState.INIT.getCode());
+				webActionDb.setTxnId(consignmentFileRequest.getTxnId());
 
-					webActionDbRepository.save(webActionDb);
+				webActionDbRepository.save(webActionDb);
 
-					return new GenricResponse(0,"Consignment Update in Processing.", consignmentFileRequest.getTxnId());
-				}				
-			}
+				return new GenricResponse(0,"Consignment Update in Processing.", consignmentFileRequest.getTxnId());
+			}				
+			// }
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -334,7 +335,7 @@ public class ConsignmentServiceImpl {
 				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
 			else
 				return new GenricResponse(1, "userType is invalid.", consignmentRequest.getTxnId());
-			
+
 			consignment.setRemarks(consignmentRequest.getRemarks());
 
 			consignmentRepository.save(consignment);
@@ -427,7 +428,7 @@ public class ConsignmentServiceImpl {
 			}
 
 			return new GenricResponse(0, "Consignment Update SuccessFully.", consignmentUpdateRequest.getTxnId());
-			
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
