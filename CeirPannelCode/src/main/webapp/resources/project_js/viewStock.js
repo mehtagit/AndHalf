@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
 	filter();
 	pageRendering()
 });
@@ -279,6 +280,7 @@ function Datatable(url,dataUrl) {
 				"columns": result,
 				"columnDefs": [{ "width": "220px", "targets":result.length - 1 }]
 			});
+			$('div#initialloader').delay(300).fadeOut('slow');
 		}
 	}); 
 }	

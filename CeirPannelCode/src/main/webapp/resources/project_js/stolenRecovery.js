@@ -6,6 +6,7 @@ var featureId="5";
 
 
 $(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
 	filterStolen();
 	pageRendering();
 });
@@ -344,6 +345,7 @@ function Datatable(url,dataUrl){
 				},
 				"columns": result
 			});
+			$('div#initialloader').delay(300).fadeOut('slow');
 		}
 	}); 
 }				

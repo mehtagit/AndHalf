@@ -15,6 +15,9 @@ $(document).ready(function(){
 				url= data[i].url.split("?"); 
 				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].featureId+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].view+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
 				var finalID = data[i].featureId;
+				if(userId == 271){
+					userId = -1;
+				}
 				$.ajax({
 					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType,
 					'async': false,

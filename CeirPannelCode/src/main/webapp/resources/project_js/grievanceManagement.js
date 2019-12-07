@@ -1,6 +1,7 @@
 var featureId = 6;
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 $(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
 	grievanceDataTable();
 	pageRendering();
 });
@@ -58,12 +59,13 @@ function grievanceDataTable(){
 				},
 				"columns": result
 			});
-			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#grivanceLibraryTable input').unbind();
 		    $('#grivanceLibraryTable input').bind('keyup', function (e) {
 		        if (e.keyCode == 13) {
 		            table.search(this.value).draw();
 		        }
+		        
 		    });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {

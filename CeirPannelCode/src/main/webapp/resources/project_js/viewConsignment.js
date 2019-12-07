@@ -9,6 +9,7 @@ var userType=$("body").attr("data-roleType");
 var featureId="3";
 
 $(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
 	filterConsignment();
 	pageRendering();
 	/*var x = '19 December, 2019'; 
@@ -263,6 +264,9 @@ function table(url,dataUrl){
 				},
 				"columns": result
 			});
+
+			$('div#initialloader').delay(300).fadeOut('slow');
+		/*	$('div#initialloader').fadeOut('slow');*/
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");

@@ -57,6 +57,7 @@
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
  
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
 </head>
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
@@ -64,6 +65,7 @@
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
+	<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">

@@ -2535,7 +2535,15 @@ input[type='search'] {
       color: #444 !important;
     }
     
-    
+    div#initialloader {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background: url('../../resources/images/loader.gif') 50% 50% no-repeat white;
+}
     
  .export-to-excel {
 color: #2979a5;

@@ -48,13 +48,10 @@ public class StockDatatableController {
 	@PostMapping("stockData")
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
-
-
+		List<List<String>> finalList=new ArrayList<List<String>>();
+		try {
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
-
-		List<List<String>> finalList=new ArrayList<List<String>>();
-
 		//FilterRequest filterrequest = request.getParameter("FilterRequest");
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
@@ -69,7 +66,7 @@ public class StockDatatableController {
 		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);
 		log.info("request passed to the filter api  ="+filterrequest);
 		log.info("response::::::::::::::::"+response);
-		try {		
+				
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			stockPaginationModel = gson.fromJson(apiResponse, StockPaginationModel.class);
