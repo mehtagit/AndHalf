@@ -20,7 +20,7 @@ var userId = $("body").attr("data-userID");
 
 function grievanceDataTable(){
 	var filterRequest={
-			"grievanceStatus": -1,
+			/*"grievanceStatus": -1,*/
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"grievanceStatus":parseInt($('#recentStatus').val()),

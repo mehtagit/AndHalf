@@ -68,6 +68,8 @@ public class GrievanceDatatableController {
 				
 				Integer file=0;
 		log.info("filterrequest::::::::::::"+filterrequest);
+		Integer status=filterrequest.getGrievanceStatus() == null ? -1 :filterrequest.getGrievanceStatus();
+		filterrequest.setGrievanceStatus(status);
 		try {
 			log.info("request parameters send to view grievance api="+filterrequest);
 			filterrequest.setSearchString(request.getParameter("search[value]"));
