@@ -19,6 +19,7 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.RegistrationContentModel;
 import org.gl.ceir.pagination.model.RegistrationPaginationModel;
+import org.gl.ceir.pagination.model.RegistrationUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,8 @@ public class RegistrationReqDatatableController {
 	RegistrationPaginationModel registrationpaginationmodel;
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
+	@Autowired
+	RegistrationUser registrationUser;
 	
 	@PostMapping("registrationData")
 	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",defaultValue = "registration",required = false) String role, HttpServletRequest request,HttpSession session) {
@@ -67,6 +70,7 @@ public class RegistrationReqDatatableController {
 		
 		
 		try {
+			log.info("request send to the filter api ="+filterrequest);
 			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
@@ -82,7 +86,7 @@ public class RegistrationReqDatatableController {
 				for(RegistrationContentModel dataInsideList : paginationContentList) 
 				{
 				   String createdOn = (String) dataInsideList.getCreatedOn();
-				   String Id = String.valueOf(dataInsideList.getId());
+				   String Id =   String.valueOf(dataInsideList.getUser().getId());
 				   String type = dataInsideList.getType();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
@@ -131,7 +135,7 @@ public class RegistrationReqDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", "filter","filterConsignment()","submitFilter"};
+			String[] names= {"FilterButton", "filter","registrationDatatable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

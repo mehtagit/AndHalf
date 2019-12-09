@@ -3,6 +3,8 @@ package org.gl.ceir.pagination.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+@Component
 public class RegistrationUser {
 	private Integer id;
 	private String username;

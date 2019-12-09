@@ -680,9 +680,9 @@ return action;
 public String adminRegistrationRequest(String Id ,String status,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
-	String approveAction = "userApprovalPopup("+Id+","+createdOn+")";
+	String approveAction = "userApprovalPopup("+Id+")";
 	String viewAction="trcInformation?id="+Id+"&roles="+roles+"&type="+type;
-	String rejectAction = "userRejectPopup("+Id+","+createdOn+")";
+	String rejectAction = "userRejectPopup("+Id+")";
 	
 	log.info("status---->"+status+"-------userStatus---->"+userStatus+"-------AdminCurrentStatus------>"+AdminCurrentStatus);
 

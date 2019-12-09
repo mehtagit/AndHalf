@@ -39,7 +39,8 @@ public class AdminRegistrationRequest {
 			)
 	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam(name="id") int id, @RequestParam(name="roles") String roles,@RequestParam(name="type") String asType) {
 		ModelAndView mv = new ModelAndView();
-		//log.info("ID----------------->"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
+		
+		log.info("ID----------------->"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
 		
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
 		mv.addObject("registration", registration);
@@ -62,7 +63,7 @@ public class AdminRegistrationRequest {
 			log.info("-------------------->4");
 			mv.setViewName("viewCompany");
 			
-		}else if("Individual".equals(asType) && "Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles) ){
+		}else if("Individual".equals(asType) && "Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)){
 			log.info("-------------------->5");
 			mv.setViewName("viewIndividual");
 		}
