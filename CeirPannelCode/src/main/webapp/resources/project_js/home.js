@@ -3,6 +3,8 @@ var userType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var featureId="3";
 var requestType="0";
+
+
 $(document).ready(function(){
 	var url;
 	$.ajax({
@@ -72,6 +74,13 @@ localStorage.setItem("grievancePageSource", "viaDashBoard");
 //**************************************************Notification Data table**********************************************
 
 function notificationDatatable(){
+	
+	var filterRequest = {
+			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+			"userType" : $("body").attr("data-roleType"),
+			"userId" : $("body").attr("data-userID"),
+			"featureId" : 3
+	}
 
 	$.ajax({
 		url: 'headers?type=dashboardNotification',
@@ -92,7 +101,8 @@ function notificationDatatable(){
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
-						console.log("Success");
+						d.filter = JSON.stringify(filterRequest); 
+						console.log(json.Stringify(filterRequest));
 					}
 
 				},
