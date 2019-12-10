@@ -75,7 +75,7 @@ public class ProfileService {
 	
 	public HttpResponse adminApprovalService(UserStatus userStatus,HttpSession session) {
 		log.info("inside update userStatus controller");
-		Integer userid=(Integer)session.getAttribute("userid");
+		Integer userid= userStatus.getUserId();
 		log.info("userid from session:  "+userid);
 		userStatus.setUserId(userid); 
 		log.info("userStatus data is :  "+userStatus);

@@ -149,7 +149,7 @@ function pageRendering(){
 
 	$.getJSON('./registrationUserType', function(data) {
 		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].usertypeName)
+			$('<option>').val(data[i].id).text(data[i].usertypeName)
 			.appendTo('#role');
 		}
 	});
@@ -235,7 +235,7 @@ $('.datepicker').on('mousedown',function(event){
 
 
 
-function userApprovalPopup(userId,registrationDate){
+function userApprovalPopup(userId){
 	$('#approveInformation').openModal();
 	$("#userId").text(userId)
 }
@@ -276,14 +276,14 @@ function aprroveUser(userId){
 
 function userRejectPopup(userId){
 	$('#rejectInformation').openModal();
-	console.log("Reject userId is---->"+userId+"------registrationDate----------->"+registrationDate);
+	console.log("Reject userId is---->"+userId);
 	$("#userId").text(userId)
 }
 
 function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
 	$('#confirmRejectInformation').openModal();
-	$("#registrationDate").text(registrationDate);
+	
 
 }
 
@@ -291,7 +291,7 @@ function rejectUser(userId){
 	var userid= $("#userId").text();
 	var rejectRequest={
 			"userId": parseInt(userid),
-			"status" : "Approved",
+			"status" : "Rejected",
 			"remark": $("#Reason").val()	
 	}
 	
