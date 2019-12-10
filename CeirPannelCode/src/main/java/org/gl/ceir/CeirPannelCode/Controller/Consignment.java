@@ -300,7 +300,7 @@ consignment.setExpectedArrivalPort(expectedArrivalPort);
 consignment.setQuantity(quantity);
 consignment.setTxnId(txnId);
 consignment.setFileName(filename);
-consignment.setUserId(Long.valueOf(1));
+consignment.setUserId(Long.valueOf(userId));
 consignment.setCurrency(currency);
 
 consignment.setTotalPrice(totalPrice);

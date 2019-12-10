@@ -52,28 +52,137 @@ public class GrievanceDatatableController {
 	
 	
 	@PostMapping("grievanceData")
-	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "grievance",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "grievance",required = false) String role, HttpServletRequest request,HttpSession session,
+												@RequestParam (name="grievanceSessionUsesFlag" ,required = false) Integer grievanceSessionUsesFlag) {
 	
-		log.info("session value user Type=="+session.getAttribute("usertype"));
+		// Data set on this List
+		List<List<String>> finalList=new ArrayList<List<String>>();
+		String filter = request.getParameter("filter");
+		Gson gsonObject=new Gson();
+		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		Integer pageSize = Integer.parseInt(request.getParameter("length"));
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		Integer file=0;
+		Object response;
+		log.info("session value user Type=="+session.getAttribute("usertype")+" grievanceSessionUsesFlag=="+grievanceSessionUsesFlag);
 		String userType = (String) session.getAttribute("usertype");
 		int userId=(int) session.getAttribute("userid");
+		log.info(" filterrequest*************"+filterrequest);
+		if(grievanceSessionUsesFlag==0)
+		{
+			if (filterrequest.getTxnId()==null && filterrequest.getGrievanceStatus()==null &&  filterrequest.getStartDate()==null && filterrequest.getEndDate()==null && filterrequest.getGrievanceId()==null )
+		{
+			log.info("filter params is  blank..... ");
+			
+		}
+	
+		else if(filterrequest.getTxnId()!=null && filterrequest.getGrievanceStatus()==null && filterrequest.getGrievanceId().equals("") &&
+				filterrequest.getStartDate().equals("") && filterrequest.getEndDate().equals("") ) 
+		{
+			log.info("++++++++++++++++++++++");
+			 session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
+			 session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
+			 session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
+			 session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
+			 session.setAttribute("grievanceId", filterrequest.getGrievanceId());
+		}
+		else if(filterrequest.getTxnId()!=null && filterrequest.getGrievanceStatus()!=null && filterrequest.getGrievanceId()!=null && 
+				filterrequest.getStartDate().equals("") && filterrequest.getEndDate().equals("") ) 
+		{
+			log.info("111111111111111111111111");
+			 session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
+			 session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
+			 session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
+			 session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
+			 session.setAttribute("grievanceId", filterrequest.getGrievanceId());
+		}
+			/*
+			 * else if(filterrequest.getTxnId().equals("") &&
+			 * filterrequest.getGrievanceStatus()!=null &&
+			 * filterrequest.getGrievanceId().equals("") &&
+			 * filterrequest.getStartDate().equals("") &&
+			 * filterrequest.getEndDate().equals("") ) { log.info("#####################");
+			 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
+			 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
+			 * session.setAttribute("grievanceStatus",
+			 * filterrequest.getConsignmentStatus()); session.setAttribute("grievanceTxnId",
+			 * filterrequest.getTxnId()); session.setAttribute("grievanceId",
+			 * filterrequest.getGrievanceId()); }
+			 */
+		else if(filterrequest.getTxnId()==null && filterrequest.getGrievanceStatus()==null && filterrequest.getGrievanceId()!=null && filterrequest.getStartDate()=="" && filterrequest.getEndDate()=="" ) 
+		{
+			log.info("22222222222222222222222222");
+			session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
+			 session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
+			 session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
+			 session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
+			 session.setAttribute("grievanceId", filterrequest.getGrievanceId());
+		}
+		else if(filterrequest.getTxnId()==null && filterrequest.getGrievanceStatus()==null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate()!=null && filterrequest.getEndDate()==null ) 
+		{
+			log.info("33333333333333333333333333");
+			session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
+			 session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
+			 session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
+			 session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
+			 session.setAttribute("grievanceId", filterrequest.getGrievanceId());
+		}
+		else if(filterrequest.getTxnId()==null && filterrequest.getGrievanceStatus()==null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate()==null && filterrequest.getEndDate()!=null ) 
+		{
+			log.info("4444444444444444444444444444444");
+			session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
+			 session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
+			 session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
+			 session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
+			 session.setAttribute("grievanceId", filterrequest.getGrievanceId());
+		}
 		
-		// Data set on this List
-				List<List<String>> finalList=new ArrayList<List<String>>();
-				String filter = request.getParameter("filter");
-				Gson gsonObject=new Gson();
-				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-				Integer pageSize = Integer.parseInt(request.getParameter("length"));
-				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-				
-				Integer file=0;
-		log.info("filterrequest::::::::::::"+filterrequest);
-		Integer status=filterrequest.getGrievanceStatus() == null ? -1 :filterrequest.getGrievanceStatus();
-		filterrequest.setGrievanceStatus(status);
+		 String grievanceStartDate=(String) session.getAttribute("grievanceStartDate");
+		 String grievanceEndDate=(String) session.getAttribute("grievanceEndDate");
+		 Integer grievanceStatus=(Integer) session.getAttribute("grievanceStatus");
+		 String grievanceTxnId=(String) session.getAttribute("grievanceTxnId");
+		 String grievanceId=(String) session.getAttribute("grievanceId");
+		
+		 log.info("filterd start date ="+filterrequest.getStartDate()+" filterd end date=="+filterrequest.getEndDate()+" filter consignment status="+filterrequest.getConsignmentStatus()+" txn id=="+filterrequest.getTxnId());
+		 
+		 if(session.getAttribute("grievanceStartDate")==null && session.getAttribute("grievanceEndDate")==null &&  session.getAttribute("grievanceStatus")==null &&
+				  session.getAttribute("grievanceTxnId")==null && session.getAttribute("grievanceId")==null ) {
+			 
+
+			
+			  filterrequest.setStartDate(grievanceStartDate);
+			  filterrequest.setEndDate(grievanceEndDate);
+			  filterrequest.setGrievanceStatus(grievanceStatus);
+			  filterrequest.setGrievanceId(grievanceId);
+			  filterrequest.setTxnId(grievanceTxnId);
+			 
+			 log.info("session is  blank *********************** request send to the filter api ="+filterrequest);
+			 response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
+
+			
+		 }
+		 else {
+			
+			  filterrequest.setStartDate(grievanceStartDate);
+			  filterrequest.setEndDate(grievanceEndDate);
+			  filterrequest.setGrievanceStatus(grievanceStatus);
+			  filterrequest.setGrievanceId(grievanceId);
+			  filterrequest.setTxnId(grievanceTxnId);
+			 
+			 log.info("session is not blank ************************ request send to the filter api ="+filterrequest);
+			 response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
+
+		 }
+		}
+		else {
+			log.info("no session needed....");
+			response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
+		}
+		
 		try {
 			log.info("request parameters send to view grievance api="+filterrequest);
 			filterrequest.setSearchString(request.getParameter("search[value]"));
-			Object response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
+			 
 			log.info("response::::::::::::::"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);

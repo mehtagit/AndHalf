@@ -13,6 +13,7 @@ var taxStatus=$('#taxPaidStatus').val();
 var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
 
+/*localStorage.setItem("grievancePageSource", "viaGriebva");*/
 
 
 
@@ -20,17 +21,43 @@ var userId = $("body").attr("data-userID");
 //**************************************************Grievance table**********************************************
 
 function grievanceDataTable(){
+	var grievancePageSource =localStorage.getItem("grievancePageSource");
+	var grievanceSessionUsesFlag;
+	console.log("grievancePageSource=="+grievancePageSource);
+	var grievanceStatus=$('#recentStatus').val();
+	console.log("grievanceStatus=="+grievanceStatus);
+	if(grievanceStatus==null)
+		{
+		grievanceStatus=-1;
+		console.log("**********"+grievanceStatus);
+		}
+	else{
+		console.log("selected user status==*"+grievanceStatus);
+		grievanceStatus=$('#recentStatus').val();
+	}
+	if(grievancePageSource=="viaDashBoard")
+		{
+		grievanceSessionUsesFlag=1;
+		console.log("1111111");
+		}
+	else{
+		grievanceSessionUsesFlag=0;
+		console.log("00000000");
+	}
+	localStorage.removeItem('grievancePageSource');
+	console.log("grievanceSessionUsesFlag=="+grievanceSessionUsesFlag);
 	var filterRequest={
-			/*"grievanceStatus": -1,*/
+			"grievanceStatus":grievanceStatus,
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
-			"grievanceStatus":parseInt($('#recentStatus').val()),
+			"recentStatus":parseInt($('#recentStatus').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"txnId":$('#transactionID').val(),
 			"grievanceId":$('#grievanceID').val(),
-			"userType":$("body").attr("data-roleType")
+			"userType":$("body").attr("data-roleType"),
+			
 	}
 	$.ajax({
 		url: 'headers?type=grievanceHeaders',
@@ -48,7 +75,7 @@ function grievanceDataTable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : 'grievanceData',
+					url : 'grievanceData?grievanceSessionUsesFlag='+grievanceSessionUsesFlag,
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
@@ -120,8 +147,8 @@ function pageRendering(){
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option>"+dropdown[i].title+
+							"<select id="+dropdown[i].id+"  class='select2 form-control boxBorder boxHeight initialized'>"+
+							"<option value='-1'>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -148,7 +175,40 @@ function pageRendering(){
 					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#recentStatus');
 				}
+				
+				
+				 var grievanceStatus= $("body").attr("data-grievanceStatus");
+				 console.log("#################33"+grievanceStatus);
+				 if(grievanceStatus=="")
+					 {
+					 console.log("grievance status is blank ");
+					 
+					 }
+				 else{
+					 console.log(" grievanceStatus is Not blank ");
+					 $("#recentStatus").val(grievanceStatus).change();
+				 
+					 
+				
+				 }
 			});
+			
+			var grievanceId = $("body").attr("data-grievanceId");
+			var txnid = $("body").attr("data-grievanceTxnId");
+
+			console.log("*******************"+txnid+" grievanceId="+grievanceId);
+			$('#transactionID').val(txnid);
+			$('#grievanceID').val(grievanceId);
+			if(txnid=="" )
+				{
+				console.log("txnid is null");
+				}
+			else{
+				console.log("txnid is not null")
+				$('label[for=TransactionID]').remove();
+				
+			}
+			
 			//cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
 			$('.datepicker').datepicker({

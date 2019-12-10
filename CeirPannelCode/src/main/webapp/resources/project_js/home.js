@@ -64,6 +64,11 @@ $(document).ready(function(){
 
 
 
+localStorage.setItem("sourceType", "viaDashBoard");
+localStorage.setItem("grievancePageSource", "viaDashBoard");
+
+
+
 //**************************************************Notification Data table**********************************************
 
 function notificationDatatable(){

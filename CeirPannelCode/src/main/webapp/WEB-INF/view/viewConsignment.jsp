@@ -59,7 +59,7 @@
  
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 </head>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" data-selected-consignmentTxnId="${consignmentTxnId}" data-selected-consignmentStatus="${consignmentStatus}">
 
 
 	<!-- START CONTENT -->
