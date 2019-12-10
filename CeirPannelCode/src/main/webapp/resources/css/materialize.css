@@ -12145,3 +12145,145 @@ button.picker__close:focus {
     margin-bottom: 5em;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* responsive css */
+@media only screen and (max-width: 992px) {
+  .pageHeader {
+    height: 50px;
+    background-color: #529dba;
+    margin: -20px -20px 0 -20px;
+    padding: 10px 40px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .modal {
+    width: 95%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .modal {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .selectDropdwn {
+    margin-top: -15px;
+    padding: 0 0.25rem !important;
+  }
+}
+
+.modal-header {
+  background-color: #529dba;
+  padding: 15px 24px;
+  color: #fff;
+  margin: -25px -24px 1rem -24px;
+}
+
+.registration-form {
+  width: 90%;
+  margin: auto;
+  padding: 20px 5% 20px 5%;
+}
+
+@media only screen and (max-width: 992px) {
+  .registration-form {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .container {
+    padding: 0;
+    margin: 0 auto;
+    max-width: 100% !important;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .section {
+    padding-top: 0;
+    padding-bottom: 1rem;
+}
+}
+
+.responsive-modal {
+  width: 40%;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 601px) {
+  .responsive-modal {
+  width: 70%;
+}
+}
+
+@media only screen and (max-width: 600px) {
+  .responsive-modal {
+  width: 95%;
+}
+}
+
+.small-modal {
+    width: 40%;
+}
+
+@media only screen and (max-width: 992px) {
+  .small-modal {
+  width: 70%;
+}
+}
+
+@media only screen and (max-width: 600px) {
+  .small-modal {
+   width: 95%;
+}
+}
+
+.export-to-excel {
+  color: #2979a5;
+  float: right;
+  border: solid 1px rgba(33, 167, 201, 0.774);
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-size: 14px;
+  background-color: #fff;
+  margin-top: 30px;
+}
+
+@media only screen and (max-width: 425px){
+  .export-to-excel {
+    color: #2979a5;
+    float: right;
+    border: solid 1px rgba(33, 167, 201, 0.774);
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 14px;
+    background-color: #fff;
+    margin-top: -30px;
+  }
+}
+
+.botton {
+  margin-top: 30px;
+  margin-left: 15px;
+  height: 32px;
+  width: 72;
+}

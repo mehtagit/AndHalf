@@ -62,6 +62,7 @@ public class GrievanceDatatableController {
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		Integer file=0;
 		Object response;
 		log.info("session value user Type=="+session.getAttribute("usertype")+" grievanceSessionUsesFlag=="+grievanceSessionUsesFlag);
@@ -180,9 +181,8 @@ public class GrievanceDatatableController {
 		}
 		
 		try {
-			log.info("request parameters send to view grievance api="+filterrequest);
-			filterrequest.setSearchString(request.getParameter("search[value]"));
-			 
+		
+			log.info("request parameters send to view grievance api="+filterrequest); 
 			log.info("response::::::::::::::"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
