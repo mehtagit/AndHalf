@@ -138,6 +138,15 @@ public class DatatableHeaders {
 			}
 			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
+			
+			//TRC Manage Type dataTable Headers
+			else if("trcManageType".equals(role)) {
+			String[] headers = {HeadersTitle.requestDate,HeadersTitle.manufacturerName,HeadersTitle.country,HeadersTitle.tac,HeadersTitle.Status,HeadersTitle.approveRejectionDate,HeadersTitle.action};
+			for(String header : headers) {
+			dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
 
 
 

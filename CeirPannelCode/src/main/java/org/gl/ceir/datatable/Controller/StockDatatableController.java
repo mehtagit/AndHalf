@@ -66,7 +66,7 @@ public class StockDatatableController {
 		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);
 		log.info("request passed to the filter api  ="+filterrequest);
 		log.info("response::::::::::::::::"+response);
-				
+		try {		
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			stockPaginationModel = gson.fromJson(apiResponse, StockPaginationModel.class);
@@ -131,8 +131,8 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String txnId= dataInsideList.getTxnId(); 
-						String userId = "";
-						String roll = "";
+						String userId = String.valueOf(dataInsideList.getUserId());
+						String roll = dataInsideList.getRoleType();
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());

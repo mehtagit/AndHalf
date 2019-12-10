@@ -14,28 +14,25 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 
 var role = currentRoleType == null ? roleType : currentRoleType;
 
-var startdate=$('#startDate').val(); 
-var endDate=$('#endDate').val();
-var taxStatus=$('#taxPaidStatus').val();
-var consignmentStatus=$('#filterConsignmentStatus').val();
-var userId = $("body").attr("data-userID");
-var featureId = 8;
-
-var filterRequest={
-		"featureId" : featureId,
-		"endDate":endDate,
-		"startDate":startdate,
-		"taxPaidStatus":taxStatus,
-		"userId":userId,
-		"roleType": role
-};
-
-
 
 //**************************************************Registration table**********************************************
 
 function registrationDatatable(){
-
+	var asType = $('#asType').val();
+	var userRoleTypeId = $("#role").val();
+	var status =  $('#recentStatus').val();
+	
+	var filterRequest={
+			"asType": asType,
+			"userRoleTypeId" : parseInt(userRoleTypeId),
+			"status" : status,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			
+	}
+	
 	$.ajax({
 		url: 'headers?type=adminRegistration',
 		type: 'POST',
@@ -122,7 +119,8 @@ function pageRendering(){
 					"</div>");
 			}
 			
-			$("#registrationTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' id='submitFilter'></button></div>");
+			$("#registrationTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#registrationTableDiv").append("<div class='col s12 m2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -151,7 +149,7 @@ function pageRendering(){
 
 	$.getJSON('./registrationUserType', function(data) {
 		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].state).text(data[i].usertypeName)
+			$('<option>').val(data[i].value).text(data[i].usertypeName)
 			.appendTo('#role');
 		}
 	});
@@ -252,7 +250,7 @@ function confirmApproveInformation(){
 function aprroveUser(userId){
 	var userid= $("#userId").text();
 	var approveRequest={
-			"userid": userid,
+			"userId": parseInt(userid),
 			"status" : "Approved",
 			"remark": $("#Reason").val()	
 	}
@@ -276,7 +274,7 @@ function aprroveUser(userId){
 	
 }
 
-function userRejectPopup(userId,registrationDate){
+function userRejectPopup(userId){
 	$('#rejectInformation').openModal();
 	console.log("Reject userId is---->"+userId+"------registrationDate----------->"+registrationDate);
 	$("#userId").text(userId)
@@ -292,7 +290,7 @@ function confirmRejectInformation(){
 function rejectUser(userId){
 	var userid= $("#userId").text();
 	var rejectRequest={
-			"userid": userid,
+			"userId": parseInt(userid),
 			"status" : "Approved",
 			"remark": $("#Reason").val()	
 	}

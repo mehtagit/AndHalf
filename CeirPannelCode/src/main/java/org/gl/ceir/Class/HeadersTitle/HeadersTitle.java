@@ -45,6 +45,16 @@ public class HeadersTitle {
 	public static final String feature = "Feature";
 	public static final String message = "Message";
 	
+	//TRC Headers
+	public static final String manufacturerName = "Manufacturer Name";
+	public static final String country = "Country";
+	public static final String tac = "TAC";
+	public static final String approveRejectionDate = "Approve/Rejection Date";
+	
+	
+	
+	
+	
 		
 	
 }
