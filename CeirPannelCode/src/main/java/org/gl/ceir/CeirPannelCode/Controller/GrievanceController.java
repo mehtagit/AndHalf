@@ -181,7 +181,7 @@ public class GrievanceController {
 						@RequestMapping(value="/exportGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 						public String exportToExcel(@RequestParam(name="grievanceStartDate",required = false) String grievanceStartDate,@RequestParam(name="grievanceEndDate",required = false) String grievanceEndDate,
 								@RequestParam(name="grievancetxnId",required = false) String grievancetxnId,@RequestParam(name="grievanceId") String grievanceId,HttpServletRequest request,
-								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo)
+								HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="grievanceStatus") Integer grievanceStatus)
 						{
 							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
 							int userId= (int) session.getAttribute("userid"); 
@@ -191,16 +191,16 @@ public class GrievanceController {
 							filterRequest.setStartDate(grievanceStartDate);
 							filterRequest.setEndDate(grievanceEndDate);
 							filterRequest.setTxnId(grievancetxnId);
-							filterRequest.setGrievanceStatus(-1);
+							filterRequest.setGrievanceStatus(grievanceStatus);
 							filterRequest.setGrievanceId(grievanceId);
 							filterRequest.setUserId(userId);
-							log.info("filterRequest=="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
+							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
 						
 						Gson gson= new Gson(); 
 						String apiResponse = gson.toJson(response);
 						fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-							log.info("response  from   export grievance  method="+fileExportResponse);
+							log.info("response  from   export grievance  api="+fileExportResponse);
 							
 							return "redirect:"+fileExportResponse.getUrl();
 					}

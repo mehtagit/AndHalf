@@ -48,22 +48,16 @@ public class StockDatatableController {
 	@PostMapping("stockData")
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
-
-
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
-
 		List<List<String>> finalList=new ArrayList<List<String>>();
-
 		//FilterRequest filterrequest = request.getParameter("FilterRequest");
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		// TODO Convert header to an ENUM.
-		// list provided via Back-end process
+	
 
 
 		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize);

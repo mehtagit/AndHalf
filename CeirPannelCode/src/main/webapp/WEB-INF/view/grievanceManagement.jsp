@@ -60,7 +60,7 @@
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-grievanceStatus="${grievanceStatus}" >
 
 
 	<!-- START CONTENT -->

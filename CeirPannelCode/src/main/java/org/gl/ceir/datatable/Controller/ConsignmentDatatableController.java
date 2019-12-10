@@ -58,7 +58,8 @@ public class ConsignmentDatatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@PostMapping("consignmentData")
-	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,@RequestParam(name="sourceType",required = false) String sourceType,HttpServletRequest request,HttpSession session) {	 		
+	 public ResponseEntity<?> viewConsignmentList(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,
+			 @RequestParam(name="sourceType",required = false) String sourceType,HttpServletRequest request,HttpSession session,@RequestParam(name="sessionFlag",required = false) Integer sessionFlag) {	 		
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
@@ -68,16 +69,133 @@ public class ConsignmentDatatableController {
 
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-
+		Object response;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		
+		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		
+		
+		log.info("session flag value==####@@@@@@@@@@@@@="+sessionFlag);
+		log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$="+filterrequest);
+		if(sessionFlag==2)
+		{
+			if (filterrequest.getTxnId()==null && filterrequest.getConsignmentStatus()==null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate()==null && filterrequest.getEndDate()==null  )
+		{
+			log.info("----------------------");
+			
+		}
+	
+		else if(filterrequest.getTxnId()!=null && filterrequest.getConsignmentStatus()==null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate().equals("") && filterrequest.getEndDate().equals("") ) 
+		{
+			log.info("++++++++++++++++++++++");
+			 session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+			 session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+			 session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+			 session.setAttribute("consignmentTaxPaidStatus",filterrequest.getTaxPaidStatus());
+			 session.setAttribute("consignmentTxnId", filterrequest.getTxnId());
+		}
+		else if(filterrequest.getTxnId()!=null
+				&& filterrequest.getConsignmentStatus()!=null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate().equals("") && filterrequest.getEndDate().equals("") ) 
+		{
+			log.info("111111111111111111111111");
+			 session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+			 session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+			 session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+			 session.setAttribute("consignmentTaxPaidStatus",filterrequest.getTaxPaidStatus());
+			 session.setAttribute("consignmentTxnId", filterrequest.getTxnId());
+		}
+		else if(filterrequest.getTxnId().equals("") && filterrequest.getConsignmentStatus()!=null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate().equals("") && filterrequest.getEndDate().equals("") ) 
+		{
+			log.info("#####################");
+			 session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+			 session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+			 session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+			 session.setAttribute("consignmentTaxPaidStatus",filterrequest.getTaxPaidStatus());
+			 session.setAttribute("consignmentTxnId", filterrequest.getTxnId());
+		}
+		else if(filterrequest.getTxnId()==null && filterrequest.getConsignmentStatus()==null && filterrequest.getTaxPaidStatus()!=null && filterrequest.getStartDate()==null && filterrequest.getEndDate()==null ) 
+		{
+			log.info("22222222222222222222222222");
+			 session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+			 session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+			 session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+			 session.setAttribute("consignmentTaxPaidStatus",filterrequest.getTaxPaidStatus());
+			 session.setAttribute("consignmentTxnId", filterrequest.getTxnId());
+		}
+		else if(filterrequest.getTxnId()==null && filterrequest.getConsignmentStatus()==null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate()!=null && filterrequest.getEndDate()==null ) 
+		{
+			log.info("33333333333333333333333333");
+			 session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+			 session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+			 session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+			 session.setAttribute("consignmentTaxPaidStatus",filterrequest.getTaxPaidStatus());
+			 session.setAttribute("consignmentTxnId", filterrequest.getTxnId());
+		}
+		else if(filterrequest.getTxnId()==null && filterrequest.getConsignmentStatus()==null && filterrequest.getTaxPaidStatus()==null && filterrequest.getStartDate()==null && filterrequest.getEndDate()!=null ) 
+		{
+			log.info("4444444444444444444444444444444");
+			 session.setAttribute("consignmentStartDate", filterrequest.getStartDate());
+			 session.setAttribute("consignmentEndDate",filterrequest.getEndDate());
+			 session.setAttribute("consignmentStatus", filterrequest.getConsignmentStatus());
+			 session.setAttribute("consignmentTaxPaidStatus",filterrequest.getTaxPaidStatus());
+			 session.setAttribute("consignmentTxnId", filterrequest.getTxnId());
+		}
+		
+		
+	
+		 
+		
+		
+		 String consignmentStartDate=(String) session.getAttribute("consignmentStartDate");
+		 String consignmentEndDate=(String) session.getAttribute("consignmentEndDate");
+		 Integer consignmentStatus=(Integer) session.getAttribute("consignmentStatus");
+		 Integer consignmentTaxPaidStatus=(Integer) session.getAttribute("consignmentTaxPaidStatus");
+		 String consignmentTxnId=(String) session.getAttribute("consignmentTxnId");
+		
+		 log.info("filterd start date ="+filterrequest.getStartDate()+" filterd end date=="+filterrequest.getEndDate()+" filter consignment status="+filterrequest.getConsignmentStatus()+" consignmentTaxPaidStatus ="+consignmentTaxPaidStatus+" consignment txn id=="+filterrequest.getTxnId());
+		 
+		 if(session.getAttribute("consignmentStartDate")==null && session.getAttribute("consignmentEndDate")==null &&  session.getAttribute("consignmentStatus")==null &&
+				  session.getAttribute("consignmentTaxPaidStatus")==null && session.getAttribute("consignmentTxnId")==null ) {
+			 
 
-		// TODO Convert header to an ENUM.
+			
+			  filterrequest.setStartDate(consignmentStartDate);filterrequest.setEndDate(
+			  consignmentEndDate);filterrequest.setConsignmentStatus(consignmentStatus);
+			  filterrequest.setTaxPaidStatus(consignmentTaxPaidStatus);filterrequest.
+			  setTxnId(consignmentTxnId);
+			 
+			 log.info("session is  blank *********************** request send to the filter api ="+filterrequest);
+			 log.info("*******consignmentStartDate=="+consignmentStartDate+" consignmentEndDate=="+consignmentEndDate+" consignmentStatus=="+consignmentStatus+" consignmentTaxPaidStatus=="+consignmentTaxPaidStatus+" consignmentTxnId ="+consignmentTxnId);
+			 
+			 response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+
+			
+		 }
+		 else {
+			
+			  filterrequest.setStartDate(consignmentStartDate);filterrequest.setEndDate(
+			  consignmentEndDate);filterrequest.setConsignmentStatus(consignmentStatus);
+			  filterrequest.setTaxPaidStatus(consignmentTaxPaidStatus);filterrequest.
+			  setTxnId(consignmentTxnId);
+			 
+			 log.info("session is not blank ************************ request send to the filter api ="+filterrequest);
+			 log.info("++++++++++++=consignmentStartDate=="+consignmentStartDate+" consignmentEndDate=="+consignmentEndDate+" consignmentStatus=="+consignmentStatus+" consignmentTaxPaidStatus=="+consignmentTaxPaidStatus+" consignmentTxnId ="+consignmentTxnId);
+			
+			 response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+
+		 }
+		}
+		 else {
+				log.info("session not to be use>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
+				response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+			}
+		 
+		 // TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
 		log.info("request send to the filter api ="+filterrequest);
-		Object response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+		
 		log.info("response:::::::::::::"+response);
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
@@ -89,7 +207,7 @@ public class ConsignmentDatatableController {
 		}
 		else {
 			log.info("sourceType---@@@@@@@@@@@@@@@@@--------"+sourceType);
-			
+			log.info("sourceType---"+userType);
 			if("Importer".equals(userType) && "viaStolen".equals(sourceType)){
 				for(ConsignmentContent dataInsideList : paginationContentList) 
 				{
@@ -164,7 +282,7 @@ public class ConsignmentDatatableController {
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
-				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
+				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,companyName);
 				
 				
 				String[] finalData={createdOn,txnId,companyName,consignmentStatusName,taxPaidStatusName,action}; 

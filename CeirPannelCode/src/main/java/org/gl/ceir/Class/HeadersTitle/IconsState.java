@@ -409,13 +409,13 @@ return action;
 
 /********************************** Icons for Admin Consignment **********************************/ 
 
-public String adminState(String fileName,String txnId ,String status,String userStatus) {
+public String adminState(String fileName,String txnId ,String status,String userStatus,String companyName) {
 // URL link 
 String emptyURL="JavaScript:void(0);"; 
 String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-
-String approveAction = "openApprovePopUp('"+txnId+"')";
-String rejectAction = "openDisapprovePopup('"+txnId+"')";
+String approveAction = "openApprovePopUp('" + txnId + "','"+companyName.replaceAll( " ", "+20")+ "')";
+//String approveAction = "openApprovePopUp('"+txnId+"')";
+String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.replaceAll( " ", "+20")+"')";
 
 String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
 

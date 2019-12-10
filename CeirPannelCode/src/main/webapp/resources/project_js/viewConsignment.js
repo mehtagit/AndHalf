@@ -184,21 +184,33 @@ function setEditPopupData(data){
 
 var sourceType =localStorage.getItem("sourceType");
 function filterConsignment()
-{       	 	
+{       	 
+	console.log("source type value=="+sourceType);
+	var sessionFlag;
+	if(sourceType==null){
+		sessionFlag=2;
+		console.log("sesion value set to "+sessionFlag);
+	}
+	else{
+		sessionFlag=1;
+		console.log("sesion value set to "+sessionFlag);
+	}
+	
 	if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
-			table('../headers?type=consignment','../consignmentData');
+			table('../headers?type=consignment','../consignmentData?sessionFlag='+sessionFlag);
 		}
 
 		else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
-			table('../headers?type=customConsignment','../consignmentData');
+			table('../headers?type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
 		}
 
 		else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
-			table('../headers?type=adminConsignment','../consignmentData');
+			table('../headers?type=adminConsignment','../consignmentData?sessionFlag='+sessionFlag);
 		}  
 
 		else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
-			table('../headers?type=stolenconsignment','../consignmentData?sourceType=viaStolen');
+			
+			table('../headers?type=stolenconsignment','../consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag);
 		}
 		localStorage.removeItem('sourceType');
 	
@@ -514,6 +526,17 @@ function pageButtons(url){
 					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#filterConsignmentStatus');
 				}
+				 var consignmentStatus= $("body").attr("data-selected-consignmentStatus");
+				 console.log("#################33"+consignmentStatus);
+				 if(consignmentStatus=="")
+					 {
+					 console.log("consignment status is blank ");
+					 
+					 }
+				 else{
+					 console.log("consignment status is Not blank ");
+				 $("#filterConsignmentStatus").val(consignmentStatus).change();
+				 }
 			});
 
 
@@ -525,8 +548,27 @@ function pageButtons(url){
 					.appendTo('#taxPaidStatus');
 				}
 			});
+			
+			var txnid = $("body").attr("data-selected-consignmentTxnId");
+
+			console.log("*******************"+txnid+" consignmentStatus="+consignmentStatus);
+			$('#transactionID').val(txnid);$('#transactionID').attr("placeholder","" );
+			if(txnid=="")
+				{
+				console.log("txnid is null");
+				}
+			else{
+				console.log("txnid is not null")
+				$('label[for=TransactionID]').remove();
+			}
+			
+			
+		/*	$("#filterConsignmentStatus").css({ "color": "red"});*/
 		}
+		
 	}); 
+	
+	
 }
 
 
