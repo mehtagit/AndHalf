@@ -49,7 +49,7 @@ public class StockDatatableController {
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
 		List<List<String>> finalList=new ArrayList<List<String>>();
-		try {
+		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
 		//FilterRequest filterrequest = request.getParameter("FilterRequest");
