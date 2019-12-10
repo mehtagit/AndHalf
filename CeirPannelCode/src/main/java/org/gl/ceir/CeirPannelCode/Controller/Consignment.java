@@ -41,10 +41,7 @@ public class Consignment {
 	FeignClientImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
-	/*
-	 * @Autowired ConsignmentService consignmentService;
-	 */
-
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	

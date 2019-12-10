@@ -32,7 +32,8 @@
 <meta name="msapplication-TileImage"
 	content="images/favicon/mstile-144x144.png">
 <!-- For Windows Phone -->
-<link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
 
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
@@ -106,13 +107,12 @@ var contextpath = "${context}";
 				<!--start container-->
 				<div class="container">
 					<div class="section">
-						<div class="row card-panel"
-							style="width: 40%;  margin: auto; margin-top: 10vh;">
-							<form action="${context}/login" method="post">
+						<div class="row card-panel login-card-panel ">
+							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
-									<div class="row">
+									<div class="row"> 
 										<h5 style="text-align: -webkit-center;">Login</h5>
-										<span style="color: red;">${msg}</span>
+										<span id="errorMsg" style="color: red;">${msg}</span>
 										<hr style="margin-bottom: 30px;">
 
 										<div class="input-field col s12">
@@ -120,7 +120,7 @@ var contextpath = "${context}";
 											<label for="newPassword"
 												style="color: #000; font-size: 12px;">Username</label> <input
 												type="text" required="required" name="username"
-												id="newPassword" class="" maxlength="10" />
+												id="username" class="" maxlength="10" />
 										</div>
 
 										<div class="input-field col s12">
@@ -128,15 +128,14 @@ var contextpath = "${context}";
 											<label for="confirmPassword"
 												style="color: #000; font-size: 12px;">Password</label> <input
 												type="password" required="required" class="" name="password"
-												id="confirmPassword" maxlength="10" />
+												id="password" maxlength="10" />
 										</div>
 
 										<div class="form-group form-actions">
 											<span class="input-icon"> <img id="captchaImage"
 												src="${context}/captcha">
-											<button
-													style="background: none; border: none; outline: none;
-													color: black;"
+												<button
+													style="background: none; border: none; outline: none; color: black;"
 													type="button" onclick="refreshCaptcha('captchaImage')">
 													<i class="fa fa-refresh"></i>
 												</button> <%-- <img src="${context}/captcha"" id="captchaImage">
@@ -160,8 +159,8 @@ var contextpath = "${context}";
 										<div class="row" style="margin-top: 30px;">
 											<div class="input-field col s12 m12 l12 center">
 												<%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>
-												<input type="submit" class="btn" id="save"
-													style="width: 100%;" value="Login">
+												<button type="submit" class="btn" id="save"
+													style="width: 100%;"  value="Login">Login</button>
 											</div>
 										</div>
 
@@ -196,12 +195,15 @@ var contextpath = "${context}";
 	<!-- ================================================
     Scripts
     ================================================ -->
-<!-- jQuery Library -->
+	<!-- jQuery Library -->
 	<%-- <script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
-		
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-		 <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js"></script>
+  <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>		
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -225,15 +227,9 @@ var contextpath = "${context}";
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
-	<script>
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
-
-        // $('.dropdown-trigger').dropdown();
-    </script>
-
 	
+
+
 
 </body>
 

@@ -2445,3 +2445,49 @@ tr.group:hover {
 #polar-chart-holder {
   padding-top: 20px;
 }
+
+.login-card-panel {
+  width: 40%;
+  margin: auto !important;
+  margin-top: 10vh !important;
+}
+
+@media only screen and (max-width: 992px) {
+  .login-card-panel {
+    width: 80%;
+    margin: auto;
+    margin-top: 10vh;
+  }
+}
+
+@media only screen and (max-width: 627px) {
+  .login-card-panel {
+    width: 100%;
+    margin: auto;
+    margin-top: 10vh;
+  }
+}
+
+
+.registration-form {
+width: 90%; margin: auto; padding: 20px 5% 20px 5%;
+}
+
+@media only screen and (max-width: 992px) {
+.registration-form {
+width: 100%;
+}
+}
+
+@media only screen and (max-width: 992px) {
+.container {
+padding: 0; 
+margin: 0 auto;
+max-width: 100% !important;
+width: 100%;
+}
+}
+
+
+
+

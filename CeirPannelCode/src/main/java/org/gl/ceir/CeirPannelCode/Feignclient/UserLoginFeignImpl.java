@@ -23,7 +23,7 @@ public interface UserLoginFeignImpl {
 	public LoginResponse checkUser(User user);
 	  
 	@PostMapping("/Login/sessionTracking/{userid}")
-	public HttpResponse sessionTracking(@PathVariable("userid") Integer userid);
+	public HttpResponse sessionTracking(@PathVariable("userid") long userid);
 	
 	@PostMapping("/Login/forgotPassword")
 	public HttpResponse ForgotPassword(ForgotPassword forgotPassword);

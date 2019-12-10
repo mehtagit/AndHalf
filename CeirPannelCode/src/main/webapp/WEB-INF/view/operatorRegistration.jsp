@@ -122,11 +122,12 @@ var contextpath = "${context}";
         <div class="container">
             <div class="section">
                 <form id="registrationForm" onsubmit="return saveOperatorRegistration()">
-                    <div class="card-panel" style="width: 90%; margin: auto; padding: 20px 5% 20px 5%;">
+                    <div class="card-panel registration-form" >
                         <div class="row">
                             <h5>Registration</h5>
                             <hr>  
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
+                               <input type="hidden" id="type" value="Organization">
                             <div class="row">
                               	<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -546,16 +547,13 @@ var contextpath = "${context}";
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%;">
                             <h5 class="center">Verify OTP</h5>
-                            <!-- <img src="images/otpImage.png" class=""
-                                style="width: 80px; display: block; margin:auto;"> -->
-                            <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
-                            <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
+                            <p style="padding:10px;" class="center" id="otpMsg"></p>
 
                             <a href="#otpVerification" class="btn modal-trigger"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
-
+                               style="margin-left: 3%;width: 94%;background-color: #ff4081;margin-bottom:30px;" >verify otp</a>
+ 
                         </div>
                     </div>
                 </div>

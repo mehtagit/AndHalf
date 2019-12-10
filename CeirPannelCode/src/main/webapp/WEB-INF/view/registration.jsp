@@ -139,8 +139,7 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm" onsubmit="return saveRegistration()">
-					<div class="card-panel"
-						style="width: 90%; margin: auto; padding: 20px 5% 20px 5%;">
+					<div class="card-panel registration-form" >
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
@@ -379,7 +378,7 @@ var contextpath = "${context}";
 										Role Type <span class="star">*</span>
 									</p>
 
-									<select multiple required name="roles" id="usertypes">
+									<select  name="roles" id="usertypes" multiple required>
 										<option value="" disabled>Role Type <span
 												class="star"></span></option>
 
@@ -700,16 +699,13 @@ var contextpath = "${context}";
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%;">
                             <h5 class="center">Verify OTP</h5>
-                            <!-- <img src="images/otpImage.png" class=""
-                                style="width: 80px; display: block; margin:auto;"> -->
-                            <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
-                            <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
+                            <p style="padding:10px;" class="center" id="otpMsg"></p>
 
                             <a href="#otpVerification" class="btn modal-trigger"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
-
+                               style="margin-left: 3%;width: 94%;background-color: #ff4081;margin-bottom:30px;" >verify otp</a>
+ 
                         </div>
                     </div>
                 </div>
@@ -723,7 +719,6 @@ var contextpath = "${context}";
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
         <div class="modal-content">
-            <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
             <div class="row">  
                 <h6 id="otpResponse"></h6>
@@ -774,14 +769,21 @@ var contextpath = "${context}";
 	
 	<script> 
         $(document).ready(function () {
-            $('.modal').modal();
+        	$('.modal-trigger').leanModal({
+        		dismissible: false
+        	});
+        	
+        	
             questionDataByCategory();
             usertypeData();
             //$('.dropdown-trigger').dropdown();
            
           //  $('select').formSelect();
         }); 
-        populateCountries("country", "Cambodia");
+        populateCountries(
+                "country",
+               "state",
+            );
     
         var password = document.getElementById("password")
         , confirm_password = document.getElementById("confirm_password");
@@ -797,8 +799,6 @@ var contextpath = "${context}";
       password.onchange = validatePassword;
       confirm_password.onkeyup = validatePassword;
 
-
-      
       
         function myFunction() {
             var x = document.getElementById("type").value;
@@ -807,28 +807,17 @@ var contextpath = "${context}";
                 document.getElementById("passportNumberDiv").style.display = "block";
                 document.getElementById("companyNames").style.display = "none";
                 $("#passportNo").prop('required',true);
+                $("#companyName").prop('required',false);
                 $("#file").prop('required',true);
-                
             } else {
                 document.getElementById("uploadFile").style.display = "none";
                 document.getElementById("passportNumberDiv").style.display = "none";
                 document.getElementById("companyNames").style.display = "block";
+                $("#companyName").prop('required',true);
                 $("#passportNo").prop('required',false);
                 $("#file").prop('required',false);
             }
-            
-
-           
-           /*  if (x == 'Company', 'Organization', 'Government') {
-                document.getElementById("companyNames").style.display = "block";
-            } else {  
-
-                document.getElementById("companyNames").style.display = "none";
-            } */
         }
     </script>
-
-
-
 </body>
 </html>

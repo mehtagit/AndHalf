@@ -3,8 +3,8 @@ import java.util.Date;
 public class Usertype { 
 	private Integer id;
 	private String usertypeName;
-	private Date createdOn;
-	private Date modifiedOn;
+	private String createdOn;
+	private String modifiedOn;
 	public Integer getId() {
 		return id;
 	}
@@ -17,16 +17,16 @@ public class Usertype {
 	public void setUsertypeName(String usertypeName) {
 		this.usertypeName = usertypeName;
 	}
-	public Date getCreatedOn() {
+	public String getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getModifiedOn() {
+	public String getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	@Override

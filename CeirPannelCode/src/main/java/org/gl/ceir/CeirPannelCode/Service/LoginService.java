@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,8 +36,9 @@ public class LoginService {
 		return mv;
 	}
 
-	public ModelAndView checkLogin(User user,HttpSession session) {
-		log.info("check login controller");
+	public LoginResponse checkLogin(User user,HttpSession session) {
+		log.info("check login controller ");
+		log.info("user data:  "+user);
 		String validCaptcha=(String)session.getAttribute("captcha_security");
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
@@ -44,6 +46,7 @@ public class LoginService {
 			ModelAndView mv=new ModelAndView();
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
+		  
 			log.info("login response:  "+response); 
 			if(response.getStatusCode()==200) { 
 				session.setAttribute("username", response.getUsername());
@@ -56,20 +59,18 @@ public class LoginService {
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
 				mv.setViewName("redirect:/importerDashboard");  
-				return mv;      
-			}      
+				return response;      
+			}       
 			else {
-				mv.setViewName("login");
-				mv.addObject("msg",response.getResponse());
-				return mv;
+				response.setResponse(response.getResponse());
+				return response;
 			}
 		}
 		else { 
 			log.info("if captcha not match");
-			ModelAndView mv=new ModelAndView();
-			mv.setViewName("login");
-			mv.addObject("msg","You have entered the wrong Captcha. Please enter the correct value");
-			return mv; 
+			LoginResponse response=new LoginResponse();
+			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
+			return response; 
 		}
 	}
 
@@ -78,8 +79,10 @@ public class LoginService {
 		HttpResponse response=new HttpResponse();
 		Integer userid=(Integer)session.getAttribute("userid");
 		log.info("userid from session:  "+userid);
+		if(userid!=null) {
 		response=userLoginFeignImpl.sessionTracking(userid);
 		log.info("response got:  "+response);
+		} 
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 
 		session.removeAttribute("usertypeList");
@@ -88,7 +91,8 @@ public class LoginService {
 		session.removeAttribute("userStatus");
 		session.invalidate(); 
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("redirect:/login");
+		mv.addObject("msg","you have been logged out sucessfully");
+		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
 	}

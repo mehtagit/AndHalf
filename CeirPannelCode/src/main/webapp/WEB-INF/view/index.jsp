@@ -85,16 +85,11 @@ var contextpath = "${context}";
 
                         <ul class="haed-btn">
                             <li class="haed-btn-style"><a href="${context}/login" style="color: #000;">Login</a></li>
-                            <li class="haed-btn-style">
- <%--  <a href="${context}/registration"
-                                    style="color: #000;">Registration</a> --%>
+                            <li class="haed-btn-style" style="padding: 0;">
+ 
                                                                
-<select id="usertypes" class="browser-default" onchange="openRegistrationPage();">
+<select id="usertypes" class="browser-default" onchange="openRegistrationPage();" style="height: 35px; width: 150px;">
 <option value="" disabled selected>Registration</option>
-<%-- <option value="#">Admin</option>  
-<option value="#">Custom</option>  
-<option value="${context}/registration">Importer</option>
-<option value="#">Operator</option> --%>  
 </select>
 </li>
 

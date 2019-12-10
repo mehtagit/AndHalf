@@ -92,12 +92,13 @@ var contextpath = "${context}";
 										class="dropdownColor"> Activate/Deactivate Account</span></a></li>			
 								<li class="divider"></li>
 								
-								<li><a href="${context}/" id=""><i style="float: left;"
+								<li><a href="${context}/logout" id=""><i style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
-										class="dropdownColor"> </span></a></li>
+										class="dropdownColor"> Logout</span></a></li>
 								
 							</ul></li>
 					</ul>
+
 				</div>
 			</nav>
 
@@ -357,11 +358,11 @@ class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${featu
 				</div>
 			</div>
 			<div class="row" style="margin-top: 30px;">
-				<div class="input-field col s12 m12 l12 center">
-					<button 
-						class="btn" type="submit" id="changePassBtn"
-						style="width: 100%;">Save</button>
-				</div>
+				<div class="input-field col s12 center">
+				<button class="btn" id="updateStatusBtn">Submit</button>
+				<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
+			</div>
+				
 			</div>
 			</form>
 		</div>
@@ -421,20 +422,16 @@ class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${featu
 	<!-- Modal End -->
 
 	<!-- modal start -->
-	<div id="changePasswordMessage" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
+	<div id="changePasswordMessage" class="modal" style="width: 40%;">
 		<div class="modal-content">
-
+        <p>Change Password</p>
+        <hr>
 			<div class="row">
 				<h6></h6>
 			</div>
 			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
+				<div class="center">
 						<a href="" class="btn">ok</a>
-					</div>
 				</div>
 			</div>
 		</div>

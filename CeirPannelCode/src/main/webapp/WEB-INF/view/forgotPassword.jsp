@@ -98,7 +98,7 @@ var contextpath='${context}';
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel" style="width: 40%;  margin: auto; margin-top: 10vh;">
+                        <div class="row card-panel login-card-panel" >
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
@@ -293,7 +293,6 @@ var contextpath='${context}';
           confirm_password.setCustomValidity('');
         }
         }
-
         password.onchange = validatePassword;
         confirm_password.onkeyup = validatePassword;
 

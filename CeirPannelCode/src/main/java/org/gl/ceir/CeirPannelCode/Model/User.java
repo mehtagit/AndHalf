@@ -1,23 +1,20 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import org.springframework.format.annotation.DateTimeFormat;
 public class User {
 	
-	
 	private int   id ;
-	private Date createdOn;
+	private String createdOn;
 	private String usertype;
 	private String username;
 	private String  password;
 	private int   fwstatus;
 	private String  modifiedBy;
-	private Date modifiedOn;
+	
+	private String modifiedOn;
 	private int subuser_status;
 	private int  parent_id;
 	private String email ;
@@ -28,16 +25,19 @@ public class User {
 	private String captcha;
     private String status;
     
-	public int getId() {
+	
+    
+    
+    public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
+	public String getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
 	public String getUsertype() {
@@ -70,10 +70,10 @@ public class User {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-	public Date getModifiedOn() {
+	public String getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	public int getSubuser_status() {

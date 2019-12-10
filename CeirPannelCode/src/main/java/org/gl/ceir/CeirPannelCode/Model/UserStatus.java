@@ -19,7 +19,4 @@ public class UserStatus {
 	public String toString() {
 		return "UserStatusRequest [status=" + status + ", userId=" + userId + "]";
 	}
-
-
-
 }
