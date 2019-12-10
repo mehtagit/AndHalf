@@ -134,8 +134,8 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String txnId= dataInsideList.getTxnId(); 
-						String userId = "";
-						String roll = "";
+						String userId = String.valueOf(dataInsideList.getUserId());
+						String roll = dataInsideList.getRoleType();
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());

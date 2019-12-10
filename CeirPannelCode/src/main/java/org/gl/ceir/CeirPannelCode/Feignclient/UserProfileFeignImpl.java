@@ -38,7 +38,7 @@ public interface UserProfileFeignImpl {
 	@RequestMapping(value="/userProfile/record" ,method=RequestMethod.POST) 
 	public Object registrationRequest(@RequestBody FilterRequest filterRequest,
 	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize);
 
 	
 	@PostMapping("/userProfile/adminApproval")

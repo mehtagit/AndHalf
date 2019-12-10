@@ -741,7 +741,31 @@ public String dashboardIcon(String userStatus) {
 	 
 }
 
+/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
+
+public String trcManageIcons(String userStatus) {	
+	// URL link 
+	String downloadURL = "JavaScript:void(0)";
+	String viewAction="JavaScript:void(0)";
+	String editAction= "JavaScript:void(0)";
+	// state related Code 
+	String download="<a href="+downloadURL+" download=\"download\"><i class="
+			+downloadIcon+" aria-hidden=\"true\" title="
+			+downloadIconTitle+" download=\"download\"></i></a>"; 
+	
+	String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+							+viewIconTitle+" ></i></a>";
+	
+	String edit="<a onclick="+editAction+"><i class="
+			+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+	
+	
+	String action=download.concat(view).concat(edit);		  
+	return action;
+	 
+}
 
 
 
