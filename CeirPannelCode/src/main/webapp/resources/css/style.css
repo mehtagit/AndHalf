@@ -61,6 +61,12 @@ select {
   max-width: 100% !important;
   width: 98%;
 }
+/* @media only screen and(max-width: 992px) {
+	.container {
+    padding: 0; 
+    width: 100%;
+    margin: 0;
+} */
 
 #left-sidebar-nav {
   position: fixed;

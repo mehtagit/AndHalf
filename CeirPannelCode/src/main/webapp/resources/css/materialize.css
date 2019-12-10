@@ -12162,7 +12162,7 @@ button.picker__close:focus {
 
 
 /* responsive css */
-@media only screen and (max-width: 992px) {
+/* @media only screen and (max-width: 992px) {
   .pageHeader {
     height: 50px;
     background-color: #529dba;
@@ -12286,4 +12286,4 @@ button.picker__close:focus {
   margin-left: 15px;
   height: 32px;
   width: 72;
-}
+} */

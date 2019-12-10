@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -9,33 +9,56 @@
 
 <meta charset="utf-8" />
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
 
-   <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> 
-  <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
-  <!-- CORE CSS-->
-  <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resources/css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
-   <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resources/css/jquery-datepicker2.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <!-- Custome CSS-->    
-  <link href="${context}/resources/css/custom/custom.css" type="text/css" rel="stylesheet" media="screen,projection">
-   <link href="${context}/resources/font/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+<!-- CORE CSS-->
+<link href="${context}/resources/css/materialize.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<link href="${context}/resources/css/style.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link href="${context}/resources/css/jquery-datepicker2.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<!-- Custome CSS-->
+<link href="${context}/resources/css/custom/custom.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 
-  <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
-  <link href="${context}/resources/js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
- <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+<link href="${context}/resources/js/plugins/prism/prism.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+<link rel="stylesheet"
+	href="${context}/resources/project_css/viewConsignment.css">
+<link rel="stylesheet"
+	href="${context}/resources/project_css/iconStates.css">
 
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
  
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
     
 <style>
 
@@ -117,7 +140,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input name="expectedDispatcheDate" id="expectedDispatcheDate"   required="required"  type="text" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input type="text" name="expectedDispatcheDate"   class='form-control datepick' autocomplete='off' required="required">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -132,7 +155,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 
 
                                         <div class="input-field col s12 m6">
-                                            <input name="expectedArrivaldate" id="expectedArrivaldate" type="text" required="required"  onfocus="(this.type='date')" onfocusout="(this.type='text')">
+                                            <input name="expectedArrivaldate" id="expectedArrivaldate" type="text"  class='form-control datepick' autocomplete='off' required="required"  >
                                             <label for="dispatchDate" class="center-align">Expected Arival Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -252,32 +275,36 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
     <!-- END MAIN -->
     
 
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-     
-    
-     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
-      <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-      <script type="text/javascript" src="${context}/resources/js/jquery-datepicker2.js"></script>
-      
+	<!--materialize js-->
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-     <%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+	
+
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
-    <!--custom-script.js - Add your own theme custom JS-->
- <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/Validator.js"></script>
-   <!--prism
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/Validator.js"></script>
+	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
-       <script type="text/javascript" src="${context}/resources/js/countries.js"></script>
-     
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+	<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
+	
        
        
           <script type="text/javascript">
@@ -318,7 +345,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
  					 if(data.errorCode=="0")
  						 {
  						 console.log("status code = 0");
- 					 $('#sucessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is');
+ 					 $('#sucessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is ');
  					 $('#sucessMessage').append(data.txnId);
  					 $('#errorCode').val(data.errorCode);
  						 }
@@ -346,44 +373,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
          
       
          </script>
-          <script>
-         function filterData(){
-        	 var startDate=$('#filterStartDate').val()
-        	 var endDate=$('#endDateFilter').val()
-        	 
-        	 var result=dateValidation(startDate,endDate);
-        	  if(result=="smaller")
-        		 {
-        		 myFunction("end date should be greater then start date")
-        		 $('#endDateFilter').val("")
-        		 }
-         }
-         
-         function submitFilterData(){
-        
-        	 var startDate=$('#filterStartDate').val()
-        	 var endDate=$('#endDateFilter').val()
-        	 if($('#filterStartDate').val()=="")
-        		 {
-        		 myFunction("Please select start date")
-        		 return false;
-        		 }
-        	 else if($('#endDateFilter').val()=="")
-        		 {
-        		 myFunction("Please select end date");
-        		 return false;
-        		 }
-        	 else if(Date.parse(startDate)>Date.parse(endDate))
-        		 
-        	 {
-        		 myFunction("start date should be smaller than end date");
-        		 return false;
-        	 }
-        	 
-        	 $("#submitFilterConsignment").submit();
-         }
-         </script>
-         
+            
           <script type="text/javascript">
           function openDeleteModal(transactionId)
           {
@@ -511,14 +501,17 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
    			 (   
      			 "country"
    			 );
-   			 
-   			 
+   			 		 
    			 
    			$(document).ready(function(){
    				
    				ConsignmentCurrency();
    			});
 
+   			
+   			$('.datepick').datepicker({
+				dateFormat: "yy-mm-dd"
+				});
   </script>
 
 </body>
