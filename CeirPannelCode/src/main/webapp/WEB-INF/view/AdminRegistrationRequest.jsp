@@ -115,6 +115,7 @@
                     <a onclick="aprroveUser()" class="btn modal-trigger">Yes</a>
                     <button class="btn modal-close" style="margin-left: 10px;">No</button>
                       <span id="userId" hidden></span>
+                       <span id="adminCurrentStatus" hidden></span>
                 </div>
             </div>
         </div>

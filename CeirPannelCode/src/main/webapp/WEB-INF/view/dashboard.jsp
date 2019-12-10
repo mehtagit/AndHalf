@@ -301,143 +301,142 @@ class="dropdownColor"> Logout</span></a></li>
 
 	<!-- Modal 4 start   -->
 
-	<div id="changePassword" class="modal" style="width: 40%;">
-		<div class="modal-content">
-		<form onsubmit="return changePassword()">
-			<div class="row">
-			 
-				<h5 style="text-align: -webkit-center;">Change Password</h5>
-<span style="text-align: center;color: red;" id="errorMsg"></span>   
-				<div class="col s1">
-					<i class="fa fa-lock" aria-hidden="true"
-						style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
-				</div>
-				<div class="input-field col s11">
-					<input type="password" id="oldPassword" class="validate" 
-						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-									required="required"
-					 />
-					<label for="oldPassword" class="center-align"
-						style="color: #000; font-size: 12px;"> Old Password </label>
-					<div class="password"></div>
-				</div>
+<div id="changePassword" class="modal" style="width: 40%;">
+<div class="modal-content">
+<form onsubmit="return changePassword()">
+<div class="row">
 
-				<div class="col s1">
-					<span class="fa-passwd-reset fa-stack"
-						style="margin-top: 12px; color: #ff4081;"> <i
-						class="fa fa-undo fa-stack-2x"></i> <i
-						class="fa fa-lock fa-stack-1x"></i>
-					</span>
-				</div>
-				<div class="input-field col s11">
+<h5 style="text-align: -webkit-center;">Change Password</h5>
+<span style="text-align: center;color: red;" id="errorMsg"></span> 
+<div class="col s1">
+<i class="fa fa-lock" aria-hidden="true"
+style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
+</div>
+<div class="input-field col s11">
+<input type="password" id="oldPassword" class="validate" 
+pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+required="required"
+/>
+<label for="oldPassword" class="center-align"
+style="color: #000; font-size: 12px;"> Old Password </label>
+<div class="password"></div>
+</div>
 
-					<label for="newPassword" style="color: #000; font-size: 12px;">New
-						Password</label> <input type="password"
-								pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-									required="required"
-						 id="password" class=""
-					 />
-				</div>
+<div class="col s1">
+<span class="fa-passwd-reset fa-stack"
+style="margin-top: 12px; color: #ff4081;"> <i
+class="fa fa-undo fa-stack-2x"></i> <i
+class="fa fa-lock fa-stack-1x"></i>
+</span>
+</div>
+<div class="input-field col s11">
 
-				<div class="col s1">
-					<i class="fa fa-check-square-o" aria-hidden="true"
-						style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
-				</div>
-				<div class="input-field col s11">
+<label for="newPassword" style="color: #000; font-size: 12px;">New
+Password</label> <input type="password"
+pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+required="required"
+id="password" class=""
+/>
+</div>
 
-					<label for="confirm_password" style="color: #000; font-size: 12px;">Confirm
-						Password</label> <input type="password" class="" id="confirm_password"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-									required="required"
-						 />
-				</div>
-			</div>
-			<div class="row" style="margin-top: 30px;">
-				<div class="input-field col s12 m12 l12 center">
-					<button 
-						class="btn" type="submit" id="changePassBtn"
-						style="width: 100%;">Save</button>
-				</div>
-			</div>
-			</form>
-		</div>
-	</div>
+<div class="col s1">
+<i class="fa fa-check-square-o" aria-hidden="true"
+style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
+</div>
+<div class="input-field col s11">
 
+<label for="confirm_password" style="color: #000; font-size: 12px;">Confirm
+Password</label> <input type="password" class="" id="confirm_password"
+pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+required="required"
+/>
+</div>
+</div>
+<div class="row" style="margin-top: 30px;">
+<div class="input-field col s12 center">
+<button class="btn" id="updateStatusBtn">Submit</button>
+<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
+</div>
+
+</div>
+</form>
+</div>
+</div>
 	<!-- Modal End -->
 
 
 	<!-- Modal 2 start   -->
 
-	<div id="submitActivateDeactivate" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<div class="modal-content">
+	
+<!-- Modal 2 start -->
 
-			<div class="row">
-				<h6>The request has been successfully registered with CEIR
-					Admin. Please find the confirmation over registered mail <
-					mail@mail.com> in 2 to 3 working days.</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn"
-							style="margin-left: 10px;" type="submit" name="add_user"
-							id="add_user">Cancel</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
+<div id="submitActivateDeactivate" class="modal">
+<button type="button"
+class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button>
+<div class="modal-content">
 
-	<!-- Modal 2 start   -->
+<div class="row">
+<h6>The request has been successfully registered with CEIR
+Admin. Please find the confirmation over registered mail <
+mail@mail.com> in 2 to 3 working days.</h6>
+</div>
+<div class="row">
+<div class="input-field col s12 center">
+<div class="input-field col s12 center">
+<button class="modal-close waves-effect waves-light btn"
+style="margin-left: 10px;" type="submit" name="add_user"
+id="add_user">Cancel</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal End -->
 
-	<div id="cancelActivateDeactivate" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<div class="modal-content">
+<!-- Modal 2 start -->
 
-			<div class="row">
-				<h6>Do you want to cancel the request?</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a href="index.html" class="btn" type="submit" name="add_user"
-							id="add_user">yes</a> <a href="#activateDeactivate"
-							class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
+<div id="cancelActivateDeactivate" class="modal">
+<button type="button"
+class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button>
+<div class="modal-content">
 
-	<!-- modal start -->
-	<div id="changePasswordMessage" class="modal">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<div class="modal-content">
+<div class="row">
+<h6>Do you want to cancel the request?</h6>
+</div>
+<div class="row">
+<div class="input-field col s12 center">
+<div class="input-field col s12 center">
+<a href="index.html" class="btn" type="submit" name="add_user"
+id="add_user">yes</a> <a href="#activateDeactivate"
+class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal End -->
 
-			<div class="row">
-				<h6></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a href="" class="btn">ok</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!-- modal start -->
+<div id="changePasswordMessage" class="modal" style="width: 40%;">
+<div class="modal-content">
+<p>Change Password</p>
+<hr>
+<div class="row">
+<h6></h6>
+</div>
+<div class="row">
+<div class="center">
+<a href="" class="btn">ok</a>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal End -->
 	<!-- Modal End -->
 
 

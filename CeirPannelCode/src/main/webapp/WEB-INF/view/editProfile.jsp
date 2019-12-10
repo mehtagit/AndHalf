@@ -63,6 +63,11 @@
             color: red;
         }
 
+		.row
+		{
+			margin-bottom: 0;
+		}
+		
         .dropdown-content li>a,
         .dropdown-content li>span {
             color: #444;
@@ -71,7 +76,9 @@
         .input-field>label {
             color: #444 !important;
         }
-
+        
+        .btn{background-color: #ff4081;}
+        .btn:hover{background-color: #ff4081;}
         select {
             background-color: transparent;
             border: none;
@@ -582,8 +589,8 @@ var contextpath = "${context}";
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn"  id="btnSave" type="submit" 
-									style="margin-left: 10px;">submit</button>
-								<a href="${context}/importerDashboard" target="_parent"  class="btn" style="margin-left: 10px;">cancel</a>
+									style="margin-left: 10px;">UPDATE</button>
+								<a href="${context}/importerDashboard" target="_parent"  class="btn" style="margin-left: 10px;">CANCEL</a>
 							</div>
 						</div>
 						</div>
@@ -672,16 +679,18 @@ var contextpath = "${context}";
         </div>
     </div>
     
-    <div id="profileResponse" class="modal">
+    <div id="profileResponse" class="modal" style="width: 40%">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
         <div class="modal-content">
             <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-            <div class="row">  
-                <h6></h6>
-            </div>
+                                <p>Update Information</p><hr>
+                    <div class="row">
+                        <h6></h6>
+                    </div>
             <div class="row">
+            
                 <div class="input-field col s12 center">
                     <a target="_parent"  href="${context}/importerDashboard" class="btn">ok</a>
                 </div>

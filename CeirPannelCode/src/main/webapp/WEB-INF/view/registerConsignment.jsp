@@ -140,7 +140,7 @@
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" name="expectedDispatcheDate"   class='form-control datepick' autocomplete='off' required="required">
+                                            <input type="text" name="expectedDispatcheDate"  id='expectedDispatcheDate' class='form-control datepick' autocomplete='off' required="required">
                                             <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>

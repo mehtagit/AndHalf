@@ -18,7 +18,9 @@ $(document).ready(function(){
 
 });
 
-
+$('.datepick').datepicker({
+	dateFormat: "yy-mm-dd"
+	});
 /*$('body').on('click',".datepicker", function(){
     $(this).datepicker({
             	dateFormat: "yy-mm-dd"});

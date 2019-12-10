@@ -5,6 +5,12 @@ function openRegistrationPage(){
 	if(usertypeDropdownText=="Importer"){   
 		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal;
 	}
+	else if(usertypeDropdownText=="Distributor"){   
+		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal;
+	}
+	else if(usertypeDropdownText=="Retailer"){   
+		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal;
+	}
 	else if(usertypeDropdownText=="Custom"){
 		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal;
 	}     
@@ -293,13 +299,13 @@ function saveCustomRegistration(){
 					email:val.find('#email').val(),
 					province:val.find('#state').val(),
 					phoneNo:val.find('#phoneNo').val(),
-					type:val.find('#type').val(), 
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
-					questionList:questionData   
+					questionList:questionData,
+					type:val.find('#type').val()
 
 			}    
 		} 
@@ -367,7 +373,8 @@ function saveOperatorRegistration(){
 					usertypeId:val.find('#usertypeId').val(),
 					operatorTypeId:val.find('#operatorType').val(),  
 					operatorTypeName:val.find('#operatorType option:selected').text(),
-					questionList:questionData       
+					type:val.find('#type').val(),
+					questionList:questionData 
 
 			}    
 		} 

@@ -200,7 +200,7 @@ public class StolenDatatableController {
 
 		if("viaExistingRecovery".equals(sourceType)) {
 			//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
-			String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","cancel()","cancel"};
+			String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","redirectToViewStolenPage()","cancel"};
 			for (int i = 0; i < footerBtn.length; i++) {
 				button = new Button();
 

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
+import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Service.LoginService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
@@ -25,15 +26,17 @@ public class LoginController {
 	LoginService loginService;
 
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView login(@ModelAttribute User user,HttpSession session){
-		if(user.getUsername()==null) {
+	public ModelAndView login(HttpSession session){
 			return loginService.loginPage();	
-		}
-		else {
-			return loginService.checkLogin(user,session);
-		}           
+			//return loginService.checkLogin(user,session);
 	} 
-
+	
+	@ResponseBody
+	@RequestMapping(value = "/saveLogin",method = {RequestMethod.POST})
+	public LoginResponse saveLogin(@RequestBody User user,HttpSession session){
+			return loginService.checkLogin(user,session);
+	}
+	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		return loginService.logout(session);

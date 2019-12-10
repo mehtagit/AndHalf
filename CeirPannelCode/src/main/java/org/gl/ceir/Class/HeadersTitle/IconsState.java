@@ -43,9 +43,11 @@ public class IconsState {
 	
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link 
-		String emptyURL="JavaScript:void(0);"; 
-		String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
-		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";	
+		String emptyURL="JavaScript:void(0);";
+		String x ="./dowloadFiles/actual/";
+		String downloadURL = x.concat(fileName.replace(" ", "&nbsp"))+"/"+txnId;
+		log.info("downloadURL::::::::::::::"+downloadURL);
+		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId;	
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";

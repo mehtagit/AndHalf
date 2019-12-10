@@ -348,7 +348,7 @@ public class ConsignmentDatatableController {
 	pageElement.setButtonList(buttonList);
 
 
-	String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","cancel()","cancel"};
+	String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","redirectToViewPage()","cancel"};
 	for(int i=0; i< footerBtn.length ; i++) {
 	button = new Button();
 	button.setType(footerBtn[i]);

@@ -72,6 +72,13 @@ localStorage.setItem("grievancePageSource", "viaDashBoard");
 //**************************************************Notification Data table**********************************************
 
 function notificationDatatable(){
+	
+	var filterRequest = {
+			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+			"userType" : $("body").attr("data-roleType"),
+			"userId" : $("body").attr("data-userID"),
+			"featureId" : 3
+	}
 
 	$.ajax({
 		url: 'headers?type=dashboardNotification',
@@ -88,11 +95,11 @@ function notificationDatatable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : 'NotificationData',
+					url : './NotificationData',
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
-						console.log("Success");
+						d.filter = JSON.stringify(filterRequest); 
 					}
 
 				},

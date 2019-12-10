@@ -498,8 +498,7 @@
 					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
 					<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
 						required="required" placeholder="Expected Dispatch Date "
-						type="text" onfocus="(this.type='date')"
-						onfocusout="(this.type='text')"> <label for="dispatchDate"
+						type="text" class='form-control datepick' autocomplete='off'> <label for="dispatchDate"
 						class="center-align">Expected Dispatch Date <span
 						class="star">*</span></label> <span class="input-group-addon"
 						style="color: #ff4081"><i class="fa fa-calendar"
@@ -518,8 +517,7 @@
 					<!-- <label for="Name">Expected arrival Date</label> -->
 					<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
 						required="required" placeholder="Expected Arrival  Date"
-						type="text" onfocus="(this.type='date')"
-						onfocusout="(this.type='text')"> <label for="dispatchDate"
+						type="text" class='form-control datepick' autocomplete='off'> <label for="dispatchDate"
 						class="center-align">Expected Arrival Date <span
 						class="star">*</span></label> <span class="input-group-addon"
 						style="color: #ff4081"><i class="fa fa-calendar"

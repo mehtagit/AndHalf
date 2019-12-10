@@ -59,11 +59,16 @@ public class NotificationDatatableController {
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
 				// Data set on this List
 				List<List<String>> finalList=new ArrayList<List<String>>();
-				FilterRequest filterrequest = new FilterRequest();
+				
+				String filter = request.getParameter("filter");
+				Gson gsonObject=new Gson();
+				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+				
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
+			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.dashBoardNotification(filterrequest,pageNo,pageSize);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
