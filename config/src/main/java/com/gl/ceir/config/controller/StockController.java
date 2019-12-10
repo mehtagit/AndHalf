@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
-import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
-
+import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.service.impl.StockServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +33,6 @@ public class StockController {
 
 	@ApiOperation(value = "Add Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/upload", method = RequestMethod.POST)
-
 	public GenricResponse uploadStock(@RequestBody StockMgmt stockMgmt){
 
 		logger.info("Upload Stock Request =" + stockMgmt);
@@ -49,7 +47,6 @@ public class StockController {
 
 	@ApiOperation(value = "Update Retailer And Distributer Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/Stock/update", method = RequestMethod.POST)
-
 	public GenricResponse updateStockInfo( @RequestBody StockMgmt stockMgmt){
 
 		logger.info("Stock Update Request ="+stockMgmt.toString());
@@ -62,7 +59,6 @@ public class StockController {
 
 	@ApiOperation(value = "View Retailer And Distributer All  Info.", response = StockMgmt.class)
 	@RequestMapping(path = "v1/stock/record", method = RequestMethod.POST)
-
 	public MappingJacksonValue findAll(@RequestBody StockMgmt stockMgmt) {
 
 		logger.info("Stock View Details Request="+stockMgmt);
@@ -94,7 +90,6 @@ public class StockController {
 
 	@ApiOperation(value = "View Retailer And Distributer Record of TxnId.", response = StockMgmt.class)
 	@RequestMapping(path = "/stock/view", method = RequestMethod.POST)
-
 	public MappingJacksonValue view(@RequestBody StockMgmt stockMgmt) {
 
 		logger.info("Txn View Request ="+stockMgmt.toString());
@@ -109,8 +104,6 @@ public class StockController {
 
 	}
 
-
-
 	@ApiOperation(value = "Delete Retailer And Distributer Record of TxnId.", response = GenricResponse.class)
 	@RequestMapping(path = "/stock/delete", method = RequestMethod.POST)
 	public GenricResponse deleteStachHolderData(@RequestBody StockMgmt stockMgmt) {
@@ -123,17 +116,23 @@ public class StockController {
 
 	}
 
-
 	@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/stock/countAndQuantity", method = RequestMethod.POST)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantityWithLongUserId request ) {
 		ResponseCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity( request );
 		return new MappingJacksonValue(response);
 	}
+	
+	@ApiOperation(value = "Accept Reject Stock.", response = GenricResponse.class)
+	@RequestMapping(path = "accept-reject/stock", method = RequestMethod.PUT)
+	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest acceptRejectRequest) {
 
+		logger.info("Request to accept/reject the stock= " + acceptRejectRequest);
 
+		GenricResponse genricResponse = stackholderServiceImpl.acceptReject(acceptRejectRequest);
 
+		return genricResponse ;
 
-
+	}
 
 }

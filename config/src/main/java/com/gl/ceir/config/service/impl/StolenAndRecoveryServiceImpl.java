@@ -101,7 +101,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			webActionDbRepository.save(webActionDb);
 
-			return new GenricResponse(0,"Upload Successfully.",stolenandRecoveryDetails.getTxnId());
+			return new GenricResponse(0,"Upload Successfully.", stolenandRecoveryDetails.getTxnId());
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);

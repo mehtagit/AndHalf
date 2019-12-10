@@ -2,7 +2,6 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -62,6 +61,8 @@ public class StockMgmt implements Serializable {
 	private String userType;
 	
 	private Double totalPrice;
+	
+	private String remarks;
 	
 	@Transient
 	private String stateInterp; 
@@ -193,13 +194,21 @@ public class StockMgmt implements Serializable {
 	public void setPreviousStockStatus(int previousStockStatus) {
 		this.previousStockStatus = previousStockStatus;
 	}
-
+	
 	public String getStateInterp() {
 		return stateInterp;
 	}
-
+	
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
+	}
+	
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 
 	@Override

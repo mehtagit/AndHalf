@@ -13,12 +13,12 @@ import com.gl.ceir.config.model.StockMgmt;
 public interface StockManagementRepository extends JpaRepository<StockMgmt, Long>, JpaSpecificationExecutor<StockMgmt> {
 
 	public StockMgmt save(StockMgmt distributerManagement);
+	
+	public StockMgmt getByTxnId(String txnId);
 
 	public List<StockMgmt> findByRoleTypeAndUserId(String moduleType,Long userId);
 
-
 	public StockMgmt findByRoleTypeAndTxnId(String moduleType,String txnId);
-
 
 	public void deleteByTxnId(String txnId);
 

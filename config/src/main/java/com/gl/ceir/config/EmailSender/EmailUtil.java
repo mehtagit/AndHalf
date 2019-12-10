@@ -5,12 +5,19 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.lang.NonNull;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
+
+import com.gl.ceir.config.model.MessageConfigurationDb;
+import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.constants.ChannelType;
+import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
+import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +32,12 @@ public class EmailUtil {
 
 	@Autowired
 	JavaMailSender javaMailSender;
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+	
+	@Autowired
+	MessageConfigurationDbRepository messageConfigurationDbRepository;
 
 	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody) {
 
@@ -63,6 +76,28 @@ public class EmailUtil {
 		}
 
 		javaMailSender.send(message);
+	}
+	
+	public boolean sendMessageAndSaveNotification(@NonNull String tag, UserProfile userProfile, long featureId, String featureName, String subFeature, String featureTxnId) {
+		try {
+			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag(tag);
+
+			// Mail send to user and Custom.
+			if(sendEmail(userProfile.getEmail(), "jangrapardeep695@gmail.com", "TEST", messageDB.getValue())) {
+				logger.info("Email to user have been sent successfully.");
+
+				// Save email in notification table.
+				configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId);
+
+			}else {
+				logger.info("Email to user have been failed.");
+			}
+
+			return Boolean.TRUE;
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return Boolean.FALSE;
+		}
 	}
 }
 

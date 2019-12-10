@@ -16,44 +16,45 @@ import org.springframework.data.jpa.domain.Specification;
 import com.gl.ceir.config.controller.ConsignmentController;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.Grievance;
+import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.util.DbFunctions;
 
-public class ConsignmentMgmtSpecificationBuilder {
+public class NotificationSpecificationBuilder {
 
-	private static final Logger logger = LogManager.getLogger(ConsignmentController.class);
+	private static final Logger logger = LogManager.getLogger(NotificationSpecificationBuilder.class);
 
 	private final List<SearchCriteria> params;
 	private final List<SearchCriteria> searchParams;
 	private final String dialect;
-	private List<Specification<ConsignmentMgmt>> specifications;
+	private List<Specification<Notification>> specifications;
 
-	public ConsignmentMgmtSpecificationBuilder(String dialect) {
+	public NotificationSpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
 		searchParams = new ArrayList<>();
 		specifications = new LinkedList<>();
 		this.dialect = dialect;
 	}
 
-	public final ConsignmentMgmtSpecificationBuilder with(SearchCriteria criteria) { 
+	public final NotificationSpecificationBuilder with(SearchCriteria criteria) { 
 		params.add(criteria);
 		return this;
 	}
 
-	public final ConsignmentMgmtSpecificationBuilder orSearch(SearchCriteria criteria) { 
+	public final NotificationSpecificationBuilder orSearch(SearchCriteria criteria) { 
 		searchParams.add(criteria);
 		return this;
 	}
 
-	public Specification<ConsignmentMgmt> build() { 
+	public Specification<Notification> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
-		Specification<ConsignmentMgmt> finalSpecification = null;
+		Specification<Notification> finalSpecification = null;
 
-		Specification<ConsignmentMgmt> searchSpecification  = null;
-		List<Specification<ConsignmentMgmt>> specifications = createSpecifications( params );
+		Specification<Notification> searchSpecification  = null;
+		List<Specification<Notification>> specifications = createSpecifications( params );
 
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
@@ -79,11 +80,11 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return finalSpecification;
 	}
 
-	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
+	public void addSpecification(Specification<Notification> specification) { 
 		specifications.add(specification);
 	}
 
-	private List<Specification<ConsignmentMgmt>> createSpecifications(List<SearchCriteria> criterias){
+	private List<Specification<Notification>> createSpecifications(List<SearchCriteria> criterias){
 
 		try {
 			for(SearchCriteria searchCriteria : params) {

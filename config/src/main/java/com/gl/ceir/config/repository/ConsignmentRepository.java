@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import com.gl.ceir.config.model.ConsignmentMgmt;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 
 import io.lettuce.core.dynamic.annotation.Param;
@@ -21,7 +20,6 @@ public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Lo
 	public List<ConsignmentMgmt> getByUserIdOrderByIdDesc(Long userId);
 
 	public ConsignmentMgmt getByTxnId(String txnId);
-
 
 	public List<ConsignmentMgmt> findByUser_id(int id);
 

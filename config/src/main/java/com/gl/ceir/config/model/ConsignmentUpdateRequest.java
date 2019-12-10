@@ -14,7 +14,7 @@ public class ConsignmentUpdateRequest {
 	
 	private String remarks;
 	
-	private int featureId;
+	private Integer featureId;
 	
 	public int getAction() {
 		return action;
@@ -52,10 +52,10 @@ public class ConsignmentUpdateRequest {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	public int getFeatureId() {
+	public Integer getFeatureId() {
 		return featureId;
 	}
-	public void setFeatureId(int featureId) {
+	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
 	
