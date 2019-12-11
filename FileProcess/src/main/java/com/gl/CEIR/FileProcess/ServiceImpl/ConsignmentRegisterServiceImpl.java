@@ -40,7 +40,6 @@ public class ConsignmentRegisterServiceImpl {
 
 	ConcurrentHashMap<String, String> chm =  new ConcurrentHashMap<String, String>();
 
-
 	public boolean saveprocess(WebActionDb webActionDb) {
 
 		try {
@@ -54,7 +53,7 @@ public class ConsignmentRegisterServiceImpl {
 			consignmentRepository.save(consignmentMgmt);
 			log.info("File Status is update as processing ");
 
-			Path filePath =Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+webActionDb.getTxnId()+"/"+consignmentMgmt.getFileName());
+			Path filePath = Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+webActionDb.getTxnId()+"/"+consignmentMgmt.getFileName());
 
 			String errorFilePath ="";
 			String moveFIlePath =" ";
@@ -64,28 +63,28 @@ public class ConsignmentRegisterServiceImpl {
 			List<String> contents = Files.readAllLines(filePath);
 
 			log.info("File is reading starts="+contents);
-			for(String content :contents) {
+			for(String content : contents) {
 
-				DeviceDb device =util.parseDevice(content);
+				DeviceDb device = util.parseDevice(content);
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(1L);
 
-				String value =	chm.get(device.getImeiEsnMeid());
+				String value = chm.get(device.getImeiEsnMeid());
 
 				if(Objects.isNull(value)) {
 
 					chm.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
 				}else {
 
-					String header="ErrorCode,Description";	
-					String record="";
+					String header = "ErrorCode,Description";	
+					String record = "";
 					util.writeInFile(errorFilePath, header, record, moveFIlePath);	
 				}
 
 				devices.add(device);
 			}
 
-
+			// Status to check if entries are saved.
 			stokeDetailsRepository.saveAll(devices);
 
 			consignmentMgmt.setConsignmentStatus(3);
@@ -95,7 +94,7 @@ public class ConsignmentRegisterServiceImpl {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.info("Exception found ="+e);
+			log.info(e.getMessage(), e);
 			return Boolean.FALSE;
 		}
 

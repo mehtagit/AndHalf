@@ -9,9 +9,6 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.model.DeviceDb;
 
-
-
-
 @Component
 public class Util {
 
@@ -43,8 +40,6 @@ public class Util {
 		}
 	}
 
-
-
 	public DeviceDb parseDevice(String content) {
 
 		String data[] = content.split(",");
@@ -65,11 +60,5 @@ public class Util {
 		}
 		return device;
 	}
-
-
-
-
-
-
 
 }

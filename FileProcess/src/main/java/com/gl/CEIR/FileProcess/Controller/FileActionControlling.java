@@ -1,5 +1,7 @@
 package com.gl.CEIR.FileProcess.Controller;
 
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ public class FileActionControlling  implements Runnable{
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	FileActionServiceImpl FileActionServiceImpl;
+	FileActionServiceImpl fileActionServiceImpl;
 
 	@Autowired
 	ConsignmentDeleteServiceImpl consignmentDeleteServiceImpl;
@@ -40,19 +42,17 @@ public class FileActionControlling  implements Runnable{
 	@Autowired
 	StockUploadServiceImpl stockUploadServiceImpl;
 
-
-
 	@Override
 	public void run() {
 
 		while(true) {
 			try {
 
-				WebActionDb webActionDb	=	FileActionServiceImpl.getFileActionDetails();
+				WebActionDb webActionDb	= fileActionServiceImpl.getFileActionDetails();
 
-				log.info("Web action Details Fetch ="+webActionDb);
+				log.info("Web action Details Fetch = " + webActionDb);
 
-				if(webActionDb != null) {
+				if(Objects.nonNull(webActionDb)) {
 
 					if("Consignment".equalsIgnoreCase(webActionDb.getFeature())) {
 

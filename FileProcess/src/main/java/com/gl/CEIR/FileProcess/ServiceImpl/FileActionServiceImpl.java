@@ -1,6 +1,5 @@
 package com.gl.CEIR.FileProcess.ServiceImpl;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +8,10 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
-
 @Service
 public class FileActionServiceImpl {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
-
-
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
@@ -32,10 +28,5 @@ public class FileActionServiceImpl {
 			return null;
 		}
 	}
-
-
-
-
-
 
 }

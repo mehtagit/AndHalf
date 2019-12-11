@@ -14,15 +14,14 @@ import com.gl.CEIR.FileProcess.Controller.FileActionControlling;
 @ComponentScan({"com.gl.CEIR.FileProcess", "com.gl.ceir.config"})
 public class App 
 {
-
 	public static ConfigurableApplicationContext  ctx;
 	
 	public static void main( String[] args )
 	{
 		
-		ctx =SpringApplication.run(App.class, args);
+		ctx = SpringApplication.run(App.class, args);
 		
-		FileActionControlling fetch=ctx.getBean(FileActionControlling.class);
+		FileActionControlling fetch = ctx.getBean(FileActionControlling.class);
 		new Thread(fetch).start();
 
 	}
