@@ -30,7 +30,6 @@ import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -90,6 +89,8 @@ public class StockServiceImpl {
 			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
 				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
 				stackholderRequest.setUserId(new Long(user.getId()));
+				stackholderRequest.setUser(user);
+				
 			}
 
 			stockManagementRepository.save(stackholderRequest);
@@ -102,7 +103,7 @@ public class StockServiceImpl {
 
 			webActionDbRepository.save(webActionDb);
 
-			return new GenricResponse(0,"Upload Successfully",stackholderRequest.getTxnId());
+			return new GenricResponse(0, "Upload Successfully", stackholderRequest.getTxnId());
 
 		} catch (Exception e) {
 

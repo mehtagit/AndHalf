@@ -366,10 +366,12 @@ public class ConsignmentServiceImpl {
 		try {
 			UserProfile userProfile = null;
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
-
+			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
+			
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
-
+			logger.debug("userProfile : " + consignmentMgmt);
+			
 			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {
 

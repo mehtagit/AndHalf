@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -46,6 +48,11 @@ public class StockMgmt implements Serializable {
 
 	private Long userId;
 
+	// @NotNull
+	@OneToOne
+	@JoinColumn(name="local_user_id", updatable = false)
+	private User user;
+
 	@Column(length = 15)
 	private String roleType;
 
@@ -57,13 +64,13 @@ public class StockMgmt implements Serializable {
 	private int previousStockStatus;
 
 	private int currency;
-	
+
 	private String userType;
-	
+
 	private Double totalPrice;
-	
+
 	private String remarks;
-	
+
 	@Transient
 	private String stateInterp; 
 
@@ -194,21 +201,27 @@ public class StockMgmt implements Serializable {
 	public void setPreviousStockStatus(int previousStockStatus) {
 		this.previousStockStatus = previousStockStatus;
 	}
-	
+
 	public String getStateInterp() {
 		return stateInterp;
 	}
-	
+
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
-	
+
 	public String getRemarks() {
 		return remarks;
 	}
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
