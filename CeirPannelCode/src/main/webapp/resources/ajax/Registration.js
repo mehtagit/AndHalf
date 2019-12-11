@@ -123,6 +123,32 @@ function usertypeData(){
 	});
 }
 
+
+function usertypeData2(id){ 
+	$.ajax({
+		type : 'GET',
+		url : contextpath + '/getTypeDropdownList/ROLE_TYPE/'+id,
+		contentType : "application/json",
+		dataType : 'html',
+		async:false,
+		success : function(data) {
+			var response=JSON.parse(data);                                    
+			var usertypeDropdown=$("#usertypes");  
+			for(var i=0; i<response.length; i++){
+					var data2='<option value="'+response[i].value+'">'+response[i].interp+'</option>';
+					usertypeDropdown.append(data2);
+				
+			}    
+			setTimeout(function(){ 
+				$('.dropdown-trigger').dropdown();
+				$('select').formSelect();
+			}, 1000);      
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
+
 function usertypeDropDownData(){ 
 	$.ajax({
 		type : 'GET',
@@ -232,7 +258,7 @@ function saveRegistration(){
 					propertyLocation:val.find('#propertyLocation').val(),
 					street:val.find('#street').val(),
 					locality:val.find('#locality').val(),
-					province:val.find('#province').val(),
+					province:val.find('#state').val(),
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),

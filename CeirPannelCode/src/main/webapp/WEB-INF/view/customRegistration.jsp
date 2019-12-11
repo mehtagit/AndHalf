@@ -17,9 +17,6 @@
     <title>CEIR | Custom Portal</title>
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-    <!-- Favicons-->
-    <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
-    <!-- Favicons-->
     <link rel="apple-touch-icon-precomposed" href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
     <!-- For iPhone -->
     <meta name="msapplication-TileColor" content="#00bcd4">
@@ -85,7 +82,8 @@ var contextpath = "${context}";
 </head>
 
 <body>
-<!--  Scripts
+    
+    <!--  Scripts
     ================================================ --> 
 	 <!-- jQuery Library -->
     <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
@@ -115,21 +113,21 @@ var contextpath = "${context}";
     <!--<script type="text/javascript" src="js/plugins.js"></script>-->
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    
+                                                                                            
     <!-- //////////////////////////////////////////////////////////////////////////// -->
-
+                      
     <!-- START CONTENT -->
     <section id="content" id="mainPage">
         <!--start container--> 
         <div class="container">
             <div class="section">
-                <form id="registrationForm" onsubmit="return saveCustomRegistration()">
+                <form id="registrationForm" onsubmit="return saveOperatorRegistration()">
                     <div class="card-panel registration-form" >
                         <div class="row">
                             <h5>Registration</h5>
                             <hr>  
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
-                              <input type="hidden" id="type" value="Government">
+                               <input type="hidden" id="type" value="Organization">
                             <div class="row">
                               	<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -160,6 +158,7 @@ var contextpath = "${context}";
 									</label>
 								</div>
 								
+								</div>
 
                             <div class="row">
                                <div class="input-field col s12 m12 l12">
@@ -168,7 +167,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight"
 										title="Please enter alphanumeric with special character upto 200 characters only"
 										id="propertyLocation" required="required"> <label
-										for="address">Address(Property Location) <span
+										for="propertyLocation">Address(Property Location) <span
 										class="star">*</span></label>
 								</div>
 								
@@ -238,7 +237,7 @@ var contextpath = "${context}";
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="employeeID" required="required" id="employeeId" maxlength="30">
-                                    <label for="employeeID">Employee ID <span class="star">*</span></label>
+                                    <label for="employeeId">Employee ID <span class="star">*</span></label>
                                 </div>
 
                                 <div class="file-field input-field col s12 m6 l6">
@@ -272,23 +271,23 @@ var contextpath = "${context}";
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="reportingAuthorityName" id="authorityName"
-                                        maxlength="30" >
+                                        maxlength="30">
                                     <label for="authorityName">Reporting Authority Name</label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6">
-                                    <input type="email" name="email"
+                                    <input type="email" name="authorityEmail"
 										class="form-control boxBorder boxHeight" id="authorityEmail"
 										>                                     
                                     <label for="authorityEmail">Reporting Authority Email ID</label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6">
-                                    <input type="text" name="reportingAuthorityContact" id="authorityPhoneNo"
+                                    <input type="text" name="authorityPhoneNo" id="authorityPhoneNo"
                                         maxlength="20"
                                         pattern="[0-9]{8,20}"
 										title="Please enter phone number between 8 to 20 characters only"
-									 >
+										 >
                                     <label for="authorityPhoneNo">Reporting Authority Contact Number</label>
                                 </div>
 
@@ -443,10 +442,9 @@ var contextpath = "${context}";
                             <div class="input-field col s12 center">
                             	<button class="btn" id="btnSave" 
 									type="submit" style="margin-left: 10px;">submit</button>
-									<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
+										<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
                             </div> 
                         </div>
-                  </div>
                   </div>
                 </form>
             </div>
@@ -530,7 +528,8 @@ var contextpath = "${context}";
             </div>
         </div>
     </div>
-    <!-- START MAIN -->
+    
+     <!-- START MAIN -->
     <div id="">
         <!-- START WRAPPER -->
         <div class="wrapper">
@@ -602,7 +601,7 @@ var contextpath = "${context}";
 
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
 
-                        <button type="submit" id="otpVerifyBtn" class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+                        <button id="otpVerifyBtn" type="submit"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
                     </form>
         </div>
     </div>
@@ -612,14 +611,11 @@ var contextpath = "${context}";
     Scripts
     ================================================ -->
 <!-- Modal End -->
-
-
-
-
     <script>
         $(document).ready(function () {
             $('.modal').modal();
             questionDataByCategory();
+            
         });   
 
         $('.dropdown-trigger').dropdown();
@@ -647,6 +643,7 @@ var contextpath = "${context}";
             "country",
             "state",
         );
+        $("#country").val("Cambodia");
         populateStates(
             "country",
             "state",
