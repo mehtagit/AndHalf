@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -286,16 +287,23 @@ public class StockServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStockCountAndQuantity( RequestCountAndQuantityWithLongUserId request ) {
+	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId ) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get  stock count and quantity.");
-			return stockManagementRepository.getStockCountAndQuantity(request.getUserId(), request.getStatus());
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					status.add(stateDb.getState());
+				}
+			}
+			return stockManagementRepository.getStockCountAndQuantity( userId, status );
 		} catch (Exception e) {
 			//logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
-
 	}
 
 	@Transactional

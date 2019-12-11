@@ -187,10 +187,10 @@ public class ConsignmentController {
 	}
 
 
-	@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.POST)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantity request ) {
 		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(request);
 		return new MappingJacksonValue(response);
-	}
+	}*/
 }

@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -442,15 +443,24 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getConsignmentCountAndQuantity( RequestCountAndQuantity request ) {
+	public ResponseCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer userTypeId, Integer featureId ) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get  Cosignment count and quantity.");
-			return consignmentRepository.getConsignmentCountAndQuantity(request.getUserId(), request.getStatus());
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					status.add(stateDb.getState());
+				}
+			}
+			return consignmentRepository.getConsignmentCountAndQuantity( userId, status);
 		} catch (Exception e) {
 			//logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
+
 
 }

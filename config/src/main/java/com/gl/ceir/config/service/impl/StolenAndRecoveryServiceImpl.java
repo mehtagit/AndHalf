@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -389,14 +390,22 @@ public class StolenAndRecoveryServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStolenAndRecoveryCount( RequestCountAndQuantityWithLongUserId request, String requestType) {
+	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get StolenAndRecovery count.");
-			return stolenAndRecoveryRepository.getStolenandRecoveryCount( request.getUserId(), request.getStatus(), requestType);
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					status.add(stateDb.getState());
+				}
+			}
+			return stolenAndRecoveryRepository.getStolenandRecoveryCount( userId, status, requestType);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			//logger.error(e.getMessage(), e);
+			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			return new ResponseCountAndQuantity(0,0);
 		}
 	}
-
 }

@@ -116,12 +116,12 @@ public class StockController {
 
 	}
 
-	@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/stock/countAndQuantity", method = RequestMethod.POST)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantityWithLongUserId request ) {
 		ResponseCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity( request );
 		return new MappingJacksonValue(response);
-	}
+	}*/
 	
 	@ApiOperation(value = "Accept Reject Stock.", response = GenricResponse.class)
 	@RequestMapping(path = "accept-reject/stock", method = RequestMethod.PUT)

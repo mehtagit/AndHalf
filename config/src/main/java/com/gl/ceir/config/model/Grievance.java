@@ -4,16 +4,20 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NamedQuery;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gl.ceir.config.model.constants.GrievanceStatus;
 
 @Entity
 @NamedQuery(name = "Grievance.getAllGrievanceStatusNotClosed",
@@ -22,6 +26,7 @@ query = "select g from Grievance g where g.grievanceId = ?1 and grievanceStatus 
 query = "select g from Grievance g where grievanceStatus != ?1")
 @NamedQuery(name = "Grievance.getGrievanceByUserId",
 query = "select g from Grievance g where g.grievanceId = ?1")
+
 public class Grievance {
 
 	@Id
@@ -47,17 +52,23 @@ public class Grievance {
 	private String fileName;
 	
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
 
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 
 	@Column(length = 1000,columnDefinition="Text")
 	private String remarks;
 	
+	@Transient
+	private String stateInterp;
+	
 	@OneToOne
 	@JoinColumn(name="user_id",insertable = false, updatable = false)
+	@JsonIgnore
 	private User user;
 	
 	public String getGrievanceId() {
@@ -140,13 +151,28 @@ public class Grievance {
 		this.remarks = remarks;
 	}
 
-	/*public User getUser() {
+	public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}*/
+	}
+	
+	public String getStateInterp() {
+		return stateInterp;
+	}
+
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+
+	@PostLoad
+    public void postLoad() {
+        if(stateInterp == null || stateInterp.isEmpty()) {
+        	this.stateInterp = GrievanceStatus.getActionNames( this.grievanceStatus ).toString();
+        }
+    }
 	
 	@Override
 	public String toString() {

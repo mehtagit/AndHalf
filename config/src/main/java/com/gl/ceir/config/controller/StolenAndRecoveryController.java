@@ -185,11 +185,10 @@ public class StolenAndRecoveryController {
 
 	}
 
-	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.POST)
 	public MappingJacksonValue getStolenAndRecoveryCount( @RequestBody RequestCountAndQuantityWithLongUserId request, @RequestParam(value = "requestType") String requestType) {
 		ResponseCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount( request, requestType);
 		return new MappingJacksonValue(response);
-	}
-
+	}*/
 }
