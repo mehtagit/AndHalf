@@ -10,7 +10,6 @@ public class UserProfileModel {
 	private String firstName;
 	private String middleName;
 	private String lastName;
-	private String displayName;
 	private String companyName;
 	private String type;
 	private Integer vatStatus;
@@ -27,9 +26,19 @@ public class UserProfileModel {
 	private String modifiedOn;
 	private String phoneOtp;
 	private String emailOtp;
-	private Integer status;
+	private String displayName;
+	private Object employeeId;
+	private Object natureOfEmployment;
+	private Object designation;
+	private Object authorityName;
+	private Object authorityEmail;
+	private Object authorityPhoneNo;
+	private Object operatorTypeName;
+	private Object operatorTypeId;
+	private Object nidFilename;
+	private Object photoFilename;
+	private Object idCardFilename;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
 	public Integer getId() {
 		return id;
 	}
@@ -45,16 +54,6 @@ public class UserProfileModel {
 	public String getMiddleName() {
 		return middleName;
 	}
-	@Override
-	public String toString() {
-		return "UserProfileModel [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", displayName=" + displayName + ", companyName=" + companyName + ", type=" + type
-				+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", propertyLocation=" + propertyLocation
-				+ ", street=" + street + ", locality=" + locality + ", province=" + province + ", country=" + country
-				+ ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", createdOn="
-				+ createdOn + ", modifiedOn=" + modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp
-				+ ", status=" + status + ", additionalProperties=" + additionalProperties + "]";
-	}
 	public void setMiddleName(String middleName) {
 		this.middleName = middleName;
 	}
@@ -63,12 +62,6 @@ public class UserProfileModel {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-	public String getDisplayName() {
-		return displayName;
-	}
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
 	}
 	public String getCompanyName() {
 		return companyName;
@@ -166,11 +159,77 @@ public class UserProfileModel {
 	public void setEmailOtp(String emailOtp) {
 		this.emailOtp = emailOtp;
 	}
-	public Integer getStatus() {
-		return status;
+	public String getDisplayName() {
+		return displayName;
 	}
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public Object getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(Object employeeId) {
+		this.employeeId = employeeId;
+	}
+	public Object getNatureOfEmployment() {
+		return natureOfEmployment;
+	}
+	public void setNatureOfEmployment(Object natureOfEmployment) {
+		this.natureOfEmployment = natureOfEmployment;
+	}
+	public Object getDesignation() {
+		return designation;
+	}
+	public void setDesignation(Object designation) {
+		this.designation = designation;
+	}
+	public Object getAuthorityName() {
+		return authorityName;
+	}
+	public void setAuthorityName(Object authorityName) {
+		this.authorityName = authorityName;
+	}
+	public Object getAuthorityEmail() {
+		return authorityEmail;
+	}
+	public void setAuthorityEmail(Object authorityEmail) {
+		this.authorityEmail = authorityEmail;
+	}
+	public Object getAuthorityPhoneNo() {
+		return authorityPhoneNo;
+	}
+	public void setAuthorityPhoneNo(Object authorityPhoneNo) {
+		this.authorityPhoneNo = authorityPhoneNo;
+	}
+	public Object getOperatorTypeName() {
+		return operatorTypeName;
+	}
+	public void setOperatorTypeName(Object operatorTypeName) {
+		this.operatorTypeName = operatorTypeName;
+	}
+	public Object getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Object operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
+	public Object getNidFilename() {
+		return nidFilename;
+	}
+	public void setNidFilename(Object nidFilename) {
+		this.nidFilename = nidFilename;
+	}
+	public Object getPhotoFilename() {
+		return photoFilename;
+	}
+	public void setPhotoFilename(Object photoFilename) {
+		this.photoFilename = photoFilename;
+	}
+	public Object getIdCardFilename() {
+		return idCardFilename;
+	}
+	public void setIdCardFilename(Object idCardFilename) {
+		this.idCardFilename = idCardFilename;
 	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
@@ -178,4 +237,18 @@ public class UserProfileModel {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	@Override
+	public String toString() {
+		return "UserProfileModel [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus=" + vatStatus + ", vatNo="
+				+ vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
+				+ ", province=" + province + ", country=" + country + ", passportNo=" + passportNo + ", email=" + email
+				+ ", phoneNo=" + phoneNo + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", phoneOtp="
+				+ phoneOtp + ", emailOtp=" + emailOtp + ", displayName=" + displayName + ", employeeId=" + employeeId
+				+ ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation + ", authorityName="
+				+ authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo
+				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename="
+				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename
+				+ ", additionalProperties=" + additionalProperties + "]";
+	}	
 	}

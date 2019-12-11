@@ -7,7 +7,7 @@ public class GenerateRandomDigits {
     { 
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                     + "0123456789"
-                                    + "abcdefghijklmnopqrstuvxyz"; 
+                                    + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
   
         // create StringBuffer size of AlphaNumericString 
         StringBuilder sb = new StringBuilder(n); 

@@ -615,7 +615,8 @@ function approveSubmit(actiontype){
 	
 	var approveRequest={
 			"action": actiontype,
-			"txnId":txnId
+			"txnId":txnId,
+			"featureId":3
 	}
 	$.ajax({
 		url : "./updateConsignmentStatus",
@@ -659,7 +660,8 @@ function disapproveSubmit(actiontype){
 	var approveRequest={
 			"action": actiontype,
 			"txnId":txnId,
-			"remarks":Remark
+			"remarks":Remark,
+			"featureId":3
 	}
 	$.ajax({
 		url : "./updateConsignmentStatus",

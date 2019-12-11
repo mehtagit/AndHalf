@@ -8,6 +8,7 @@ public class ConsignmentUpdateRequest {
 	private String txnId;
 	private int userId;
 	private String remarks;
+	private Integer featureId;
 	public int getAction() {
 		return action;
 	}
@@ -44,10 +45,17 @@ public class ConsignmentUpdateRequest {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
 	@Override
 	public String toString() {
 		return "ConsignmentUpdateRequest [action=" + action + ", roleType=" + roleType + ", roleTypeUserId="
-				+ roleTypeUserId + ", txnId=" + txnId + ", userId=" + userId + ", remarks=" + remarks + "]";
+				+ roleTypeUserId + ", txnId=" + txnId + ", userId=" + userId + ", remarks=" + remarks + ", featureId="
+				+ featureId + "]";
 	}
 	
 }

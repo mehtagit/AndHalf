@@ -308,7 +308,7 @@ function uploadStock(){
 			 if(data.errorCode=="0")
 				 {
 				 console.log("status code = 0");
-				$('#stockSuccessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is');
+				$('#stockSuccessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is ');
 			 $('#stockSuccessMessage').append(data.txnId);
 			 //$('#errorCode').val(data.errorCode);
 				 }

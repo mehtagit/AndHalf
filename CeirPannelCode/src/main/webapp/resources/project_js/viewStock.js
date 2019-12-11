@@ -367,7 +367,7 @@ function pageButtons(url){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					/*$('#'+button[i].id).attr("onclick", button[i].buttonURL);*/
 
-					if(button[i].buttonTitle === "Upload Stock"){
+					if(button[i].buttonTitle === "Upload Stock" || button[i].buttonTitle === "Assign Stock"){
 						$('#'+button[i].id).attr("href", button[i].buttonURL);
 					}
 					else{

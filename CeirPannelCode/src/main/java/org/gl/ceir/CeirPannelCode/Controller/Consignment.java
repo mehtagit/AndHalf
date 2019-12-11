@@ -348,7 +348,7 @@ request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
 request.setUserId((int) session.getAttribute("userid"));
 request.setRemarks(consignmentUpdateRequest.getRemarks());
 request.setTxnId(consignmentUpdateRequest.getTxnId());
-
+request.setFeatureId(consignmentUpdateRequest.getFeatureId());
 log.info(" request passed to the update consignment status="+request);
 GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
 log.info("response after update consignment status="+response);

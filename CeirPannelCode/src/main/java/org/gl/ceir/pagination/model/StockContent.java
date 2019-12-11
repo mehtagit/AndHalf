@@ -15,12 +15,17 @@ public class StockContent {
 	private String txnId;
 	private String fileName;
 	private Integer userId;
+	private UserModel user;
 	private String roleType;
 	private Integer quantity;
 	private Integer stockStatus;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private Integer previousStockStatus;
+	private Integer currency;
+	private String userType;
+	private Object totalPrice;
+	private Object remarks;
 	private String stateInterp;
-	private String taxInterp;
+	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
@@ -75,6 +80,12 @@ public class StockContent {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	public UserModel getUser() {
+		return user;
+	}
+	public void setUser(UserModel user) {
+		this.user = user;
+	}
 	public String getRoleType() {
 		return roleType;
 	}
@@ -93,11 +104,35 @@ public class StockContent {
 	public void setStockStatus(Integer stockStatus) {
 		this.stockStatus = stockStatus;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public Integer getPreviousStockStatus() {
+		return previousStockStatus;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setPreviousStockStatus(Integer previousStockStatus) {
+		this.previousStockStatus = previousStockStatus;
+	}
+	public Integer getCurrency() {
+		return currency;
+	}
+	public void setCurrency(Integer currency) {
+		this.currency = currency;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public Object getTotalPrice() {
+		return totalPrice;
+	}
+	public void setTotalPrice(Object totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	public Object getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(Object remarks) {
+		this.remarks = remarks;
 	}
 	public String getStateInterp() {
 		return stateInterp;
@@ -105,18 +140,22 @@ public class StockContent {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
-	public String getTaxInterp() {
-		return taxInterp;
+	public Map<String, Object> getAdditionalProperties() {
+		return additionalProperties;
 	}
-	public void setTaxInterp(String taxInterp) {
-		this.taxInterp = taxInterp;
+	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+		this.additionalProperties = additionalProperties;
 	}
 	@Override
 	public String toString() {
 		return "StockContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", suplierName="
 				+ suplierName + ", supplierId=" + supplierId + ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId
-				+ ", fileName=" + fileName + ", userId=" + userId + ", roleType=" + roleType + ", quantity=" + quantity
-				+ ", stockStatus=" + stockStatus + ", additionalProperties=" + additionalProperties + ", stateInterp="
-				+ stateInterp + ", taxInterp=" + taxInterp + "]";
+				+ ", fileName=" + fileName + ", userId=" + userId + ", user=" + user + ", roleType=" + roleType
+				+ ", quantity=" + quantity + ", stockStatus=" + stockStatus + ", previousStockStatus="
+				+ previousStockStatus + ", currency=" + currency + ", userType=" + userType + ", totalPrice="
+				+ totalPrice + ", remarks=" + remarks + ", stateInterp=" + stateInterp + ", additionalProperties="
+				+ additionalProperties + "]";
 	}
-	}
+
+
+}

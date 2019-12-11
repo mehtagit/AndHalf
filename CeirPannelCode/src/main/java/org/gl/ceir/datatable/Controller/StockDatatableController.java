@@ -113,7 +113,7 @@ public class StockDatatableController {
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
-						String assignedTo = "";
+						String assignedTo = dataInsideList.getUser().getUserProfile().getDisplayName();
 						String txnId= dataInsideList.getTxnId(); 
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName

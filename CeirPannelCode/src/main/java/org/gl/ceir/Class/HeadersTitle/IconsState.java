@@ -679,14 +679,14 @@ return action;
 
 /********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-public String adminRegistrationRequest(String Id ,String status,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type) {
+public String adminRegistrationRequest(String userId ,String status,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
-	String approveAction = "userApprovalPopup("+Id+")";
-	String viewAction="trcInformation?id="+Id+"&roles="+roles+"&type="+type;
-	String rejectAction = "userRejectPopup("+Id+")";
+	String approveAction = "userApprovalPopup("+userId+")";
+	String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
+	String rejectAction = "userRejectPopup("+userId+")";
 	
-	log.info("status---->"+status+"-------userStatus---->"+userStatus+"-------AdminCurrentStatus------>"+AdminCurrentStatus);
+	log.info("userId---->"+userId+"-------id---->"+id+"-------AdminCurrentStatus------>"+AdminCurrentStatus);
 
 	// state related Code 
 
