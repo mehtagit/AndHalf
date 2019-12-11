@@ -492,5 +492,36 @@ function exportData()
 	window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
+//************************************************ category dropdown function ******************************************************************
+function grievanceCategory()
+{
+		var grievanceCategory="GRIEVANCE_CATEGORY";
+	 	 $.ajax({
+			url: './Consignment/consignmentCurency?currency='+grievanceCategory,
+			type: 'GET',
+			processData: false,
+			contentType: false,
+			success: function (data, textStatus, jqXHR) {
+				 console.log(data);
+				 
+		    	$('#category').empty();
+		    	$('#category').append('<option value="">Select Category *</option>');
+		    	
+		    	for (i = 0; i < data.length; i++){
+		    		
+		    		var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+					//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
+					$('#category').append(html);	
+					}
+		    	/* $('#currency').val($("#langid").val()); */
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+			}
+		});
+}
 
-
+$(document).ready(function(){
+	grievanceCategory();
+	});

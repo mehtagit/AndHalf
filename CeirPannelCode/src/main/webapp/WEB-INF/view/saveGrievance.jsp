@@ -81,12 +81,12 @@
                                             <div class="input-field col s12 m6 l6">
                                                 <!-- <label for="Category">Category</label> -->
                                                 <select class="browser-default" id="category">
-                                                    <option value="" disabled selected>Category *</option>
+                                                <!--<option value="" disabled selected>Category *</option>
                                                     <option value="1">Report Related</option>
                                                     <option value="2">Device Stolen Related</option>
                                                     <option value="3">Device Recovery Related</option>
                                                     <option value="4">Stock Related</option>
-                                                    <option value="5">Other</option>
+                                                    <option value="5">Other</option> -->
                                                 </select>
                                             </div>
                                         </div>
