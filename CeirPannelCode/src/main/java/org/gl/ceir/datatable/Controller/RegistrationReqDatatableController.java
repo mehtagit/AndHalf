@@ -88,17 +88,18 @@ public class RegistrationReqDatatableController {
 			
 				for(RegistrationContentModel dataInsideList : paginationContentList) 
 				{
-				   String createdOn = (String) dataInsideList.getCreatedOn();
+				   String createdOn = (String) dataInsideList.getUser().getCreatedOn();
 				   String Id =   String.valueOf(dataInsideList.getUser().getId());
+				   String username =  dataInsideList.getUser().getUsername();
 				   String id =  String.valueOf(dataInsideList.getId());
 				   String type = dataInsideList.getType();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
 				   String grievanceStatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   log.info("----Id------"+Id+"-------id----------------"+id);
+				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName,createdOn,roles,type,id);			   
-				   String[] finalData={createdOn,Id,type,roles,grievanceStatusName,action}; 
+				   String[] finalData={createdOn,username,type,roles,grievanceStatusName,action}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

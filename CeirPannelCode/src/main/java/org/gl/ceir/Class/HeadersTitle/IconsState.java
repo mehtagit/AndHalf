@@ -682,11 +682,11 @@ return action;
 public String adminRegistrationRequest(String userId ,String status,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
-	String approveAction = "userApprovalPopup("+userId+")";
+	String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"')";
 	String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
 	String rejectAction = "userRejectPopup("+userId+")";
 	
-	log.info("userId---->"+userId+"-------id---->"+id+"-------AdminCurrentStatus------>"+AdminCurrentStatus);
+	//log.info("userId---->"+userId+"-------id---->"+id+"-------AdminCurrentStatus------>"+AdminCurrentStatus+"---createdOn--"+createdOn);
 
 	// state related Code 
 

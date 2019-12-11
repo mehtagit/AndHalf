@@ -123,7 +123,7 @@ public class DatatableHeaders {
 			
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-			String[] headers = {HeadersTitle.requestOn,HeadersTitle.userId,HeadersTitle.asType,HeadersTitle.roll,HeadersTitle.Status,HeadersTitle.action};	
+			String[] headers = {HeadersTitle.requestOn,HeadersTitle.disaplyName,HeadersTitle.asType,HeadersTitle.roll,HeadersTitle.Status,HeadersTitle.action};	
 			for(String header : headers) {
 			dataTableInputs.add(new DatatableHeaderModel(header));
 			}
