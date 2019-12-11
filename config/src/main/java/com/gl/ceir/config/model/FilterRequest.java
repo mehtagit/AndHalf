@@ -14,6 +14,7 @@ public class FilterRequest {
 	private String userType;
 	private Integer featureId;
 	private Integer userTypeId;
+	private String searchString;
 
 	public Integer getUserId() {
 		return userId;
@@ -89,6 +90,13 @@ public class FilterRequest {
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -117,8 +125,6 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-
 }
 
 

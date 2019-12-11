@@ -76,7 +76,6 @@ public class ConsignmentController {
 
 	@ApiOperation(value = "View all the list of consignment", response = ConsignmentMgmt.class)
 	@RequestMapping(path = "/consignment/Record", method = RequestMethod.GET)
-
 	public MappingJacksonValue getByImporterId(@RequestParam("userId") Long userId) {
 
 		logger.info("Request TO view TO all record of user="+userId);

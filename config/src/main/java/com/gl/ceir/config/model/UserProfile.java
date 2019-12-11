@@ -325,8 +325,6 @@ public class UserProfile {
 		builder.append(authorityEmail);
 		builder.append(", authorityPhoneNo=");
 		builder.append(authorityPhoneNo);
-		builder.append(", user=");
-		builder.append(user);
 		builder.append("]");
 		return builder.toString();
 	}

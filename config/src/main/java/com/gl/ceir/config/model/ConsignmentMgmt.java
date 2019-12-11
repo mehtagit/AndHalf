@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class ConsignmentMgmt implements Serializable {
 
-
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -30,7 +29,7 @@ public class ConsignmentMgmt implements Serializable {
 
 	private String supplierId;
 
-	@NotNull
+	// @NotNull
 	private String supplierName;
 
 	@Column(length = 15)
@@ -46,6 +45,7 @@ public class ConsignmentMgmt implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
+	@NotNull
 	private Integer userId;
 
 	@NotNull
@@ -85,6 +85,7 @@ public class ConsignmentMgmt implements Serializable {
 	@Transient
 	private String taxInterp;
 
+	// @NotNull
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
@@ -235,8 +236,9 @@ public class ConsignmentMgmt implements Serializable {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public ConsignmentMgmt setUser(User user) {
 		this.user = user;
+		return this;
 	}
 
 	public int getCurrency() {

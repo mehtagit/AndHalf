@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,8 @@ public class MessageConfigurationDb implements Serializable {
 	@UpdateTimestamp
 	private Date modifiedOn;
 	private String tag;
+	
+	@Column(length = 1000)
 	private String value;
 	private String description;
 	public Long getId() {

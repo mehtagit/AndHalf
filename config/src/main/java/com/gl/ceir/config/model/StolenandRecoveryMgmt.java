@@ -56,6 +56,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 	
 	private Integer sourceType;
 	
+	private Integer qty;
+	
 	@Transient
 	private String sourceTypeInterp;
 	
@@ -174,6 +176,12 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
+	public Integer getQty() {
+		return qty;
+	}
+	public void setQty(Integer qty) {
+		this.qty = qty;
+	}
 	
 	@Override
 	public String toString() {
@@ -210,5 +218,4 @@ public class StolenandRecoveryMgmt implements Serializable {
 		return builder.toString();
 	}
 
-	
 }

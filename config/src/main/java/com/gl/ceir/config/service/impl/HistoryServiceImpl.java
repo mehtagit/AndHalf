@@ -1,25 +1,33 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.Objects;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.BlacklistDbHistory;
 import com.gl.ceir.config.model.ConsignmentMgmtHistoryDb;
 import com.gl.ceir.config.model.DeviceDbHistory;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
+import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
+import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.BlackListTrackDetailsRepository;
 import com.gl.ceir.config.repository.ConsignmentMgmtHistoryRepository;
@@ -31,6 +39,7 @@ import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
+import com.gl.ceir.config.specificationsbuilder.NotificationSpecificationBuilder;
 
 
 @Service
@@ -57,23 +66,25 @@ public class HistoryServiceImpl {
 
 	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
-	
+
 	@Autowired
 	StolenAndRecoveryHistoryMgmtRepository stolenAndRecoveryHistoryMgmtRepository;
-	
+
 	@Autowired
 	ConsignmentMgmtHistoryRepository consignmentMgmtHistoryRepository;
 
 	@Autowired
 	StockMgmtHistoryRepository stockMgmtHistoryRepository;
-	
+
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
-	
+
 	@Autowired
 	NotificationRepository notificationRepository;
 	
-	
+	@Autowired
+	PropertiesReader propertiesReader;
+
 	public Page<PolicyConfigurationHistoryDb> ViewAllPolicyHistory(Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
@@ -147,7 +158,7 @@ public class HistoryServiceImpl {
 		}
 	}
 
-	
+
 	public Page<StolenAndRecoveryHistoryMgmt> ViewAllStolenAndRecoveryHistory(Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
@@ -158,8 +169,8 @@ public class HistoryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	
+
+
 	public Page<ConsignmentMgmtHistoryDb> ViewAllConsignmentHistory(Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
@@ -170,7 +181,7 @@ public class HistoryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public Page<StockMgmtHistoryDb> ViewAllStockHistory(Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
@@ -181,9 +192,9 @@ public class HistoryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	
-	
+
+
+
 	public Page<AuditTrail> ViewAllAuditHistory(Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
@@ -194,14 +205,10 @@ public class HistoryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-
-	
 
 	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-
 			return notificationRepository.findAll(pageable);
 		} catch (Exception e) {
 			logger.error("Not Register Consignent="+e.getMessage());
@@ -209,4 +216,23 @@ public class HistoryServiceImpl {
 		}
 	}
 	
+	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize, FilterRequest filterRequest){
+		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
+			
+			if(!"Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+				if(Objects.nonNull(filterRequest.getUserId()))
+					nsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			}else {
+				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
+			}
+
+			return notificationRepository.findAll(nsb.build(), pageable);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
 }

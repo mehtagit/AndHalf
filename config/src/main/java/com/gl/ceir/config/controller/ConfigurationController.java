@@ -24,8 +24,6 @@ import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
 
-
-
 @RestController
 public class ConfigurationController {
 
@@ -50,8 +48,6 @@ public class ConfigurationController {
 		return mapping;
 	}
 
-
-
 	@ApiOperation(value = "System Config view Data using Tag", response = SystemConfigurationDb.class)
 	@RequestMapping(path = "/system/viewTag", method = RequestMethod.POST)
 	public MappingJacksonValue findSystemDetailsByTag(@RequestBody SystemConfigurationDb systemConfigurationDb) {
@@ -67,7 +63,6 @@ public class ConfigurationController {
 		return mapping;
 	}
 
-
 	@ApiOperation(value = "System Config update Data using id", response = GenricResponse.class)
 	@RequestMapping(path = "/system/update", method = RequestMethod.PUT)
 	public GenricResponse updateSytem(@RequestBody SystemConfigurationDb systemConfigurationDb) {
@@ -80,7 +75,6 @@ public class ConfigurationController {
 
 		return GenricResponse;
 	}
-
 
 	@ApiOperation(value = "Message Config view All Data", response = MessageConfigurationDb.class)
 	@RequestMapping(path = "/message/viewAll", method = RequestMethod.POST)
@@ -140,7 +134,6 @@ public class ConfigurationController {
 		return mapping;
 	}
 
-
 	@ApiOperation(value = "Policy Config view All Data ", response = PolicyConfigurationDb.class)
 	@RequestMapping(path = "/policy/viewAll", method = RequestMethod.POST)
 	public MappingJacksonValue findPolicyDetails() {
@@ -183,8 +176,6 @@ public class ConfigurationController {
 		return genricResponse;
 	}
 
-
-
 	@ApiOperation(value = " save Notification data", response = GenricResponse.class)
 	@RequestMapping(path = "/notification/save", method = RequestMethod.POST)
 	public GenricResponse saveNotification(@RequestBody Notification notification) {
@@ -214,7 +205,7 @@ public class ConfigurationController {
 	}
 	
 	@ApiOperation(value = "System Config List DB - view All Data", response = SystemConfigListDb.class)
-	@GetMapping("/system-config-list/by-tag-and-usertype{tagId}/{userTypeId}")
+	@GetMapping("/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}")
 	public MappingJacksonValue findSystemConfigListByTagAndUserType(@PathVariable("tagId") String tagId, 
 			@PathVariable("userTypeId") int userTypeId) {
 

@@ -15,9 +15,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
@@ -26,16 +28,20 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.User;
+import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
@@ -62,12 +68,18 @@ public class StockServiceImpl {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
-	
+
 	@Autowired
 	PropertiesReader propertiesReader;
+
+	@Autowired
+	UserProfileRepository userProfileRepository;
+
+	@Autowired	
+	EmailUtil emailUtil;
 
 	public GenricResponse uploadStock(StockMgmt stackholderRequest) {
 
@@ -77,6 +89,8 @@ public class StockServiceImpl {
 			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
 				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
 				stackholderRequest.setUserId(new Long(user.getId()));
+				stackholderRequest.setUser(user);
+				
 			}
 
 			stockManagementRepository.save(stackholderRequest);
@@ -89,7 +103,7 @@ public class StockServiceImpl {
 
 			webActionDbRepository.save(webActionDb);
 
-			return new GenricResponse(0,"Upload Successfully",stackholderRequest.getTxnId());
+			return new GenricResponse(0, "Upload Successfully", stackholderRequest.getTxnId());
 
 		} catch (Exception e) {
 
@@ -110,25 +124,28 @@ public class StockServiceImpl {
 	}
 
 	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
-		
+
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
-		
+
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			
+
 			if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
 				filterRequest.setUserType("Custom");
 			}
-			
+
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler(propertiesReader.dialect);
 
-			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || "Distributor".equalsIgnoreCase(filterRequest.getUserType())) {
+			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
+					"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
+					"Retailer".equalsIgnoreCase(filterRequest.getUserType())) {
+				
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-				
+
 				if(Objects.nonNull(filterRequest.getUserId()))
 					smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 			} 
@@ -164,10 +181,15 @@ public class StockServiceImpl {
 					}
 				}
 			}
-			
+
+			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+				smsb.orSearch(new SearchCriteria("taxPaidStatus", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+				smsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			}
+
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
- 			
+
 			for(StockMgmt stockMgmt : page.getContent()) {
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
@@ -176,7 +198,7 @@ public class StockServiceImpl {
 					}
 				}
 			}
-			
+
 			return page;
 
 		} catch (Exception e) {
@@ -227,7 +249,7 @@ public class StockServiceImpl {
 	@Transactional
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
 
-		StockMgmt stackHolderInfo=	stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
+		StockMgmt stackHolderInfo =	stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
 
 		if(Objects.isNull(stackHolderInfo)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
@@ -276,5 +298,58 @@ public class StockServiceImpl {
 
 	}
 
-	
+	@Transactional
+	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
+		try {
+			UserProfile userProfile = null;
+			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
+
+			// Fetch user_profile to update user over mail/sms regarding the action.
+			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
+
+			if(Objects.isNull(stockMgmt)) {
+				String message = "TxnId Does not Exist";
+				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
+				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
+			}
+
+			// 0 - Accept, 1 - Reject
+			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				if(consignmentUpdateRequest.getAction() == 0) {
+
+					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
+					stockManagementRepository.save(stockMgmt);	
+
+					emailUtil.sendMessageAndSaveNotification("STOCK_APPROVED_BY_CEIR_ADMIN", 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.STOCK,
+							SubFeatures.ACCEPT,
+							consignmentUpdateRequest.getTxnId());
+
+				}else {
+					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
+					stockManagementRepository.save(stockMgmt);
+
+					emailUtil.sendMessageAndSaveNotification("STOCK_REJECT_BY_CEIR_ADMIN", 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.STOCK,
+							SubFeatures.REJECT,
+							consignmentUpdateRequest.getTxnId());
+				}
+			}else {
+				logger.warn("Accept/reject of Stock not allowed to you.");
+				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
+			}
+
+			return new GenricResponse(0, "Consignment Update SuccessFully.", consignmentUpdateRequest.getTxnId());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
 }

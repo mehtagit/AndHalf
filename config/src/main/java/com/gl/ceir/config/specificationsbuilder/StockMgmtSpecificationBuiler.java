@@ -18,11 +18,13 @@ public class StockMgmtSpecificationBuiler {
 	private static final Logger logger = LogManager.getLogger(StockMgmtSpecificationBuiler.class);
 
 	private final List<SearchCriteria> params;
+	private final List<SearchCriteria> searchParams;
 	private final String dialect;
 	private List<Specification<ConsignmentMgmt>> specifications;
 
 	public StockMgmtSpecificationBuiler(String dialect) {
 		params = new ArrayList<>();
+		searchParams = new ArrayList<>();
 		specifications = new LinkedList<>();
 		this.dialect = dialect;
 	}
@@ -34,6 +36,11 @@ public class StockMgmtSpecificationBuiler {
 
 	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
 		specifications.add(specification);
+	}
+	
+	public final StockMgmtSpecificationBuiler orSearch(SearchCriteria criteria) { 
+		searchParams.add(criteria);
+		return this;
 	}
 	
 	public Specification<StockMgmt> build() { 

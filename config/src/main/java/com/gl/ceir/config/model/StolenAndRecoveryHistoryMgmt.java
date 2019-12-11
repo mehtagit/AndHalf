@@ -17,12 +17,14 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Long userId;
+	
 	private String fileName;
+	
 	private Integer fileStatus;
 
 	@NotNull	
@@ -30,10 +32,11 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 
 	@CreationTimestamp
 	private Date createdOn;
+	
 	@UpdateTimestamp
 	private Date modifiedOn;
 	
-	private String requestType;
+	private Integer requestType;
 	
 	private String roleType;
 	
@@ -41,7 +44,7 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	
 	private String blockingTimePeriod;
 	
-	private String sourceType;
+	private Integer sourceType;
 
 	public Long getId() {
 		return id;
@@ -61,7 +64,6 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
 	public Integer getFileStatus() {
 		return fileStatus;
 	}
@@ -80,10 +82,10 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public String getRequestType() {
+	public Integer getRequestType() {
 		return requestType;
 	}
-	public void setRequestType(String requestType) {
+	public void setRequestType(Integer requestType) {
 		this.requestType = requestType;
 	}
 	public String getRoleType() {
@@ -110,24 +112,42 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	public String getSourceType() {
+	public Integer getSourceType() {
 		return sourceType;
 	}
-	public void setSourceType(String sourceType) {
+	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
 	}
+	
 	@Override
 	public String toString() {
-		return "StolenandRecoveryMgmt [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
-				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", requestType=" + requestType + ", roleType=" + roleType + ", blockingType=" + blockingType
-				+ ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StolenAndRecoveryHistoryMgmt [id=");
+		builder.append(id);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", fileStatus=");
+		builder.append(fileStatus);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", blockingType=");
+		builder.append(blockingType);
+		builder.append(", blockingTimePeriod=");
+		builder.append(blockingTimePeriod);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append("]");
+		return builder.toString();
 	}
-
-
-
-
-
-
-
+	
 }
