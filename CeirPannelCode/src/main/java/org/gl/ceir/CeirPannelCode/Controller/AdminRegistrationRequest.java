@@ -39,11 +39,13 @@ public class AdminRegistrationRequest {
 			)
 	    public ModelAndView viewAdminUser(HttpSession session,@RequestParam(name="id") int id, @RequestParam(name="roles") String roles,@RequestParam(name="type") String asType) {
 		ModelAndView mv = new ModelAndView();
-		//log.info("ID----------------->"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
+		
+		log.info("ID------------>"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
 		
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
 		mv.addObject("registration", registration);
-		log.info(" view trcInformation entry point."+registration); 
+		
+		log.info(" view trcInformation entry point."+registration+"---ID-----"+id); 
 		
 	
 		if("TRC".equals(roles)) {
