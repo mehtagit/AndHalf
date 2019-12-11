@@ -232,7 +232,7 @@ function saveRegistration(){
 					propertyLocation:val.find('#propertyLocation').val(),
 					street:val.find('#street').val(),
 					locality:val.find('#locality').val(),
-					province:val.find('#province').val(),
+					province:val.find('#state').val(),
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),

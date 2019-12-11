@@ -80,6 +80,7 @@ function udapteNewPassword(){
 }
 
 function login(){
+	$("#save").prop('disabled', true);
 	var obj="";
 	$("#loginForm").each(function(key, val){
 		val = $(this);
@@ -108,10 +109,10 @@ function login(){
 			else{
 				$("#errorMsg").text(resp.response);
 			}
-			
+			$("#save").prop('disabled', false);
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
-		
+			$("#save").prop('disabled', false);
 		} 
 	});
 	return false;

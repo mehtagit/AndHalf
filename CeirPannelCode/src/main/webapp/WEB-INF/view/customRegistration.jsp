@@ -643,14 +643,15 @@ var contextpath = "${context}";
     </script>
 
     <script>
-        populateCountries(
+    populateCountries(
             "country",
-            "state",
+           "state",
         );
-        populateStates(
-            "country",
-            "state",
-        );
+    
+   $("#country").val("Cambodia");
+   
+   populateStates( "country",
+           "state" );
     </script>
 
     <script>

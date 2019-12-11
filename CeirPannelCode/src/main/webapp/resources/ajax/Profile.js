@@ -12,6 +12,8 @@ function changePassword(){
 			}    
 		}
 	});
+	
+	console.log(JSON.stringify(obj));
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/changePassword',
