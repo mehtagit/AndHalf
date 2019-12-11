@@ -125,8 +125,8 @@
             <div class="row">
                 <form action="">
                     <h6 class="modal-header">Approve</h6>
-                    <h6>An email on the register mail ID of the user has been sent with <br> Registration ID__________ <span id="RegistrationId"></span>
-                        and registration date____________ <span id="registrationDate"></span>.</h6>
+                    <h6>An email on the register mail ID of the user has been sent with <br> Registration ID <span id="RegistrationId"></span>
+                        and registration date <span id="registrationDate"></span>.</h6>
                    
                 </form>
             </div>

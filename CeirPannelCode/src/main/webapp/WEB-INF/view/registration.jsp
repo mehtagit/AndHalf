@@ -303,15 +303,7 @@ var contextpath = "${context}";
 									</label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
-									<input type="text" name="province" maxlength="20"
-										class="form-control  boxBorder boxHeight" id="province"
-										pattern="[A-Za-z\s]{0,20}" required="required"
-										title="Please enter alphanumeric with special character upto 20 characters only">
-									<label for="province">Province<span class="star">*</span></label>
-								</div>
-
-								<div class="input-field col s12 m6 l6">
+<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Country <span class="star">*</span>
@@ -322,6 +314,16 @@ var contextpath = "${context}";
 									</select>
 									<!-- <label for="country">Country <span class="star">*</span></label> -->
 								</div>
+								
+								
+								<div class="input-field col s12 m6 l6">
+                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Province <span
+                                            class="star">*</span></p>
+                                    <select id="state" class="browser-default" class="mySelect" style="padding-left: 0;"
+                                        required></select>
+                                </div>
+
+								
 							</div>
 
 							<!-- <div class="row">
@@ -775,7 +777,7 @@ var contextpath = "${context}";
         	
         	
             questionDataByCategory();
-            usertypeData();
+            usertypeData2(<%=request.getParameter("usertypeId")%>);
             //$('.dropdown-trigger').dropdown();
            
           //  $('select').formSelect();
@@ -784,7 +786,11 @@ var contextpath = "${context}";
                 "country",
                "state",
             );
-    
+        
+       $("#country").val("Cambodia");
+       
+       populateStates( "country",
+               "state" );
         var password = document.getElementById("password")
         , confirm_password = document.getElementById("confirm_password");
 

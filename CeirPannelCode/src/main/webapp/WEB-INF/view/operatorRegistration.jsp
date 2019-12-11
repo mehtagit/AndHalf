@@ -14,7 +14,7 @@
         content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
     <meta name="keywords"
         content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
-    <title>CEIR | Custom Portal</title>
+    <title>CEIR | Operator Portal</title>
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link rel="apple-touch-icon-precomposed" href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
@@ -652,6 +652,7 @@ var contextpath = "${context}";
             "country",
             "state",
         );
+        $("#country").val("Cambodia");
         populateStates(
             "country",
             "state",

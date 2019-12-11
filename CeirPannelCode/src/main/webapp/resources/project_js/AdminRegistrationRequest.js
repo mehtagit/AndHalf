@@ -235,19 +235,17 @@ $('.datepicker').on('mousedown',function(event){
 
 
 
-function userApprovalPopup(userId){
+function userApprovalPopup(userId,date){
 	$('#approveInformation').openModal();
-	$("#userId").text(userId)
-}
-
-function confirmApproveInformation(){
-	$('#approveInformation').closeModal();
-	$('#confirmApproveInformation').openModal();
-	$("#registrationDate").text(registrationDate);
+	$("#userId").text(userId);
+	window.userID=userId;
+	window.date=date.replace("="," ");
 }
 
 
-function aprroveUser(userId){
+
+
+function aprroveUser(){
 	var userid= $("#userId").text();
 	var approveRequest={
 			"userId": parseInt(userid),
@@ -259,19 +257,24 @@ function aprroveUser(userId){
 		url : './adminApproval',
 		data : JSON.stringify(approveRequest),
 		dataType : 'json',
+		'async' : false,
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(approveRequest));
-			confirmApproveInformation();
-			
+			confirmApproveInformation(window.userID,window.date);
 		},
 		error : function() {
 			alert("Failed");
 		}
 	});
-	
-	
+}
+
+function confirmApproveInformation(userID,date){
+	$('#approveInformation').closeModal(); 
+	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+	$("#registrationDate").text(date);
+	$("#RegistrationId").text(userID);
 }
 
 function userRejectPopup(userId){
@@ -280,12 +283,6 @@ function userRejectPopup(userId){
 	$("#userId").text(userId)
 }
 
-function confirmRejectInformation(){
-	$('#rejectInformation').closeModal();
-	$('#confirmRejectInformation').openModal();
-	
-
-}
 
 function rejectUser(userId){
 	var userid= $("#userId").text();
@@ -313,10 +310,10 @@ function rejectUser(userId){
 	
 }
 
-
-
-
-
-function setFormData(){
-	
+function confirmRejectInformation(){
+	$('#rejectInformation').closeModal();
+	$('#confirmRejectInformation').openModal();
 }
+
+
+
