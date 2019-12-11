@@ -22,7 +22,6 @@ import com.gl.ceir.config.repository.StateMgmtRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
 import com.gl.ceir.config.util.Utility;
 
-
 @Service
 public class StateMgmtServiceImpl {
 

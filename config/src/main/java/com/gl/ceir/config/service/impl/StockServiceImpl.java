@@ -138,7 +138,10 @@ public class StockServiceImpl {
 
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler(propertiesReader.dialect);
 
-			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || "Distributor".equalsIgnoreCase(filterRequest.getUserType())) {
+			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
+					"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
+					"Retailer".equalsIgnoreCase(filterRequest.getUserType())) {
+				
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
