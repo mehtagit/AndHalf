@@ -182,7 +182,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -202,6 +201,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(modifiedOn);
 		builder.append(", requestType=");
 		builder.append(requestType);
+		builder.append(", requestTypeInterp=");
+		builder.append(requestTypeInterp);
 		builder.append(", roleType=");
 		builder.append(roleType);
 		builder.append(", blockingType=");
@@ -210,6 +211,12 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(blockingTimePeriod);
 		builder.append(", sourceType=");
 		builder.append(sourceType);
+		builder.append(", qty=");
+		builder.append(qty);
+		builder.append(", sourceTypeInterp=");
+		builder.append(sourceTypeInterp);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
 		builder.append(", singleImeiDetails=");
 		builder.append(singleImeiDetails);
 		builder.append(", imei=");

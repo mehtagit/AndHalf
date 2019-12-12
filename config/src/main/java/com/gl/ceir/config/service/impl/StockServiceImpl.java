@@ -178,6 +178,7 @@ public class StockServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			}else {
 				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 

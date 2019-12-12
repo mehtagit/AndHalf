@@ -15,7 +15,7 @@ public class FileStorageProperties {
 	private String immegreationUploadDir;
 	private String grievanceDownloadDir;
 	private String grievanceDownloadLink;
-	private String consignmentDownloadDir;
+	private String consignmentDownloadDir; 
 	private String consignmentDownloadLink;
 	private String stockDownloadDir;
 	private String stockDownloadLink;

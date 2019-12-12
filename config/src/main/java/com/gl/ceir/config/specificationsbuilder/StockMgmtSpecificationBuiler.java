@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.criteria.Expression;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,7 +13,9 @@ import org.springframework.data.jpa.domain.Specification;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.util.DbFunctions;
 
 public class StockMgmtSpecificationBuiler {
 
@@ -66,13 +70,25 @@ public class StockMgmtSpecificationBuiler {
 
 		for(SearchCriteria searchCriteria : params) {
 			specifications.add((root, query, cb)-> {
-				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation()))
+				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+						&& Datatype.DATE.equals(searchCriteria.getDatatype())) {
 					return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-
-				else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation()))
+				
+				}else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+						&& Datatype.DATE.equals(searchCriteria.getDatatype())) {
 					return cb.lessThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-
-				else
+					
+				}else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+					return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				
+				}else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+					return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+				
+				}else
 					return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 
 
@@ -89,7 +105,3 @@ public class StockMgmtSpecificationBuiler {
 		};
 	}
 }
-
-
-
-

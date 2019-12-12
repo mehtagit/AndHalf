@@ -212,23 +212,28 @@ public class StolenAndRecoveryServiceImpl {
 
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			logger.info(stateInterpList);
+
+			sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
+			logger.info(sourceTypes);
+
+			requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
+			logger.info(requestTypes);
 
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {
-				sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
-				requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
 
 				for(SystemConfigListDb configListDb : sourceTypes) {
 					if(stolenandRecoveryMgmt.getSourceType() == configListDb.getValue()) {
 						stolenandRecoveryMgmt.setSourceTypeInterp(configListDb.getInterp());
+						break;
 					}
-					break;
 				}
 
 				for(SystemConfigListDb configListDb : requestTypes) {
 					if(stolenandRecoveryMgmt.getRequestType() == configListDb.getValue()) {
 						stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp());
+						break;
 					}
-					break;
 				}
 
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
@@ -239,6 +244,7 @@ public class StolenAndRecoveryServiceImpl {
 				}
 			}
 
+			logger.info(stolenandRecoveryMgmtPage.getContent());
 			return stolenandRecoveryMgmtPage;
 
 		} catch (Exception e) {
@@ -317,12 +323,12 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse uploadMultipleStolen(List<StolenandRecoveryMgmt> stolenandRecoveryMgmt) {
 		try {
 
-			for(StolenandRecoveryMgmt  request:stolenandRecoveryMgmt) {
+			for(StolenandRecoveryMgmt  request : stolenandRecoveryMgmt) {
 
 				// Consignment = 0
 				// Stock = 1
 				if(request.getSourceType() == 0){
-					ConsignmentMgmt consignmentMgmt =	consignmentRepository.getByTxnId(request.getTxnId());
+					ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(request.getTxnId());
 
 					// Stolen = 0
 					if(request.getRequestType() == 0) {
@@ -334,7 +340,7 @@ public class StolenAndRecoveryServiceImpl {
 					consignmentRepository.save(consignmentMgmt);
 				}else if(request.getSourceType() == 1) {
 
-					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(),request.getTxnId());
+					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(), request.getTxnId());
 
 					if(request.getRequestType() == 0) {
 						stockMgmt.setStockStatus(StockStatus.STOLEN.getCode());
@@ -346,7 +352,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setState(0);
-				webActionDb.setFeature("" /* request.getRequestType() */ );				
+				webActionDb.setFeature(Integer.toString(request.getRequestType()));				
 				webActionDb.setSubFeature("Upload");
 				webActionDb.setData(request.getTxnId());
 
