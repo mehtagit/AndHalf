@@ -3,7 +3,7 @@ package org.gl.ceir.Class.HeadersTitle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
+import java.net.URLEncoder;
 @Component
 public class IconsState {
 	String className = "emptyClass";
@@ -45,9 +45,11 @@ public class IconsState {
 		// URL link 
 		String emptyURL="JavaScript:void(0);";
 		String x ="./dowloadFiles/actual/";
-		String downloadURL = x.concat(fileName.replace(" ", "&nbsp"))+"/"+txnId;
+		String downloadURL = x.concat(fileName)+"/"+txnId;
+		downloadURL=URLEncoder.encode(downloadURL);
 		log.info("downloadURL::::::::::::::"+downloadURL);
 		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId;	
+		errorURL=URLEncoder.encode(errorURL);
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
@@ -731,9 +733,9 @@ public String adminRegistrationRequest(String userId ,String status,String userS
 /********************************** Icons for DashBoard Notification **********************************/ 
 
 
-public String dashboardIcon(String userStatus) {
+public String dashboardIcon(String userStatus,Integer featureID) {
 	// URL link 
-	String viewAction="./Consignment/viewConsignment"; 
+	String viewAction = featureID == 3 ? "./Consignment/viewConsignment" : featureID ==4 ? "./assignDistributor": featureID ==5 ? "./stolenRecovery" : featureID == 6 ? "./grievanceManagement" : "JavaScript:void(0);";
 	
 	// state related Code 
 	String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="

@@ -14,7 +14,7 @@ public class StolenRecoveryModel {
 	private String  txnId;
 	private int userId;
 	private int sourceType;
-	
+	private Integer qty;
 	public String getBlockingTimePeriod() {
 		return blockingTimePeriod;
 	}
@@ -45,7 +45,6 @@ public class StolenRecoveryModel {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 	public int getRequestType() {
 		return requestType;
 	}
@@ -70,28 +69,24 @@ public class StolenRecoveryModel {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-
-	
-	
 	public int getSourceType() {
 		return sourceType;
 	}
 	public void setSourceType(int sourceType) {
 		this.sourceType = sourceType;
 	}
+	public Integer getQty() {
+		return qty;
+	}
+	public void setQty(Integer qty) {
+		this.qty = qty;
+	}
 	@Override
 	public String toString() {
 		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
 				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
 				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", userId=" + userId + ", sourceType="
-				+ sourceType + "]";
+				+ sourceType + ", qty=" + qty + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
-
 }

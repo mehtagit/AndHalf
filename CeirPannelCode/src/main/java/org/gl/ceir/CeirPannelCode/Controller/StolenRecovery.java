@@ -100,7 +100,7 @@ public class StolenRecovery {
 	  public @ResponseBody GenricResponse FileTypeStolen(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
-			  @RequestParam(name="userId",required = false) Integer userId)
+			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty)
 	  {	
 		  log.info(" file stolen entry point .");
 		 
@@ -138,6 +138,7 @@ public class StolenRecovery {
 			stolenRecoveryModel.setUserId(userId);
 			stolenRecoveryModel.setRoleType(roleType);
 			stolenRecoveryModel.setTxnId(stlnTxnNumber);
+			stolenRecoveryModel.setQty(qty);
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);
@@ -153,7 +154,7 @@ public class StolenRecovery {
 			  RequestMethod.POST}) 
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
-			  @RequestParam(name="userId",required = false) Integer userId)
+			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty)
 	  {	
 		  
 		  log.info(" file Recovery api entry point .");
@@ -190,6 +191,7 @@ public class StolenRecovery {
 			stolenRecoveryModel.setUserId(userId);
 			stolenRecoveryModel.setRoleType(roleType);
 			stolenRecoveryModel.setTxnId(stlnTxnNumber);
+			stolenRecoveryModel.setQty(qty);
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
 			log.info("request sent to file Recovery api ="+response);

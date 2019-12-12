@@ -465,6 +465,7 @@ function fileStolenReport(){
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var blockType=$('input[name=stolenBlockPeriod]:checked').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
+	var qty = $('#stolenQuantity').val();
 	console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType+"  blockType=="+blockType);
 	var formData= new FormData();
 
@@ -475,8 +476,7 @@ function fileStolenReport(){
 	formData.append('roleType',role);
 	formData.append('sourceType',sourceType);
 	formData.append('userId',userId);
-
-
+	formData.append('qty',qty);
 	console.log(JSON.stringify(formData));
 	console.log("*********");
 
@@ -523,7 +523,7 @@ function fileRecoveryReport(){
 	var sourceType='2';
 	var requestType='1';
 	var role = currentRoleType == null ? roleType : currentRoleType;
-
+	var qty = $('#recoverQuantity').val();
 	var blockType=$('input[name=stolenBlockPeriod]:checked').val();
 	console.log("roleType=="+roleType+" userId="+userId+" currentRoleType =="+currentRoleType);
 
@@ -534,7 +534,7 @@ function fileRecoveryReport(){
 	formData.append('roleType',role);
 	formData.append('sourceType',sourceType);
 	formData.append('userId',userId);
-
+	formData.append('qty',qty);
 	console.log(JSON.stringify(formData));
 	console.log("*********");
 	$.ajax({
@@ -670,7 +670,6 @@ function updatefileStolenReport(){
 	formData.append('roleType',role);
 	formData.append('sourceType',sourceType);
 	formData.append('userId',userId);
-
 	console.log(JSON.stringify(formData));
 	console.log("*********");
 

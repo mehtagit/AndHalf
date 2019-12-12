@@ -70,17 +70,17 @@
                                         <p class="PageHeading">Report Grievance</p>
                                     </div>
 
-                                    <form id="ForeignerFormId">
+                                    <form  onsubmit="return saveGrievance()" method="POST" enctype="multipart/form-data"  id="saveGrievance">
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="TransactionId"
+                                                <input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
                                                     class="form-control boxBorder boxHeight"/>
                                                     <label for="TransactionId">Transaction ID</label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
                                                 <!-- <label for="Category">Category</label> -->
-                                                <select class="browser-default" id="category">
+                                                <select class="browser-default" id="category" required="required">
                                                 <!--<option value="" disabled selected>Category *</option>
                                                     <option value="1">Report Related</option>
                                                     <option value="2">Device Stolen Related</option>
@@ -93,7 +93,7 @@
 
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="input-field col s12 m6 l6">
-                                                <textarea id="Remark" class="materialize-textarea"></textarea>
+                                                <textarea id="Remark" class="materialize-textarea" required="required"></textarea>
                                                 <label for="Remark">Remark <span class="star">*</span></label>
                                             </div>
                                         </div>
@@ -103,7 +103,7 @@
                                             <div class="file-field col s12 m6">
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input id="myInput" type="file" accept=".csv"  multiple>
+                                                    <input id="myInput" type="file" accept=".csv" required="required" multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate" type="text" multiple
@@ -122,8 +122,8 @@
 			
                 </div>
                                         <div class="center" style="margin-top: 50px;">
-                                            <button class="waves-effect waves-light modal-trigger btn"
-                                                 type="button" onclick="saveGrievance()">Submit</button>
+                                            <button class="btn"
+                                                 type="submit" >Submit</button>
                                             <a href="./grievanceManagement" class="btn" id="Cancel"
                                                 style="margin-left: 10px;">Cancel</a>
                                         </div>

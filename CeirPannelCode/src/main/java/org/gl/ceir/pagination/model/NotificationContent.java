@@ -15,8 +15,10 @@ public class NotificationContent {
 	private String message;
 	private Integer userId;
 	private Integer featureId;
+	private String featureTxnId;
 	private String featureName;
 	private String subFeature;
+	private Integer status;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -60,6 +62,12 @@ public class NotificationContent {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+	public String getFeatureTxnId() {
+		return featureTxnId;
+	}
+	public void setFeatureTxnId(String featureTxnId) {
+		this.featureTxnId = featureTxnId;
+	}
 	public String getFeatureName() {
 		return featureName;
 	}
@@ -72,6 +80,12 @@ public class NotificationContent {
 	public void setSubFeature(String subFeature) {
 		this.subFeature = subFeature;
 	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -82,8 +96,8 @@ public class NotificationContent {
 	public String toString() {
 		return "NotificationContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
 				+ ", channelType=" + channelType + ", message=" + message + ", userId=" + userId + ", featureId="
-				+ featureId + ", featureName=" + featureName + ", subFeature=" + subFeature + "]";
+				+ featureId + ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature="
+				+ subFeature + ", status=" + status + ", additionalProperties=" + additionalProperties + "]";
 	}
-	
 	
 }
