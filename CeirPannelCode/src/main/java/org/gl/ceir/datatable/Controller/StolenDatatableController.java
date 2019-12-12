@@ -88,11 +88,12 @@ public class StolenDatatableController {
 						// for future purpose statusOfStolen
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceType();
+						String source =dataInsideList.getSourceTypeInterp();
 						log.info("source type message="+source);
-						String requestType = dataInsideList.getRequestType();
+						String requestType = dataInsideList.getRequestType(); 
+						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
-						String[] finalData = {checboxes,createdOn,txnId,fileName, stolenStatusName,source, requestType};
+						String[] finalData = {checboxes,createdOn,txnId,fileName, stolenStatusName,source, requestTypeName};
 						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);

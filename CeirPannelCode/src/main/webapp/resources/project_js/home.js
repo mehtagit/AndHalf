@@ -4,6 +4,7 @@ var userId = $("body").attr("data-userID");
 var featureId="3";
 var requestType="0";
 $(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
 	var url;
 	$.ajax({
 		url: './dashboard/box?userTypeId='+userTypeId,
@@ -13,8 +14,9 @@ $(document).ready(function(){
 				var id=data[i].name;
 				/*var finalID=id.replace (/\//g, "");*/
 				url= data[i].url.split("?"); 
-				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].featureId+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].view+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
-				var finalID = data[i].featureId;
+				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].view+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+				var finalID = data[i].id;
+				var outParam = data[i].outParam;
 				if(userTypeId == 8){
 					userId = -1;
 				}
@@ -23,40 +25,10 @@ $(document).ready(function(){
 					'async': false,
 					type: 'GET',
 					success: function(data){
-						$('#'+finalID+'count').text(data.count);	
+						outParam == 'count' ? $('#'+finalID+'count').text(data.count) : $('#'+finalID+'count').text(data.quantity);	
 					}
 				});
 			}
-
-
-
-			/*
-			$.ajax({
-				url: './getStockCountAndQuantity?featureId='+featureId+'&userId='+userId+'&userTypeId='+userTypeId,
-				type: 'GET',
-				success: function(data){
-					$('#Stockcount').text(data.count);	
-				}
-			});
-
-
-			$.ajax({
-				url: './getStolen_RecoveryCountAndQuantity?requestType='+requestType+'&featureId='+featureId+'&userId='+userId+'&userTypeId='+userTypeId,
-				type: 'GET',
-				success: function(data){
-					$('#StolenRecoverycount').text(data.count);	
-				}
-			});
-
-
-
-			$.ajax({
-				url: './getGrievanceNotificationCountAndQuantity?featureId='+featureId+'&userId='+userId+'&userTypeId='+userTypeId,
-				type: 'GET',
-				success: function(data){
-					$('#Grievancecount').text(data.count);	
-				}
-			});*/
 		}
 	});
 	notificationDatatable();
@@ -72,7 +44,7 @@ localStorage.setItem("grievancePageSource", "viaDashBoard");
 //**************************************************Notification Data table**********************************************
 
 function notificationDatatable(){
-	
+
 	var filterRequest = {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
@@ -105,6 +77,7 @@ function notificationDatatable(){
 				},
 				"columns": result
 			});
+			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");

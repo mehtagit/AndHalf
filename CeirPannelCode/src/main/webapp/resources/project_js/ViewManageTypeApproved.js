@@ -139,7 +139,37 @@ function pageRendering(){
 };
 
 
+function viewDevicesDetails(){
+	$("#viewModal").openModal();
+	
+	$.ajax({
+		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId, //controller haven'nt made yet for this url. this is dummy url.
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'GET',
+		success : function(data) {
+			setViewPopupData(data);
+			console.log(data);
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+	
+}
 
+function setViewPopupData(data){
+	$("#manufacturerId").val();
+	$("#manufacturerName").val();
+	$("#Country").val();
+	$("#deviceType").val();
+	$("#deviceTypeID").val();
+	$("#dateRequested").val();
+	$("#tac").val();
+	$("#Status").val();
+	$("#bdate2").val();
+	$("#Remark").val();
+}
 
 
 

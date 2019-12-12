@@ -385,7 +385,7 @@ String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hid
 String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 		+rejectIconTitle+" ></i></a>";
 
-if("5".equals(status) || "7".equals(status) || "8".equals(status) && "Approved".equals(userStatus) ) {
+if("6".equals(status) || "7".equals(status) || "9".equals(status) && "Approved".equals(userStatus) ) {
 	approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 			+approveIconTitle+" ></i></a>";
 	 reject = "<a onclick="+rejectAction+" class="+disableIconClass+"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
@@ -393,6 +393,7 @@ if("5".equals(status) || "7".equals(status) || "8".equals(status) && "Approved".
 		
 	
  }
+
 else if("Disable".equals(userStatus)) {
 	 log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 	 approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
@@ -751,7 +752,7 @@ public String dashboardIcon(String userStatus,Integer featureID) {
 public String trcManageIcons(String userStatus) {	
 	// URL link 
 	String downloadURL = "JavaScript:void(0)";
-	String viewAction="JavaScript:void(0)";
+	String viewAction="viewDevicesDetails()";
 	String editAction= "JavaScript:void(0)";
 	// state related Code 
 	String download="<a href="+downloadURL+" download=\"download\"><i class="

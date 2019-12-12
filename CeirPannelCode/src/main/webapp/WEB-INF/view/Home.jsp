@@ -38,6 +38,12 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+	
+	
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+ 
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <style type="text/css">
   .dataTables_info {
         display: none;
@@ -62,6 +68,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 	
 	 <section id="content">
                 <!--start container-->
+                <div id="initialloader"></div>
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel">

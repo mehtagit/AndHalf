@@ -180,7 +180,7 @@ opacity: 0;
                                             <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input type="file" id="file" accept=".csv">
+                                                    <input type="file" id="file" size=50 maxlength=50 accept=".csv">
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate responsive-file-div" type="text">

@@ -260,7 +260,7 @@ function Datatable(url,dataUrl) {
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			var table=	$("#stockTable").DataTable({
+			var table=	$("#stockTable").removeAttr('width').DataTable({
 				bAutoWidth: false,
 				destroy:true,
 				"serverSide": true,
@@ -270,6 +270,7 @@ function Datatable(url,dataUrl) {
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				scrollCollapse: true,	
 				ajax: {
 					type: 'POST',
 					url: dataUrl, 
@@ -278,7 +279,11 @@ function Datatable(url,dataUrl) {
 					}
 				},
 				"columns": result,
-				"columnDefs": [{ "width": "220px", "targets":result.length - 1 }]
+				fixedColumns: true,
+				columnDefs: [
+		            { width: 240, targets: result.length - 1 }
+		        ]
+		
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
 		}

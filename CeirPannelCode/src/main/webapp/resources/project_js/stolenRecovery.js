@@ -327,6 +327,7 @@ function Datatable(url,dataUrl){
 		dataType: "json",
 		success: function(result){
 			var table=	$("#stolenLibraryTable").DataTable({
+				bAutoWidth: false,
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
@@ -335,6 +336,7 @@ function Datatable(url,dataUrl){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				scrollCollapse: true,	
 				ajax: {
 					url: dataUrl,
 					type: 'POST',
@@ -343,7 +345,11 @@ function Datatable(url,dataUrl){
 						console.log(JSON.stringify(filterRequest));
 					}
 				},
-				"columns": result
+				"columns": result,
+				fixedColumns: true,
+				columnDefs: [
+		            { width: 240, targets: result.length - 1 }
+		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
 		}

@@ -65,7 +65,7 @@ public class DatatableHeaders {
 
 			//consignments from stolen headers
 			else if("stolenconsignment".equals(role)) {
-				String[] headers = {HeadersTitle.blankHeader,HeadersTitle.creationDate,HeadersTitle.transactionID,HeadersTitle.supplierName,HeadersTitle.consignmentStatus,HeadersTitle.taxPaidStatus};		
+				String[] headers = {HeadersTitle.blankHeader,HeadersTitle.requestDate,HeadersTitle.transactionID,HeadersTitle.supplierName,HeadersTitle.consignmentStatus,HeadersTitle.taxPaidStatus};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -74,7 +74,7 @@ public class DatatableHeaders {
 
 			//stock headers
 			else if("stockcheckHeaders".equals(role)) {
-				String[] headers = {HeadersTitle.blankHeader,HeadersTitle.creationDate,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus};		
+				String[] headers = {HeadersTitle.blankHeader,HeadersTitle.requestDate,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -84,7 +84,7 @@ public class DatatableHeaders {
 
 			//stolen headers
 			else if("stolenCheckHeaders".equals(role)) {
-				String[] headers = {HeadersTitle.blankHeader,HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType};		
+				String[] headers = {HeadersTitle.blankHeader,HeadersTitle.requestDate,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.Status,HeadersTitle.source,HeadersTitle.requestType};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
