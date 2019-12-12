@@ -1,8 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,status,asType;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -44,18 +44,6 @@ public class FilterRequest {
 	}
 	public void setGrievanceId(String grievanceId) {
 		this.grievanceId = grievanceId;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getAsType() {
-		return asType;
-	}
-	public void setAsType(String asType) {
-		this.asType = asType;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -117,18 +105,26 @@ public class FilterRequest {
 	public void setUserRoleTypeId(Integer userRoleTypeId) {
 		this.userRoleTypeId = userRoleTypeId;
 	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public Integer getAsType() {
+		return asType;
+	}
+	public void setAsType(Integer asType) {
+		this.asType = asType;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
 				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
-				+ grievanceId + ", status=" + status + ", asType=" + asType + ", userId=" + userId + ", taxPaidStatus="
-				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
-				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
-				+ ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId="
-				+ userRoleTypeId + "]";
+				+ grievanceId + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus="
+				+ consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus="
+				+ fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus="
+				+ grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType
+				+ "]";
 	}
-	
-	
-
-		
 }

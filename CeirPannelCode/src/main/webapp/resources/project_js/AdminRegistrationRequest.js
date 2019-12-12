@@ -1,16 +1,16 @@
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var featureId = 8;
+var roleType = $("body").attr("data-roleType");
+var userId = $("body").attr("data-userID");
+var currentRoleType = $("body").attr("data-selected-roleType"); 
+var startdate=$('#startDate').val(); 
+var endDate=$('#endDate').val();
+
 $(document).ready(function(){
 	registrationDatatable();
 	pageRendering();
 	
 });
-
-
-var roleType = $("body").attr("data-roleType");
-var userId = $("body").attr("data-userID");
-var currentRoleType = $("body").attr("data-selected-roleType"); 
-
 
 var role = currentRoleType == null ? roleType : currentRoleType;
 
@@ -23,9 +23,11 @@ function registrationDatatable(){
 	var status =  $('#recentStatus').val();
 	
 	var filterRequest={
-			"asType": asType,
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
+			"asType": parseInt(asType),
 			"userRoleTypeId" : parseInt(userRoleTypeId),
-			"status" : status,
+			"status" : parseInt(status),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
