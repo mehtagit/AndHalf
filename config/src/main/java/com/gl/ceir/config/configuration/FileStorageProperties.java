@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "file")
 public class FileStorageProperties {
+	
 	private String uploadDir;
 	private String tacUploadDir;
 	private String stokeUploadDir;
@@ -14,6 +15,12 @@ public class FileStorageProperties {
 	private String immegreationUploadDir;
 	private String grievanceDownloadDir;
 	private String grievanceDownloadLink;
+	private String consignmentDownloadDir;
+	private String consignmentDownloadLink;
+	private String stockDownloadDir;
+	private String stockDownloadLink;
+	private String stolenAndRecoveryDownloadDir;
+	private String stolenAndRecoveryDownloadLink;
 
 	public String getGrievanceDownloadLink() {
 		return grievanceDownloadLink;
@@ -79,5 +86,54 @@ public class FileStorageProperties {
 	public void setGrievanceDownloadDir(String grievanceDownloadDir) {
 		this.grievanceDownloadDir = grievanceDownloadDir;
 	}
+
+	public String getConsignmentDownloadDir() {
+		return consignmentDownloadDir;
+	}
+
+	public void setConsignmentDownloadDir(String consignmentDownloadDir) {
+		this.consignmentDownloadDir = consignmentDownloadDir;
+	}
+
+	public String getConsignmentDownloadLink() {
+		return consignmentDownloadLink;
+	}
+
+	public void setConsignmentDownloadLink(String consignmentDownloadLink) {
+		this.consignmentDownloadLink = consignmentDownloadLink;
+	}
+
+	public String getStockDownloadDir() {
+		return stockDownloadDir;
+	}
+
+	public void setStockDownloadDir(String stockDownloadDir) {
+		this.stockDownloadDir = stockDownloadDir;
+	}
+
+	public String getStockDownloadLink() {
+		return stockDownloadLink;
+	}
+
+	public void setStockDownloadLink(String stockDownloadLink) {
+		this.stockDownloadLink = stockDownloadLink;
+	}
+
+	public String getStolenAndRecoveryDownloadDir() {
+		return stolenAndRecoveryDownloadDir;
+	}
+
+	public void setStolenAndRecoveryDownloadDir(String stolenAndRecoveryDownloadDir) {
+		this.stolenAndRecoveryDownloadDir = stolenAndRecoveryDownloadDir;
+	}
+
+	public String getStolenAndRecoveryDownloadLink() {
+		return stolenAndRecoveryDownloadLink;
+	}
+
+	public void setStolenAndRecoveryDownloadLink(String stolenAndRecoveryDownloadLink) {
+		this.stolenAndRecoveryDownloadLink = stolenAndRecoveryDownloadLink;
+	}
+
 	
 }

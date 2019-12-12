@@ -1,5 +1,11 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,9 +28,9 @@ import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -42,6 +48,7 @@ import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
+import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
@@ -50,6 +57,9 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.ConsignmentMgmtSpecificationBuilder;
 import com.gl.ceir.config.util.Utility;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class ConsignmentServiceImpl {
@@ -440,6 +450,78 @@ public class ConsignmentServiceImpl {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	public FileDetails getFilteredConsignmentInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+		String fileName = null;
+		Writer writer   = null;
+		ConsignmentFileModel cfm = null;
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		
+		String filePath  = fileStorageProperties.getConsignmentDownloadDir();
+		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
+		StatefulBeanToCsv<ConsignmentFileModel> csvWriter = null;
+		List< ConsignmentFileModel > fileRecords = null;
+
+		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
+		try {
+			List<ConsignmentMgmt> consignmentMgmts = getFilterPaginationConsignments(filterRequest, pageNo, pageSize).getContent();
+			if( !consignmentMgmts.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + consignmentMgmts.get(0).getUser().getUsername()+"_Consignments.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignments.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignments.csv";
+			}
+			
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<ConsignmentFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			
+			if( !consignmentMgmts.isEmpty() ) {
+				
+				List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
+				fileRecords = new ArrayList<>(); 
+				
+				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
+					cfm = new ConsignmentFileModel();
+					
+					cfm.setConsignmentId( consignmentMgmt.getId() );
+					cfm.setConsignmentStatus( consignmentMgmt.getStateInterp());
+					
+					for( SystemConfigListDb config : customTagStatusList ) {
+						
+						if( config.getValue() == consignmentMgmt.getTaxPaidStatus() ) {
+							cfm.setTaxPaidStatus(config.getInterp());
+						}
+					}
+					
+					cfm.setTxnId( consignmentMgmt.getTxnId());
+					cfm.setCreatedOn(consignmentMgmt.getCreatedOn().format(dtf));
+					cfm.setModifiedOn( consignmentMgmt.getModifiedOn().format(dtf));
+					cfm.setFileName( consignmentMgmt.getFileName());
+					
+					logger.debug(cfm);
+					
+					fileRecords.add(cfm);
+				}
+				
+				csvWriter.write(fileRecords);
+			}
+			return new FileDetails( fileName, filePath, fileStorageProperties.getConsignmentDownloadLink() + fileName ); 
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( Objects.nonNull(writer) )
+				writer.close();
+			} catch (IOException e) {}
 		}
 	}
 

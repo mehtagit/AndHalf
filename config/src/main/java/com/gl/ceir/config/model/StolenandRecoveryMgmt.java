@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -38,10 +38,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date createdOn;
+	private LocalDateTime createdOn;
 	
 	@UpdateTimestamp
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 	
 	private Integer requestType;
 	
@@ -100,10 +100,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 	public Integer getRequestType() {
@@ -130,10 +130,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setBlockingTimePeriod(String blockingTimePeriod) {
 		this.blockingTimePeriod = blockingTimePeriod;
 	}
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 	public Integer getSourceType() {
