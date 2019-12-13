@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class GrievanceMsgHistory {
 	@Id
@@ -34,10 +36,12 @@ public class GrievanceMsgHistory {
 	private String fileName;
 	
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
 
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 	
 	@Column(length = 2000,columnDefinition="Text")

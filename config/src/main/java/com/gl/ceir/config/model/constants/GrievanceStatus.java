@@ -15,7 +15,7 @@ public enum GrievanceStatus {
 
 	public static GrievanceStatus getActionNames(int code) {
 		for (GrievanceStatus codes : GrievanceStatus.values()) {
-			if (codes.equals(code))
+			if (codes.code == code )
 				return codes;
 		}
 

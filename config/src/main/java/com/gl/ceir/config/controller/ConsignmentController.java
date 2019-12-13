@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
-import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.service.impl.ConsignmentServiceImpl;
 import com.gl.ceir.config.service.impl.StackholderPolicyMappingServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
@@ -69,7 +68,7 @@ public class ConsignmentController {
 
 		GenricResponse genricResponse =	consignmentServiceImpl.updateConsignment(consignmentUploadRequest);
 		logger.info("Update Consignment Response ="+genricResponse);
-		
+
 		return genricResponse;
 
 	}
@@ -106,13 +105,21 @@ public class ConsignmentController {
 	@PostMapping("v2/filter/consignment")
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
-		logger.info("Request TO view filtered consignment = " + filterRequest);
+		MappingJacksonValue mapping = null;
+		if(file == 0) {
+			logger.info("Request to view filtered consignment = " + filterRequest);
+			Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(consignment);
+		}else {
+			logger.info("Request to export filtered consignment = " + filterRequest);
+			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFile(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(fileDetails);
+		}
 
-		Page<ConsignmentMgmt> consignment =  consignmentServiceImpl.getFilterPaginationConsignments(filterRequest, pageNo, pageSize);
-		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
-		logger.info("Response of view Request ="+mapping);
+		logger.info("Response of view Request = " + mapping);
 
 		return mapping;
 	}
@@ -122,11 +129,11 @@ public class ConsignmentController {
 	public MappingJacksonValue getByTxnId(@RequestParam("txnId") String txnId) {
 
 		logger.info("View Request only Single Record="+txnId);
-		
+
 		ConsignmentMgmt consignmentRecordInfo = consignmentServiceImpl.getRecordInfo(txnId);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignmentRecordInfo);
 		logger.info("Response of View ="+mapping);
-		
+
 		return mapping;
 	}
 
@@ -166,7 +173,7 @@ public class ConsignmentController {
 			@RequestParam(value = "userType", required = false) String userType) {
 
 		logger.info("Consignment Withdraw Request ="+consignmentUploadRequest);
-		
+
 		GenricResponse genricResponse =	consignmentServiceImpl.deleteConsigmentInfo(consignmentUploadRequest, userType);
 		logger.info("Response of Delete Request="+genricResponse);
 
@@ -187,10 +194,10 @@ public class ConsignmentController {
 	}
 
 
-	@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.POST)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantity request ) {
 		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(request);
 		return new MappingJacksonValue(response);
-	}
+	}*/
 }

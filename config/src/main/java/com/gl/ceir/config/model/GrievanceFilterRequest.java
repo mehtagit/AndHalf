@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 
 public class GrievanceFilterRequest {
 	public Integer userId;
-	public LocalDateTime startDate;
-	public LocalDateTime endDate;
+	public String startDate;
+	public String endDate;
 	public String txnId;
 	public String grievanceId;
 	private int grievanceStatus;
+	private String searchString;
 	
 	public String getTxnId() {
 		return txnId;
@@ -22,16 +23,16 @@ public class GrievanceFilterRequest {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public LocalDateTime getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	public LocalDateTime getEndDate() {
+	public String getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
 	public String getGrievanceId() {
@@ -45,6 +46,12 @@ public class GrievanceFilterRequest {
 	}
 	public void setGrievanceStatus(int grievanceStatus) {
 		this.grievanceStatus = grievanceStatus;
+	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
 	}
 	@Override
 	public String toString() {
@@ -61,6 +68,8 @@ public class GrievanceFilterRequest {
 		builder.append(grievanceId);
 		builder.append(", grievanceStatus=");
 		builder.append(grievanceStatus);
+		builder.append(", searchString=");
+		builder.append(searchString);
 		builder.append("]");
 		return builder.toString();
 	}

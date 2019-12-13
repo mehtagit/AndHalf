@@ -1,5 +1,12 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -20,9 +27,9 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -38,6 +45,7 @@ import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
+import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
@@ -45,6 +53,9 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class StockServiceImpl {
@@ -80,6 +91,9 @@ public class StockServiceImpl {
 
 	@Autowired	
 	EmailUtil emailUtil;
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
 
 	public GenricResponse uploadStock(StockMgmt stackholderRequest) {
 
@@ -164,6 +178,7 @@ public class StockServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			}else {
 				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
@@ -285,17 +300,90 @@ public class StockServiceImpl {
 			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
+	
+	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+		String fileName = null;
+		Writer writer   = null;
+		StockFileModel sfm = null;
+		
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String filePath  = fileStorageProperties.getStockDownloadDir();
+		
+		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
+		StatefulBeanToCsv<StockFileModel> csvWriter = null;
+		List< StockFileModel > fileRecords = null;
 
-	public ResponseCountAndQuantity getStockCountAndQuantity( RequestCountAndQuantityWithLongUserId request ) {
+		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
+		try {
+			List<StockMgmt> stockMgmts = getAllFilteredData(filterRequest, pageNo, pageSize).getContent();
+			
+			if( !stockMgmts.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + stockMgmts.get(0).getUser().getUsername()+"_Stocks.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
+			}
+			
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			
+			if( !stockMgmts.isEmpty() ) {
+				
+				fileRecords = new ArrayList<>();
+				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
+				
+				for( StockMgmt stockMgmt : stockMgmts ) {
+					sfm = new StockFileModel();
+					
+					sfm.setStockId(stockMgmt.getId());
+					sfm.setStockStatus(stockMgmt.getStateInterp());
+					sfm.setTxnId( stockMgmt.getTxnId());
+					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
+					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
+					sfm.setFileName( stockMgmt.getFileName());
+					
+					logger.debug(sfm);
+					
+					fileRecords.add(sfm);
+				}
+				
+				csvWriter.write(fileRecords);
+			}
+			return new FileDetails( fileName, filePath, fileStorageProperties.getStockDownloadLink() + fileName ); 
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( Objects.nonNull(writer) )
+				writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
+	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId ) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get  stock count and quantity.");
-			return stockManagementRepository.getStockCountAndQuantity(request.getUserId(), request.getStatus());
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					status.add(stateDb.getState());
+				}
+			}
+			return stockManagementRepository.getStockCountAndQuantity( userId, status );
 		} catch (Exception e) {
 			//logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
-
 	}
 
 	@Transactional

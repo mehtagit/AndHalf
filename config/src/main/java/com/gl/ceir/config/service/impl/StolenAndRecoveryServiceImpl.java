@@ -1,5 +1,12 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -19,9 +26,9 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SingleImeiDetails;
@@ -40,6 +47,7 @@ import com.gl.ceir.config.model.constants.StolenStatus;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
+import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
 import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
@@ -48,6 +56,9 @@ import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.StolenAndRecoverySpecificationBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class StolenAndRecoveryServiceImpl {
@@ -62,7 +73,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
-	
+
 	@Autowired
 	PropertiesReader propertiesReader;
 
@@ -83,7 +94,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
-	
+
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
 
@@ -145,15 +156,15 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
-		
+
 		List<SystemConfigListDb> sourceTypes = null;
 		List<SystemConfigListDb> requestTypes = null;
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
-		
+
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			
+
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
 			StolenAndRecoverySpecificationBuilder srsb = new StolenAndRecoverySpecificationBuilder(propertiesReader.dialect);
@@ -198,28 +209,33 @@ public class StolenAndRecoveryServiceImpl {
 					}
 				}
 			}
-			
+
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			
+			logger.info(stateInterpList);
+
+			sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
+			logger.info(sourceTypes);
+
+			requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
+			logger.info(requestTypes);
+
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {
-				sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
-				requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
-				
+
 				for(SystemConfigListDb configListDb : sourceTypes) {
 					if(stolenandRecoveryMgmt.getSourceType() == configListDb.getValue()) {
 						stolenandRecoveryMgmt.setSourceTypeInterp(configListDb.getInterp());
+						break;
 					}
-					break;
 				}
-				
+
 				for(SystemConfigListDb configListDb : requestTypes) {
 					if(stolenandRecoveryMgmt.getRequestType() == configListDb.getValue()) {
 						stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp());
+						break;
 					}
-					break;
 				}
-				
+
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
 						stolenandRecoveryMgmt.setStateInterp(stateMgmtDb.getInterp()); 
@@ -227,7 +243,8 @@ public class StolenAndRecoveryServiceImpl {
 					}
 				}
 			}
-			
+
+			logger.info(stolenandRecoveryMgmtPage.getContent());
 			return stolenandRecoveryMgmtPage;
 
 		} catch (Exception e) {
@@ -237,29 +254,94 @@ public class StolenAndRecoveryServiceImpl {
 		}	
 	}
 
+	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+		String fileName = null;
+		Writer writer   = null;
+		StolenAndRecoveryFileModel srfm = null;
+
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String filePath  = fileStorageProperties.getStolenAndRecoveryDownloadDir();
+
+		StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel> builder = null;
+		StatefulBeanToCsv<StolenAndRecoveryFileModel> csvWriter = null;
+		List< StolenAndRecoveryFileModel > fileRecords = null;
+
+		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
+		try {
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAllInfo(filterRequest, pageNo, pageSize).getContent();
+
+			if( !stolenandRecoveryMgmts.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
+			}
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+
+			if( !stolenandRecoveryMgmts.isEmpty() ) {
+
+				fileRecords = new ArrayList<>();
+				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
+
+				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
+					srfm = new StolenAndRecoveryFileModel();
+
+					srfm.setStolenId(stolenandRecoveryMgmt.getId());
+					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
+					srfm.setTxnId( stolenandRecoveryMgmt.getTxnId());
+					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
+					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
+					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
+
+					logger.debug(srfm);
+
+					fileRecords.add(srfm);
+				}
+
+				csvWriter.write(fileRecords);
+			}
+			return new FileDetails( fileName, filePath, fileStorageProperties.getStolenAndRecoveryDownloadLink() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
 	@Transactional
 	public GenricResponse uploadMultipleStolen(List<StolenandRecoveryMgmt> stolenandRecoveryMgmt) {
 		try {
 
-			for(StolenandRecoveryMgmt  request:stolenandRecoveryMgmt) {
+			for(StolenandRecoveryMgmt  request : stolenandRecoveryMgmt) {
 
 				// Consignment = 0
 				// Stock = 1
 				if(request.getSourceType() == 0){
-					ConsignmentMgmt consignmentMgmt =	consignmentRepository.getByTxnId(request.getTxnId());
-					
+					ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(request.getTxnId());
+
 					// Stolen = 0
 					if(request.getRequestType() == 0) {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.STOLEN.getCode());
 					}else {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.RECOVERY.getCode());
 					}
-					
+
 					consignmentRepository.save(consignmentMgmt);
 				}else if(request.getSourceType() == 1) {
 
-					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(),request.getTxnId());
-					
+					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(), request.getTxnId());
+
 					if(request.getRequestType() == 0) {
 						stockMgmt.setStockStatus(StockStatus.STOLEN.getCode());
 					}else {
@@ -270,7 +352,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setState(0);
-				webActionDb.setFeature("" /* request.getRequestType() */ );				
+				webActionDb.setFeature(Integer.toString(request.getRequestType()));				
 				webActionDb.setSubFeature("Upload");
 				webActionDb.setData(request.getTxnId());
 
@@ -309,7 +391,7 @@ public class StolenAndRecoveryServiceImpl {
 				historyMgmt.setTxnId(stolenandRecoveryMgmtInfo.getTxnId());
 				historyMgmt.setUserId(stolenandRecoveryMgmtInfo.getUserId());
 				historyMgmt.setSourceType(stolenandRecoveryMgmtInfo.getSourceType());
-				
+
 				// 4 = Single
 				if (stolenandRecoveryMgmt.getSourceType() == 4){
 
@@ -363,7 +445,7 @@ public class StolenAndRecoveryServiceImpl {
 					stolenandRecoveryMgmtInfo.setBlockingTimePeriod(stolenandRecoveryMgmt.getBlockingTimePeriod());
 					stolenandRecoveryMgmtInfo.setBlockingType(stolenandRecoveryMgmt.getBlockingType());
 				}
-				
+
 				stolenandRecoveryMgmtInfo.setFileName(stolenandRecoveryMgmt.getFileName());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
@@ -389,14 +471,22 @@ public class StolenAndRecoveryServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStolenAndRecoveryCount( RequestCountAndQuantityWithLongUserId request, String requestType) {
+	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType) {
+		List<StateMgmtDb> featureList = null;
+		List<Integer> status = new ArrayList<Integer>();
 		try {
 			logger.info("Going to get StolenAndRecovery count.");
-			return stolenAndRecoveryRepository.getStolenandRecoveryCount( request.getUserId(), request.getStatus(), requestType);
+			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
+			if(Objects.nonNull(featureList)) {	
+				for(StateMgmtDb stateDb : featureList ) {
+					status.add(stateDb.getState());
+				}
+			}
+			return stolenAndRecoveryRepository.getStolenandRecoveryCount( userId, status, requestType);
 		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			//logger.error(e.getMessage(), e);
+			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			return new ResponseCountAndQuantity(0,0);
 		}
 	}
-
 }

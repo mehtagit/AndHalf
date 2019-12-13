@@ -96,7 +96,7 @@ public class GrievanceController {
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 		MappingJacksonValue mapping = null;
-		logger.info("Request to view filtered grievance = " + filterRequest);
+		logger.info("Request to view filtered grievance = " + filterRequest+", pageNo:["+pageNo+"], pageSize:["+pageSize+"] and file:["+file+"]");
 		if( file == 0) {
 			Page<Grievance>  grievance =  grievanceServiceImpl.getFilterPaginationGrievances(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(grievance);
@@ -142,11 +142,11 @@ public class GrievanceController {
 		return mapping;
 	}
 	
-	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/grievance/count", method = RequestMethod.POST)
 	public MappingJacksonValue getgrievanceCount(@RequestBody RequestCountAndQuantity request ) {
 		ResponseCountAndQuantity response = grievanceServiceImpl.getGrievanceCount(request);
 		return new MappingJacksonValue(response);
-	}
+	}*/
 	
 }

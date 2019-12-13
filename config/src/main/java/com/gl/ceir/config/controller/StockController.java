@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RequestCountAndQuantityWithLongUserId;
-import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.service.impl.StockServiceImpl;
 
@@ -75,14 +74,22 @@ public class StockController {
 	@RequestMapping(path = "/stock/record", method = RequestMethod.POST)
 	public MappingJacksonValue findAllFilteredData(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
-		logger.info("Stock View filter Details Request= " + filterRequest);
+		MappingJacksonValue mapping = null;
 
-		Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize);
+		if(file == 0) {
+			logger.info("Stock View filter Details Request= " + filterRequest);
+			Page<StockMgmt> response = stackholderServiceImpl.getAllFilteredData(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(response);
+		}else {
+			logger.info("Request to export filtered Stocks = " + filterRequest);
+			FileDetails fileDetails = stackholderServiceImpl.getFilteredStockInFile(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(fileDetails);
+		}
 		
-		MappingJacksonValue mapping = new MappingJacksonValue(response);
-		logger.info("Response Filtered Record Details="+mapping);
+		logger.info("Response Filtered Record Details = " + mapping);
 
 		return mapping;
 
@@ -116,13 +123,13 @@ public class StockController {
 
 	}
 
-	@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
+	/*@ApiOperation(value = "Get total count and quantity.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/stock/countAndQuantity", method = RequestMethod.POST)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestBody RequestCountAndQuantityWithLongUserId request ) {
 		ResponseCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity( request );
 		return new MappingJacksonValue(response);
-	}
-	
+	}*/
+
 	@ApiOperation(value = "Accept Reject Stock.", response = GenricResponse.class)
 	@RequestMapping(path = "accept-reject/stock", method = RequestMethod.PUT)
 	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest acceptRejectRequest) {
