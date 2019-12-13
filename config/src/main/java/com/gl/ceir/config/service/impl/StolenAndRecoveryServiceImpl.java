@@ -332,9 +332,10 @@ public class StolenAndRecoveryServiceImpl {
 
 					// Stolen = 0
 					if(request.getRequestType() == 0) {
+						consignmentMgmt.setPreviousConsignmentStatus(consignmentMgmt.getConsignmentStatus());
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.STOLEN.getCode());
 					}else {
-						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.RECOVERY.getCode());
+						consignmentMgmt.setConsignmentStatus(consignmentMgmt.getPreviousConsignmentStatus());
 					}
 
 					consignmentRepository.save(consignmentMgmt);
@@ -343,9 +344,10 @@ public class StolenAndRecoveryServiceImpl {
 					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(), request.getTxnId());
 
 					if(request.getRequestType() == 0) {
+						stockMgmt.setPreviousStockStatus(stockMgmt.getStockStatus());
 						stockMgmt.setStockStatus(StockStatus.STOLEN.getCode());
 					}else {
-						stockMgmt.setStockStatus(StockStatus.RECOVERY.getCode());
+						stockMgmt.setStockStatus(stockMgmt.getPreviousStockStatus());
 					}
 					distributerManagementRepository.save(stockMgmt);
 				}
@@ -460,7 +462,6 @@ public class StolenAndRecoveryServiceImpl {
 		}
 
 	}
-
 
 	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
