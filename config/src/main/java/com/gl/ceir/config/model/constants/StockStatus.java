@@ -9,7 +9,7 @@ public enum StockStatus {
 	RECOVERY(5), 
 	APPROVED_BY_CEIR_ADMIN(6),
 	REJECTED_BY_CEIR_ADMIN(7),
-	STOLEN(10),;
+	STOLEN(10);
 	
 	private int code;
 

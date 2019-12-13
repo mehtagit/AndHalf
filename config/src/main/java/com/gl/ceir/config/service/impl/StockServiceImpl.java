@@ -204,12 +204,13 @@ public class StockServiceImpl {
 
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-
+			logger.info(stateInterpList);
+			
 			for(StockMgmt stockMgmt : page.getContent()) {
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
 						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
-						break;
+						// break;
 					}
 				}
 			}
