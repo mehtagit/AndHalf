@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity          
 public class User {  
 
@@ -20,6 +22,7 @@ public class User {
 	
 	private String username;
 	
+	@JsonIgnore
 	private String password; 
 	
 	private Date createdOn;
