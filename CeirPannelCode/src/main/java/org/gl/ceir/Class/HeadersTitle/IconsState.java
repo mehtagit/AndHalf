@@ -46,10 +46,10 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);";
 		String x ="./dowloadFiles/actual/";
 		String downloadURL = x.concat(fileName)+"/"+txnId;
-		downloadURL=URLEncoder.encode(downloadURL);
+		//downloadURL=URLEncoder.encode(downloadURL);
 		log.info("downloadURL::::::::::::::"+downloadURL);
 		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId;	
-		errorURL=URLEncoder.encode(errorURL);
+		//errorURL=URLEncoder.encode(errorURL);
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
@@ -287,12 +287,12 @@ public class IconsState {
 	
 	/********************************** Icons for Stolen **********************************/ 
 
-public String stolenState(String fileName,String txnId ,String status,String userStatus, String requestType,int id) {
+public String stolenState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty) {
 	// URL link 
 	String emptyURL="JavaScript:void(0);"; 
 	String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";	
 	String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
-	String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"')";
+	String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"','"+qty+"')";
 	String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 

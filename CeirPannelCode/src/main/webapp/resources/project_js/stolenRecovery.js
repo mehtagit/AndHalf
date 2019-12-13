@@ -622,18 +622,21 @@ function closeRecoveryModalModal()
 	$(".lean-overlay").remove();
 }
 
-function openFileStolenUpdate(txnId,requestType,id)
+function openFileStolenUpdate(txnId,requestType,id,qty)
 {
 	console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
 	if(requestType=='1'){
 		$('#editRecoveryFileModal').openModal(); 
 		$('#editFileRecoveryTxnId').text(txnId)
 		$('#editFileRecoveryId').val(id);
+		$('#editRecoveryQuantity').val(qty);
+		
 	}
 	else{
 		$('#editFileStolenModal').openModal(); 
 		$('#editFileStolenTxnId').text(txnId)
 		$('#editFileStolenId').val(id);
+		$('#editStolenQuantity').val(qty);
 	}
 
 

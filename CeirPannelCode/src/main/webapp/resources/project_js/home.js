@@ -10,6 +10,7 @@ $(document).ready(function(){
 		url: './dashboard/box?userTypeId='+userTypeId,
 		type: 'GET',
 		success: function(data){
+		
 			for (i = 0; i < data.length; i++) {
 				var id=data[i].name;
 				/*var finalID=id.replace (/\//g, "");*/
@@ -29,6 +30,7 @@ $(document).ready(function(){
 					}
 				});
 			}
+			
 		}
 	});
 	notificationDatatable();

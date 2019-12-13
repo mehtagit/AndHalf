@@ -24,6 +24,7 @@ public class StolenContent {
 	private String taxInterp;
 	private String requestTypeInterp;
 	private String sourceTypeInterp;
+	private Integer qty;
 	public Integer getId() {
 		return id;
 	}
@@ -128,7 +129,7 @@ public class StolenContent {
 				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
 				+ ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + ", taxInterp="
 				+ taxInterp + ", requestTypeInterp=" + requestTypeInterp + ", sourceTypeInterp=" + sourceTypeInterp
-				+ "]";
+				+ ", qty=" + qty + "]";
 	}
 	public String getRequestTypeInterp() {
 		return requestTypeInterp;
@@ -141,6 +142,12 @@ public class StolenContent {
 	}
 	public void setSourceTypeInterp(String sourceTypeInterp) {
 		this.sourceTypeInterp = sourceTypeInterp;
+	}
+	public Integer getQty() {
+		return qty;
+	}
+	public void setQty(Integer qty) {
+		this.qty = qty;
 	}
 	
 }

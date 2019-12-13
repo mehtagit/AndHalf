@@ -657,7 +657,7 @@
 							Upload Bulk Devices Information <span class="star">*</span>
 						</h6>
 
-						<div class="file-field input-field col s12 m8">
+						<div class="file-field input-field col s12 m6">
 							<div class="btn" style="height: 35px; line-height: 2.5rem;">
 								<span>Select File</span> <input type="text"
 									id="editFileStolenId" style="display: none;"> <input
@@ -667,13 +667,15 @@
 								<input class="file-path validate" type="text">
 							</div>
 						</div>
+						<div class="input-field col s12 m6">
+					<input type="text" name="quantity" id="editStolenQuantity" /> <label
+						for="quantity" class="center-align">Quantity</label>
+				</div>
 					</div>
+					
 				</div>
 
-			<!-- 	<div class="input-field col s12 m6">
-					<input type="text" name="quantity" id="quantity" /> <label
-						for="quantity" class="center-align">Quantity</label>
-				</div> -->
+				
 
 				<div class="col s12 m6 l6" id="SavedFileNameDiv"
 					style="display: none">
@@ -831,7 +833,7 @@
 							Upload Bulk Devices Information <span class="star">*</span>
 						</h6>
 
-						<div class="file-field input-field col s12 m8">
+						<div class="file-field input-field col s12 m6">
 							<div class="btn" style="height: 35px; line-height: 2.5rem;">
 								<span>Select File</span> <input type="text"
 									id="editFileRecoveryId" style="display: none;"> <input
@@ -842,6 +844,11 @@
 							</div>
 						</div>
 
+	<div class="input-field col s12 m6">
+					<input type="text" name="quantity" id="editRecoveryQuantity" /> <label
+						for="quantity" class="center-align">Quantity</label>
+				</div>
+				
 						<div class="col s12 m6 l6" id="SavedFileNameDiv"
 							style="display: none">
 							<label for="TotalPrice" class="center-align">Uploaded
