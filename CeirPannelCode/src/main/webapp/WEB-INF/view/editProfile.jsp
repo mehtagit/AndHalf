@@ -497,9 +497,9 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input  type="text" placeholder="" name="answer" 
 										class="form-control boxBorder boxHeight answer" id="answer0"
-										pattern="[A-Za-z]{0,50}" required="required"
+										pattern="[A-Za-z0-9\s]{0,50}" required="required"
 										maxlength="50"
-										title="Please enter alphabets upto 50 characters only"
+										title="Please enter alphanumeric upto 50 characters only"
 										> <label>Answer
 										<span class="star">*</span>
 									</label>
@@ -526,9 +526,9 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input  type="text" placeholder="" name="answer"
 										class="form-control boxBorder boxHeight answer" id="answer1"
-										pattern="[A-Za-z]{0,50}"
+										pattern="[A-Za-z0-9\s]{0,50}"
 										maxlength="50"
-										title="Please enter alphabets upto 50 characters only"
+										title="Please enter alphanumeric upto 50 characters only"
 										 required="required"> <label >Answer
 										<span class="star">*</span>
 									</label>
@@ -558,9 +558,9 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="answer" placeholder=""
 										class="form-control boxBorder boxHeight answer" id="answer2"
-										title="Please enter alphabets upto 50 characters only"
+										title="Please enter alphanumeric upto 50 characters only"
 										maxlength="50"
-										pattern="[A-Za-z]{0,50}" required="required"> <label >Answer
+										pattern="[A-Za-z0-9\s]{0,50}" required="required"> <label >Answer
 										<span class="star">*</span>
 									</label>
 								</div>
