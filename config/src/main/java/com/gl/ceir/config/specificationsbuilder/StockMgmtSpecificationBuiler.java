@@ -41,12 +41,12 @@ public class StockMgmtSpecificationBuiler {
 	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
 		specifications.add(specification);
 	}
-	
+
 	public final StockMgmtSpecificationBuiler orSearch(SearchCriteria criteria) { 
 		searchParams.add(criteria);
 		return this;
 	}
-	
+
 	public Specification<StockMgmt> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
@@ -68,31 +68,39 @@ public class StockMgmtSpecificationBuiler {
 	private List<Specification<StockMgmt>> createSpecifications(){
 		List<Specification<StockMgmt>> specifications = new ArrayList<Specification<StockMgmt>>();
 
-		for(SearchCriteria searchCriteria : params) {
-			specifications.add((root, query, cb)-> {
-				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.DATE.equals(searchCriteria.getDatatype())) {
-					return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-				
-				}else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.DATE.equals(searchCriteria.getDatatype())) {
-					return cb.lessThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-					
-				}else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
-					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-					return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
-				
-				}else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
-						&& Datatype.DATE.equals(searchCriteria.getDatatype())){
-					Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-					return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
-				
-				}else
-					return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
-
-
-			});
+		try {
+			for(SearchCriteria searchCriteria : params) {
+				specifications.add((root, query, cb)-> {
+					// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
+					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.lessThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+						return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+					}
+					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+						return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+					}else {
+						return null;
+					}
+				});
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			logger.error(e.getMessage(), e);
 		}
 
 		return specifications;
