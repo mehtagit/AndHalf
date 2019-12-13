@@ -609,8 +609,8 @@ public String adminStockState(String fileName,String txnId ,String status,String
 		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";
 		String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 		String viewAction="viewUploadedStockDetails('"+txnId+"')";  
-		String approveAction = null;
-		String rejectAction = null;
+		String approveAction = "ApproveStock('"+txnId+"')";
+		String rejectAction = "disApproveStock('"+txnId+"')";
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 // state related Code 
 

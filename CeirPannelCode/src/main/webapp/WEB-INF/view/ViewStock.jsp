@@ -354,6 +354,82 @@
             </div>
         </div>
     </div>
+    <div id="ApproveStock" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Approve Stock</h6>
+            <div class="row">
+                <h6>The stock with Transaction ID : <span id="approveStockTxnId"> </span> has been
+                    successfully paid.</h6>
+            </div>
+            <div class="row">
+                <h6>Do you approve the stock?</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <button class=" modal-close modal-trigger btn"
+                             onclick="approveStockSubmit(0)">Yes</button>
+                        <button class="modal-close btn" style="margin-left: 10px;">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="confirmApproveStockModal" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Approve Stock</h6>
+            <div class="row">
+                <h6 id="stockApproveSucessMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./assignDistributor" class="modal-close btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      <div id="RejectStockModal" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Reject Stock</h6>
+            <div class="row">
+                <h6>Do you really want to mark the stock with Transaction ID: <span id="disaproveTxnId"> </span> as
+                    rejected.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 m12" style="margin-left: -10px;">
+                    <textarea id="stockDispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
+                    <label for="textarea1">Remarks</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <button class="modal-close modal-trigger btn"
+                            onclick="disApproveStockSubmit(1)">Yes</button>
+                        <button class="modal-close btn" style="margin-left: 10px;">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div id="confirmRejectStock" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Reject Stock</h6>
+            <div class="row">
+                <h6 id="stockDisapproveSucessMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./assignDistributor" class="modal-close btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<!-- Modal End -->
 	<!-- END MAIN -->
