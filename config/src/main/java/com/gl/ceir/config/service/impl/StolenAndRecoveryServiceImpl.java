@@ -126,7 +126,8 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
-			if("Single".equalsIgnoreCase(""/*stolenandRecoveryDetails.getSourceType()*/)){
+			// Single = 4
+			if(stolenandRecoveryDetails.getSourceType() == 4){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
 				singleImeiDetails.setImei(stolenandRecoveryDetails.getImei());
 				singleImeiDetails.setsARm(stolenandRecoveryDetails);
