@@ -3,13 +3,13 @@ function openRegistrationPage(){
 	var usertypeDropdownText=usertypeDropdown.text();
 	var usertypeDropdownVal=usertypeDropdown.val(); 
 	if(usertypeDropdownText=="Importer"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal;
+		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Importer";
 	}
 	else if(usertypeDropdownText=="Distributor"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal;
+		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Distributor";
 	}
 	else if(usertypeDropdownText=="Retailer"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal;
+		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Retailer";
 	}
 	else if(usertypeDropdownText=="Custom"){
 		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal;

@@ -473,3 +473,92 @@ function setAllDropdowns(){
 		}
 	});
 }
+
+function ApproveStock(txnId)
+{
+	console.log("stock txnid="+txnId);
+	$('#ApproveStock').openModal();
+	$('#approveStockTxnId').text(txnId);
+}
+
+function approveStockSubmit(actiontype){
+	var txnId=$('#approveStockTxnId').text();
+	console.log("txnId==="+txnId);
+	var approveRequest={
+			"action": actiontype,
+			"txnId":txnId,
+			"featureId":4
+	}
+	console.log(JSON.stringify(approveRequest))
+	$.ajax({
+		url : "./acceptRejectStockController",
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			$('#ApproveStock').closeModal();
+			$('#confirmApproveStockModal').openModal();
+			console.log(data);
+			if(data.errorCode==0){
+
+				$('#stockApproveSucessMessage').text('');
+				$('#stockApproveSucessMessage').text(data.message);
+			}
+			else{
+				$('#stockApproveSucessMessage').text('');
+				$('#stockApproveSucessMessage').text(data.message);
+			}
+		},
+		error : function() {
+			
+		}
+	});
+}
+
+function disApproveStock(txnId)
+{
+
+	$('#RejectStockModal').openModal();
+	$('#disaproveTxnId').text(txnId);
+	
+
+
+}
+
+function disApproveStockSubmit(actiontype){
+	var txnId=$('#disaproveTxnId').text();
+	var Remark=$('#stockDispproveRemarks').val();
+console.log("txnId =="+txnId+" Remark="+Remark );
+	var approveRequest={
+			"action": actiontype,
+			"txnId":txnId,
+			"remarks":Remark,
+			"featureId":4
+	}
+	$.ajax({
+		url : "./acceptRejectStockController",
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			
+			//setTimeout(function(){ $('#confirmRejectStock').openModal()}, 200);
+			$('#RejectStockModal').closeModal();
+			$('#confirmRejectStock').openModal();
+			if(data.errorCode==0){
+
+				$('#stockDisapproveSucessMessage').text('');
+				$('#stockDisapproveSucessMessage').text(data.message);
+			}
+			else{
+				$('#stockDisapproveSucessMessage').text('');
+				$('#stockDisapproveSucessMessage').text(data.message);
+			}
+		},
+		error : function() {
+			
+		}
+	});
+}

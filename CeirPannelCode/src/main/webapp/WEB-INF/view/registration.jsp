@@ -144,7 +144,7 @@ var contextpath = "${context}";
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5>Registration</h5>
+							<h5><%=request.getParameter("name") %> Registration</h5>
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
                <input type="hidden" id="usertypeId" value="${usertypeId}">
@@ -506,8 +506,8 @@ var contextpath = "${context}";
 							<div class="input-field col s12 m6 l6">
 								<input type="text" placeholder="" name="answer"
 									class="form-control boxBorder boxHeight answer" id="answer0"
-									pattern="[A-Za-z]{0,50}" required="required" maxlength="50"
-									title="Please enter alphabets upto 50 characters only">
+									pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
+									title="Please enter alphanumeric upto 50 characters only">
 								<label>Answer <span class="star">*</span>
 								</label>
 							</div>
@@ -522,19 +522,14 @@ var contextpath = "${context}";
 									name="questionId" id="questionId1"
 									class="browser-default questionId" required>
 									<option value="" disabled selected>Security Question 2</option>
-									<%--<c:forEach items="${questions}" var="question"> 		
-										<c:if test="${question.category=='2'}">
-									<option value="${question.id}">${question.question}</option>
-									</c:if>
-									</c:forEach> --%>
 								</select>
 							</div>
 
 							<div class="input-field col s12 m6 l6">
 								<input type="text" placeholder="" name="answer"
 									class="form-control boxBorder boxHeight answer" id="answer1"
-									pattern="[A-Za-z]{0,50}" maxlength="50"
-									title="Please enter alphabets upto 50 characters only"
+									pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
+									title="Please enter alphanumeric upto 50 characters only"
 									required="required"> <label>Answer <span
 									class="star">*</span>
 								</label>
@@ -552,20 +547,15 @@ var contextpath = "${context}";
 									name="questionId" id="questionId2"
 									class="browser-default questionId" required>
 									<option value="" disabled selected>Security Question 3</option>
-									<%--<c:forEach items="${questions}" var="question"> 		
-										<c:if test="${question.category=='3'}">
-									<option value="${question.id}">${question.question}</option>
-									</c:if>     	
-									</c:forEach> --%>
-
+								
 								</select>
 							</div>
 
 							<div class="input-field col s12 m6 l6">
 								<input type="text" name="answer" placeholder=""
 									class="form-control boxBorder boxHeight answer" id="answer2"
-									title="Please enter alphabets upto 50 characters only"
-									maxlength="50" pattern="[A-Za-z]{0,50}" required="required">
+									title="Please enter alphanumeric upto 50 characters only"
+									maxlength="50" pattern="[A-Za-z0-9\s]{0,50}" required="required">
 								<label>Answer <span class="star">*</span>
 								</label>
 							</div>
@@ -796,8 +786,7 @@ var contextpath = "${context}";
 
       function validatePassword(){
         if(password.value != confirm_password.value) {
-          confirm_password.setCustomValidity("Passwords Don't Match");
-        } else {
+       } else {
           confirm_password.setCustomValidity('');
         }
       }

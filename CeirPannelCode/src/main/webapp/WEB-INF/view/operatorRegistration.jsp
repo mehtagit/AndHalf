@@ -124,7 +124,7 @@ var contextpath = "${context}";
                 <form id="registrationForm" onsubmit="return saveOperatorRegistration()">
                     <div class="card-panel registration-form" >
                         <div class="row">
-                            <h5>Registration</h5>
+                            <h5>Operator Registration</h5>
                             <hr>  
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
                                <input type="hidden" id="type" value="Organization">
@@ -364,8 +364,8 @@ var contextpath = "${context}";
 							<div class="input-field col s12 m6 l6">
 								<input type="text" placeholder="" name="answer"
 									class="form-control boxBorder boxHeight answer" id="answer0"
-									pattern="[A-Za-z]{0,50}" required="required" maxlength="50"
-									title="Please enter alphabets upto 50 characters only">
+									pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
+									title="Please enter alphanumeric upto 50 characters only">
 								<label>Answer <span class="star">*</span>
 								</label>
 							</div>
@@ -391,8 +391,8 @@ var contextpath = "${context}";
 							<div class="input-field col s12 m6 l6">
 								<input type="text" placeholder="" name="answer"
 									class="form-control boxBorder boxHeight answer" id="answer1"
-									pattern="[A-Za-z]{0,50}" maxlength="50"
-									title="Please enter alphabets upto 50 characters only"
+									pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
+									title="Please enter alphanumeric upto 50 characters only"
 									required="required"> <label>Answer <span
 									class="star">*</span>
 								</label>
@@ -416,8 +416,8 @@ var contextpath = "${context}";
 							<div class="input-field col s12 m6 l6">
 								<input type="text" name="answer" placeholder=""
 									class="form-control boxBorder boxHeight answer" id="answer2"
-									title="Please enter alphabets upto 50 characters only"
-									maxlength="50" pattern="[A-Za-z]{0,50}" required="required">
+									title="Please enter alphanumeric upto 50 characters only"
+									maxlength="50" pattern="[A-Za-z0-9\s]{0,50}" required="required">
 								<label>Answer <span class="star">*</span>
 								</label>
 							</div>
@@ -652,7 +652,6 @@ var contextpath = "${context}";
             "country",
             "state",
         );
-        $("#country").val("Cambodia");
         populateStates(
             "country",
             "state",

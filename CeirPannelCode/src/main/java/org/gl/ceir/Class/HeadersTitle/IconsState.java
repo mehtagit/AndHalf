@@ -45,11 +45,11 @@ public class IconsState {
 		// URL link 
 		String emptyURL="JavaScript:void(0);";
 		String x ="./dowloadFiles/actual/";
-		String downloadURL = x.concat(fileName)+"/"+txnId;
+		String downloadURL = x.concat(fileName.replace(" ", "+"))+"/"+txnId;
 		//downloadURL=URLEncoder.encode(downloadURL);
 		log.info("downloadURL::::::::::::::"+downloadURL);
-		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId;	
-		//errorURL=URLEncoder.encode(errorURL);
+		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "+")+"/"+txnId;	
+		errorURL=URLEncoder.encode(errorURL);
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
@@ -612,8 +612,8 @@ public String adminStockState(String fileName,String txnId ,String status,String
 		String errorURL = "./dowloadFiles/error/"+fileName+"/"+txnId+"";
 		String downloadURL = "./dowloadFiles/actual/"+fileName+"/"+txnId+"";
 		String viewAction="viewUploadedStockDetails('"+txnId+"')";  
-		String approveAction = null;
-		String rejectAction = null;
+		String approveAction = "ApproveStock('"+txnId+"')";
+		String rejectAction = "disApproveStock('"+txnId+"')";
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 // state related Code 
 

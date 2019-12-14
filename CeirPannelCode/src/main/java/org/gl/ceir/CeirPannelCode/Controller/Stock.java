@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
@@ -290,5 +291,29 @@ else {
 	return response;
 
 	}
+	
+	
+	@RequestMapping(value= {"/acceptRejectStockController"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public @ResponseBody GenricResponse updateConsignmentStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest,HttpSession session) {
+	ConsignmentUpdateRequest request= new ConsignmentUpdateRequest ();
+	log.info("enter in update consignment status ."+consignmentUpdateRequest);
+
+
+	request.setAction(consignmentUpdateRequest.getAction());
+	request.setTxnId(consignmentUpdateRequest.getTxnId());
+	request.setRoleType((String) session.getAttribute("usertype"));
+	request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
+	request.setUserId((int) session.getAttribute("userid"));
+	request.setRemarks(consignmentUpdateRequest.getRemarks());
+	request.setTxnId(consignmentUpdateRequest.getTxnId());
+	request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+	log.info(" request passed to the stock accept reject  api="+request);
+	GenricResponse response=feignCleintImplementation.acceptRejectStock(request);
+	log.info("response after stock accept reject  api="+response);
+	return response;
+
+	}
+
+
 	
 }

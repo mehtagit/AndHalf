@@ -764,11 +764,28 @@ function valuesPush(){
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var requestType="1";
 	console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
+	
+	 
+	console.log("role++++"+role+"requestType++"+requestType+"currentRoleType="+currentRoleType);
 	$('#stolenLibraryTable tr td input:checkbox:checked').each(function() {
-
+		var sourceInterp=$(this).closest('tr').find('td:eq(5)').text();
+		 var sourceType;
+		 if(sourceInterp=='Consignment')
+			 {
+			 sourceType=0;
+			 }
+		 else if(sourceInterp=='File')
+			 {
+			 sourceType=2;
+			 }
+		 else if(sourceInterp=='Stock')
+			 {
+			 sourceType=1;
+			 }
+		 
 		var json={"txnId":$(this).closest('tr').find('td:eq(2)').text(),
 				"userId":userId,
-				"sourceType":$(this).closest('tr').find('td:eq(5)').text(),
+				"sourceType":sourceType,
 				"roleType":role,
 				"requestType":requestType
 		};

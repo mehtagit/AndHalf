@@ -68,7 +68,7 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/consigment/delete" ,method=RequestMethod.DELETE) 
 	public @ResponseBody GenricResponse deleteConsignment(ConsignmentModel consignmentModel,@RequestParam("userType") String userType) ;
 
-	//delete Consignment feign  controller
+	//accept reject Consignment feign  controller
 	@RequestMapping(value="/update/consigmentStatus" ,method=RequestMethod.PUT) 
 	public @ResponseBody GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) ;
 
@@ -121,6 +121,11 @@ public interface FeignCleintImplementation {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
 
+
+	
+	//accept reject stock feign  controller
+		@RequestMapping(value="/accept-reject/stock" ,method=RequestMethod.PUT) 
+		public @ResponseBody GenricResponse acceptRejectStock(ConsignmentUpdateRequest consignmentUpdateRequest) ;
 
 	//****************************************************                              ***************************************************************************		
 	//**************************************************** Stolen Recovery integration  **************************************************************************

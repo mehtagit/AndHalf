@@ -216,9 +216,9 @@ public class ConsignmentDatatableController {
 				String txnId=	dataInsideList.getTxnId(); 
 				String supplierName= dataInsideList.getSupplierName(); 
 				// if API provide me consignmentStatusName
-				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
+				//String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatusName = dataInsideList.getStateInterp();
-				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
+			//	String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName}; 
 					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));

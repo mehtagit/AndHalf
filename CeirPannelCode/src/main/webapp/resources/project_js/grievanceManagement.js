@@ -51,7 +51,8 @@ function grievanceDataTable(){
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"recentStatus":parseInt($('#recentStatus').val()),
-			"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),
+			/*"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),*/
+			"userId": parseInt($("body").attr("data-userTypeID")),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"txnId":$('#transactionID').val(),
