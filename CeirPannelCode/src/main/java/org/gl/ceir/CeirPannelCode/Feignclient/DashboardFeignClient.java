@@ -2,10 +2,13 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.NumberOfBox;
 import org.gl.ceir.CeirPannelCode.Model.RequestCountAndQuantity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,4 +42,5 @@ public interface DashboardFeignClient {
 	//dashboard/dbConf  controller
 		@RequestMapping(value="/dashboard/dbConf" ,method=RequestMethod.GET) 
 		public List<NumberOfBox> dashBoardDBConf(@RequestParam(value = "userTypeId") Integer userTypeId);
-	}
+		
+		}

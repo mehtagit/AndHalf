@@ -5,26 +5,33 @@ import java.util.Map;
 
 public class TrcContentModel {
 
-	private Integer id;
-	private String manufacturerId;
-	private String manufacturerName;
-	private String country;
-	private String requestDate;
-	private String tac;
-	private Integer status;
-	private Integer approveStatus;
-	private String approveDisapproveDate;
-	private String remark;
-	private String file;
-	private String createdOn;
-	private String modifiedOn;
-	private String txnId;
+	private Integer id,userID,status,approveStatus;
+	private String manufacturerId, manufacturerName,country,requestDate,tac;
+	private String approveDisapproveDate, remark,file,createdOn,modifiedOn,txnId,stateInterp;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getUserID() {
+		return userID;
+	}
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public Integer getApproveStatus() {
+		return approveStatus;
+	}
+	public void setApproveStatus(Integer approveStatus) {
+		this.approveStatus = approveStatus;
 	}
 	public String getManufacturerId() {
 		return manufacturerId;
@@ -55,18 +62,6 @@ public class TrcContentModel {
 	}
 	public void setTac(String tac) {
 		this.tac = tac;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	public Integer getApproveStatus() {
-		return approveStatus;
-	}
-	public void setApproveStatus(Integer approveStatus) {
-		this.approveStatus = approveStatus;
 	}
 	public String getApproveDisapproveDate() {
 		return approveDisapproveDate;
@@ -104,6 +99,12 @@ public class TrcContentModel {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -112,15 +113,12 @@ public class TrcContentModel {
 	}
 	@Override
 	public String toString() {
-		return "TrcContentModel [id=" + id + ", manufacturerId=" + manufacturerId + ", manufacturerName="
-				+ manufacturerName + ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac
-				+ ", status=" + status + ", approveStatus=" + approveStatus + ", approveDisapproveDate="
+		return "TrcContentModel [id=" + id + ", userID=" + userID + ", status=" + status + ", approveStatus="
+				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
+				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
 				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", additionalProperties=" + additionalProperties
-				+ "]";
+				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
+				+ ", additionalProperties=" + additionalProperties + "]";
 	}
-	
-	
-	
 	
 }

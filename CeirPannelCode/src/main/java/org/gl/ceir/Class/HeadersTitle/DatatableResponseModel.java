@@ -5,13 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 @Component
 public class DatatableResponseModel {
-
-
-	@Override
-	public String toString() {
-		return "DatatableResponse [recordsTotal=" + recordsTotal + ", recordsFiltered=" + recordsFiltered + ", data="
-				+ data + "]";
-	}
+	private Integer recordsTotal;
+	//Integer recordsTotal = new Integer(10)     int recordsTotal;  int x= recordsTotal.intValue();
+	private Integer recordsFiltered;
+	private List<List<String>> data = null;
 	public Integer getRecordsTotal() {
 		return recordsTotal;
 	}
@@ -30,8 +27,11 @@ public class DatatableResponseModel {
 	public void setData(List<List<String>> data) {
 		this.data = data;
 	}
-	private Integer recordsTotal;
-	//Integer recordsTotal = new Integer(10)     int recordsTotal;  int x= recordsTotal.intValue();
-	private Integer recordsFiltered;
-	private List<List<String>> data = null;
+	@Override
+	public String toString() {
+		return "DatatableResponseModel [recordsTotal=" + recordsTotal + ", recordsFiltered=" + recordsFiltered
+				+ ", data=" + data + "]";
+	}
+
+	
 }

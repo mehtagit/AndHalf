@@ -12,14 +12,13 @@ $(document).ready(function(){
 
 function typeApprovedDataTable(){
 	var filterRequest={
-			"endDate":$('#endDate').val(),
-			"startDate":$('#startDate').val(),
-			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
-			"tac" : $('#tac').val(),
-			"status": $('#Status').val()
+	"endDate":$('#endDate').val(),
+	"startDate":$('#startDate').val(),
+  	"tac" : $('#tac').val(),
+  	"userId":parseInt(userId),
+	"featureId":parseInt(featureId),
+	"userTypeId": parseInt($("body").attr("data-userTypeID")),
+	"userType":$("body").attr("data-roleType"),
 	}
 	$.ajax({
 		url: 'headers?type=trcManageType',
@@ -36,7 +35,7 @@ function typeApprovedDataTable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : 'typeApprovedData',
+					url : './trc',
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
@@ -127,10 +126,10 @@ function pageRendering(){
 			
 
 			//Tax paid status-----------dropdown
-			$.getJSON('../getDropdownList/TAD_STATUS', function(data) {
+			$.getJSON('./getDropdownList/TAD_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#filterFileStatus');
+					.appendTo('#Status');
 				}
 			});
 		}

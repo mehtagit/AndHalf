@@ -40,8 +40,6 @@ public class GrievanceDatatableController {
 	@Autowired
 	Button button;
 	@Autowired
-	FeignCleintImplementation feignCleintImplementation;
-	@Autowired
 	GrievanceContentModel grievancecontentmodel;
 	@Autowired
 	IconsState iconState;

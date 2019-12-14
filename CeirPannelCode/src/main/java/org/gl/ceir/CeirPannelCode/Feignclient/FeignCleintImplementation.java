@@ -205,6 +205,8 @@ public interface FeignCleintImplementation {
 
 		@RequestMapping(value="/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}" ,method=RequestMethod.GET) 
 		public List<Dropdown> asTypeList(@PathVariable("tagId") String tag, @PathVariable("userTypeId") Integer userTypeId);
+
+		
 }
 
 

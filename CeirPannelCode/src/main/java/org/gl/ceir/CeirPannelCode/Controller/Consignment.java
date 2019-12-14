@@ -417,8 +417,8 @@ public String downloadFile(@PathVariable("transactionNumber") String txnid,@Path
 
 log.info("inside file download method");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")");
-String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%AO", ""));
-log.info("response of download api="+response+"------------------"+fileName.replace("%AO", ""));
+String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "));
+log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 return "redirect:"+response;
 }
 
