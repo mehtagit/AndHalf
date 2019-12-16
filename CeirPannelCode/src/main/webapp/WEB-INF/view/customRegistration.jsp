@@ -127,7 +127,7 @@ var contextpath = "${context}";
                             <h5>Custom Registration</h5>
                             <hr>  
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
-                               <input type="hidden" id="type" value="Organization">
+                               <input type="hidden" id="type" value="2">
                             <div class="row">
                               	<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"

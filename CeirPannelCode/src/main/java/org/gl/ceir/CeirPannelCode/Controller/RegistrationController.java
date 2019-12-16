@@ -6,8 +6,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
@@ -38,6 +40,9 @@ public class RegistrationController {
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
     @Autowired
     FeignClientImplementation feignImplementation;
+	@Autowired
+	FeignCleintImplementation feignCleintImplementation;
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
 	public ModelAndView index(){
@@ -46,7 +51,16 @@ public class RegistrationController {
 		mv.setViewName("index");
 		return mv;      
 	}         
-
+	
+	@ResponseBody
+	@GetMapping("asTypeData/{tagId}")
+	public List<Dropdown> asTypeDropdown(@PathVariable("tagId") String tag ) {
+		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
+		return dropdown;
+	}
+	
+	
+	
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> usertypeList(){ 

@@ -21,8 +21,8 @@ function changePassword(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-			$("#changePasswordMessage h6").text(resp.response);
-			$("#changePasswordMessage").openModal();   
+				$("#changePasswordMessage h6").text(resp.response);
+				$("#changePasswordMessage").openModal();   
 			}
 			else{
 				$("#changePassword #errorMsg").text(resp.response);
@@ -32,13 +32,13 @@ function changePassword(){
 		error: function (xhr, ajaxOptions, thrownError) {
 			$("#changePassBtn").prop('disabled', false);
 		} 
- 
+
 	});
 	return false;
 }
 
 function updateUSerStatus(){
-	
+
 	$("#updateStatusBtn").prop('disabled', true);
 	var obj="";  
 	obj={
@@ -55,9 +55,9 @@ function updateUSerStatus(){
 		success : function(data) { 
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-			$("#manageAccountSubmit h6").text(resp.response);
-			$("#manageAccountSubmit").openModal();   
-			
+				$("#manageAccountSubmit h6").text(resp.response);
+				$("#manageAccountSubmit").openModal();   
+
 			}
 			else{  
 				$("#userStatusForm #errorMsg").text(resp.response);
@@ -72,7 +72,7 @@ function updateUSerStatus(){
 	return false;
 }
 
-function questionDataByCategory(){ 
+function questionDataByCategory2(){ 
 	$.ajax({
 		type : 'GET',
 		url : contextpath + '/securityQuestionList/',
@@ -82,28 +82,40 @@ function questionDataByCategory(){
 			var response=JSON.parse(data);
 			var usertypeDropdown1=$("#registrationForm #questionId0");
 			var usertypeDropdown2=$("#registrationForm #questionId1");
-			// usertypeDropdown2.empty();
 			var usertypeDropdown3=$("#registrationForm #questionId2");
-			// usertypeDropdown3.empty(); 
 			var data1='<option value="" disabled selected>Security Question 1</option>';
-			//usertypeDropdown1.append(data1);
 			var data2='<option value="" disabled selected>Security Question 2</option>';
-			//usertypeDropdown2.append(data2);
 			var data3='<option value="" disabled selected>Security Question 3</option>';
-			// usertypeDropdown3.append(data3);
-
+			var checkVal=usertypeDropdown1.val();
+			var checkVal2=usertypeDropdown2.val();
+			var checkVal3=usertypeDropdown3.val();
 			for(var i=0; i<response.length; i++){
 				if(response[i].category==1){
-					var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
-					usertypeDropdown1.append(text);	
+					if(checkVal==response[i].id){
+
+					}
+					else{
+						var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
+						usertypeDropdown1.append(text);	
+					}
 				}
 				else if(response[i].category==2){
-					var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
-					usertypeDropdown2.append(text);	  
+					if(checkVal2==response[i].id){
+
+					}
+					else{
+						var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
+						usertypeDropdown2.append(text);	  
+					}
 				}
 				else if(response[i].category==3){
-					var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
-					usertypeDropdown3.append(text);	
+					if(checkVal3==response[i].id){
+
+					}
+					else{
+						var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
+						usertypeDropdown3.append(text);	
+					}
 				}
 				else{}
 			}
@@ -114,6 +126,45 @@ function questionDataByCategory(){
 	});
 }
 
+function questionDataByCategory(){ 
+	$.ajax({
+		type : 'GET',
+		url : contextpath + '/securityQuestionList/',
+		contentType : "application/json",
+		dataType : 'html', 
+		success : function(data) {
+			var response=JSON.parse(data);
+			var usertypeDropdown1=$("#registrationForm #questionId0");
+			var usertypeDropdown2=$("#registrationForm #questionId1");
+			var usertypeDropdown3=$("#registrationForm #questionId2");
+			var data1='<option value="" disabled selected>Security Question 1</option>';
+			var data2='<option value="" disabled selected>Security Question 2</option>';
+			var data3='<option value="" disabled selected>Security Question 3</option>';
+
+			for(var i=0; i<response.length; i++){
+				if(response[i].category==1){
+					var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
+					usertypeDropdown1.append(text);	
+
+				}
+				else if(response[i].category==2){
+					var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
+					usertypeDropdown2.append(text);	  
+
+				}
+				else if(response[i].category==3){
+					var text='<option value="'+response[i].id+'">'+response[i].question+'</option>';
+					usertypeDropdown3.append(text);	
+
+				}
+				else{}
+			}
+
+		},    
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
 
 
 
@@ -143,7 +194,7 @@ function editProfile(){
 			$("#registrationForm #country").val(resp.country);  
 			$("#questionId1 #country").val(resp.country);
 			$("#registrationForm #usertypes").val(resp.roles); 
-            
+
 			var arr=[];    
 			arr=resp.roles;
 			for (var i = 0; i < arr.length; i++) {
@@ -151,8 +202,8 @@ function editProfile(){
 			}
 
 
-			
-			
+
+
 			//$("#").val(resp[i].); 
 			var questionData=resp.questionList;
 			for(var i=0;i<questionData.length;i++){
@@ -162,7 +213,7 @@ function editProfile(){
 				$("#registrationForm #answer"+i).val(questionData[i].answer);
 				$("#registrationForm #id"+i).val(questionData[i].id);
 			}  
-			questionDataByCategory();
+			questionDataByCategory2();
 
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -191,7 +242,7 @@ function updateProfile(){
 		}
 	});
 
-  var password=document.getElementById("confirmPassword").value;
+	var password=document.getElementById("confirmPassword").value;
 	$("#registrationForm").each(function(key, val){
 		val = $(this);  
 		if(val.html() !== "") {
@@ -229,19 +280,19 @@ function updateProfile(){
 
 			var response=JSON.parse(data);
 			if(response.statusCode=='200'){
-			if(response.userstatus=='Approved'){
-				$("#passwordModal").closeModal();
-				$("#profileResponse h6").text(response.response); 
-				$('#profileResponse').openModal();    
-			} 
-			else if(response.userstatus=='OTP Verification Pending'){
-				$("#userid").val(response.userId);
-				$("#passwordModal").closeModal();
-				$("#otpMsgModal").openModal();     
-				$("#otpMsg").text(response.response);
-			}
-			else{
-			}
+				if(response.userstatus=='Approved'){
+					$("#passwordModal").closeModal();
+					$("#profileResponse h6").text(response.response); 
+					$('#profileResponse').openModal();    
+				} 
+				else if(response.userstatus=='OTP Verification Pending'){
+					$("#userid").val(response.userId);
+					$("#passwordModal").closeModal();
+					$("#otpMsgModal").openModal();     
+					$("#otpMsg").text(response.response);
+				}
+				else{
+				}
 			}
 			else{
 				$("#registrationForm #errorMsg").text(response.response);

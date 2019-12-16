@@ -94,6 +94,25 @@ function reg(){
 }
 
 
+function asTypeData(){ 
+	$.ajax({
+		type : 'GET',
+		url : contextpath + '/asTypeData/AS_TYPE',
+		contentType : "application/json",
+		dataType : 'html',
+		async:false,
+		success : function(data) {
+			var response=JSON.parse(data);                                    
+			var asTypeDropdown=$("#type");  
+			for(var i=0; i<response.length; i++){
+					var data2='<option value="'+response[i].value+'">'+response[i].interp+'</option>';
+					asTypeDropdown.append(data2);
+			}    
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
 function usertypeData(){ 
 	$.ajax({
 		type : 'GET',
