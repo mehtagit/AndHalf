@@ -125,7 +125,9 @@ var contextpath = "${context}";
                     <div class="card-panel registration-form" >
                         <div class="row">
                             <h5>Operator Registration</h5>
+                            <span id="msg" style="color: red;">${msg}</span>
                             <hr>  
+                            
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
                                <input type="hidden" id="type" value="2">
                             <div class="row">
