@@ -186,6 +186,7 @@ public class GrievanceController {
 							log.info("grievanceStartDate=="+grievanceStartDate+ " grievanceEndDate ="+grievanceEndDate+" grievancetxnId="+grievancetxnId+"grievanceId="+grievanceId);
 							int userId= (int) session.getAttribute("userid"); 
 							int file=1;
+							String userType=(String) session.getAttribute("usertype");
 							FileExportResponse fileExportResponse;
 							FilterRequest filterRequest= new FilterRequest();
 							filterRequest.setStartDate(grievanceStartDate);
@@ -194,6 +195,7 @@ public class GrievanceController {
 							filterRequest.setGrievanceStatus(grievanceStatus);
 							filterRequest.setGrievanceId(grievanceId);
 							filterRequest.setUserId(userId);
+							filterRequest.setUserType(userType);
 							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
 						

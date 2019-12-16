@@ -367,7 +367,7 @@ function pageButtons(url){
 			}else{
 
 				$("#consignmentTableDIv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
-				$("#consignmentTableDIv").append("<div class='col s12 m3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m3'><a href='JavaScript:void(0)' onclick='exportStockData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					/*$('#'+button[i].id).attr("onclick", button[i].buttonURL);*/
@@ -561,4 +561,36 @@ console.log("txnId =="+txnId+" Remark="+Remark );
 			
 		}
 	});
+}
+
+
+
+
+
+//**********************************************************Export Excel file************************************************************************
+function exportStockData()
+{
+	var stockStartDate=$('#startDate').val();
+	var stockEndDate=$('#endDate').val();
+	var stockTxnId=$('#transactionID').val();
+	var StockStatus=parseInt($('#StockStatus').val());
+	var roleType = $("body").attr("data-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	
+	var role = currentRoleType == null ? roleType : currentRoleType;
+	console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+    
+      if(isNaN(StockStatus))
+	   {
+    	  StockStatus='';
+  	   console.log(" StockStatus=="+StockStatus);
+	   }
+ 
+	var table = $('#stockTable').DataTable();
+	var info = table.page.info(); 
+    var pageNo=info.page;
+    var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+"=role="+role);
+	window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 }
