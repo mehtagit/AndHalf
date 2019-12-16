@@ -53,16 +53,19 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-	
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-	
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
 
 
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
@@ -78,8 +81,7 @@
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/manageTypeDevices"
-								method="post">
+							<form action="${context}/manageTypeDevices" method="post">
 								<div class="col s12 m12 l12" id="typeAprroveTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
@@ -98,132 +100,115 @@
 				<div id="footerBtn"></div>
 			</div>
 		</div>
-		
-		
+
+
 		<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
-		<div class="modal-content">
-		
-		<h6>View Type-Approve Devices</h6>
-			<hr>
-		
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="manufacturerId" name="manufacturerId" placeholder="GHJ6487328" disabled="">
-                                                <label for="manufacturerId" class="active">Manufacturer ID</label>
-                                            </div>
+			<div class="modal-content">
 
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="manufacturerName" name="manufacturerName" placeholder="ABC Name" disabled="">
-                                                <label for="manufacturerName" class="active">Manufacturer Name <span class="star">*</span></label>
-                                            </div>
+				<h6>View Type-Approve Devices</h6>
+				<hr>
 
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="Country" name="Country" placeholder="ABC Country" disabled="">
-                                                <label for="Country" class="active">Country </label>
-                                            </div>
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewmanufacturerId" name="manufacturerId"
+							placeholder="GHJ6487328" disabled=""> <label
+							for="manufacturerId" class="active">Manufacturer ID</label>
+					</div>
 
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="deviceType" name="deviceType" placeholder="Handheld" disabled="">
-                                                <label for="deviceType" class="active">Device Type </label>
-                                            </div>
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewmanufacturerName" name="manufacturerName"
+							placeholder="ABC Name" disabled=""> <label
+							for="manufacturerName" class="active">Manufacturer Name <span
+							class="star">*</span></label>
+					</div>
 
-                                            <!-- <div class="col s12 m6 l6">
-                                                <label for="country">Country </label>
-                                                <select id="country" class="browser-default" class="mySelect"
-                                                    required></select>
-                                            </div> -->
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewcountry" name="Country"
+							placeholder="ABC Country" disabled=""> <label
+							for="Country" class="active">Country </label>
+					</div>
 
-                                            <!-- <div class="col s12 m6 l6">
-                                                <label for="deviceType">Device Type </label>
-                                                <select class="browser-default" id="deviceType">
-                                                    <option value="" disabled selected>Select Device Type</option>
-                                                    <option value="Handheld">Handheld</option>
-                                                    <option value="MobilePhone">Mobile Phone/Feature phone</option>
-                                                    <option value="Vehicle">Vehicle</option>
-                                                    <option value="Portable">Portable(include PDA)</option>
-                                                    <option value="Module">Module</option>
-                                                    <option value="Dongle">Dongle</option>
-                                                    <option value="WLAN">WLAN Router</option>
-                                                    <option value="Modem">Modem</option>
-                                                    <option value="Smartphone">Smartphone</option>
-                                                    <option value="Computer">Connected Computer</option>
-                                                    <option value="Tablet">Tablet</option>
-                                                    <option value="e-Book">e-Book</option>
-                                                </select>
-                                            </div> -->
-                                        </div>
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewDeviceType" name="deviceType"
+							placeholder="Handheld" disabled=""> <label
+							for="deviceType" class="active">Device Type </label>
+					</div>
 
-                                        <div class="row" style="margin-top: 5px;">
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="deviceTypeID" name="deviceType" placeholder="IMEI" disabled="">
-                                                <label for="deviceType" class="active">Device ID Type</label>
-                                            </div>
 
-                                            <!-- <div class="col s12 m6 l6">
-                                                <label for="deviceType">Device ID Type </label>
-                                                <select class="browser-default" id="deviceType">
-                                                    <option value="" disabled selected>Select Device ID Type</option>
-                                                    <option value="IMEI">IMEI</option>
-                                                    <option value="ESN">ESN</option>
-                                                    <option value="MEID">MEID</option>
-                                                </select>
-                                            </div> -->
+				</div>
 
-                                            <div class="input-field col s12 m6">
-                                                <input type="text" id="dateRequested" class="datepicker picker__input" name="requestDate" pattern="[]" title=""
-                                                 maxlength="20" placeholder="" disabled="" readonly="" tabindex="-1" aria-haspopup="true" aria-expanded="false" 
-                                                 aria-readonly="false" aria-owns="bdate2_root">
-                                                    <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar" aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
-                                                <label for="dateRequested" class="active">Request Date </label>
-                                            </div>
+				<div class="row" style="margin-top: 5px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewdeviceTypeID" name="deviceType"
+							placeholder="IMEI" disabled=""> <label for="deviceType"
+							class="active">Device ID Type</label>
+					</div>
 
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="tac" name="tac" placeholder="67458392" disabled="">
-                                                <label for="tac" class="active">TAC </label>
-                                            </div>
 
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="Status" name="Status" placeholder="Approved" disabled="">
-                                                <label for="Status" class="active">Status </label>
-                                            </div>
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewrequestDate"
+							class="datepicker picker__input" name="requestDate" pattern="[]"
+							title="" maxlength="20" placeholder="" disabled="" readonly=""
+							tabindex="-1" aria-haspopup="true" aria-expanded="false"
+							aria-readonly="false" aria-owns="bdate2_root"> <span
+							class="input-group-addon" style="color: #ff4081"><i
+							class="fa fa-calendar" aria-hidden="true"
+							style="float: right; margin-top: -37px;"></i></span> <label
+							for="dateRequested" class="active">Request Date </label>
+					</div>
 
-                                            <!-- <div class="col s12 m6 l6">
-                                                <label for="deviceType">Status </label>
-                                                <select class="browser-default" id="deviceType">
-                                                    <option value="" disabled selected>Select Status</option>
-                                                    <option value="Approved">Approved</option>
-                                                    <option value="Rejected">Rejected</option>
-                                                </select>
-                                            </div> -->
-                                        </div>
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtac" name="tac" placeholder="67458392"
+							disabled=""> <label for="tac" class="active">TAC
+						</label>
+					</div>
 
-                                        <div class="row">
-                                            <div class="input-field col s12 m6">
-                                                <input type="text" id="bdate2" class="datepicker picker__input" name="approveRejectionDate" pattern="[]" 
-                                                title="" maxlength="20" placeholder="5/12/2019" disabled="" readonly="" tabindex="-1" aria-haspopup="true"
-                                                 aria-expanded="false" aria-readonly="false" aria-owns="bdate2_root">
-                                                    <span class="input-group-addon" style="color:#ff4081"><i class="fa fa-calendar" aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
-                                                <label for="bdate2" class="active">Approve/Rejection Date <span class="star">*</span></label>
-                                            </div>
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="status" name="Status"
+							placeholder="Approved" disabled=""> <label for="Status"
+							class="active">Status </label>
+					</div>
+					
+			
+									
+									
 
-                                            <div class="input-field col s12 m6 l6" style="margin-top: 9px;">
-                                                <textarea id="Remark" class="materialize-textarea" placeholder="" disabled=""></textarea>
-                                                <label for="Remark" class="active">Remark </label>
-                                            </div>
-                                        </div>
-                                            <div class="center" style="margin-top: 30px;">
-                                                <a href="manageTypeDevices.html" class="btn" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                                            </div>
-                                
-				
-		
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewapproveDisapproveDate" class="datepicker picker__input"
+							name="approveRejectionDate" pattern="[]" title="" maxlength="20"
+							placeholder="5/12/2019" disabled="" readonly="" tabindex="-1"
+							aria-haspopup="true" aria-expanded="false" aria-readonly="false"
+							aria-owns="bdate2_root"> <span class="input-group-addon"
+							style="color: #ff4081"><i class="fa fa-calendar"
+							aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
+						<label for="bdate2" class="active">Approve/Rejection Date
+							<span class="star">*</span>
+						</label>
+					</div>
+
+					<div class="input-field col s12 m6 l6" style="margin-top: 9px;">
+						<textarea id="viewremark" class="materialize-textarea" placeholder=""
+							disabled=""></textarea>
+						<label for="Remark" class="active">Remark </label>
+					</div>
+				</div>
+				<div class="center" style="margin-top: 30px;">
+					<a href="./manageTypeDevices" class="btn" id="Cancel"
+						style="margin-left: 10px;">Cancel</a>
+				</div>
+
+
+
+			</div>
 		</div>
-		</div>
-		
+
 		<!--end container-->
 	</section>
 
-  <!--materialize js-->
+	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
@@ -231,7 +216,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-	
+
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -254,6 +239,6 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>
-		
+
 </body>
 </html>

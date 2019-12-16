@@ -1,16 +1,13 @@
-package org.gl.ceir.pagination.model;
-
-import java.util.HashMap;
-import java.util.Map;
+package org.gl.ceir.CeirPannelCode.Model;
 
 import org.springframework.stereotype.Component;
+
 @Component
-public class TrcContentModel {
+public class TRCRegisteration {
 
 	private Integer id,userID,status,approveStatus;
 	private String manufacturerId, manufacturerName,country,requestDate,tac;
 	private String approveDisapproveDate, remark,file,createdOn,modifiedOn,txnId,stateInterp;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
@@ -107,20 +104,12 @@ public class TrcContentModel {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
 	@Override
 	public String toString() {
-		return "TrcContentModel [id=" + id + ", userID=" + userID + ", status=" + status + ", approveStatus="
+		return "TRCRegisteration [id=" + id + ", userID=" + userID + ", status=" + status + ", approveStatus="
 				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
 				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
 				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
-				+ ", additionalProperties=" + additionalProperties + "]";
+				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp + "]";
 	}
-	
 }

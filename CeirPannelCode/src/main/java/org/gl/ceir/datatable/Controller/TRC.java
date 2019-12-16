@@ -90,7 +90,7 @@ public class TRC implements CRUD{
 					Integer status = trcContentModelList.getStatus();
 					String statusInterp = trcContentModelList.getStateInterp();
 					String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-					String action = iconState.trcManageIcons(status);
+					String action = iconState.trcManageIcons(status,trcContentModelList.getId());
 					
 					Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 					
@@ -134,7 +134,7 @@ public class TRC implements CRUD{
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"HeaderButton","Report Type-Approved Devices","./manageTypeDevices","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
+			String[] names= {"HeaderButton","Report Type-Approved Devices","./register-form","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

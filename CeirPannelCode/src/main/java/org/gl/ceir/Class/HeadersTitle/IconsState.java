@@ -287,9 +287,10 @@ public class IconsState {
 
 	public String stolenState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty) {
 		// URL link 
+		String file = fileName == null ? null : fileName.replace(" ", "%20");
 		String emptyURL="JavaScript:void(0);"; 
-		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";	
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
 		String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"','"+qty+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
@@ -747,17 +748,17 @@ public class IconsState {
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcManageIcons(Integer status) {	
+	public String trcManageIcons(Integer status,Integer id) {	
 		// URL link 
 		String downloadURL = "JavaScript:void(0)";
-		String viewAction="viewDevicesDetails()";
+		String viewAction="viewByID("+id+")";
 		String editAction= "JavaScript:void(0)";
 		// state related Code 
 		String download="<a href="+downloadURL+" download=\"download\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" download=\"download\"></i></a>"; 
 
-		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		String edit="<a onclick="+editAction+"><i class="

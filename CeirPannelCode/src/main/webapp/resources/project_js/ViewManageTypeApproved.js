@@ -138,36 +138,35 @@ function pageRendering(){
 };
 
 
-function viewDevicesDetails(){
+function viewByID(id){
+	
 	$("#viewModal").openModal();
 	
 	$.ajax({
-		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId, //controller haven'nt made yet for this url. this is dummy url.
+		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
-		type : 'GET',
+		type : 'POST',
 		success : function(data) {
 			setViewPopupData(data);
-			console.log(data);
 		},
 		error : function() {
-			alert("Failed");
+			console.log("failed");
 		}
 	});
 	
 }
 
 function setViewPopupData(data){
-	$("#manufacturerId").val();
-	$("#manufacturerName").val();
-	$("#Country").val();
-	$("#deviceType").val();
-	$("#deviceTypeID").val();
-	$("#dateRequested").val();
-	$("#tac").val();
-	$("#Status").val();
-	$("#bdate2").val();
-	$("#Remark").val();
+	alert(data.stateInterp)
+	$("#viewmanufacturerId").val(data.manufacturerId);
+	$("#viewmanufacturerName").val(data.manufacturerName);
+	$("#viewcountry").val(data.country);
+	$("#viewtac").val(data.tac);
+	$("#status").val(data.stateInterp);
+	$('#viewrequestDate').val(data.requestDate)
+	$("#viewapproveDisapproveDate").val(data.approveDisapproveDate);
+	$("#viewremark").val(data.Remark);
 }
 
 
