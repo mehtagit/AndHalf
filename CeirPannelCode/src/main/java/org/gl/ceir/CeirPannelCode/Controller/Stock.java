@@ -8,11 +8,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
@@ -27,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 
 
@@ -312,6 +317,34 @@ else {
 	log.info("response after stock accept reject  api="+response);
 	return response;
 
+	}
+
+	//***************************************** Export Grievance controller *********************************
+	@RequestMapping(value="/exportStock",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public String exportToExcel(@RequestParam(name="stockStartDate",required = false) String stockStartDate,@RequestParam(name="stockEndDate",required = false) String stockEndDate,
+			@RequestParam(name="stockTxnId",required = false) String stockTxnId,@RequestParam(name="StockStatus") Integer StockStatus,HttpServletRequest request,
+			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="roleType") String roleType)
+	{
+		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId);
+		int userId= (int) session.getAttribute("userid"); 
+		int file=1;
+		FileExportResponse fileExportResponse;
+		FilterRequest filterRequest= new FilterRequest();
+		filterRequest.setStartDate(stockStartDate);
+		filterRequest.setEndDate(stockEndDate);
+		filterRequest.setTxnId(stockTxnId);
+		filterRequest.setConsignmentStatus(StockStatus);
+		filterRequest.setUserId(userId);
+		filterRequest.setRoleType(roleType);
+		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
+		Object	response= feignCleintImplementation.stockFilter(filterRequest, pageNo, pageSize, file);
+
+	   Gson gson= new Gson(); 
+	   String apiResponse = gson.toJson(response);
+	   fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+	   log.info("response  from   export stock  api="+fileExportResponse);
+		
+		return "redirect:"+fileExportResponse.getUrl();
 	}
 
 

@@ -70,6 +70,7 @@ public class ConsignmentDatatableController {
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		Object response;
+		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
@@ -168,7 +169,7 @@ public class ConsignmentDatatableController {
 			 log.info("session is  blank *********************** request send to the filter api ="+filterrequest);
 			 log.info("*******consignmentStartDate=="+consignmentStartDate+" consignmentEndDate=="+consignmentEndDate+" consignmentStatus=="+consignmentStatus+" consignmentTaxPaidStatus=="+consignmentTaxPaidStatus+" consignmentTxnId ="+consignmentTxnId);
 			 
-			 response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+			 response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize,file);
 
 			
 		 }
@@ -182,13 +183,13 @@ public class ConsignmentDatatableController {
 			 log.info("session is not blank ************************ request send to the filter api ="+filterrequest);
 			 log.info("++++++++++++=consignmentStartDate=="+consignmentStartDate+" consignmentEndDate=="+consignmentEndDate+" consignmentStatus=="+consignmentStatus+" consignmentTaxPaidStatus=="+consignmentTaxPaidStatus+" consignmentTxnId ="+consignmentTxnId);
 			
-			 response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+			 response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize,file);
 
 		 }
 		}
 		 else {
 				log.info("session not to be use>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ");
-				response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize);
+				response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize,file);
 			}
 		 
 		 // TODO Convert header to an ENUM.

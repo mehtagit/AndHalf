@@ -528,7 +528,7 @@ function pageButtons(url){
 
 			}else{
 				$("#consignmentTableDIv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
-				$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' onclick='exportConsignmentData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -743,4 +743,38 @@ function redirectToViewPage()
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	window.location.href = "../stolenRecovery?userTypeId="+role;
 
+}
+
+//**********************************************************Export Excel file************************************************************************
+function exportConsignmentData()
+{
+	var consignmentStartDate=$('#startDate').val();
+	var consignmentEndDate=$('#endDate').val();
+	var consignmentTxnId=$('#transactionID').val();
+	var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
+	var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
+       if(isNaN(consignmentTaxPaidStatus) && isNaN(filterConsignmentStatus) )
+    	   {
+    	   consignmentTaxPaidStatus="";
+    	   filterConsignmentStatus='';
+    	   console.log('consignmentTaxPaidStatus='+consignmentTaxPaidStatus+" filterConsignmentStatus=="+filterConsignmentStatus);
+    	   }
+       else if(isNaN(consignmentTaxPaidStatus))
+    	   {
+    	   consignmentTaxPaidStatus="";
+    	   console.log('consignmentTaxPaidStatus=='+consignmentTaxPaidStatus);
+    	   }
+       else if(isNaN(filterConsignmentStatus))
+	   {
+    	   filterConsignmentStatus='';
+    	   console.log(" filterConsignmentStatus=="+filterConsignmentStatus);
+	   }
+   
+	var table = $('#consignmentLibraryTable').DataTable();
+	var info = table.page.info(); 
+   var pageNo=info.page;
+    var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log(" consignmentStartDate  ="+consignmentStartDate+"  consignmentEndDate=="+consignmentEndDate+"  consignmentTxnId="+consignmentTxnId+" filterConsignmentStatus ="+filterConsignmentStatus+"consignmentTaxPaidStatus  "+consignmentTaxPaidStatus)
+	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
