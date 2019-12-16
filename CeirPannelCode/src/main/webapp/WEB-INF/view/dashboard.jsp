@@ -85,12 +85,12 @@ class="fa fa-pencil dropdownColor" style="float: left"></i><span
 style="float: left" class="dropdownColor">Edit Info</span></a></li>
 <li class="divider"></li>
 <li><a data-target="changePassword" class="modal-trigger"><i
-class="mdi-action-settings dropdownColor" style="float: left"></i><span
+class="fa fa-key dropdownColor" style="float: left"></i><span
 style="float: left" class="dropdownColor">Change
 Password</span></a></li>
 
 <li class="divider"></li>
-<li><a href="#manageAccount" class="modal-trigger"><i class="fa fa-sign-out dropdownColor"></i><span
+<li><a href="#manageAccount" class="modal-trigger"><i class="mdi-action-settings dropdownColor"></i><span
 class="dropdownColor"> Activate/Deactivate Account</span></a></li>	
 <li class="divider"></li>
 

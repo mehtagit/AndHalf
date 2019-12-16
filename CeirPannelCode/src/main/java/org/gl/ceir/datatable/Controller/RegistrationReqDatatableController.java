@@ -62,7 +62,7 @@ public class RegistrationReqDatatableController {
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
 		
 		// Data set on this List
-		List<List<String>> finalList=new ArrayList<List<String>>();
+		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
@@ -92,15 +92,15 @@ public class RegistrationReqDatatableController {
 				   String Id =   String.valueOf(dataInsideList.getUser().getId());
 				   String username =  dataInsideList.getUser().getUsername();
 				   String id =  String.valueOf(dataInsideList.getId());
-				   String type = dataInsideList.getType();
+				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
 				   String grievanceStatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName,createdOn,roles,type,id);			   
-				   String[] finalData={createdOn,username,type,roles,grievanceStatusName,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+				   Object[] finalData={createdOn,username,type,roles,grievanceStatusName,action}; 
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
 					

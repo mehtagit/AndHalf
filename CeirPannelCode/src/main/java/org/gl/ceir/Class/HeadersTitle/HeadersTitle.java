@@ -1,5 +1,8 @@
 package org.gl.ceir.Class.HeadersTitle;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class HeadersTitle {
 	public static final String creationDate = "Creation Date";
 	public static final String  transactionID ="Transaction ID";

@@ -186,10 +186,10 @@ var contextpath = "${context}";
 									<select name="type" class="browser-default" id="type"
 										onchange="myFunction()" required>
 										<option value="" disabled selected>Type</option>
-										<option value="Individual">Individual</option>
+										<!-- <option value="Individual">Individual</option>
 										<option value="Company">Company</option>
 										<option value="Organization">Organization</option>
-										<option value="Government">Government</option>
+										<option value="Government">Government</option> -->
 									</select>
 								</div>
 
@@ -765,8 +765,9 @@ var contextpath = "${context}";
         		dismissible: false
         	});
         	
-        	
+        	asTypeData();       	
             questionDataByCategory();
+            
             usertypeData2(<%=request.getParameter("usertypeId")%>);
             //$('.dropdown-trigger').dropdown();
            
@@ -797,7 +798,7 @@ var contextpath = "${context}";
       
         function myFunction() {
             var x = document.getElementById("type").value;
-            if (x == 'Individual') {
+            if (x == '0') {
                 document.getElementById("uploadFile").style.display = "block";
                 document.getElementById("passportNumberDiv").style.display = "block";
                 document.getElementById("companyNames").style.display = "none";

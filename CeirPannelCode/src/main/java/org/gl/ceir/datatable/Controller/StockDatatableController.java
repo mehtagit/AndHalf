@@ -48,7 +48,7 @@ public class StockDatatableController {
 	@PostMapping("stockData")
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
-		List<List<String>> finalList=new ArrayList<List<String>>();
+		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
@@ -88,8 +88,8 @@ public class StockDatatableController {
 						// if API provide me consignmentStatusName
 						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
 						String stockStatusName=dataInsideList.getStateInterp();
-						String[] finalData={checboxes,date,txnId,file,stockStatusName}; 
-						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData={checboxes,date,txnId,file,stockStatusName}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -104,8 +104,8 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,txnId,file,stockStatusName,action}; 
-						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData={date,txnId,file,stockStatusName,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -121,8 +121,8 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.customStockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,assignedTo,txnId,file,stockStatusName,action}; 
-						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData={date,assignedTo,txnId,file,stockStatusName,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -139,8 +139,8 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,txnId,userId,roll,file,stockStatusName,action}; 
-						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData={date,txnId,userId,roll,file,stockStatusName,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -155,8 +155,8 @@ public class StockDatatableController {
 					String stockStatusName=dataInsideList.getStateInterp();
 					String userStatus = (String) session.getAttribute("userStatus");
 					String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-					String[] finalData={date,txnId,file,stockStatusName,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					Object[] finalData={date,txnId,file,stockStatusName,action}; 
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 					}
@@ -172,8 +172,8 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-						String[] finalData={date,txnId,file,stockStatusName,action}; 
-						List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData={date,txnId,file,stockStatusName,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}

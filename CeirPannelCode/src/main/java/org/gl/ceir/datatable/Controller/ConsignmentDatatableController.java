@@ -65,7 +65,7 @@ public class ConsignmentDatatableController {
 		String userType = (String) session.getAttribute("usertype");
 		
 		// Data set on this List
-		List<List<String>> finalList=new ArrayList<List<String>>();
+		List<List<Object>> finalList=new ArrayList<List<Object>>();
 
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
@@ -220,8 +220,8 @@ public class ConsignmentDatatableController {
 				String consignmentStatusName = dataInsideList.getStateInterp();
 			//	String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
-				String[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+				Object[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName}; 
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 				}
@@ -241,8 +241,8 @@ public class ConsignmentDatatableController {
 				String userStatus = (String) session.getAttribute("userStatus");
 				String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
-				String[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+				Object[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,action}; 
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 				}
@@ -265,7 +265,7 @@ public class ConsignmentDatatableController {
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 				}
@@ -286,7 +286,7 @@ public class ConsignmentDatatableController {
 				
 				
 				String[] finalData={createdOn,txnId,companyName,consignmentStatusName,taxPaidStatusName,action}; 
-					List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
 				}

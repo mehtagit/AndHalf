@@ -53,7 +53,7 @@ public class StolenDatatableController {
 	public ResponseEntity<?> viewStolenList(
 			@RequestParam(name = "type", defaultValue = "stolen", required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,
 			HttpServletRequest request, HttpSession session) {
-		List<List<String>> finalList = new ArrayList<List<String>>();
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
 
 		// FilterRequest filterrequest = request.getParameter("FilterRequest");
 		//FilterRequest filterrequest = new FilterRequest();
@@ -93,8 +93,8 @@ public class StolenDatatableController {
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
-						String[] finalData = {checboxes,createdOn,txnId,fileName, stolenStatusName,source, requestTypeName};
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = {checboxes,createdOn,txnId,fileName, stolenStatusName,source, requestTypeName};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -114,8 +114,8 @@ public class StolenDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.stolenState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty());
-						String[] finalData = { createdOn,txnId,fileName, stolenStatusName,source, requestTypeName, action };
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = { createdOn,txnId,fileName, stolenStatusName,source, requestTypeName, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}

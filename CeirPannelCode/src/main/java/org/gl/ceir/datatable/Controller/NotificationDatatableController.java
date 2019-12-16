@@ -58,7 +58,7 @@ public class NotificationDatatableController {
 		
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
 				// Data set on this List
-				List<List<String>> finalList=new ArrayList<List<String>>();
+				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				
 				String filter = request.getParameter("filter");
 				Gson gsonObject=new Gson();
@@ -80,15 +80,15 @@ public class NotificationDatatableController {
 			}else {
 				for(NotificationContent dataInsideList : paginationContentList) 
 				{
-				  String id = String.valueOf(dataInsideList.getId());
+				  Integer id = dataInsideList.getId();
 				  String createdOn = (String) dataInsideList.getCreatedOn();
 				  String txnID = dataInsideList.getFeatureTxnId();
 				  String featureName = dataInsideList.getFeatureName();
 				  String message =  dataInsideList.getMessage();
 				  String userStatus = (String) session.getAttribute("userStatus");
 				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId());			   
-				  String[] finalData={id,createdOn,txnID,featureName,message,action}; 
-				  List<String> finalDataList=new ArrayList<String>(Arrays.asList(finalData));
+				  Object[] finalData={id,createdOn,txnID,featureName,message,action}; 
+				  List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				  finalList.add(finalDataList);
 				  datatableResponseModel.setData(finalList);	
 			}

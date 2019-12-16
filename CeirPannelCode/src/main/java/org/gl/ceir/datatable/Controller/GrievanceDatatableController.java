@@ -55,7 +55,7 @@ public class GrievanceDatatableController {
 			@RequestParam(name = "grievanceSessionUsesFlag", required = false) Integer grievanceSessionUsesFlag) {
 
 		// Data set on this List
-		List<List<String>> finalList = new ArrayList<List<String>>();
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject = new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
@@ -213,8 +213,8 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
-						String[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -230,8 +230,8 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.customGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
-						String[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -248,8 +248,8 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
-						String[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -265,8 +265,8 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
-						String[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
@@ -284,8 +284,8 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
-						String[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
-						List<String> finalDataList = new ArrayList<String>(Arrays.asList(finalData));
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}

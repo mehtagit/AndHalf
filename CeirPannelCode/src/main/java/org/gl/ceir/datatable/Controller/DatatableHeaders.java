@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.gl.ceir.Class.HeadersTitle.DatatableHeaderModel;
 import org.gl.ceir.Class.HeadersTitle.HeadersTitle;
+import org.gl.ceir.interfacepackage.HeaderInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DatatableHeaders {
+public class DatatableHeaders implements HeaderInterface{
 
 	@PostMapping("headers")
 	public ResponseEntity<?> headers(@RequestParam(name="type",defaultValue = "stock",required = false) String role){
@@ -168,9 +169,4 @@ public class DatatableHeaders {
 
 
 	}
-
-
-
-
-
-}
+	}

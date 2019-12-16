@@ -35,6 +35,7 @@ public class RegistrationContentModel {
 	private Object roles;
 	private Object usertypeId;
 	private Object password;
+	private String asTypeName;
 	private RegistrationUser user;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private String stateInterp;
@@ -221,8 +222,14 @@ public class RegistrationContentModel {
 				+ passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", createdOn=" + createdOn
 				+ ", modifiedOn=" + modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", status="
 				+ status + ", username=" + username + ", questionList=" + questionList + ", roles=" + roles
-				+ ", usertypeId=" + usertypeId + ", password=" + password + ", user=" + user + ", additionalProperties="
-				+ additionalProperties + ", stateInterp=" + stateInterp + "]";
+				+ ", usertypeId=" + usertypeId + ", password=" + password + ", asTypeName=" + asTypeName + ", user="
+				+ user + ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + "]";
+	}
+	public String getAsTypeName() {
+		return asTypeName;
+	}
+	public void setAsTypeName(String asTypeName) {
+		this.asTypeName = asTypeName;
 	}
 
 }

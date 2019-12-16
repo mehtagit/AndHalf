@@ -12,6 +12,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.interfacepackage.CRUD;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -33,7 +34,7 @@ import com.google.gson.Gson;
 
 @RestController
 @CrossOrigin
-public class TRC {
+public class TRC implements CRUD{
 
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;	
@@ -52,8 +53,15 @@ public class TRC {
 
 	@ResponseBody
 	@PostMapping("trc")
-	public ResponseEntity<?> view(HttpServletRequest request,HttpSession session,@RequestParam(name = "file", defaultValue = "0", required = false) Integer file){
-	List<List<String>> finalList = new ArrayList<List<String>>();
+	@Override
+	public ResponseEntity<?> view(@RequestParam(name="type",defaultValue = "consignment",required = false) String role ,
+			 @RequestParam(name="sourceType",required = false) String sourceType,
+			 @RequestParam(name = "file", defaultValue = "0", required = false) Integer file,
+			 HttpServletRequest request,HttpSession session,
+			 @RequestParam(name="sessionFlag",
+			 required = false) Integer sessionFlag) {
+		// TODO Auto-generated method stub
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
@@ -84,9 +92,9 @@ public class TRC {
 					String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 					String action = iconState.trcManageIcons(status);
 					
-					String[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
+					Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 					
-					List<String> datatableList = Arrays.asList(data);
+					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
@@ -102,14 +110,14 @@ public class TRC {
 			datatableResponseModel.setData(Collections.emptyList());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-}
-	
+	}
+
 	
 	
 	
 	
 	@PostMapping("TRC/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "TRC",required = false) String role,HttpSession session){
+	public ResponseEntity<?> directives(@RequestParam(name="type",defaultValue = "TRC",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -126,7 +134,7 @@ public class TRC {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"HeaderButton","Report Type-Approved Devices","./openReportTypeForm?reqType=formPage","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
+			String[] names= {"HeaderButton","Report Type-Approved Devices","./manageTypeDevices","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

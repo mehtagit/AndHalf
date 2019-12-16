@@ -8,7 +8,7 @@ public class DatatableResponseModel {
 	private Integer recordsTotal;
 	//Integer recordsTotal = new Integer(10)     int recordsTotal;  int x= recordsTotal.intValue();
 	private Integer recordsFiltered;
-	private List<List<String>> data = null;
+	private List<List<Object>> data = null;
 	public Integer getRecordsTotal() {
 		return recordsTotal;
 	}
@@ -21,17 +21,10 @@ public class DatatableResponseModel {
 	public void setRecordsFiltered(Integer recordsFiltered) {
 		this.recordsFiltered = recordsFiltered;
 	}
-	public List<List<String>> getData() {
+	public List<List<Object>> getData() {
 		return data;
 	}
-	public void setData(List<List<String>> data) {
+	public void setData(List<List<Object>> data) {
 		this.data = data;
 	}
-	@Override
-	public String toString() {
-		return "DatatableResponseModel [recordsTotal=" + recordsTotal + ", recordsFiltered=" + recordsFiltered
-				+ ", data=" + data + "]";
 	}
-
-	
-}
