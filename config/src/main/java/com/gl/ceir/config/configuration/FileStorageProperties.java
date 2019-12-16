@@ -21,6 +21,8 @@ public class FileStorageProperties {
 	private String stockDownloadLink;
 	private String stolenAndRecoveryDownloadDir;
 	private String stolenAndRecoveryDownloadLink;
+	private String regularizeDeviceDownloadDir;
+	private String regularizeDeviceDownloadLink;
 
 	public String getGrievanceDownloadLink() {
 		return grievanceDownloadLink;
@@ -135,5 +137,20 @@ public class FileStorageProperties {
 		this.stolenAndRecoveryDownloadLink = stolenAndRecoveryDownloadLink;
 	}
 
+	public String getRegularizeDeviceDownloadDir() {
+		return regularizeDeviceDownloadDir;
+	}
+
+	public void setRegularizeDeviceDownloadDir(String regularizeDeviceDownloadDir) {
+		this.regularizeDeviceDownloadDir = regularizeDeviceDownloadDir;
+	}
+
+	public String getRegularizeDeviceDownloadLink() {
+		return regularizeDeviceDownloadLink;
+	}
+
+	public void setRegularizeDeviceDownloadLink(String regularizeDeviceDownloadLink) {
+		this.regularizeDeviceDownloadLink = regularizeDeviceDownloadLink;
+	}
 	
 }

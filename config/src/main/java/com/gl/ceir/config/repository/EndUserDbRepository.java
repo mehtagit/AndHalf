@@ -2,10 +2,13 @@ package com.gl.ceir.config.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.ceir.config.model.CustomRegistrationDB;
+import com.gl.ceir.config.model.EndUserDB;
 
-public interface CustomRegisterationDbRepository extends JpaRepository<CustomRegistrationDB, Long> {
+public interface EndUserDbRepository extends JpaRepository<EndUserDB, Long> {
 
-	public CustomRegistrationDB save (CustomRegistrationDB customRegistrationDB);
+	@SuppressWarnings("unchecked")
+	public EndUserDB save (EndUserDB customRegistrationDB);
+	
+	public EndUserDB getByNid(String nid);
 	
 }

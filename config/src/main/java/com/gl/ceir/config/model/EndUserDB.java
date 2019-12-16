@@ -18,16 +18,18 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class CustomRegistrationDB implements Serializable {
+public class EndUserDB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
+	
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
@@ -43,8 +45,8 @@ public class CustomRegistrationDB implements Serializable {
 	private String email;
 	private String phoneNo;
 
-	@OneToMany(mappedBy = "customRegistrationDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<UserCustomDb> userCustomDb ;
+	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 
 	public Long getId() {
 		return id;
@@ -185,29 +187,56 @@ public class CustomRegistrationDB implements Serializable {
 		this.phoneNo = phoneNo;
 	}
 
-
-	public List<UserCustomDb> getUserCustomDb() {
-		return userCustomDb;
+	public List<RegularizeDeviceDb> getRegularizeDeviceDbs() {
+		return regularizeDeviceDbs;
 	}
 
 
-	public void setUserCustomDb(List<UserCustomDb> userCustomDb) {
-		this.userCustomDb = userCustomDb;
+	public void setRegularizeDeviceDbs(List<RegularizeDeviceDb> regularizeDeviceDbs) {
+		this.regularizeDeviceDbs = regularizeDeviceDbs;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 
 	@Override
 	public String toString() {
-		return "CustomRegistrationDB [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
-				+ nid + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
-				+ ", province=" + province + ", country=" + country + ", email=" + email + ", phoneNo=" + phoneNo
-				+ ", userCustomDb=" + userCustomDb + "]";
-	} 
-
-
-
-
-
+		StringBuilder builder = new StringBuilder();
+		builder.append("EndUserDB [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", regularizeDeviceDbs=");
+		builder.append(regularizeDeviceDbs);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

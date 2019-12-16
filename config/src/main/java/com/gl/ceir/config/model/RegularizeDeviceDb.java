@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class UserCustomDb implements Serializable {
+public class RegularizeDeviceDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,12 +30,15 @@ public class UserCustomDb implements Serializable {
 	private LocalDateTime modifiedOn;
 	
 	@NotNull
-	private String deviceStatus;
+	private String nid;
+	
+	@NotNull
+	private Integer deviceStatus;
 	
 	@NotNull
 	private Integer taxPaidStatus;
 	@Transient
-	private Integer taxPaidStatusInterp;
+	private String taxPaidStatusInterp;
 	
 	@NotNull
 	private Integer deviceType;
@@ -53,14 +56,10 @@ public class UserCustomDb implements Serializable {
 	@NotNull
 	private String country;
 	
-	@NotNull
 	private String deviceSerialNumber;
 	
 	@NotNull
 	private String txnId;
-	
-	@NotNull
-	private String nid;
 	
 	@NotNull
 	private Double price;
@@ -80,7 +79,7 @@ public class UserCustomDb implements Serializable {
 
 	@ManyToOne 
 	@JoinColumn(name = "userId") 
-	private CustomRegistrationDB customRegistrationDB;
+	private EndUserDB endUserDB;
 
 	public Long getId() {
 		return id;
@@ -178,12 +177,12 @@ public class UserCustomDb implements Serializable {
 		this.txnId = txnId;
 	}
 
-	public CustomRegistrationDB getCustomRegistrationDB() {
-		return customRegistrationDB;
+	public EndUserDB getEndUserDB() {
+		return endUserDB;
 	}
 
-	public void setCustomRegistrationDB(CustomRegistrationDB customRegistrationDB) {
-		this.customRegistrationDB = customRegistrationDB;
+	public void setEndUserDB(EndUserDB endUserDB) {
+		this.endUserDB = endUserDB;
 	}
 
 	public String getNid() {
@@ -194,19 +193,19 @@ public class UserCustomDb implements Serializable {
 		this.nid = nid;
 	}
 
-	public String getDeviceStatus() {
+	public Integer getDeviceStatus() {
 		return deviceStatus;
 	}
 
-	public void setDeviceStatus(String deviceStatus) {
+	public void setDeviceStatus(Integer deviceStatus) {
 		this.deviceStatus = deviceStatus;
 	}
 
-	public Integer getTaxPaidStatusInterp() {
+	public String getTaxPaidStatusInterp() {
 		return taxPaidStatusInterp;
 	}
 
-	public void setTaxPaidStatusInterp(Integer taxPaidStatusInterp) {
+	public void setTaxPaidStatusInterp(String taxPaidStatusInterp) {
 		this.taxPaidStatusInterp = taxPaidStatusInterp;
 	}
 
@@ -317,8 +316,6 @@ public class UserCustomDb implements Serializable {
 		builder.append(thirdImei);
 		builder.append(", fourthImei=");
 		builder.append(fourthImei);
-		builder.append(", customRegistrationDB=");
-		builder.append(customRegistrationDB);
 		builder.append("]");
 		return builder.toString();
 	}

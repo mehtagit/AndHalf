@@ -12,7 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-public class UserCustomHistoryDb implements  Serializable {
+public class RegularizeDeviceHistoryDb implements  Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,19 +25,41 @@ public class UserCustomHistoryDb implements  Serializable {
 
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
-	private String  nid;
-	private int status;
+	private String nid;
+	private int deviceStatus;
 	private Long firstImei;
 	private Long secondImei;
 	private Long thirdImei;
 	private Long fourthImei;
 	private int taxPaidStatus;
-	private String deviceType;
+	private Integer deviceType;
+	private Integer deviceIdType;
 	private String multiSimStatus;
 	private String country;
 	private String deviceSerialNumber;
 
 	private String txnId;
+	
+	public RegularizeDeviceHistoryDb() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public RegularizeDeviceHistoryDb(String nid, int deviceStatus, Long firstImei, Long secondImei, Long thirdimei, 
+			Long fourthImei, int taxPaidStatus, Integer deviceType, Integer deviceIdType, String multiSimStatus,
+			String country, String deviceSerialNumber) {
+		this.nid = nid;
+		this.deviceStatus = deviceStatus;
+		this.firstImei = firstImei;
+		this.secondImei = secondImei;
+		this.thirdImei = thirdimei;
+		this.fourthImei = fourthImei;
+		this.taxPaidStatus = taxPaidStatus;
+		this.deviceIdType = deviceType;
+		this.multiSimStatus = multiSimStatus;
+		this.country = country;
+		this.deviceSerialNumber = deviceSerialNumber;
+	}
+	
 
 	public Long getId() {
 		return id;
@@ -71,12 +93,12 @@ public class UserCustomHistoryDb implements  Serializable {
 		this.nid = nid;
 	}
 
-	public int getStatus() {
-		return status;
+	public int getDeviceStatus() {
+		return deviceStatus;
 	}
 
-	public void setStatus(int status) {
-		this.status = status;
+	public void setDeviceStatus(int status) {
+		this.deviceStatus = deviceStatus;
 	}
 
 	public Long getFirstImei() {
@@ -119,12 +141,24 @@ public class UserCustomHistoryDb implements  Serializable {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 
-	public String getDeviceType() {
+	public Integer getDeviceType() {
 		return deviceType;
 	}
 
-	public void setDeviceType(String deviceType) {
+	public void setDeviceType(Integer deviceType) {
 		this.deviceType = deviceType;
+	}
+
+	public Integer getDeviceIdType() {
+		return deviceIdType;
+	}
+
+	public void setDeviceIdType(Integer deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getMultiSimStatus() {
@@ -161,14 +195,41 @@ public class UserCustomHistoryDb implements  Serializable {
 
 	@Override
 	public String toString() {
-		return "UserCustomDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid
-				+ ", status=" + status + ", firstImei=" + firstImei + ", secondImei=" + secondImei + ", thirdImei="
-				+ thirdImei + ", fourthImei=" + fourthImei + ", taxPaidStatus=" + taxPaidStatus + ", deviceType="
-				+ deviceType + ", multiSimStatus=" + multiSimStatus + ", country=" + country + ", deviceSerialNumber="
-				+ deviceSerialNumber + ", txnId=" + txnId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserCustomHistoryDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append("]");
+		return builder.toString();
 	}
-
-
-
 
 }

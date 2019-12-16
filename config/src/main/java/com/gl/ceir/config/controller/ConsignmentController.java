@@ -59,12 +59,11 @@ public class ConsignmentController {
 		return genricResponse;
 	}
 
-
 	@ApiOperation(value = "Update Consignment Info.", response = GenricResponse.class)
 	@RequestMapping(path = "/consignment/update", method = RequestMethod.POST)
 	public GenricResponse updateConsigmentInfo(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
-		logger.info("Update Consignment Request="+consignmentUploadRequest.toString());
+		logger.info("Update Consignment Request = "+consignmentUploadRequest.toString());
 
 		GenricResponse genricResponse =	consignmentServiceImpl.updateConsignment(consignmentUploadRequest);
 		logger.info("Update Consignment Response ="+genricResponse);
@@ -94,7 +93,7 @@ public class ConsignmentController {
 
 		logger.info("Request TO view filtered consignment = " + filterRequest);
 
-		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getFilterConsignments(filterRequest, pageNo, pageSize);
+		List<ConsignmentMgmt>  consignment = consignmentServiceImpl.getFilterConsignments(filterRequest, pageNo, pageSize);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 		logger.info("Response of view Request ="+mapping);
 

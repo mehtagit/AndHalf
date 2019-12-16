@@ -1,32 +1,55 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.CustomRegistrationDB;
-import com.gl.ceir.config.model.DeviceDb;
+import com.gl.ceir.config.model.EndUserDB;
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.UserCustomDb;
-import com.gl.ceir.config.model.UserCustomHistoryDb;
-import com.gl.ceir.config.model.constants.EndUserStatus;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
+import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
+import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.Tags;
+import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.CustomDetailsRepository;
-import com.gl.ceir.config.repository.CustomRegisterationDbRepository;
+import com.gl.ceir.config.repository.EndUserDbRepository;
+import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
-import com.gl.ceir.config.repository.UserCustomDbRepository;
-import com.gl.ceir.config.repository.UserCustomHistoryDbRepository;
+import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
-public class CustomServiceImpl {
+public class RegularizedDeviceServiceImpl {
 
-
-	private static final Logger logger = LogManager.getLogger(CustomServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(RegularizedDeviceServiceImpl.class);
 
 	@Autowired
 	ConsignmentRepository consignmentRepository;
@@ -38,33 +61,224 @@ public class CustomServiceImpl {
 	CustomDetailsRepository customDetailsRepository;
 
 	@Autowired
-	CustomRegisterationDbRepository customRegisterationDbRepository;
+	EndUserDbRepository endUserDbRepository;
 
 	@Autowired
-	UserCustomDbRepository userCustomDbRepository;
+	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
 
 	@Autowired
-	UserCustomHistoryDbRepository userCustomHistoryDbRepository;
+	RegularizeDeviceHistoryDbRepository userCustomHistoryDbRepository;
 
-	public List<UserCustomDb> getCustomDetails(UserCustomDb userCustomDb){
+	@Autowired
+	PropertiesReader propertiesReader;
+
+	@Autowired
+	FileStorageProperties fileStorageProperties;
+
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+
+	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+
+		List<SystemConfigListDb> customTaxStatusList = null;
+		List<SystemConfigListDb> deviceIdTypeList = null;
+		List<SystemConfigListDb> deviceTypeList = null;
+
 		try {
-			List<UserCustomDb>	userCustomDetails = userCustomDbRepository.getByNid(userCustomDb.getNid());
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			List<DeviceDb> deviceDb = stokeDetailsRepository.getByEndUserUserId(userCustomDb.getNid());
+			System.out.println("dialect : " + propertiesReader.dialect);
+
+			SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
+
+			if(Objects.nonNull(filterRequest.getNid()))
+				specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+				specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+				specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+
+			if(Objects.nonNull(filterRequest.getDeviceIdType()))
+				specificationBuilder.with(new SearchCriteria("deviceIdType", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			if(Objects.nonNull(filterRequest.getDeviceType()))
+				specificationBuilder.with(new SearchCriteria("deviceType", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			if(Objects.nonNull(filterRequest.getTaxPaidStatus()))
+				specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(specificationBuilder.build(), pageable);
+
+			customTaxStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
+			deviceIdTypeList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_ID_TYPE);
+			deviceTypeList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_TYPE);
+
+			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
+
+				for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
+					if(regularizeDeviceDb.getTaxPaidStatus() == systemConfigListDb.getValue()) {
+						regularizeDeviceDb.setTaxPaidStatusInterp(systemConfigListDb.getInterp()); 
+						break;
+					} 
+				}
+
+				for(SystemConfigListDb systemConfigListDb : deviceIdTypeList) {
+					if(regularizeDeviceDb.getDeviceIdType() == systemConfigListDb.getValue()) {
+						regularizeDeviceDb.setTaxPaidStatusInterp(systemConfigListDb.getInterp()); 
+						break;
+					} 
+				}
+
+				for(SystemConfigListDb systemConfigListDb : deviceTypeList) {
+					if(regularizeDeviceDb.getDeviceType() == systemConfigListDb.getValue()) {
+						regularizeDeviceDb.setTaxPaidStatusInterp(systemConfigListDb.getInterp()); 
+						break;
+					} 
+				}
+			}
+
+			return page;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Regularized Device Service", e.getMessage());
+		}
+	}
+
+	public FileDetails getFilteredDeviceInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+		String fileName = null;
+		Writer writer   = null;
+		RegularizeDeviceFileModel rdfm = null;
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+		String filePath  = fileStorageProperties.getRegularizeDeviceDownloadDir();
+		StatefulBeanToCsvBuilder<RegularizeDeviceFileModel> builder = null;
+		StatefulBeanToCsv<RegularizeDeviceFileModel> csvWriter = null;
+		List< RegularizeDeviceFileModel > fileRecords = null;
+
+		try {
+			List<RegularizeDeviceDb> regularizeDevices = filter(filterRequest, pageNo, pageSize).getContent();
+
+			if( !regularizeDevices.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + "_RegularizeDevices.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevices.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevices.csv";
+			}
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<RegularizeDeviceFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+
+			if( !regularizeDevices.isEmpty() ) {
+
+				List<SystemConfigListDb> currencyList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CURRENCY);
+
+				fileRecords = new ArrayList<>(); 
+
+				for(RegularizeDeviceDb regularizeDeviceDb : regularizeDevices ) {
+					rdfm = new RegularizeDeviceFileModel();
+
+					rdfm.setCreatedOn(regularizeDeviceDb.getCreatedOn().format(dtf));
+					rdfm.setDeviceIdTypeInterp(regularizeDeviceDb.getDeviceIdTypeInterp());
+					rdfm.setDeviceTypeInterp(regularizeDeviceDb.getDeviceTypeInterp());
+					rdfm.setPrice( regularizeDeviceDb.getPrice());
+
+					for(SystemConfigListDb systemConfigListDb : currencyList) {
+						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
+							rdfm.setCurrency(systemConfigListDb.getInterp()); 
+							break;
+						} 
+					}
+					rdfm.setCountry(regularizeDeviceDb.getCountry());
+					rdfm.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatusInterp());
+
+					logger.debug(rdfm);
+
+					fileRecords.add(rdfm);
+				}
+
+				csvWriter.write(fileRecords);
+			}
+			return new FileDetails(fileName, filePath, fileStorageProperties.getRegularizeDeviceDownloadLink() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
+	@Transactional
+	public GenricResponse saveDevices(EndUserDB endUserDB) {
+		try {
+
+			EndUserDB endUserDB2 = endUserDbRepository.getByNid(endUserDB.getNid());
+
+			// End user is not registered with CEIR system.
+			if(Objects.isNull(endUserDB2)) {
+				endUserDbRepository.save(endUserDB);
+			}else {
+				// TODO Validation required.
+				regularizedDeviceDbRepository.saveAll(endUserDB.getRegularizeDeviceDbs());
+			}
 			
-			if(deviceDb != null) {
-				UserCustomDb deviceDbFetchDetails =new UserCustomDb();
+			return new GenricResponse(0, "User register sucessfully", endUserDB.getRegularizeDeviceDbs().get(0).getTxnId());
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Custom Service", e.getMessage());
+		}
+	}
 
-				for(int i= 0; i<deviceDb.size(); i++) {
+	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
+		try {
+			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 
+			if(Objects.nonNull(userCustomDbDetails)) {
+				
+				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
+				regularizedDeviceDbRepository.save(userCustomDbDetails);
+				return new GenricResponse(0, "Update Successfully.",userCustomDbDetails.getDeviceSerialNumber());
+
+			}else {
+				return  new GenricResponse(4,"TxnId Does Not exist.", "");
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Custom Service", e.getMessage());}
+	}
+
+	public RegularizeDeviceDb viewDeviceInfoByImei1(long imei) {
+		try {
+
+			return regularizedDeviceDbRepository.getByFirstImei(imei);
+			
+			/*if(userDetails != null) {
+				return userDetails;
+			}else {
+
+				RegularizeDeviceDb deviceDbFetchDetails = new  RegularizeDeviceDb();
+				List<DeviceDb> deviceDb = stokeDetailsRepository.getByDeviceNumber(UserCustomDb.getDeviceSerialNumber());
+
+				for(int i=0;i < deviceDb.size();i++) {
 					if(i == 0) {
-						deviceDbFetchDetails.setCountry(deviceDb.get(i).getEndUserCountry());
-						// deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
+						deviceDbFetchDetails.setFirstImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 						deviceDbFetchDetails.setMultiSimStatus(deviceDb.get(i).getMultipleSimStatus());
 						deviceDbFetchDetails.setNid(deviceDb.get(i).getEndUserUserId());
 						deviceDbFetchDetails.setTaxPaidStatus(deviceDb.get(i).getEndUserDeviceStatus());
 						deviceDbFetchDetails.setTxnId(deviceDb.get(i).getEndUserTxnId());
-						deviceDbFetchDetails.setFirstImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
+						deviceDbFetchDetails.setCountry(deviceDb.get(i).getEndUserCountry());
+						// deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
 					}
 					if(i == 1) {
 						deviceDbFetchDetails.setSecondImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
@@ -76,92 +290,10 @@ public class CustomServiceImpl {
 						deviceDbFetchDetails.setFourthImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 					}
 
-					if(i %4 == 0) {
-						userCustomDetails.add(deviceDbFetchDetails);
-					}
-				}
-			}
-
-			return userCustomDetails;
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException("Custom Service", e.getMessage());
-		}
-	}
-
-
-	public GenricResponse updateTaxPaidStatus( UserCustomDb userCustomDb) {
-		try {
-
-			UserCustomDb userCustomDbDetails = userCustomDbRepository.getByDeviceSerialNumber(userCustomDb.getDeviceSerialNumber());
-
-			if(userCustomDbDetails != null) {
-				userCustomDbDetails.setTaxPaidStatus(EndUserStatus.PAID.getCode());
-				userCustomDbRepository.save(userCustomDbDetails);
-				return new GenricResponse(0, "Update Successfully.",userCustomDbDetails.getDeviceSerialNumber());
-
-			}else {
-
-				return  new GenricResponse(4,"TxnId Does Not exist.", userCustomDbDetails.getDeviceSerialNumber());
-			}
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException("Custom Service", e.getMessage());}
-	}
-
-
-	@Transactional
-	public GenricResponse saveRegisterInfo(CustomRegistrationDB customRegistrationDB) {
-		try {
-
-			CustomRegistrationDB customRegistration = customRegisterationDbRepository.save(customRegistrationDB);
-
-			return new GenricResponse(0, "User register sucessfully", customRegistrationDB.getUserCustomDb().get(0).getTxnId());
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException("Custom Service", e.getMessage());
-		}
-	}
-
-
-	public UserCustomDb viewStatus(UserCustomDb UserCustomDb) {
-		try {
-
-			UserCustomDb  userDetails = userCustomDbRepository.getByDeviceSerialNumber(UserCustomDb.getDeviceSerialNumber());
-			if(userDetails != null) {
-				return userDetails;
-			}else {
-
-				UserCustomDb deviceDbFetchDetails = new  UserCustomDb();
-				List<DeviceDb> deviceDb = stokeDetailsRepository.getByDeviceNumber(UserCustomDb.getDeviceSerialNumber());
-
-				for(int i=0;i < deviceDb.size();i++) {
-
-
-					if(i == 0) {
-						deviceDbFetchDetails.setFirstImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-						deviceDbFetchDetails.setMultiSimStatus(deviceDb.get(i).getMultipleSimStatus());
-						deviceDbFetchDetails.setNid(deviceDb.get(i).getEndUserUserId());
-						deviceDbFetchDetails.setTaxPaidStatus(deviceDb.get(i).getEndUserDeviceStatus());
-						deviceDbFetchDetails.setTxnId(deviceDb.get(i).getEndUserTxnId());
-						deviceDbFetchDetails.setCountry(deviceDb.get(i).getEndUserCountry());
-						// deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
-					}
-					if(i ==1) {
-						deviceDbFetchDetails.setSecondImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-					}
-					if(i ==2) {
-						deviceDbFetchDetails.setThirdImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-					}
-					if(i ==3) {
-						deviceDbFetchDetails.setFourthImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-					}
-
 				}
 
 				return deviceDbFetchDetails;
-			}
+			}*/
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -169,35 +301,35 @@ public class CustomServiceImpl {
 
 	}
 
-
-	public GenricResponse deleteCustomInfo(UserCustomDb userCustomDb) {
+	@Transactional
+	public GenricResponse deleteCustomInfo(Long imei) {
 		try {
-			UserCustomDb customDb = userCustomDbRepository.getByDeviceSerialNumber(userCustomDb.getDeviceSerialNumber());
-			if(customDb  != null) {
-				userCustomDbRepository.deleteById(customDb.getId());
+			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
+			
+			if(Objects.nonNull(regularizeDeviceDb)) {
+				
+				regularizedDeviceDbRepository.deleteById(regularizeDeviceDb.getId());
 
-				UserCustomHistoryDb userCustomHistoryDb = new UserCustomHistoryDb();
-				userCustomHistoryDb.setCountry(customDb.getCountry());
-				userCustomHistoryDb.setDeviceSerialNumber(customDb.getDeviceSerialNumber());
-				// userCustomHistoryDb.setDeviceType(customDb.getDeviceType());
-				userCustomHistoryDb.setFirstImei(customDb.getFirstImei());
-				userCustomHistoryDb.setFourthImei(customDb.getFourthImei());
-				userCustomHistoryDb.setMultiSimStatus(customDb.getMultiSimStatus());
-				userCustomHistoryDb.setNid(customDb.getNid());
-				userCustomHistoryDb.setSecondImei(customDb.getSecondImei());
-				// userCustomHistoryDb.setStatus(customDb.getStatus());
-				userCustomHistoryDb.setTaxPaidStatus(customDb.getTaxPaidStatus());
-				userCustomHistoryDb.setThirdImei(customDb.getThirdImei());
-				userCustomHistoryDb.setTxnId(customDb.getTxnId());
+				userCustomHistoryDbRepository.save(new RegularizeDeviceHistoryDb(regularizeDeviceDb.getNid(), regularizeDeviceDb.getDeviceStatus(), regularizeDeviceDb.getFirstImei(), 
+						regularizeDeviceDb.getSecondImei(), regularizeDeviceDb.getThirdImei(), regularizeDeviceDb.getFourthImei(), regularizeDeviceDb.getTaxPaidStatus(),
+						regularizeDeviceDb.getDeviceType(), regularizeDeviceDb.getDeviceIdType(), regularizeDeviceDb.getMultiSimStatus(), regularizeDeviceDb.getCountry(),
+						regularizeDeviceDb.getDeviceSerialNumber()));
 
-				userCustomHistoryDbRepository.save(userCustomHistoryDb);
-
-				return new GenricResponse(0, "Txn delete sucessfully", userCustomDb.getDeviceSerialNumber());
+				return new GenricResponse(0, "Device have been deleted sucessfully.", Long.toString(regularizeDeviceDb.getFirstImei()));
 			}else {
 
-				return new GenricResponse(4, "This txn not exist", userCustomDb.getDeviceSerialNumber());	
+				return new GenricResponse(4, "This IMEI does not exist.", Long.toString(regularizeDeviceDb.getFirstImei()));	
 			}
 
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Custom Service", e.getMessage());
+		}
+	}
+	
+	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
+		try {
+			return new GenricResponse(0, "", "", Long.toString(regularizedDeviceDbRepository.countByNid(nid)));	
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());

@@ -16,9 +16,9 @@ public interface StockManagementRepository extends JpaRepository<StockMgmt, Long
 	
 	public StockMgmt getByTxnId(String txnId);
 
-	public List<StockMgmt> findByRoleTypeAndUserId(String moduleType,Long userId);
+	public List<StockMgmt> findByRoleTypeAndUserId(String moduleType, Long userId);
 
-	public StockMgmt findByRoleTypeAndTxnId(String moduleType,String txnId);
+	public StockMgmt findByRoleTypeAndTxnId(String moduleType, String txnId);
 
 	public void deleteByTxnId(String txnId);
 

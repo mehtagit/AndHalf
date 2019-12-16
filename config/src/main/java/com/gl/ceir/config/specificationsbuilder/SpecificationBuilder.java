@@ -4,56 +4,50 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
-import com.gl.ceir.config.controller.ConsignmentController;
-import com.gl.ceir.config.model.ConsignmentMgmt;
-import com.gl.ceir.config.model.Grievance;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.util.DbFunctions;
 
-public class ConsignmentMgmtSpecificationBuilder {
+public class SpecificationBuilder<T> {
 
-	private static final Logger logger = LogManager.getLogger(ConsignmentController.class);
+	private static final Logger logger = LogManager.getLogger(SpecificationBuilder.class);
 
 	private final List<SearchCriteria> params;
 	private final List<SearchCriteria> searchParams;
 	private final String dialect;
-	private List<Specification<ConsignmentMgmt>> specifications;
+	private List<Specification<T>> specifications;
 
-	public ConsignmentMgmtSpecificationBuilder(String dialect) {
+	public SpecificationBuilder(String dialect) {
 		params = new ArrayList<>();
 		searchParams = new ArrayList<>();
 		specifications = new LinkedList<>();
 		this.dialect = dialect;
 	}
 
-	public final ConsignmentMgmtSpecificationBuilder with(SearchCriteria criteria) { 
+	public final SpecificationBuilder<T> with(SearchCriteria criteria) { 
 		params.add(criteria);
 		return this;
 	}
 
-	public final ConsignmentMgmtSpecificationBuilder orSearch(SearchCriteria criteria) { 
+	public final SpecificationBuilder<T> orSearch(SearchCriteria criteria) { 
 		searchParams.add(criteria);
 		return this;
 	}
 
-	public Specification<ConsignmentMgmt> build() { 
+	public Specification<T> build() { 
 		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
 
-		Specification<ConsignmentMgmt> finalSpecification = null;
+		Specification<T> finalSpecification = null;
 
-		Specification<ConsignmentMgmt> searchSpecification  = null;
-		List<Specification<ConsignmentMgmt>> specifications = createSpecifications( params );
+		Specification<T> searchSpecification  = null;
+		List<Specification<T>> specifications = createSpecifications( params );
 
 		if(!specifications.isEmpty()) {
 			finalSpecification = Specification.where(specifications.get(0));
@@ -79,11 +73,11 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return finalSpecification;
 	}
 
-	public void addSpecification(Specification<ConsignmentMgmt> specification) { 
+	public void addSpecification(Specification<T> specification) { 
 		specifications.add(specification);
 	}
 
-	private List<Specification<ConsignmentMgmt>> createSpecifications(List<SearchCriteria> criterias){
+	private List<Specification<T>> createSpecifications(List<SearchCriteria> criterias){
 
 		try {
 			for(SearchCriteria searchCriteria : params) {
@@ -123,24 +117,11 @@ public class ConsignmentMgmtSpecificationBuilder {
 		return specifications;
 	}
 
-	public Specification<ConsignmentMgmt> in(SearchCriteria searchCriteria, List<Integer> status){
+	public Specification<T> in(SearchCriteria searchCriteria, List<Integer> status){
 		return (root, query, cb) -> {
 			logger.info("In query save ");
 			return cb.in(root.get(searchCriteria.getKey())).value(status);
 		};
 	}
 
-	private Predicate[] getSearchPredicates(Root<Grievance> root, CriteriaBuilder cb, List<SearchCriteria> criterias ){
-		int i = 0;
-		Predicate[] list = new Predicate[criterias.size()];
-		try {
-			for(SearchCriteria searchCriteria : criterias) {
-				list[i] = cb.like(root.get(searchCriteria.getKey()), "%"+(String)searchCriteria.getValue()+"%");
-				i++;
-			}
-		}catch( Exception ex) {
-			logger.error(ex.getMessage(), ex);
-		}
-		return list;
-	}
 }

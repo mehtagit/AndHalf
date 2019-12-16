@@ -11,4 +11,7 @@ public class PropertiesReader {
 	
 	@Value("${date.view.format}")
 	public String dateViewFormat;
+	
+	@Value("${default-no-of-regularized-devices}")
+	public int defaultNoOfRegularizedDevices;
 }

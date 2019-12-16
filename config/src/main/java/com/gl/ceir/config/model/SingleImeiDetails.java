@@ -26,8 +26,10 @@ public class SingleImeiDetails implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@CreationTimestamp
 	private Date createdOn;
+	
 	@UpdateTimestamp
 	private Date modifiedOn;
 

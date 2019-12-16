@@ -3,10 +3,10 @@ package com.gl.ceir.config.model;
 public class FilterRequest {
 
 	public Integer userId;
+	public String nid;
 	private String txnId;
 	public String startDate;
 	public String endDate;
-	public Integer taxPaidStatus;
 	private Integer consignmentStatus;
 	private String roleType;
 	private Integer requestType;
@@ -15,12 +15,23 @@ public class FilterRequest {
 	private Integer featureId;
 	private Integer userTypeId;
 	private String searchString;
+	
+	public Integer taxPaidStatus;
+	private Integer deviceIdType;
+	private Integer deviceType;
 
 	public Integer getUserId() {
 		return userId;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	
+	public String getNid() {
+		return nid;
+	}
+	public void setNid(String nid) {
+		this.nid = nid;
 	}
 	public String getTxnId() {
 		return txnId;
@@ -77,7 +88,6 @@ public class FilterRequest {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-
 	public Integer getFeatureId() {
 		return featureId;
 	}
@@ -96,7 +106,19 @@ public class FilterRequest {
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
 	}
-	
+	public Integer getDeviceIdType() {
+		return deviceIdType;
+	}
+	public void setDeviceIdType(Integer deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
+
+	public Integer getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
