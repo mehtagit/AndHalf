@@ -20,25 +20,17 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class CambodiaNationalismController {
 
-
 	@Autowired
 	NationalislmServiceImpl nationalislmServiceImpl;
-
-
-
 
 	@ApiOperation(value = "Add Nationalism Details ", response = GenricResponse.class)
 	@RequestMapping(path = "/nationallism/add", method = RequestMethod.POST)
 
-	public GenricResponse saveNationlismInfo(@RequestBody ForeignerRequest foreignerDetails)
-
-	{
+	public GenricResponse saveNationlismInfo(@RequestBody ForeignerRequest foreignerDetails){
 		GenricResponse response = nationalislmServiceImpl.saveNationalismData(foreignerDetails);
 
 		return response;
 	}
-
-
 
 	@ApiOperation(value = "Update Nationalism Details ", response = GenricResponse.class)
 	@RequestMapping(path = "/nationallism/update", method = RequestMethod.POST)
@@ -50,7 +42,6 @@ public class CambodiaNationalismController {
 		return response;
 
 	}
-
 
 	@ApiOperation(value = "View  Nationalism Details ", response = NationalismImeiDetails.class)
 	@RequestMapping(path = "/nationallism/view", method = RequestMethod.GET)

@@ -3,18 +3,17 @@ package com.gl.CEIR.CDRPicker.services;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.gl.CEIR.CDRPicker.Repository.CdrRepository;
-import com.gl.CEIR.CDRPicker.beans.CDRFile;
 import com.gl.CEIR.CDRPicker.beans.ConfigurationDetails;
-import com.gl.CEIR.CDRPicker.beans.HashDetails;
 import com.gl.CEIR.CDRPicker.beans.ImeiHashRecord;
 import com.gl.CEIR.CDRPicker.beans.RedisParams;
 import com.gl.CEIR.CDRPicker.beans.conterDetails;
@@ -22,8 +21,6 @@ import com.gl.CEIR.CDRPicker.util.Utility;
 
 @Service
 public class CDRService implements Runnable {
-
-
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -41,9 +38,9 @@ public class CDRService implements Runnable {
 	@Override
 	public void run() 
 	{
-		int resp= 1;
+		int resp = 1;
 
-		while(resp ==1 ) {
+		while(resp == 1 ) {
 			resp = process();
 		}
 
@@ -56,12 +53,13 @@ public class CDRService implements Runnable {
 		configurationDetails.setAggregationType("file");
 		configurationDetails.setAggregationValue(1);
 		log.info("ConifgDetails="+configurationDetails.toString());
-		int runnaingVariable=0;
-		int invaidCount=0;
-		int duplicateCount=0;
-		int validCount =0;
-		int actualCounter=0;
-		int repetedCount =0;
+		
+		int runnaingVariable = 0;
+		int invaidCount = 0;
+		int duplicateCount = 0;
+		int validCount = 0;
+		int actualCounter = 0;
+		int repetedCount = 0;
 
 		ConcurrentHashMap<String, ImeiHashRecord>  hashTable = new ConcurrentHashMap<>();
 
@@ -73,7 +71,7 @@ public class CDRService implements Runnable {
 
 			final File dir = new File("/home/ubuntu/cdrPicker/datafile/");
 
-			long minDate=System.currentTimeMillis();
+			long minDate = System.currentTimeMillis();
 
 			String fileName=null;
 			String date= null;
@@ -87,8 +85,8 @@ public class CDRService implements Runnable {
 
 					for (final File f : fileList ) {
 						log.info("File Name "+f.getName());
-						fileName =f.getName();
-						date =f.getName().substring(9, 21);
+						fileName = f.getName();
+						date = f.getName().substring(9, 21);
 
 						operator = f.getName().substring(0, 2);
 						/*String[] splitfile =	f.getName().split("_");
@@ -202,7 +200,7 @@ public class CDRService implements Runnable {
 										String logicalFileName=null;
 
 
-										actualCounter=actualCounter+1;
+										actualCounter = actualCounter+1;
 
 										RedisParams redisParams = new RedisParams();
 										redisParams.setDate(changeTime);
@@ -214,17 +212,17 @@ public class CDRService implements Runnable {
 										redisParams.setrATType(userType);
 										redisParams.setLocation(location);
 
-										List<RedisParams> jsonData=imeiDetails.get(servedImei);
+										List<RedisParams> jsonData = imeiDetails.get(servedImei);
 
 										log.info("KEY Data------"+jsonData);
 
 										if(jsonData == null) {
 
-											List<RedisParams> objectList=new ArrayList<RedisParams>();
+											List<RedisParams> objectList = new ArrayList<RedisParams>();
 											objectList.add(redisParams);
 
-											if(servedImei.length() >0) {
-												validCount =validCount+1;
+											if(servedImei.length() > 0) {
+												validCount = validCount+1;
 												redisParams.setCountType("Valid Count");
 												log.info("Insert data in Map Imei="+servedImei+"Value="+objectList);
 												imeiDetails.put(servedImei, objectList);
@@ -352,7 +350,6 @@ public class CDRService implements Runnable {
 								String cvsSplitBy = ",";
 
 								br = new BufferedReader(new FileReader(csvFile));
-
 
 								int firstrow=0;
 
@@ -541,11 +538,7 @@ public class CDRService implements Runnable {
 								runnaingVariable = runnaingVariable+1;
 
 							}
-
-
-
 						}
-
 
 						for (String key : imeiDetails.keySet()) {
 
@@ -560,7 +553,6 @@ public class CDRService implements Runnable {
 								util.writeInFile("/home/ceirapp/cdrPrcess/outputFile//"+readingFileName+"out", header, record);
 							}
 						}
-
 
 						conterDetails.setInvaidCount(invaidCount);
 						conterDetails.setDuplicateCount(duplicateCount);

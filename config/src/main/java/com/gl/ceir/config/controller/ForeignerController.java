@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.model.ForeignerDetails;
 import com.gl.ceir.config.model.ForeignerImeiDetails;
 import com.gl.ceir.config.model.ForeignerRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -42,11 +41,8 @@ public class ForeignerController {
 
 	}
 
-
 	@ApiOperation(value = "View  foreigner Imei  Details using passport Number ", response = ForeignerImeiDetails.class)
 	@RequestMapping(path = "/foreigner/view", method = RequestMethod.GET)
-
-
 	public MappingJacksonValue viewImeiDetails(String passportNumber) {
 
 		logger.info("Imei view Request PassportNumber="+passportNumber);
@@ -60,7 +56,6 @@ public class ForeignerController {
 
 	@ApiOperation(value = "Update foreigner Details ", response = GenricResponse.class)
 	@RequestMapping(path = "/foreigner/update", method = RequestMethod.POST)
-
 	public GenricResponse updateForeignerInfo(@RequestBody ForeignerRequest foreignerDetails  ) {
 
 		logger.info("update foreigner Info Request"+foreignerDetails.toString());
@@ -69,10 +64,8 @@ public class ForeignerController {
 
 	}
 
-
 	@ApiOperation(value = "View passportNumber Record", response = ForeignerRequest.class)
 	@RequestMapping(path = "/foreigner/view/record", method = RequestMethod.GET)
-
 	public MappingJacksonValue viewRecord(String passportNumber) {
 
 		logger.info("Get record using passport Number="+passportNumber);
@@ -83,11 +76,5 @@ public class ForeignerController {
 
 		return mapping;
 	}
-
-
-
-
-
-
 
 }

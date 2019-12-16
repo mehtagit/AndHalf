@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gl.ceir.config.model.Tac;
-import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
-import com.gl.ceir.config.model.constants.DocumentType;
 import com.gl.ceir.config.service.TacService;
 
 import io.swagger.annotations.ApiOperation;

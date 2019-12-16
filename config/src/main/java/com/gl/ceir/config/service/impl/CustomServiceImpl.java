@@ -46,34 +46,33 @@ public class CustomServiceImpl {
 	@Autowired
 	UserCustomHistoryDbRepository userCustomHistoryDbRepository;
 
-
-
 	public List<UserCustomDb> getCustomDetails(UserCustomDb userCustomDb){
 		try {
-			List<UserCustomDb>	userCustomDetails =userCustomDbRepository.getByNid(userCustomDb.getNid());
+			List<UserCustomDb>	userCustomDetails = userCustomDbRepository.getByNid(userCustomDb.getNid());
 
 			List<DeviceDb> deviceDb = stokeDetailsRepository.getByEndUserUserId(userCustomDb.getNid());
+			
 			if(deviceDb != null) {
 				UserCustomDb deviceDbFetchDetails =new UserCustomDb();
 
-				for(int i= 0 ;i<deviceDb.size();i++) {
+				for(int i= 0; i<deviceDb.size(); i++) {
 
-					if(i ==0) {
+					if(i == 0) {
 						deviceDbFetchDetails.setCountry(deviceDb.get(i).getEndUserCountry());
-						deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
+						// deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
 						deviceDbFetchDetails.setMultiSimStatus(deviceDb.get(i).getMultipleSimStatus());
 						deviceDbFetchDetails.setNid(deviceDb.get(i).getEndUserUserId());
 						deviceDbFetchDetails.setTaxPaidStatus(deviceDb.get(i).getEndUserDeviceStatus());
 						deviceDbFetchDetails.setTxnId(deviceDb.get(i).getEndUserTxnId());
 						deviceDbFetchDetails.setFirstImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 					}
-					if(i ==1) {
+					if(i == 1) {
 						deviceDbFetchDetails.setSecondImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 					}
-					if(i ==2) {
+					if(i == 2) {
 						deviceDbFetchDetails.setThirdImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 					}
-					if(i ==3) {
+					if(i == 3) {
 						deviceDbFetchDetails.setFourthImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
 					}
 
@@ -116,11 +115,9 @@ public class CustomServiceImpl {
 	public GenricResponse saveRegisterInfo(CustomRegistrationDB customRegistrationDB) {
 		try {
 
+			CustomRegistrationDB customRegistration = customRegisterationDbRepository.save(customRegistrationDB);
 
-			CustomRegistrationDB customRegistration =	customRegisterationDbRepository.save(customRegistrationDB);
-
-
-			return new GenricResponse(0,"User register sucessfully",customRegistrationDB.getUserCustomDb().get(0).getTxnId());
+			return new GenricResponse(0, "User register sucessfully", customRegistrationDB.getUserCustomDb().get(0).getTxnId());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -137,7 +134,7 @@ public class CustomServiceImpl {
 			}else {
 
 				UserCustomDb deviceDbFetchDetails = new  UserCustomDb();
-				List<DeviceDb> deviceDb=	stokeDetailsRepository.getByDeviceNumber(UserCustomDb.getDeviceSerialNumber());
+				List<DeviceDb> deviceDb = stokeDetailsRepository.getByDeviceNumber(UserCustomDb.getDeviceSerialNumber());
 
 				for(int i=0;i < deviceDb.size();i++) {
 
@@ -149,7 +146,7 @@ public class CustomServiceImpl {
 						deviceDbFetchDetails.setTaxPaidStatus(deviceDb.get(i).getEndUserDeviceStatus());
 						deviceDbFetchDetails.setTxnId(deviceDb.get(i).getEndUserTxnId());
 						deviceDbFetchDetails.setCountry(deviceDb.get(i).getEndUserCountry());
-						deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
+						// deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
 					}
 					if(i ==1) {
 						deviceDbFetchDetails.setSecondImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
@@ -175,26 +172,25 @@ public class CustomServiceImpl {
 
 	public GenricResponse deleteCustomInfo(UserCustomDb userCustomDb) {
 		try {
-			UserCustomDb customDb =userCustomDbRepository.getByDeviceSerialNumber(userCustomDb.getDeviceSerialNumber());
+			UserCustomDb customDb = userCustomDbRepository.getByDeviceSerialNumber(userCustomDb.getDeviceSerialNumber());
 			if(customDb  != null) {
 				userCustomDbRepository.deleteById(customDb.getId());
 
 				UserCustomHistoryDb userCustomHistoryDb = new UserCustomHistoryDb();
 				userCustomHistoryDb.setCountry(customDb.getCountry());
 				userCustomHistoryDb.setDeviceSerialNumber(customDb.getDeviceSerialNumber());
-				userCustomHistoryDb.setDeviceType(customDb.getDeviceType());
+				// userCustomHistoryDb.setDeviceType(customDb.getDeviceType());
 				userCustomHistoryDb.setFirstImei(customDb.getFirstImei());
 				userCustomHistoryDb.setFourthImei(customDb.getFourthImei());
 				userCustomHistoryDb.setMultiSimStatus(customDb.getMultiSimStatus());
 				userCustomHistoryDb.setNid(customDb.getNid());
 				userCustomHistoryDb.setSecondImei(customDb.getSecondImei());
-				userCustomHistoryDb.setStatus(customDb.getStatus());
+				// userCustomHistoryDb.setStatus(customDb.getStatus());
 				userCustomHistoryDb.setTaxPaidStatus(customDb.getTaxPaidStatus());
 				userCustomHistoryDb.setThirdImei(customDb.getThirdImei());
 				userCustomHistoryDb.setTxnId(customDb.getTxnId());
 
 				userCustomHistoryDbRepository.save(userCustomHistoryDb);
-
 
 				return new GenricResponse(0, "Txn delete sucessfully", userCustomDb.getDeviceSerialNumber());
 			}else {
@@ -207,12 +203,5 @@ public class CustomServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
-
-
-
-
-
-
-
-
+	
 }

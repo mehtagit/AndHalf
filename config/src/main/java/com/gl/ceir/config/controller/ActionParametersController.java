@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.ActionParameters;
-import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.ActionParametersService;
 
 import io.swagger.annotations.ApiOperation;

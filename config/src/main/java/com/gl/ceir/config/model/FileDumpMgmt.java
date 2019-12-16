@@ -16,11 +16,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class FileDumpMgmt  implements Serializable{
-
-	
 	
 	private static final long serialVersionUID = 1L;
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +32,9 @@ public class FileDumpMgmt  implements Serializable{
 	@UpdateTimestamp
 	private Date modifiedOn;
 	
-	private String dumpType;
+	private String FileName;
+	
+	private String fileType;
 	
 	private String serviceDump;
 
@@ -62,13 +61,25 @@ public class FileDumpMgmt  implements Serializable{
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
-	public String getDumpType() {
-		return dumpType;
+	
+	public String getFileName() {
+		return FileName;
 	}
 
-	public void setDumpType(String dumpType) {
-		this.dumpType = dumpType;
+	public void setFileName(String fileName) {
+		FileName = fileName;
+	}
+
+	public String getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getServiceDump() {

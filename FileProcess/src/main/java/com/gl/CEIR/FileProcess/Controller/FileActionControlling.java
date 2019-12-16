@@ -40,12 +40,10 @@ public class FileActionControlling  implements Runnable{
 	@Autowired
 	StockUploadServiceImpl stockUploadServiceImpl;
 
-
-
 	@Override
 	public void run() {
 
-		while(true) {
+		while(Boolean.TRUE) {
 			try {
 
 				WebActionDb webActionDb	=	FileActionServiceImpl.getFileActionDetails();
@@ -86,11 +84,12 @@ public class FileActionControlling  implements Runnable{
 
 					}
 				}
+				
+				// TODO Make sleep time confugurable. 
 				Thread.sleep(6000);
 
 			} catch (Exception e) {
-				e.printStackTrace();
-				log.error("Exception in Main");
+				log.error(e.getMessage(), e);
 			}
 
 		}

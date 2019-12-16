@@ -10,11 +10,4 @@ public interface FileDumpMgmtRepository extends JpaRepository<FileDumpMgmt, Long
 
 	public List<FileDumpMgmt> getByServiceDump(String serviceDump);
 
-
-
-
-
 }
-
-
-

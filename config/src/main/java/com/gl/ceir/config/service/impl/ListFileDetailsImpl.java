@@ -16,13 +16,8 @@ public class ListFileDetailsImpl {
 
 	private static final Logger logger = LogManager.getLogger(ListFileDetailsImpl.class);
 
-
 	@Autowired
 	FileDumpMgmtRepository fileDumpMgmtRepository;
-
-
-
-
 
 	public List<FileDumpMgmt> getByListType(String listType){
 		try {
@@ -34,12 +29,5 @@ public class ListFileDetailsImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
-
-
-
-
-
-
 
 }

@@ -2,7 +2,6 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,7 +16,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class CustomRegistrationDB implements Serializable {
@@ -45,10 +43,8 @@ public class CustomRegistrationDB implements Serializable {
 	private String email;
 	private String phoneNo;
 
-
 	@OneToMany(mappedBy = "customRegistrationDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserCustomDb> userCustomDb ;
-
 
 	public Long getId() {
 		return id;

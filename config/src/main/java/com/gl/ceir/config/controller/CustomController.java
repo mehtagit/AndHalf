@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.CustomRegistrationDB;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.UserCustomDb;
@@ -31,8 +30,8 @@ public class CustomController {
 
 
 	@ApiOperation(value = "View All available Success File Info", response = UserCustomDb.class)
-	@RequestMapping(path = "/custom/record", method = RequestMethod.POST)
-	public MappingJacksonValue getAll( @RequestBody UserCustomDb userCustomDb) {
+	@RequestMapping(path = "/end-user-device-info", method = RequestMethod.POST)
+	public MappingJacksonValue getDeviceByNid( @RequestBody UserCustomDb userCustomDb) {
 
 		logger.info("Custom view info request");
 		List<UserCustomDb> customInfo =	customServiceImpl.getCustomDetails(userCustomDb);
@@ -58,19 +57,17 @@ public class CustomController {
 
 
 	@ApiOperation(value = "View the detail of the devices Status", response = GenricResponse.class)
-	@RequestMapping(path = "/custom/view", method = RequestMethod.POST)
+	@RequestMapping(path = "/end-user-device-info-by-serial-no", method = RequestMethod.POST)
 	public MappingJacksonValue viewCustominfo(@RequestBody UserCustomDb userCustomDb) {
 
 		logger.info("Update Custom taxPaid info Info request TxnId="+userCustomDb);
 
-		UserCustomDb response =customServiceImpl.viewStatus(userCustomDb);
+		UserCustomDb response = customServiceImpl.viewStatus(userCustomDb);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response); 
 		return mapping;
 
 	}
-
-
 
 	@ApiOperation(value = "Update taxPaid Status", response = GenricResponse.class)
 	@RequestMapping(path = "/custom/update", method = RequestMethod.PUT)
@@ -85,7 +82,6 @@ public class CustomController {
 
 	}
 
-
 	@ApiOperation(value = "Delete taxPaid Status", response = GenricResponse.class)
 	@RequestMapping(path = "/custom/delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteCustominfo( @RequestBody UserCustomDb userCustomDb) {
@@ -95,8 +91,5 @@ public class CustomController {
 		logger.info("Response send to user="+response);
 		return response;
 	}
-
-
-
 
 }

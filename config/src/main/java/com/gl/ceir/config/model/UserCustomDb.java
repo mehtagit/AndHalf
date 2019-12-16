@@ -8,9 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 
 @Entity
 public class UserCustomDb implements Serializable {
@@ -26,23 +28,59 @@ public class UserCustomDb implements Serializable {
 
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
-	private int status;
-	private Long firstImei;
-	private Long secondImei;
-	private Long thirdImei;
-	private Long fourthImei;
+	
+	@NotNull
+	private String deviceStatus;
+	
+	@NotNull
 	private Integer taxPaidStatus;
-	private String deviceType;
+	@Transient
+	private Integer taxPaidStatusInterp;
+	
+	@NotNull
+	private Integer deviceType;
+	@Transient
+	private String deviceTypeInterp;
+	
+	@NotNull
+	private Integer deviceIdType;
+	@Transient
+	private String deviceIdTypeInterp;
+	
+	@NotNull
 	private String multiSimStatus;
+	
+	@NotNull
 	private String country;
+	
+	@NotNull
 	private String deviceSerialNumber;
+	
+	@NotNull
 	private String txnId;
+	
+	@NotNull
 	private String nid;
+	
+	@NotNull
+	private Double price;
+	
+	@NotNull
+	private Integer currency;
+	private String currencyInterp;
+	
+	@NotNull
+	private Long firstImei;
+	
+	private Long secondImei;
+	
+	private Long thirdImei;
+	
+	private Long fourthImei;
 
 	@ManyToOne 
 	@JoinColumn(name = "userId") 
 	private CustomRegistrationDB customRegistrationDB;
-
 
 	public Long getId() {
 		return id;
@@ -66,15 +104,6 @@ public class UserCustomDb implements Serializable {
 
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	public Long getFirstImei() {
@@ -115,14 +144,6 @@ public class UserCustomDb implements Serializable {
 
 	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
-	}
-
-	public String getDeviceType() {
-		return deviceType;
-	}
-
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
 	}
 
 	public String getMultiSimStatus() {
@@ -173,19 +194,133 @@ public class UserCustomDb implements Serializable {
 		this.nid = nid;
 	}
 
-	@Override
-	public String toString() {
-		return "UserCustomDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", status="
-				+ status + ", firstImei=" + firstImei + ", secondImei=" + secondImei + ", thirdImei=" + thirdImei
-				+ ", fourthImei=" + fourthImei + ", taxPaidStatus=" + taxPaidStatus + ", deviceType=" + deviceType
-				+ ", multiSimStatus=" + multiSimStatus + ", country=" + country + ", deviceSerialNumber="
-				+ deviceSerialNumber + ", txnId=" + txnId + ", nid=" + nid + ", customRegistrationDB="
-				+ customRegistrationDB + "]";
+	public String getDeviceStatus() {
+		return deviceStatus;
 	}
 
+	public void setDeviceStatus(String deviceStatus) {
+		this.deviceStatus = deviceStatus;
+	}
 
+	public Integer getTaxPaidStatusInterp() {
+		return taxPaidStatusInterp;
+	}
 
+	public void setTaxPaidStatusInterp(Integer taxPaidStatusInterp) {
+		this.taxPaidStatusInterp = taxPaidStatusInterp;
+	}
 
+	public Integer getDeviceType() {
+		return deviceType;
+	}
 
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getDeviceTypeInterp() {
+		return deviceTypeInterp;
+	}
+
+	public void setDeviceTypeInterp(String deviceTypeInterp) {
+		this.deviceTypeInterp = deviceTypeInterp;
+	}
+
+	public Integer getDeviceIdType() {
+		return deviceIdType;
+	}
+
+	public void setDeviceIdType(Integer deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
+
+	public String getDeviceIdTypeInterp() {
+		return deviceIdTypeInterp;
+	}
+
+	public void setDeviceIdTypeInterp(String deviceIdTypeInterp) {
+		this.deviceIdTypeInterp = deviceIdTypeInterp;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public Integer getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Integer currency) {
+		this.currency = currency;
+	}
+
+	public String getCurrencyInterp() {
+		return currencyInterp;
+	}
+
+	public void setCurrencyInterp(String currencyInterp) {
+		this.currencyInterp = currencyInterp;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserCustomDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", taxPaidStatusInterp=");
+		builder.append(taxPaidStatusInterp);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceTypeInterp=");
+		builder.append(deviceTypeInterp);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceIdTypeInterp=");
+		builder.append(deviceIdTypeInterp);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", price=");
+		builder.append(price);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", currencyInterp=");
+		builder.append(currencyInterp);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", customRegistrationDB=");
+		builder.append(customRegistrationDB);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

@@ -14,8 +14,6 @@ import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.MobileOperatorService;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class MobileOperatorController {

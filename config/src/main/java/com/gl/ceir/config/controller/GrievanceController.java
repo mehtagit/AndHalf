@@ -15,16 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
-import com.gl.ceir.config.model.RequestCountAndQuantity;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.Grievance;
-import com.gl.ceir.config.model.GrievanceMsg;
+import com.gl.ceir.config.model.GrievanceFilterRequest;
+import com.gl.ceir.config.model.GrievanceGenricResponse;
+import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.model.GrievanceMsgWithUser;
 import com.gl.ceir.config.model.GrievanceReply;
-import com.gl.ceir.config.model.ResponseCountAndQuantity;
-import com.gl.ceir.config.model.GrievanceGenricResponse;
-import com.gl.ceir.config.model.GrievanceFilterRequest;
-import com.gl.ceir.config.model.GrievanceHistory;
 import com.gl.ceir.config.service.impl.GrievanceServiceImpl;
 import com.gl.ceir.config.util.Utility;
 

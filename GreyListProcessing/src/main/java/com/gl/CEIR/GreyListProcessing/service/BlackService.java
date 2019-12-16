@@ -31,21 +31,21 @@ public class BlackService implements  Runnable{
 
 			try {
 
-				ConfigurationDetails configurationDetails	=blackListRepo.getConfigurationDetails();
+				ConfigurationDetails configurationDetails = blackListRepo.getConfigurationDetails();
 
 				log.info("Configuration Details="+configurationDetails);
 
 				if(configurationDetails.getUnit().equalsIgnoreCase("DAY")) {
 
-					millis =86400000 * configurationDetails.getTime();
+					millis = 86400000 * configurationDetails.getTime();
 				}
 				else if(configurationDetails.getUnit().equalsIgnoreCase("HOUR")) {
 
-					millis =3600000 * configurationDetails.getTime();
+					millis = 3600000 * configurationDetails.getTime();
 				}
 				else if(configurationDetails.getUnit().equalsIgnoreCase("MINUTE")) {
 
-					millis =60000 * configurationDetails.getTime();
+					millis = 60000 * configurationDetails.getTime();
 				}
 				else {
 
@@ -53,12 +53,12 @@ public class BlackService implements  Runnable{
 					break;
 				}
 
-				String currentTime =utility.getTxnId();
+				String currentTime = utility.getTxnId();
 
 				if(configurationDetails.getDumptype().equals("FULL")) {
 
-					List<String> greListDump =	blackListRepo.getImeidetails();
-					if(greListDump !=null) {
+					List<String> greListDump = blackListRepo.getImeidetails();
+					if(greListDump != null) {
 						for(String listDump :greListDump) {
 
 							String header="IMEI";
@@ -79,7 +79,7 @@ public class BlackService implements  Runnable{
 				}else if(configurationDetails.getDumptype().equals("Incremental")) {
 
 
-					List<DumpDetails> dumpDetails=	blackListRepo.getpartiallyDumpDetails(configurationDetails.getUnit(),configurationDetails.getTime());
+					List<DumpDetails> dumpDetails =	blackListRepo.getpartiallyDumpDetails(configurationDetails.getUnit(),configurationDetails.getTime());
 					log.info("Dump Details ="+dumpDetails);
 
 					if(dumpDetails != null) {

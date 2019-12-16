@@ -11,13 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.Action;
-import com.gl.ceir.config.model.MediationSource;
-import com.gl.ceir.config.model.MobileOperator;
 import com.gl.ceir.config.service.ActionService;
-import com.gl.ceir.config.service.MediationSourceService;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 
 @RestController
 public class ActionController {

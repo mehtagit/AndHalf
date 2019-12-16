@@ -24,8 +24,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class ImmegreationController {
 
-
-
 	@Autowired
 	ForeignerServiceImpl foreignerServiceImpl;
 

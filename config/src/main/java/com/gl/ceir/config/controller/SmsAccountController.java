@@ -10,15 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.model.MobileOperator;
-import com.gl.ceir.config.model.Rules;
 import com.gl.ceir.config.model.SmsAccount;
-import com.gl.ceir.config.service.RulesService;
 import com.gl.ceir.config.service.SmsAccountService;
-
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 @RestController
 public class SmsAccountController {
