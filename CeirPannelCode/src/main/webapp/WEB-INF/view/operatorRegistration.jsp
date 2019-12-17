@@ -324,25 +324,25 @@ var contextpath = "${context}";
 
 
                             <div class="row">
-                                <div class="input-field col s12 m6 l6">
-                                    <input type="password" name="password"
+							<div class="input-field col s12 m6 l6">
+								<input type="password" name="password"
 									class="form-control boxBorder boxHeight" id="password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-									required="required">
-                                    <label for="password">Password <span class="star">*</span></label>
-                                </div>
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
+									required="required"> <label for="password">Password
+									<span class="star">*</span>
+								</label>  
+							</div>
 
-                                <div class="input-field col s12 m6 l6">
-                                    <input type="password" name="rePassword" 
-										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-									class="form-control boxBorder boxHeight" id="confirm_password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"  maxlength="10" min="8"
-									required="required">
-									
-                                    <label for="confirm_password">Retype Password <span class="star">*</span></label>
-                                </div>
-                            </div>
+							<div class="input-field col s12 m6 l6">
+								<input type="password" name="rePassword" 
+	title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length" class="form-control boxBorder boxHeight" id="confirm_password"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
+									required="required"> <label for="confirm_password">Retype
+									Password <span class="star">*</span>
+								</label>
+							</div>
+						</div>
 
 
                    <div class="row securityQuestionDiv">
