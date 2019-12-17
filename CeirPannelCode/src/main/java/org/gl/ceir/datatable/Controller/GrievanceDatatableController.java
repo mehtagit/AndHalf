@@ -201,8 +201,8 @@ public class GrievanceDatatableController {
 			if (paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			} else {
-				if ("Importer".equals(userType)) {
-					log.info("<><><><> in Importer Controller");
+				if ("Importer".equals(userType) || "TRC".equals(userType)) {
+					log.info("<><><><> in Importer Controller AND TRC CONTROLLER");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
@@ -247,14 +247,14 @@ public class GrievanceDatatableController {
 						String grievanceStatus = dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
-								StatusofGrievance, userStatus, userId);
+						StatusofGrievance, userStatus, userId);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
 				} else if ("Retailer".equals(userType)) {
-					log.info("<><><><> in Greivance Controller");
+					log.info("<><><><> in Retailer Greivance Controller");
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();

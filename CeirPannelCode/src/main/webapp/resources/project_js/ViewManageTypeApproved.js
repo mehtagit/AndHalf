@@ -3,6 +3,7 @@ var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 
 $(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
 	typeApprovedDataTable()
 	pageRendering();
 });
@@ -53,6 +54,7 @@ function typeApprovedDataTable(){
 		            table.search(this.value).draw();
 		        }
 		    });
+		    $('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -158,7 +160,6 @@ function viewByID(id){
 }
 
 function setViewPopupData(data){
-	alert(data.stateInterp)
 	$("#viewmanufacturerId").val(data.manufacturerId);
 	$("#viewmanufacturerName").val(data.manufacturerName);
 	$("#viewcountry").val(data.country);

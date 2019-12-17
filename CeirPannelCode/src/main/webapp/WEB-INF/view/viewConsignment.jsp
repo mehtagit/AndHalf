@@ -104,8 +104,8 @@
 	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
 		<div class="modal-content">
 
-			<h6>View Consignment</h6>
-			<hr>
+			<h6 class="modal-header">View Consignment</h6>
+			
 
 
 			<div class="row myRow">
@@ -218,8 +218,8 @@
 	<div id="DeleteConsignment" class="modal">
 		<div class="modal-content">
 
-			<h6>Delete Consignment</h6>
-			<hr>
+			<h6 class="modal-header">Delete Consignment</h6>
+			
 
 			<div class="row">
 				<h6>
@@ -256,8 +256,8 @@
 
 	<div id="updateConsignment" class="modal">
 		<div class="modal-content">
-			<h6>Update Consignment</h6>
-			<hr>
+			<h6 class="modal-header">Update Consignment</h6>
+			
 
 			<div class="row">
 				<h6 id="sucessMessage"></h6>
@@ -279,8 +279,8 @@
 	<div id="confirmDeleteConsignment" class="modal">
 		<div class="modal-content">
 
-			<h6>Delete Consignment</h6>
-			<hr>
+			<h6 class="modal-header">Delete Consignment</h6>
+			
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
 			<div class="row">
@@ -303,8 +303,8 @@
 
   <div id="ApproveConsignment" class="modal">
     <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Approve Consignment</h6>
+      
       <div class="row">
         <h6>The tax against the consignment with <span id="displayname"></span> having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
           successfully paid.</h6>
@@ -326,8 +326,8 @@
 
 <div id="confirmApproveConsignment" class="modal">
     <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Approve Consignment</h6>
+      
       <div class="row">
         <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
       </div>
@@ -344,8 +344,8 @@
   
     <div id="RejectConsignment" class="modal">
     <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Reject Consignment</h6>
+      
       <div class="row">
         <h6>Do you really want to mark the consignment (<span id="disapprovedDisplayname"></span> having Transaction ID: <span id="disaproveTxnId"></span> as
           rejected.</h6>
@@ -375,8 +375,8 @@
 
   <div id="ApproveConsignment" class="modal">
     <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Approve Consignment</h6>
+      
       <div class="row">
         <h6>The tax against the consignment with (Importer/Company name) having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
           successfully paid.</h6>
@@ -398,8 +398,8 @@
 
 <div id="confirmApproveConsignment" class="modal">
     <div class="modal-content">
-      <h6>Approve Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Approve Consignment</h6>
+      
       <div class="row">
         <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
       </div>
@@ -416,8 +416,8 @@
   
     <div id="RejectConsignment" class="modal">
     <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Reject Consignment</h6>
+      
       <div class="row">
         <h6>Do you really want to mark the consignment (Importer/Company name) having Transaction ID: <span id="disaproveTxnId"></span> as
           rejected.</h6>
@@ -444,8 +444,8 @@
   
   <div id="confirmRejectConsignment" class="modal">
     <div class="modal-content">
-      <h6>Reject Consignment</h6>
-      <hr>
+      <h6 class="modal-header">Reject Consignment</h6>
+      
       <div class="row">
         <h6 id="disapproveSuccessMessage">The consignment has been marked as rejected.</h6>
       </div>
@@ -463,8 +463,8 @@
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
 		<div class="modal-content">
 
-			<h6>Edit Consignment</h6>
-			<hr>
+			<h6 class="modal-header">Edit Consignment</h6>
+			
 
 
 			<div class="row myRow">
@@ -605,8 +605,8 @@
 	   <div id="markAsMultipleStolen" class="modal">
         <div class="modal-content">
 
-            <h6>Mark As Stolen</h6>
-            <hr>
+            <h6 class="modal-header">Mark As Stolen</h6>
+            
 
             <div class="row">
                 <h6>Do you want to mark the following transaction  as stolen?</h6>
@@ -621,8 +621,8 @@
     </div>
      <div id="markAsStolenDone" class="modal">
         <div class="modal-content">
-            <h6>Mark As Stolen</h6>
-            <hr>
+            <h6 class="modal-header">Mark As Stolen</h6>
+            
             <div class="row">
                 <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
                 </h6>

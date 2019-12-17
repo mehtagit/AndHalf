@@ -106,8 +106,8 @@
 	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
 		<div class="modal-content">
 
-			<h6>View Consignment</h6>
-			<hr>
+			<h6 class="modal-header">View Consignment</h6>
+			
 
 
 			<div class="row myRow">
@@ -203,7 +203,7 @@
 	<div id="DeleteConsignment" class="modal">
 		<div class="modal-content">
 
-			<h6>Delete</h6>
+			<h6 class="modal-header">Delete</h6>
 			<hr>
 
 			<div class="row">
@@ -415,7 +415,7 @@
 	<div id="markAsStolen" class="modal">
 		<div class="modal-content">
 
-			<h6>Mark As Stolen</h6>
+			<h6 class="modal-header">Mark As Stolen</h6>
 			<hr>
 
 			<div class="row">
@@ -457,7 +457,7 @@
 			id="stolenRecoveryDivPage">
 
 			<div class="col s12 m12 modal-content">
-				<h6>Report Stolen/Recovery</h6>
+				<h6 class="modal-header">Report Stolen/Recovery</h6>
 				<hr>
 				<div class="row">
 					<form action="#">
@@ -540,7 +540,7 @@
 		<div class="modal-content">
 			<div class="row">
 				<div class="col s12 m12">
-					<h6>Mark As Stolen</h6>
+					<h6 class="modal-header">Mark As Stolen</h6>
 					<hr>
 					<div class="row">
 						<h6 style="color: #000;">
@@ -645,7 +645,7 @@
 		<div class="modal-content">
 			<div class="row">
 				<div class="col s12 m12">
-					<h6>
+					<h6 class="modal-header">
 						Update Stolen request for this transaction id ( <span
 							id="editFileStolenTxnId"></span> ).
 					</h6>
@@ -760,7 +760,7 @@
 		<div class="modal-content">
 			<div class="row">
 				<div class="col s12 m12">
-					<h6>Mark As Recovered</h6>
+					<h6 class="modal-header">Mark As Recovered</h6>
 					<hr>
 					<div class="row">
 						<h6 style="color: #000;">
@@ -887,7 +887,7 @@
 
 	<div id="markAsRecoverDone" class="modal">
 		<div class="modal-content">
-			<h6>Mark As Recovered</h6>
+			<h6 class="modal-header">Mark As Recovered</h6>
 			<hr>
 			<div class="row">
 				<h6>The following devices marked as recover has been recieved
@@ -904,7 +904,7 @@
 	<div id="markAsMultipleRecovery" class="modal">
 		<div class="modal-content">
 
-			<h6>Mark As Recover</h6>
+			<h6 class="modal-header">Mark As Recover</h6>
 			<hr>
 
 			<div class="row">
@@ -922,7 +922,7 @@
 	</div>
 	<div id="markAsRecoveryDone" class="modal">
 		<div class="modal-content">
-			<h6>Mark As Recover</h6>
+			<h6 class="modal-header">Mark As Recover</h6>
 			<hr>
 			<div class="row">
 				<h6>The following Transaction ID's devices marked as

@@ -186,10 +186,6 @@ var contextpath = "${context}";
 									<select name="type" class="browser-default" id="type"
 										onchange="myFunction()" required>
 										<option value="" disabled selected>Type</option>
-										<!-- <option value="Individual">Individual</option>
-										<option value="Company">Company</option>
-										<option value="Organization">Organization</option>
-										<option value="Government">Government</option> -->
 									</select>
 								</div>
 
@@ -453,8 +449,8 @@ var contextpath = "${context}";
 							<div class="input-field col s12 m6 l6">
 								<input type="password" name="password"
 									class="form-control boxBorder boxHeight" id="password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
+									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
 									required="required"> <label for="password">Password
 									<span class="star">*</span>
 								</label>  
@@ -462,9 +458,8 @@ var contextpath = "${context}";
 
 							<div class="input-field col s12 m6 l6">
 								<input type="password" name="rePassword" 
-										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-									class="form-control boxBorder boxHeight" id="confirm_password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"  maxlength="10" min="8"
+	title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length" class="form-control boxBorder boxHeight" id="confirm_password"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
 									required="required"> <label for="confirm_password">Retype
 									Password <span class="star">*</span>
 								</label>
@@ -782,18 +777,21 @@ var contextpath = "${context}";
        
        populateStates( "country",
                "state" );
-        var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
+       
+       
+       var password = document.getElementById("password")
+       , confirm_password = document.getElementById("confirm_password");
 
-      function validatePassword(){
-        if(password.value != confirm_password.value) {
+     function validatePassword(){
+       if(password.value != confirm_password.value) {
+         confirm_password.setCustomValidity("Passwords Don't Match");
        } else {
-          confirm_password.setCustomValidity('');
-        }
-      }
+         confirm_password.setCustomValidity('');
+       }
+     }
 
-      password.onchange = validatePassword;
-      confirm_password.onkeyup = validatePassword;
+     password.onchange = validatePassword;
+     confirm_password.onkeyup = validatePassword;
 
       
         function myFunction() {
