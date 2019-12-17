@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.ServiceImpl.FileActionServiceImpl;
@@ -18,6 +19,7 @@ public class FileActionControlling implements Runnable {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
+	@Qualifier("config")
 	AppConfig appConfig;
 	
 	@Autowired
@@ -29,7 +31,7 @@ public class FileActionControlling implements Runnable {
 	@Override
 	public void run() {
 
-		while(Boolean.TRUE) {
+		// while(Boolean.TRUE) {
 			
 			try {
 				WebActionDb webActionDb	= fileActionServiceImpl.getFileActionDetails();
@@ -45,7 +47,7 @@ public class FileActionControlling implements Runnable {
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
-		}
+		// }
 	}
 
 }

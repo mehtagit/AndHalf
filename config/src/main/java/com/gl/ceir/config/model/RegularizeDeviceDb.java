@@ -66,6 +66,7 @@ public class RegularizeDeviceDb implements Serializable {
 	
 	@NotNull
 	private Integer currency;
+	@Transient
 	private String currencyInterp;
 	
 	@NotNull

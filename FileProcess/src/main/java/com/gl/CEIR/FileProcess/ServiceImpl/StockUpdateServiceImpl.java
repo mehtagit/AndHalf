@@ -1,5 +1,7 @@
 package com.gl.CEIR.FileProcess.ServiceImpl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.service.WebActionService;
@@ -8,6 +10,8 @@ import com.gl.ceir.config.model.WebActionDb;
 @Service
 public class StockUpdateServiceImpl implements WebActionService{
 
+	private Logger log = LoggerFactory.getLogger(getClass());
+	
 	@Override
 	public boolean process(WebActionDb webActionDb) {
 		try {
@@ -15,7 +19,7 @@ public class StockUpdateServiceImpl implements WebActionService{
 
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

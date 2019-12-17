@@ -33,7 +33,7 @@ public class EnduserServiceImpl {
 			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
 
 			// End user is not registered with CEIR system.
-			if(Objects.isNull(endUserDB)) {
+			if(Objects.nonNull(endUserDB)) {
 				return new GenricResponse(1, "End User does exist.", nid);
 			}else {
 				return new GenricResponse(0, "User does not exist.", "");

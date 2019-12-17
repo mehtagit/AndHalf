@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +16,16 @@ import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDb;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
-
 @Service
 public class ConsignmentUpdateServiceImpl implements WebActionService{
 
-
+	private Logger log = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	Util util;
 
@@ -39,7 +42,7 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 	public boolean process(WebActionDb webActionDb){
 		try {
 
-			webActionDb.setState(1);
+			webActionDb.setState(WebActionStatus.PROCESSING.getCode());
 
 			webActionDbRepository.save(webActionDb);
 
@@ -50,13 +53,13 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 
 			List<DeviceDb> devices = new ArrayList<DeviceDb>();
 
-			Path filePath =Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+webActionDb.getTxnId()+"/"+consignmentMgmt.getFileName());
+			Path filePath = Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/" + webActionDb.getTxnId() + "/" + consignmentMgmt.getFileName());
 
 			List<String> contents = Files.readAllLines(filePath);
 
-			for(String content :contents) {
+			for(String content : contents) {
 
-				DeviceDb device =util.parseDevice(content);
+				DeviceDb device = util.parseDevice(content);
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(1L);
 
@@ -77,10 +80,9 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e.getMessage(), e);
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
 	}
-
 }

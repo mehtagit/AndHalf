@@ -3,7 +3,7 @@ package com.gl.CEIR.FileProcess.ServiceImpl;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,13 +11,18 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.Utility.Util;
+import com.gl.CEIR.FileProcess.conf.FileStorageProperties;
+import com.gl.CEIR.FileProcess.model.constants.Separator;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDb;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
+import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
@@ -29,6 +34,10 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 
 	@Autowired
 	Util util;
+	
+	@Autowired
+	@Qualifier("fileProperties")
+	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
@@ -39,65 +48,67 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
 
-	ConcurrentHashMap<String, String> chm;
+	ConcurrentHashMap<String, String> deviceBufferMap;
+	ConcurrentHashMap<String, String> errorBufferMap;
 
 	@Override
 	public boolean process(WebActionDb webActionDb) {
 		try {
 
-			webActionDb.setState(1);
+			// Set WebAction state as Processing(1).
+			webActionDb.setState(WebActionStatus.PROCESSING.getCode());
 			webActionDbRepository.save(webActionDb);
 
+			// Fetch the current Consignment and update it's status as Processing(1).
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(webActionDb.getTxnId());
-
-			consignmentMgmt.setConsignmentStatus(1);
+			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
 			consignmentRepository.save(consignmentMgmt);
+			
 			log.info("File Status is update as processing ");
-
-			Path filePath = Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+webActionDb.getTxnId()+"/"+consignmentMgmt.getFileName());
+			StringBuffer filePathBuffer = new StringBuffer().append(fileStorageProperties.getConsignmentsDir())
+					.append(webActionDb.getTxnId())
+					.append(Separator.SLASH)
+					.append(consignmentMgmt.getFileName()); 
+			
+			Path filePath = Paths.get(filePathBuffer.toString());
 
 			String errorFilePath = "";
-			String moveFIlePath = " ";
+			String moveFIlePath  = "";
 
-			List<DeviceDb> devices = new ArrayList<DeviceDb>();
-
+			List<DeviceDb> devices = new LinkedList<>();
 			List<String> contents = Files.readAllLines(filePath);
 
-			log.info("File is reading starts = " + contents);
+			log.info("File reading starts = " + contents);
 			
-			chm = new ConcurrentHashMap<String, String>();
+			deviceBufferMap = new ConcurrentHashMap<String, String>();
 					
 			for(String content : contents) {
-
 				DeviceDb device = util.parseDevice(content);
 				device.setImporterTxnId(webActionDb.getTxnId());
-				device.setImporterUserId(1L);
+				device.setImporterUserId(Long.valueOf(consignmentMgmt.getUserId()));
 
-				String value = chm.get(device.getImeiEsnMeid());
+				String value = deviceBufferMap.get(device.getImeiEsnMeid());
 
 				if(Objects.isNull(value)) {
-
-					chm.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
+					deviceBufferMap.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
 					devices.add(device);
+					
 				}else {
-
-					String header = "ErrorCode,Description";	
+					String header = "ErrorCode, Description";	
 					String record = "";
 					util.writeInFile(errorFilePath, header, record, moveFIlePath);	
 				}
-
 			}
 
 			stokeDetailsRepository.saveAll(devices);
 
-			consignmentMgmt.setConsignmentStatus(3);
+			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
 			consignmentRepository.save(consignmentMgmt);
 
 			return Boolean.TRUE;
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			log.info("Exception found ="+e);
+			log.error(e.getMessage(), e);
 			return Boolean.FALSE;
 		}
 	}

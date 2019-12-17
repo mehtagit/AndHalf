@@ -19,7 +19,6 @@ public class DeviceDb  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -34,15 +33,20 @@ public class DeviceDb  implements Serializable{
 	private Date modifiedOn;
 
 	private String manufatureDate;
-	private String deviceNumber;
 	private String deviceType;
+	private String deviceIdType;
+	private String multipleSimStatus;
+	private String snOfDevice;
+	private String imeiEsnMeid;
+	private Date DeviceLaunchDate;
+	private String deviceStatus;
 	private String deviceAction;
 
-	private Long  importerUserId;
+	private Long importerUserId;
 	private Long distributerUserId;
 	private Long retailerUserId;
 	private Long customUserId;
-	private String endUserUserId;
+	private Long endUserUserId;
 
 	private String importerTxnId;
 	private String distributerTxnId;
@@ -56,25 +60,20 @@ public class DeviceDb  implements Serializable{
 	private Date customDate;
 	private Date endUserDate;
 
-	private int importerDeviceStatus;
-	private int distributerDeviceStatus;
-	private int retailerDeviceStatus;
-	private int customDeviceStatus;
-	private int endUserDeviceStatus;
+	private Integer importerDeviceStatus;
+	private Integer distributerDeviceStatus;
+	private Integer retailerDeviceStatus;
+	private Integer customDeviceStatus;
+	private Integer endUserDeviceStatus;
 
-	private int previousImporterDeviceStatus;
-	private int previousDistributerDeviceStatus;
-	private int previousRetailerDeviceStatus;
-	private int previousCustomDeviceStatus;
-	private int previousEndUserDeviceStatus;
+	private Integer previousImporterDeviceStatus;
+	private Integer previousDistributerDeviceStatus;
+	private Integer previousRetailerDeviceStatus;
+	private Integer previousCustomDeviceStatus;
+	private Integer previousEndUserDeviceStatus;
 
 	private String endUserCountry;
-
-	private String deviceStatus;
-	private String DeviceLaunchDate;
-	private String multipleSimStatus;
-	private String  deviceId;
-	private String imeiEsnMeid;
+	private String period;
 
 	public Long getId() {
 		return id;
@@ -93,12 +92,6 @@ public class DeviceDb  implements Serializable{
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-	public String getDeviceNumber() {
-		return deviceNumber;
-	}
-	public void setDeviceNumber(String deviceNumber) {
-		this.deviceNumber = deviceNumber;
 	}
 	public String getDeviceType() {
 		return deviceType;
@@ -150,10 +143,10 @@ public class DeviceDb  implements Serializable{
 	public void setDeviceStatus(String deviceStatus) {
 		this.deviceStatus = deviceStatus;
 	}
-	public String getDeviceLaunchDate() {
+	public Date getDeviceLaunchDate() {
 		return DeviceLaunchDate;
 	}
-	public void setDeviceLaunchDate(String deviceLaunchDate) {
+	public void setDeviceLaunchDate(Date deviceLaunchDate) {
 		DeviceLaunchDate = deviceLaunchDate;
 	}
 	public String getMultipleSimStatus() {
@@ -161,12 +154,6 @@ public class DeviceDb  implements Serializable{
 	}
 	public void setMultipleSimStatus(String multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
-	}
-	public String getDeviceId() {
-		return deviceId;
-	}
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
 	}
 	public String getImeiEsnMeid() {
 		return imeiEsnMeid;
@@ -204,40 +191,40 @@ public class DeviceDb  implements Serializable{
 	public void setRetailerDate(Date retailerDate) {
 		this.retailerDate = retailerDate;
 	}
-	public int getImporterDeviceStatus() {
+	public Integer getImporterDeviceStatus() {
 		return importerDeviceStatus;
 	}
-	public void setImporterDeviceStatus(int importerDeviceStatus) {
+	public void setImporterDeviceStatus(Integer importerDeviceStatus) {
 		this.importerDeviceStatus = importerDeviceStatus;
 	}
-	public int getDistributerDeviceStatus() {
+	public Integer getDistributerDeviceStatus() {
 		return distributerDeviceStatus;
 	}
-	public void setDistributerDeviceStatus(int distributerDeviceStatus) {
+	public void setDistributerDeviceStatus(Integer distributerDeviceStatus) {
 		this.distributerDeviceStatus = distributerDeviceStatus;
 	}
-	public int getRetailerDeviceStatus() {
+	public Integer getRetailerDeviceStatus() {
 		return retailerDeviceStatus;
 	}
-	public void setRetailerDeviceStatus(int retailerDeviceStatus) {
+	public void setRetailerDeviceStatus(Integer retailerDeviceStatus) {
 		this.retailerDeviceStatus = retailerDeviceStatus;
 	}
-	public int getPreviousImporterDeviceStatus() {
+	public Integer getPreviousImporterDeviceStatus() {
 		return previousImporterDeviceStatus;
 	}
-	public void setPreviousImporterDeviceStatus(int previousImporterDeviceStatus) {
+	public void setPreviousImporterDeviceStatus(Integer previousImporterDeviceStatus) {
 		this.previousImporterDeviceStatus = previousImporterDeviceStatus;
 	}
-	public int getPreviousDistributerDeviceStatus() {
+	public Integer getPreviousDistributerDeviceStatus() {
 		return previousDistributerDeviceStatus;
 	}
-	public void setPreviousDistributerDeviceStatus(int previousDistributerDeviceStatus) {
+	public void setPreviousDistributerDeviceStatus(Integer previousDistributerDeviceStatus) {
 		this.previousDistributerDeviceStatus = previousDistributerDeviceStatus;
 	}
-	public int getPreviousRetailerDeviceStatus() {
+	public Integer getPreviousRetailerDeviceStatus() {
 		return previousRetailerDeviceStatus;
 	}
-	public void setPreviousRetailerDeviceStatus(int previousRetailerDeviceStatus) {
+	public void setPreviousRetailerDeviceStatus(Integer previousRetailerDeviceStatus) {
 		this.previousRetailerDeviceStatus = previousRetailerDeviceStatus;
 	}
 	public Long getCustomUserId() {
@@ -246,10 +233,10 @@ public class DeviceDb  implements Serializable{
 	public void setCustomUserId(Long customUserId) {
 		this.customUserId = customUserId;
 	}
-	public String getEndUserUserId() {
+	public Long getEndUserUserId() {
 		return endUserUserId;
 	}
-	public void setEndUserUserId(String endUserUserId) {
+	public void setEndUserUserId(Long endUserUserId) {
 		this.endUserUserId = endUserUserId;
 	}
 	public String getCustomTxnId() {
@@ -276,28 +263,28 @@ public class DeviceDb  implements Serializable{
 	public void setEndUserDate(Date endUserDate) {
 		this.endUserDate = endUserDate;
 	}
-	public int getCustomDeviceStatus() {
+	public Integer getCustomDeviceStatus() {
 		return customDeviceStatus;
 	}
-	public void setCustomDeviceStatus(int customDeviceStatus) {
+	public void setCustomDeviceStatus(Integer customDeviceStatus) {
 		this.customDeviceStatus = customDeviceStatus;
 	}
-	public int getEndUserDeviceStatus() {
+	public Integer getEndUserDeviceStatus() {
 		return endUserDeviceStatus;
 	}
-	public void setEndUserDeviceStatus(int endUserDeviceStatus) {
+	public void setEndUserDeviceStatus(Integer endUserDeviceStatus) {
 		this.endUserDeviceStatus = endUserDeviceStatus;
 	}
-	public int getPreviousCustomDeviceStatus() {
+	public Integer getPreviousCustomDeviceStatus() {
 		return previousCustomDeviceStatus;
 	}
-	public void setPreviousCustomDeviceStatus(int previousCustomDeviceStatus) {
+	public void setPreviousCustomDeviceStatus(Integer previousCustomDeviceStatus) {
 		this.previousCustomDeviceStatus = previousCustomDeviceStatus;
 	}
-	public int getPreviousEndUserDeviceStatus() {
+	public Integer getPreviousEndUserDeviceStatus() {
 		return previousEndUserDeviceStatus;
 	}
-	public void setPreviousEndUserDeviceStatus(int previousEndUserDeviceStatus) {
+	public void setPreviousEndUserDeviceStatus(Integer previousEndUserDeviceStatus) {
 		this.previousEndUserDeviceStatus = previousEndUserDeviceStatus;
 	}
 	public String getEndUserCountry() {
@@ -306,6 +293,111 @@ public class DeviceDb  implements Serializable{
 	public void setEndUserCountry(String endUserCountry) {
 		this.endUserCountry = endUserCountry;
 	}
-
+	public String getDeviceIdType() {
+		return deviceIdType;
+	}
+	public void setDeviceIdType(String deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
+	public String getSnOfDevice() {
+		return snOfDevice;
+	}
+	public void setSnOfDevice(String snOfDevice) {
+		this.snOfDevice = snOfDevice;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("DeviceDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", manufatureDate=");
+		builder.append(manufatureDate);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", multipleSimStatus=");
+		builder.append(multipleSimStatus);
+		builder.append(", snOfDevice=");
+		builder.append(snOfDevice);
+		builder.append(", imeiEsnMeid=");
+		builder.append(imeiEsnMeid);
+		builder.append(", DeviceLaunchDate=");
+		builder.append(DeviceLaunchDate);
+		builder.append(", deviceStatus=");
+		builder.append(deviceStatus);
+		builder.append(", deviceAction=");
+		builder.append(deviceAction);
+		builder.append(", importerUserId=");
+		builder.append(importerUserId);
+		builder.append(", distributerUserId=");
+		builder.append(distributerUserId);
+		builder.append(", retailerUserId=");
+		builder.append(retailerUserId);
+		builder.append(", customUserId=");
+		builder.append(customUserId);
+		builder.append(", endUserUserId=");
+		builder.append(endUserUserId);
+		builder.append(", importerTxnId=");
+		builder.append(importerTxnId);
+		builder.append(", distributerTxnId=");
+		builder.append(distributerTxnId);
+		builder.append(", retalierTxnId=");
+		builder.append(retalierTxnId);
+		builder.append(", customTxnId=");
+		builder.append(customTxnId);
+		builder.append(", endUserTxnId=");
+		builder.append(endUserTxnId);
+		builder.append(", importerDate=");
+		builder.append(importerDate);
+		builder.append(", distributerDate=");
+		builder.append(distributerDate);
+		builder.append(", retailerDate=");
+		builder.append(retailerDate);
+		builder.append(", customDate=");
+		builder.append(customDate);
+		builder.append(", endUserDate=");
+		builder.append(endUserDate);
+		builder.append(", importerDeviceStatus=");
+		builder.append(importerDeviceStatus);
+		builder.append(", distributerDeviceStatus=");
+		builder.append(distributerDeviceStatus);
+		builder.append(", retailerDeviceStatus=");
+		builder.append(retailerDeviceStatus);
+		builder.append(", customDeviceStatus=");
+		builder.append(customDeviceStatus);
+		builder.append(", endUserDeviceStatus=");
+		builder.append(endUserDeviceStatus);
+		builder.append(", previousImporterDeviceStatus=");
+		builder.append(previousImporterDeviceStatus);
+		builder.append(", previousDistributerDeviceStatus=");
+		builder.append(previousDistributerDeviceStatus);
+		builder.append(", previousRetailerDeviceStatus=");
+		builder.append(previousRetailerDeviceStatus);
+		builder.append(", previousCustomDeviceStatus=");
+		builder.append(previousCustomDeviceStatus);
+		builder.append(", previousEndUserDeviceStatus=");
+		builder.append(previousEndUserDeviceStatus);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", endUserCountry=");
+		builder.append(endUserCountry);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

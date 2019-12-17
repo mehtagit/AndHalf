@@ -59,7 +59,6 @@ public class Validation {
 		return b1;
 	}
 
-
 	public String lengthValidator(String filePath,String deviceIDtype ,String iMEIESNMEID,String moveFIlePath) {
 		try {
 
@@ -88,7 +87,6 @@ public class Validation {
 		}
 	}
 
-
 	public String greyListCheck(String device) {
 
 		//greydb fetch
@@ -104,17 +102,15 @@ public class Validation {
 
 		//deviceDb check
 		String result=" ";
+		
 		if(result == null) {
-
 			return "fail";
 		}
 		return "success";
 	}
 
 	public String activeDbCheck(String device) {
-
 		//activeDb check
-
 		String result =" ";
 		if(result == null) {
 
@@ -124,10 +120,7 @@ public class Validation {
 
 	}
 
-
-
-
-	public boolean deivceExistValidator(List<DeviceDb> deviceDb) {
+	public boolean deviceExistValidator(List<DeviceDb> deviceDb) {
 
 		for(DeviceDb deivceDetails :deviceDb ) {
 
@@ -139,14 +132,5 @@ public class Validation {
 		return Boolean.FALSE;		
 
 	}
-
-
-
-
-
-
-
-
-
 
 }

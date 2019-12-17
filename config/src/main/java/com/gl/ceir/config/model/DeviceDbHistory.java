@@ -39,23 +39,24 @@ public class DeviceDbHistory implements Serializable {
 	private String deviceAction;
 	private String invoiceNumber;    
 
-	private int	operation;       
+	private Integer	operation;       
 	private String roleType;     
 	private String 	txnId;          
 	private Long userId;         
 	private String supplierName;
 
-	private String taxPaidStatus;
+	private Integer taxPaidStatus;
 
 	private String deviceStatus;
 
-	private String deviceLaunchDate;
+	private Date deviceLaunchDate;
 
 	private String multipleSimStatus;
-	private String 	deviceId;
-	private String 	deviceNumber; 
-	private String 	deviceType;   
-	private String	imeiEsnEeid;
+	private String deviceIdType;
+	private String snOfDevice; 
+	private String deviceType;   
+	private String imeiEsnEeid;
+	
 	public Long getId() {
 		return id;
 	}
@@ -134,41 +135,24 @@ public class DeviceDbHistory implements Serializable {
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
-	public String getTaxPaidStatus() {
-		return taxPaidStatus;
-	}
-	public void setTaxPaidStatus(String taxPaidStatus) {
-		this.taxPaidStatus = taxPaidStatus;
-	}
 	public String getDeviceStatus() {
 		return deviceStatus;
 	}
 	public void setDeviceStatus(String deviceStatus) {
 		this.deviceStatus = deviceStatus;
 	}
-	public String getDeviceLaunchDate() {
-		return deviceLaunchDate;
-	}
-	public void setDeviceLaunchDate(String deviceLaunchDate) {
-		this.deviceLaunchDate = deviceLaunchDate;
-	}
+	
 	public String getMultipleSimStatus() {
 		return multipleSimStatus;
 	}
 	public void setMultipleSimStatus(String multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
 	}
-	public String getDeviceId() {
-		return deviceId;
+	public String getDeviceIdType() {
+		return deviceIdType;
 	}
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
-	public String getDeviceNumber() {
-		return deviceNumber;
-	}
-	public void setDeviceNumber(String deviceNumber) {
-		this.deviceNumber = deviceNumber;
+	public void setDeviceIdType(String deviceIdType) {
+		this.deviceIdType = deviceIdType;
 	}
 	public String getDeviceType() {
 		return deviceType;
@@ -182,8 +166,29 @@ public class DeviceDbHistory implements Serializable {
 	public void setImeiEsnEeid(String imeiEsnEeid) {
 		this.imeiEsnEeid = imeiEsnEeid;
 	}
-
-
-
+	public Integer getTaxPaidStatus() {
+		return taxPaidStatus;
+	}
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
+		this.taxPaidStatus = taxPaidStatus;
+	}
+	public Date getDeviceLaunchDate() {
+		return deviceLaunchDate;
+	}
+	public void setDeviceLaunchDate(Date deviceLaunchDate) {
+		this.deviceLaunchDate = deviceLaunchDate;
+	}
+	public String getSnOfDevice() {
+		return snOfDevice;
+	}
+	public void setSnOfDevice(String snOfDevice) {
+		this.snOfDevice = snOfDevice;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public void setOperation(Integer operation) {
+		this.operation = operation;
+	}
 
 }
