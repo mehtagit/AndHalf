@@ -13,5 +13,5 @@ public class PropertiesReader {
 	public String dateViewFormat;
 	
 	@Value("${default-no-of-regularized-devices}")
-	public int defaultNoOfRegularizedDevices;
+	public Long defaultNoOfRegularizedDevices;
 }

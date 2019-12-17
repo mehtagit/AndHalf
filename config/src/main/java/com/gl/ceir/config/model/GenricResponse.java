@@ -5,7 +5,7 @@ public class GenricResponse {
 	private int errorCode;
 	private String message;
 	private String txnId;
-	private String data;
+	private Object data;
 
 	public GenricResponse(int errorCode, String message, String txnId) {
 		this.errorCode = errorCode;
@@ -13,7 +13,7 @@ public class GenricResponse {
 		this.txnId = txnId;
 	}
 	
-	public GenricResponse(int errorCode, String message, String txnId, String data) {
+	public GenricResponse(int errorCode, String message, String txnId, Object data) {
 		this.errorCode = errorCode;
 		this.message = message;
 		this.txnId = txnId;
@@ -41,7 +41,7 @@ public class GenricResponse {
 		this.txnId = txnId;
 	}
 
-	public String getData() {
+	public Object getData() {
 		return data;
 	}
 

@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.Count;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -329,7 +330,7 @@ public class RegularizedDeviceServiceImpl {
 	
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
 		try {
-			return new GenricResponse(0, "", "", Long.toString(regularizedDeviceDbRepository.countByNid(nid)));	
+			return new GenricResponse(0, "", "", new Count(propertiesReader.defaultNoOfRegularizedDevices, regularizedDeviceDbRepository.countByNid(nid)));	
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
