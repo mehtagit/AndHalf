@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.Utility.Util;
+import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDb;
 import com.gl.ceir.config.model.WebActionDb;
@@ -22,7 +23,7 @@ import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Service
-public class ConsignmentRegisterServiceImpl {	
+public class ConsignmentRegisterServiceImpl implements WebActionService {	
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -38,11 +39,10 @@ public class ConsignmentRegisterServiceImpl {
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
 
-	ConcurrentHashMap<String, String> chm =  new ConcurrentHashMap<String, String>();
+	ConcurrentHashMap<String, String> chm;
 
-
-	public boolean saveprocess(WebActionDb webActionDb) {
-
+	@Override
+	public boolean process(WebActionDb webActionDb) {
 		try {
 
 			webActionDb.setState(1);
@@ -63,8 +63,11 @@ public class ConsignmentRegisterServiceImpl {
 
 			List<String> contents = Files.readAllLines(filePath);
 
-			log.info("File is reading starts="+contents);
-			for(String content :contents) {
+			log.info("File is reading starts = " + contents);
+			
+			chm = new ConcurrentHashMap<String, String>();
+					
+			for(String content : contents) {
 
 				DeviceDb device = util.parseDevice(content);
 				device.setImporterTxnId(webActionDb.getTxnId());
@@ -85,7 +88,6 @@ public class ConsignmentRegisterServiceImpl {
 
 			}
 
-
 			stokeDetailsRepository.saveAll(devices);
 
 			consignmentMgmt.setConsignmentStatus(3);
@@ -98,7 +100,5 @@ public class ConsignmentRegisterServiceImpl {
 			log.info("Exception found ="+e);
 			return Boolean.FALSE;
 		}
-
 	}
-
 }

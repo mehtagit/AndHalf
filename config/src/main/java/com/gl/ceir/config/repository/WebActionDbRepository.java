@@ -7,14 +7,10 @@ import com.gl.ceir.config.model.WebActionDb;
 
 public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long> {
 
-
-
 	public WebActionDb save(WebActionDb webActionDb);
 
 	public WebActionDb getByState(int state);
 
-
 	public WebActionDb findFirstByState(int state);
 	
-
 }

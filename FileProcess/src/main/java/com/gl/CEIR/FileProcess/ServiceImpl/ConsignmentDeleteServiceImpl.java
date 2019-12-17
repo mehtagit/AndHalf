@@ -6,17 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.Utility.Validation;
+import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.DeviceDb;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDbHistory;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Service
-public class ConsignmentDeleteServiceImpl {
+public class ConsignmentDeleteServiceImpl implements WebActionService{
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
@@ -33,10 +35,10 @@ public class ConsignmentDeleteServiceImpl {
 	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
 
-	public boolean deleteProcess(WebActionDb webActionDb) {
-		try {
+	@Override
+	public boolean process(WebActionDb webActionDb) {
 
-			
+		try {
 			DeviceDbHistory deviceDbHistory = new DeviceDbHistory();
 
 			webActionDb.setState(1);
@@ -53,7 +55,6 @@ public class ConsignmentDeleteServiceImpl {
 			if(result) {
 
 				// stokeDetailsRepository.deleteByTxnId(webActionDb.getTxnId());
-
 				deviceDbHistory.setFileName(consignmentMgmt.getFileName());
 				deviceDbHistory.setFilePath("");
 				deviceDbHistory.setTxnId(webActionDb.getTxnId());
@@ -80,19 +81,15 @@ public class ConsignmentDeleteServiceImpl {
 				}
 
 			}
-			consignmentMgmt.setConsignmentStatus(10);
-
+			
+			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.STOLEN.getCode());
 			consignmentRepository.save(consignmentMgmt);
-
-
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Boolean.FALSE;		
-
 		}
+		
 		return Boolean.TRUE;
-
-
 	}
 
 

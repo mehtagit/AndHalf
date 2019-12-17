@@ -2,20 +2,18 @@ package com.gl.CEIR.FileProcess.ServiceImpl;
 
 import org.springframework.stereotype.Service;
 
+import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.WebActionDb;
 
-
-
 @Service
-public class StockUpdateServiceImpl {
+public class StockUpdateServiceImpl implements WebActionService{
 
-
-
-	public boolean updateStockProcess(WebActionDb webActionDb) {
+	@Override
+	public boolean process(WebActionDb webActionDb) {
 		try {
 
-			
-			
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Boolean.FALSE;

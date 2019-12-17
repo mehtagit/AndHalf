@@ -2,15 +2,14 @@ package com.gl.CEIR.FileProcess.ServiceImpl;
 
 import org.springframework.stereotype.Service;
 
+import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.WebActionDb;
 
-
-
 @Service
-public class StockDeleteServiceImpl {
+public class StockDeleteServiceImpl implements WebActionService{
 
-
-	public boolean deleteStockProcess(WebActionDb webActionDb) {
+	@Override
+	public boolean process(WebActionDb webActionDb) {
 
 		try {
 
@@ -23,6 +22,4 @@ public class StockDeleteServiceImpl {
 		return Boolean.TRUE;
 
 	}
-
-
 }

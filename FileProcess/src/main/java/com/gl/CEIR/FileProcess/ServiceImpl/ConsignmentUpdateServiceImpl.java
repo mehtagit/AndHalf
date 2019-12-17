@@ -5,13 +5,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.Utility.Util;
+import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDb;
-import com.gl.ceir.config.model.DeviceDbHistory;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
@@ -19,7 +20,7 @@ import com.gl.ceir.config.repository.WebActionDbRepository;
 
 
 @Service
-public class ConsignmentUpdateServiceImpl {
+public class ConsignmentUpdateServiceImpl implements WebActionService{
 
 
 	@Autowired
@@ -34,11 +35,9 @@ public class ConsignmentUpdateServiceImpl {
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
 
-
-	public boolean updateProcess(WebActionDb webActionDb){
+	@Override
+	public boolean process(WebActionDb webActionDb){
 		try {
-
-			DeviceDbHistory deviceDbHistory = new DeviceDbHistory();
 
 			webActionDb.setState(1);
 

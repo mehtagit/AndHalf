@@ -36,7 +36,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
-			<version>${spring.boot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -45,12 +44,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-			<version>${spring.boot.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.3</version>
 		</dependency>
 
 		<dependency>
@@ -77,7 +74,7 @@
 		<dependency>
 			<groupId>com.gl.ceir</groupId>
 			<artifactId>config</artifactId>
-			<version>1.0.7</version>
+			<version>1.0.12</version>
 			<classifier>import-lib</classifier>
 			<!-- <scope>system</scope>
 			<systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath>-->

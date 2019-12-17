@@ -8,17 +8,14 @@ import org.springframework.context.annotation.ComponentScan;
 
 import com.gl.CEIR.FileProcess.Controller.FileActionControlling;
 
-
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan({"com.gl.CEIR.FileProcess", "com.gl.ceir.config"})
-public class App 
-{
+public class App {
 
 	public static ConfigurableApplicationContext  ctx;
 	
-	public static void main( String[] args )
-	{
+	public static void main( String[] args ){
 		
 		ctx = SpringApplication.run(App.class, args);
 		

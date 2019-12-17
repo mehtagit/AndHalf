@@ -1,97 +1,50 @@
 package com.gl.CEIR.FileProcess.Controller;
 
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.gl.CEIR.FileProcess.ServiceImpl.ConsignmentDeleteServiceImpl;
-import com.gl.CEIR.FileProcess.ServiceImpl.ConsignmentRegisterServiceImpl;
-import com.gl.CEIR.FileProcess.ServiceImpl.ConsignmentUpdateServiceImpl;
+
 import com.gl.CEIR.FileProcess.ServiceImpl.FileActionServiceImpl;
-import com.gl.CEIR.FileProcess.ServiceImpl.StockDeleteServiceImpl;
-import com.gl.CEIR.FileProcess.ServiceImpl.StockUpdateServiceImpl;
-import com.gl.CEIR.FileProcess.ServiceImpl.StockUploadServiceImpl;
+import com.gl.CEIR.FileProcess.ServiceImpl.WebActionFactoryImpl;
+import com.gl.CEIR.FileProcess.conf.AppConfig;
 import com.gl.ceir.config.model.WebActionDb;
 
-
 @Service
-public class FileActionControlling  implements Runnable{
+public class FileActionControlling implements Runnable {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
-	FileActionServiceImpl FileActionServiceImpl;
-
+	AppConfig appConfig;
+	
 	@Autowired
-	ConsignmentDeleteServiceImpl consignmentDeleteServiceImpl;
-
-	@Autowired                                                        
-	ConsignmentRegisterServiceImpl consignmentRegisterServiceImpl;
-
+	FileActionServiceImpl fileActionServiceImpl;
+	
 	@Autowired
-	ConsignmentUpdateServiceImpl consignmentUpdateServiceImpl;
-
-	@Autowired
-	StockDeleteServiceImpl stockDeleteServiceImpl;
-
-	@Autowired
-	StockUpdateServiceImpl stockUpdateServiceImpl;
-
-	@Autowired
-	StockUploadServiceImpl stockUploadServiceImpl;
+	WebActionFactoryImpl webActionFactoryImpl;
 
 	@Override
 	public void run() {
 
 		while(Boolean.TRUE) {
+			
 			try {
+				WebActionDb webActionDb	= fileActionServiceImpl.getFileActionDetails();
 
-				WebActionDb webActionDb	=	FileActionServiceImpl.getFileActionDetails();
+				log.info("Web action Details Fetch = " + webActionDb);
 
-				log.info("Web action Details Fetch ="+webActionDb);
-
-				if(webActionDb != null) {
-
-					if("Consignment".equalsIgnoreCase(webActionDb.getFeature())) {
-
-						if("Register".equalsIgnoreCase(webActionDb.getSubFeature())) {
-							consignmentRegisterServiceImpl.saveprocess(webActionDb);
-
-						}else if("Update".equalsIgnoreCase(webActionDb.getSubFeature())) {
-							consignmentUpdateServiceImpl.updateProcess(webActionDb);
-
-						}else if("Delete".equalsIgnoreCase(webActionDb.getSubFeature())) {
-
-							consignmentDeleteServiceImpl.deleteProcess(webActionDb);
-						}
-
-					}else if("Stock".equalsIgnoreCase(webActionDb.getFeature())) {
-
-						if("Upload".equalsIgnoreCase(webActionDb.getSubFeature())) {
-							// stockUploadServiceImpl.saveStockProcess(webActionDb);
-
-
-						}else if("Update".equalsIgnoreCase(webActionDb.getSubFeature())) {
-
-							stockUpdateServiceImpl.updateStockProcess(webActionDb);
-
-						}else if("Delete".equalsIgnoreCase(webActionDb.getSubFeature())) {
-
-							stockDeleteServiceImpl.deleteStockProcess(webActionDb);
-
-
-						}
-
-					}
+				if(Objects.nonNull(webActionDb)) {
+					webActionFactoryImpl.create(webActionDb).process(webActionDb);
 				}
 				
-				// TODO Make sleep time confugurable. 
-				Thread.sleep(6000);
+				Thread.sleep(1000/appConfig.tps);
 
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
-
 		}
 	}
 
