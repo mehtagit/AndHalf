@@ -16,7 +16,7 @@ function typeApprovedDataTable(){
 	"endDate":$('#endDate').val(),
 	"startDate":$('#startDate').val(),
   	"tac" : $('#tac').val(),
-  	"userId":parseInt(userId),
+  	"userId":parseInt($("body").attr("data-userID")),
 	"featureId":parseInt(featureId),
 	"userTypeId": parseInt($("body").attr("data-userTypeID")),
 	"userType":$("body").attr("data-roleType"),
@@ -127,12 +127,13 @@ function pageRendering(){
 			    });
 			
 
-			//Tax paid status-----------dropdown
-			$.getJSON('./getDropdownList/TAD_STATUS', function(data) {
+			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
+					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#Status');
 				}
+			
 			});
 		}
 		

@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -49,18 +49,45 @@
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- Datepicker javascript-->
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+ 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
+   <style>
+        .row {
+            margin-bottom: 0;
+            margin-top: 0;
+        }
 
+        label {
+            color: #444;
+            font-size: 13px;
+        }
+
+        textarea.materialize-textarea {
+            padding: 0;
+            /* padding-left: 10px; */
+        }
+
+        select {
+            height: 2.2rem;
+        }
+
+        .welcomeMsg {
+            padding-bottom: 50px !important;
+            line-height: 1.5 !important;
+            text-align: center;
+        }
+        .picker__date-display {
+            display: none !important;
+        }
+    </style>
 </head>
 
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -102,7 +129,7 @@
 
 									<div class="input-field col s12 m6">
 										<input type="text" id="requestDate"
-											class="form-control datepick" name="requestDate" pattern="[]"
+											class="form-control dateClass" name="requestDate" 
 											title="" autocomplete="off"> <span
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
@@ -124,18 +151,18 @@
 									<div class="col s12 m6 l6">
 										<label for="status">Status <span class="star">*</span></label>
 										<select class="browser-default" id="status">
-											<option value="" disabled selected>Select Status</option>
-											<option value="Approved">Approved</option>
-											<option value="Rejected">Rejected</option>
+											<option>Status</option>
 										</select>
 									</div>
+									
+									
 								</div>
 
 								<div class="row">
 									<div class="input-field col s12 m6">
 										<input type="text" id="approveDisapproveDate"
-											class="form-control datepick" name="approveRejectionDate"
-											pattern="[]" title="" autocomplete="off" /> <span
+											class="form-control dateClass" name="approveRejectionDate"
+											 title="" autocomplete="off" /> <span
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
@@ -143,6 +170,9 @@
 											class="star">*</span></label>
 									</div>
 
+                                            
+                                            
+                                            
 									<div class="input-field col s12 m6 l6" style="margin-top: 9px;">
 										<textarea id="remark" class="materialize-textarea"></textarea>
 										<label for="Remark">Remark </label>
@@ -170,8 +200,8 @@
 									marked with <span class="star">*</span>
 								</span>
 								<div class="center" style="margin-top: 50px;">
-									<button class="btn" onclick="register();">Submit</button>
-									<a href="manageTypeDevices.html" class="btn" id="Cancel"
+									<input type="button" class="btn" value="Submit" onclick="register();">
+									<a href="./manageTypeDevices" class="btn" id="Cancel"
 										style="margin-left: 10px;">Cancel</a>
 								</div>
 							</form>
@@ -194,7 +224,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-
+	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -215,17 +245,9 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.datepick').on('mousedown', function(event) {
-				event.preventDefault();
-			});
-
-			$('.datepick').datepicker({
-				dateFormat : "yy-mm-dd"
-			});
-		});
-
+	
+		<script type="text/javascript">
+var featureId = 11;
 		populateCountries("country");
 
 		function register() {
@@ -233,19 +255,23 @@
 			var manufacturerName = $('#manufacturerName').val();
 			var country = $('#country').val();
 			var tac = $('#tac').val();
-			var stateInterp = $('#status').val();
+			var approveStatus = parseInt($('#status').val());
 			var approveDisapproveDate = $('#approveDisapproveDate').val();
+			var requestDate= $('#requestDate').val();
 			var remark = $('#remark').val();
+			var userId = $("body").attr("data-userID");
 			var formData = new FormData();
 			formData.append('file', $('#file')[0].files[0]);
 			formData.append('manufacturerId', manufacturerId);
 			formData.append('manufacturerName', manufacturerName);
 			formData.append('country', country);
 			formData.append('tac', tac);
-			formData.append('stateInterp', stateInterp);
+			formData.append('approveStatus', approveStatus);
 			formData.append('approveDisapproveDate', approveDisapproveDate);
+			formData.append('requestDate',requestDate);
 			formData.append('remark', remark);
-
+			formData.append('userId',userId);
+			console.log(formData)
 			$.ajax({
 				url : './register-approved-device',
 				type : 'POST',
@@ -253,9 +279,8 @@
 				processData : false,
 				contentType : false,
 				success : function(data, textStatus, jqXHR) {
-
-					console.log(data);
-					/* $('#submitConsignment').openModal();
+console.log("-----success"+data);
+					/*  $('#submitConsignment').openModal();
 					if(data.errorCode=="0")
 					 {
 					 console.log("status code = 0");
@@ -269,10 +294,10 @@
 					$('#sucessMessage').text('');
 					$('#sucessMessage').text("consignment number already exist");
 					$('#errorCode').val(data.errorCode);
-					 }
+					 } */
 					// $('#updateConsignment').modal('open'); 
 					//alert("success");
-					 */
+					 
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
@@ -282,6 +307,23 @@
 			return false;
 
 		}
+		
+		
+
+		$('#approveDisapproveDate,#requestDate').datepicker({
+			dateFormat : "yy-mm-dd"
+		});
+	
+		
+		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#status');
+			}
+		
+		});
+		
 	</script>
 
 </body>

@@ -17,19 +17,21 @@ public class RegisterationImpl implements Registeration{
 	TRCRegisteration model;
 	
 	@Override
-	public TRCRegisteration register(HttpServletRequest request,String fileName) {
+	public TRCRegisteration register(HttpServletRequest request,String fileName,String txnId) {
 		// TODO Auto-generated method stub
 		
 		model.setManufacturerId(request.getParameter("manufacturerId"));
 		model.setManufacturerName(request.getParameter("manufacturerName"));
 		model.setCountry(request.getParameter("country"));
 		model.setTac(request.getParameter("tac"));
-		model.setStateInterp(request.getParameter("stateInterp"));
+		model.setApproveStatus(Integer.parseInt(request.getParameter("approveStatus")));
 		model.setApproveDisapproveDate(request.getParameter("approveDisapproveDate"));
 		model.setRemark(request.getParameter("remark"));
+		model.setRequestDate(request.getParameter("requestDate"));
+		model.setUserId(Integer.parseInt(request.getParameter("userId")));
+		model.setTxnId(txnId);
 		model.setFile(fileName);
-		log.info("---------modelmodel---------"+request.getParameter("manufacturerId"));
-		log.info("---------modelmodel---------"+model);
+		log.info("---------model inside implementation class---------"+model);
 		return model;
 	}
 
