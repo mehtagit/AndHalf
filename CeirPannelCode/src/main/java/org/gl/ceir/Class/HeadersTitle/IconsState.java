@@ -288,8 +288,8 @@ public class IconsState {
 	public String stolenState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";	
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+fileName+"/"+txnId+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName+"/"+txnId+"";
 		String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"','"+qty+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 

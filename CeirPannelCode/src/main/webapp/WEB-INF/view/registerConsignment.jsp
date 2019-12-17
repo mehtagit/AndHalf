@@ -235,7 +235,7 @@
     
         <div id="submitConsignment" class="modal">
         <div class="modal-content">
-            <h6>Submit Consignment</h6><hr>
+            <h6 class="modal-header">Submit Consignment</h6><hr>
 
             <div class="row">
                 <h6 id="sucessMessage">Your form has been successfully submitted. The Transaction ID for future reference is </h6>
@@ -252,7 +252,7 @@
     </div>
     <div id="cancelMessage" class="modal">
             <div class="modal-content">
-                <h6>Cancel Request</h6><hr>
+                <h6 class="modal-header">Cancel Request</h6>
               <div class="row">
                 <h6>Are you sure you want to close this window. The form data will be lost</h6>
               </div>

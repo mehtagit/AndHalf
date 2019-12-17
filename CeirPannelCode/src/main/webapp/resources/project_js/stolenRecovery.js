@@ -439,7 +439,7 @@ function pageElements(url){
 
 			}else{
 				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
-				$("#consignmentTableDIv").append("<div class='col s12 m4'><a href='#' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m4'><a href='#' onclick='exportStolenRecoveryData()'  class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -884,3 +884,70 @@ function setAllDropdowns(){
 }
 
 
+//**********************************************************Export Excel file************************************************************************
+function exportStolenRecoveryData()
+{
+	var stolenRecoveryStartDate=$('#startDate').val();
+	var stolenRecoveryEndDate=$('#endDate').val();
+	var stolenRecoveryTxnId=$('#transactionID').val();
+	var stolenRecoveryFileStatus=parseInt($('#status').val());
+	var stolenRecoverySourceStatus=parseInt($('#sourceStatus').val());
+	var stolenRecoveryRequestType=parseInt($('#requestType').val());
+
+	
+	var roleType = $("body").attr("data-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	
+	var role = currentRoleType == null ? roleType : currentRoleType;
+	console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+    
+	console.log("stolenRecoveryFileStatus=="+stolenRecoveryFileStatus+" stolenRecoverySourceStatus=="+stolenRecoverySourceStatus+" stolenRecoveryRequestType="+stolenRecoveryRequestType)
+      if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
+	   {
+    	  stolenRecoveryFileStatus='';
+    	  stolenRecoverySourceStatus='';
+    	  stolenRecoveryRequestType='';
+    	  console.log(" 11111111stolenRecoveryFileStatus && stolenRecoverySourceStatus && stolenRecoveryRequestType is empty =="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+	   }
+      else if(isNaN(stolenRecoveryFileStatus) && isNaN(stolenRecoverySourceStatus))
+	   {
+    	  stolenRecoveryFileStatus='';
+    	  stolenRecoverySourceStatus='';
+    	  console.log(" 2222stolenRecoveryFileStatus && stolenRecoverySourceStatus is empty=="+stolenRecoveryFileStatus+stolenRecoverySourceStatus);
+	   }
+      else if(isNaN(stolenRecoverySourceStatus) && isNaN(stolenRecoveryRequestType))
+	   {
+    	  stolenRecoverySourceStatus='';
+    	  stolenRecoveryRequestType='';
+    	  console.log(" 333333stolenRecoverySourceStatus && stolenRecoveryRequestType is empty="+stolenRecoverySourceStatus+stolenRecoveryRequestType);
+	   }
+      else if(isNaN(stolenRecoveryRequestType) && isNaN(stolenRecoveryFileStatus))
+    	  {
+    	   stolenRecoveryRequestType='';
+    	   stolenRecoveryFileStatus='';
+    	   console.log(" 44444stolenRecoveryRequestType && stolenRecoveryFileStatus is empty "+stolenRecoveryRequestType+stolenRecoveryFileStatus);
+    	  }
+      else if(isNaN(stolenRecoveryFileStatus))
+    	  {
+    	  stolenRecoveryFileStatus='';
+    	  console.log("stolenRecoveryFileStatus is blank="+stolenRecoveryFileStatus);
+    	  }
+      else if(isNaN(stolenRecoverySourceStatus))
+	  {
+    	  stolenRecoverySourceStatus='';
+    	  console.log("stolenRecoverySourceStatus is blank="+stolenRecoverySourceStatus);
+	  }
+      else if(isNaN(stolenRecoveryRequestType))
+	  {
+    	  stolenRecoveryRequestType='';
+    	  console.log("stolenRecoveryRequestType is blank="+stolenRecoveryRequestType);
+	  }
+
+	var table = $('#stolenLibraryTable').DataTable();
+	var info = table.page.info(); 
+    var pageNo=info.page;
+    var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
+	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+}

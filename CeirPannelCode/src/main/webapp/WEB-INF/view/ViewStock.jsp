@@ -114,8 +114,8 @@
 
 	<div id="successUpdateStockModal" class="modal">
 		<div class="modal-content">
-			<h6 style="font-size: 16px;">Update Stock</h6>
-			<hr>
+			<h6 class="modal-header" style="font-size: 16px;">Update Stock</h6>
+			
 
 			<div class="row">
 				<p id="stockSucessMessage">Your updated on the form for
@@ -133,8 +133,8 @@
 
 	<div id="editStockModal" class="modal">
 		<div class="modal-content">
-			<h6>Edit Stock</h6>
-			<hr>
+			<h6 class="modal-header">Edit Stock</h6>
+			
 			<form action="" style="margin-top: 10px;">
 				<div class="row myRow">
 					<div class="input-field col s12 m6">
@@ -215,8 +215,8 @@
 
 	<div id="viewStockModal" class="modal">
 		<div class="modal-content">
-			<h6>View Stock</h6>
-			<hr>
+			<h6 class="modal-header">View Stock</h6>
+			
 			<form action="" style="margin-top: 10px;">
 
 				<div class="row myRow">
@@ -289,8 +289,8 @@
 	<div id="DeleteStockconfirmationModal" class="modal">
 		<div class="modal-content">
 
-			<h6>Delete Stock</h6>
-			<hr>
+			<h6 class="modal-header">Delete Stock</h6>
+			
 
 			<div class="row">
 				<h6>Are you sure you want to withdraw the stock details for
@@ -309,8 +309,8 @@
 
 	<div id="closeDeleteModal" class="modal">
 		<div class="modal-content">
-			<h6>Delete Stock</h6>
-			<hr>
+			<h6 class="modal-header">Delete Stock</h6>
+			
 			<div class="row">
 
 				<h6 id="stockModalText"></h6>
@@ -328,10 +328,10 @@
         <div class="modal-content">
 
             <h6>Mark As Stolen</h6>
-            <hr>
+            
 
             <div class="row">
-                <h6>Do you want to mark the following transaction  as stolen?</h6>
+                <h6 class="modal-header">Do you want to mark the following transaction  as stolen?</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -343,8 +343,8 @@
     </div>
      <div id="markAsStolenDone" class="modal">
         <div class="modal-content">
-            <h6>Mark As Stolen</h6>
-            <hr>
+            <h6 class="modal-header">Mark As Stolen</h6>
+            
             <div class="row">
                 <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
                 </h6>

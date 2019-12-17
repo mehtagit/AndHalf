@@ -33,19 +33,24 @@ public class StolenDatatableController {
 
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
+	
 	@Autowired
 	UtilDownload utildownload;
+	
 	@Autowired
 	DatatableResponseModel datatableResponseModel;
+	
 	@Autowired
 	StolenPaginationModel stolenPaginationModel;
+	
 	@Autowired
 	PageElement pageElement;
+	
 	@Autowired
 	Button button;
+	
 	@Autowired
 	IconsState iconState;
-
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -59,6 +64,7 @@ public class StolenDatatableController {
 		//FilterRequest filterrequest = new FilterRequest();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();	
+		Integer exportFile=0;
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 		log.info("flter request=="+filterrequest);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
@@ -68,7 +74,7 @@ public class StolenDatatableController {
 		// list provided via Back-end process
 		try {
 
-			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize);
+			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);

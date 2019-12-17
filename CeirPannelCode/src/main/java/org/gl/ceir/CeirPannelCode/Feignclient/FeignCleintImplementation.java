@@ -120,7 +120,8 @@ public interface FeignCleintImplementation {
 	@RequestMapping(value="/stakeholder/record" ,method=RequestMethod.POST) 
 	public Object stolenFilter(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) ;
 
 
 	
