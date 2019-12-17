@@ -1,7 +1,5 @@
 package com.gl.ceir.config.controller;
-
 import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
@@ -21,10 +18,7 @@ import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
-
 import io.swagger.annotations.ApiOperation;
-
-
 
 @RestController
 public class ConfigurationController {
@@ -34,23 +28,15 @@ public class ConfigurationController {
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
-
 	@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
 	@RequestMapping(path = "/system/viewAll", method = RequestMethod.POST)
 	public MappingJacksonValue findSystemDetails() {
-
 		logger.info("Request to get system all details");
-
 		List<SystemConfigurationDb>  pocessDetails = configurationManagementServiceImpl.getAllInfo();
-
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
-
 		logger.info("Response to send="+pocessDetails);
-
 		return mapping;
 	}
-
-
 
 	@ApiOperation(value = "System Config view Data using Tag", response = SystemConfigurationDb.class)
 	@RequestMapping(path = "/system/viewTag", method = RequestMethod.POST)
@@ -66,7 +52,6 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-
 
 	@ApiOperation(value = "System Config update Data using id", response = GenricResponse.class)
 	@RequestMapping(path = "/system/update", method = RequestMethod.PUT)
@@ -95,7 +80,6 @@ public class ConfigurationController {
 		logger.info("Response to send="+pocessDetails);
 
 		return mapping;
-
 	}
 
 
@@ -218,6 +202,4 @@ public class ConfigurationController {
 
 		return mapping;
 	}
-
-
 }

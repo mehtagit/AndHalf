@@ -126,8 +126,6 @@ public class GrievanceServiceImpl{
 				gsb.with(new SearchCriteria("grievanceId", grievance.getGrievanceId(), SearchOperation.EQUALITY, Datatype.LONG));
 			if(Objects.nonNull(grievance.getTxnId()))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-			//List<Grievance> data = grievanceRepository.getGrievanceByUserId(grievance.getUserId());
-			//logger.info("Data to be fetch in db using jioin ="+data);
 			return grievanceRepository.findAll(gsb.build(), pageable).getContent();
 
 		} catch (Exception e) {

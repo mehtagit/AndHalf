@@ -48,7 +48,6 @@ public class GrievanceSpecificationBuilder {
 
 	private List<Specification<Grievance>> createSpecifications(){
 		List<Specification<Grievance>> specifications = new ArrayList<Specification<Grievance>>();
-		// Path<Tuple> tuple = null;
 		try {
 		for(SearchCriteria searchCriteria : params) {
 			specifications.add((root, query, cb)-> {

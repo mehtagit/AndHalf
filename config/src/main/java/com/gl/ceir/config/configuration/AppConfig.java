@@ -21,7 +21,7 @@ public class AppConfig {
 		return new Docket(DocumentationType.SWAGGER_2).select()
 				.apis(RequestHandlerSelectors.basePackage("com.gl.ceir.config.controller"))
 				.paths(PathSelectors.regex("/.*")).build().apiInfo(apiEndPointsInfo());
-	}
+	} 
 
 	private ApiInfo apiEndPointsInfo() {
 		return new ApiInfoBuilder().title("CEIR Configuration APIs Document")
