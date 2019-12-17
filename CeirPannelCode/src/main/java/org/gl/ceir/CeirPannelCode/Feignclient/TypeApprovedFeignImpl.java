@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Component
 @Service
@@ -27,7 +28,8 @@ public interface TypeApprovedFeignImpl {
 	
 	
 	@RequestMapping(value="/TypeApproved/add" ,method=RequestMethod.POST) 
-	public GenricResponse register(@RequestBody TRCRegisteration model) ;
+	public GenricResponse register(@RequestBody TRCRegisteration filterRequest) ;
+	
 	
 	@PostMapping("/TypeApproved/viewById/{id}") 
 	public TRCRegisteration viewByID(@PathVariable("id") int id) ;

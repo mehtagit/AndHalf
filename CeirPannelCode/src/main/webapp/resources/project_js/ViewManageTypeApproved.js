@@ -20,6 +20,7 @@ function typeApprovedDataTable(){
 	"featureId":parseInt(featureId),
 	"userTypeId": parseInt($("body").attr("data-userTypeID")),
 	"userType":$("body").attr("data-roleType"),
+	"status" : parseInt($('#Status').val()),
 	}
 	$.ajax({
 		url: 'headers?type=trcManageType',

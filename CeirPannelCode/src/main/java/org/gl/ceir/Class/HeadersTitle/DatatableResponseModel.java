@@ -27,4 +27,9 @@ public class DatatableResponseModel {
 	public void setData(List<List<Object>> data) {
 		this.data = data;
 	}
+	@Override
+	public String toString() {
+		return "DatatableResponseModel [recordsTotal=" + recordsTotal + ", recordsFiltered=" + recordsFiltered
+				+ ", data=" + data + "]";
+	}
 	}

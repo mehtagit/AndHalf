@@ -276,8 +276,8 @@ var featureId = 11;
 				url : './register-approved-device',
 				type : 'POST',
 				data : formData,
-				processData : false,
-				contentType : false,
+				 processData : false,
+				contentType : false, 
 				success : function(data, textStatus, jqXHR) {
 console.log("-----success"+data);
 					/*  $('#submitConsignment').openModal();
