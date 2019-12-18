@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TRCRegisteration {
 
-	private Integer id,userID,status,approveStatus;
+	private Integer id,userId,status,approveStatus;
 	private String manufacturerId, manufacturerName,country,requestDate,tac;
 	private String approveDisapproveDate, remark,file,createdOn,modifiedOn,txnId,stateInterp;
 	public Integer getId() {
@@ -14,11 +14,19 @@ public class TRCRegisteration {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getUserID() {
-		return userID;
+	@Override
+	public String toString() {
+		return "TRCRegisteration [id=" + id + ", userId=" + userId + ", status=" + status + ", approveStatus="
+				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
+				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
+				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp + "]";
 	}
-	public void setUserID(Integer userID) {
-		this.userID = userID;
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 	public Integer getStatus() {
 		return status;
@@ -104,12 +112,5 @@ public class TRCRegisteration {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
-	@Override
-	public String toString() {
-		return "TRCRegisteration [id=" + id + ", userID=" + userID + ", status=" + status + ", approveStatus="
-				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
-				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
-				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp + "]";
-	}
+	
 }

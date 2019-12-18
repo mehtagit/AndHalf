@@ -59,6 +59,12 @@
  
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
+<style type="text/css">
+textarea {
+	padding: 0px;
+}
+
+</style>
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -204,6 +210,131 @@
 			</div>
 		</div>
 
+
+		<div id="editModal" class="modal-form" style="overflow-y: hidden;">
+		
+                                    <div class="container-fluid pageHeader">
+                                        <p class="PageHeading"> Update Report Type-Approve Devices</p>
+                                    </div>
+
+                                   
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="editmanufacturerId" name="manufacturerId"
+                                                    placeholder="GHJ6487328" />
+                                                <label for="manufacturerId">Manufacturer ID</label>
+                                                <input type="text" id="transactionid" style="display: none">
+                                                <input type="text" id="columnid" style="display: none">
+                                            </div>
+
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="editmanufacturerName" name="manufacturerName"
+                                                    placeholder="ABC Name" />
+                                                <label for="manufacturerName">Manufacturer Name <span
+                                                        class="star">*</span></label>
+                                            </div>
+
+                                            <div class="col s12 m6 l6">
+                                                <label for="country">Country <span class="star">*</span></label>
+                                                <select id="editcountry" class="browser-default" class="mySelect"
+                                                    required></select>
+                                            </div>
+
+                                            <div class="input-field col s12 m6">
+                                                <input type="text" id="editRequestDate" class="datepicker" name="requestDate"
+                                                    pattern="[]" title="" maxlength="20" placeholder="12/10/2019" />
+                                                <label for="bdate2">Request Date <span class="star">*</span></label>
+                                            </div>
+
+                                          
+                                        </div>
+
+                                        <div class="row" style="margin-top: 5px;">
+                                            <!-- <div class="col s12 m6 l6">
+                                                <label for="deviceType">Device ID Type </label>
+                                                <select class="browser-default" id="deviceType">
+                                                    <option value="" disabled selected>Select Device ID Type</option>
+                                                    <option value="IMEI">IMEI</option>
+                                                    <option value="ESN">ESN</option>
+                                                    <option value="MEID">MEID</option>
+                                                </select>
+                                            </div> -->
+
+
+
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="edittac" name="tac" placeholder="FGJB263572" />
+                                                <label for="tac">TAC <span class="star">*</span></label>
+                                            </div>
+
+                                            <div class="col s12 m6 l6">
+                                                <label for="deviceType">Status <span class="star">*</span></label>
+                                                <select class="browser-default" id="editdeviceType">
+                                                    <option value="" disabled selected>Select Status</option>
+                                                    <option value="0">Approved</option>
+                                                    <option value="1">Rejected</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="input-field col s12 m6">
+                                                <input type="text" id="editApproveRejectionDate" class="datepicker"
+                                                    name="approveRejectionDate" pattern="[]" title="" maxlength="20"
+                                                    placeholder="5/12/2019" />
+                                                <label for="bdate2">Approve Rejection Date <span
+                                                        class="star">*</span></label>
+                                            </div>
+
+                                            <div class="input-field col s12 m6 l6" style="margin-top: 9px;">
+                                                <textarea id="editRemark" class="materialize-textarea"
+                                                    placeholder="kjshdksahdkjsahdksajhdksad"></textarea>
+                                                <label for="Remark" style="margin-top: 7px">Remark </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <h6 style="color: #000; margin-left: 10px;">Upload Supporting Document <span
+                                                    class="star">*</span></h6>
+                                            <div class="file-field col s12 m6">
+                                                <div class="btn">
+                                                    <span>Select File</span>
+                                                    <input id="editUploadFile" type="file" multiple>
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input class="file-path validate" type="text" id="editFileName" placeholder="file.csv"
+                                                        multiple>
+                                                    <div>
+                                                        <p id="myFiles"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span style="margin-left: 5px;"> Required Field are marked with <span
+                                                class="star">*</span></span>
+                                            <div class="center" style="margin-top: 50px;">
+                                                <button class="btn " onclick="updateReportTypeDevice()"
+                                                    type="submit">Update</button>
+                                                <a href="manageTypeDevices.html" class="btn" id="Cancel"
+                                                    style="margin-left: 10px;">Cancel</a>
+                                            </div>
+                                    
+                                </div>	
+                                
+     <div id="updateManageTypeDevice" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Update</h6>
+            <div class="row">
+                <h6 id="updateTacMessage"> Your request has been successfully updated.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="./manageTypeDevices" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+	
 		<!--end container-->
 	</section>
 

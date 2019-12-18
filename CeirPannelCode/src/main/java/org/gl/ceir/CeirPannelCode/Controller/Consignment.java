@@ -221,7 +221,7 @@ return response;
 
 
 
-//************************************************ Open consignment record page********************************************************************************/
+//************************************************ update consignment record page********************************************************************************/
 
 @RequestMapping(value= {"/updateRegisterConsignment"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
