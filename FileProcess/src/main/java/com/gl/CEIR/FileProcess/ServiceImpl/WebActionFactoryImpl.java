@@ -9,7 +9,7 @@ import com.gl.CEIR.FileProcess.service.WebActionFactory;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.WebActionDb;
 
-@Component
+@Component("WebActionFactoryImpl")
 public class WebActionFactoryImpl implements WebActionFactory {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
@@ -30,7 +30,7 @@ public class WebActionFactoryImpl implements WebActionFactory {
 	StockUpdateServiceImpl stockUpdateServiceImpl;
 
 	@Autowired
-	StockUploadServiceImpl stockUploadServiceImpl;
+	StockRegisterServiceImpl stockUploadServiceImpl;
 	
 	@Override
 	public WebActionService create(WebActionDb webActionDb) {
@@ -40,21 +40,21 @@ public class WebActionFactoryImpl implements WebActionFactory {
 				return consignmentRegisterServiceImpl;
 
 			}else if("Update".equalsIgnoreCase(webActionDb.getSubFeature())) {
-				// return consignmentUpdateServiceImpl
+				return consignmentUpdateServiceImpl;
 			
 			}else if("Delete".equalsIgnoreCase(webActionDb.getSubFeature())) {
-				// return consignmentDeleteServiceImpl;
+				return consignmentDeleteServiceImpl;
 			
 			}
 		}else if("Stock".equalsIgnoreCase(webActionDb.getFeature())) {
 			if("Upload".equalsIgnoreCase(webActionDb.getSubFeature())) {
-				// return stockUploadServiceImpl;
+				return stockUploadServiceImpl;
 			
 			}else if("Update".equalsIgnoreCase(webActionDb.getSubFeature())) {
-				// return stockUpdateServiceImpl;
+				return stockUpdateServiceImpl;
 			
 			}else if("Delete".equalsIgnoreCase(webActionDb.getSubFeature())) {
-				// return stockDeleteServiceImpl;
+				return stockDeleteServiceImpl;
 			}
 		}
 		

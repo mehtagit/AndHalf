@@ -8,7 +8,7 @@ import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.WebActionDb;
 
 @Service
-public class StockUploadServiceImpl implements WebActionService{
+public class StockRegisterServiceImpl implements WebActionService{
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 	

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.Utility.Util;
+import com.gl.CEIR.FileProcess.factory.PrototypeBeanProvider;
+import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDb;
@@ -37,6 +39,9 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
+	
+	@Autowired
+	PrototypeBeanProvider<ConsignmentFileParser> consignmentFileParser;
 
 	@Override
 	public boolean process(WebActionDb webActionDb){
@@ -59,7 +64,7 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 
 			for(String content : contents) {
 
-				DeviceDb device = util.parseDevice(content);
+				DeviceDb device = consignmentFileParser.getBean().parse(content);
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(1L);
 

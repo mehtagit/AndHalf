@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.gl.CEIR.FileProcess.model.constants.Separator;
 
 @Component
-public class Util {
+public class DateUtil {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 

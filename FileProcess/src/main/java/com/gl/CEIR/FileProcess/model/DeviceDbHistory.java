@@ -53,6 +53,7 @@ public class DeviceDbHistory implements Serializable {
 	private String 	deviceNumber; 
 	private String 	deviceType;   
 	private String	imeiEsnEeid;
+	
 	public Long getId() {
 		return id;
 	}

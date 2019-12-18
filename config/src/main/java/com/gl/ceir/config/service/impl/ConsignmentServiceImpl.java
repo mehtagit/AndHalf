@@ -23,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -401,7 +402,8 @@ public class ConsignmentServiceImpl {
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
-								consignmentUpdateRequest.getTxnId());
+								consignmentUpdateRequest.getTxnId(),
+								MailSubjects.SUBJECT);
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -413,7 +415,8 @@ public class ConsignmentServiceImpl {
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT, 
 								SubFeatures.ACCEPT,
-								consignmentUpdateRequest.getTxnId());
+								consignmentUpdateRequest.getTxnId(),
+								MailSubjects.SUBJECT);
 
 					}
 				}
@@ -429,7 +432,8 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT,
-							consignmentUpdateRequest.getTxnId());
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
 
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -442,7 +446,8 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT, 
-							consignmentUpdateRequest.getTxnId());
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
 				}
 			}
 

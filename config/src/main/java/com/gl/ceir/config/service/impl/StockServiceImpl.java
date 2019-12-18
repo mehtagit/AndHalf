@@ -23,6 +23,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -414,7 +415,8 @@ public class StockServiceImpl {
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,
 							SubFeatures.ACCEPT,
-							consignmentUpdateRequest.getTxnId());
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
 
 				}else {
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
@@ -426,7 +428,8 @@ public class StockServiceImpl {
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,
 							SubFeatures.REJECT,
-							consignmentUpdateRequest.getTxnId());
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
 				}
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");

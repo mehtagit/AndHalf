@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Service
@@ -19,7 +20,7 @@ public class FileActionServiceImpl {
 	public WebActionDb getFileActionDetails() {
 
 		try {
-			return 	webActionDbRepository.findFirstByState(0);
+			return 	webActionDbRepository.findFirstByState(WebActionStatus.INIT.getCode());
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return null;

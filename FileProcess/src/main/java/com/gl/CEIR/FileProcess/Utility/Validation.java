@@ -14,7 +14,6 @@ public class Validation {
 	@Autowired
 	Util util;
 
-
 	public String headerValidator(String filePath, String devicetype,String deviceIDtype,String multipleSIMStatus,String sNofDevice,String iMEIESNMEID,String devicelaunchdate, String deviceStatus,String moveFIlePath ) {
 		try {
 
@@ -32,12 +31,10 @@ public class Validation {
 		}
 	}
 
-
 	public String alfanumricValidator(String filePath,String deviceIDtype ,String iMEIESNMEID,String moveFIlePath) {
 		try {
 
 			if("IMEI".equalsIgnoreCase(deviceIDtype)) {
-
 				boolean  result =	alfaNumricChecck(iMEIESNMEID);
 				if(result) {
 					return "fail";
@@ -52,7 +49,7 @@ public class Validation {
 		}
 	}
 
-	public static  boolean  alfaNumricChecck(String value) {
+	public static boolean alfaNumricChecck(String value) {
 
 		boolean b1 = value.matches(".*[a-zA-Z].*");
 
@@ -73,7 +70,6 @@ public class Validation {
 					return "fail";
 				}				
 			}else {
-
 				if(14 != iMEIESNMEID.length() ) {
 
 					return "fail";
@@ -102,7 +98,7 @@ public class Validation {
 
 		//deviceDb check
 		String result=" ";
-		
+
 		if(result == null) {
 			return "fail";
 		}
@@ -132,5 +128,4 @@ public class Validation {
 		return Boolean.FALSE;		
 
 	}
-
 }

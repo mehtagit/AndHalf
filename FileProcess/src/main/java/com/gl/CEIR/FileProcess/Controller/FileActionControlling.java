@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.ServiceImpl.FileActionServiceImpl;
-import com.gl.CEIR.FileProcess.ServiceImpl.WebActionFactoryImpl;
 import com.gl.CEIR.FileProcess.conf.AppConfig;
+import com.gl.CEIR.FileProcess.service.WebActionFactory;
 import com.gl.ceir.config.model.WebActionDb;
 
 @Service
@@ -26,7 +26,8 @@ public class FileActionControlling implements Runnable {
 	FileActionServiceImpl fileActionServiceImpl;
 	
 	@Autowired
-	WebActionFactoryImpl webActionFactoryImpl;
+	@Qualifier("WebActionFactoryImpl")
+	WebActionFactory webActionFactory;
 
 	@Override
 	public void run() {
@@ -39,15 +40,14 @@ public class FileActionControlling implements Runnable {
 				log.info("Web action Details Fetch = " + webActionDb);
 
 				if(Objects.nonNull(webActionDb)) {
-					webActionFactoryImpl.create(webActionDb).process(webActionDb);
+					webActionFactory.create(webActionDb).process(webActionDb);
 				}
 				
-				Thread.sleep(1000/appConfig.tps);
+				// Thread.sleep(1000/appConfig.tps);
 
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
 			}
 		// }
 	}
-
 }

@@ -16,7 +16,9 @@ import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.Utility.Util;
 import com.gl.CEIR.FileProcess.conf.FileStorageProperties;
+import com.gl.CEIR.FileProcess.factory.PrototypeBeanProvider;
 import com.gl.CEIR.FileProcess.model.constants.Separator;
+import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.DeviceDb;
@@ -47,6 +49,9 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
+	
+	@Autowired
+	PrototypeBeanProvider<ConsignmentFileParser> consignmentFileParser;
 
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
@@ -81,9 +86,10 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 			log.info("File reading starts = " + contents);
 			
 			deviceBufferMap = new ConcurrentHashMap<String, String>();
-					
+
 			for(String content : contents) {
-				DeviceDb device = util.parseDevice(content);
+				DeviceDb device = consignmentFileParser.getBean().parse(content);
+				
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(Long.valueOf(consignmentMgmt.getUserId()));
 

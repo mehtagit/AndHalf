@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -49,7 +50,7 @@ public class DeviceDbHistory implements Serializable {
 
 	private String deviceStatus;
 
-	private Date deviceLaunchDate;
+	private LocalDateTime deviceLaunchDate;
 
 	private String multipleSimStatus;
 	private String deviceIdType;
@@ -172,10 +173,10 @@ public class DeviceDbHistory implements Serializable {
 	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
-	public Date getDeviceLaunchDate() {
+	public LocalDateTime getDeviceLaunchDate() {
 		return deviceLaunchDate;
 	}
-	public void setDeviceLaunchDate(Date deviceLaunchDate) {
+	public void setDeviceLaunchDate(LocalDateTime deviceLaunchDate) {
 		this.deviceLaunchDate = deviceLaunchDate;
 	}
 	public String getSnOfDevice() {

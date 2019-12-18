@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class DeviceDb  implements Serializable{
 	private String multipleSimStatus;
 	private String snOfDevice;
 	private String imeiEsnMeid;
-	private Date DeviceLaunchDate;
+	private LocalDateTime DeviceLaunchDate;
 	private String deviceStatus;
 	private String deviceAction;
 
@@ -54,11 +55,11 @@ public class DeviceDb  implements Serializable{
 	private String customTxnId;
 	private String endUserTxnId;   
 
-	private Date importerDate;
-	private Date distributerDate;
-	private Date retailerDate;
-	private Date customDate;
-	private Date endUserDate;
+	private LocalDateTime importerDate;
+	private LocalDateTime distributerDate;
+	private LocalDateTime retailerDate;
+	private LocalDateTime customDate;
+	private LocalDateTime endUserDate;
 
 	private Integer importerDeviceStatus;
 	private Integer distributerDeviceStatus;
@@ -143,10 +144,10 @@ public class DeviceDb  implements Serializable{
 	public void setDeviceStatus(String deviceStatus) {
 		this.deviceStatus = deviceStatus;
 	}
-	public Date getDeviceLaunchDate() {
+	public LocalDateTime getDeviceLaunchDate() {
 		return DeviceLaunchDate;
 	}
-	public void setDeviceLaunchDate(Date deviceLaunchDate) {
+	public void setDeviceLaunchDate(LocalDateTime deviceLaunchDate) {
 		DeviceLaunchDate = deviceLaunchDate;
 	}
 	public String getMultipleSimStatus() {
@@ -173,22 +174,22 @@ public class DeviceDb  implements Serializable{
 	public void setManufatureDate(String manufatureDate) {
 		this.manufatureDate = manufatureDate;
 	}
-	public Date getImporterDate() {
+	public LocalDateTime getImporterDate() {
 		return importerDate;
 	}
-	public void setImporterDate(Date importerDate) {
+	public void setImporterDate(LocalDateTime importerDate) {
 		this.importerDate = importerDate;
 	}
-	public Date getDistributerDate() {
+	public LocalDateTime getDistributerDate() {
 		return distributerDate;
 	}
-	public void setDistributerDate(Date distributerDate) {
+	public void setDistributerDate(LocalDateTime distributerDate) {
 		this.distributerDate = distributerDate;
 	}
-	public Date getRetailerDate() {
+	public LocalDateTime getRetailerDate() {
 		return retailerDate;
 	}
-	public void setRetailerDate(Date retailerDate) {
+	public void setRetailerDate(LocalDateTime retailerDate) {
 		this.retailerDate = retailerDate;
 	}
 	public Integer getImporterDeviceStatus() {
@@ -251,16 +252,16 @@ public class DeviceDb  implements Serializable{
 	public void setEndUserTxnId(String endUserTxnId) {
 		this.endUserTxnId = endUserTxnId;
 	}
-	public Date getCustomDate() {
+	public LocalDateTime getCustomDate() {
 		return customDate;
 	}
-	public void setCustomDate(Date customDate) {
+	public void setCustomDate(LocalDateTime customDate) {
 		this.customDate = customDate;
 	}
-	public Date getEndUserDate() {
+	public LocalDateTime getEndUserDate() {
 		return endUserDate;
 	}
-	public void setEndUserDate(Date endUserDate) {
+	public void setEndUserDate(LocalDateTime endUserDate) {
 		this.endUserDate = endUserDate;
 	}
 	public Integer getCustomDeviceStatus() {

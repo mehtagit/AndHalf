@@ -22,36 +22,41 @@ public class Notification  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-	
+
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
 	private String channelType;
-	
+
 	@Column(length = 1000)
 	private String message;
-	
+
 	private Long userId;
-	
+
 	private Long featureId;
-	
+
 	private String featureTxnId;
-	
+
 	private String featureName;
-	
+
 	private String subFeature;
-	
+
 	private Integer status;
-	
+
+	private String subject;
+
+	private Integer retryCount;
+
 	public Notification() {
 
 	}
-	
-	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, String subFeature, String featureTxnId) {
+
+	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, 
+			String subFeature, String featureTxnId, String subject, Integer retryCount) {
 		this.channelType = channelType;
 		this.message = message;
 		this.userId = userId;
@@ -60,8 +65,10 @@ public class Notification  implements Serializable{
 		this.subFeature = subFeature;
 		this.featureTxnId = featureTxnId;
 		status = NotificationStatus.INIT.getCode();
+		this.subject = subject;
+		this.retryCount = retryCount;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -130,6 +137,22 @@ public class Notification  implements Serializable{
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public Integer getRetryCount() {
+		return retryCount;
+	}
+
+	public void setRetryCount(Integer retryCount) {
+		this.retryCount = retryCount;
 	}
 
 	@Override

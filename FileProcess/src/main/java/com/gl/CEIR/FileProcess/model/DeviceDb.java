@@ -11,12 +11,10 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
 @Entity
 public class DeviceDb  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +38,7 @@ public class DeviceDb  implements Serializable{
 	private String importerTxnId;
 	private String distributerTxnId;
 	private String retalierTxnId;        
-	private String	 deviceStatus;
+	private String deviceStatus;
 
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
