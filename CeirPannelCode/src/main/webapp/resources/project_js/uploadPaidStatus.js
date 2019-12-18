@@ -1,8 +1,4 @@
- $(document).ready(function () {
-         pageRendering();
-     });
-
-	
+$('#btnLink').css({"display":"none"});	
  var roleType = $("body").attr("data-roleType");
  var userId = $("body").attr("data-userID");
  var currentRoleType = $("body").attr("data-selected-roleType"); 
@@ -17,6 +13,7 @@
         		type : 'GET',
         		success : function(data) {
         			//console.log(data.txnId)
+        			$('#btnLink').css({"display":"block"});
         			if (data.errorCode == 1) {
         					$("#user123").css("display", "none");
           	                $("#user456").css("display", "block");
@@ -35,7 +32,9 @@
         			console.log("Failed");
         		}
         	}); 
+            pageRendering();
         	filter(); 
+        	   
         
         }
  
