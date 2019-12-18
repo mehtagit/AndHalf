@@ -22,7 +22,7 @@ $(document).ready(function(){
 					userId = -1;
 				}
 				$.ajax({
-					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType,
+					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType,
 					'async': false,
 					type: 'GET',
 					success: function(data){

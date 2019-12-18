@@ -97,29 +97,29 @@ public class Dashboard {
 	}
 	
 	@GetMapping("/consignment/countAndQuantity")
-	public ResponseEntity<?> getConsignmetnCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
-		RequestCountAndQuantity response = dashboardFeignClient.consignmentNotification(userId, featureId, userTypeId);
+	public ResponseEntity<?> getConsignmetnCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.consignmentNotification(userId, featureId, userTypeId,userType);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/stock/countAndQuantity")
-	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
-		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId);
+	public ResponseEntity<?> getStockCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.stockNotification(userId, featureId, userTypeId,userType);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/stakeholder/count")
-	public ResponseEntity<?> getStolen_RecoveryCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
-		RequestCountAndQuantity response = dashboardFeignClient.stolenRecoveryNotification(requestType, userId, featureId, userTypeId);
+	public ResponseEntity<?> getStolen_RecoveryCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.stolenRecoveryNotification(requestType, userId, featureId, userTypeId,userType);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	
 	@GetMapping("/grievance/count")
-	public ResponseEntity<?> getGrievanceNotificationCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId ) {
-		RequestCountAndQuantity response = dashboardFeignClient.grievanceNotification(userId, featureId, userTypeId);
+	public ResponseEntity<?> getGrievanceNotificationCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.grievanceNotification(userId, featureId, userTypeId,userType);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	

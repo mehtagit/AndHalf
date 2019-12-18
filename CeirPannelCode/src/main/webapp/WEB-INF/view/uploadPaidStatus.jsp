@@ -539,9 +539,7 @@
                                                         <br />
                                                         <select id="taxPaidStatus" class="browser-default">
                                                             <option value="" disabled selected>Tax Paid Status</option>
-                                                            <option value="Paid">Paid</option>
-                                                            <option value="regularized">Regularized</option>
-                                                            <option value="NotPaid">Not Paid</option>
+                                                            
                                                         </select>
                                                     </div>
 
@@ -561,141 +559,7 @@
                                                     <div class="col s12 m12">
                                                         <table class="responsive-table striped display"
                                                             id="data-table-simple" cellspacing="0">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>S No.</th>
-                                                                    <th>Date</th>
-                                                                    <th>Device ID Type</th>
-                                                                    <th>Device Type</th>
-                                                                    <th>Price</th>
-                                                                    <th>Country</th>
-                                                                    <th>Status</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="consignmentTableLibraryTbody">
-
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>25/05/2019</td>
-                                                                    <td>IMEI</td>
-                                                                    <td>Handheld</td>
-                                                                    <td>125$</td>
-                                                                    <td>ABC Country</td>
-                                                                    <td>Tax Paid</td>
-                                                                    <td style="width: 120px;">
-                                                                        <a href="#payTaxModal" class="modal-trigger"><i
-                                                                                class="fa fa-money pay-tax-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Pay Tax"></i></a>
-                                                                        <a href="#viewDeviceInformation"
-                                                                            class="modal-trigger"><i
-                                                                                class="fa fa-eye view-icon"
-                                                                                aria-hidden="true" title="View"></i></a>
-                                                                        <a href="#deleteMsg" class="modal-trigger"><i
-                                                                                class="fa fa-trash delete-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Delete"></i></a>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>25/05/2019</td>
-                                                                    <td>MEID</td>
-                                                                    <td>Mobile Phone/Featured Phone</td>
-                                                                    <td>125$</td>
-                                                                    <td>ABC Country</td>
-                                                                    <td>Regularized</td>
-                                                                    <td>
-                                                                        <a href="#payTaxModal" class="modal-trigger"><i
-                                                                                class="fa fa-money pay-tax-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Pay Tax"></i></a>
-                                                                        <a href="#viewDeviceInformation"
-                                                                            class="modal-trigger"><i
-                                                                                class="fa fa-eye view-icon"
-                                                                                aria-hidden="true" title="View"></i></a>
-                                                                        <a href="#deleteMsg" class="modal-trigger"><i
-                                                                                class="fa fa-trash delete-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Delete"></i></a>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>25/05/2019</td>
-                                                                    <td>ESN</td>
-                                                                    <td>Vehicle</td>
-                                                                    <td>125$</td>
-                                                                    <td>ABC Country</td>
-                                                                    <td>Non Tax Paid</td>
-                                                                    <td>
-                                                                        <a href="#payTaxModal" class="modal-trigger"><i
-                                                                                class="fa fa-money pay-tax-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Pay Tax"></i></a>
-                                                                        <a href="#viewDeviceInformation"
-                                                                            class="modal-trigger"><i
-                                                                                class="fa fa-eye view-icon"
-                                                                                aria-hidden="true" title="View"></i></a>
-                                                                        <a href="#deleteMsg" class="modal-trigger"><i
-                                                                                class="fa fa-trash delete-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Delete"></i></a>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>4</td>
-                                                                    <td>25/05/2019</td>
-                                                                    <td>EMEI</td>
-                                                                    <td>Portable</td>
-                                                                    <td>125$</td>
-                                                                    <td>ABC Country</td>
-                                                                    <td>Tax Paid</td>
-                                                                    <td>
-                                                                        <a href="#payTaxModal" class="modal-trigger"><i
-                                                                                class="fa fa-money pay-tax-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Pay Tax"></i></a>
-                                                                        <a href="#viewDeviceInformation"
-                                                                            class="modal-trigger"><i
-                                                                                class="fa fa-eye view-icon"
-                                                                                aria-hidden="true" title="View"></i></a>
-                                                                        <a href="#deleteMsg" class="modal-trigger"><i
-                                                                                class="fa fa-trash delete-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Delete"></i></a>
-                                                                    </td>
-                                                                </tr>
-
-                                                                <tr>
-                                                                    <td>5</td>
-                                                                    <td>25/05/2019</td>
-                                                                    <td>MEID</td>
-                                                                    <td>Module</td>
-                                                                    <td>125$</td>
-                                                                    <td>ABC Country</td>
-                                                                    <td>Regularized</td>
-                                                                    <td>
-                                                                        <a href="#payTaxModal" class="modal-trigger"><i
-                                                                                class="fa fa-money pay-tax-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Pay Tax"></i></a>
-                                                                        <a href="#viewDeviceInformation"
-                                                                            class="modal-trigger"><i
-                                                                                class="fa fa-eye view-icon"
-                                                                                aria-hidden="true" title="View"></i></a>
-                                                                        <a href="#deleteMsg" class="modal-trigger"><i
-                                                                                class="fa fa-trash delete-icon"
-                                                                                aria-hidden="true"
-                                                                                title="Delete"></i></a>
-                                                                    </td>
-                                                                </tr>
-
-                                                            </tbody>
+                                                            
                                                         </table>
 
                                                         <a href="#viewBlockDevices" class="modal-trigger">View block
@@ -743,6 +607,8 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
+	<script type="text/javascript"
+		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
 
 
 

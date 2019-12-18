@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
+import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -12,19 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Component
 @Service
-@FeignClient(url="${apiUrl1}",value = "profileUrls")
+@FeignClient(url="${dashBoardfeignClientPath}",value = "profileUrls")
 public interface TypeApprovedFeignImpl {
 
 	
 	//View Manage Type-Approved Feign*****************************************
 	@RequestMapping(value="/TypeApproved/view" ,method=RequestMethod.POST) 
-	public Object manageTypeFeign(@RequestBody FilterRequest filterRequest,
+	public Object manageTypeFeign(@RequestBody TRCRequest filterRequest,
 	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;
+	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+	@RequestParam(value = "file", defaultValue = "0") Integer file) ;
 	
 	
 	@RequestMapping(value="/TypeApproved/add" ,method=RequestMethod.POST) 
@@ -34,5 +35,8 @@ public interface TypeApprovedFeignImpl {
 	@PostMapping("/TypeApproved/viewById/{id}") 
 	public TRCRegisteration viewByID(@PathVariable("id") int id) ;
 	
+	
+	@PostMapping("/TypeApproved/update") 
+	public GenricResponse updateApproved(@RequestBody TRCRegisteration model) ;
 	
 	}

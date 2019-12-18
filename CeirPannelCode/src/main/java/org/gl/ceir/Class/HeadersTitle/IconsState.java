@@ -751,8 +751,8 @@ public class IconsState {
 	public String trcManageIcons(Integer status,Integer id) {	
 		// URL link 
 		String downloadURL = "JavaScript:void(0)";
-		String viewAction="viewByID("+id+")";
-		String editAction= "JavaScript:void(0)";
+		String viewAction="viewByID("+id+",'view')";
+		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
 		String download="<a href="+downloadURL+" download=\"download\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="

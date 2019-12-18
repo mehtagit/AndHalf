@@ -112,7 +112,7 @@ function pageRendering(){
 			}
 
 			$("#typeAprroveTableDiv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' id='submitFilter' value='filter'></div>");
-			$("#typeAprroveTableDiv").append("<div class='col s12 m2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#typeAprroveTableDiv").append("<div class='col s12 m2'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -134,7 +134,6 @@ function pageRendering(){
 					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#Status');
 				}
-			
 			});
 		}
 		
@@ -142,9 +141,9 @@ function pageRendering(){
 };
 
 
-function viewByID(id){
+function viewByID(id,actionType){
 	
-	$("#viewModal").openModal();
+	
 	
 	$.ajax({
 		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
@@ -152,7 +151,20 @@ function viewByID(id){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			setViewPopupData(data);
+			console.log(+data);
+			if(actionType=='view')
+				{
+				$("#viewModal").openModal();
+				console.log("222222222");
+				setViewPopupData(data);
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#editModal").openModal();
+				setEditPopupData(data)
+				}
+			
 		},
 		error : function() {
 			console.log("failed");
@@ -169,7 +181,91 @@ function setViewPopupData(data){
 	$("#status").val(data.stateInterp);
 	$('#viewrequestDate').val(data.requestDate)
 	$("#viewapproveDisapproveDate").val(data.approveDisapproveDate);
-	$("#viewremark").val(data.Remark);
+	$("#viewremark").val(data.remark);
+}
+function setEditPopupData(data){
+	$("#editmanufacturerId").val(data.manufacturerId);
+	$("#editmanufacturerName").val(data.manufacturerName);
+	$("#editcountry").val(data.country);
+	$("#edittac").val(data.tac);
+	$("#editdeviceType").val(data.approveStatus).change();
+	$('#editRequestDate').val(data.requestDate)
+	$("#editApproveRejectionDate").val(data.approveDisapproveDate);
+	$("#editRemark").val(data.remark);
+	$("#editFileName").val(data.file);
+	$("#transactionid").val(data.txnId);
+	$("#columnid").val(data.id);
+	
+	
+}
+
+populateCountries
+(   
+		"editcountry"
+);
+
+
+function updateReportTypeDevice()
+{
+	var manufacturerId=$("#editmanufacturerId").val();
+	var manufacturerName=$("#editmanufacturerName").val();
+	 var country=$("#editcountry").val();
+	 var tac=$("#edittac").val();
+	 var approveStatus=$("#editdeviceType").val();
+    var requestDate=$('#editRequestDate').val()
+	 var approveDisapproveDate=$("#editApproveRejectionDate").val();
+	 var remark =$("#editRemark").val();
+	 var file=$("#editFileName").val();
+	 var txnid=$("#transactionid").val();
+	 var id=$("#columnid").val();
+	 console.log("approveStatus=="+approveStatus);
+	 
+	 var formData = new FormData();
+		formData.append('file', $('#editUploadFile')[0].files[0]);
+		formData.append('manufacturerId', manufacturerId);
+		formData.append('manufacturerName', manufacturerName);
+		formData.append('country', country);
+		formData.append('tac', tac);
+		formData.append('status', approveStatus);
+		formData.append('approveDisapproveDate', approveDisapproveDate);
+		formData.append('remark', remark);
+		formData.append('txnId', txnid);
+		formData.append('id', id);
+		formData.append('fileName', file);
+		formData.append('requestDate', requestDate);
+		
+		$.ajax({
+			url : './update-register-approved-device',
+			type : 'POST',
+			data : formData,
+			processData : false,
+			contentType : false,
+			success : function(data, textStatus, jqXHR) {
+				alert("suucess");	
+				console.log(data);
+				$('#updateManageTypeDevice').openModal();
+				/*if(data.errorCode=="200")
+				 {
+				 console.log("status code = 0");
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').append(data.message);
+				$('#errorCode').val(data.errorCode);
+				 }
+				else if(data.errorCode=="204")
+				 {
+				console.log("status code = 3"); 
+				$('#updateTacMessage').text('');
+				$('#updateTacMessage').text(data.message);
+				$('#errorCode').val(data.errorCode);
+				 }
+				// $('#updateConsignment').modal('open'); 
+				//alert("success");
+*/				 
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});
 }
 
 
@@ -181,6 +277,25 @@ function setViewPopupData(data){
 
 
 
-
-
-
+//**********************************************************Export Excel file************************************************************************
+function exportTacData()
+{
+	var tacStartDate=$('#startDate').val();
+	var tacEndDate=$('#endDate').val();
+	var tacStatus=parseInt($('#Status').val());
+	var tacNumber=$('#tac').val();
+	console.log("tacStatus=="+tacStatus);
+     if(isNaN(tacStatus))
+	   {
+    	 tacStatus='';
+  	   console.log(" tacStatus=="+tacStatus);
+	   }
+ 
+	var table = $('#typeAprroveTable').DataTable();
+	var info = table.page.info(); 
+ var pageNo=info.page;
+  var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo+" tacStartDate="+tacStartDate+" tacEndDate="+tacEndDate+" tacStatus= "+tacStatus);
+	
+	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+}
