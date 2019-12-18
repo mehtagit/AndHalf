@@ -1,18 +1,12 @@
-/* $(document).ready(function () {
-            $('.modal').modal();
-            $('#DeleteConsignment').openModal({
-                dismissible: false
-            });
-        });*/
+ $(document).ready(function () {
+         pageRendering();
+     });
 
-     
-
-   
-        populateCountries("country","state");
-        populateStates("country","state");
- 
-
-   
+	
+ var roleType = $("body").attr("data-roleType");
+ var userId = $("body").attr("data-userID");
+ var currentRoleType = $("body").attr("data-selected-roleType"); 
+ var featureId =12;
         function hide() {
             var In = $('#Search').val();
             
@@ -35,12 +29,14 @@
         	                $("#addbutton").css("display", "none");
         	                $("#submitbtn").css("display", "none");
         	            }
+        		
         		},
         		error : function() {
         			console.log("Failed");
         		}
         	}); 
-           
+        	filter(); 
+        
         }
  
 
@@ -67,13 +63,173 @@
         });
  
 
-  //Tax paid status-----------dropdown
-	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#taxPaidStatus');
-		}
-	});
-	
+    
+    
+    
+    
+    
+    var sourceType =localStorage.getItem("sourceType");
+    function filter()
+    {       	 
+    	console.log("source type value=="+sourceType);
+    	var sessionFlag;
+    	if(sourceType==null){
+    		sessionFlag=2;
+    		console.log("sesion value set to "+sessionFlag);
+    	}
+    	else{
+    		sessionFlag=1;
+    		console.log("sesion value set to "+sessionFlag);
+    	}
+    	table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
+    		
+    	
+    		localStorage.removeItem('sourceType');
+    	
+    }
+
+    
+    
+    function table(url,dataUrl){
+    	var request={
+    			"endDate":$('#endDate').val(),
+    			"startDate":$('#startDate').val(),
+    			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
+    			"userId":parseInt(userId),
+    			"featureId":parseInt(featureId),
+    			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+    			"userType":$("body").attr("data-roleType"),	
+    			"deviceIdType":parseInt($('#deviceIDType').val()),
+    			"deviceType":parseInt($('#deviceType').val()),
+    			"txnId":$('#Search').val()
+    			}
+    	
+    	$.ajax({
+    		url: url,
+    		type: 'POST',
+    		dataType: "json",
+    		success: function(result){
+    			var table=	$("#data-table-simple").DataTable({
+    				destroy:true,
+    				"serverSide": true,
+    				orderCellsTop : true,
+    				"ordering" : false,
+    				"bPaginate" : true,
+    				"bFilter" : true,
+    				"bInfo" : true,
+    				"bSearchable" : true,
+    				ajax: {
+    					url : dataUrl,
+    					type: 'POST',
+    					dataType: "json",
+    					data : function(d) {
+    						d.filter = JSON.stringify(request); 
+    					}
+
+    				},
+    				"columns": result
+    			});
+
+    		//	$('div#initialloader').delay(300).fadeOut('slow');
+    		/*	$('div#initialloader').fadeOut('slow');*/
+    		},
+    		error: function (jqXHR, textStatus, errorThrown) {
+    			console.log("error in ajax");
+    		}
+    	});
+    }
+
+
+    function pageRendering(){
+    	pageButtons('./upload-paid-status/pageRendering?type=userPaidStatus');
+
+    	localStorage.removeItem('sourceType');
+
+    }
+    
+    
+    function pageButtons(url){
+    	$.ajax({
+    		url: url,
+    		type: 'POST',
+    		dataType: "json",
+    		success: function(data){
+    			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+
+
+    			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
+    			$("#pageHeader").append(elem);
+    			var button=data.buttonList;
+
+				
+				
+    			var date=data.inputTypeDateList;
+    			for(i=0; i<date.length; i++){
+    				if(date[i].type === "date"){
+    					$("#tableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+    							"<div id='enddatepicker' class='input-group'>"+
+    							"<label for='TotalPrice'>"+date[i].title
+    							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+    							"<span	class='input-group-addon' style='color: #ff4081'>"+
+    							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+
+    				}else if(date[i].type === "text"){
+    					$("#tableDiv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+    				}
+    			} 
+
+    			// dynamic dropdown portion
+    			var dropdown=data.dropdownList;
+    			for(i=0; i<dropdown.length; i++){
+    				var dropdownDiv=
+    					$("#tableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+    							"<br>"+
+    							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+    							"<span class='caret'>"+"</span>"+
+    							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+    							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+    							"<option>"+dropdown[i].title+
+    							"</option>"+
+    							"</select>"+
+    							"</div>"+
+    					"</div>");
+    			}
+
+    			
+
+    			
+    			$("#tableDiv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
+				$("#tableDiv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' onclick='exportConsignmentData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				for(i=0; i<button.length; i++){
+					$('#'+button[i].id).text(button[i].buttonTitle);
+					if(button[i].type === "HeaderButton"){
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+					}
+					else{
+						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+					}
+				}
+
+
+    			//Tax paid status-----------dropdown
+    			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+    				for (i = 0; i < data.length; i++) {
+    					$('<option>').val(data[i].value).text(data[i].interp)
+    					.appendTo('#taxPaidStatus');
+    				}
+    			});
+    			
+    			
+    			$('.datepicker').datepicker({
+    				dateFormat: "yy-mm-dd"
+    				});
+    		}
+    	}); 	
+    }
+
+
+
+    
     
     /*filterFileStatus,deviceType,taxPaidStatus*/

@@ -8,6 +8,7 @@ import java.net.URLEncoder;
 public class IconsState {
 	String className = "emptyClass";
 	String disableIconClass = "eventNone";
+	String emptyURL="JavaScript:void(0);";
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	// fa fa icons
 	String errorIcon="\"fa fa-exclamation-circle  error-icon\"";
@@ -18,7 +19,7 @@ public class IconsState {
 	String replyIcon="\"fa fa-reply reply-icon\""; 
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
 	String rejectIcon = "\"fa fa-user-times reject-icon\"";
-
+	String payTaxIcon = "\"fa fa-money pay-tax-icon\"";
 	// icon title  
 	String errorIconTitle="Error-File";
 	String downloadIconTitle="Download"; 
@@ -28,6 +29,7 @@ public class IconsState {
 	String replyIconTitle="Reply";
 	String approveIconTitle="Approve";
 	String rejectIconTitle="Reject";
+	String payTaxIconTitle ="Pay Tax";
 
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
@@ -38,13 +40,11 @@ public class IconsState {
 	String disableReplyIcon="\"fa fa-reply reply-icon disable\""; 
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableRejectIcon = "\"fa fa-user-times reject-icon disable\"";
-
+	String disablePayTaxICon =  "\"fa fa-money pay-tax-icon disable\"";
 
 
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link 
-		String emptyURL="JavaScript:void(0);";
-
 		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
 		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";
 		log.info("downloadURL::::::::::::::"+downloadURL);
@@ -772,6 +772,24 @@ public class IconsState {
 	}
 
 
-
+	/********************************** Icons for UPS **********************************/ 	
+	public String userPaidStatusIcon() {
+		String payTaxAction ="";
+		String viewAction="";
+		String deleteAction= "";
+		
+		String taxPaid="<a onclick="+payTaxAction+"><i class="
+				+payTaxIcon+" aria-hidden=\"true\" title="
+				+payTaxIconTitle+"></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\" title="
+				+deleteIconTitle+"></i></a>";
+		
+		String action = taxPaid.concat(view).concat(delete);
+		return action;
+	}
 }
 

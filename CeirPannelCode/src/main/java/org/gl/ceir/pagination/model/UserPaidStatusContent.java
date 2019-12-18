@@ -3,7 +3,9 @@ package org.gl.ceir.pagination.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UPSContentModel {
+import org.springframework.stereotype.Component;
+@Component
+public class UserPaidStatusContent {
 	private Integer id;
 	private String createdOn;
 	private String modifiedOn;
@@ -19,10 +21,13 @@ public class UPSContentModel {
 	private String country;
 	private String deviceSerialNumber;
 	private String txnId;
-	private Integer price;
+	private Double price;
 	private Integer currency;
 	private String currencyInterp;
-	private Integer firstImei, secondImei, thirdImei, fourthImei;
+	private Long firstImei;
+	private Long secondImei;
+	private Long thirdImei;
+	private Long fourthImei;
 	private Object endUserDB;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
@@ -115,10 +120,10 @@ public class UPSContentModel {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	public Integer getPrice() {
+	public Double getPrice() {
 		return price;
 	}
-	public void setPrice(Integer price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	public Integer getCurrency() {
@@ -133,28 +138,28 @@ public class UPSContentModel {
 	public void setCurrencyInterp(String currencyInterp) {
 		this.currencyInterp = currencyInterp;
 	}
-	public Integer getFirstImei() {
+	public Long getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Integer firstImei) {
+	public void setFirstImei(Long firstImei) {
 		this.firstImei = firstImei;
 	}
-	public Integer getSecondImei() {
+	public Long getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(Integer secondImei) {
+	public void setSecondImei(Long secondImei) {
 		this.secondImei = secondImei;
 	}
-	public Integer getThirdImei() {
+	public Long getThirdImei() {
 		return thirdImei;
 	}
-	public void setThirdImei(Integer thirdImei) {
+	public void setThirdImei(Long thirdImei) {
 		this.thirdImei = thirdImei;
 	}
-	public Integer getFourthImei() {
+	public Long getFourthImei() {
 		return fourthImei;
 	}
-	public void setFourthImei(Integer fourthImei) {
+	public void setFourthImei(Long fourthImei) {
 		this.fourthImei = fourthImei;
 	}
 	public Object getEndUserDB() {
@@ -171,8 +176,8 @@ public class UPSContentModel {
 	}
 	@Override
 	public String toString() {
-		return "UPSContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid
-				+ ", deviceStatus=" + deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp="
+		return "UserPaidStatusContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
+				+ nid + ", deviceStatus=" + deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp="
 				+ taxPaidStatusInterp + ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp
 				+ ", deviceIdType=" + deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus="
 				+ multiSimStatus + ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId="
@@ -181,4 +186,4 @@ public class UPSContentModel {
 				+ ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", additionalProperties="
 				+ additionalProperties + "]";
 	}
-}
+	}

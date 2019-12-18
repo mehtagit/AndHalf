@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UPSPaginationModel {
-	private List<UPSContentModel> content = null;
+import org.springframework.stereotype.Component;
+@Component
+public class UserPaidStatusPaginationModel {
+	private List<UserPaidStatusContent> content = null;
 	private Pageable pageable;
 	private Integer totalPages;
 	private Integer totalElements;
@@ -17,10 +19,10 @@ public class UPSPaginationModel {
 	private Integer number;
 	private Boolean empty;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	public List<UPSContentModel> getContent() {
+	public List<UserPaidStatusContent> getContent() {
 		return content;
 	}
-	public void setContent(List<UPSContentModel> content) {
+	public void setContent(List<UserPaidStatusContent> content) {
 		this.content = content;
 	}
 	public Pageable getPageable() {
@@ -96,4 +98,6 @@ public class UPSPaginationModel {
 				+ ", numberOfElements=" + numberOfElements + ", size=" + size + ", number=" + number + ", empty="
 				+ empty + ", additionalProperties=" + additionalProperties + "]";
 	}
+
+
 }

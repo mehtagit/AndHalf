@@ -57,9 +57,10 @@ public class HeadersTitle {
 	public static final String approveRejectionDate = "Approve/Rejection Date";
 	
 	
-	
-	
-	
+	//User Paid Status
+	public static final String deviceIDType= "Device ID Type";
+	public static final String deviceType= "Device Type";
+	public static final String price = "Price";
 		
 	
 }

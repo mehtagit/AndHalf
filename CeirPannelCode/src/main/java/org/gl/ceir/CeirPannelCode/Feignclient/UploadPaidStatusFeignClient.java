@@ -1,10 +1,14 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Service
 @FeignClient(url = "${feignClientPath}",value = "dsj" )
@@ -13,4 +17,10 @@ public interface UploadPaidStatusFeignClient {
 	@GetMapping("/end-user/{nid}")
 	public GenricResponse respone(@PathVariable("nid") String nid);
 	
+	
+	@PostMapping("/filter/end-user-device-info")
+	public Object view(@RequestBody FilterRequest_UserPaidStatus filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file);
 }

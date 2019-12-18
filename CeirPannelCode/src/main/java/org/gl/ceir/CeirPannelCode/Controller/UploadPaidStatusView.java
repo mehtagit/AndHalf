@@ -11,4 +11,12 @@ public class UploadPaidStatusView {
 		ModelAndView modelAndView = new ModelAndView("uploadPaidStatus");
 		return modelAndView;
 	}
+	
+	
+	@GetMapping("add-device-information")
+	public ModelAndView deviceInformationView() {
+		ModelAndView modelAndView = new ModelAndView("addDeviceInformation");
+		return modelAndView;
+	}
+	
 }
