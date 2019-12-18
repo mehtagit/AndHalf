@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class FileStorageProperties {
 	
 	private String consignmentsDir;
+	private String stockDir;
 
 	public String getConsignmentsDir() {
 		return consignmentsDir;
@@ -15,6 +16,14 @@ public class FileStorageProperties {
 
 	public void setConsignmentsDir(String consignmentsDir) {
 		this.consignmentsDir = consignmentsDir;
+	}
+
+	public String getStockDir() {
+		return stockDir;
+	}
+
+	public void setStockDir(String stockDir) {
+		this.stockDir = stockDir;
 	}
 	
 }

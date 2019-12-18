@@ -51,7 +51,7 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 	StokeDetailsRepository stokeDetailsRepository;
 	
 	@Autowired
-	PrototypeBeanProvider<ConsignmentFileParser> consignmentFileParser;
+	PrototypeBeanProvider<ConsignmentFileParser> fileParser;
 
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
@@ -88,7 +88,11 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 			deviceBufferMap = new ConcurrentHashMap<String, String>();
 
 			for(String content : contents) {
-				DeviceDb device = consignmentFileParser.getBean().parse(content);
+				DeviceDb device = fileParser.getBean().parse(content);
+				
+				if(Objects.isNull(device)) {
+					continue;
+				}
 				
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(Long.valueOf(consignmentMgmt.getUserId()));
