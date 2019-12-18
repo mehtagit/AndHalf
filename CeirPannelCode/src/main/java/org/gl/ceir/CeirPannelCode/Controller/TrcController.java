@@ -221,7 +221,7 @@ public String exportToExcel(@RequestParam(name="tacStartDate",required = false) 
  fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
  log.info("response  from   export trc  api ="+fileExportResponse);
 	
-	return "redirect:";
+	return "redirect:"+fileExportResponse.getUrl();
 }
 	  
 }

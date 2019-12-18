@@ -606,7 +606,8 @@
 		src="${context}/resources/js/Validator.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
 

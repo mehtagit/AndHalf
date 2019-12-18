@@ -90,7 +90,9 @@ public class TRC implements CRUD{
 					Integer status = trcContentModelList.getStatus();
 					String statusInterp = trcContentModelList.getStateInterp();
 					String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-					String action = iconState.trcManageIcons(status,trcContentModelList.getId());
+					String txnId= trcContentModelList.getTxnId();
+					String fileName=trcContentModelList.getFile();
+					String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName,txnId);
 					
 					Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 					

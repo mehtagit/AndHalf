@@ -748,9 +748,10 @@ public class IconsState {
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcManageIcons(Integer status,Integer id) {	
+	public String trcManageIcons(Integer status,Integer id,String fileName,String txnId) {	
 		// URL link 
-		String downloadURL = "JavaScript:void(0)";
+		//String downloadURL = "JavaScript:void(0)";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
 		String viewAction="viewByID("+id+",'view')";
 		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
