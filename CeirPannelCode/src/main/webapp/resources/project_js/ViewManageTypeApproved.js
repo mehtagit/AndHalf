@@ -241,7 +241,7 @@ function updateReportTypeDevice()
 			processData : false,
 			contentType : false,
 			success : function(data, textStatus, jqXHR) {
-				alert("suucess");	
+			
 				console.log(data);
 				$('#updateManageTypeDevice').openModal();
 				/*if(data.errorCode=="200")

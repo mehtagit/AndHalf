@@ -105,11 +105,12 @@ textarea {
 		</div>
 
 
-		<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
+		<div id="viewModal" class="modal" style="overflow-y: hidden;">
+			<h6 class="modal-header">View Type-Approve Devices</h6>
 			<div class="modal-content">
 
-				<h6>View Type-Approve Devices</h6>
-				<hr>
+				
+
 
 				<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
@@ -120,7 +121,7 @@ textarea {
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewmanufacturerName" name="manufacturerName"
-							placeholder="ABC Name" disabled=""> <label
+							placeholder="ABC Name" disabled="disabled"> <label
 							for="manufacturerName" class="active">Manufacturer Name <span
 							class="star">*</span></label>
 					</div>
@@ -209,11 +210,10 @@ textarea {
 		</div>
 
 
-		<div id="editModal" class="modal-form" style="overflow-y: hidden;">
-		
-                                    <div class="container-fluid pageHeader">
-                                        <p class="PageHeading"> Update Report Type-Approve Devices</p>
-                                    </div>
+		<div id="editModal" class="modal" style="overflow-y: hidden;">
+		<h6 class="modal-header" > Update Report Type-Approve Devices</h6>
+		<div class="modal-content">
+                                    
 
                                    
                                         <div class="row" style="margin-top: 10px;">
@@ -285,7 +285,7 @@ textarea {
                                             </div>
 
                                             <div class="input-field col s12 m6 l6" style="margin-top: 9px;">
-                                                <textarea id="editRemark" class="materialize-textarea"
+                                                <textarea id="editRemark" class="materialize-textarea" style="padding: 0"
                                                     placeholder="kjshdksahdkjsahdksajhdksad"></textarea>
                                                 <label for="Remark" style="margin-top: 7px">Remark </label>
                                             </div>
@@ -310,18 +310,20 @@ textarea {
                                         </div>
                                         <span style="margin-left: 5px;"> Required Field are marked with <span
                                                 class="star">*</span></span>
-                                            <div class="center" style="margin-top: 50px;">
+                                            <div class="center" >
                                                 <button class="btn " onclick="updateReportTypeDevice()"
                                                     type="submit">Update</button>
-                                                <a href="manageTypeDevices.html" class="btn" id="Cancel"
-                                                    style="margin-left: 10px;">Cancel</a>
+                                                <!-- <a href="manageTypeDevices.html" class="btn" id="Cancel"
+                                                    style="margin-left: 10px;">Cancel</a> -->
+                                                    <button class="modal-close btn" style="margin-left: 10px;">Cancel</button>
                                             </div>
-                                    
+                                    </div>
                                 </div>	
                                 
      <div id="updateManageTypeDevice" class="modal">
+     <h6 class="modal-header" style="margin:0px;">Update</h6>
         <div class="modal-content">
-            <h6 class="modal-header">Update</h6>
+            
             <div class="row">
                 <h6 id="updateTacMessage"> Your request has been successfully updated.</h6>
             </div>

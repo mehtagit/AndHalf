@@ -63,43 +63,38 @@ public class TrcController {
 		return modelAndView;
 
 	}
-	@ResponseBody
-	@PostMapping("register-approved-device")
-	public GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
-		log.info("-inside controller register-approved-device-------request---------"+request.getParameter("manufacturerId"));
-		// log.info(""+request.getParameter("file"));
-		String userName=session.getAttribute("username").toString();
-		String userId= session.getAttribute("userid").toString();
-		String name=session.getAttribute("name").toString();
-		log.info(" Register consignment entry point.");
-		String txnNumber="T" + utildownload.getTxnId();
-		log.info("Random transaction id number="+txnNumber);
-		try { byte[] bytes = file.getBytes();
-		String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; 
-		File dir = new File(rootPath + File.separator);
-
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
-		} 
-
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		log.info("above model"+txnNumber);
-		// set request parameters into model class
-		TRCRegisteration model = registerationImpl.register(request,file.getOriginalFilename(),txnNumber);
-		log.info("---------model--------"+model);
-		GenricResponse response = typeApprovedFeignImpl.register(model);
-		log.info("---------response--------"+response);
-		return response;
-	}
-
+	/*
+	 * @ResponseBody
+	 * 
+	 * @PostMapping("register-device") public GenricResponse
+	 * register(@RequestParam(name="file",required = false) MultipartFile
+	 * file,HttpServletRequest request,HttpSession session) {
+	 * log.info("-inside controller register-approved-device-------request---------"
+	 * +request.getParameter("manufacturerId")); //
+	 * log.info(""+request.getParameter("file")); String
+	 * userName=session.getAttribute("username").toString(); String userId=
+	 * session.getAttribute("userid").toString(); String
+	 * name=session.getAttribute("name").toString();
+	 * log.info(" Register consignment entry point."); String txnNumber="T" +
+	 * utildownload.getTxnId(); log.info("Random transaction id number="+txnNumber);
+	 * try { byte[] bytes = file.getBytes(); String rootPath
+	 * ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; File dir =
+	 * new File(rootPath + File.separator);
+	 * 
+	 * if (!dir.exists()) dir.mkdirs(); // Create the file on server File serverFile
+	 * = new File(rootPath+file.getOriginalFilename());
+	 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+	 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+	 * stream.write(bytes); stream.close(); }
+	 * 
+	 * catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+	 * log.info("above model"+txnNumber); // set request parameters into model class
+	 * TRCRegisteration model =
+	 * registerationImpl.register(request,file.getOriginalFilename(),txnNumber);
+	 * log.info("---------model--------"+model); GenricResponse response =
+	 * typeApprovedFeignImpl.register(model);
+	 * log.info("---------response--------"+response); return response; }
+	 */
 
 	@ResponseBody
 	@PostMapping("viewByID/{id}")
@@ -221,7 +216,7 @@ public String exportToExcel(@RequestParam(name="tacStartDate",required = false) 
  fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
  log.info("response  from   export trc  api ="+fileExportResponse);
 	
-	return "redirect:";
+	return "redirect:"+fileExportResponse.getUrl();
 }
 	  
 }

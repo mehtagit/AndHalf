@@ -103,32 +103,33 @@
 				<div class="row">
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
+						<form action="" onsubmit="return registerTAC()"  method="POST" enctype="multipart/form-data"  id="registerTAC">
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading">Report Type-Approved Devices</p>
 							</div>
 
-							<form>
+							
 								<div class="row" style="margin-top: 10px;">
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="manufacturerId" name="manufacturerId" />
-										<label for="manufacturerId">Manufacturer ID</label>
+										<input type="text" id="manufacturerId" name="manufacturerId"  pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="10"/>
+										<label for="manufacturerId" >Manufacturer ID</label>
 									</div>
 
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="manufacturerName"
-											name="manufacturerName" /> <label for="manufacturerName">Manufacturer
+										<input type="text" id="manufacturerName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
+											name="manufacturerName"  required="required" /> <label for="manufacturerName">Manufacturer
 											Name <span class="star">*</span>
 										</label>
 									</div>
 
 									<div class="col s12 m6 l6">
 										<label for="country">Country <span class="star">*</span></label>
-										<select id="country" class="browser-default" class="mySelect"
+										<select id="country" class="browser-default" class="mySelect" required="required"
 											required></select>
 									</div>
 
 									<div class="input-field col s12 m6">
-										<input type="text" id="requestDate"
+										<input type="text" id="requestDate" required="required"
 											class="form-control dateClass" name="requestDate" 
 											title="" autocomplete="off"> <span
 											class="input-group-addon" style="color: #ff4081"><i
@@ -143,14 +144,15 @@
 								<div class="row" style="margin-top: 5px;">
 
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="tac" name="tac" /> <label for="tac">TAC
+										<input type="text" id="tac" pattern="[0-9]{7,7}" title="Please enter 7 digits tac number"  maxlength="7" required="required"
+										 name="tac" /> <label for="tac">TAC
 											<span class="star">*</span>
 										</label>
 									</div>
 
 									<div class="col s12 m6 l6">
 										<label for="status">Status <span class="star">*</span></label>
-										<select class="browser-default" id="status">
+										<select class="browser-default" required="required" id="status">
 											<option>Status</option>
 										</select>
 									</div>
@@ -160,7 +162,7 @@
 
 								<div class="row">
 									<div class="input-field col s12 m6">
-										<input type="text" id="approveDisapproveDate"
+										<input type="text" id="approveDisapproveDate"  required="required"
 											class="form-control dateClass" name="approveRejectionDate"
 											 title="" autocomplete="off" /> <span
 											class="input-group-addon" style="color: #ff4081"><i
@@ -185,7 +187,7 @@
 									</h6>
 									<div class="file-field col s12 m6">
 										<div class="btn">
-											<span>Select File</span> <input id="file" type="file"
+											<span>Select File</span> <input id="file" type="file" required="required"
 												multiple>
 										</div>
 										<div class="file-path-wrapper">
@@ -200,7 +202,8 @@
 									marked with <span class="star">*</span>
 								</span>
 								<div class="center" style="margin-top: 50px;">
-									<input type="button" class="btn" value="Submit" onclick="register();">
+									<button  class=" btn"
+                                                 type="submit">Submit</button>
 									<a href="./manageTypeDevices" class="btn" id="Cancel"
 										style="margin-left: 10px;">Cancel</a>
 								</div>
@@ -214,6 +217,20 @@
 		</div>
 		</div>
 		</div>
+		  <div id="RegisterManageTypeDevice" class="modal">
+     <h6 class="modal-header" style="margin:0px;">Update</h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateTacMessage"> Your request has been successfully saved.</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="./manageTypeDevices" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
 		<!--end container-->
 	</section>
 	<!--materialize js-->
@@ -250,7 +267,7 @@
 var featureId = 11;
 		populateCountries("country");
 
-		function register() {
+		function registerTAC() {
 			var manufacturerId = $('#manufacturerId').val();
 			var manufacturerName = $('#manufacturerName').val();
 			var country = $('#country').val();
@@ -271,7 +288,7 @@ var featureId = 11;
 			formData.append('requestDate',requestDate);
 			formData.append('remark', remark);
 			formData.append('userId',userId);
-			console.log(formData)
+			
 			$.ajax({
 				url : './register-approved-device',
 				type : 'POST',
@@ -279,9 +296,9 @@ var featureId = 11;
 				 processData : false,
 				contentType : false, 
 				success : function(data, textStatus, jqXHR) {
-console.log("-----success"+data);
-					/*  $('#submitConsignment').openModal();
-					if(data.errorCode=="0")
+						console.log("-----success"+data);
+					  $('#RegisterManageTypeDevice').openModal();
+					  /*if(data.errorCode=="0")
 					 {
 					 console.log("status code = 0");
 					$('#sucessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is ');
