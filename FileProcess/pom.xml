@@ -76,8 +76,7 @@
 			<artifactId>config</artifactId>
 			<version>1.0.12</version>
 			<classifier>import-lib</classifier>
-			<!-- <scope>system</scope>
-			<systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath>-->
+			<!-- <scope>system</scope> <systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath> -->
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
@@ -119,6 +118,7 @@
 	<build>
 
 		<finalName>${artifactId}_${version}</finalName>
+
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -127,11 +127,58 @@
 		</resources>
 
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
+				<configuration>
+					<mainClass>com.gl.CEIR.FileProcess.App</mainClass>
+				</configuration>
+
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
+
+			<!-- Building a fat jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<configuration>
+			<archive>
+			<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+			</archive>
+			</configuration>
+			</plugin>
+
 		</plugins>
+
 	</build>
 
 	<dependencyManagement>

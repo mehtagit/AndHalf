@@ -24,6 +24,4 @@ public class StockUpdateServiceImpl implements WebActionService{
 		}
 		return Boolean.TRUE;
 	}
-
-
 }
