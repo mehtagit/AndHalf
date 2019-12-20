@@ -149,7 +149,8 @@ public class DatatableHeaders implements HeaderInterface{
 			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
 
-			//DEFAULT PORTION  
+			
+
 			else if("userPaidStatus".equals(role)) {
 				String[] headers = {HeadersTitle.sNo,HeadersTitle.date,HeadersTitle.deviceIDType,HeadersTitle.deviceType,HeadersTitle.price,HeadersTitle.country,HeadersTitle.Status,HeadersTitle.action};		
 				for(String header : headers) {
@@ -157,6 +158,16 @@ public class DatatableHeaders implements HeaderInterface{
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			//operator view
+			else if("greyBlackList".equals(role)) {
+				String[] headers = {HeadersTitle.updatedOn,HeadersTitle.fileName,HeadersTitle.fileType,HeadersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+
 
 			//DEFAULT PORTION  
 			else {

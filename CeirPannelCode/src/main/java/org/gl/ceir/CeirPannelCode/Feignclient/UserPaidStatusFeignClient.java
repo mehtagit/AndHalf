@@ -2,12 +2,14 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+@Component
 @Service
 @FeignClient(url = "${feignClientPath}",value = "dsj" )
 public interface UserPaidStatusFeignClient {

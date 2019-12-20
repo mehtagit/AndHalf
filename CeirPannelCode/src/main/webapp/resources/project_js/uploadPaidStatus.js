@@ -188,7 +188,7 @@ $('#btnLink').css({"display":"none"});
     							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
     							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-    							"<option>"+dropdown[i].title+
+    							"<option value='-1'>"+dropdown[i].title+
     							"</option>"+
     							"</select>"+
     							"</div>"+
@@ -199,7 +199,7 @@ $('#btnLink').css({"display":"none"});
 
     			
     			$("#tableDiv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
-				$("#tableDiv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' onclick='exportConsignmentData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#tableDiv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -233,5 +233,23 @@ populateCountries
 			"country"
 	);
     
+
+
+function exportpaidStatus(){
+	var startDate = $('#startDate').val();
+	var endDate = $('#endDate').val();
+	var taxPaidStatus = $('#taxPaidStatus').val();
+	var deviceIdType = $('#deviceIDType').val();
+	var deviceType = $('#deviceType').val();
+	
+	
+	var table = $('#data-table-simple').DataTable();
+	var info = table.page.info(); 
+    var pageNo=info.page;
+    var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType)
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&pageSize="+pageSize+"&pageNo="+pageNo;
+}
     
     /*filterFileStatus,deviceType,taxPaidStatus*/

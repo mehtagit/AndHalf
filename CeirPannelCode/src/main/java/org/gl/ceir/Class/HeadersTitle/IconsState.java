@@ -792,5 +792,32 @@ public class IconsState {
 		String action = taxPaid.concat(view).concat(delete);
 		return action;
 	}
+	
+	
+	
+	/********************************** Icons for Operator **********************************/ 
+	public String greyBlackIcon(String userStatus) {
+		
+		String downloadURL = "JavaScript:void(0)";
+		
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>"; 
+	
+		
+	if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+	}
+		String action=download;
+		return action;
+	
+	}
 }
+
+
+
 
