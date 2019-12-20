@@ -160,7 +160,7 @@ input[type='search'] {
 		<div class="container">
 			<div class="section">
 				<div class="row">
-					<div class="col s12 m12 l12">
+					<div class="col s12 m12 l12" id="emptyTable">
 						<div class="row card-panel">
 							
 							<div class="container-fluid pageHeader" id="pageHeader">
@@ -467,7 +467,7 @@ input[type='search'] {
 
 												</table>
 
-												<a href="#viewBlockDevices" class="modal-trigger">View
+												<a href="Javascript:void(0);" onclick="viewDeviceHistory()">View
 													block devices</a>
 											</div>
 										</div>
@@ -486,18 +486,187 @@ input[type='search'] {
 
 
 
+<!-- Modal start   -->
+
+    <div id="viewBlockDevices" class="modal">
+               <h6 class="modal-header">View Block Devices</h6>
+        <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <div class="modal-content">
+ 
+            <div class="row">
+                <table class="responsive-table striped display" id="data-table-history" cellspacing="0">
+                  </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End -->
 
 
 
+   <!-- Modal start   -->
+
+    <div id="deleteMsg" class="modal">
+      <h6 class="modal-header">Delete</h6>
+        <div class="modal-content">
+          
+            <div class="row">
+                <h6>Are you sure you want to Delete this device information?</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="btn" onclick="accept()">yes</button>
+                    <button class="modal-close btn" style="margin-left: 10px;">no</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End -->
 
 
 
+<!-- Modal 2 start   -->
 
+    <div id="viewDeviceInformation" class="modal">
+                 <h6 class="modal-header">View Device Information</h6>
+        <div class="modal-content">
+  
+            <div class="row" style="margin-top: -10px;">
+                <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="deviceType" id="viewdeviceType" placeholder="Mobile Phone/Feature phone"
+                            maxlength="30" disabled style="height: 28px;">
+                        <label for="deviceType">Device Type</label>
+                    </div>
 
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="deviceIdType" id="viewdeviceIdType" placeholder="IMEI" maxlength="30"
+                            disabled style="height: 28px;">
+                        <label for="deviceIdType">Device ID Type</label>
+                    </div>
 
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="simStatus" id="viewsimStatus" placeholder="Yes" maxlength="30" disabled
+                            style="height: 28px;">
+                        <label for="simStatus">Multiple Sim Status</label>
+                    </div>
 
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="countryBought" id="viewcountryBought" placeholder="ABC Country"
+                            maxlength="30" disabled style="height: 28px;">
+                        <label for="countryBought">Country bought From</label>
+                    </div>
 
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="viewserialNumber" name="serialNumber" placeholder="1234567890" maxlength="20"
+                            disabled style="height: 28px;">
+                        <label for="serialNumber">Device Serial Number</label>
+                    </div>
 
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="taxStatus" id="viewtaxStatus" placeholder="Regularized" maxlength="30"
+                            disabled style="height: 28px;">
+                        <label for="taxStatus">Tax paid Status</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="deviceStatus" id="viewdeviceStatus" placeholder="New" maxlength="30"
+                            disabled style="height: 28px;">
+                        <label for="deviceStatus">Device Status</label>
+                    </div>
+
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="Price" id="viewPrice" placeholder="125$" maxlength="30" disabled
+                            style="height: 28px;">
+                        <label for="Price">Price </label>
+                    </div>
+
+                    <div class="input-field col s12 m6 l6">
+                        <input type="text" name="currency" id="viewcurrency" placeholder="$" maxlength="30" disabled
+                            style="height: 28px;">
+                        <label for="currency">Currency</label>
+                    </div>
+                </div>
+
+                <div class="row input_fields_wrap">
+                    <div class="col s12 m12">
+                        <p style="margin-bottom: 0; margin-top: -10px;">IMEI/MEID/ESN</p>
+                    </div>
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="viewIMEI1" name="IMEI1" pattern="[0-9]"
+                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
+                            placeholder="1234567891234567" disabled style="height: 28px;">
+                        <label for="IMEI1">1 </label>
+                    </div>
+
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="viewIMEI2" name="IMEI2" pattern="[0-9]"
+                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
+                            placeholder="98765432198765432" disabled style="height: 28px;">
+                        <label for="IMEI2">2</label>
+                    </div>
+
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="viewIMEI3" name="IMEI3" pattern="[0-9]"
+                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
+                            style="height: 28px;">
+                        <label for="IMEI3">3</label>
+                    </div>
+
+                    <div class="input-field col s12 m6">
+                        <input type="text" id="viewIMEI4" name="IMEI4[]" pattern="[0-9]"
+                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
+                            style="height: 28px;">
+                        <label for="IMEI4">4</label>
+                    </div>
+
+                    <div class="col s12 m12 center" style="margin-top: 10px;">
+                        <button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal End -->
+
+<!-- Pay Tax Modal start   -->
+
+    <div id="payTaxModal" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Pay Tax Information</h6>
+            <div class="row">
+                <h6>Do you confirm that tax has been paid?</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <button class="modal-close modal-trigger btn" data-target="payNowTaxPayment">Yes</button>
+                        <button class="modal-close btn" style="margin-left: 10px;">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pay Tax Modal End -->
+<!-- 
+<div id="payNowTaxPayment" class="modal" style="z-index: 1005; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
+        <div class="modal-content">
+            <h6 class="modal-header">Add Device Information</h6>
+            <div class="row">
+                <h6>The device status has been successfully updated</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <button class="modal-close btn">ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

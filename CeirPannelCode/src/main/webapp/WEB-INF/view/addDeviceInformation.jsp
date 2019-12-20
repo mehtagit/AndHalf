@@ -924,7 +924,7 @@ input[type='search'] {
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<!-- <button class="modal-close btn">yes</button> -->
-						<a href="uploadPaidStatus1.htm" class="btn">Yes</a>
+						<a href="./uploadPaidStatus" class="btn">Yes</a>
 						<button class="modal-close btn" style="margin-left: 10px;">no</button>
 					</div>
 				</div>
@@ -1012,43 +1012,16 @@ input[type='search'] {
     Scripts
     ================================================ -->
 
-	<script>
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
 
-        $(document).ready(function () {
-            $('#DeleteConsignment').openModal({
-                dismissible: false
-            });
-        });
-    </script>
 
 	<script>
         populateCountries(
             "country",
             "state",
         );
-        populateStates(
-            "country",
-            "state",
-        );
     </script>
 
-	<script>
-        function hide() {
-            var In = $('#Search').val()
-            if (In == "black") {
 
-                $("#user123").css("display", "block");
-                $("#user456").css("display", "none");
-
-            } else if (In == "blue") {
-                $("#user123").css("display", "none");
-                $("#user456").css("display", "block");
-            }
-        }
-    </script>
 
 
 	<script>

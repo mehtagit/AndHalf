@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -24,9 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,15 +50,13 @@ public class UploadPaidStatus {
 	@Autowired
 	IconsState iconState;
 
-	@Autowired
-	UserPaidStatusPaginationModel upsPaginationModel;
 	
 	@Autowired
 	PageElement pageElement;
-	
+
 	@Autowired
 	Button button;
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@GetMapping("/paid-status/{nid}")
@@ -76,18 +78,20 @@ public class UploadPaidStatus {
 		String filter = request.getParameter("filter");
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
-
+	
 		Object response = null;
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
+
 		//	filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
+			log.info("-----------filterrequest-------------"+filterrequest);
 			response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
 			log.info("--response----------"+response);
 			String apiResponse = gson.toJson(response);
 			log.info("--contentList----------"+apiResponse);
-			upsPaginationModel = gson.fromJson(apiResponse, UserPaidStatusPaginationModel.class);
+			UserPaidStatusPaginationModel upsPaginationModel = gson.fromJson(apiResponse, UserPaidStatusPaginationModel.class);
 			log.info("::::::::::::::::"+upsPaginationModel);	
 			List<UserPaidStatusContent> contentList = upsPaginationModel.getContent();
 			if(contentList.isEmpty()) {
@@ -103,7 +107,10 @@ public class UploadPaidStatus {
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String status = contentModelList.getTaxPaidStatusInterp();
-					String action = iconState.userPaidStatusIcon();
+
+					//params for action 
+					Long imei1 = contentModelList.getFirstImei();
+					String action = iconState.userPaidStatusIcon(imei1);
 
 					Object[] data = {sno,createdOn,deviceIDInterp,deviceTypeInterp,price,country,status,action};
 
@@ -127,73 +134,94 @@ public class UploadPaidStatus {
 	}
 
 
-	
-	
-	
+
+
+
 	@PostMapping("upload-paid-status/pageRendering")
 	public ResponseEntity<?> directives(@RequestParam(name="type",defaultValue = "userPaidStatus",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
-		
+
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-		
+
 		pageElement.setPageTitle("Upload Paid Status");
-		
+
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-			
-			log.info("USER STATUS:::::::::"+userStatus);
-			log.info("session value user Type=="+session.getAttribute("usertype"));
-			
-			String[] names= {"HeaderButton","Add Device","./add-device-information","btnLink","FilterButton", "filter","filter()","submitFilter"};
-			for(int i=0; i< names.length ; i++) {
-				button = new Button();
-				button.setType(names[i]);
-				i++;
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}			
-			pageElement.setButtonList(buttonList);
-			
-			//Dropdown items			
-			String[] selectParam= {"select","Device ID Type ","deviceIDType","","select","Device Type ","deviceType","","select","Tax Paid Status","taxPaidStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
-			
-			//input type date list		
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
-			
-			pageElement.setInputTypeDateList(inputTypeDateList);
-			pageElement.setUserStatus(userStatus);
-			return new ResponseEntity<>(pageElement, HttpStatus.OK); 		
+
+		log.info("USER STATUS:::::::::"+userStatus);
+		log.info("session value user Type=="+session.getAttribute("usertype"));
+
+		String[] names= {"HeaderButton","Add Device","./add-device-information","btnLink","FilterButton", "filter","filter()","submitFilter"};
+		for(int i=0; i< names.length ; i++) {
+			button = new Button();
+			button.setType(names[i]);
+			i++;
+			button.setButtonTitle(names[i]);
+			i++;
+			button.setButtonURL(names[i]);
+			i++;
+			button.setId(names[i]);
+			buttonList.add(button);
+		}			
+		pageElement.setButtonList(buttonList);
+
+		//Dropdown items			
+		String[] selectParam= {"select","Device ID Type ","deviceIDType","","select","Device Type ","deviceTypeFilter","","select","Tax Paid Status","taxPaidStatus",""};
+		for(int i=0; i< selectParam.length; i++) {
+			inputFields= new InputFields();
+			inputFields.setType(selectParam[i]);
+			i++;
+			inputFields.setTitle(selectParam[i]);
+			i++;
+			inputFields.setId(selectParam[i]);
+			i++;
+			inputFields.setClassName(selectParam[i]);
+			dropdownList.add(inputFields);
+		}
+		pageElement.setDropdownList(dropdownList);
+
+		//input type date list		
+		String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
+		for(int i=0; i< dateParam.length; i++) {
+			dateRelatedFields= new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
+		}
+
+		pageElement.setInputTypeDateList(inputTypeDateList);
+		pageElement.setUserStatus(userStatus);
+		return new ResponseEntity<>(pageElement, HttpStatus.OK); 		
 	}	
+
+
+
+	//************************************************ delete consignment record page********************************************************************************/
+
+
+	@DeleteMapping("/delete/{imei}")
+	public @ResponseBody GenricResponse deleteConsignment(@PathVariable("imei") Long imei) {
+		GenricResponse response=uploadPaidStatusFeignClient.delete(imei);
+		log.info("response after delete consignment."+response);
+		return response;
+	}
+
+
+	
+	@GetMapping("/deviceInfo/{imei}")
+	public @ResponseBody UserPaidStatusContent viewByImei(@PathVariable("imei") Long imei) {
+		UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(imei);
+		return content;
+	}
+	
 	
 }

@@ -2,8 +2,8 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest_UserPaidStatus {
 	
-		private Integer deviceIdType,deviceType,taxPaidStatus;
-		  private String createdOn,modifiedOn;
+		private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus;
+		  private String createdOn,modifiedOn,nid;
 	/*
 	 * "nid": "ABC", "deviceStatus": 0, "": 0, "taxPaidStatusInterp": null, "": 0,
 	 * "deviceTypeInterp": null,
@@ -46,8 +46,14 @@ public class FilterRequest_UserPaidStatus {
 		@Override
 		public String toString() {
 			return "FilterRequest_UserPaidStatus [deviceIdType=" + deviceIdType + ", deviceType=" + deviceType
-					+ ", taxPaidStatus=" + taxPaidStatus + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-					+ "]";
+					+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", createdOn="
+					+ createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid + "]";
+		}
+		public Integer getConsignmentStatus() {
+			return consignmentStatus;
+		}
+		public void setConsignmentStatus(Integer consignmentStatus) {
+			this.consignmentStatus = consignmentStatus;
 		}
 		
 		

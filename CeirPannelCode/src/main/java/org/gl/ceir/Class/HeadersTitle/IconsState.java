@@ -774,10 +774,10 @@ public class IconsState {
 
 
 	/********************************** Icons for UPS **********************************/ 	
-	public String userPaidStatusIcon() {
-		String payTaxAction ="";
-		String viewAction="";
-		String deleteAction= "";
+	public String userPaidStatusIcon(Long imei1) {
+		String payTaxAction ="taxPaid('"+imei1+"')";
+		String viewAction="viewDetails('"+imei1+"')";
+		String deleteAction= "deleteByImei('"+imei1+"')";
 		
 		String taxPaid="<a onclick="+payTaxAction+"><i class="
 				+payTaxIcon+" aria-hidden=\"true\" title="
@@ -785,7 +785,7 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		
-		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+		String delete="<a onclick="+deleteAction+"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 		

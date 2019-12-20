@@ -104,10 +104,11 @@
 	<!--viewModal Modal start   -->
 
 	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
-		<div class="modal-content">
-
 			<h6 class="modal-header">View Consignment</h6>
 			
+			<div class="modal-content">
+
+		
 
 
 			<div class="row myRow">
@@ -201,9 +202,10 @@
 	<!--Delete Modal start   -->
 
 	<div id="DeleteConsignment" class="modal">
+		<h6 class="modal-header">Delete</h6>
 		<div class="modal-content">
 
-			<h6 class="modal-header">Delete</h6>
+			
 			<hr>
 
 			<div class="row">
@@ -234,8 +236,9 @@
 	<!-- Modal 1 start   -->
 
 	<div id="updateConsignment" class="modal">
-		<div class="modal-content">
 			<h6>Update Consignment</h6>
+			<div class="modal-content">
+		
 			<hr>
 
 			<div class="row">
@@ -256,9 +259,10 @@
 	<!-- Delete confirmation Modal start   -->
 
 	<div id="confirmDeleteConsignment" class="modal">
+		<h6>Delete Consignment</h6>
 		<div class="modal-content">
 
-			<h6>Delete Consignment</h6>
+			
 			<hr>
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
@@ -280,9 +284,10 @@
 
 	<!-- Update Modal Start -->
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
-		<div class="modal-content">
-
 			<h6>Edit Consignment</h6>
+			<div class="modal-content">
+
+		
 			<hr>
 
 
@@ -413,9 +418,10 @@
 	</div>
 
 	<div id="markAsStolen" class="modal">
+		<h6 class="modal-header">Mark As Stolen</h6>
 		<div class="modal-content">
 
-			<h6 class="modal-header">Mark As Stolen</h6>
+			
 			<hr>
 
 			<div class="row">
@@ -432,9 +438,10 @@
 	</div>
 
 	<div id="updateMarkAsStolen" class="modal">
+		<h6>Mark As Stolen</h6>
 		<div class="modal-content">
 
-			<h6>Mark As Stolen</h6>
+			
 			<hr>
 
 			<div class="row">
@@ -455,9 +462,9 @@
 			data-dismiss="modal">&times;</button>
 		<div class="row" style="padding-bottom: 20px;"
 			id="stolenRecoveryDivPage">
-
+<h6 class="modal-header">Report Stolen/Recovery</h6>
 			<div class="col s12 m12 modal-content">
-				<h6 class="modal-header">Report Stolen/Recovery</h6>
+				
 				<hr>
 				<div class="row">
 					<form action="#">
@@ -537,10 +544,11 @@
 
 
 	<div id="fileStolenModal" class="modal">
+		<h6 class="modal-header">Mark As Stolen</h6>
 		<div class="modal-content">
 			<div class="row">
 				<div class="col s12 m12">
-					<h6 class="modal-header">Mark As Stolen</h6>
+					
 					<hr>
 					<div class="row">
 						<h6 style="color: #000;">

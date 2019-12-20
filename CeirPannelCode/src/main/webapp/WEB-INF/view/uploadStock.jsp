@@ -215,8 +215,9 @@ opacity: 0;
     </section>
     
         <div id="cancelMessage" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Cancel</h6>
+             <h6 class="modal-header">Cancel</h6>
+             <div class="modal-content">
+       
             <hr>
             <div class="row">
                 <h6>Are you sure you want to close this window. The form data will be lost</h6>
@@ -234,8 +235,9 @@ opacity: 0;
     
     <!-- Modal 4 start   -->
 <div id="submitStock" class="modal">
+       <h6 class="modal-header">Submit Stock</h6>
         <div class="modal-content">
-            <h6 class="modal-header">Submit Stock</h6>
+            
             <hr>
 
             <div class="row">

@@ -214,8 +214,9 @@
 	<!-- View Stock Modal start   -->
 
 	<div id="viewStockModal" class="modal">
+		<h6 class="modal-header">View Stock</h6>
 		<div class="modal-content">
-			<h6 class="modal-header">View Stock</h6>
+			
 			
 			<form action="" style="margin-top: 10px;">
 
@@ -287,9 +288,10 @@
 
 
 	<div id="DeleteStockconfirmationModal" class="modal">
+		<h6 class="modal-header">Delete Stock</h6>
 		<div class="modal-content">
 
-			<h6 class="modal-header">Delete Stock</h6>
+			
 			
 
 			<div class="row">
@@ -308,8 +310,9 @@
 	</div>
 
 	<div id="closeDeleteModal" class="modal">
-		<div class="modal-content">
 			<h6 class="modal-header">Delete Stock</h6>
+			<div class="modal-content">
+		
 			
 			<div class="row">
 
@@ -325,9 +328,10 @@
 	</div>
 	
 	  <div id="markAsMultipleStolen" class="modal">
+       <h6>Mark As Stolen</h6>
         <div class="modal-content">
 
-            <h6>Mark As Stolen</h6>
+            
             
 
             <div class="row">
@@ -342,8 +346,9 @@
         </div>
     </div>
      <div id="markAsStolenDone" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Mark As Stolen</h6>
+                <h6 class="modal-header">Mark As Stolen</h6>
+                    <div class="modal-content">
+
             
             <div class="row">
                 <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
@@ -380,8 +385,9 @@
     </div>
     
     <div id="confirmApproveStockModal" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Approve Stock</h6>
+           <h6 class="modal-header">Approve Stock</h6>
+             <div class="modal-content">
+       
             <div class="row">
                 <h6 id="stockApproveSucessMessage"></h6>
             </div>
@@ -395,8 +401,9 @@
         </div>
     </div>
       <div id="RejectStockModal" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Reject Stock</h6>
+                    <h6 class="modal-header">Reject Stock</h6>
+                    <div class="modal-content">
+
             <div class="row">
                 <h6>Do you really want to mark the stock with Transaction ID: <span id="disaproveTxnId"> </span> as
                     rejected.</h6>
@@ -419,8 +426,9 @@
         </div>
     </div>
      <div id="confirmRejectStock" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Reject Stock</h6>
+                <h6 class="modal-header">Reject Stock</h6>
+                <div class="modal-content">
+    
             <div class="row">
                 <h6 id="stockDisapproveSucessMessage"></h6>
             </div>
