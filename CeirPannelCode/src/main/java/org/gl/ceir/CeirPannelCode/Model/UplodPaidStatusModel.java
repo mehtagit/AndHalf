@@ -1,122 +1,185 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class UplodPaidStatusModel {
 
-	   private String country ,createdOn,email,firstName,lastName,locality,middleName,modifiedOn,nid,phoneNo,propertyLocation,province,
-	   fileName,regularizeDeviceDbs,street;
-		private Integer id;
-		
-		@Override
-		public String toString() {
-			return "UplodPaidStatusModel [country=" + country + ", createdOn=" + createdOn + ", email=" + email
-					+ ", firstName=" + firstName + ", lastName=" + lastName + ", locality=" + locality + ", middleName="
-					+ middleName + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", phoneNo=" + phoneNo
-					+ ", propertyLocation=" + propertyLocation + ", province=" + province + ", fileName=" + fileName
-					+ ", regularizeDeviceDbs=" + regularizeDeviceDbs + ", street=" + street + ", id=" + id + "]";
-		}
-		public String getFileName() {
-			return fileName;
-		}
-		public void setFileName(String fileName) {
-			this.fileName = fileName;
-		}
-		public String getCountry() {
-			return country;
-		}
-		public void setCountry(String country) {
-			this.country = country;
-		}
-		public String getCreatedOn() {
-			return createdOn;
-		}
-		public void setCreatedOn(String createdOn) {
-			this.createdOn = createdOn;
-		}
-		public String getEmail() {
-			return email;
-		}
-		public void setEmail(String email) {
-			this.email = email;
-		}
-		public String getFirstName() {
-			return firstName;
-		}
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-		public String getLastName() {
-			return lastName;
-		}
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-		public String getLocality() {
-			return locality;
-		}
-		public void setLocality(String locality) {
-			this.locality = locality;
-		}
-		public String getMiddleName() {
-			return middleName;
-		}
-		public void setMiddleName(String middleName) {
-			this.middleName = middleName;
-		}
-		public String getModifiedOn() {
-			return modifiedOn;
-		}
-		public void setModifiedOn(String modifiedOn) {
-			this.modifiedOn = modifiedOn;
-		}
-		public String getNid() {
-			return nid;
-		}
-		public void setNid(String nid) {
-			this.nid = nid;
-		}
-		public String getPhoneNo() {
-			return phoneNo;
-		}
-		public void setPhoneNo(String phoneNo) {
-			this.phoneNo = phoneNo;
-		}
-		public String getPropertyLocation() {
-			return propertyLocation;
-		}
-		public void setPropertyLocation(String propertyLocation) {
-			this.propertyLocation = propertyLocation;
-		}
-		public String getProvince() {
-			return province;
-		}
-		public void setProvince(String province) {
-			this.province = province;
-		}
-		public String getRegularizeDeviceDbs() {
-			return regularizeDeviceDbs;
-		}
-		public void setRegularizeDeviceDbs(String regularizeDeviceDbs) {
-			this.regularizeDeviceDbs = regularizeDeviceDbs;
-		}
-		public String getStreet() {
-			return street;
-		}
-		public void setStreet(String street) {
-			this.street = street;
-		}
-		public Integer getId() {
-			return id;
-		}
-		public void setId(Integer id) {
-			this.id = id;
-		}
-		
-		
-		
-		
+	   private String currency,currencyInterp,deviceIdType,deviceIdTypeInterp,deviceSerialNumber,deviceStatus,deviceType,deviceTypeInterp ,
+	   firstImei,secondImei,thirdImei,fourthImei,multiSimStatus,taxPaidStatus,taxPaidStatusInterp,txnId,price,nid,modifiedOn,createdOn;
 
+	@Override
+	public String toString() {
+		return "UplodPaidStatusModel [currency=" + currency + ", currencyInterp=" + currencyInterp + ", deviceIdType="
+				+ deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", deviceSerialNumber="
+				+ deviceSerialNumber + ", deviceStatus=" + deviceStatus + ", deviceType=" + deviceType
+				+ ", deviceTypeInterp=" + deviceTypeInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
+				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", multiSimStatus=" + multiSimStatus
+				+ ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp + ", txnId="
+				+ txnId + ", price=" + price + ", nid=" + nid + ", modifiedOn=" + modifiedOn + ", createdOn="
+				+ createdOn + "]";
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+
+	public String getCurrencyInterp() {
+		return currencyInterp;
+	}
+
+	public void setCurrencyInterp(String currencyInterp) {
+		this.currencyInterp = currencyInterp;
+	}
+
+	public String getDeviceIdType() {
+		return deviceIdType;
+	}
+
+	public void setDeviceIdType(String deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
+
+	public String getDeviceIdTypeInterp() {
+		return deviceIdTypeInterp;
+	}
+
+	public void setDeviceIdTypeInterp(String deviceIdTypeInterp) {
+		this.deviceIdTypeInterp = deviceIdTypeInterp;
+	}
+
+	public String getDeviceSerialNumber() {
+		return deviceSerialNumber;
+	}
+
+	public void setDeviceSerialNumber(String deviceSerialNumber) {
+		this.deviceSerialNumber = deviceSerialNumber;
+	}
+
+	public String getDeviceStatus() {
+		return deviceStatus;
+	}
+
+	public void setDeviceStatus(String deviceStatus) {
+		this.deviceStatus = deviceStatus;
+	}
+
+	public String getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(String deviceType) {
+		this.deviceType = deviceType;
+	}
+
+	public String getDeviceTypeInterp() {
+		return deviceTypeInterp;
+	}
+
+	public void setDeviceTypeInterp(String deviceTypeInterp) {
+		this.deviceTypeInterp = deviceTypeInterp;
+	}
+
+	public String getFirstImei() {
+		return firstImei;
+	}
+
+	public void setFirstImei(String firstImei) {
+		this.firstImei = firstImei;
+	}
+
+	public String getSecondImei() {
+		return secondImei;
+	}
+
+	public void setSecondImei(String secondImei) {
+		this.secondImei = secondImei;
+	}
+
+	public String getThirdImei() {
+		return thirdImei;
+	}
+
+	public void setThirdImei(String thirdImei) {
+		this.thirdImei = thirdImei;
+	}
+
+	public String getFourthImei() {
+		return fourthImei;
+	}
+
+	public void setFourthImei(String fourthImei) {
+		this.fourthImei = fourthImei;
+	}
+
+	public String getMultiSimStatus() {
+		return multiSimStatus;
+	}
+
+	public void setMultiSimStatus(String multiSimStatus) {
+		this.multiSimStatus = multiSimStatus;
+	}
+
+	public String getTaxPaidStatus() {
+		return taxPaidStatus;
+	}
+
+	public void setTaxPaidStatus(String taxPaidStatus) {
+		this.taxPaidStatus = taxPaidStatus;
+	}
+
+	public String getTaxPaidStatusInterp() {
+		return taxPaidStatusInterp;
+	}
+
+	public void setTaxPaidStatusInterp(String taxPaidStatusInterp) {
+		this.taxPaidStatusInterp = taxPaidStatusInterp;
+	}
+
+	public String getTxnId() {
+		return txnId;
+	}
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
+	}
+
+	public String getNid() {
+		return nid;
+	}
+
+	public void setNid(String nid) {
+		this.nid = nid;
+	}
+
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public String getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	};
+	   
+	 
+	   
+	   
+	
 }
 

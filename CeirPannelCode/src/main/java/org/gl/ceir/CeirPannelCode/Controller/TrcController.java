@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
@@ -63,38 +65,47 @@ public class TrcController {
 		return modelAndView;
 
 	}
-	/*
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("register-device") public GenricResponse
-	 * register(@RequestParam(name="file",required = false) MultipartFile
-	 * file,HttpServletRequest request,HttpSession session) {
-	 * log.info("-inside controller register-approved-device-------request---------"
-	 * +request.getParameter("manufacturerId")); //
-	 * log.info(""+request.getParameter("file")); String
-	 * userName=session.getAttribute("username").toString(); String userId=
-	 * session.getAttribute("userid").toString(); String
-	 * name=session.getAttribute("name").toString();
-	 * log.info(" Register consignment entry point."); String txnNumber="T" +
-	 * utildownload.getTxnId(); log.info("Random transaction id number="+txnNumber);
-	 * try { byte[] bytes = file.getBytes(); String rootPath
-	 * ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; File dir =
-	 * new File(rootPath + File.separator);
-	 * 
-	 * if (!dir.exists()) dir.mkdirs(); // Create the file on server File serverFile
-	 * = new File(rootPath+file.getOriginalFilename());
-	 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-	 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-	 * stream.write(bytes); stream.close(); }
-	 * 
-	 * catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
-	 * log.info("above model"+txnNumber); // set request parameters into model class
-	 * TRCRegisteration model =
-	 * registerationImpl.register(request,file.getOriginalFilename(),txnNumber);
-	 * log.info("---------model--------"+model); GenricResponse response =
-	 * typeApprovedFeignImpl.register(model);
-	 * log.info("---------response--------"+response); return response; }
-	 */
+	@ResponseBody
+	@PostMapping("register-approved-device")
+	public GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+		log.info("-inside controller register-approved-device-------request---------"+request.getParameter("manufacturerId"));
+		// log.info(""+request.getParameter("file"));
+		String userName=session.getAttribute("username").toString();
+		String userId= session.getAttribute("userid").toString();
+		String name=session.getAttribute("name").toString();
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		log.info("************"+parameterMap.toString());
+		log.info(" Register consignment entry point.");
+		String txnNumber="T" + utildownload.getTxnId();
+		log.info("Random transaction id number="+txnNumber);
+		request.getParameterValues("");
+		try { byte[] bytes = file.getBytes();
+		String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; 
+		File dir = new File(rootPath + File.separator);
+
+		if (!dir.exists()) dir.mkdirs();
+		// Create the file on server 
+		File serverFile = new File(rootPath+file.getOriginalFilename());
+		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		stream.write(bytes); 
+		stream.close();
+		} 
+
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		log.info("above model"+txnNumber);
+		// set request parameters into model class
+		TRCRegisteration model = registerationImpl.register(request,file.getOriginalFilename(),txnNumber);
+		log.info("---------model--------"+model);
+		GenricResponse response = typeApprovedFeignImpl.register(model);
+		//GenricResponse response = null;
+		log.info("---------response--------"+response);
+		return response;
+	}
+
 
 	@ResponseBody
 	@PostMapping("viewByID/{id}")
