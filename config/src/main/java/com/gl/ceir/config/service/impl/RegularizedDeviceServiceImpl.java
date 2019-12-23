@@ -43,6 +43,7 @@ import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -78,6 +79,9 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+	
+	@Autowired
+	InterpSetter interpSetter;
 
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
@@ -120,33 +124,13 @@ public class RegularizedDeviceServiceImpl {
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 
-				for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
-					if(regularizeDeviceDb.getTaxPaidStatus() == systemConfigListDb.getValue()) {
-						regularizeDeviceDb.setTaxPaidStatusInterp(systemConfigListDb.getInterp()); 
-						break;
-					} 
-				}
+				regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
 
-				for(SystemConfigListDb systemConfigListDb : deviceIdTypeList) {
-					if(regularizeDeviceDb.getDeviceIdType() == systemConfigListDb.getValue()) {
-						regularizeDeviceDb.setDeviceIdTypeInterp(systemConfigListDb.getInterp()); 
-						break;
-					} 
-				}
-
-				for(SystemConfigListDb systemConfigListDb : deviceTypeList) {
-					if(regularizeDeviceDb.getDeviceType() == systemConfigListDb.getValue()) {
-						regularizeDeviceDb.setDeviceTypeInterp(systemConfigListDb.getInterp()); 
-						break;
-					} 
-				}
+				regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
 				
-				for(SystemConfigListDb systemConfigListDb : deviceStatusList) {
-					if(regularizeDeviceDb.getDeviceStatus() == systemConfigListDb.getValue()) {
-						regularizeDeviceDb.setDeviceStatusInterp(systemConfigListDb.getInterp()); 
-						break;
-					} 
-				}
+				regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
+				
+				regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
 			}
 
 			return page;

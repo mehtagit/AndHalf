@@ -57,6 +57,7 @@ import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -105,6 +106,9 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
+	@Autowired
+	InterpSetter interpSetter;
+	
 	@Transactional
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
@@ -259,12 +263,13 @@ public class ConsignmentServiceImpl {
 					}
 				}
 
-				for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
-					if(consignmentMgmt2.getTaxPaidStatus() == systemConfigListDb.getValue()) {
-						consignmentMgmt2.setTaxInterp(systemConfigListDb.getInterp()); 
-						break;
-					} 
-				}
+				/*
+				 * for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
+				 * if(consignmentMgmt2.getTaxPaidStatus() == systemConfigListDb.getValue()) {
+				 * consignmentMgmt2.setTaxInterp(systemConfigListDb.getInterp()); break; } }
+				 */				
+				
+				consignmentMgmt2.setTaxInterp(interpSetter.setInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt2.getTaxPaidStatus()));
 			}
 
 			return page;
