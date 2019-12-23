@@ -1,34 +1,38 @@
 var cierRoletype = sessionStorage.getItem("cierRoletype");
-var featureId = 9;
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
-var serviceDump = 0;
-
 
 
 $(document).ready(function(){
 	operatorDatatable();
-	pageRendering();
+	pagetitle();
 	
 });
 
-var role = currentRoleType == null ? roleType : currentRoleType;
+
+if(window.location.search == "?type=greyList"){
+	window.serviceDump = 0
+}else{
+	window.serviceDump = 1
+}
+
+
 
 
 //**************************************************Registration table**********************************************
 
 function operatorDatatable(){
 
-	
+	var fileType = $("#fileType").val();
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"serviceDump" : 0
+			"serviceDump" : serviceDump,
+			"fileType" : parseInt(fileType)
 		}
 	
 	$.ajax({
@@ -58,6 +62,14 @@ function operatorDatatable(){
 				},
 				"columns": result
 			});
+			
+			$('#operatorLibraryTable input').unbind();
+		    $('#operatorLibraryTable input').bind('keyup', function (e) {
+		        if (e.keyCode == 13) {
+		            table.search(this.value).draw();
+		        }
+		        
+		    });
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -65,13 +77,20 @@ function operatorDatatable(){
 	});
 }
 
+function pagetitle(){
+	if(window.location.search == "?type=greyList"){
+			pageRendering("operator/pageRendering?featureType=greyList")
+	}else if(window.location.search == "?type=blackList"){
+			pageRendering("operator/pageRendering?featureType=blackList")
+	}
+}
 
 
 //**************************************************Registration page buttons**********************************************
 
-function pageRendering(){
+function pageRendering(URL){
 	$.ajax({
-		url: 'operator/pageRendering',
+		url: URL,
 		type: 'POST',
 		dataType: "json",
 		success: function(data){
@@ -118,7 +137,7 @@ function pageRendering(){
 			}
 			
 			$("#operatorTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#operatorTableDiv").append("<div class='col s12 m2'><a onclick='exportButton()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#operatorTableDiv").append("<div class='col s12 m4'><a onclick='exportButton()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -128,16 +147,22 @@ function pageRendering(){
 			$('.datepicker').datepicker({
 				dateFormat: "yy-mm-dd"
 				});
-		
-			cierRoletype=="CEIRAdmin"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
-		
+			
+			//File Type-----------dropdown
+			$.getJSON('./getDropdownList/FILE_TYPE', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#fileType');
+				}
+			});
+			
+			$("#btnLink").css({display: "none"}) 
 			
 		}
+		
+}); 
 
-	}); 
-	
-	};
+};
 
 
 
@@ -212,18 +237,21 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function exportButton(){
-	var startdate=$('#startDate').val(); 
-	var endDate=$('#endDate').val();
-	var asType =  $('#asType').val();
-	var userRoleTypeId =  $("#role").val();
-	var status =  $('#recentStatus').val();
 	
-	var table = $('#registrationLibraryTable').DataTable();
+	var startDate=$('#startDate').val();
+	var endDate = $('#endDate').val();
+	var userTypeId= parseInt($("body").attr("data-userTypeID"));
+	var userType=$("body").attr("data-roleType");
+	var serviceDump= window.serviceDump;
+	var fileType= parseInt($("#fileType").val());
+
+	
+	var table = $('#operatorLibraryTable').DataTable();
 	var info = table.page.info(); 
     var pageNo=info.page;
     var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("RegistrationS----------------------tartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status)
-	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	console.log("startdate ="+startDate+"  endDate=="+endDate+"userTypeId ="+userTypeId+"userType ="+userType+"serviceDump ="+serviceDump+"fileType ="+fileType+"status  "+status)
+	window.location.href="./exportOperatorDetails?startDate="+startDate+"&endDate="+endDate+"&userTypeId="+userTypeId+"&userType="+userType+"&serviceDump="+serviceDump+"&fileType="+fileType+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 

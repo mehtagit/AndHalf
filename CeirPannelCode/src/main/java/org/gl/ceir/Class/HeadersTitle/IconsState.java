@@ -796,9 +796,9 @@ public class IconsState {
 	
 	
 	/********************************** Icons for Operator **********************************/ 
-	public String greyBlackIcon(String userStatus) {
-		
-		String downloadURL = "JavaScript:void(0)";
+	public String greyBlackIcon(String userStatus,String fileName) {
+		 	
+		String downloadURL = "./dowloadFiles/"+fileName.replace(" ", "%20")+"/";
 		
 		String download="<a href="+downloadURL+" download=\"download\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="

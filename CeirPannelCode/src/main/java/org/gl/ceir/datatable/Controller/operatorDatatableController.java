@@ -58,7 +58,7 @@ public class operatorDatatableController {
 		int userId=	(int) session.getAttribute("userid");
 
 		log.info("session value Operator Controller=="+session.getAttribute("usertype"));
-		int file=0;
+		
 		// Data set on this List
 				List<List<Object>> finalList=new ArrayList<List<Object>>();
 				String filter = request.getParameter("filter");
@@ -66,9 +66,10 @@ public class operatorDatatableController {
 				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 				
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
-				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+				filterrequest.setSearchString(request.getParameter("search[value]"));
+				Integer file = 0;
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-				
 				try {
 					log.info("request send to the filter api ="+filterrequest);
 					Object response = grievanceFeignClient.viewOperatorFeign(filterrequest,pageNo,pageSize,file);
@@ -90,7 +91,7 @@ public class operatorDatatableController {
 						   String fileTypeInterp = dataInsideList.getFileTypeInterp();
 						   String userStatus = (String) session.getAttribute("userStatus");
 						   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
-						   String action=iconState.greyBlackIcon(userStatus);			   
+						   String action=iconState.greyBlackIcon(userStatus,fileName);			   
 						   Object[] finalData={createdOn,fileName,fileTypeInterp,action}; 
 							List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 							finalList.add(finalDataList);
@@ -114,15 +115,20 @@ public class operatorDatatableController {
 	
 	
 	@PostMapping("operator/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "operator",required = false) String role,HttpSession session){
-
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "operator",required = false) String role,
+			@RequestParam(name="featureType",required = false) String featureType,HttpSession session){
+		
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
 		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("Grey List");
+		if("greyList".equals(featureType)) {
+		pageElement.setPageTitle("Grey List");	
+		}else if("blackList".equals(featureType)) {
+		pageElement.setPageTitle("Black List");
+		}
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
