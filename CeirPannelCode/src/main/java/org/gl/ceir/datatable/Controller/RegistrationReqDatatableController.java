@@ -60,7 +60,7 @@ public class RegistrationReqDatatableController {
 		int userId=	(int) session.getAttribute("userid");
 		
 		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
-		
+		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
@@ -74,7 +74,7 @@ public class RegistrationReqDatatableController {
 		
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize);
+			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);

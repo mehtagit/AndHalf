@@ -297,7 +297,8 @@ input[type='search'] {
 												</div>
 											</div>
 										</div>
-
+										<div id="mainDeviceInformation" class="mainDeviceInformation">
+										<div id="deviceInformation" class="deviceInformation">
 										<div class="row">
 											<div class="col s12 m12">
 												<div class="col s12 m12" style="margin-top: 30px;">
@@ -308,27 +309,29 @@ input[type='search'] {
 												<div class="col s12 m6">
 													<label for="deviceType">Device Type <span
 														class="star">*</span></label> <select class="browser-default"
-														id="deviceType">
+														id="deviceType1">
 														<option value="" disabled selected>Select Device
 															Type</option>
+															<option value="device" >device </option>
+															<option value="type" >type</option>
 														
 													</select>
 												</div>
 
 												<div class="col s12 m6">
-													<label for="deviceIdType">Device ID Type <span
+													<label for="deviceIdType1">Device ID Type <span
 														class="star">*</span></label> <select class="browser-default"
-														id="deviceType">
-														<option value="" disabled selected>Select Device
-															ID Type</option>
-														
+														id="deviceIdType1">
+														<option value="" disabled selected>Select Device ID Type</option>
+														<option value="device" >device </option>
+															<option value="type" >type</option>
 													</select>
 												</div>
 
 												<div class="col s12 m6">
-													<label for="deviceType">Multiple Sim Status <span
+													<label for="multipleSimStatus1">Multiple Sim Status <span
 														class="star">*</span></label> <select class="browser-default"
-														id="deviceType">
+														id="multipleSimStatus1">
 														<option value="" disabled selected>Select
 															Multiple Sim Status</option>
 														<option value="Yes">Yes</option>
@@ -337,15 +340,15 @@ input[type='search'] {
 												</div>
 
 												<div class="col s12 m6">
-													<label for="country">Country bought From <span
-														class="star">*</span></label> <select id="country"
+													<label for="country1">Country bought From <span
+														class="star">*</span></label> <select id="country1"
 														class="browser-default" class="mySelect"
 														style="padding-left: 0;" required></select>
 												</div>
 
 												<div class="input-field col s12 m6"
 													style="margin-top: 28px;">
-													<input type="text" id="serialNumber" name="serialNumber"
+													<input type="text" id="serialNumber1" name="serialNumber"
 														pattern="[0-9]"
 														title="Please enter your device serial number first"
 														maxlength="20"> <label for="serialNumber">Device
@@ -354,9 +357,9 @@ input[type='search'] {
 												</div>
 
 												<div class="col s12 m6">
-													<label for="taxStatus">Tax paid Status <span
+													<label for="taxStatus1">Tax paid Status <span
 														class="star">*</span></label> <select class="browser-default"
-														id="taxStatus">
+														id="taxStatus1">
 														<option value="" disabled selected>Select Tax
 															paid Status</option>
 														<option value="Regularized">Regularized</option>
@@ -369,9 +372,9 @@ input[type='search'] {
 										<div class="row">
 											<div class="col s12 m12">
 												<div class="col s12 m6" style="margin-top: -10px;">
-													<label for="taxStatus">Device Status <span
+													<label for="deviceStatus1">Device Status <span
 														class="star">*</span></label> <select class="browser-default"
-														id="taxStatus">
+														id="deviceStatus1">
 														<option value="" disabled selected>Select Device
 															Status</option>
 														<option value="New">New</option>
@@ -381,13 +384,13 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" name="Price" id="Price" maxlength="30">
-													<label for="Price">Price <span class="star">*</span></label>
+													<input type="text" name="Price" id="Price1" maxlength="30">
+													<label for="Price1">Price <span class="star">*</span></label>
 												</div>
 
 												<div class="col s12 m6">
-													<label for="Currency">Currency <span class="star">*</span></label>
-													<select class="browser-default" id="Currency">
+													<label for="Currency1">Currency <span class="star">*</span></label>
+													<select class="browser-default" id="Currency1">
 														<option value="" disabled selected>Select
 															Currency</option>
 														<option value="Regularized">$</option>
@@ -403,37 +406,38 @@ input[type='search'] {
 													<p>IMEI/MEID/ESN</p>
 													<div class='row'>
 														<div class="input-field col s12 m6">
-															<input type="text" id="IMEI1" name="IMEI1"
+															<input type="text" id="IMEIA1" name="IMEI1"
 																pattern="[0-9]"
 																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16"> <label for="IMEI1">1 <span
+																maxlength="16"> <label for="IMEIA1">1 <span
 																class="star">*</span></label>
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" id="IMEI2" name="IMEI2"
+															<input type="text" id="IMEIB1" name="IMEI2"
 																pattern="[0-9]"
 																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16"> <label for="IMEI2">2</label>
+																maxlength="16"> <label for="IMEIB2">2</label>
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" id="IMEI3" name="IMEI3"
+															<input type="text" id="IMEIC1" name="IMEIC3"
 																pattern="[0-9]"
 																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16"> <label for="IMEI3">3</label>
+																maxlength="16"> <label for="IMEIC3">3</label>
 														</div>
 
 														<div class="input-field col s12 m6" id="field">
-															<input type="text" id="IMEI4" name="IMEI4[]"
+															<input type="text" id="IMEID1" name="IMEID4[]"
 																pattern="[0-9]"
 																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16" id="field0"> <label for="IMEI4">4</label>
+																maxlength="16" id="field0"> <label for="IMEID4">4</label>
 														</div>
 													</div>
 												</div>
-
-
+                                             </div></div> 
+                                             </div>
+                                             </div>
 												<div class="col s12 m12">
 													<button class="btn right add_field_button"
 														style="margin-top: 5px;">
@@ -443,15 +447,15 @@ input[type='search'] {
 														Required Field are marked with <span class="star">*</span>
 													</p>
 												</div>
-
+                                                      
 												<div class="col s12 m12 center" style="margin-top: 30px;">
-													<button class="btn modal-trigger"
-														data-target="otpVerification">Submit</button>
+													<button class="btn " onclick="submitDeviceInfo()"
+														>Submit</button>
 													<button class="btn modal-trigger" data-target="cancelMsg"
 														style="margin-left: 10px;">Cancel</button>
 												</div>
-											</div>
-										</div>
+											
+										
 									</form>
 								</div>
 

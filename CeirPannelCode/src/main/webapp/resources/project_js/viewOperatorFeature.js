@@ -1,13 +1,14 @@
 var cierRoletype = sessionStorage.getItem("cierRoletype");
-var featureId = 8;
+var featureId = 9;
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
-var startdate=$('#startDate').val(); 
-var endDate=$('#endDate').val();
+var serviceDump = 0;
+
+
 
 $(document).ready(function(){
-	registrationDatatable();
+	operatorDatatable();
 	pageRendering();
 	
 });
@@ -17,31 +18,26 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 //**************************************************Registration table**********************************************
 
-function registrationDatatable(){
-	var asType = $('#asType').val();
-	var userRoleTypeId = $("#role").val();
-	var status =  $('#recentStatus').val();
+function operatorDatatable(){
+
 	
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
-			"asType": parseInt(asType),
-			"userRoleTypeId" : parseInt(userRoleTypeId),
-			"status" : parseInt(status),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			
-	}
+			"serviceDump" : 0
+		}
 	
 	$.ajax({
-		url: 'headers?type=adminRegistration',
+		url: 'headers?type=greyBlackList',
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
 			/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
-			var table=	$("#registrationLibraryTable").DataTable({
+			var table=	$("#operatorLibraryTable").DataTable({
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
@@ -51,7 +47,7 @@ function registrationDatatable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : 'registrationData',
+					url : 'operatorData',
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
@@ -75,7 +71,7 @@ function registrationDatatable(){
 
 function pageRendering(){
 	$.ajax({
-		url: 'registration/pageRendering',
+		url: 'operator/pageRendering',
 		type: 'POST',
 		dataType: "json",
 		success: function(data){
@@ -89,7 +85,7 @@ function pageRendering(){
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-				$("#registrationTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+				$("#operatorTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
 						"<div id='enddatepicker' class='input-group date'>"+
 						"<label for='TotalPrice'>"+date[i].title
 						+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
@@ -97,7 +93,7 @@ function pageRendering(){
 						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
 				else if(date[i].type === "select"){
-					$("#registrationTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					$("#operatorTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
 					
 				}
 				
@@ -107,7 +103,7 @@ function pageRendering(){
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
-					$("#registrationTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+					$("#operatorTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
 							"<br>"+
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
@@ -121,8 +117,8 @@ function pageRendering(){
 					"</div>");
 			}
 			
-			$("#registrationTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#registrationTableDiv").append("<div class='col s12 m2'><a onclick='exportButton()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#operatorTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#operatorTableDiv").append("<div class='col s12 m2'><a onclick='exportButton()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -141,30 +137,7 @@ function pageRendering(){
 
 	}); 
 	
-	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].state).text(data[i].interp)
-			.appendTo('#recentStatus');
-		}
-	});
-	
-
-	$.getJSON('./registrationUserType', function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].id).text(data[i].usertypeName)
-			.appendTo('#role');
-		}
-	});
-	
-	
-	$.getJSON('./getTypeDropdownList/AS_TYPE/'+$("body").attr("data-userTypeID"), function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#asType');
-		}
-	});
-	
-};
+	};
 
 
 
@@ -237,85 +210,6 @@ $('.datepicker').on('mousedown',function(event){
 
 
 
-function userApprovalPopup(userId,date){
-	$('#approveInformation').openModal();
-	$("#userId").text(userId);
-	window.userID=userId;
-	window.date=date.replace("="," ");
-}
-
-
-
-
-function aprroveUser(){
-	var userid= $("#userId").text();
-	var approveRequest={
-			"userId": parseInt(userid),
-			"status" : "Approved",
-			"remark": $("#Reason").val()	
-	}
-	
-	$.ajax({
-		url : './adminApproval',
-		data : JSON.stringify(approveRequest),
-		dataType : 'json',
-		'async' : false,
-		contentType : 'application/json; charset=utf-8',
-		type : 'POST',
-		success : function(data) {
-			console.log("approveRequest----->"+JSON.stringify(approveRequest));
-			confirmApproveInformation(window.userID,window.date);
-		},
-		error : function() {
-			alert("Failed");
-		}
-	});
-}
-
-function confirmApproveInformation(userID,date){
-	$('#approveInformation').closeModal(); 
-	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
-	$("#registrationDate").text(date);
-	$("#RegistrationId").text(userID);
-}
-
-function userRejectPopup(userId){
-	$('#rejectInformation').openModal();
-	console.log("Reject userId is---->"+userId);
-	$("#userId").text(userId)
-}
-
-
-function rejectUser(userId){
-	var userid= $("#userId").text();
-	var rejectRequest={
-			"userId": parseInt(userid),
-			"status" : "Rejected",
-			"remark": $("#Reason").val()	
-	}
-	
-	$.ajax({
-		url : './adminApproval',
-		data : JSON.stringify(rejectRequest),
-		dataType : 'json',
-		contentType : 'application/json; charset=utf-8',
-		type : 'POST',
-		success : function(data) {
-			console.log("rejectRequest----->"+JSON.stringify(rejectRequest));
-			confirmRejectInformation();
-		},
-		error : function() {
-			alert("Failed");
-		}
-	});
-	
-	
-}
-
-function confirmRejectInformation(){
-	$('#rejectInformation').closeModal();
-	$('#confirmRejectInformation').openModal();
-}
 
 function exportButton(){
 	var startdate=$('#startDate').val(); 
