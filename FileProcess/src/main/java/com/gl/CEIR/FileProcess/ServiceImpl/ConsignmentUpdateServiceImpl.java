@@ -60,7 +60,6 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 			webActionDb.setState(WebActionStatus.PROCESSING.getCode());
 			webActionDbRepository.save(webActionDb);
 			
-			// Fetch the current Consignment and update it's status as Processing(1).
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(webActionDb.getTxnId());
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PROCESSING.getCode());
 			consignmentRepository.save(consignmentMgmt);

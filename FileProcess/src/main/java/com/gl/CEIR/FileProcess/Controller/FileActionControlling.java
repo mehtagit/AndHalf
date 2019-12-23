@@ -33,7 +33,6 @@ public class FileActionControlling implements Runnable {
 	public void run() {
 
 		// while(Boolean.TRUE) {
-			
 			try {
 				WebActionDb webActionDb	= fileActionServiceImpl.getFileActionDetails();
 
@@ -42,7 +41,6 @@ public class FileActionControlling implements Runnable {
 				if(Objects.nonNull(webActionDb)) {
 					webActionFactory.create(webActionDb).process(webActionDb);
 				}
-				
 				// Thread.sleep(1000/appConfig.tps);
 
 			} catch (Exception e) {

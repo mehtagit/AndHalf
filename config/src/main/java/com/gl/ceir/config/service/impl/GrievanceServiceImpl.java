@@ -5,9 +5,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -128,7 +126,6 @@ public class GrievanceServiceImpl{
 	}
 
 	public Grievance getByGrievanceTxnId(String txnId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -157,8 +154,6 @@ public class GrievanceServiceImpl{
 			
 			if(Objects.nonNull(grievance.getTxnId()) && !grievance.getTxnId().equals(""))
 				gsb.with(new SearchCriteria("txnId", grievance.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-			//List<Grievance> data = grievanceRepository.getGrievanceByUserId(grievance.getUserId());
-			//logger.info("Data to be fetch in db using jioin ="+data);
 			return grievanceRepository.findAll(gsb.build(), pageable).getContent();
 
 		} catch (Exception e) {
@@ -212,14 +207,12 @@ public class GrievanceServiceImpl{
 	public FileDetails getFilterGrievancesInFile(GrievanceFilterRequest grievance, Integer pageNo, Integer pageSize) {
 		String fileName = null;
 		Writer writer   = null;
-		//String[] columns = new String[]{"grievanceId","userId","userType","grievanceStatus","txnId","categoryId","fileName","createdOn","modifiedOn","remarks"};
 		GrievanceFileModel gfm = null;
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String filePath  = fileStorageProperties.getGrievanceDownloadDir();
 		StatefulBeanToCsvBuilder<GrievanceFileModel> builder = null;
 		StatefulBeanToCsv<GrievanceFileModel> csvWriter      = null;
-		List< GrievanceFileModel> fileRecords       = null;
-		//ColumnPositionMappingStrategy<Grievance> mapStrategy = null;
+		List<GrievanceFileModel> fileRecords       = null;
 		HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<Grievance> grievances = this.getFilterPaginationGrievances(grievance, pageNo, pageSize).getContent();
@@ -232,26 +225,6 @@ public class GrievanceServiceImpl{
 			}else {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Grievances.csv";
 			}
-			/*Map<String, String> columnMapping = new HashMap<String, String>();
-			columnMapping.put("grievanceId", "grievanceId");
-			columnMapping.put("userId", "userId");
-			columnMapping.put("userType", "userType");
-			columnMapping.put("grievanceStatus", "grievanceStatus");
-			columnMapping.put("txnId", "txnId");
-			columnMapping.put("categoryId", "categoryId");
-			columnMapping.put("fileName", "fileName");
-			columnMapping.put("createdOn", "createdOn");
-			columnMapping.put("modifiedOn", "modifiedOn");
-			columnMapping.put("remarks", "remarks");
-			//mapStrategy = new ColumnPositionMappingStrategy<Grievance>();
-			mapStrategy = new HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel>();
-			mapStrategy.setType( GrievanceFileModel.class );
-			mapStrategy.setColumnMapping(columnMapping);
-			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mapStrategy)
-                    .withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER)
-                    .build();*/
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<GrievanceFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
