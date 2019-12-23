@@ -41,7 +41,6 @@ public class WebActionDb implements Serializable {
 
 	private String data;
 
-
 	public Long getId() {
 		return id;
 	}

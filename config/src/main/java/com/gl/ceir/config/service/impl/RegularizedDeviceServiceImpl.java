@@ -84,7 +84,8 @@ public class RegularizedDeviceServiceImpl {
 		List<SystemConfigListDb> customTaxStatusList = null;
 		List<SystemConfigListDb> deviceIdTypeList = null;
 		List<SystemConfigListDb> deviceTypeList = null;
-
+		List<SystemConfigListDb> deviceStatusList = null;
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
@@ -115,6 +116,7 @@ public class RegularizedDeviceServiceImpl {
 			customTaxStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 			deviceIdTypeList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_ID_TYPE);
 			deviceTypeList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_TYPE);
+			deviceStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_STATUS);
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 
@@ -127,14 +129,21 @@ public class RegularizedDeviceServiceImpl {
 
 				for(SystemConfigListDb systemConfigListDb : deviceIdTypeList) {
 					if(regularizeDeviceDb.getDeviceIdType() == systemConfigListDb.getValue()) {
-						regularizeDeviceDb.setTaxPaidStatusInterp(systemConfigListDb.getInterp()); 
+						regularizeDeviceDb.setDeviceIdTypeInterp(systemConfigListDb.getInterp()); 
 						break;
 					} 
 				}
 
 				for(SystemConfigListDb systemConfigListDb : deviceTypeList) {
 					if(regularizeDeviceDb.getDeviceType() == systemConfigListDb.getValue()) {
-						regularizeDeviceDb.setTaxPaidStatusInterp(systemConfigListDb.getInterp()); 
+						regularizeDeviceDb.setDeviceTypeInterp(systemConfigListDb.getInterp()); 
+						break;
+					} 
+				}
+				
+				for(SystemConfigListDb systemConfigListDb : deviceStatusList) {
+					if(regularizeDeviceDb.getDeviceStatus() == systemConfigListDb.getValue()) {
+						regularizeDeviceDb.setDeviceStatusInterp(systemConfigListDb.getInterp()); 
 						break;
 					} 
 				}

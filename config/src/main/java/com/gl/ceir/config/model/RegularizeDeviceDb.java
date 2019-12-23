@@ -34,6 +34,8 @@ public class RegularizeDeviceDb implements Serializable {
 	
 	@NotNull
 	private Integer deviceStatus;
+	@Transient
+	private String deviceStatusInterp;
 	
 	@NotNull
 	private Integer taxPaidStatus;
@@ -268,6 +270,14 @@ public class RegularizeDeviceDb implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getDeviceStatusInterp() {
+		return deviceStatusInterp;
+	}
+
+	public void setDeviceStatusInterp(String deviceStatusInterp) {
+		this.deviceStatusInterp = deviceStatusInterp;
 	}
 
 	@Override

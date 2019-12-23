@@ -118,7 +118,7 @@ public class Validation {
 
 	public boolean deviceExistValidator(List<DeviceDb> deviceDb) {
 
-		for(DeviceDb deivceDetails :deviceDb ) {
+		for(DeviceDb deivceDetails : deviceDb ) {
 
 			if(deivceDetails.getRetalierTxnId() != null || deivceDetails.getDistributerTxnId() != null) {
 
