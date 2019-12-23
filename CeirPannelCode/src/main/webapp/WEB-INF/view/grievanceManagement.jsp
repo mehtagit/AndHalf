@@ -104,8 +104,8 @@
 	
 	<div id="replyModal" class="modal">
         <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-        <div class="modal-content">
-        <h6 class="modal-header">Reply</h6>
+             <h6 class="modal-header">Reply</h6>
+             <div class="modal-content">
             <div class="row">
                 <div class="col s12 m12">
                     <h6 style="font-weight: bold;">Grievance ID: <span id="grievanceIdToSave"></span></h6>
@@ -159,9 +159,9 @@
     </div>
     
     <div id="replyMsg" class="modal">
+    <h6 class="modal-header">Grievance Reply</h6>
     <div class="modal-content">
-        <h6 class="modal-header">Grievance Reply</h6>
-        <hr>
+        
         <div class="row">
             <h6 id="showReplyResponse">Your reply successfully sent to admin</h6>
         </div>
@@ -177,9 +177,8 @@
 
 <div id="manageAccount" class="modal">
 <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-<div class="modal-content">
 <h6 class="modal-header">Grievance history</h6>
-
+<div class="modal-content">
 <div id="live-chat">
 <div class="chat">
 <div class="chat-history">

@@ -158,6 +158,18 @@ public class DatatableHeaders implements HeaderInterface{
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 
+			
+
+			//operator view
+			else if("greyBlackList".equals(role)) {
+			String[] headers = {HeadersTitle.updatedOn,HeadersTitle.fileName,HeadersTitle.fileType,HeadersTitle.action};
+			for(String header : headers) {
+			dataTableInputs.add(new DatatableHeaderModel(header));
+			}
+			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};		

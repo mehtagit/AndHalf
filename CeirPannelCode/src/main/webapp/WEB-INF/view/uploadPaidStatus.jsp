@@ -535,7 +535,7 @@ input[type='search'] {
                  <h6 class="modal-header">View Device Information</h6>
         <div class="modal-content">
   
-            <div class="row" style="margin-top: -10px;">
+            <div class="row">
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
                         <input type="text" name="deviceType" id="viewdeviceType" placeholder="Mobile Phone/Feature phone"
@@ -556,19 +556,19 @@ input[type='search'] {
                     </div>
 
                     <div class="input-field col s12 m6 l6">
-                        <input type="text" name="countryBought" id="viewcountryBought" placeholder="ABC Country"
+                        <input type="text" name="countryBought" id="viewcountryBought" placeholder=""
                             maxlength="30" disabled style="height: 28px;">
                         <label for="countryBought">Country bought From</label>
                     </div>
 
                     <div class="input-field col s12 m6">
-                        <input type="text" id="viewserialNumber" name="serialNumber" placeholder="1234567890" maxlength="20"
+                        <input type="text" id="viewserialNumber" name="serialNumber" placeholder="" maxlength="20"
                             disabled style="height: 28px;">
                         <label for="serialNumber">Device Serial Number</label>
                     </div>
 
                     <div class="input-field col s12 m6 l6">
-                        <input type="text" name="taxStatus" id="viewtaxStatus" placeholder="Regularized" maxlength="30"
+                        <input type="text" name="taxStatus" id="viewtaxStatus" placeholder="" maxlength="30"
                             disabled style="height: 28px;">
                         <label for="taxStatus">Tax paid Status</label>
                     </div>
@@ -576,19 +576,19 @@ input[type='search'] {
 
                 <div class="row">
                     <div class="input-field col s12 m6 l6">
-                        <input type="text" name="deviceStatus" id="viewdeviceStatus" placeholder="New" maxlength="30"
+                        <input type="text" name="deviceStatus" id="viewdeviceStatus" placeholder="" maxlength="30"
                             disabled style="height: 28px;">
                         <label for="deviceStatus">Device Status</label>
                     </div>
 
                     <div class="input-field col s12 m6 l6">
-                        <input type="text" name="Price" id="viewPrice" placeholder="125$" maxlength="30" disabled
+                        <input type="text" name="Price" id="viewPrice" placeholder="" maxlength="30" disabled
                             style="height: 28px;">
                         <label for="Price">Price </label>
                     </div>
 
                     <div class="input-field col s12 m6 l6">
-                        <input type="text" name="currency" id="viewcurrency" placeholder="$" maxlength="30" disabled
+                        <input type="text" name="currency" id="viewcurrency" placeholder="" maxlength="30" disabled
                             style="height: 28px;">
                         <label for="currency">Currency</label>
                     </div>
@@ -601,28 +601,28 @@ input[type='search'] {
                     <div class="input-field col s12 m6">
                         <input type="text" id="viewIMEI1" name="IMEI1" pattern="[0-9]"
                             title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
-                            placeholder="1234567891234567" disabled style="height: 28px;">
+                            placeholder="" disabled style="height: 28px;">
                         <label for="IMEI1">1 </label>
                     </div>
 
                     <div class="input-field col s12 m6">
                         <input type="text" id="viewIMEI2" name="IMEI2" pattern="[0-9]"
                             title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
-                            placeholder="98765432198765432" disabled style="height: 28px;">
+                            placeholder="" disabled style="height: 28px;">
                         <label for="IMEI2">2</label>
                     </div>
 
                     <div class="input-field col s12 m6">
                         <input type="text" id="viewIMEI3" name="IMEI3" pattern="[0-9]"
-                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
-                            style="height: 28px;">
+                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"   placeholder=""
+                            style="height: 28px;" disabled>
                         <label for="IMEI3">3</label>
                     </div>
 
                     <div class="input-field col s12 m6">
                         <input type="text" id="viewIMEI4" name="IMEI4[]" pattern="[0-9]"
-                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
-                            style="height: 28px;">
+                            title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"   placeholder=""
+                            style="height: 28px;" disabled>
                         <label for="IMEI4">4</label>
                     </div>
 
@@ -639,28 +639,44 @@ input[type='search'] {
 <!-- Pay Tax Modal start   -->
 
     <div id="payTaxModal" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Pay Tax Information</h6>
+           <h6 class="modal-header">Pay Tax Information</h6>
+           <div class="modal-content">
+         
             <div class="row">
                 <h6>Do you confirm that tax has been paid?</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <button class="modal-close modal-trigger btn" data-target="payNowTaxPayment">Yes</button>
+                        <button class="btn" onclick="taxPaidStatus()">Yes</button>
                         <button class="modal-close btn" style="margin-left: 10px;">No</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Pay Tax Modal End -->
-<!-- 
-<div id="payNowTaxPayment" class="modal" style="z-index: 1005; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
-            <h6 class="modal-header">Add Device Information</h6>
+    
+    <div id="confirmDeleteMsg" class="modal">
+          <h6 class="modal-header">Delete</h6>
+          <div class="modal-content">
+          
             <div class="row">
-                <h6>The device status has been successfully updated</h6>
+                <h6 id="responseMsg"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="modal-close btn">ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="payNowTaxPayment" class="modal">
+          <h6 class="modal-header">Add Device Information</h6>
+          <div class="modal-content">
+          
+            <div class="row">
+                <h6 id="taxPaidMsg"></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -670,8 +686,8 @@ input[type='search'] {
                 </div>
             </div>
         </div>
-    </div> -->
-
+    </div>
+   
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"

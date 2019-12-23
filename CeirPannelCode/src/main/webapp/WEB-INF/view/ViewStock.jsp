@@ -113,8 +113,9 @@
 
 
 	<div id="successUpdateStockModal" class="modal">
+		<h6 class="modal-header" style="font-size: 16px;">Update Stock</h6>
 		<div class="modal-content">
-			<h6 class="modal-header" style="font-size: 16px;">Update Stock</h6>
+			
 			
 
 			<div class="row">
@@ -132,8 +133,9 @@
 	<!-- Modal End -->
 
 	<div id="editStockModal" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Edit Stock</h6>
+				<h6 class="modal-header">Edit Stock</h6>
+				<div class="modal-content">
+	
 			
 			<form action="" style="margin-top: 10px;">
 				<div class="row myRow">

@@ -1,6 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -54,18 +54,23 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
- 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 </head>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" data-selected-consignmentTxnId="${consignmentTxnId}" data-selected-consignmentStatus="${consignmentStatus}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}">
 
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
-	<div id="initialloader"></div>
+		<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -102,8 +107,8 @@
 	<!--viewModal Modal start   -->
 
 	<div id="viewModal" class="modal-form" style="overflow-y: hidden;">
-	<h6 class="modal-header">View Consignment</h6>
-		<div class="modal-content">
+		<h6 class="modal-header">View Consignment</h6>
+		<div class="modal-content" style="margin-top: 5px;">
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId"
@@ -113,9 +118,8 @@
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierName"
-						placeholder="Supplier/Manufacturer Name" readonly="readonly" />
-					<label for="Name" class="center-align">Supplier/Manufacturer
-						Name</label>
+						placeholder="Supplier/Manufacturer Name" readonly="readonly" /> <label
+						for="Name" class="center-align">Supplier/Manufacturer Name</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="consignmentNumber"
@@ -124,11 +128,11 @@
 				</div>
 
 				<div class="input-field col s12 m6" style="color: #c4c4c4;">
-					<p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
-						Arival Date</p>
-					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
+					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+						Arival Date</p> -->
 					<input type="date" id="expectedArrivaldate"
-						placeholder="Expected Arival Date" readonly="readonly"> <span
+						placeholder="Expected Arival Date" readonly="readonly" placeholder="">
+					<label for="Name" class="center-align">Expected Arival Date</label> <span
 						class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
@@ -142,11 +146,11 @@
 
 
 				<div class="input-field col s12 m6">
-					<p class="input-text-date" style="color: #c4c4c4;">Expected
-						Dispatch Date</p>
-					<!-- <label for="Name">Expected arrival Date</label> -->
+					<!-- <p class="input-text-date" style="color: #c4c4c4;">Expected
+						Dispatch Date</p> -->
 					<input type="date" id="expectedDispatcheDate"
-						placeholder="Expected Dispatch Date" readonly="readonly">
+						placeholder="Expected Dispatch Date" readonly="readonly" placeholder="">
+					<label for="Name">Expected Dispatch Date</label>
 					<span class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
@@ -170,23 +174,23 @@
 						class="center-align">Transaction ID</label>
 				</div>
 
-				
-				 <div class="input-field col s12 m6">
-                                                <input type="text" name="totalPrice" placeholder="" disabled="disabled"  id="viewtotalPrice" maxlength="7"
-                                                    required />
-                                                <label for="totalPrice" class="center-align">Total Price</label>
-                                            </div>
 
-                                            <div class="col s12 m6">
-                                                <label for="Currency">Currency</label>
-                                                <select id="viewcurrency" class="browser-default" disabled="disabled">
-                                                    <option value="" disabled selected>Currency</option>
-                                                 
-                                                </select>
-                                                <!-- <input type="text" id="viewcurrency" placeholder="" disabled="disabled"> -->
-                                                <input type="text" id="viewhideCurrency"  style="display: none;">
-                                              </div>
-                                              <div class="input-field col s12 m6">
+				<div class="input-field col s12 m6">
+					<input type="text" name="totalPrice" placeholder=""
+						disabled="disabled" id="viewtotalPrice" maxlength="7" required />
+					<label for="totalPrice" class="center-align">Total Price</label>
+				</div>
+
+				<div class="col s12 m6">
+					<label for="Currency">Currency</label> <select id="viewcurrency"
+						class="browser-default" disabled="disabled">
+						<option value="" disabled selected>Currency</option>
+
+					</select>
+					<!-- <input type="text" id="viewcurrency" placeholder="" disabled="disabled"> -->
+					<input type="text" id="viewhideCurrency" style="display: none;">
+				</div>
+				<div class="input-field col s12 m6">
 					<textarea id="remark" class="materialize-textarea"
 						style="height: 0px;" readonly="readonly"></textarea>
 					<label for="remark" class="">Remarks</label>
@@ -214,10 +218,6 @@
 	<div id="DeleteConsignment" class="modal">
 		<h6 class="modal-header">Delete Consignment</h6>
 		<div class="modal-content">
-
-			
-			
-
 			<div class="row">
 				<h6>
 					Are you sure you want to withdraw the consignment details for (<span
@@ -254,8 +254,8 @@
 	<div id="updateConsignment" class="modal">
 		<h6 class="modal-header">Update Consignment</h6>
 		<div class="modal-content">
-			
-			
+
+
 
 			<div class="row">
 				<h6 id="sucessMessage"></h6>
@@ -278,8 +278,8 @@
 		<h6 class="modal-header">Delete Consignment</h6>
 		<div class="modal-content">
 
-			
-			
+
+
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
 			<div class="row">
@@ -297,181 +297,211 @@
 	</div>
 
 
-<!-- -----------------------------------------------------------------Approved Model------------------------------------------------------------------------------ -->
+	<!-- -----------------------------------------------------------------Approved Model------------------------------------------------------------------------------ -->
 
 
-  <div id="ApproveConsignment" class="modal">
-        <h6 class="modal-header">Approve Consignment</h6>
-         <div class="modal-content">
- 
-      
-      <div class="row">
-        <h6>The tax against the consignment with <span id="displayname"></span> having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
-          successfully paid.</h6>
-      </div>
-      <div class="row">
-        <h6>Do you approve the consignment?</h6>
-        <input type="text" id="setApproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="approveSubmit(0)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div id="ApproveConsignment" class="modal">
+		<h6 class="modal-header">Approve Consignment</h6>
+		<div class="modal-content">
 
-<div id="confirmApproveConsignment" class="modal">
-        <h6 class="modal-header">Approve Consignment</h6>
-          <div class="modal-content">
 
-      
-      <div class="row">
-        <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a  href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-    <div id="RejectConsignment" class="modal">
-    <div class="modal-content">
-      <h6 class="modal-header">Reject Consignment</h6>
-      
-      <div class="row">
-        <h6>Do you really want to mark the consignment (<span id="disapprovedDisplayname"></span> having Transaction ID: <span id="disaproveTxnId"></span> as
-          rejected.</h6>
-            <input type="text" id="setDisapproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 m12" style="margin-left: -10px;">
-          <textarea id="dispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
-          <label for="textarea1">Remarks <span class="star">*</span></label>
-        </div>
-        <p>Required Field are marked with <span class="star">*</span></p>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="disapproveSubmit(1)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
+			<div class="row">
+				<h6>
+					The tax against the consignment with <span id="displayname"></span>
+					having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span>
+					) has been successfully paid.
+				</h6>
+			</div>
+			<div class="row">
+				<h6>Do you approve the consignment?</h6>
+				<input type="text" id="setApproveConsignmentTxnId"
+					style="display: none">
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="approveSubmit(0)">Yes</button>
+						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  
+	<div id="confirmApproveConsignment" class="modal">
+		<h6 class="modal-header">Approve Consignment</h6>
+		<div class="modal-content">
 
-  <div id="ApproveConsignment" class="modal">
-         <h6 class="modal-header">Approve Consignment</h6> <div class="modal-content">
 
-      
-      <div class="row">
-        <h6>The tax against the consignment with (Importer/Company name) having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has been
-          successfully paid.</h6>
-      </div>
-      <div class="row">
-        <h6>Do you approve the consignment?</h6>
-        <input type="text" id="setApproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="approveSubmit(0)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+			<div class="row">
+				<h6 id="approveSuccessMessage">The consignment has been
+					successfully approved.</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a href="${context}/Consignment/viewConsignment"
+							class="modal-close btn">ok</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div id="confirmApproveConsignment" class="modal">
-       <h6 class="modal-header">Approve Consignment</h6>
-         <div class="modal-content">
- 
-      
-      <div class="row">
-        <h6 id="approveSuccessMessage">The consignment has been successfully approved.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a  href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-    <div id="RejectConsignment" class="modal">
-       <h6 class="modal-header">Reject Consignment</h6>   <div class="modal-content">
 
-      
-      <div class="row">
-        <h6>Do you really want to mark the consignment (Importer/Company name) having Transaction ID: <span id="disaproveTxnId"></span> as
-          rejected.</h6>
-            <input type="text" id="setDisapproveConsignmentTxnId" style="display: none">
-      </div>
-      <div class="row">
-        <div class="input-field col s12 m12" style="margin-left: -10px;">
-          <textarea id="dispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
-          <label for="textarea1">Remarks <span class="star">*</span></label>
-        </div>
-        <p>Required Field are marked with <span class="star">*</span></p>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <button class="modal-close modal-trigger btn" onclick="disapproveSubmit(1)">Yes</button>
-            <button class="modal-close btn" style="margin-left: 10px;">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  
-  <div id="confirmRejectConsignment" class="modal">
-         <h6 class="modal-header">Reject Consignment</h6>
-         <div class="modal-content">
- 
-      
-      <div class="row">
-        <h6 id="disapproveSuccessMessage">The consignment has been marked as rejected.</h6>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 center">
-          <div class="input-field col s12 center">
-            <a href="${context}/Consignment/viewConsignment" class="modal-close btn">ok</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
+	<div id="RejectConsignment" class="modal">
+		<h6 class="modal-header">Reject Consignment</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6>
+					Do you really want to mark the consignment (<span
+						id="disapprovedDisplayname"></span> having Transaction ID: <span
+						id="disaproveTxnId"></span> as rejected.
+				</h6>
+				<input type="text" id="setDisapproveConsignmentTxnId"
+					style="display: none">
+			</div>
+			<div class="row">
+				<div class="input-field col s12 m12" style="margin-left: -10px;">
+					<textarea id="dispproveRemarks" class="materialize-textarea"
+						style="padding-left: 0;"></textarea>
+					<label for="textarea1">Remarks <span class="star">*</span></label>
+				</div>
+				<p>
+					Required Field are marked with <span class="star">*</span>
+				</p>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="disapproveSubmit(1)">Yes</button>
+						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<div id="ApproveConsignment" class="modal">
+		<h6 class="modal-header">Approve Consignment</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6>
+					The tax against the consignment with (Importer/Company name) having
+					Transaction ID : ( <span id="ApproveConsignmentTxnid"></span> ) has
+					been successfully paid.
+				</h6>
+			</div>
+			<div class="row">
+				<h6>Do you approve the consignment?</h6>
+				<input type="text" id="setApproveConsignmentTxnId"
+					style="display: none">
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="approveSubmit(0)">Yes</button>
+						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="confirmApproveConsignment" class="modal">
+		<h6 class="modal-header">Approve Consignment</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6 id="approveSuccessMessage">The consignment has been
+					successfully approved.</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a href="${context}/Consignment/viewConsignment"
+							class="modal-close btn">ok</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="RejectConsignment" class="modal">
+		<h6 class="modal-header">Reject Consignment</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6>
+					Do you really want to mark the consignment (Importer/Company name)
+					having Transaction ID: <span id="disaproveTxnId"></span> as
+					rejected.
+				</h6>
+				<input type="text" id="setDisapproveConsignmentTxnId"
+					style="display: none">
+			</div>
+			<div class="row">
+				<div class="input-field col s12 m12" style="margin-left: -10px;">
+					<textarea id="dispproveRemarks" class="materialize-textarea"
+						style="padding-left: 0;"></textarea>
+					<label for="textarea1">Remarks <span class="star">*</span></label>
+				</div>
+				<p>
+					Required Field are marked with <span class="star">*</span>
+				</p>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="disapproveSubmit(1)">Yes</button>
+						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="confirmRejectConsignment" class="modal">
+		<h6 class="modal-header">Reject Consignment</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6 id="disapproveSuccessMessage">The consignment has been
+					marked as rejected.</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a href="${context}/Consignment/viewConsignment"
+							class="modal-close btn">ok</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Update Modal Start -->
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
-					<h6 class="modal-header">Edit Consignment</h6>
-					<div class="modal-content">
-
-
-			
-
-
-			<div class="row myRow">
+		<h6 class="modal-header">Edit Consignment</h6>
+		<div class="modal-content">
+	<div class="row myRow" style="margin-top: 5px;">
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierId" id="supplierIdEdit"
 						pattern="[A-Za-z0-9]{0,15}"
@@ -502,11 +532,11 @@
 					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
 					<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
 						required="required" placeholder="Expected Dispatch Date "
-						type="text" class='form-control datepick' autocomplete='off'> <label for="dispatchDate"
-						class="center-align">Expected Dispatch Date <span
-						class="star">*</span></label> <span class="input-group-addon"
-						style="color: #ff4081"><i class="fa fa-calendar"
-						aria-hidden="true"></i></span>
+						type="text" class='form-control datepick' autocomplete='off'>
+					<label for="dispatchDate" class="center-align">Expected
+						Dispatch Date <span class="star">*</span>
+					</label> <span class="input-group-addon" style="color: #ff4081"><i
+						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
 				<div class="input-field col s12 m6">
 					<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
@@ -521,11 +551,11 @@
 					<!-- <label for="Name">Expected arrival Date</label> -->
 					<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
 						required="required" placeholder="Expected Arrival  Date"
-						type="text" class='form-control datepick' autocomplete='off'> <label for="dispatchDate"
-						class="center-align">Expected Arrival Date <span
-						class="star">*</span></label> <span class="input-group-addon"
-						style="color: #ff4081"><i class="fa fa-calendar"
-						aria-hidden="true"></i></span>
+						type="text" class='form-control datepick' autocomplete='off'>
+					<label for="dispatchDate" class="center-align">Expected
+						Arrival Date <span class="star">*</span>
+					</label> <span class="input-group-addon" style="color: #ff4081"><i
+						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
 				<div class="input-field col s12 m6">
 					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
@@ -554,23 +584,22 @@
 					<label for="TransactionId" class="center-align">Transaction
 						ID</label>
 				</div>
-				
-				
-                                            <div class="input-field col s12 m6">
-                                                <input type="text" name="totalPrice" id="totalPrice" maxlength="7"
-                                                    required placeholder="" />
-                                                <label for="totalPrice" class="center-align">Total Price</label>
-                                            </div>
 
-                                            <div class="col s12 m6">
-                                                <label for="Currency">Currency</label>
-                                                <select id="currency" class="browser-default">
-                                                    <option value="" disabled selected>Currency</option>
-                                                   
-                                                </select>
-                                                  <input type="text" id="hideCurrency"  style="display: none;">
-                                            </div>
-			
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
+						required placeholder="" /> <label for="totalPrice"
+						class="center-align">Total Price</label>
+				</div>
+
+				<div class="col s12 m6">
+					<label for="Currency">Currency</label> <select id="currency"
+						class="browser-default">
+						<option value="" disabled selected>Currency</option>
+
+					</select> <input type="text" id="hideCurrency" style="display: none;">
+				</div>
+
 				<div class="file-field input-field col s12 m6"
 					style="margin-top: 5px;">
 					<h6 class="file-upload-heading" style="margin-top: -5px;">
@@ -586,16 +615,18 @@
 					</div>
 				</div>
 			</div>
+			
 
-			<p>
-				<a href="./sampleFileDownload/filetype=sample">Download Sample Format</a>
-			</p>
+
+			<div class="row" style="padding-bottom: 15px">
+			<div class="col s12 m12" >
+			<a href="./sampleFileDownload/filetype=sample">Download Sample
+					Format</a></br>
+			
 
 			<span> Required Field are marked with <span class="star">*</span>
 			</span>
-
-
-			<div class="row">
+			</div>
 				<div class="input-field col s12 center">
 					<button class="waves-effect waves-light modal-trigger btn"
 						type="button" onclick="editRegisterConsignment()">Update</button>
@@ -605,41 +636,41 @@
 			</div>
 		</div>
 	</div>
-	
-	   <div id="markAsMultipleStolen" class="modal">
-              <h6 class="modal-header">Mark As Stolen</h6>
-               <div class="modal-content">
 
-     
-            
+	<div id="markAsMultipleStolen" class="modal">
+		<h6 class="modal-header">Mark As Stolen</h6>
+		<div class="modal-content">
 
-            <div class="row">
-                <h6>Do you want to mark the following transaction  as stolen?</h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a onclick="openMulipleStolenPopUp()" class="modal-close modal-trigger btn">Yes</a>
-                    <button class="modal-close btn" style="margin-left: 10px;">no</button>
-                </div>
-            </div>
-        </div>
-    </div>
-     <div id="markAsStolenDone" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Mark As Stolen</h6>
-            
-            <div class="row">
-                <h6>To be the following Transaction ID's marked as stolen has been recieved successfully.
-                </h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
-                    <a onclick="redirectToViewPage()" class="btn">ok</a>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
+
+			<div class="row">
+				<h6>Do you want to mark the following transaction as stolen?</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="openMulipleStolenPopUp()"
+						class="modal-close modal-trigger btn">Yes</a>
+					<button class="modal-close btn" style="margin-left: 10px;">no</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="markAsStolenDone" class="modal">
+		<h6 class="modal-header">Mark As Stolen</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6>To be the following Transaction ID's marked as stolen has
+					been recieved successfully.</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
+					<a onclick="redirectToViewPage()" class="btn">ok</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -648,7 +679,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-	
+
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -671,6 +702,6 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-		
+
 </body>
 </html>

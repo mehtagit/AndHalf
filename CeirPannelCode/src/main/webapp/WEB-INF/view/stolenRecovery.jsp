@@ -465,7 +465,6 @@
 <h6 class="modal-header">Report Stolen/Recovery</h6>
 			<div class="col s12 m12 modal-content">
 				
-				<hr>
 				<div class="row">
 					<form action="#">
 						<h5 class="center">

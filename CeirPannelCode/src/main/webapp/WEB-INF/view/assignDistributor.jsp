@@ -293,9 +293,10 @@ style="font-size: 20px; color: red;" title="delete"></i></a>
     <div id="modal1" class="modal">
         <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
-        <div class="modal-content">
-
             <h6>Assign Distributor</h6>
+            <div class="modal-content">
+
+        
             <hr>
             <!-- <h4 class="header2 pb-2">User Info</h4> -->
 

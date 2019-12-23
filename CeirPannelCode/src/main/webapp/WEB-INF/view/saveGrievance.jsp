@@ -143,8 +143,9 @@
 
 
 <div id="submitGrievance" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Submit Grievance Report</h6><hr>
+           <h6 class="modal-header">Submit Grievance Report</h6>
+           <div class="modal-content">
+         
 
             <div class="row">
                 <h6 id="grievanceSuccessId">Your grievance report has been successfully submitted. Your Grievance Id is ( <span id="greivanceId"></span> )</h6>

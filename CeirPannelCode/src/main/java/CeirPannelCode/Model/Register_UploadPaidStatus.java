@@ -12,12 +12,12 @@ private String lastName;
 private String passportNo; 
 private String email;
 private String phoneNo;
-
 private String propertyLocation;
 private String street;
 private String locality;
 private String province;
 private String country;
+private List<UplodPaidStatusModel> regularizeDeviceDbs;
 
 @Override
 public String toString() {
@@ -123,6 +123,6 @@ public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDb
 	this.regularizeDeviceDbs = regularizeDeviceDbs;
 }
 
-private List<UplodPaidStatusModel> regularizeDeviceDbs;
+
 
 }

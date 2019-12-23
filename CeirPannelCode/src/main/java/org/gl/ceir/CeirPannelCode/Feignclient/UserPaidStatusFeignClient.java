@@ -6,6 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,8 @@ public interface UserPaidStatusFeignClient {
 	@PostMapping("/end-user-device-info") 
 	public GenricResponse uploadPaidUser(@RequestBody Register_UploadPaidStatus model) ;
 	
+	@PutMapping("/update-tax-paid-status/end-user-device-info")
+	public GenricResponse tax(@RequestBody Register_UploadPaidStatus model);
 	
 }
 

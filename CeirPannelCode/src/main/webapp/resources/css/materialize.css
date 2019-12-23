@@ -8970,8 +8970,8 @@ a.waves-effect .waves-ripple {
   right: 0;
   top : 50px;
   background-color: #fafafa;
-  padding: 24px;
-  padding-right: 24px !important;
+/*   padding: 24px;
+  padding-right: 24px !important; */
   max-height: 83%;
   width: 66%;
   margin: auto;
@@ -9416,7 +9416,7 @@ input[type=search]:disabled,
 input[type=search][readonly="readonly"],
 textarea.materialize-textarea:disabled,
 textarea.materialize-textarea[readonly="readonly"] {
-  color: rgba(0, 0, 0, 0.26);
+  color: #444;
   border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
 }
 
@@ -9442,7 +9442,7 @@ input[type=search]:disabled+label,
 input[type=search][readonly="readonly"]+label,
 textarea.materialize-textarea:disabled+label,
 textarea.materialize-textarea[readonly="readonly"]+label {
-  color: rgba(0, 0, 0, 0.26);
+  color: #444;
 }
 
 input[type=text]:focus:not([readonly]),
