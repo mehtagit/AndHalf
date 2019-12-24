@@ -369,7 +369,7 @@ public class StockServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId ) {
+	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -380,13 +380,17 @@ public class StockServiceImpl {
 					status.add(stateDb.getState());
 				}
 			}
-			return stockManagementRepository.getStockCountAndQuantity( userId, status );
+			if( !userType.equalsIgnoreCase("ceiradmin") )
+				return stockManagementRepository.getStockCountAndQuantity( userId, status );
+			else
+				return stockManagementRepository.getStockCountAndQuantity( status );
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
+
 
 	@Transactional
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {

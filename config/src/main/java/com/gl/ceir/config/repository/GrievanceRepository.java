@@ -23,4 +23,8 @@ public interface GrievanceRepository extends JpaRepository<Grievance, Long>, Jpa
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(g.id) as count) from Grievance g "
 			+ "where g.userId =:userId and g.grievanceStatus in (:grievanceStatus)")
 	public ResponseCountAndQuantity getGrievanceCount( @Param("userId") Integer userId, @Param("grievanceStatus") List< Integer > grievanceStatus);
+	
+	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(g.id) as count) from Grievance g "
+			+ "where g.grievanceStatus in (:grievanceStatus)")
+	public ResponseCountAndQuantity getGrievanceCount( @Param("grievanceStatus") List< Integer > grievanceStatus);
 }

@@ -16,8 +16,10 @@ import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.service.impl.ConsignmentServiceImpl;
 import com.gl.ceir.config.service.impl.DashboardConfServiceImpl;
 import com.gl.ceir.config.service.impl.GrievanceServiceImpl;
+import com.gl.ceir.config.service.impl.ListFileDetailsImpl;
 import com.gl.ceir.config.service.impl.StockServiceImpl;
 import com.gl.ceir.config.service.impl.StolenAndRecoveryServiceImpl;
+import com.gl.ceir.config.service.impl.TypeApproveServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -35,13 +37,18 @@ public class DashboardController {
 	StolenAndRecoveryServiceImpl stolenAndRecoveryServiceImpl;
 	@Autowired
 	DashboardConfServiceImpl dashboardConfServiceImpl;
+	@Autowired
+	ListFileDetailsImpl listFileDetailsImpl;
+	@Autowired
+	TypeApproveServiceImpl typeApproveServiceImpl;
 	
 	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
 	@RequestMapping(path = "/grievance/count", method = RequestMethod.GET)
 	public MappingJacksonValue getgrievanceCount(@RequestParam(value = "userId") Integer userId,
 			@RequestParam(value = "userTypeId") Integer userTypeId,
+			@RequestParam(value = "userType") String userType,
 			@RequestParam(value = "featureId") Integer featureId) {
-		ResponseCountAndQuantity response = grievanceServiceImpl.getGrievanceCount(userId, userTypeId, featureId);
+		ResponseCountAndQuantity response = grievanceServiceImpl.getGrievanceCount(userId, userTypeId, featureId, userType);
 		return new MappingJacksonValue(response);
 	}
 	
@@ -49,8 +56,9 @@ public class DashboardController {
 	@RequestMapping(path = "/consignment/countAndQuantity", method = RequestMethod.GET)
 	public MappingJacksonValue getConsignmentCountAndQuantity( @RequestParam(value = "userId") Integer userId,
 			@RequestParam(value = "userTypeId") Integer userTypeId,
+			@RequestParam(value = "userType") String userType,
 			@RequestParam(value = "featureId") Integer featureId ) {
-		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(userId, userTypeId, featureId);
+		ResponseCountAndQuantity response = consignmentServiceImpl.getConsignmentCountAndQuantity(userId, userTypeId, featureId, userType);
 		return new MappingJacksonValue(response);
 	}
 	
@@ -58,8 +66,9 @@ public class DashboardController {
 	@RequestMapping(path = "/stock/countAndQuantity", method = RequestMethod.GET)
 	public MappingJacksonValue getStockCountAndQuantity( @RequestParam(value = "userId") long userId,
 			@RequestParam(value = "userTypeId") Integer userTypeId,
+			@RequestParam(value = "userType") String userType,
 			@RequestParam(value = "featureId") Integer featureId ) {
-		ResponseCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity( userId, userTypeId, featureId );
+		ResponseCountAndQuantity response = stackholderServiceImpl.getStockCountAndQuantity( userId, userTypeId, featureId, userType );
 		return new MappingJacksonValue(response);
 	}
 	
@@ -68,8 +77,31 @@ public class DashboardController {
 	public MappingJacksonValue getStolenAndRecoveryCount( @RequestParam(value = "userId") long userId,
 			@RequestParam(value = "userTypeId") Integer userTypeId,
 			@RequestParam(value = "featureId") Integer featureId,
+			@RequestParam(value = "userType") String userType,
 			@RequestParam(value = "requestType") String requestType) {
-		ResponseCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount( userId, userTypeId, featureId, requestType);
+		ResponseCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount( userId, userTypeId, featureId, requestType, userType);
+		return new MappingJacksonValue(response);
+	}
+	
+	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
+	@RequestMapping(path = "/filedump/count", method = RequestMethod.GET)
+	public MappingJacksonValue getOperatorCount( @RequestParam(value = "userId") Integer userId,
+			@RequestParam(value = "userTypeId") Integer userTypeId,
+			@RequestParam(value = "featureId") Integer featureId,
+			@RequestParam(value = "userType") String userType,
+			@RequestParam(value = "serviceDump") Integer serviceDump) {
+		ResponseCountAndQuantity response = listFileDetailsImpl.getFileDumpCount(serviceDump);
+		return new MappingJacksonValue(response);
+	}
+	
+	@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
+	@RequestMapping(path = "/TypeApproved/count", method = RequestMethod.GET)
+	public MappingJacksonValue getTACCount( @RequestParam(value = "userId") Integer userId,
+			@RequestParam(value = "userTypeId") Integer userTypeId,
+			@RequestParam(value = "featureId") Integer featureId,
+			@RequestParam(value = "userType") String userType,
+			@RequestParam(value = "approveStatus") Integer approveStatus) {
+		ResponseCountAndQuantity response = typeApproveServiceImpl.getTACCount(userId, approveStatus);
 		return new MappingJacksonValue(response);
 	}
 	

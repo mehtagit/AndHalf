@@ -427,7 +427,7 @@ public class GrievanceServiceImpl{
 
 	}
 	
-	public ResponseCountAndQuantity getGrievanceCount( Integer userId, Integer userTypeId, Integer featureId ) {
+	public ResponseCountAndQuantity getGrievanceCount( Integer userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -439,10 +439,12 @@ public class GrievanceServiceImpl{
 						status.add(stateDb.getState());
 				}
 			}
-			return grievanceRepository.getGrievanceCount( userId, status);
+			if( !userType.equalsIgnoreCase("ceiradmin"))
+				return grievanceRepository.getGrievanceCount( userId, status);
+			else
+				return grievanceRepository.getGrievanceCount( status );
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
-			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			logger.error(e.getMessage(), e);
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}

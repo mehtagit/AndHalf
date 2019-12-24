@@ -473,7 +473,7 @@ public class StolenAndRecoveryServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType) {
+	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -484,9 +484,12 @@ public class StolenAndRecoveryServiceImpl {
 					status.add(stateDb.getState());
 				}
 			}
-			return stolenAndRecoveryRepository.getStolenandRecoveryCount( userId, status, requestType);
+			if( !userType.equalsIgnoreCase("ceiradmin"))
+				return stolenAndRecoveryRepository.getStolenandRecoveryCount( userId, status, Integer.valueOf(requestType));
+			else
+				return stolenAndRecoveryRepository.getStolenandRecoveryCount( status, Integer.valueOf(requestType));
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}

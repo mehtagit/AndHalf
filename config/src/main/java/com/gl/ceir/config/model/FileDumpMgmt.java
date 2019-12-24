@@ -7,36 +7,50 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gl.ceir.config.model.constants.FileDumpType;
+import com.gl.ceir.config.model.constants.FileType;;
 
 @Entity
 public class FileDumpMgmt  implements Serializable{
+
+	
 	
 	private static final long serialVersionUID = 1L;
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JsonIgnore
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 
 	@JsonIgnore
 	@UpdateTimestamp
 	private Date modifiedOn;
 	
-	private String FileName;
+	private String dumpType;
 	
-	private String fileType;
+	@Transient
+	private String dumpTypeInterp;
 	
-	private String serviceDump;
+	@Transient
+	private String fileTypeInterp;
+	
+	private Integer serviceDump;
+	
+	private String fileName;
+	
+	private Integer fileType;
 
 	public Long getId() {
 		return id;
@@ -61,38 +75,63 @@ public class FileDumpMgmt  implements Serializable{
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	
-	public String getFileName() {
-		return FileName;
+
+	public String getDumpType() {
+		return dumpType;
 	}
 
-	public void setFileName(String fileName) {
-		FileName = fileName;
+	public void setDumpType(String dumpType) {
+		this.dumpType = dumpType;
 	}
 
-	public String getFileType() {
-		return fileType;
-	}
-
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public String getServiceDump() {
+	public Integer getServiceDump() {
 		return serviceDump;
 	}
 
-	public void setServiceDump(String serviceDump) {
+	public void setServiceDump(Integer serviceDump) {
 		this.serviceDump = serviceDump;
 	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public Integer getFileType() {
+		return fileType;
+	}
+
+	public void setFileType(Integer fileType) {
+		this.fileType = fileType;
+	}
+
+	public String getFileTypeInterp() {
+		return fileTypeInterp;
+	}
+
+	public void setFileTypeInterp(String fileTypeInterp) {
+		this.fileTypeInterp = fileTypeInterp;
+	}
 	
-	
-	
-	
-	
+	public String getDumpTypeInterp() {
+		return dumpTypeInterp;
+	}
+
+	public void setDumpTypeInterp(String dumpTypeInterp) {
+		this.dumpTypeInterp = dumpTypeInterp;
+	}
+
+	@PostLoad
+    public void postLoad() {
+        if(fileTypeInterp == null || fileTypeInterp.isEmpty()) {
+        	this.fileTypeInterp = FileType.getActionNames( this.fileType ).toString();
+        }
+        if(dumpTypeInterp == null || dumpTypeInterp.isEmpty()) {
+        	this.dumpTypeInterp = FileDumpType.getActionNames( this.serviceDump ).toString();
+        }
+    }
 	
 }

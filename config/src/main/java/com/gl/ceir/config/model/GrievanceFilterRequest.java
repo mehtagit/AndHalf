@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class GrievanceFilterRequest {
 	public Integer userId;
+	public String userType;
 	public String startDate;
 	public String endDate;
 	public String txnId;
@@ -52,6 +53,12 @@ public class GrievanceFilterRequest {
 	}
 	public void setSearchString(String searchString) {
 		this.searchString = searchString;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	@Override
 	public String toString() {

@@ -536,7 +536,7 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer userTypeId, Integer featureId ) {
+	public ResponseCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -547,13 +547,17 @@ public class ConsignmentServiceImpl {
 					status.add(stateDb.getState());
 				}
 			}
-			return consignmentRepository.getConsignmentCountAndQuantity( userId, status);
+			if( !userType.equalsIgnoreCase("ceiradmin"))
+				return consignmentRepository.getConsignmentCountAndQuantity( userId, status);
+			else
+				return consignmentRepository.getConsignmentCountAndQuantity( status);
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
+
 
 
 }
