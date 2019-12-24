@@ -507,11 +507,12 @@ input[type='search'] {
 
 	<!-- Modal start   -->
 
-	<div id="viewBlockDevices" class="modal">
-		<h6 class="modal-header">View Block Devices</h6>
+	<div id="viewBlockDevices" class="modal" style="width: 75%;">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header">View Block Devices</h6>
+		
 		<div class="modal-content">
 
 			<div class="row">

@@ -5,14 +5,14 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 var featureId =12;
 function hide() {
 	var In = $('#Search').val();
-	
+	if(In.length > 0 && In != ''){	
 	$.ajax({
 		url : "./paid-status/"+In,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			//console.log(data.txnId)
+			// console.log(data.txnId)
 			$('#btnLink').css({"display":"block"});
 			if (data.errorCode == 1) {
 				$("#user123").css("display", "none");
@@ -36,9 +36,10 @@ function hide() {
 	sessionStorage.setItem("nationalId", In);
 	pageRendering();
 	filter(); 
-
-
+	}
+	
 }
+
 
 
 
@@ -589,7 +590,6 @@ console.log("error in ajax")
 }
 });
 return false;
-
 }
 
 
@@ -608,127 +608,74 @@ populateCountries
 
 
 function taxPaidStatus(){
-	 var formData= new FormData();
-	 
-	 
-		var nationalID=$('#nationalID').val();
-		var csvUploadFile=$('#csvUploadFile').val();
-		var firstName=$('#firstName').val();
-		var middleName=$('#middleName').val();
-		var lastName=$('#lastName').val();
-		var address=$('#address').val();
-		var streetNumber=$('#streetNumber').val();
-		var locality=$('#locality').val();
-		var country=$('#country').val();
-		var state=$('#state').val();
-		var email=$('#email').val();
-		var phone=$('#phone').val();
-		var state=$('#state').val();
-		
-		
-		 var fieldId=1;	
-		 var regularizeDeviceDbs =[];
-		 $('.deviceInformation').each(function() {	
-			 var deviceType1=$('#deviceType'+fieldId).val();
-				var serialNumber1=$('#serialNumber'+fieldId).val();
-				var deviceIdType1=$('#deviceIdType'+fieldId).val();
-				var taxStatus1=$('#taxStatus'+fieldId).val();
-				var deviceStatus1=$('#deviceStatus'+fieldId).val();
-				var Price1=$('#Price'+fieldId).val();
-				var Currency1=$('#Currency'+fieldId).val();
-				var IMEI1=$('#IMEIA'+fieldId).val();
-				var IMEI2=$('#IMEIB'+fieldId).val();
-				var IMEI3=$('#IMEIC'+fieldId).val();
-				var IMEI4=$('#IMEID'+fieldId).val();
-				var deviceCountry=$('#country'+fieldId).val();
-				var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
-				
-				console.log("serialNumber1="+serialNumber1+" deviceIdType1="+deviceIdType1+" taxStatus1="+taxStatus1+" deviceStatus1="+deviceStatus1+" Price1="+Price1+" Currency1="+Currency1)
-			var deviceInfo=
-			{
-				      "country": deviceCountry,
-				      "currency": parseInt(Currency1),
-				      "deviceIdType": parseInt(deviceType1),
-				      "deviceSerialNumber": serialNumber1,
-				      "deviceStatus": parseInt(deviceStatus1),
-				      "deviceType": parseInt(deviceType1),
-				      "firstImei": parseInt(IMEI1),
-				      "secondImei": parseInt(IMEI2),
-				      "thirdImei": parseInt(IMEI3),
-				      "fourthImei": parseInt(IMEI4),
-				      "multiSimStatus": deviceStatus1,
-				      "price": parseFloat(Price1),
-				      "taxPaidStatus": parseInt(taxStatus1),
-				      "nid":nationalID,
-				      "txnId":""
-			
-			}
-			regularizeDeviceDbs.push(deviceInfo);  
-			
-			// console.log(formData.values()); 
-			//console.log(JSON.stringify(formData));
-		    
-			//alert(deviceType1,serialNumber1,deviceIdType1,taxStatus1,deviceStatus1,Price1,Currency1,IMEI1,IMEI2,IMEI3,IMEI4,multipleSimStatus1)
-			fieldId++;
-			
-			
-		});
-		 
-		 
-		
-		 var request={
-				 "country": country,
-				 "email": email,
-				  "firstName": firstName,
-				  "lastName": lastName,
-				  "locality": locality,
-				  "middleName": middleName,
-				  "nid": nationalID,
-				  "phoneNo": phone,
-				  "propertyLocation": address,
-				  "province": state,
-				  "street": streetNumber,
-				  "regularizeDeviceDbs":regularizeDeviceDbs,
-				  
-				}
-		 formData.append('file', $('#csvUploadFile')[0].files[0]);
-		 formData.append("request",JSON.stringify(request));
-		 
-		 for (var value of formData.values()) {
-			   console.log(value); 
-			}
-		$.ajax({
-			url: './uploadPaidStatusForm',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data, textStatus, jqXHR) {
-				console.log("in suucess method");
-			
-				console.log(data);
-
-				// $('#updateConsignment').modal();
-				if(data.errorCode==200){
-
-				//	$('#sucessMessage').text('');
-					   $('#regularisedDevice').openModal();
-					$('#dynamicTxnId').text(data.txnId);
-				}
-				else{
-					//$('#sucessMessage').text('');
-					   $('#regularisedDevice').openModal();
-					$('#dynamicTxnId').text(data.txnId);
-				}
+	var request={
+			"country":null,
+			"createdOn": null,
+			"currency": null,
+			"currencyInterp": null,
+			"deviceIdType": null,
+			"deviceIdTypeInterp": null,
+			"deviceSerialNumber": null,
+			"deviceStatus": null,
+			"deviceType": null,
+			"deviceTypeInterp": null,
+			"endUserDB": {
+				"country": null,
+				"createdOn": null,
+				"email": null,
+				"firstName": null,
+				"id": null,
+				"lastName": null,
+				"locality": null,
+				"middleName": null,
+				"modifiedOn": null,
+				"nid": null,
+				"phoneNo": null,
+				"propertyLocation": null,
+				"province": null,
+				"regularizeDeviceDbs": [
+					null
+					],
+					"street": null
 			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
-			
-			}
-		});
-		return false;
+			"firstImei": parseInt(window.taxIMEI),
+			"fourthImei": 0,
+			"id": 0,
+			"modifiedOn": null,
+			"multiSimStatus": null,
+			"nid": $('#Search').val(),
+			"price": null,
+			"secondImei": null,
+			"taxPaidStatus":0,
+			"taxPaidStatusInterp": null,
+			"thirdImei": null,
+			"txnId": null
+	}
+	$.ajax({
+		url: './tax-paid/status',
+		type: 'PUT',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		'data' : JSON.stringify(request),
+		success: function (data, textStatus, jqXHR) {
+			console.log("success"+JSON.stringify(data))
 
-		 }
+			$('#payTaxModal').closeModal();
+			$('#payNowTaxPayment').openModal();
+			if(data.errorCode==200){
+				$('#taxPaidMsg').text(data.message);
+
+			}
+			else{
+				$('#taxPaidMsg').text(data.message);
+			}
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
+}
 	 populateCountries
 	(   
 			"country1"
