@@ -239,9 +239,9 @@ textarea {
                                             </div>
 
                                             <div class="input-field col s12 m6">
-                                                <input type="text" id="editRequestDate" class="datepicker" name="requestDate"
-                                                    pattern="[]" title="" maxlength="20" placeholder="12/10/2019" />
-                                                <label for="bdate2">Request Date <span class="star">*</span></label>
+                                              <input type="text" id="editRequestDate" required="required"
+											class="form-control dateClass" name="requestDate" 
+											title="" placeholder="" autocomplete="off">                                               <label for="bdate2">Request Date <span class="star">*</span></label>
                                             </div>
 
                                           
@@ -277,9 +277,12 @@ textarea {
 
                                         <div class="row">
                                             <div class="input-field col s12 m6">
-                                                <input type="text" id="editApproveRejectionDate" class="datepicker"
-                                                    name="approveRejectionDate" pattern="[]" title="" maxlength="20"
-                                                    placeholder="5/12/2019" />
+                                              
+                                                    
+                                                               <input type="text" id="editApproveRejectionDate" required="required"
+											class="form-control dateClass" name="requestDate" 
+											title="" autocomplete="off" placeholder=""> 
+											
                                                 <label for="bdate2">Approve Rejection Date <span
                                                         class="star">*</span></label>
                                             </div>

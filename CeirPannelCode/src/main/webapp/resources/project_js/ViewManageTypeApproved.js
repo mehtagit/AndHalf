@@ -123,7 +123,7 @@ function pageRendering(){
 				}
 			}
 	
-			$('.datepicker').datepicker({
+			$('.dateClass').datepicker({
 			    dateFormat: "yy-mm-dd"
 			    });
 			
