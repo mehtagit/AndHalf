@@ -68,7 +68,7 @@ public interface GrievanceFeignClient {
 	
 	
 	@RequestMapping(value="/filedump/downloadFile" ,method=RequestMethod.GET) 
-	public @ResponseBody String downloadOperatorFeign(@RequestParam("fileName") String fileName);
+	public @ResponseBody Object downloadOperatorFeign(@RequestParam("fileName") String fileName);
 	
 
 }

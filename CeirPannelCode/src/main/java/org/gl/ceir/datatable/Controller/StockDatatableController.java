@@ -77,8 +77,8 @@ public class StockDatatableController {
 			}
 			else {
 
-				if( ("Importer".equals(userType) || "Retailer".equals(userType) || "Distributor".equals(userType)) && "viaStock".equals(sourceType)){	
-					log.info("userType in stock controller 1--------"+userType);
+				if( ("Importer".equals(userType) || "Retailer".equals(userType) || "Distributor".equals(userType) || "Custom".equals(userType)) && "viaStock".equals(sourceType)){	
+					log.info("userType in stock controller--------"+userType+"-----sourceType--->"+sourceType);
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String checboxes = "<input type=checkbox class=filled-in>";

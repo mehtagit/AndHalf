@@ -225,11 +225,11 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 function filter(){
 	if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType !="viaStock" ){
 	Datatable('headers?type=stockHeaders','stockData');
-	}else if(currentRoleType=="Custom"){
+	}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
 	Datatable('./headers?type=customStockHeaders','stockData')
 	}else if(currentRoleType=="CEIRAdmin"){
 	Datatable('./headers?type=adminStockHeaders','stockData')
-	}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType =="viaStock"){
+	}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Custom") && sourceType =="viaStock"){
 	Datatable('./headers?type=stockcheckHeaders','stockData?sourceType=viaStock')
 	}
 	localStorage.removeItem('sourceType');

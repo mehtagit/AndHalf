@@ -68,7 +68,7 @@ public class operatorController {
 			HttpSession session)
 	{
 		log.info("startDate=="+startDate+ " endDate ="+endDate+"userTypeId="+userTypeId+"serviceDump="+serviceDump+"fileType="+fileType);
-		int userId= (int) session.getAttribute("userid");
+		int userId= (int) session.getAttribute("userid"); 
 		int file=1;
 		String userType=(String) session.getAttribute("usertype"); 	
 		FileExportResponse fileExportResponse;
@@ -92,12 +92,16 @@ public class operatorController {
 	//************************************************* download file *************************************************************** 
 	@RequestMapping(value="/dowloadFiles/{fileName}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 	public String downloadFile(@PathVariable("fileName") String fileName) throws IOException {
-
-	log.info("inside file download method");
+	FileExportResponse fileExportResponse;
 	log.info("request send to the download file api=  fileName ("+fileName+")");
-	String response=grievanceFeignClient.downloadOperatorFeign(fileName.replace("%20", " "));
+	Object response=grievanceFeignClient.downloadOperatorFeign(fileName.replace("%20", " "));
+	log.info("response----->" +response);
+	Gson gson= new Gson(); 
+	String apiResponse = gson.toJson(response);
+	log.info("request passed to the api =="+fileName);
+	fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
 	log.info("response of download api="+response);
-	return "redirect:"+response;
+	return "redirect:"+fileExportResponse.getUrl();
 	}
 
 	
