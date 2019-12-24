@@ -3,14 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.gl.CEIR</groupId>
-	<artifactId>FileProcess</artifactId>
+	<groupId>com.gl.ceir</groupId>
+	<artifactId>fileprocess</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>FileProcess</name>
 	<url>http://maven.apache.org</url>
-
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,7 +24,7 @@
 		<java.version>1.8</java.version>
 		<spring.boot.version>2.0.3.RELEASE</spring.boot.version>
 		<spring.version>5.0.8.RELEASE</spring.version>
-		<start-class>com.gl.CEIR.FileProcess.App</start-class>
+		<!-- <start-class>com.gl.CEIR.FileProcess.App</start-class> -->
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 
@@ -74,7 +73,7 @@
 		<dependency>
 			<groupId>com.gl.ceir</groupId>
 			<artifactId>config</artifactId>
-			<version>1.0.12</version>
+			<version>1.0.13</version>
 			<classifier>import-lib</classifier>
 			<!-- <scope>system</scope> <systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath> -->
 			<exclusions>
@@ -154,6 +153,12 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.gl.CEIR.FileProcess.App</mainClass>
+						</manifest>
+						<!-- <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>-->
+					</archive>
 				</configuration>
 
 				<executions>
@@ -167,15 +172,33 @@
 				</executions>
 			</plugin>
 			
-			<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-jar-plugin</artifactId>
-			<configuration>
-			<archive>
-			<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-			</archive>
-			</configuration>
-			</plugin>
+			<!-- Shaded jar -->
+			<!-- <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-shade-plugin</artifactId>
+              <version>2.1</version>
+              <executions>
+                <execution>
+                  <phase>package</phase>
+                  <goals><goal>shade</goal></goals>
+                  <configuration>
+                    <transformers>
+                      <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        <mainClass>com.gl.CEIR.FileProcess.App</mainClass>
+                      </transformer>
+                    </transformers>
+                  </configuration>
+                </execution>
+              </executions>
+            </plugin> -->
+
+			<!-- <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin> -->
 
 		</plugins>
 
@@ -186,7 +209,7 @@
 			<dependency>
 				<groupId>com.gl.ceir</groupId>
 				<artifactId>config</artifactId>
-				<version>1.0.12</version>
+				<version>1.0.13</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
