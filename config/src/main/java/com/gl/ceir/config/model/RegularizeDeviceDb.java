@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class RegularizeDeviceDb implements Serializable {
 
@@ -24,6 +26,7 @@ public class RegularizeDeviceDb implements Serializable {
 	private Long id;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp

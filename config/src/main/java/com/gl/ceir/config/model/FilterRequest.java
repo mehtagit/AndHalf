@@ -119,34 +119,46 @@ public class FilterRequest {
 	public void setDeviceType(Integer deviceType) {
 		this.deviceType = deviceType;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("FilterRequest [userId=");
 		builder.append(userId);
+		builder.append(", nid=");
+		builder.append(nid);
 		builder.append(", txnId=");
 		builder.append(txnId);
 		builder.append(", startDate=");
 		builder.append(startDate);
 		builder.append(", endDate=");
 		builder.append(endDate);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
 		builder.append(", consignmentStatus=");
 		builder.append(consignmentStatus);
 		builder.append(", roleType=");
 		builder.append(roleType);
 		builder.append(", requestType=");
 		builder.append(requestType);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append(", featureId=");
 		builder.append(featureId);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }
 
 

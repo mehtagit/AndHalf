@@ -84,11 +84,6 @@ public class RegularizedDeviceServiceImpl {
 	InterpSetter interpSetter;
 
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
-
-		List<SystemConfigListDb> customTaxStatusList = null;
-		List<SystemConfigListDb> deviceIdTypeList = null;
-		List<SystemConfigListDb> deviceTypeList = null;
-		List<SystemConfigListDb> deviceStatusList = null;
 		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -107,20 +102,15 @@ public class RegularizedDeviceServiceImpl {
 				specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 			if(Objects.nonNull(filterRequest.getDeviceIdType()))
-				specificationBuilder.with(new SearchCriteria("deviceIdType", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("deviceIdType", filterRequest.getDeviceIdType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getDeviceType()))
-				specificationBuilder.with(new SearchCriteria("deviceType", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("deviceType", filterRequest.getDeviceType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getTaxPaidStatus()))
-				specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(specificationBuilder.build(), pageable);
-
-			customTaxStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
-			deviceIdTypeList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_ID_TYPE);
-			deviceTypeList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_TYPE);
-			deviceStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.DEVICE_STATUS);
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 
