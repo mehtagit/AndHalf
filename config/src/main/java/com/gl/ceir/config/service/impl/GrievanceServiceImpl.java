@@ -5,9 +5,7 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -21,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -77,6 +76,8 @@ public class GrievanceServiceImpl{
 	FileStorageProperties fileStorageProperties;
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+	@Autowired	
+	EmailUtil emailUtil;
 	
 	@Transactional
 	public GrievanceGenricResponse save(Grievance grievance) {
@@ -138,7 +139,8 @@ public class GrievanceServiceImpl{
 			System.out.println("dialect : " + propertiesReader.dialect);
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
 			
-			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
+			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0) 
+					&& !grievance.getUserType().equalsIgnoreCase("ceiradmin"))
 				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
 			
 			if(Objects.nonNull(grievance.getStartDate()) && !grievance.getStartDate().equals(""))
@@ -173,7 +175,8 @@ public class GrievanceServiceImpl{
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "createdOn"));
 			GrievanceSpecificationBuilder gsb = new GrievanceSpecificationBuilder(propertiesReader.dialect);
 			
-			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0))
+			if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0)
+					&& !grievance.getUserType().equalsIgnoreCase("ceiradmin"))
 				gsb.with(new SearchCriteria("userId", grievance.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
 			
 			if(Objects.nonNull(grievance.getStartDate()) && !grievance.getStartDate().equals(""))
@@ -222,9 +225,11 @@ public class GrievanceServiceImpl{
 		//ColumnPositionMappingStrategy<Grievance> mapStrategy = null;
 		HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
+			pageSize = fileStorageProperties.getMaxFileRecord();
 			List<Grievance> grievances = this.getFilterPaginationGrievances(grievance, pageNo, pageSize).getContent();
 			if( grievances.size() > 0 ) {
-				if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0)) {
+				if(Objects.nonNull(grievance.getUserId()) && (grievance.getUserId() != -1 && grievance.getUserId() != 0) 
+						&& !grievance.getUserType().equalsIgnoreCase("ceiradmin")) {
 					fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_"+grievances.get(0).getUser().getUsername()+"_Grievances.csv";
 				}else {
 					fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Grievances.csv";
@@ -287,7 +292,7 @@ public class GrievanceServiceImpl{
 			try {
 
 				if( writer != null )
-				writer.close();
+					writer.close();
 			} catch (IOException e) {}
 		}
 
@@ -311,12 +316,29 @@ public class GrievanceServiceImpl{
 			webActionDb.setFeature(WebActionDbFeature.GRIEVANCE.getName());
 			/**Grievance status update**/
 			if( grievanceReply.getGrievanceStatus() != GrievanceStatus.CLOSED.getCode() ) {
-				if( grievance.getUserId() != grievanceReply.getUserId() ) { 
+				//if( grievance.getUserId() != grievanceReply.getUserId() ) {
+				if( grievanceReply.getUserType().equalsIgnoreCase("ceiradmin") ) {
 					webActionDb.setState(GrievanceStatus.PENDING_WITH_USER.getCode());
 					grievance.setGrievanceStatus( GrievanceStatus.PENDING_WITH_USER.getCode() );
+					/**Email Notification Start
+					emailUtil.sendMessageAndSaveNotification("PENDING_WITH_USER", 
+							grievance.getUser().getUserProfile(), 
+							grievanceReply.getFeatureId(),
+							Features.GRIEVANCE,
+							SubFeatures.REPLY,
+							grievance.getGrievanceId());
+					Email Notification End**/
 				}else{
 					webActionDb.setState(GrievanceStatus.PENDING_WITH_ADMIN.getCode());
 					grievance.setGrievanceStatus( GrievanceStatus.PENDING_WITH_ADMIN.getCode() );
+					/**Email Notification Start
+					emailUtil.sendMessageAndSaveNotification("PENDING_WITH_ADMIN", 
+							grievance.getUser().getUserProfile(), 
+							grievanceReply.getFeatureId(),
+							Features.GRIEVANCE,
+							SubFeatures.REPLY,
+							grievance.getGrievanceId());
+					Email Notification End**/
 				}
 			}else{
 				webActionDb.setState(GrievanceStatus.CLOSED.getCode());
@@ -334,6 +356,14 @@ public class GrievanceServiceImpl{
 				grievanceHistory.setTxnId( grievance.getTxnId() );
 				grievanceHistory.setRemarks( grievance.getRemarks() );
 				/**Grievance History object all parameters set**/
+				/**Email Notification Start
+				emailUtil.sendMessageAndSaveNotification("CLOSED", 
+						grievance.getUser().getUserProfile(), 
+						grievanceReply.getFeatureId(),
+						Features.GRIEVANCE,
+						SubFeatures.CLOSED,
+						grievance.getGrievanceId());
+				Email Notification End**/
 			}
 			/**Grievance status update end**/
 			webActionDb.setTxnId(grievanceReply.getTxnId());
@@ -377,7 +407,8 @@ public class GrievanceServiceImpl{
 					msgWithUser.setReply(msg.getReply());
 					msgWithUser.setUserId(msg.getUserId());
 					msgWithUser.setUserType(msg.getUserType());
-					if( messages.get(0).getGrievance().getUserId().equals(userId ) ) {
+					//if( messages.get(0).getGrievance().getUserId().equals(userId ) ) {
+					if( !msg.getUserType().equalsIgnoreCase("ceiradmin") ) {
 						if( msg.getUserId().equals( userId ) )
 							msgWithUser.setUserDisplayName("You");
 						else
@@ -427,7 +458,7 @@ public class GrievanceServiceImpl{
 
 	}
 	
-	public ResponseCountAndQuantity getGrievanceCount( Integer userId, Integer userTypeId, Integer featureId ) {
+	public ResponseCountAndQuantity getGrievanceCount( Integer userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -439,10 +470,12 @@ public class GrievanceServiceImpl{
 						status.add(stateDb.getState());
 				}
 			}
-			return grievanceRepository.getGrievanceCount( userId, status);
+			if( !userType.equalsIgnoreCase("ceiradmin"))
+				return grievanceRepository.getGrievanceCount( userId, status);
+			else
+				return grievanceRepository.getGrievanceCount( status );
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
-			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+			logger.error(e.getMessage(), e);
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}

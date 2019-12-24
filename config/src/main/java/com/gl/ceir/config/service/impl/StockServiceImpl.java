@@ -205,13 +205,12 @@ public class StockServiceImpl {
 
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			logger.info(stateInterpList);
-			
+
 			for(StockMgmt stockMgmt : page.getContent()) {
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
 						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
-						// break;
+						break;
 					}
 				}
 			}
@@ -228,7 +227,7 @@ public class StockServiceImpl {
 	public StockMgmt view(StockMgmt stockMgmt) {
 		try {
 
-			return stockManagementRepository.getByTxnId(stockMgmt.getTxnId());
+			return stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -240,10 +239,10 @@ public class StockServiceImpl {
 	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt) {
 		try {
 
-			StockMgmt txnRecord	= stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
+			StockMgmt txnRecord	=	stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
 
 			if(Objects.isNull(txnRecord)) {
-				return new GenricResponse(1000, "No record found against this transactionId.", stockMgmt.getTxnId());
+				return new GenricResponse(1000, "No record found against this transactionId.",stockMgmt.getTxnId());
 			}else {
 
 				WebActionDb webActionDb = new WebActionDb();
@@ -321,7 +320,7 @@ public class StockServiceImpl {
 			
 			if( !stockMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + stockMgmts.get(0).getUser().getUsername()+"_Stocks.csv";
 				}else {
 					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
 				}
@@ -369,7 +368,7 @@ public class StockServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId ) {
+	public ResponseCountAndQuantity getStockCountAndQuantity( long userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -380,9 +379,12 @@ public class StockServiceImpl {
 					status.add(stateDb.getState());
 				}
 			}
-			return stockManagementRepository.getStockCountAndQuantity( userId, status );
+			if( !userType.equalsIgnoreCase("ceiradmin") )
+				return stockManagementRepository.getStockCountAndQuantity( userId, status );
+			else
+				return stockManagementRepository.getStockCountAndQuantity( status );
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}

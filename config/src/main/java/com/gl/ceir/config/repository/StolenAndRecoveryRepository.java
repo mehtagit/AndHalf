@@ -30,7 +30,12 @@ public interface StolenAndRecoveryRepository extends JpaRepository<StolenandReco
 	
 	
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(srm.id) as count) from StolenandRecoveryMgmt srm "
-			+ "where srm.userId =:userId and srm.fileStatus =:fileStatus and srm.requestType =:requestType")
+			+ "where srm.userId =:userId and srm.fileStatus in(:fileStatus) and srm.requestType =:requestType")
 	public ResponseCountAndQuantity getStolenandRecoveryCount( @Param("userId") long userId, @Param("fileStatus") List<Integer> fileStatus,
-			@Param("requestType") String requestType);
+			@Param("requestType") Integer requestType);
+	
+	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(srm.id) as count) from StolenandRecoveryMgmt srm "
+			+ "where srm.fileStatus in(:fileStatus) and srm.requestType =:requestType")
+	public ResponseCountAndQuantity getStolenandRecoveryCount( @Param("fileStatus") List<Integer> fileStatus,
+			@Param("requestType") Integer requestType);
 }

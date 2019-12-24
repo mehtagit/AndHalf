@@ -9,6 +9,7 @@ public class GrievanceReply {
 	private int categoryId;
 	private String fileName;
 	private String reply;
+	private long featureId;
 	public String getGrievanceId() {
 		return grievanceId;
 	}
@@ -56,5 +57,11 @@ public class GrievanceReply {
 	}
 	public void setReply(String reply) {
 		this.reply = reply;
-	}	
+	}
+	public long getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(long featureId) {
+		this.featureId = featureId;
+	}
 }

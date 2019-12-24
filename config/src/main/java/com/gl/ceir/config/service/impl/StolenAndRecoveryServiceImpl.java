@@ -126,8 +126,7 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
-			// Single = 4
-			if(stolenandRecoveryDetails.getSourceType() == 4){
+			if("Single".equalsIgnoreCase(""/*stolenandRecoveryDetails.getSourceType()*/)){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
 				singleImeiDetails.setImei(stolenandRecoveryDetails.getImei());
 				singleImeiDetails.setsARm(stolenandRecoveryDetails);
@@ -333,7 +332,6 @@ public class StolenAndRecoveryServiceImpl {
 
 					// Stolen = 0
 					if(request.getRequestType() == 0) {
-						consignmentMgmt.setPreviousConsignmentStatus(consignmentMgmt.getConsignmentStatus());
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.STOLEN.getCode());
 					}else {
 						consignmentMgmt.setConsignmentStatus(consignmentMgmt.getPreviousConsignmentStatus());
@@ -345,10 +343,9 @@ public class StolenAndRecoveryServiceImpl {
 					StockMgmt stockMgmt = distributerManagementRepository.findByRoleTypeAndTxnId(request.getRoleType(), request.getTxnId());
 
 					if(request.getRequestType() == 0) {
-						stockMgmt.setPreviousStockStatus(stockMgmt.getStockStatus());
 						stockMgmt.setStockStatus(StockStatus.STOLEN.getCode());
 					}else {
-						stockMgmt.setStockStatus(stockMgmt.getPreviousStockStatus());
+						stockMgmt.setStockStatus(StockStatus.RECOVERY.getCode());
 					}
 					distributerManagementRepository.save(stockMgmt);
 				}
@@ -464,6 +461,7 @@ public class StolenAndRecoveryServiceImpl {
 
 	}
 
+
 	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
 			return stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
@@ -473,7 +471,7 @@ public class StolenAndRecoveryServiceImpl {
 		}
 	}
 
-	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType) {
+	public ResponseCountAndQuantity getStolenAndRecoveryCount( long userId, Integer userTypeId, Integer featureId, String requestType, String userType ) {
 		List<StateMgmtDb> featureList = null;
 		List<Integer> status = new ArrayList<Integer>();
 		try {
@@ -484,9 +482,12 @@ public class StolenAndRecoveryServiceImpl {
 					status.add(stateDb.getState());
 				}
 			}
-			return stolenAndRecoveryRepository.getStolenandRecoveryCount( userId, status, requestType);
+			if( !userType.equalsIgnoreCase("ceiradmin"))
+				return stolenAndRecoveryRepository.getStolenandRecoveryCount( userId, status, Integer.valueOf(requestType));
+			else
+				return stolenAndRecoveryRepository.getStolenandRecoveryCount( status, Integer.valueOf(requestType));
 		} catch (Exception e) {
-			//logger.error(e.getMessage(), e);
+			logger.error(e.getMessage(), e);
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}

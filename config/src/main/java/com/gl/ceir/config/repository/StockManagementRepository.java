@@ -16,14 +16,18 @@ public interface StockManagementRepository extends JpaRepository<StockMgmt, Long
 	
 	public StockMgmt getByTxnId(String txnId);
 
-	public List<StockMgmt> findByRoleTypeAndUserId(String moduleType, Long userId);
+	public List<StockMgmt> findByRoleTypeAndUserId(String moduleType,Long userId);
 
-	public StockMgmt findByRoleTypeAndTxnId(String moduleType, String txnId);
+	public StockMgmt findByRoleTypeAndTxnId(String moduleType,String txnId);
 
 	public void deleteByTxnId(String txnId);
 
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(sm.id) as count, sum(sm.quantity) as quantity) from StockMgmt sm "
 			+ "where sm.userId =:userId and sm.stockStatus in(:stockStatus)")
 	public ResponseCountAndQuantity getStockCountAndQuantity( @Param("userId") long userId, @Param("stockStatus") List<Integer> stockStatus);
+	
+	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(sm.id) as count, sum(sm.quantity) as quantity) from StockMgmt sm "
+			+ "where sm.stockStatus in(:stockStatus)")
+	public ResponseCountAndQuantity getStockCountAndQuantity(@Param("stockStatus") List<Integer> stockStatus);
 	
 }

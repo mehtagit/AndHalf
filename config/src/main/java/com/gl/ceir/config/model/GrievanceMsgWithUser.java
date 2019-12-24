@@ -2,6 +2,8 @@ package com.gl.ceir.config.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class GrievanceMsgWithUser {
 	
 	private Long id;
@@ -14,8 +16,10 @@ public class GrievanceMsgWithUser {
 	
 	private String fileName;
 	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime modifiedOn;
 	
 	private String reply;

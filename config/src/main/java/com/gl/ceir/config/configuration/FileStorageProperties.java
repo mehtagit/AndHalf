@@ -21,9 +21,12 @@ public class FileStorageProperties {
 	private String stockDownloadLink;
 	private String stolenAndRecoveryDownloadDir;
 	private String stolenAndRecoveryDownloadLink;
-	private String regularizeDeviceDownloadDir;
-	private String regularizeDeviceDownloadLink;
-
+	private String tacDownloadDir;
+	private String tacDownloadLink;
+	private int maxFileRecord;
+	private String fileDumpDownloadDir;
+	private String fileDumpDownloadLink;
+	
 	public String getGrievanceDownloadLink() {
 		return grievanceDownloadLink;
 	}
@@ -137,20 +140,44 @@ public class FileStorageProperties {
 		this.stolenAndRecoveryDownloadLink = stolenAndRecoveryDownloadLink;
 	}
 
-	public String getRegularizeDeviceDownloadDir() {
-		return regularizeDeviceDownloadDir;
+	public String getTacDownloadDir() {
+		return tacDownloadDir;
 	}
 
-	public void setRegularizeDeviceDownloadDir(String regularizeDeviceDownloadDir) {
-		this.regularizeDeviceDownloadDir = regularizeDeviceDownloadDir;
+	public void setTacDownloadDir(String tacDownloadDir) {
+		this.tacDownloadDir = tacDownloadDir;
 	}
 
-	public String getRegularizeDeviceDownloadLink() {
-		return regularizeDeviceDownloadLink;
+	public String getTacDownloadLink() {
+		return tacDownloadLink;
 	}
 
-	public void setRegularizeDeviceDownloadLink(String regularizeDeviceDownloadLink) {
-		this.regularizeDeviceDownloadLink = regularizeDeviceDownloadLink;
+	public void setTacDownloadLink(String tacDownloadLink) {
+		this.tacDownloadLink = tacDownloadLink;
+	}
+
+	public int getMaxFileRecord() {
+		return maxFileRecord;
+	}
+
+	public void setMaxFileRecord(int maxFileRecord) {
+		this.maxFileRecord = maxFileRecord;
+	}
+
+	public String getFileDumpDownloadDir() {
+		return fileDumpDownloadDir;
+	}
+
+	public void setFileDumpDownloadDir(String fileDumpDownloadDir) {
+		this.fileDumpDownloadDir = fileDumpDownloadDir;
+	}
+
+	public String getFileDumpDownloadLink() {
+		return fileDumpDownloadLink;
+	}
+
+	public void setFileDumpDownloadLink(String fileDumpDownloadLink) {
+		this.fileDumpDownloadLink = fileDumpDownloadLink;
 	}
 	
 }
