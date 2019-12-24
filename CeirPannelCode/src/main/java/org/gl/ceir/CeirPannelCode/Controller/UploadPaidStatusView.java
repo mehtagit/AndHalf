@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,23 +56,30 @@ public class UploadPaidStatusView {
 	}
 	
 	
-	@ResponseBody
+	
 	@PostMapping("uploadPaidStatusForm")
-	public GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller register-approved-device-------request---------");
 		// log.info(""+request.getParameter("file"));
 		String userName=session.getAttribute("username").toString();
 		String userId= session.getAttribute("userid").toString();
 		String name=session.getAttribute("name").toString();
-		String txnNumber="T" + utildownload.getTxnId();
+		String txnNumber="R" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
 		//request.setAttribute("txnId", txnNumber);
-		String filter = request.getParameter("request"); 
+		//request.setAttribute("request[regularizeDeviceDbs][txnId]",txnNumber);
+		String filter = request.getParameter("request");
+		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
 		Gson gson= new Gson(); 
 	
 		log.info("*********"+filter);
 		
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
+		
+		for(int i =0; i<regularizeDeviceDbs.getRegularizeDeviceDbs().size();i++) {
+			regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
+		}
+		
 		log.info(""+regularizeDeviceDbs.toString());
 		log.info(" Register consignment entry point.");
 		try { byte[] bytes = file.getBytes();
@@ -91,11 +99,19 @@ public class UploadPaidStatusView {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		log.info("request passed to the regularizeDeviceDbs api"+regularizeDeviceDbs);
-		
-		GenricResponse response = userPaidStatusFeignClient.uploadPaidUser(regularizeDeviceDbs);
+		log.info("request passed to the save regularizeDeviceDbs api"+regularizeDeviceDbs);
+		GenricResponse response = null;
+		try {
+		 response = userPaidStatusFeignClient.uploadPaidUser(regularizeDeviceDbs);
 		//GenricResponse response = null;
 		log.info("---------response--------"+response);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			log.info("exception in upload paid stat error"+e);
+			e.printStackTrace();
+			
+		}
 		return response;
 	}
 

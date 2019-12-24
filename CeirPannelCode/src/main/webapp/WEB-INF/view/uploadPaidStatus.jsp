@@ -186,7 +186,7 @@ input[type='search'] {
 
 
 								<div id="user123" class="section" style="display: none;">
-									<form action="">
+									<form action="" onsubmit="return submitDeviceInfo()" method="POST" enctype="multipart/form-data"   >
 										<div class="row">
 											<div class="col s12 m12">
 												<div class="col s12 m12">
@@ -196,8 +196,8 @@ input[type='search'] {
 											</div>
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m6">
-													<input type="text" id="nationalID" name="nationalID"
-														value="black" /> <label for="nationalID"
+													<input type="text" id="nationalID" name="nationalID" placeholder=""
+														value="" /> <label for="nationalID"
 														class="center-align ml-10">NID </label>
 												</div>
 
@@ -207,31 +207,31 @@ input[type='search'] {
 														Upload National ID Proof <span class="star">*</span>
 													</h6>
 													<div class="btn">
-														<span>Select File</span> <input type="file"
+														<span>Select File</span> <input type="file" required="required"
 															id="csvUploadFile" accept=".csv">
 													</div>
 													<div class="file-path-wrapper">
-														<input class="file-path validate responsive-file-div"
+														<input class="file-path validate responsive-file-div" 
 															type="text">
 													</div>
 												</div>
 											</div>
 											<div class="col s12 m12">
 												<div class="input-field col s12 m4 l4">
-													<input type="text" name="firstName" id="firstName"
-														maxlength="20"> <label for="firstName"
+													<input type="text" name="firstName" id="firstName" maxlength="20" required="required"
+													pattern="[A-Za-z]{0,20}" title="Please enter alphabets  upto 20 characters only"> <label for="firstName"
 														class="center-align">First Name <span class="star">*</span></label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" name="middleName" id="middleName"
-														maxlength="20"> <label for="middleName">Middle
+													<input type="text" name="middleName" id="middleName" maxlength="20" 
+											pattern="[A-Za-z]{0,20}" title="Please enter alphabets upto 20 characters only"> <label for="middleName">Middle
 														Name</label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
-													<input type="text" name="lastName" id="lastName"
-														maxlength="20"> <label for="lastName">Last
+													<input type="text" name="lastName" id="lastName" required="required"
+													pattern="[A-Za-z]{0,20}" title="Please enter alphabets  upto 20 characters only"	maxlength="20"> <label for="lastName">Last
 														Name <span class="star">*</span>
 													</label>
 												</div>
@@ -241,24 +241,24 @@ input[type='search'] {
 										<div class="row">
 											<div class="col s12 m12">
 												<div class="input-field col s12 m12 l12">
-													<input type="text" name="address"
-														class="form-control boxBorder boxHeight" id="address">
+													<input type="text" name="address" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 200 characters only"
+														maxlength="200" required="required" class="form-control boxBorder boxHeight" id="address">
 													<label for="address">Address(Property Location) <span
 														class="star">*</span></label>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" name="streetNumber"
+													<input type="text" pattern="[A-Za-z0-9]{0,20}" title="Please enter alphabets and numbers upto 20 characters only" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="streetNumber"
-														maxlength="30"> <label for="streetNumber">Street
+														maxlength="20" required="required"> <label for="streetNumber">Street
 														Number <span class="star">*</span>
 													</label>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" name="locality"
+													<input type="text" name="locality" pattern="[A-Za-z0-9]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
 														class="form-control boxBorder boxHeight" id="locality"
-														maxlength="20"> <label for="locality">Locality
+														maxlength="50" required="required"> <label for="locality">Locality
 														<span class="star">*</span>
 													</label>
 												</div>
@@ -284,12 +284,12 @@ input[type='search'] {
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-													<input type="text" name="email" id="email" maxlength="30">
+													<input type="email" name="email" id="email"  required  maxlength="30">
 													<label for="email">Email <span class="star">*</span></label>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" name="phone"
+													<input type="text" name="phone" required pattern="[0-9]{10,10}" title="Please enter 10 digits contact number"
 														class="form-control boxBorder boxHeight" id="phone"
 														maxlength="10"> <label for="phone">Contact
 														Number <span class="star">*</span>
@@ -309,39 +309,35 @@ input[type='search'] {
 												<div class="col s12 m6">
 													<label for="deviceType">Device Type <span
 														class="star">*</span></label> <select class="browser-default"
-														id="deviceType1">
+														id="deviceType1" required="required">
 														<option value="" disabled selected>Select Device
 															Type</option>
-															<option value="device" >device </option>
-															<option value="type" >type</option>
+															
 														
 													</select>
 												</div>
 
 												<div class="col s12 m6">
 													<label for="deviceIdType1">Device ID Type <span
-														class="star">*</span></label> <select class="browser-default"
+														class="star">*</span></label> <select required="required" class="browser-default"
 														id="deviceIdType1">
 														<option value="" disabled selected>Select Device ID Type</option>
-														<option value="device" >device </option>
-															<option value="type" >type</option>
+													
 													</select>
 												</div>
 
 												<div class="col s12 m6">
 													<label for="multipleSimStatus1">Multiple Sim Status <span
-														class="star">*</span></label> <select class="browser-default"
+														class="star">*</span></label> <select class="browser-default" required="required"
 														id="multipleSimStatus1">
 														<option value="" disabled selected>Select
-															Multiple Sim Status</option>
-														<option value="Yes">Yes</option>
-														<option value="No">No</option>
+													
 													</select>
 												</div>
 
 												<div class="col s12 m6">
 													<label for="country1">Country bought From <span
-														class="star">*</span></label> <select id="country1"
+														class="star">*</span></label> <select id="country1" 
 														class="browser-default" class="mySelect"
 														style="padding-left: 0;" required></select>
 												</div>
@@ -349,22 +345,19 @@ input[type='search'] {
 												<div class="input-field col s12 m6"
 													style="margin-top: 28px;">
 													<input type="text" id="serialNumber1" name="serialNumber"
-														pattern="[0-9]"
-														title="Please enter your device serial number first"
-														maxlength="20"> <label for="serialNumber">Device
+														pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"
+														maxlength="15"> <label for="serialNumber">Device
 														Serial Number <span class="star">*</span>
 													</label>
 												</div>
 
 												<div class="col s12 m6">
 													<label for="taxStatus1">Tax paid Status <span
-														class="star">*</span></label> <select class="browser-default"
+														class="star">*</span></label> <select class="browser-default" required="required"
 														id="taxStatus1">
 														<option value="" disabled selected>Select Tax
 															paid Status</option>
-														<option value="Regularized">Regularized</option>
-														<option value="Paid">Paid</option>
-														<option value="NotPaid">Not Paid</option>
+														
 													</select>
 												</div>
 											</div>
@@ -373,29 +366,25 @@ input[type='search'] {
 											<div class="col s12 m12">
 												<div class="col s12 m6" style="margin-top: -10px;">
 													<label for="deviceStatus1">Device Status <span
-														class="star">*</span></label> <select class="browser-default"
+														class="star">*</span></label> <select class="browser-default" required="required"
 														id="deviceStatus1">
 														<option value="" disabled selected>Select Device
 															Status</option>
-														<option value="New">New</option>
-														<option value="Used">Used</option>
-														<option value="Refurbished">Refurbished</option>
+														
 													</select>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" name="Price" id="Price1" maxlength="30">
+													<input type="text" name="Price" id="Price1" pattern="[0-9]{0,7}" required="required"  maxlength="7">
 													<label for="Price1">Price <span class="star">*</span></label>
 												</div>
 
 												<div class="col s12 m6">
 													<label for="Currency1">Currency <span class="star">*</span></label>
-													<select class="browser-default" id="Currency1">
+													<select class="browser-default" id="Currency1" required="required">
 														<option value="" disabled selected>Select
 															Currency</option>
-														<option value="Regularized">$</option>
-														<option value="Paid">$</option>
-														<option value="NotPaid">$</option>
+														
 													</select>
 												</div>
 											</div>
@@ -407,7 +396,7 @@ input[type='search'] {
 													<div class='row'>
 														<div class="input-field col s12 m6">
 															<input type="text" id="IMEIA1" name="IMEI1"
-																pattern="[0-9]"
+																pattern="[0-9]{15,16}"
 																title="Please enter minimum 15 and maximum 16 digit only"
 																maxlength="16"> <label for="IMEIA1">1 <span
 																class="star">*</span></label>
@@ -415,21 +404,21 @@ input[type='search'] {
 
 														<div class="input-field col s12 m6">
 															<input type="text" id="IMEIB1" name="IMEI2"
-																pattern="[0-9]"
+																pattern="[0-9]{15,16}"
 																title="Please enter minimum 15 and maximum 16 digit only"
 																maxlength="16"> <label for="IMEIB2">2</label>
 														</div>
 
 														<div class="input-field col s12 m6">
 															<input type="text" id="IMEIC1" name="IMEIC3"
-																pattern="[0-9]"
+																pattern="[0-9]{15,16}"
 																title="Please enter minimum 15 and maximum 16 digit only"
 																maxlength="16"> <label for="IMEIC3">3</label>
 														</div>
 
 														<div class="input-field col s12 m6" id="field">
 															<input type="text" id="IMEID1" name="IMEID4[]"
-																pattern="[0-9]"
+																pattern="[0-9]{15,16}"
 																title="Please enter minimum 15 and maximum 16 digit only"
 																maxlength="16" id="field0"> <label for="IMEID4">4</label>
 														</div>
@@ -449,7 +438,7 @@ input[type='search'] {
 												</div>
                                                       
 												<div class="col s12 m12 center" style="margin-top: 30px;">
-													<button class="btn " onclick="submitDeviceInfo()"
+													<button class="btn " type="submit"
 														>Submit</button>
 													<button class="btn modal-trigger" data-target="cancelMsg"
 														style="margin-left: 10px;">Cancel</button>
@@ -599,28 +588,28 @@ input[type='search'] {
                         <p style="margin-bottom: 0; margin-top: -10px;">IMEI/MEID/ESN</p>
                     </div>
                     <div class="input-field col s12 m6">
-                        <input type="text" id="viewIMEI1" name="IMEI1" pattern="[0-9]"
+                        <input type="text" id="viewIMEI1" name="IMEI1" pattern="[0-9]{15,16}"
                             title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
                             placeholder="1234567891234567" disabled style="height: 28px;">
                         <label for="IMEI1">1 </label>
                     </div>
 
                     <div class="input-field col s12 m6">
-                        <input type="text" id="viewIMEI2" name="IMEI2" pattern="[0-9]"
+                        <input type="text" id="viewIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
                             title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
                             placeholder="98765432198765432" disabled style="height: 28px;">
                         <label for="IMEI2">2</label>
                     </div>
 
                     <div class="input-field col s12 m6">
-                        <input type="text" id="viewIMEI3" name="IMEI3" pattern="[0-9]"
+                        <input type="text" id="viewIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
                             title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
                             style="height: 28px;">
                         <label for="IMEI3">3</label>
                     </div>
 
                     <div class="input-field col s12 m6">
-                        <input type="text" id="viewIMEI4" name="IMEI4[]" pattern="[0-9]"
+                        <input type="text" id="viewIMEI4" name="IMEI4[]" pattern="[15-9]"
                             title="Please enter minimum 15 and maximum 16 digit only" maxlength="16"
                             style="height: 28px;">
                         <label for="IMEI4">4</label>
@@ -637,10 +626,44 @@ input[type='search'] {
     <!-- Modal End -->
 
 <!-- Pay Tax Modal start   -->
+  <%-- <div id="regularisedDevice" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Upload Paid Device</h6><hr>
+
+            <div class="row">
+                <h6 id="sucessMessage">Your form has been successfully submitted. The Transaction ID for future reference is <span id="dynamicTxnId"></span></h6>
+                <input type="text" style="display:none" id="errorCode">
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                <form action="${context}/Consignment/viewConsignment" id="closeOkPop" method="POST">
+                    <a  onclick="closeConfirmation()" class="btn">ok</a>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div> --%>
+
+	<div id="regularisedDevice" class="modal">
+        <h6  class="modal-header">Upload Paid Device</h6>
+        <div class="modal-content">
+            <div class="row">
+                <h6 id="sucessMessage"> Your form has been successfully submitted. The Transaction ID for future reference is <span id="dynamicTxnId"></span></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./uploadPaidStatus" class="btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 
     <div id="payTaxModal" class="modal">
         <div class="modal-content">
-            <h6 class="modal-header">Pay Tax Information</h6>
+           
             <div class="row">
                 <h6>Do you confirm that tax has been paid?</h6>
             </div>
@@ -654,6 +677,8 @@ input[type='search'] {
             </div>
         </div>
     </div>
+    
+     
     <!-- Pay Tax Modal End -->
 <!-- 
 <div id="payNowTaxPayment" class="modal" style="z-index: 1005; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
