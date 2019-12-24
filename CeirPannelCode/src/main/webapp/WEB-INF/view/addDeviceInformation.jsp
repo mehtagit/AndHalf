@@ -158,167 +158,153 @@ input[type='search'] {
 								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
 							</div>
 							<div id="user123" class="section">
-								<form action="">
-									<div class="row">
-										<div class="col s12 m6">
-											<label for="deviceType">Device Type <span
-												class="star">*</span></label> <select class="browser-default"
-												id="deviceType">
-												<option value="" disabled selected>Select Device
-													Type</option>
-												<option value="Handheld">Handheld</option>
-												<option value="MobilePhone">Mobile Phone/Feature
-													phone</option>
-												<option value="Vehicle">Vehicle</option>
-												<option value="Portable">Portable(include PDA)</option>
-												<option value="Module">Module</option>
-												<option value="Dongle">Dongle</option>
-												<option value="WLAN">WLAN Router</option>
-												<option value="Modem">Modem</option>
-												<option value="Smartphone">Smartphone</option>
-												<option value="Computer">Connected Computer</option>
-												<option value="Tablet">Tablet</option>
-												<option value="e-Book">e-Book</option>
-											</select>
-										</div>
-
-										<div class="col s12 m6">
-											<label for="deviceIdType">Device ID Type <span
-												class="star">*</span></label> <select class="browser-default"
-												id="deviceType">
-												<option value="" disabled selected>Select Device ID
-													Type</option>
-												<option value="IMEI">IMEI</option>
-												<option value="ESN">ESN</option>
-												<option value="MEID">MEID</option>
-											</select>
-										</div>
-
-										<div class="col s12 m6">
-											<label for="deviceType">Multiple Sim Status <span
-												class="star">*</span></label> <select class="browser-default"
-												id="deviceType">
-												<option value="" disabled selected>Select Multiple
-													Sim Status</option>
-												<option value="Yes">Yes</option>
-												<option value="No">No</option>
-											</select>
-										</div>
-
-										<div class="col s12 m6">
-											<label for="country">Country bought From <span
-												class="star">*</span></label> <select id="country"
-												class="browser-default" class="mySelect"
-												style="padding-left: 0;" required></select>
-										</div>
-
-										<div class="input-field col s12 m6" style="margin-top: 25px;">
-											<input type="text" id="serialNumber" name="serialNumber"
-												pattern="[0-9]"
-												title="Please enter your device serial number first"
-												maxlength="20"> <label for="serialNumber">Device
-												Serial Number <span class="star">*</span>
-											</label>
-										</div>
-
-										<div class="col s12 m6">
-											<label for="taxStatus">Tax paid Status <span
-												class="star">*</span></label> <select class="browser-default"
-												id="taxStatus">
-												<option value="" disabled selected>Select Tax paid
-													Status</option>
-												<option value="Regularized">Regularized</option>
-												<option value="Paid">Paid</option>
-												<option value="NotPaid">Not Paid</option>
-											</select>
-										</div>
-									</div>
-									<div class="row">
-										<!-- <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="deviceStatus" id="deviceStatus"
-                                                        maxlength="30">
-                                                    <label for="deviceStatus">Device Status <span
-                                                            class="star">*</span></label>
-                                                </div> -->
-
-										<div class="col s12 m6" style="margin-top: -10px;">
-											<label for="taxStatus">Device Status <span
-												class="star">*</span></label> <select class="browser-default"
-												id="taxStatus">
-												<option value="" disabled selected>Select Device
-													Status</option>
-												<option value="New">New</option>
-												<option value="Used">Used</option>
-												<option value="Refurbished">Refurbished</option>
-											</select>
-										</div>
-
-										<div class="input-field col s12 m6 l6">
-											<input type="text" name="Price" id="Price" maxlength="30">
-											<label for="Price">Price </label>
-										</div>
-
-										<div class="col s12 m6">
-											<label for="Currency">Currency </label> <select
-												class="browser-default" id="Currency">
-												<option value="" disabled selected>Select Currency
-												</option>
-												<option value="Regularized">$</option>
-												<option value="Paid">$</option>
-												<option value="NotPaid">$</option>
-											</select>
-										</div>
-									</div>
-									<div class="row">
-										<div class='col s12 m12 input_fields_wrap'>
-											<p>IMEI/MEID/ESN</p>
-											<div class='row'>
-												<div class="input-field col s12 m6">
-													<input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
-														title="Please enter minimum 15 and maximum 16 digit only"
-														maxlength="16"> <label for="IMEI1">1 <span
-														class="star">*</span></label>
+								<form action="" onsubmit="return submitDeviceInfo()" method="POST" enctype="multipart/form-data">
+								<div id="mainDeviceInformation" class="mainDeviceInformation">
+										<div id="deviceInformation" class="deviceInformation">
+										<div class="row">
+											<div class="col s12 m12">
+												<div class="col s12 m12" style="margin-top: 30px;">
+													<h5>Device Information</h5>
+													<hr>
 												</div>
 
-												<div class="input-field col s12 m6">
-													<input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
-														title="Please enter minimum 15 and maximum 16 digit only"
-														maxlength="16"> <label for="IMEI2">2</label>
+												<div class="col s12 m6">
+													<label for="deviceType">Device Type <span
+														class="star">*</span></label> <select class="browser-default"
+														id="deviceType1" required="required">
+														<option value="" disabled selected>Select Device
+															Type</option>
+															
+														
+													</select>
 												</div>
 
-												<div class="input-field col s12 m6">
-													<input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"
-														title="Please enter minimum 15 and maximum 16 digit only"
-														maxlength="16"> <label for="IMEI3">3</label>
+												<div class="col s12 m6">
+													<label for="deviceIdType1">Device ID Type <span
+														class="star">*</span></label> <select required="required" class="browser-default"
+														id="deviceIdType1">
+														<option value="" disabled selected>Select Device ID Type</option>
+													
+													</select>
 												</div>
 
-												<div class="input-field col s12 m6" id="field">
-													<input type="text" id="IMEI4" name="IMEI4[]"
-														pattern="[0-9]"
-														title="Please enter minimum 15 and maximum 16 digit only"
-														maxlength="16" id="field0"> <label for="IMEI4">4</label>
+												<div class="col s12 m6">
+													<label for="multipleSimStatus1">Multiple Sim Status <span
+														class="star">*</span></label> <select class="browser-default" required="required"
+														id="multipleSimStatus1">
+														<option value="" disabled selected>Select
+													
+													</select>
+												</div>
+
+												<div class="col s12 m6">
+													<label for="country1">Country bought From <span
+														class="star">*</span></label> <select id="country1" 
+														class="browser-default" class="mySelect"
+														style="padding-left: 0;" required></select>
+												</div>
+
+												<div class="input-field col s12 m6"
+													style="margin-top: 28px;">
+													<input type="text" id="serialNumber1" name="serialNumber" required="required" 
+														pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"
+														maxlength="15"> <label for="serialNumber">Device
+														Serial Number <span class="star">*</span>
+													</label>
+												</div>
+
+												<div class="col s12 m6">
+													<label for="taxStatus1">Tax paid Status <span
+														class="star">*</span></label> <select class="browser-default" required="required"
+														id="taxStatus1">
+														<option value="" disabled selected>Select Tax
+															paid Status</option>
+														
+													</select>
 												</div>
 											</div>
 										</div>
+										<div class="row">
+											<div class="col s12 m12">
+												<div class="col s12 m6" style="margin-top: -10px;">
+													<label for="deviceStatus1">Device Status <span
+														class="star">*</span></label> <select class="browser-default" required="required"
+														id="deviceStatus1">
+														<option value="" disabled selected>Select Device
+															Status</option>
+														
+													</select>
+												</div>
 
+												<div class="input-field col s12 m6 l6">
+													<input type="text" name="Price" id="Price1" pattern="[0-9]{0,7}" required="required"  maxlength="7">
+													<label for="Price1">Price <span class="star">*</span></label>
+												</div>
 
-										<div class="col s12 m12">
-											<button class="btn right add_field_button"
-												style="margin-top: 5px;">
-												<span style="font-size: 20px;">+</span> Add More Device
-											</button>
-											<p>
-												Required Field are marked with <span class="star">*</span>
-											</p>
+												<div class="col s12 m6">
+													<label for="Currency1">Currency <span class="star">*</span></label>
+													<select class="browser-default" id="Currency1" required="required">
+														<option value="" disabled selected>Select
+															Currency</option>
+														
+													</select>
+												</div>
+											</div>
 										</div>
+										<div class="row">
+											<div class="col s12 m12">
+												<div class='col s12 m12 input_fields_wrap'>
+													<p>IMEI/MEID/ESN</p>
+													<div class='row'>
+														<div class="input-field col s12 m6">
+															<input type="text" id="IMEIA1" name="IMEI1"
+																pattern="[0-9]{15,16}"
+																title="Please enter minimum 15 and maximum 16 digit only"
+																maxlength="16"> <label for="IMEIA1">1 <span
+																class="star">*</span></label>
+														</div>
 
-										<div class="col s12 m12 center" style="margin-top: 30px;">
-											<button class="btn modal-trigger" data-target="submitMsg">Submit</button>
-											<button class="btn modal-trigger" data-target="cancelMsg"
-												style="margin-left: 10px;">Cancel</button>
-										</div>
+														<div class="input-field col s12 m6">
+															<input type="text" id="IMEIB1" name="IMEI2"
+																pattern="[0-9]{15,16}"
+																title="Please enter minimum 15 and maximum 16 digit only"
+																maxlength="16"> <label for="IMEIB2">2</label>
+														</div>
 
-									</div>
+														<div class="input-field col s12 m6">
+															<input type="text" id="IMEIC1" name="IMEIC3"
+																pattern="[0-9]{15,16}"
+																title="Please enter minimum 15 and maximum 16 digit only"
+																maxlength="16"> <label for="IMEIC3">3</label>
+														</div>
+
+														<div class="input-field col s12 m6" id="field">
+															<input type="text" id="IMEID1" name="IMEID4[]"
+																pattern="[0-9]{15,16}"
+																title="Please enter minimum 15 and maximum 16 digit only"
+																maxlength="16" id="field0"> <label for="IMEID4">4</label>
+														</div>
+													</div>
+												</div>
+                                             </div></div> 
+                                             </div>
+                                             </div>
+												<div class="col s12 m12">
+													<button class="btn right add_field_button"
+														style="margin-top: 5px;">
+														<span style="font-size: 20px;">+</span> Add More Device
+													</button>
+													<p>
+														Required Field are marked with <span class="star">*</span>
+													</p>
+												</div>
+                                                      
+												<div class="col s12 m12 center" style="margin-top: 30px;">
+													<button class="btn " type="submit" >Submit</button>
+													<button class="btn modal-trigger" data-target="cancelMsg"
+														style="margin-left: 10px;">Cancel</button>
+												</div>
+								
 								</form>
 							</div>
 						</div>
@@ -340,7 +326,7 @@ input[type='search'] {
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 	<!-- START FOOTER -->
-	<footer class="page-footer"
+	<!-- <footer class="page-footer"
 		style="position: fixed; bottom: 0; width: 100%;">
 		<div class="footer-copyright">
 			<div class="container">
@@ -348,7 +334,7 @@ input[type='search'] {
 					Ltd, All rights reserved.</span>
 			</div>
 		</div>
-	</footer>
+	</footer> -->
 	<!-- END FOOTER -->
 
 	<!-- Modal 2 start   -->
@@ -935,6 +921,22 @@ input[type='search'] {
 
 	<!-- Modal start   -->
 
+	<div id="regularisedDevice" class="modal">
+        <h6  class="modal-header">Upload Paid Device</h6>
+        <div class="modal-content">
+            <div class="row">
+                <h6 id="sucessMessage"> Your form has been successfully submitted. The Transaction ID for future reference is <span id="dynamicTxnId"></span></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./uploadPaidStatus" class="btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<div id="deleteMsg" class="modal">
 		<div class="modal-content">
 			<h6 class="modal-header">Delete</h6>
@@ -1006,26 +1008,180 @@ input[type='search'] {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
+	<%-- <script type="text/javascript"
+		src="${context}/resources/project_js/uploadPaidStatus.js"></script> --%>
 	<!-- ================================================
     Scripts
     ================================================ -->
 
 
 
-	<script>
-        populateCountries(
-            "country",
-            "state",
-        );
-    </script>
+	
 
 
 
 
 	<script>
-        $(document).ready(function () {
+	
+	function submitDeviceInfo(){
+		 var formData= new FormData();
+		 var nationalID = sessionStorage.getItem("nationalId");
+			console.log(" nationalID ="+nationalID)
+			 var fieldId=1;	
+			 var regularizeDeviceDbs =[];
+			 $('.deviceInformation').each(function() {	
+				 var deviceType1=$('#deviceType'+fieldId).val();
+					var serialNumber1=$('#serialNumber'+fieldId).val();
+					var deviceIdType1=$('#deviceIdType'+fieldId).val();
+					var taxStatus1=$('#taxStatus'+fieldId).val();
+					var deviceStatus1=$('#deviceStatus'+fieldId).val();
+					var Price1=$('#Price'+fieldId).val();
+					var Currency1=$('#Currency'+fieldId).val();
+					var IMEI1=$('#IMEIA'+fieldId).val();
+					var IMEI2=$('#IMEIB'+fieldId).val();
+					var IMEI3=$('#IMEIC'+fieldId).val();
+					var IMEI4=$('#IMEID'+fieldId).val();
+					var deviceCountry=$('#country'+fieldId).val();
+					var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+				console.log("serialNumber1="+serialNumber1+" deviceIdType1="+deviceIdType1+" taxStatus1="+taxStatus1+" deviceStatus1="+deviceStatus1+" Price1="+Price1+" Currency1="+Currency1)
+				var deviceInfo=
+				{
+					      "country": deviceCountry,
+					      "currency": parseInt(Currency1),
+					      "deviceIdType": parseInt(deviceType1),
+					      "deviceSerialNumber": serialNumber1,
+					      "deviceStatus": parseInt(deviceStatus1),
+					      "deviceType": parseInt(deviceType1),
+					      "firstImei": parseInt(IMEI1),
+					      "secondImei": parseInt(IMEI2),
+					      "thirdImei": parseInt(IMEI3),
+					      "fourthImei": parseInt(IMEI4),
+					      "multiSimStatus": deviceStatus1,
+					      "price": parseFloat(Price1),
+					      "taxPaidStatus": parseInt(taxStatus1),
+					      "nid":nationalID,
+					      "txnId":""
+				}
+				regularizeDeviceDbs.push(deviceInfo);  
+				fieldId++;
+			});
+			 var request={
+					 "country": null,
+					 "email": null,
+					  "firstName": null,
+					  "lastName": null,
+					  "locality": null,
+					  "middleName": null,
+					  "nid": nationalID,
+					  "phoneNo": null,
+					  "propertyLocation": null,
+					  "province": null,
+					  "street": null,
+					  "regularizeDeviceDbs":regularizeDeviceDbs,
+					  
+					}
+			 formData.append("request",JSON.stringify(request));
+			$.ajax({
+				url: './uploadPaidStatusForm',
+				type: 'POST',
+				data: formData,
+				processData: false,
+				contentType: false,
+				success: function (data, textStatus, jqXHR) {
+					console.log("in suucess method");
+					console.log(data);
+				   
+					// $('#updateConsignment').modal();
+					if(data.errorCode==200){
+
+					//	$('#sucessMessage').text('');
+					$('#regularisedDevice').openModal();
+						$('#dynamicTxnId').text(data.txnId);
+					}
+					else{
+						//$('#sucessMessage').text('');
+						$('#regularisedDevice').openModal();
+						$('#dynamicTxnId').text(data.txnId);
+					}
+					//sessionStorage.removeItem("nationalId");
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log("error in ajax")
+				
+				}
+			});
+			return false;
+
+			 } 
+/* 	
+	populateCountries(
+            "country1",
+            "state" ); */
+   	 populateCountries
+ 	(   
+ 			"country1"
+ 	);
+	
+	$(document).ready(function () {
+		console.log("start,..");
+		$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#taxStatus1');
+				console.log("...........");
+			}
+		});
+
+
+
+		$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#deviceType1');
+				console.log("...........");
+			}
+		});
+
+
+		
+		$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#deviceIdType1');
+				console.log("...........");
+			}
+		});
+		
+		$.getJSON('./getDropdownList/currency', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#Currency1');
+				console.log("...........");
+			}
+		});
+		
+		$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#multipleSimStatus1');
+				console.log("...........");
+			}
+		});
+		
+		$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#deviceStatus1');
+				console.log("...........");
+			}
+		});
+		
+		
+	        });
+
+  /*       $(document).ready(function () {
             var max_fields = 15; //maximum input boxes allowed
             var wrapper = $(".input_fields_wrap"); //Fields wrapper
             var add_button = $(".add_field_button"); //Add button ID
@@ -1044,7 +1200,101 @@ input[type='search'] {
                 $(this).parent('div').remove();
                 x--;
             })
-        });
+        }); */
+        
+
+
+        $(document).ready(function () {
+                    var max_fields = 15; //maximum input boxes allowed
+                    var wrapper = $(".mainDeviceInformation"); //Fields wrapper
+                    var add_button = $(".add_field_button"); //Add button ID
+                    var x = 1; //initlal text box count
+                    var id=2;
+                    $(add_button).click(function (e) { //on add input button click
+                        e.preventDefault();
+                        if (x < max_fields) { //max input box allowed
+                            x++; //text box increment
+                           
+                            console.log("incremented value="+id)
+                            $(wrapper).append(
+                              /*  '<div style="margin-top:30px;"><div class="row"><div class="col s12 m6"><label for="deviceType">Device Type <spanclass="star">*</span></label><select class="browser-default" id='"deviceType"+id+"'><option value="" disabled selected>Device Type</option><option value='Handheld'>Handheld</option><option value='MobilePhone'>Mobile Phone/Feature phone</option><option value='Vehicle'>Vehicle</option><option value='Portable'>Portable(include PDA)</option><option value='Module'>Module</option><option value='Dongle'>Dongle</option><option value='WLAN'>WLAN Router</option><option value='Modem'>Modem</option><option value='Smartphone'>Smartphone</option><option value='Computer'>Connected Computer</option><option value='Tablet'>Tablet</option><option value='e-Book'>e-Book</option></select></div><div class='col s12 m6'><label for='deviceIdType'>Device ID Type <span class='star'>*</span></label><select class='browser-default' id='deviceIdType'><option value="" disabled selected>Select Device ID Type</option><option value='IMEI'>IMEI</option><option value='ESN'>ESN</option><option value='MEID'>MEID</option></select></div><div class='col s12 m6'><label for='deviceType'>Multiple Sim Status <span class='star'>*</span></label><select class='browser-default' id='deviceType'><option value="" disabled selected>Multiple Sim Status</option><option value='Yes'>Yes</option><option value='No'>No</option></select></div><div class='col s12 m6'><label for='country'>Country bought From <span class='star'>*</span></label><select id='country1' class='browser-default' class='mySelect' style='padding-left: 0;' required></select></div><div class='input-field col s12 m6' style='margin-top: 28px;'><input type='text' id='serialNumber1' name='serialNumber1' pattern='[0-9]' title='Please enter your device serial number first' maxlength='20'><label for='serialNumber1'>Device Serial Number <span class='star'>*</span></label></div><div class='col s12 m6'><label for='deviceType'>Tax paid Status <span class='star'>*</span></label><select class='browser-default' id='deviceType'><option value="" disabled selected>Tax paid Status</option><option value='Regularized'>Regularized</option><option value='Paid'>Paid</option><option value='NotPaid'>Not Paid</option></select></div></div><div class='row'><div class='col s12 m6' style='margin-top: -10px;'><label for='taxStatus'>Device Status <span class='star'>*</span></label><select class='browser-default' id='taxStatus'><option value='' disabled selected>Select Device Status</option><option value='New'>New</option><option value='Used'>Used</option><option value='Refurbished'>Refurbished</option></select></div><div class='input-field col s12 m6 l6'><input type='text' name='Price' id='Price' maxlength='30'><label for='Price'>Price <span class='star'>*</span></label></div><div class='col s12 m6'><label for='Currency'>Currency <span class='star'>*</span></label><select class='browser-default' id='Currency'><option value='' disabled selected>Select Currency</option><option value='Regularized'>$</option><option value='Paid'>$</option><option value="NotPaid">$</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI1">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI2">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI3">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEI4">4</label></div></div><div style="cursor:pointer;background-color:red;' class='remove_field btn right btn-info'>Remove</div></div>'*/
+                            		'<div id="deviceInformation'+id+'" class="deviceInformation"><div class="row"><div class="col s12 m6"><label for="deviceType">Device Type <spanclass="star">*</span></label><select class="browser-default" required id="deviceType'+id+'"><option value="" disabled selected>Device Type</option></select></div><div class="col s12 m6"><label for="deviceIdType'+id+'">Device ID Type <span class="star">*</span></label><select class="browser-default" required id="deviceIdType'+id+'"><option value="" disabled selected>Select Device ID Type</option></select></div><div class="col s12 m6"><label for="multipleSimStatus'+id+'">Multiple Sim Status <span class="star">*</span></label><select class="browser-default" required id="multipleSimStatus'+id+'"><option value="" disabled selected>Multiple Sim Status</option></select></div><div class="col s12 m6"><label for="deviceCountry">Country bought From <span class="star">*</span></label><select id="country'+id+'" class="browser-default" required class="mySelect" style="padding-left: 0;" required></select></div><div class="input-field col s12 m6" style="margin-top: 28px;"><input type="text" id="serialNumber'+id+'" required name="serialNumber'+id+'" pattern="[A-Za-z0-9]{0,15}" title="Please enter your device serial number first" maxlength="15"><label for="serialNumber'+id+'">Device Serial Number <span class="star">*</span></label></div><div class="col s12 m6"><label for="taxStatus'+id+'">Tax paid Status <span class="star">*</span></label><select class="browser-default" required id="taxStatus'+id+'"><option value="" disabled selected>Tax paid Status</option></select></div></div><div class="row"><div class="col s12 m6" style="margin-top: -10px;"><label for="deviceStatus'+id+'">Device Status <span class="star">*</span></label><select class="browser-default" required id="deviceStatus'+id+'"><option value="" disabled selected>Select Device Status</option></select></div><div class="input-field col s12 m6 l6"><input type="text" name="Price" id="Price'+id+'" required maxlength="30"><label for="Price'+id+'">Price <span class="star">*</span></label></div><div class="col s12 m6"><label for="Currency'+id+'">Currency <span class="star">*</span></label><select class="browser-default" required id="Currency'+id+'"><option value="" disabled selected>Select Currency</option></select></div></div><div class="row"><div class="col s12 m12"><p>IMEI/MEID/ESN</p></div><div class="input-field col s12 m6"><input type="text" id="IMEIA'+id+'" required name="IMEI1" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIA'+id+'">1 <span class="star">*</span></label></div><div class="input-field col s12 m6"><input type="text"  id="IMEIB'+id+'" name="IMEI2" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIB'+id+'">2</label></div><div class="input-field col s12 m6"><input type="text" id="IMEIC'+id+'"  name="IMEI3" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEIC'+id+'">3</label></div><div class="input-field col s12 m6"><input type="text" id="IMEID'+id+'"  name="IMEI4[]" pattern="[0-9]{15,16}"title="Please enter minimum 15 and maximum 16 digit only"maxlength="16"><label for="IMEID'+id+'">4</label></div></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">Remove</div></div>'
+                            
+                            );  //add input box
+                          
+                            populateCountries
+                         	(   
+                         			"country"+id
+                         	);
+                            $.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+                            	var dropdownid=id-1;
+                        		for (i = 0; i < data.length; i++) {
+                        			$('<option>').val(data[i].value).text(data[i].interp)
+                        			.appendTo('#taxStatus'+dropdownid);
+                        			
+                        			console.log("+++++taxStatus"+dropdownid);
+                        		}
+                        	});
+
+
+
+                        	$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+                        		var dropdownid=id-1;
+                        		for (i = 0; i < data.length; i++) {
+                        			$('<option>').val(data[i].value).text(data[i].interp)
+                        			.appendTo('#deviceType'+dropdownid);
+                        			console.log('#deviceType'+dropdownid)
+                        		}
+                        	});
+
+
+                        	
+                        	$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+                        		var dropdownid=id-1;
+                        		for (i = 0; i < data.length; i++) {
+                        			$('<option>').val(data[i].value).text(data[i].interp)
+                        			.appendTo('#deviceIdType'+dropdownid);
+                        			console.log('#deviceIdType'+dropdownid);
+                        		}
+                        	});
+                        	
+                        	$.getJSON('./getDropdownList/currency', function(data) {
+                        		var dropdownid=id-1;
+                        		for (i = 0; i < data.length; i++) {
+                        			$('<option>').val(data[i].value).text(data[i].interp)
+                        			.appendTo('#Currency'+dropdownid);
+                        			console.log('#Currency'+dropdownid);
+                        		}
+                        	});
+                        	
+                        	$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+                        		var dropdownid=id-1;
+                        		for (i = 0; i < data.length; i++) {
+                        			$('<option>').val(data[i].value).text(data[i].interp)
+                        			.appendTo('#multipleSimStatus'+dropdownid);
+                        			console.log('#multipleSimStatus'+dropdownid);
+                        		}
+                        	});
+                        	
+                        	$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+                        		var dropdownid=id-1;
+                        		for (i = 0; i < data.length; i++) {
+                        			$('<option>').val(data[i].value).text(data[i].interp)
+                        			.appendTo('#deviceStatus'+dropdownid);
+                        			console.log('#deviceStatus'+dropdownid);
+                        		}
+                        	});
+                            
+                        	
+                        	id++;
+                        }
+                    });
+                    $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+                        e.preventDefault();
+                        $(this).parent('div').remove();
+                        x--;
+                    })
+                });
     </script>
 
 </body>

@@ -224,7 +224,7 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 //alert("currentRoleType<><><><>"+currentRoleType);
 function filter(){
 	if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType !="viaStock" ){
-	Datatable('headers','stockData')
+	Datatable('headers?type=stockHeaders','stockData');
 	}else if(currentRoleType=="Custom"){
 	Datatable('./headers?type=customStockHeaders','stockData')
 	}else if(currentRoleType=="CEIRAdmin"){
