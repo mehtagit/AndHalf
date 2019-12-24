@@ -40,4 +40,8 @@ public interface UploadPaidStatusFeignClient {
 	@GetMapping("/end-user-device-info/{imei}")
 	public @ResponseBody UserPaidStatusContent viewByImei(@PathVariable("imei") Long imei);
 	
+
+	@PostMapping("/end-user-device-info/count-by-nid/{nid}")
+	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid);
+	
 }

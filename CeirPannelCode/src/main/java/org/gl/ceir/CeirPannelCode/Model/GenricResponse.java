@@ -6,6 +6,7 @@ public class GenricResponse {
 	private String txnId;
 	private String  message;
 	private String response,statusCode,user;
+	private CountApprovedData data;
 	public String getErrorCode() {
 		return errorCode;
 	}
@@ -23,11 +24,6 @@ public class GenricResponse {
 	}
 	public void setMessage(String message) {
 		this.message = message;
-	}
-	@Override
-	public String toString() {
-		return "GenricResponse [errorCode=" + errorCode + ", txnId=" + txnId + ", message=" + message + ", response="
-				+ response + ", statusCode=" + statusCode + ", user=" + user + "]";
 	}
 	public String getResponse() {
 		return response;
@@ -47,8 +43,15 @@ public class GenricResponse {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	
-	
-	
-	
-}
+	public CountApprovedData getData() {
+		return data;
+	}
+	public void setData(CountApprovedData data) {
+		this.data = data;
+	}
+	@Override
+	public String toString() {
+		return "GenricResponse [errorCode=" + errorCode + ", txnId=" + txnId + ", message=" + message + ", response="
+				+ response + ", statusCode=" + statusCode + ", user=" + user + ", data=" + data + "]";
+	}
+	}

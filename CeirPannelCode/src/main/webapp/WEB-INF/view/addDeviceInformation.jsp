@@ -1127,11 +1127,13 @@ input[type='search'] {
 	$(document).ready(function () {
 		console.log("start,..");
 		$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
-			for (i = 0; i < data.length; i++) {
+			/* for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#taxStatus1');
-				console.log("...........");
-			}
+				console.log("...........");} */
+				$('#taxStatus1').prop('disabled', 'disabled');
+		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
+			
 		});
 
 
@@ -1226,14 +1228,27 @@ input[type='search'] {
                          	(   
                          			"country"+id
                          	);
+                            var current =localStorage.getItem("current");
+                            
+                            console.log("allowed session value=="+current)
                             $.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
                             	var dropdownid=id-1;
-                        		for (i = 0; i < data.length; i++) {
-                        			$('<option>').val(data[i].value).text(data[i].interp)
-                        			.appendTo('#taxStatus'+dropdownid);
-                        			
-                        			console.log("+++++taxStatus"+dropdownid);
-                        		}
+                            	if(dropdownid <= current){
+                            		
+                           		 $('#taxStatus'+dropdownid).prop('disabled', 'disabled');
+                       		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus'+dropdownid);
+                       			//console.log("+++++taxStatus"+dropdownid);
+                       		//alert("Regularised");
+                       		}
+                           	else{
+                           		for (i = 0; i < data.length; i++) {
+                           			$('<option>').val(data[i].value).text(data[i].interp)
+                           			.appendTo('#taxStatus'+dropdownid);
+                           			//alert("NonRegularised");
+                           			// $('#taxStatus'+dropdownid).prop('disabled', 'false');
+                           			console.log("+++++taxStatus"+dropdownid);
+                           		}
+                           	}
                         	});
 
 
