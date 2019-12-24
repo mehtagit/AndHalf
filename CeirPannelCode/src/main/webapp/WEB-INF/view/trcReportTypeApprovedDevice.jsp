@@ -153,7 +153,7 @@
 									<div class="col s12 m6 l6">
 										<label for="status">Status <span class="star">*</span></label>
 										<select class="browser-default" required="required" id="status">
-											<option>Status</option>
+											<option value="">Status</option>
 										</select>
 									</div>
 									

@@ -295,10 +295,7 @@ style="font-size: 20px; color: red;" title="delete"></i></a>
             data-dismiss="modal">&times;</button>
             <h6>Assign Distributor</h6>
             <div class="modal-content">
-
-        
-            <hr>
-            <!-- <h4 class="header2 pb-2">User Info</h4> -->
+ <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
             <div class="row">
                 <div class="input-field col s10 m6">

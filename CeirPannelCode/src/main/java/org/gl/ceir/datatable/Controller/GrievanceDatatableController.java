@@ -290,6 +290,25 @@ public class GrievanceDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}
+				
+				else if ("Operator".equals(userType)) {
+					log.info("<><><><> in Operator Greivance Controller");
+					for (GrievanceContentModel dataInsideList : paginationContentList) {
+					String createdOn = dataInsideList.getCreatedOn();
+					String modifiedOn = dataInsideList.getModifiedOn();
+					String txnId = dataInsideList.getTxnId();
+					String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+					String grievanceStatus = dataInsideList.getStateInterp();
+					String userStatus = (String) session.getAttribute("userStatus");
+					String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+					StatusofGrievance, userStatus, userId);
+					Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+					}
+					}
 			}
 			// data set on ModelClass
 			datatableResponseModel.setRecordsTotal(grievancepaginationmodel.getNumberOfElements());
