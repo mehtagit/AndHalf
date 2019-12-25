@@ -27,7 +27,7 @@ function hide() {
 				$("#submitbtn").css("display", "none");
 			}
 			$('#nationalID').val(In);
-sss();
+regularizedCount();
 		},
 		error : function() {
 			console.log("Failed");
@@ -776,7 +776,7 @@ $(document).ready(function () {
         
         
         
-        function sss(){
+       function regularizedCount(){
 	var nid=$('#nationalID').val();
     console.log("nid==&&&&&&&&&&&&&&&&&"+nid);
 	$.ajax({
