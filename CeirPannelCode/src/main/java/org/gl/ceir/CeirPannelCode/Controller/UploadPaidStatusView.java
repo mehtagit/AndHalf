@@ -3,11 +3,15 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -41,6 +45,8 @@ public class UploadPaidStatusView {
 	@Autowired
 	UserPaidStatusFeignClient userPaidStatusFeignClient;
 
+	@Autowired
+	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
 	
 	@GetMapping("uploadPaidStatus")
 	public ModelAndView pageView() {
@@ -81,7 +87,7 @@ public class UploadPaidStatusView {
 		}
 		
 		log.info(""+regularizeDeviceDbs.toString());
-		log.info(" Register consignment entry point.");
+		log.info(" upload status  entry point.");
 		try { byte[] bytes = file.getBytes();
 		String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; 
 		File dir = new File(rootPath + File.separator);
@@ -148,5 +154,17 @@ public class UploadPaidStatusView {
 			return "redirect:"+fileExportResponse.getUrl();
 	}
 	
+	
+	
+	//***********************************************cuurency controller *************************************************
+	@RequestMapping(value="/countByNid",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+	public @ResponseBody GenricResponse countByNid(@RequestParam("nid") String nId)  {
+	log.info("request send to the currency  api="+nId);
+	GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId);
+
+	log.info("response from currency api "+response);
+	return response;
+
+	}
 	
 }

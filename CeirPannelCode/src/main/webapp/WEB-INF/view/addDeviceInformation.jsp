@@ -330,7 +330,7 @@ input[type='search'] {
 		style="position: fixed; bottom: 0; width: 100%;">
 		<div class="footer-copyright">
 			<div class="container">
-				<span class="right">Copyright Â© 2018 Sterlite Technologies
+				<span class="right">Copyright Ã‚Â© 2018 Sterlite Technologies
 					Ltd, All rights reserved.</span>
 			</div>
 		</div>
@@ -1124,14 +1124,17 @@ input[type='search'] {
  			"country1"
  	);
 	
+	
 	$(document).ready(function () {
 		console.log("start,..");
 		$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
-			for (i = 0; i < data.length; i++) {
+			/* for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#taxStatus1');
-				console.log("...........");
-			}
+				console.log("...........");} */
+				$('#taxStatus1').prop('disabled', 'disabled');
+		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
+			
 		});
 
 
@@ -1181,6 +1184,7 @@ input[type='search'] {
 		
 	        });
 
+
   /*       $(document).ready(function () {
             var max_fields = 15; //maximum input boxes allowed
             var wrapper = $(".input_fields_wrap"); //Fields wrapper
@@ -1204,7 +1208,7 @@ input[type='search'] {
         
 
 
-        $(document).ready(function () {
+$(document).ready(function () {
                     var max_fields = 15; //maximum input boxes allowed
                     var wrapper = $(".mainDeviceInformation"); //Fields wrapper
                     var add_button = $(".add_field_button"); //Add button ID
@@ -1226,14 +1230,27 @@ input[type='search'] {
                          	(   
                          			"country"+id
                          	);
+                            var current =localStorage.getItem("current");
+                            
+                            console.log("allowed session value=="+current)
                             $.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
                             	var dropdownid=id-1;
-                        		for (i = 0; i < data.length; i++) {
-                        			$('<option>').val(data[i].value).text(data[i].interp)
-                        			.appendTo('#taxStatus'+dropdownid);
-                        			
-                        			console.log("+++++taxStatus"+dropdownid);
-                        		}
+                            	if(dropdownid <= current){
+                            		
+                           		 $('#taxStatus'+dropdownid).prop('disabled', 'disabled');
+                       		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus'+dropdownid);
+                       			//console.log("+++++taxStatus"+dropdownid);
+                       		//alert("Regularised");
+                       		}
+                           	else{
+                           		for (i = 0; i < data.length; i++) {
+                           			$('<option>').val(data[i].value).text(data[i].interp)
+                           			.appendTo('#taxStatus'+dropdownid);
+                           			//alert("NonRegularised");
+                           			// $('#taxStatus'+dropdownid).prop('disabled', 'false');
+                           			console.log("+++++taxStatus"+dropdownid);
+                           		}
+                           	}
                         	});
 
 

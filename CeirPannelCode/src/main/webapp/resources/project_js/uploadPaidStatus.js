@@ -27,7 +27,7 @@ function hide() {
 				$("#submitbtn").css("display", "none");
 			}
 			$('#nationalID').val(In);
-
+sss();
 		},
 		error : function() {
 			console.log("Failed");
@@ -66,14 +66,28 @@ $(document).ready(function () {
                  			"country"+id
                  	);
                     
+                    
+                    var allowed =localStorage.getItem("allowed");
+                    
+                    console.log("allowed session value=="+allowed)
                     $.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
                     	var dropdownid=id-1;
-                		for (i = 0; i < data.length; i++) {
-                			$('<option>').val(data[i].value).text(data[i].interp)
-                			.appendTo('#taxStatus'+dropdownid);
-                			
-                			console.log("+++++taxStatus"+dropdownid);
+                    	if(dropdownid <= allowed){
+                    		
+                    		 $('#taxStatus'+dropdownid).prop('disabled', 'disabled');
+                		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus'+dropdownid);
+                			//console.log("+++++taxStatus"+dropdownid);
+                		//alert("Regularised");
                 		}
+                    	else{
+                    		for (i = 0; i < data.length; i++) {
+                    			$('<option>').val(data[i].value).text(data[i].interp)
+                    			.appendTo('#taxStatus'+dropdownid);
+                    			//alert("NonRegularised");
+                    			// $('#taxStatus'+dropdownid).prop('disabled', 'false');
+                    			console.log("+++++taxStatus"+dropdownid);
+                    		}
+                    	}
                 	});
 
 
@@ -704,11 +718,13 @@ function taxPaidStatus(){
 $(document).ready(function () {
 	console.log("start,..");
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
+		/*for (i = 0; i < data.length; i++) {
+			$('<option>').val("2").text("Regularized")
 			.appendTo('#taxStatus1');
 			console.log("...........");
-		}
+		}*/
+		$('#taxStatus1').prop('disabled', 'disabled');
+		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
 	});
 
 
@@ -757,3 +773,32 @@ $(document).ready(function () {
 	
 	
         });
+        
+        
+        
+        function sss(){
+	var nid=$('#nationalID').val();
+    console.log("nid==&&&&&&&&&&&&&&&&&"+nid);
+	$.ajax({
+		url: './countByNid?nid='+nid,
+		type: 'GET',
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			console.log("in suucess method");
+			console.log(data.data.allowed);
+			var allowed=data.data.allowed;
+			var current=data.data.current;
+			console.log("set session value==="+allowed);
+			localStorage.setItem("allowed", allowed);
+			localStorage.setItem("current", current);
+	        /* var allowedd = localStorage.getItem("allowed");
+	          console.log("_____________"+allowedd);*/
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		
+		}
+	});
+}
+        
