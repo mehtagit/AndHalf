@@ -321,11 +321,19 @@ else {
 
 	//***************************************** Export Grievance controller *********************************
 	@RequestMapping(value="/exportStock",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public String exportToExcel(@RequestParam(name="stockStartDate",required = false) String stockStartDate,@RequestParam(name="stockEndDate",required = false) String stockEndDate,
-			@RequestParam(name="stockTxnId",required = false) String stockTxnId,@RequestParam(name="StockStatus") Integer StockStatus,HttpServletRequest request,
-			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="roleType") String roleType)
+	public String exportToExcel(@RequestParam(name="stockStartDate",required = false) String stockStartDate,
+			@RequestParam(name="stockEndDate",required = false) String stockEndDate,
+			@RequestParam(name="stockTxnId",required = false) String stockTxnId,
+			@RequestParam(name="StockStatus") Integer StockStatus,
+			@RequestParam(name="userType") String userType,
+			@RequestParam(name="userTypeId") Integer userTypeId,
+			HttpServletRequest request,
+			HttpSession session,
+			@RequestParam(name="pageSize") Integer pageSize,
+			@RequestParam(name="pageNo") Integer pageNo,
+			@RequestParam(name="roleType") String roleType)
 	{
-		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId);
+		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId+"userType="+userType+"userTypeId="+userTypeId);
 		int userId= (int) session.getAttribute("userid"); 
 		int file=1;
 		FileExportResponse fileExportResponse;
@@ -336,6 +344,10 @@ else {
 		filterRequest.setConsignmentStatus(StockStatus);
 		filterRequest.setUserId(userId);
 		filterRequest.setRoleType(roleType);
+		filterRequest.setUserType(userType);
+		filterRequest.setUserTypeId(userTypeId);
+		
+		
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= feignCleintImplementation.stockFilter(filterRequest, pageNo, pageSize, file);
 
