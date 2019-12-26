@@ -43,6 +43,13 @@ public class FilterRequest_UserPaidStatus {
 		public void setModifiedOn(String modifiedOn) {
 			this.modifiedOn = modifiedOn;
 		}
+		
+		public String getNid() {
+			return nid;
+		}
+		public void setNid(String nid) {
+			this.nid = nid;
+		}
 		@Override
 		public String toString() {
 			return "FilterRequest_UserPaidStatus [deviceIdType=" + deviceIdType + ", deviceType=" + deviceType
