@@ -198,8 +198,8 @@ input[type='search'] {
 											</div>
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m6">
-													<input type="text" id="nationalID" name="nationalID"
-														placeholder="" value="" /> <label for="nationalID"
+													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{12,12}" title="Please enter alphabets and numbers upto 15 characters only"
+													  required="required" maxlength="12" name="nationalID"placeholder="" value="" /> <label for="nationalID"
 														class="center-align ml-10">NID </label>
 												</div>
 
@@ -251,7 +251,7 @@ input[type='search'] {
 											<div class="col s12 m12">
 												<div class="input-field col s12 m12 l12">
 													<input type="text" name="address"
-														pattern="[A-Za-z0-9]{0,200}"
+														pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
 														title="Please enter alphabets and numbers upto 200 characters only"
 														maxlength="200" required="required"
 														class="form-control boxBorder boxHeight" id="address">
@@ -260,7 +260,7 @@ input[type='search'] {
 												</div>
 
 												<div class="input-field col s12 m6 l6">
-													<input type="text" pattern="[A-Za-z0-9]{0,20}"
+													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
 														title="Please enter alphabets and numbers upto 20 characters only"
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="streetNumber"
@@ -272,7 +272,7 @@ input[type='search'] {
 
 												<div class="input-field col s12 m6 l6">
 													<input type="text" name="locality"
-														pattern="[A-Za-z0-9]{0,50}"
+														pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
 														title="Please enter alphabets and numbers upto 50 characters only"
 														class="form-control boxBorder boxHeight" id="locality"
 														maxlength="50" required="required"> <label
@@ -720,7 +720,7 @@ input[type='search'] {
 		<div class="modal-content">
 
 			<div class="row">
-				<h6 id="responseMsg"></h6>
+				<h6 id="responseMsg"> This device information has been successfully deleted.</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -735,7 +735,7 @@ input[type='search'] {
 		<div class="modal-content">
 
 			<div class="row">
-				<h6 id="taxPaidMsg"></h6>
+				<h6 id="taxPaidMsg"> The device status has been successfully updated</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">

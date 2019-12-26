@@ -34,8 +34,14 @@ regularizedCount();
 		}
 	}); 
 	sessionStorage.setItem("nationalId", In);
+	localStorage.setItem("nationalId", In);
+	//localStorage.removeItem('incrementedCurrent');
+	 //var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
+	// console.log("******"+incrementedCurrent);
+	//localStorage.removeItem('current');	
 	pageRendering();
-	filter(); 
+	filter();
+
 	}
 	
 }
@@ -172,15 +178,14 @@ function filter()
 		console.log("sesion value set to "+sessionFlag);
 	}
 	table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
-
-
 	localStorage.removeItem('sourceType');
-
 }
 
 
 
 function table(url,dataUrl){
+	//var nid=$('#nationalID').val(In);
+	var nationalId =localStorage.getItem("nationalId");
 	var request={
 			"modifiedOn":$('#endDate').val(),
 			"createdOn":$('#startDate').val(),
@@ -193,6 +198,7 @@ function table(url,dataUrl){
 			"deviceType":parseInt($('#deviceType').val()),
 			"txnId":$('#Search').val(),
 			"consignmentStatus": 3,
+			"nid":nationalId
 	}
 
 
@@ -281,7 +287,7 @@ function pageButtons(url){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='-1'>"+dropdown[i].title+
+							"<option value=''>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -308,6 +314,7 @@ function pageButtons(url){
 
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				for (i = 0; i < data.length; i++) {
+					//console.log(data[i].value);
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxPaidStatus');
 				}
@@ -359,11 +366,11 @@ function accept(){
 
 			$('#confirmDeleteMsg').openModal();
 			$('#deleteMsg').closeModal();
-			if(data.errorCode == 200){
+			/*if(data.errorCode == 200){
 				$("#responseMsg").text(data.message);
 			}else if(data.errorCode == 0){
 				$("#responseMsg").text(data.message);
-			}
+			}*/
 		},
 		error : function() {
 			console.log("Error");
@@ -441,7 +448,7 @@ function historytable(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify({						
 							"nid":$('#Search').val(),
-							"consignmentStatus": 3,
+							"taxPaidStatus":3
 						}); 
 					}
 
@@ -525,7 +532,7 @@ var deviceInfo=
 {
 "country": deviceCountry,
 "currency": parseInt(Currency1),
-"deviceIdType": parseInt(deviceType1),
+"deviceIdType": parseInt(deviceIdType1),
 "deviceSerialNumber": serialNumber1,
 "deviceStatus": parseInt(deviceStatus1),
 "deviceType": parseInt(deviceType1),
@@ -673,16 +680,16 @@ function taxPaidStatus(){
 		'data' : JSON.stringify(request),
 		success: function (data, textStatus, jqXHR) {
 			console.log("success"+JSON.stringify(data))
-
+			var msg="The device status has been successfully updated";
 			$('#payTaxModal').closeModal();
 			$('#payNowTaxPayment').openModal();
-			if(data.errorCode==200){
-				$('#taxPaidMsg').text(data.message);
+			/*if(data.errorCode==200){
+				$('#taxPaidMsg').text(msg);
 
 			}
 			else{
-				$('#taxPaidMsg').text(data.message);
-			}
+				$('#taxPaidMsg').text(msg);
+			}*/
 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -789,7 +796,8 @@ $(document).ready(function () {
 			console.log(data.data.allowed);
 			var allowed=data.data.allowed;
 			var current=data.data.current;
-			console.log("set session value==="+allowed);
+			console.log("set allowed value==="+allowed);
+			console.log("set current value==="+current);
 			localStorage.setItem("allowed", allowed);
 			localStorage.setItem("current", current);
 	        /* var allowedd = localStorage.getItem("allowed");
