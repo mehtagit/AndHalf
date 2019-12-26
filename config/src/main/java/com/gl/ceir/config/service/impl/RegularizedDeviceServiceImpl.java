@@ -36,6 +36,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.Tags;
+import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.CustomDetailsRepository;
@@ -81,15 +82,15 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
-	
+
 	@Autowired
 	InterpSetter interpSetter;
-	
+
 	@Autowired
 	StatusSetter statusSetter;
 
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
-		
+
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
@@ -118,18 +119,18 @@ public class RegularizedDeviceServiceImpl {
 			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 				specificationBuilder.with(new SearchCriteria("status", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
-			
+
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(specificationBuilder.build(), pageable);
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 
-				regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
+				regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
 
-				regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
-				
-				regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
-				
-				regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
+				regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
+
+				regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
+
+				regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setConfigInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
 			}
 
 			return page;
@@ -215,19 +216,31 @@ public class RegularizedDeviceServiceImpl {
 	@Transactional
 	public GenricResponse saveDevices(EndUserDB endUserDB) {
 		try {
+			String nid = endUserDB.getNid();
 
-			EndUserDB endUserDB2 = endUserDbRepository.getByNid(endUserDB.getNid());
-
-			statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-			// End user is not registered with CEIR system.
-			if(Objects.isNull(endUserDB2)) {
-				endUserDbRepository.save(endUserDB);
-			}else {
-				// TODO Validation required.
-				regularizedDeviceDbRepository.saveAll(endUserDB.getRegularizeDeviceDbs());
-			}
+			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
 			
-			return new GenricResponse(0, "User register sucessfully", endUserDB.getRegularizeDeviceDbs().get(0).getTxnId());
+			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
+				
+				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
+					
+					statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+
+					// End user is not registered with CEIR system.
+					if(Objects.isNull(endUserDB2)) {
+						endUserDbRepository.save(endUserDB);
+					}else {
+						regularizedDeviceDbRepository.saveAll(endUserDB.getRegularizeDeviceDbs());
+					}
+
+					return new GenricResponse(0, "User register sucessfully.", endUserDB.getRegularizeDeviceDbs().get(0).getTxnId());
+				}else {
+					logger.warn("Regularized Devices are exceeding the allowed count." + endUserDB);
+					return new GenricResponse(1, "Regularized Devices are exceeding the allowed count.", "");
+				}
+			}else {
+				return new GenricResponse(2, "No device found in the system.", "");
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -239,7 +252,7 @@ public class RegularizedDeviceServiceImpl {
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 
 			if(Objects.nonNull(userCustomDbDetails)) {
-				
+
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
 				return new GenricResponse(0, "Update Successfully.",userCustomDbDetails.getDeviceSerialNumber());
@@ -256,7 +269,7 @@ public class RegularizedDeviceServiceImpl {
 		try {
 
 			return regularizedDeviceDbRepository.getByFirstImei(imei);
-			
+
 			/*if(userDetails != null) {
 				return userDetails;
 			}else {
@@ -299,9 +312,9 @@ public class RegularizedDeviceServiceImpl {
 	public GenricResponse deleteCustomInfo(Long imei) {
 		try {
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
-			
+
 			if(Objects.nonNull(regularizeDeviceDb)) {
-				
+
 				regularizedDeviceDbRepository.deleteById(regularizeDeviceDb.getId());
 
 				userCustomHistoryDbRepository.save(new RegularizeDeviceHistoryDb(regularizeDeviceDb.getNid(), regularizeDeviceDb.getDeviceStatus(), regularizeDeviceDb.getFirstImei(), 
@@ -320,7 +333,7 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
-	
+
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
 		try {
 			return new GenricResponse(0, "", "", new Count(propertiesReader.defaultNoOfRegularizedDevices, regularizedDeviceDbRepository.countByNid(nid)));	
@@ -329,5 +342,40 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
+
+	private boolean validateRegularizedDevicesCount(String nid, List<RegularizeDeviceDb> regularizeDeviceDbs) {
+		try {
+			Count count = (Count) getCountOfRegularizedDevicesByNid(nid).getData();
+			return validateRegularizedDevicesCount(count, regularizeDeviceDbs);
+		}catch (ClassCastException e) {
+			return Boolean.FALSE;
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return Boolean.FALSE;
+		}
+	}
 	
+	private boolean validateRegularizedDevicesCount(Count count, List<RegularizeDeviceDb> regularizeDeviceDbs) {
+		try {
+			Long regularizedDeviceCount = regularizedDevicesCountByStatus(regularizeDeviceDbs, TaxStatus.REGULARIZED.getCode());
+			if(count.getAllowed() <= regularizedDeviceCount + count.getCurrent()) {
+				return Boolean.TRUE;
+			}else {
+				return Boolean.FALSE;
+			}
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return Boolean.FALSE;
+		}
+	}
+	
+	private Long regularizedDevicesCountByStatus(List<RegularizeDeviceDb> regularizeDeviceDbs, int status) {
+		try {
+			return regularizeDeviceDbs.stream().filter(o -> o.getTaxPaidStatus() == status).count();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return -1L;
+		}
+	}
 }

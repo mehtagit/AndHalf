@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model.constants;
 
 public enum TaxStatus {
-	TAX_PAID(0), TAX_NOT_PAID(1);
+	TAX_PAID(0), TAX_NOT_PAID(1), REGULARIZED(2), BLOCKED(3);
 	
 	private Integer code;
 

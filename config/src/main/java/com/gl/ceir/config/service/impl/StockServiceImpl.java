@@ -54,6 +54,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
+import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -82,9 +83,6 @@ public class StockServiceImpl {
 	UserRepository userRepository;
 
 	@Autowired
-	StateMgmtServiceImpl stateMgmtServiceImpl;
-
-	@Autowired
 	PropertiesReader propertiesReader;
 
 	@Autowired
@@ -94,7 +92,13 @@ public class StockServiceImpl {
 	EmailUtil emailUtil;
 	
 	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
+	
+	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
+	
+	@Autowired
+	InterpSetter interpSetter;
 
 	public GenricResponse uploadStock(StockMgmt stackholderRequest) {
 
@@ -207,16 +211,19 @@ public class StockServiceImpl {
 			}
 
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
-			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			// stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId();
 			logger.info(stateInterpList);
 			
 			for(StockMgmt stockMgmt : page.getContent()) {
-				for(StateMgmtDb stateMgmtDb : stateInterpList) {
+				
+				/*for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
 						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
 						// break;
 					}
-				}
+				}*/
+				
+				interpSetter.setStateInterp(filterRequest.getFeatureId(), filterRequest.getUserTypeId(), stockMgmt.getStockStatus());
 			}
 
 			return page;

@@ -254,12 +254,13 @@ public class ConsignmentServiceImpl {
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
-				for(StateMgmtDb stateMgmtDb : featureList) {
-					if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
-						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
-						break;
-					}
-				}
+				/*
+				 * for(StateMgmtDb stateMgmtDb : featureList) {
+				 * if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
+				 * consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); break; } }
+				 */
+				
+				interpSetter.setStateInterp(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId(), consignmentMgmt2.getConsignmentStatus());
 
 				/*
 				 * for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
@@ -267,7 +268,7 @@ public class ConsignmentServiceImpl {
 				 * consignmentMgmt2.setTaxInterp(systemConfigListDb.getInterp()); break; } }
 				 */				
 				
-				consignmentMgmt2.setTaxInterp(interpSetter.setInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt2.getTaxPaidStatus()));
+				consignmentMgmt2.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt2.getTaxPaidStatus()));
 			}
 
 			return page;
@@ -555,7 +556,5 @@ public class ConsignmentServiceImpl {
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
-
-
 
 }
