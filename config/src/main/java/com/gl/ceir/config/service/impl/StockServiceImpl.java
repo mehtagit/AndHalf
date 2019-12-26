@@ -148,15 +148,18 @@ public class StockServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
-				filterRequest.setUserType("Custom");
-			}
-
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler(propertiesReader.dialect);
+			
+			/*
+			 * if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
+			 * filterRequest.setUserType("Custom"); }
+			 */
 
 			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 					"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
-					"Retailer".equalsIgnoreCase(filterRequest.getUserType())) {
+					"Retailer".equalsIgnoreCase(filterRequest.getUserType()) || 
+					"Manufacturer".equalsIgnoreCase(filterRequest.getUserType())
+					) {
 				
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));

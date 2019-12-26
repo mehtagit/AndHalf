@@ -29,21 +29,23 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
+import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigListDb;
-import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.CustomDetailsRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
+import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
-import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
+import com.gl.ceir.config.util.StatusSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -82,6 +84,9 @@ public class RegularizedDeviceServiceImpl {
 	
 	@Autowired
 	InterpSetter interpSetter;
+	
+	@Autowired
+	StatusSetter statusSetter;
 
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		
@@ -110,6 +115,10 @@ public class RegularizedDeviceServiceImpl {
 			if(Objects.nonNull(filterRequest.getTaxPaidStatus()))
 				specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+				specificationBuilder.with(new SearchCriteria("status", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
+			
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(specificationBuilder.build(), pageable);
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
@@ -209,6 +218,7 @@ public class RegularizedDeviceServiceImpl {
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(endUserDB.getNid());
 
+			statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 			// End user is not registered with CEIR system.
 			if(Objects.isNull(endUserDB2)) {
 				endUserDbRepository.save(endUserDB);

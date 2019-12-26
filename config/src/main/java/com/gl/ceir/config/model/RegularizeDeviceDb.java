@@ -2,6 +2,7 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,11 +14,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.gl.ceir.config.util.State;
+import com.gl.ceir.config.util.StatusSetter;
 
 @Entity
-public class RegularizeDeviceDb implements Serializable {
+public class RegularizeDeviceDb extends State implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -82,7 +86,12 @@ public class RegularizeDeviceDb implements Serializable {
 	private Long thirdImei;
 	
 	private Long fourthImei;
+	
+	private String remark;
 
+	@NotNull
+	private Integer status;
+	
 	@ManyToOne 
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
@@ -281,6 +290,22 @@ public class RegularizeDeviceDb implements Serializable {
 
 	public void setDeviceStatusInterp(String deviceStatusInterp) {
 		this.deviceStatusInterp = deviceStatusInterp;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 	@Override

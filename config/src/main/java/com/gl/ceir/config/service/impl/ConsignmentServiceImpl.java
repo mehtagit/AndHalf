@@ -199,7 +199,6 @@ public class ConsignmentServiceImpl {
 			Integer pageSize) {
 
 		List<StateMgmtDb> featureList = null;
-		List<SystemConfigListDb> customTaxStatusList = null;
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -252,7 +251,6 @@ public class ConsignmentServiceImpl {
 			}
 
 			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
-			customTaxStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
