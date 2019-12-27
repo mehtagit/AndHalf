@@ -71,7 +71,7 @@ public class StockDatatableController {
 			String apiResponse = gson.toJson(response);
 			stockPaginationModel = gson.fromJson(apiResponse, StockPaginationModel.class);
 			List<StockContent> paginationContentList = stockPaginationModel.getContent();
-			log.info("-----after response-  paginationContentList------" + paginationContentList);
+			//log.info("-----after response-  paginationContentList------" + paginationContentList);
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
@@ -127,11 +127,13 @@ public class StockDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 				}else if("CEIRAdmin".equals(userType)) {
+					//log.info("inside CEIRAdmin---------------------------");
 					for(StockContent dataInsideList : paginationContentList) 
 					{
 						String date= dataInsideList.getCreatedOn(); 
-						String txnId= dataInsideList.getTxnId(); 
-						String userId = String.valueOf(dataInsideList.getUserId());
+						String txnId= dataInsideList.getTxnId();
+						String suplierName = dataInsideList.getSuplierName();
+						//String userId = String.valueOf(dataInsideList.getUserId());
 						String roll = dataInsideList.getRoleType();
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
@@ -139,7 +141,7 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,userId,roll,file,stockStatusName,action}; 
+						Object[] finalData={date,txnId,suplierName,roll,file,stockStatusName,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -177,13 +179,29 @@ public class StockDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
+				}else if("Manufacturer".equals(userType)){
+					log.info("<><><><>userType in Manufacturer<><><>" +userType);
+					for(StockContent dataInsideList : paginationContentList) 
+					{
+						String date= dataInsideList.getCreatedOn(); 
+						String txnId= dataInsideList.getTxnId(); 
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatusName=dataInsideList.getStateInterp();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						Object[] finalData={date,txnId,file,stockStatusName,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
 				}
 
 			}
 			//data set on ModelClass
 			datatableResponseModel.setRecordsTotal(stockPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(stockPaginationModel.getTotalElements());
-			log.info("------------datatableModel::::::::"+datatableResponseModel);
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 
 		}
@@ -315,7 +333,7 @@ public class StockDatatableController {
 				dateRelatedFields.setId(dateParam[i]);
 				i++;
 				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
+				inputTypeDateList.add(dateRelatedFields); 
 			}
 		}
 		pageElement.setPageTitle("View Stock");

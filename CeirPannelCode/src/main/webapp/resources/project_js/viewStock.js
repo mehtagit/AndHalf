@@ -221,13 +221,13 @@ function closeEditModal()
 var sourceType =localStorage.getItem("sourceType");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 //alert("sourceType<><><><>"+sourceType);
-//alert("currentRoleType<><><><>"+currentRoleType);
+//console.log("currentRoleType<><><><>"+currentRoleType);
 function filter(){
-	if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor") && sourceType !="viaStock" ){
+	if((currentRoleType=="Importer" || currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Manufacturer") && sourceType !="viaStock" ){
 	Datatable('headers?type=stockHeaders','stockData');
 	}else if(currentRoleType=="Custom" && sourceType !="viaStock"){
 	Datatable('./headers?type=customStockHeaders','stockData')
-	}else if(currentRoleType=="CEIRAdmin"){
+	}else if(currentRoleType=="CEIRAdmin" && sourceType !="viaStock"){
 	Datatable('./headers?type=adminStockHeaders','stockData')
 	}else if((currentRoleType=="Importer"|| currentRoleType=="Retailer" || currentRoleType=="Distributor" || currentRoleType=="Custom") && sourceType =="viaStock"){
 	Datatable('./headers?type=stockcheckHeaders','stockData?sourceType=viaStock')
@@ -239,7 +239,8 @@ function filter(){
 
 var role = currentRoleType == null ? roleType : currentRoleType;
 var featureId="4";
-var usertypeId=7;
+var userTypeId = $("body").attr("data-userTypeID");
+
 
 
 
@@ -251,7 +252,7 @@ function Datatable(url,dataUrl) {
 			"userId": userId,
 			"userType" : role,
 			"featureId":featureId,
-			"userTypeId":usertypeId,
+			"userTypeId":$("body").attr("data-userTypeID"),
 			"txnId":$('#transactionID').val(),
 			"consignmentStatus":parseInt($('#StockStatus').val())
 	}
@@ -276,6 +277,7 @@ function Datatable(url,dataUrl) {
 					url: dataUrl, 
 					data : function(d) {
 						d.filter = JSON.stringify(jsonObj); 
+						console.log(JSON.stringify(jsonObj));
 					}
 				},
 				"columns": result,
@@ -465,7 +467,7 @@ function redirectToViewPage()
 }
 
 function setAllDropdowns(){
-	$.getJSON('./getDropdownList/4/4', function(data) {
+	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].state).text(data[i].interp)
 			.appendTo('#StockStatus');
@@ -565,7 +567,7 @@ console.log("txnId =="+txnId+" Remark="+Remark );
 
 
 
-
+var role = currentRoleType == null ? roleType : currentRoleType;
 
 //**********************************************************Export Excel file************************************************************************
 function exportStockData()
@@ -575,10 +577,12 @@ function exportStockData()
 	var stockTxnId=$('#transactionID').val();
 	var StockStatus=parseInt($('#StockStatus').val());
 	var roleType = $("body").attr("data-roleType");
-	var currentRoleType = $("body").attr("data-stolenselected-roleType");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType");	
+	var userType = role;
+	var userTypeId = $("body").attr("data-userTypeID");
 	
-	var role = currentRoleType == null ? roleType : currentRoleType;
-	console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
+	//console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
+	//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
     
       if(isNaN(StockStatus))
 	   {
@@ -592,5 +596,5 @@ function exportStockData()
     var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
 	console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+"=role="+role);
-	window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+	window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+userTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 }
