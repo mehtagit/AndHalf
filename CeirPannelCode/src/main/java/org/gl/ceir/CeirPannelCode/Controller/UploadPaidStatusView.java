@@ -177,4 +177,16 @@ public class UploadPaidStatusView {
 
 	}
 
+	
+	//********************************************Admin Approve/Reject Controller******************************************
+	
+	@RequestMapping(value="/approveRejectDevice",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+	public @ResponseBody GenricResponse approveRejectDevice (@RequestParam("nid") String nId)  {
+		log.info("request send to the approveRejectDevice api="+nId);
+		GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId);
+
+		log.info("response from currency api "+response);
+		return response;
+
+		}
 }

@@ -67,7 +67,7 @@ public class UploadPaidStatus {
 
 	@ResponseBody
 	@PostMapping("/user-paid-status-data")
-	public ResponseEntity<?> view(@RequestParam(name="type",defaultValue = "userPaidStatus",required = false) String role ,
+	public ResponseEntity<?> view(@RequestParam(name="type",defaultValue = "userPaidStatus",required = false) String role,
 			@RequestParam(name="sourceType",required = false) String sourceType,
 			@RequestParam(name = "file", defaultValue = "0", required = false) Integer file,
 			HttpServletRequest request,HttpSession session,
@@ -78,7 +78,8 @@ public class UploadPaidStatus {
 		String filter = request.getParameter("filter");
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
-	
+		String userType = (String) session.getAttribute("usertype");
+		log.info("userType in uploadPaidStatus" +userType);
 		Object response = null;
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
@@ -97,7 +98,8 @@ public class UploadPaidStatus {
 			if(contentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
-			else {
+			else if("Custom".equals(userType)) {
+				log.info("in Custom Userpaid Status---" +userType);
 				for(UserPaidStatusContent contentModelList : contentList) {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
@@ -113,6 +115,28 @@ public class UploadPaidStatus {
 					String action = iconState.userPaidStatusIcon(imei1);
 
 					Object[] data = {sno,createdOn,deviceIDInterp,deviceTypeInterp,price,country,status,action};
+
+					List<Object> datatableList = Arrays.asList(data);
+					finalList.add(datatableList);
+					datatableResponseModel.setData(finalList);
+				}
+			}else if("CEIRAdmin".equals(userType)) {
+				for(UserPaidStatusContent contentModelList : contentList) {
+					Integer sno = contentModelList.getId();
+					String createdOn = contentModelList.getCreatedOn();
+					String nid = contentModelList.getNid();
+					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
+					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
+					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
+					String country = contentModelList.getCountry();
+					String status = contentModelList.getTaxPaidStatusInterp();
+
+					//params for action 
+					Long imei1 = contentModelList.getFirstImei();
+					String action = iconState.adminUserPaidStatusIcon(imei1);
+
+					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);

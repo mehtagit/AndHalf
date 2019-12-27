@@ -197,7 +197,7 @@ class="dropdownColor"> Logout</span></a></li>
 				<div class="container">
 					<div class="section">
 
-						<iframe name="mainArea" class="embed-responsive-item"
+						<iframe name="mainArea" class="embed-responsive-item" id="mainArea"
 							scrolling="yes" frameBorder="0" src="./Home" width="100%"
 							height="700px"></iframe>
 					</div>

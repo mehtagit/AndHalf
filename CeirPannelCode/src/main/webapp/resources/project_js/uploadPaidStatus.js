@@ -5,105 +5,106 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 var featureId =12;
 $(window).load(function() {
 
-var In = sessionStorage.getItem("nationalId") == undefined ? null : sessionStorage.getItem("nationalId") == undefined ? "" : sessionStorage.getItem("nationalId");
+	var In = sessionStorage.getItem("nationalId") == undefined ? null : sessionStorage.getItem("nationalId") == undefined ? "" : sessionStorage.getItem("nationalId");
 
-if(In == ''){
-	 window.location.replace("./uploadPaidStatus");
-	 $('#btnLink').css({"display":"block"});
-}
-else if(In == null){
-	$.ajax({
-		url : "./paid-status/"+In,
-		dataType : 'json',
-		contentType : 'application/json; charset=utf-8',
-		type : 'GET',
-		success : function(data) {
-			
-			sessionStorage.removeItem('nationalId');
+	if(In == ''){
+		window.location.replace("./uploadPaidStatus");
+		$('#btnLink').css({"display":"block"});
+	}
+	else if(In == null){
+		sessionStorage.setItem("admin","CEIRAdmin");
+		$.ajax({
+			url : "./paid-status/"+In,
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'GET',
+			success : function(data) {
 
-			if (data.errorCode == 1) {
-				$("#user123").css("display", "none");
-				$("#user456").css("display", "block");
-				$("#addbutton").css("display", "block");
-				$("#submitbtn").css("display", "none");
-			} 
-			else if (data.errorCode == 0 && In == null) {
-				$("#user123").css("display", "none");
-				$("#user456").css("display", "block");
-				$("#addbutton").css("display", "block");
-				$("#submitbtn").css("display", "none");
-			} 
-			else
-			{
-				$("#user123").css("display", "block");
-				$("#user456").css("display", "none");
-				$("#addbutton").css("display", "none");
-				$("#submitbtn").css("display", "none");	
+				sessionStorage.removeItem('nationalId');
+
+				if (data.errorCode == 1) {
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+				} 
+				else if (data.errorCode == 0 && In == null) {
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+				} 
+				else
+				{
+					$("#user123").css("display", "block");
+					$("#user456").css("display", "none");
+					$("#addbutton").css("display", "none");
+					$("#submitbtn").css("display", "none");	
+				}
+				$('#nationalID').val(In);
+				regularizedCount();
+			},
+			error : function() {
+				console.log("Failed");
 			}
-			$('#nationalID').val(In);
-			regularizedCount();
-		},
-		error : function() {
-			console.log("Failed");
-		}
-	}); 
-	sessionStorage.setItem("nationalId", In);
-	localStorage.setItem("nationalId", In);
-	//localStorage.removeItem('incrementedCurrent');
-	//var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
-	// console.log("******"+incrementedCurrent);
-	//localStorage.removeItem('current');	
-	pageRendering();
-	filter();
-	
-}
-else if(In.length > 0 ){
-	$.ajax({
-		url : "./paid-status/"+In,
-		dataType : 'json',
-		contentType : 'application/json; charset=utf-8',
-		type : 'GET',
-		success : function(data) {
-			
-			sessionStorage.removeItem('nationalId');
+		}); 
+		sessionStorage.setItem("nationalId", In);
+		localStorage.setItem("nationalId", In);
+		//localStorage.removeItem('incrementedCurrent');
+		//var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
+		// console.log("******"+incrementedCurrent);
+		//localStorage.removeItem('current');	
+		pageRendering();
+		filter();
 
-			if (data.errorCode == 1) {
-				$("#user123").css("display", "none");
-				$("#user456").css("display", "block");
-				$("#addbutton").css("display", "block");
-				$("#submitbtn").css("display", "none");
-			} 
-			else if (data.errorCode == 0 && In == null) {
-				$("#user123").css("display", "none");
-				$("#user456").css("display", "block");
-				$("#addbutton").css("display", "block");
-				$("#submitbtn").css("display", "none");
-			} 
-			else
-			{
-				$("#user123").css("display", "block");
-				$("#user456").css("display", "none");
-				$("#addbutton").css("display", "none");
-				$("#submitbtn").css("display", "none");	
+	}
+	else if(In.length > 0 ){
+		$.ajax({
+			url : "./paid-status/"+In,
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'GET',
+			success : function(data) {
+
+				sessionStorage.removeItem('nationalId');
+
+				if (data.errorCode == 1) {
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+				} 
+				else if (data.errorCode == 0 && In == null) {
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+				} 
+				else
+				{
+					$("#user123").css("display", "block");
+					$("#user456").css("display", "none");
+					$("#addbutton").css("display", "none");
+					$("#submitbtn").css("display", "none");	
+				}
+				$('#nationalID').val(In);
+				regularizedCount();
+			},
+			error : function() {
+				console.log("Failed");
 			}
-			$('#nationalID').val(In);
-			regularizedCount();
-		},
-		error : function() {
-			console.log("Failed");
-		}
-	}); 
-	sessionStorage.setItem("nationalId", In);
-	localStorage.setItem("nationalId", In);
-	//localStorage.removeItem('incrementedCurrent');
-	//var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
-	// console.log("******"+incrementedCurrent);
-	//localStorage.removeItem('current');	
-	pageRendering();
-	filter();
+		}); 
+		sessionStorage.setItem("nationalId", In);
+		localStorage.setItem("nationalId", In);
+		//localStorage.removeItem('incrementedCurrent');
+		//var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
+		// console.log("******"+incrementedCurrent);
+		//localStorage.removeItem('current');	
+		pageRendering();
+		filter();
 
 
-		}
+	}
 
 });
 
@@ -218,28 +219,22 @@ $(document).ready(function () {
 });
 
 
-
-
-
-
-
-
-
 var sourceType =localStorage.getItem("sourceType");
 function filter()
 {       
-	console.log("source type value=="+sourceType);
-	var sessionFlag;
-	if(sourceType==null){
-		sessionFlag=2;
-		console.log("sesion value set to "+sessionFlag);
+	var roleType= sessionStorage.getItem("roleType");
+	
+	var sessionFlag=0;
+
+	if(roleType=="Custom"){
+	
+		table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
-	else{
-		sessionFlag=1;
-		console.log("sesion value set to "+sessionFlag);
+	else if(sessionStorage.getItem("admin")=="CEIRAdmin"){
+		
+		table('./headers?type=adminUserPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
-	table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
-	localStorage.removeItem('sourceType');
+	sessionStorage.removeItem('roleType');
 }
 
 
@@ -259,7 +254,7 @@ function table(url,dataUrl){
 			"deviceType":parseInt($('#deviceType').val()),
 			"txnId":$('#Search').val(),
 			"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : 3,
-			"nid":nationalId
+					"nid":nationalId
 	}
 
 
@@ -870,3 +865,7 @@ function regularizedCount(){
 		}
 	});
 }
+function deviceApprovalPopup(imei1){
+
+	alert("called")
+}   

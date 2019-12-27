@@ -794,6 +794,26 @@ public class IconsState {
 	}
 	
 	
+	/********************************** Icons for AdminUPS **********************************/ 	
+	public String adminUserPaidStatusIcon(Long imei1) {
+		String viewAction="viewDetails('"+imei1+"')";
+		String approveAction ="deviceApprovalPopup('"+imei1+"')";
+		String rejectAction= "deleteByImei('"+imei1+"')";
+		
+		
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+
+		
+		String action = view.concat(approve).concat(reject);
+		return action;
+	}
+	
+	
 	
 	/********************************** Icons for Operator **********************************/ 
 	public String greyBlackIcon(String userStatus,String fileName) {

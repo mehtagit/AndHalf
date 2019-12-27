@@ -44,4 +44,10 @@ public interface UploadPaidStatusFeignClient {
 	@PostMapping("/end-user-device-info/count-by-nid/{nid}")
 	public @ResponseBody GenricResponse countByNid(@PathVariable("nid") String  nid);
 	
+	
+	@PostMapping("/accept-reject/end-user-device")
+	public @ResponseBody GenricResponse approveRejectFeign(FilterRequest_UserPaidStatus filterRequest);
+	
+	
+	
 }

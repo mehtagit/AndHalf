@@ -195,11 +195,12 @@ input[type='search'] {
 $('#btnLink').css({"display":"none"});	
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
-var currentRoleType = $("body").attr("data-selected-roleType"); 
+var roleType = $("body").attr("data-roleType"); 
 var featureId =12;
 function hide() {
 	var In = $('#Search').val();
-	sessionStorage.setItem("nationalId", In);
+	sessionStorage.setItem("roleType",roleType);
+		sessionStorage.setItem("nationalId", In);
 	  window.location.replace("./uploadPaidStatus?via=other");
 }
 	    </script>
