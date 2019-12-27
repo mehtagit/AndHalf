@@ -163,21 +163,17 @@ $(document).ready(function () {
 
 
 
-
+var currentRoleType = $("body").attr("data-selected-roleType"); 
 var sourceType =localStorage.getItem("sourceType");
 function filter()
 {       
-	console.log("source type value=="+sourceType);
-	var sessionFlag;
-	if(sourceType==null){
-		sessionFlag=2;
-		console.log("sesion value set to "+sessionFlag);
+	var sessionFlag=0;
+	if(currentRoleType=="Custom"){
+		table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
-	else{
-		sessionFlag=1;
-		console.log("sesion value set to "+sessionFlag);
+	else if(currentRoleType=="CEIRAdmin"){
+		table('./headers?type=adminUserPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
-	table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	localStorage.removeItem('sourceType');
 }
 
@@ -809,4 +805,13 @@ $(document).ready(function () {
 		}
 	});
 }
-        
+       
+       
+    function deviceApprovalPopup(imei1){
+    	
+    	alert("called")
+    }       
+ 
+       
+       
+       

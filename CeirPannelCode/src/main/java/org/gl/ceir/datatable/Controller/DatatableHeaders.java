@@ -115,7 +115,7 @@ public class DatatableHeaders implements HeaderInterface{
 			
 			//AdminStock Headers
 			else if("adminStockHeaders".equals(role)) {
-			String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.userId,HeadersTitle.roll,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};	
+			String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.disaplyName,HeadersTitle.roll,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};	
 			for(String header : headers) {
 			dataTableInputs.add(new DatatableHeaderModel(header));
 			}
@@ -176,6 +176,16 @@ public class DatatableHeaders implements HeaderInterface{
 			dataTableInputs.add(new DatatableHeaderModel(header));
 			}
 			return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			
+			//adminUserPaidStatus Headers 
+			else if("adminUserPaidStatus".equals(role)) {
+				String[] headers = {HeadersTitle.sNo,HeadersTitle.date,HeadersTitle.nid,HeadersTitle.deviceIDType,HeadersTitle.deviceType,HeadersTitle.price,HeadersTitle.country,HeadersTitle.Status,HeadersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
 			//DEFAULT PORTION  
