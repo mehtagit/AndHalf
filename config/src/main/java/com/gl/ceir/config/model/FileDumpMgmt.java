@@ -38,6 +38,8 @@ public class FileDumpMgmt  implements Serializable{
 	
 	private String serviceDump;
 
+	private String dumpType;
+	
 	public Long getId() {
 		return id;
 	}
@@ -88,6 +90,14 @@ public class FileDumpMgmt  implements Serializable{
 
 	public void setServiceDump(String serviceDump) {
 		this.serviceDump = serviceDump;
+	}
+
+	public String getDumpType() {
+		return dumpType;
+	}
+
+	public void setDumpType(String dumpType) {
+		this.dumpType = dumpType;
 	}
 	
 	

@@ -9,5 +9,6 @@ import com.gl.ceir.config.model.FileDumpMgmt;
 public interface FileDumpMgmtRepository extends JpaRepository<FileDumpMgmt, Long> {
 
 	public List<FileDumpMgmt> getByServiceDump(String serviceDump);
-
+    public FileDumpMgmt findTopByDumpTypeOrderByIdDesc(String dumpType);
+    public FileDumpMgmt save(FileDumpMgmt fileDumpMgmt);
 }

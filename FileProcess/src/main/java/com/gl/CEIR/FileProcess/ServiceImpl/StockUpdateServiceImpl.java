@@ -44,7 +44,7 @@ public class StockUpdateServiceImpl implements WebActionService{
 
 	@Autowired
 	StockManagementRepository stockManagementRepository;
-	
+
 	@Autowired
 	PrototypeBeanProvider<ConsignmentFileParser> fileParser;
 	
@@ -64,7 +64,7 @@ public class StockUpdateServiceImpl implements WebActionService{
 			stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
 			stockManagementRepository.save(stockMgmt);
 
-			StringBuffer filePathBuffer = new StringBuffer().append(fileStorageProperties.getConsignmentsDir())
+			StringBuffer filePathBuffer = new StringBuffer().append(fileStorageProperties.getStockDir())
 					.append(webActionDb.getTxnId())
 					.append(Separator.SLASH)
 					.append(stockMgmt.getFileName());

@@ -1,9 +1,5 @@
 package com.gl.ceir.config.model;
 
-/**
- * @author ravi
- *
- */
 public class FileDetails {
 	private String fileName;
 	private String filePath;
