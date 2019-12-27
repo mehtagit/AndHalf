@@ -418,7 +418,7 @@ public class RegularizedDeviceServiceImpl {
 	private boolean validateRegularizedDevicesCount(Count count, List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		try {
 			Long regularizedDeviceCount = regularizedDevicesCountByStatus(regularizeDeviceDbs, TaxStatus.REGULARIZED.getCode());
-			if(count.getAllowed() <= regularizedDeviceCount + count.getCurrent()) {
+			if(count.getAllowed() >= regularizedDeviceCount + count.getCurrent()) {
 				return Boolean.TRUE;
 			}else {
 				return Boolean.FALSE;
