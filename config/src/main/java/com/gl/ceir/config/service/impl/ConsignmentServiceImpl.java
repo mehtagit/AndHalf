@@ -387,7 +387,7 @@ public class ConsignmentServiceImpl {
 			
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
-			logger.debug("userProfile : " + consignmentMgmt);
+			logger.debug("userProfile : " + userProfile);
 			
 			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {

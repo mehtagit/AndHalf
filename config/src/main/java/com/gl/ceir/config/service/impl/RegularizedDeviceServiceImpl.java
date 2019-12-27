@@ -20,9 +20,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.Count;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
@@ -32,6 +34,7 @@ import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -44,6 +47,7 @@ import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.StatusSetter;
@@ -89,6 +93,11 @@ public class RegularizedDeviceServiceImpl {
 	@Autowired
 	StatusSetter statusSetter;
 
+	@Autowired	
+	EmailUtil emailUtil;
+
+	@Autowired
+	UserProfileRepository userProfileRepository;
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
 		try {
@@ -219,11 +228,11 @@ public class RegularizedDeviceServiceImpl {
 			String nid = endUserDB.getNid();
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
-			
+
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
-				
+
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
-					
+
 					statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 
 					// End user is not registered with CEIR system.
@@ -334,6 +343,57 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
+	@Transactional
+	public GenricResponse acceptReject(CeirActionRequest ceirActionRequest) {
+		try {
+			UserProfile userProfile = null;
+			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
+			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
+
+			// Fetch user_profile to update user over mail/sms regarding the action.
+			userProfile = userProfileRepository.getByUserId(ceirActionRequest.getUserId());
+			logger.debug("userProfile : " + userProfile);
+
+			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
+
+				if(ceirActionRequest.getAction() == 0) {
+					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
+
+					/*
+					emailUtil.sendMessageAndSaveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.CONSIGNMENT,
+							SubFeatures.ACCEPT,
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
+					 */
+				}else if(ceirActionRequest.getAction() == 0){
+					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+
+					/*
+					emailUtil.sendMessageAndSaveNotification("Consignment_Approved_CustomImporter_Email_Message", 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.CONSIGNMENT, 
+							SubFeatures.ACCEPT,
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
+					 */
+				}
+			}else {
+				return new GenricResponse(0, "You are not allowed to do this operation.", "");
+			}
+
+			regularizedDeviceDbRepository.save(regularizeDeviceDb);
+			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
 		try {
 			return new GenricResponse(0, "", "", new Count(propertiesReader.defaultNoOfRegularizedDevices, regularizedDeviceDbRepository.countByNid(nid)));	
@@ -354,7 +414,7 @@ public class RegularizedDeviceServiceImpl {
 			return Boolean.FALSE;
 		}
 	}
-	
+
 	private boolean validateRegularizedDevicesCount(Count count, List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		try {
 			Long regularizedDeviceCount = regularizedDevicesCountByStatus(regularizeDeviceDbs, TaxStatus.REGULARIZED.getCode());
@@ -368,11 +428,11 @@ public class RegularizedDeviceServiceImpl {
 			return Boolean.FALSE;
 		}
 	}
-	
+
 	private Long regularizedDevicesCountByStatus(List<RegularizeDeviceDb> regularizeDeviceDbs, int status) {
 		try {
 			return regularizeDeviceDbs.stream().filter(o -> o.getTaxPaidStatus() == status).count();
-			
+
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			return -1L;

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -43,7 +44,6 @@ public class RegularizedDeviceController {
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response); 
 		return mapping;
-
 	}
 
 	@ApiOperation(value = "View Regularized DB of end User", response = RegularizeDeviceDb.class)
@@ -112,6 +112,18 @@ public class RegularizedDeviceController {
 		GenricResponse genricResponse = regularizedDeviceServiceImpl.getCountOfRegularizedDevicesByNid(nid);
 		logger.info("Resonse send = " + genricResponse);
 		return genricResponse;
+
+	}
+	
+	@ApiOperation(value = "Accept/Reject regularized Devices Status.", response = GenricResponse.class)
+	@RequestMapping(path = "accept-reject/end-user-device", method = RequestMethod.PUT)
+	public GenricResponse updateConsigmentStatus(@RequestBody CeirActionRequest ceirActionRequest) {
+
+		logger.info("Request to update the regularized devices = " + ceirActionRequest);
+
+		GenricResponse genricResponse = regularizedDeviceServiceImpl.acceptReject(ceirActionRequest);
+
+		return genricResponse ;
 
 	}
 }
