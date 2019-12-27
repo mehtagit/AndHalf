@@ -368,7 +368,7 @@ public class RegularizedDeviceServiceImpl {
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT);
 					 */
-				}else if(ceirActionRequest.getAction() == 0){
+				}else if(ceirActionRequest.getAction() == 1){
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 
 					/*
@@ -382,7 +382,7 @@ public class RegularizedDeviceServiceImpl {
 					 */
 				}
 			}else {
-				return new GenricResponse(0, "You are not allowed to do this operation.", "");
+				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
 
 			regularizedDeviceDbRepository.save(regularizeDeviceDb);
