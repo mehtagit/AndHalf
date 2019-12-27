@@ -223,15 +223,15 @@ var sourceType =localStorage.getItem("sourceType");
 function filter()
 {       
 	var roleType= sessionStorage.getItem("roleType");
-	
+
 	var sessionFlag=0;
 
 	if(roleType=="Custom"){
-	
+
 		table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
 	else if(sessionStorage.getItem("admin")=="CEIRAdmin"){
-		
+
 		table('./headers?type=adminUserPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
 	sessionStorage.removeItem('roleType');
