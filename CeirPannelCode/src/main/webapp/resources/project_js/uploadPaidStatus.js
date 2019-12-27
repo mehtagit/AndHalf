@@ -1,4 +1,3 @@
-$('#btnLink').css({"display":"none"});	
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
@@ -103,7 +102,7 @@ $(window).load(function() {
 		pageRendering();
 		filter();
 
-
+		$("#btnLink").css({display: "block"});
 	}
 
 });
@@ -309,8 +308,7 @@ function pageButtons(url){
 		dataType: "json",
 		success: function(data){
 			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
-
-
+			
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
@@ -398,6 +396,10 @@ function pageButtons(url){
 			});
 		}
 	}); 	
+	
+	if(sessionStorage.getItem("admin")=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+		}
 }
 
 
