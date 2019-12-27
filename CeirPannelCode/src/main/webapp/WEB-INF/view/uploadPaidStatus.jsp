@@ -169,22 +169,7 @@ input[type='search'] {
 							</div>
 
 							<div class="row">
-								<div class="col s12 m12" style="margin-top: 20px;">
-									<div id="submitbtn">
-										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10">NID :</label>
-										</div>
-										<div class="input-field col s12 m3 l3">
-											<input type="text" id="Search" name="Search"
-												placeholder="NID" />
-										</div>
-										<div class="input-field col s12 m2 l2">
-											<input type="button" class="btn" value="Submit"
-												onclick="hide();">
-										</div>
-									</div>
-								</div>
-
+					
 
 								<div id="user123" class="section" style="display: none;">
 									<form action="" onsubmit="return submitDeviceInfo()"
@@ -466,8 +451,8 @@ input[type='search'] {
 
 										<div class="col s12 m12 center" style="margin-top: 30px;">
 											<button class="btn " type="submit">Submit</button>
-											<button class="btn modal-trigger" data-target="cancelMsg"
-												style="margin-left: 10px;">Cancel</button>
+											<a  href='./uploadPaidStatus' class="btn"
+												style="margin-left: 10px;">Cancel</a>
 										</div>
 
 

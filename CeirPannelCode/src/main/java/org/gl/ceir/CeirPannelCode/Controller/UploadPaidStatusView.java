@@ -35,34 +35,45 @@ import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 @Controller
 public class UploadPaidStatusView {
-	
-	
+
+
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	UtilDownload utildownload;
-	
+
 	@Autowired
 	UserPaidStatusFeignClient userPaidStatusFeignClient;
 
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
-	
+
+
+
 	@GetMapping("uploadPaidStatus")
-	public ModelAndView pageView() {
-		ModelAndView modelAndView = new ModelAndView("uploadPaidStatus");
+	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
+			modelAndView.setViewName("uploadPaidStatus");
+		}
+		else if("other".equals(via)) {
+			modelAndView.setViewName("uploadPaidStatus");
+		}
+		else {
+			modelAndView.setViewName("nidForm");
+		}
 		return modelAndView;
 	}
-	
-	
+
+
 	@GetMapping("add-device-information")
 	public ModelAndView deviceInformationView() {
 		ModelAndView modelAndView = new ModelAndView("addDeviceInformation");
 		return modelAndView;
 	}
-	
-	
-	
+
+
+
 	@PostMapping("uploadPaidStatusForm")
 	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller register-approved-device-------request---------");
@@ -77,15 +88,15 @@ public class UploadPaidStatusView {
 		String filter = request.getParameter("request");
 		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
 		Gson gson= new Gson(); 
-	
+
 		log.info("*********"+filter);
-		
+
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
-		
+
 		for(int i =0; i<regularizeDeviceDbs.getRegularizeDeviceDbs().size();i++) {
 			regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
 		}
-		
+
 		log.info(""+regularizeDeviceDbs.toString());
 		log.info(" upload status  entry point.");
 		try { byte[] bytes = file.getBytes();
@@ -108,21 +119,21 @@ public class UploadPaidStatusView {
 		log.info("request passed to the save regularizeDeviceDbs api"+regularizeDeviceDbs);
 		GenricResponse response = null;
 		try {
-		 response = userPaidStatusFeignClient.uploadPaidUser(regularizeDeviceDbs);
-		//GenricResponse response = null;
-		log.info("---------response--------"+response);
+			response = userPaidStatusFeignClient.uploadPaidUser(regularizeDeviceDbs);
+			//GenricResponse response = null;
+			log.info("---------response--------"+response);
 		}
 		catch (Exception e) {
 			// TODO: handle exception
 			log.info("exception in upload paid stat error"+e);
 			e.printStackTrace();
-			
+
 		}
 		return response;
 	}
 
 	//***************************************** Export Registration controller *********************************
-	
+
 	@RequestMapping(value="/exportPaidStatus",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 	public String exportToExcel(@RequestParam(name="startDate", required = false) String startDate,
 			@RequestParam(name="endDate",required = false) String endDate,
@@ -134,7 +145,7 @@ public class UploadPaidStatusView {
 			HttpServletRequest request,
 			HttpSession session)
 	{
-		
+
 		int userId= (int) session.getAttribute("userid");
 		int file=1;
 		String userType=(String) session.getAttribute("usertype"); 	
@@ -150,21 +161,20 @@ public class UploadPaidStatusView {
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
 		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-			log.info("response  from   export grievance  api="+fileExportResponse);
-			return "redirect:"+fileExportResponse.getUrl();
+		log.info("response  from   export grievance  api="+fileExportResponse);
+		return "redirect:"+fileExportResponse.getUrl();
 	}
-	
-	
-	
+
+
+
 	//***********************************************cuurency controller *************************************************
 	@RequestMapping(value="/countByNid",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public @ResponseBody GenricResponse countByNid(@RequestParam("nid") String nId)  {
-	log.info("request send to the currency  api="+nId);
-	GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId);
-
-	log.info("response from currency api "+response);
-	return response;
+	public @ResponseBody GenricResponse countByNid(@RequestParam(name="nid", required = false) String nId)  {
+		log.info("request send to the currency  api="+nId);
+		GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId);
+		log.info("response from currency api "+response);
+		return response;
 
 	}
-	
+
 }

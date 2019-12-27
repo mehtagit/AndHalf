@@ -158,155 +158,162 @@ input[type='search'] {
 								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
 							</div>
 							<div id="user123" class="section">
-								<form action="" onsubmit="return submitDeviceInfo()" method="POST" enctype="multipart/form-data">
-								<div id="mainDeviceInformation" class="mainDeviceInformation">
+								<form action="" onsubmit="return submitDeviceInfo()"
+									method="POST" enctype="multipart/form-data">
+									<div id="mainDeviceInformation" class="mainDeviceInformation">
 										<div id="deviceInformation" class="deviceInformation">
-										<div class="row">
-											<div class="col s12 m12">
-												<div class="col s12 m12" style="margin-top: 30px;">
-													<h5>Device Information</h5>
-													<hr>
-												</div>
+											<div class="row">
+												<div class="col s12 m12">
+													<div class="col s12 m12" style="margin-top: 30px;">
+														<h5>Device Information</h5>
+														<hr>
+													</div>
 
-												<div class="col s12 m6">
-													<label for="deviceType">Device Type <span
-														class="star">*</span></label> <select class="browser-default"
-														id="deviceType1" required="required">
-														<option value="" disabled selected>Select Device
-															Type</option>
-															
-														
-													</select>
-												</div>
+													<div class="col s12 m6">
+														<label for="deviceType">Device Type <span
+															class="star">*</span></label> <select class="browser-default"
+															id="deviceType1" required="required">
+															<option value="" disabled selected>Select Device
+																Type</option>
 
-												<div class="col s12 m6">
-													<label for="deviceIdType1">Device ID Type <span
-														class="star">*</span></label> <select required="required" class="browser-default"
-														id="deviceIdType1">
-														<option value="" disabled selected>Select Device ID Type</option>
-													
-													</select>
-												</div>
 
-												<div class="col s12 m6">
-													<label for="multipleSimStatus1">Multiple Sim Status <span
-														class="star">*</span></label> <select class="browser-default" required="required"
-														id="multipleSimStatus1">
-														<option value="" disabled selected>Select
-													
-													</select>
-												</div>
-
-												<div class="col s12 m6">
-													<label for="country1">Country bought From <span
-														class="star">*</span></label> <select id="country1" 
-														class="browser-default" class="mySelect"
-														style="padding-left: 0;"  required="required">
-															<option value="" disabled selected>Country bought From
 														</select>
-												</div>
+													</div>
 
-												<div class="input-field col s12 m6"
-													style="margin-top: 28px;">
-													<input type="text" id="serialNumber1" name="serialNumber" required="required" 
-														pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"
-														maxlength="15"> <label for="serialNumber">Device
-														Serial Number <span class="star">*</span>
-													</label>
-												</div>
+													<div class="col s12 m6">
+														<label for="deviceIdType1">Device ID Type <span
+															class="star">*</span></label> <select required="required"
+															class="browser-default" id="deviceIdType1">
+															<option value="" disabled selected>Select Device
+																ID Type</option>
 
-												<div class="col s12 m6">
-													<label for="taxStatus1">Tax paid Status <span
-														class="star">*</span></label> <select class="browser-default" required="required"
-														id="taxStatus1">
-														<option value="" disabled selected>Select Tax
-															paid Status</option>
-														
-													</select>
+														</select>
+													</div>
+
+													<div class="col s12 m6">
+														<label for="multipleSimStatus1">Multiple Sim
+															Status <span class="star">*</span>
+														</label> <select class="browser-default" required="required"
+															id="multipleSimStatus1">
+															<option value="" disabled selected>Select
+														</select>
+													</div>
+
+													<div class="col s12 m6">
+														<label for="country1">Country bought From <span
+															class="star">*</span></label> <select id="country1"
+															class="browser-default" class="mySelect"
+															style="padding-left: 0;" required="required">
+															<option value="" disabled selected>Country
+																bought From
+														</select>
+													</div>
+
+													<div class="input-field col s12 m6"
+														style="margin-top: 28px;">
+														<input type="text" id="serialNumber1" name="serialNumber"
+															required="required" pattern="[A-Za-z0-9]{0,15}"
+															title="Please enter alphabets and numbers upto 15 characters only"
+															maxlength="15"> <label for="serialNumber">Device
+															Serial Number <span class="star">*</span>
+														</label>
+													</div>
+
+													<div class="col s12 m6">
+														<label for="taxStatus1">Tax paid Status <span
+															class="star">*</span></label> <select class="browser-default"
+															required="required" id="taxStatus1">
+															<option value="" disabled selected>Select Tax
+																paid Status</option>
+
+														</select>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col s12 m12">
-												<div class="col s12 m6" style="margin-top: -10px;">
-													<label for="deviceStatus1">Device Status <span
-														class="star">*</span></label> <select class="browser-default" required="required"
-														id="deviceStatus1">
-														<option value="" disabled selected>Select Device
-															Status</option>
-														
-													</select>
-												</div>
+											<div class="row">
+												<div class="col s12 m12">
+													<div class="col s12 m6" style="margin-top: -10px;">
+														<label for="deviceStatus1">Device Status <span
+															class="star">*</span></label> <select class="browser-default"
+															required="required" id="deviceStatus1">
+															<option value="" disabled selected>Select Device
+																Status</option>
 
-												<div class="input-field col s12 m6 l6">
-													<input type="text" name="Price" id="Price1" pattern="[0-9]{0,7}" required="required"  maxlength="7">
-													<label for="Price1">Price <span class="star">*</span></label>
-												</div>
+														</select>
+													</div>
 
-												<div class="col s12 m6">
-													<label for="Currency1">Currency <span class="star">*</span></label>
-													<select class="browser-default" id="Currency1" required="required">
-														<option value="" disabled selected>Select
-															Currency</option>
-														
-													</select>
+													<div class="input-field col s12 m6 l6">
+														<input type="text" name="Price" id="Price1"
+															pattern="[0-9]{0,7}" required="required" maxlength="7">
+														<label for="Price1">Price <span class="star">*</span></label>
+													</div>
+
+													<div class="col s12 m6">
+														<label for="Currency1">Currency <span class="star">*</span></label>
+														<select class="browser-default" id="Currency1"
+															required="required">
+															<option value="" disabled selected>Select
+																Currency</option>
+
+														</select>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col s12 m12">
-												<div class='col s12 m12 input_fields_wrap'>
-													<p>IMEI/MEID/ESN</p>
-													<div class='row'>
-														<div class="input-field col s12 m6">
-															<input type="text" id="IMEIA1" name="IMEI1"
-																pattern="[0-9]{15,16}"
-																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16"> <label for="IMEIA1">1 <span
-																class="star">*</span></label>
-														</div>
+											<div class="row">
+												<div class="col s12 m12">
+													<div class='col s12 m12 input_fields_wrap'>
+														<p>IMEI/MEID/ESN</p>
+														<div class='row'>
+															<div class="input-field col s12 m6">
+																<input type="text" id="IMEIA1" name="IMEI1"
+																	pattern="[0-9]{15,16}"
+																	title="Please enter minimum 15 and maximum 16 digit only"
+																	maxlength="16"> <label for="IMEIA1">1 <span
+																	class="star">*</span></label>
+															</div>
 
-														<div class="input-field col s12 m6">
-															<input type="text" id="IMEIB1" name="IMEI2"
-																pattern="[0-9]{15,16}"
-																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16"> <label for="IMEIB2">2</label>
-														</div>
+															<div class="input-field col s12 m6">
+																<input type="text" id="IMEIB1" name="IMEI2"
+																	pattern="[0-9]{15,16}"
+																	title="Please enter minimum 15 and maximum 16 digit only"
+																	maxlength="16"> <label for="IMEIB2">2</label>
+															</div>
 
-														<div class="input-field col s12 m6">
-															<input type="text" id="IMEIC1" name="IMEIC3"
-																pattern="[0-9]{15,16}"
-																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16"> <label for="IMEIC3">3</label>
-														</div>
+															<div class="input-field col s12 m6">
+																<input type="text" id="IMEIC1" name="IMEIC3"
+																	pattern="[0-9]{15,16}"
+																	title="Please enter minimum 15 and maximum 16 digit only"
+																	maxlength="16"> <label for="IMEIC3">3</label>
+															</div>
 
-														<div class="input-field col s12 m6" id="field">
-															<input type="text" id="IMEID1" name="IMEID4[]"
-																pattern="[0-9]{15,16}"
-																title="Please enter minimum 15 and maximum 16 digit only"
-																maxlength="16" id="field0"> <label for="IMEID4">4</label>
+															<div class="input-field col s12 m6" id="field">
+																<input type="text" id="IMEID1" name="IMEID4[]"
+																	pattern="[0-9]{15,16}"
+																	title="Please enter minimum 15 and maximum 16 digit only"
+																	maxlength="16" id="field0"> <label for="IMEID4">4</label>
+															</div>
 														</div>
 													</div>
 												</div>
-                                             </div></div> 
-                                             </div>
-                                             </div>
-												<div class="col s12 m12">
-													<button class="btn right add_field_button"
-														style="margin-top: 5px;">
-														<span style="font-size: 20px;">+</span> Add More Device
-													</button>
-													<p>
-														Required Field are marked with <span class="star">*</span>
-													</p>
-												</div>
-                                                      
-												<div class="col s12 m12 center" style="margin-top: 30px;">
-													<button class="btn " type="submit" >Submit</button>
-													<button class="btn modal-trigger" data-target="cancelMsg"
-														style="margin-left: 10px;">Cancel</button>
-												</div>
-								
+											</div>
+										</div>
+									</div>
+									<div class="col s12 m12">
+										<button class="btn right add_field_button"
+											style="margin-top: 5px;">
+											<span style="font-size: 20px;">+</span> Add More Device
+										</button>
+										<p>
+											Required Field are marked with <span class="star">*</span>
+										</p>
+									</div>
+
+									<div class="col s12 m12 center" style="margin-top: 30px;">
+										<button class="btn " type="submit">Submit</button>
+										<a  href='./uploadPaidStatus' class="btn"
+												style="margin-left: 10px;">Cancel</a>
+									</div>
+
 								</form>
 							</div>
 						</div>
@@ -902,8 +909,9 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="cancelMsg" class="modal">
+		<h6 class="modal-header">Cancel Request</h6>
 		<div class="modal-content">
-			<h6 class="modal-header">Cancel Request</h6>
+
 			<div class="row">
 				<h6>Are you sure you want to close this window. The form data
 					will be lost?</h6>
@@ -924,24 +932,28 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="regularisedDevice" class="modal">
-        <h6  class="modal-header">Upload Paid Device</h6>
-        <div class="modal-content">
-            <div class="row">
-                <h6 id="sucessMessage"> Your form has been successfully submitted. The Transaction ID for future reference is <span id="dynamicTxnId"></span></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <div class="input-field col s12 center">
-                        <a href="./uploadPaidStatus" class="btn">ok</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+		<h6 class="modal-header">Upload Paid Device</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="sucessMessage">
+					Your form has been successfully submitted. The Transaction ID for
+					future reference is <span id="dynamicTxnId"></span>
+				</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a href="./uploadPaidStatus" class="btn">ok</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div id="deleteMsg" class="modal">
+		<h6 class="modal-header">Delete</h6>
 		<div class="modal-content">
-			<h6 class="modal-header">Delete</h6>
+
 			<div class="row">
 				<h6>Are you sure you want to Delete this device information?</h6>
 			</div>
@@ -959,8 +971,9 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="confirmDeleteMsg" class="modal">
+		<h6 class="modal-header">Delete</h6>
 		<div class="modal-content">
-			<h6 class="modal-header">Delete</h6>
+
 			<div class="row">
 				<h6>This device information has been successfully deleted.</h6>
 			</div>
@@ -976,8 +989,9 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="submitMsg" class="modal">
+		<h6 class="modal-header">Submit Request</h6>
 		<div class="modal-content">
-			<h6 class="modal-header">Submit Request</h6>
+
 			<div class="row">
 				<h6>Your request has been successfully submitted.</h6>
 			</div>
@@ -1010,7 +1024,7 @@ input[type='search'] {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
-<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<%-- <script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script> --%>
@@ -1020,7 +1034,7 @@ input[type='search'] {
 
 
 
-	
+
 
 
 
