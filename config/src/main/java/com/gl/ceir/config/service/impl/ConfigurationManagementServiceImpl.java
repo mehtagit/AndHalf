@@ -11,8 +11,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FilterRequest;
@@ -22,10 +25,13 @@ import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
+import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
+import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
@@ -36,6 +42,7 @@ import com.gl.ceir.config.repository.SystemConfigListRepository;
 import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 
 @Service
 public class ConfigurationManagementServiceImpl {
@@ -71,6 +78,9 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
+	
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	public List<SystemConfigurationDb> getAllInfo(){
 		try {
@@ -81,11 +91,17 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 	
-	public Page<SystemConfigurationDb> filter(FilterRequest filterRequest){
+	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
-			// TODO
-			// return systemConfigurationDbRepository.findAll();
-			return null;
+			
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			SpecificationBuilder<SystemConfigurationDb> sb = new SpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
+			
+			if(Objects.nonNull(filterRequest.getUserId()))
+				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			return systemConfigurationDbRepository.findAll(sb.build(), pageable);
+			
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -137,6 +153,23 @@ public class ConfigurationManagementServiceImpl {
 		}	
 
 	}
+	
+	public Page<MessageConfigurationDb> filterMessageConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		try {
+			
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			SpecificationBuilder<MessageConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
+			
+			if(Objects.nonNull(filterRequest.getUserId()))
+				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			return messageConfigurationDbRepository.findAll(sb.build(), pageable);
+			
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 	public MessageConfigurationDb getMessageConfigDetailsByTag(MessageConfigurationDb messageConfigurationDb){
 		try {
@@ -186,6 +219,23 @@ public class ConfigurationManagementServiceImpl {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
+	}
+	
+	public Page<PolicyConfigurationDb> filterPolicyConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		try {
+			
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			SpecificationBuilder<PolicyConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
+			
+			if(Objects.nonNull(filterRequest.getUserId()))
+				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			return policyConfigurationDbRepository.findAll(sb.build(), pageable);
+			
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	public List<PolicyConfigurationDb> getPolicyConfigDetails(){

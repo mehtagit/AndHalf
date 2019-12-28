@@ -19,6 +19,8 @@ public class FilterRequest {
 	public Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;
+	
+	private String tag;
 
 	public Integer getUserId() {
 		return userId;
@@ -118,6 +120,12 @@ public class FilterRequest {
 	}
 	public void setDeviceType(Integer deviceType) {
 		this.deviceType = deviceType;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	
 	@Override

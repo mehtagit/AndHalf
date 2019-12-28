@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.AuditTrail;
@@ -53,11 +54,14 @@ public class ConfigurationController {
 	
 	@ApiOperation(value = "Paginated view of System Config.", response = SystemConfigurationDb.class)
 	@PostMapping("/filter/system-configuration")
-	public MappingJacksonValue paginatedViewOfSystemConfig(@RequestBody FilterRequest filterRequest) {
+	public MappingJacksonValue paginatedViewOfSystemConfig(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		logger.info("Paginated view of System Config " + filterRequest);
 
-		Page<SystemConfigurationDb>  page = configurationManagementServiceImpl.filter(filterRequest);
+		Page<SystemConfigurationDb>  page = configurationManagementServiceImpl.filterSystemConfiguration(filterRequest, pageNo, pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(page);
 
@@ -110,6 +114,23 @@ public class ConfigurationController {
 
 	}
 
+	@ApiOperation(value = "Paginated view of Message Config.", response = SystemConfigurationDb.class)
+	@PostMapping("/filter/message-configuration")
+	public MappingJacksonValue paginatedViewOfMessageConfig(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+
+		logger.info("Paginated view of Message Config " + filterRequest);
+
+		Page<MessageConfigurationDb>  page = configurationManagementServiceImpl.filterMessageConfiguration(filterRequest, pageNo, pageSize);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(page);
+
+		logger.info("Response to send = " + page);
+
+		return mapping;
+	}
 
 	@ApiOperation(value = "Message Config view  Data by Tag", response = MessageConfigurationDb.class)
 	@RequestMapping(path = "/message/viewTag", method = RequestMethod.POST)
@@ -148,6 +169,24 @@ public class ConfigurationController {
 		PolicyConfigurationDb  pocessDetails = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(messageConfigurationDb);
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
 		logger.info("Response to send="+pocessDetails);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "Paginated view of policy Config.", response = SystemConfigurationDb.class)
+	@PostMapping("/filter/message-configuration")
+	public MappingJacksonValue paginatedViewOfPolicyConfig(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+
+		logger.info("Paginated view of Message Config " + filterRequest);
+
+		Page<PolicyConfigurationDb>  page = configurationManagementServiceImpl.filterPolicyConfiguration(filterRequest, pageNo, pageSize);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(page);
+
+		logger.info("Response to send = " + page);
 
 		return mapping;
 	}
