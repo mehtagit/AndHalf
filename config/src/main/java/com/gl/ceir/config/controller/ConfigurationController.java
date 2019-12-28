@@ -5,15 +5,18 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.Notification;
@@ -39,11 +42,26 @@ public class ConfigurationController {
 
 		logger.info("Request to get system all details");
 
-		List<SystemConfigurationDb>  pocessDetails = configurationManagementServiceImpl.getAllInfo();
+		List<SystemConfigurationDb> pocessDetails = configurationManagementServiceImpl.getAllInfo();
 
 		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
 
 		logger.info("Response to send="+pocessDetails);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "Paginated view of System Config.", response = SystemConfigurationDb.class)
+	@PostMapping("/filter/system-configuration")
+	public MappingJacksonValue paginatedViewOfSystemConfig(@RequestBody FilterRequest filterRequest) {
+
+		logger.info("Paginated view of System Config " + filterRequest);
+
+		Page<SystemConfigurationDb>  page = configurationManagementServiceImpl.filter(filterRequest);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(page);
+
+		logger.info("Response to send = " + page);
 
 		return mapping;
 	}

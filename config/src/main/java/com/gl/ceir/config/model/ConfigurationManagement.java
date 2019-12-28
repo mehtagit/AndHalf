@@ -21,7 +21,6 @@ public class ConfigurationManagement  implements Serializable{
 
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
-	
 	private Date updatedOn;
 	private String name;
 	private String value;
@@ -56,11 +55,5 @@ public class ConfigurationManagement  implements Serializable{
 	public void setValue(String value) {
 		this.value = value;
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 }

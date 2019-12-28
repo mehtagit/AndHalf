@@ -3,13 +3,16 @@ package com.gl.ceir.config.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.FileDumpFilter;
 import com.gl.ceir.config.model.ForeignerRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.GreylistDb;
@@ -17,10 +20,14 @@ import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.ImeiInfo;
 import com.gl.ceir.config.model.NationalismImeiDetails;
 import com.gl.ceir.config.model.NationlismDetails;
+import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.repository.GreyListRepository;
 import com.gl.ceir.config.repository.GreyListTrackRepository;
 import com.gl.ceir.config.repository.NationalismDetailsRepository;
 import com.gl.ceir.config.repository.NationlismImeiDetailsRepository;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 
 @Service
 public class NationalislmServiceImpl {
@@ -37,6 +44,8 @@ public class NationalislmServiceImpl {
 	@Autowired
 	GreyListTrackRepository greyListTrackRepository;
 
+	@Autowired
+	PropertiesReader propertiesReader;
 
 	@Transactional
 	public GenricResponse saveNationalismData(ForeignerRequest foreignerDetails) {
@@ -72,7 +81,7 @@ public class NationalislmServiceImpl {
 
 						GreylistDb greyList =new GreylistDb();
 						greyList.setCreatedOn(new Date());
-					//	greyList.setUpdatedOn(new Date());
+						//	greyList.setUpdatedOn(new Date());
 						greyList.setImei(info.getFirstImei());
 						///greyList.setSourceType("Cambodiya Nationlism");
 
@@ -80,7 +89,7 @@ public class NationalislmServiceImpl {
 
 						GreylistDbHistory greyListTracDetails = new GreylistDbHistory();
 						greyListTracDetails.setCreatedOn(new Date());
-					//	greyListTracDetails.setUpdatedOn(new Date());
+						//	greyListTracDetails.setUpdatedOn(new Date());
 						greyListTracDetails.setImei(info.getFirstImei());
 						//greyListTracDetails.setOperation("Add");
 
@@ -129,7 +138,7 @@ public class NationalislmServiceImpl {
 
 					GreylistDb greyList =new GreylistDb();
 					greyList.setCreatedOn(new Date());
-				//	greyList.setUpdatedOn(new Date());
+					//	greyList.setUpdatedOn(new Date());
 					greyList.setImei(info.getFirstImei());
 					//greyList.setSourceType("Cambodiya Nationlism");
 
@@ -137,9 +146,9 @@ public class NationalislmServiceImpl {
 
 					GreylistDbHistory greyListTracDetails = new GreylistDbHistory();
 					greyListTracDetails.setCreatedOn(new Date());
-				//	greyListTracDetails.setUpdatedOn(new Date());
+					//	greyListTracDetails.setUpdatedOn(new Date());
 					greyListTracDetails.setImei(info.getFirstImei());
-				//	greyListTracDetails.setOperation("Add");
+					//	greyListTracDetails.setOperation("Add");
 
 					greyListTrackRepository.save(greyListTracDetails);
 
@@ -237,4 +246,45 @@ public class NationalislmServiceImpl {
 
 
 
+
+	public List<GreylistDb> greyListDataByCreatedOn(FileDumpFilter fileDumpFilter){
+
+		try {
+			SpecificationBuilder<GreylistDb> fdsb = new SpecificationBuilder<GreylistDb>(propertiesReader.dialect);
+
+			if(Objects.nonNull(fileDumpFilter.getStartDate()))
+				fdsb.with(new SearchCriteria("createdOn",fileDumpFilter.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+			if(Objects.nonNull(fileDumpFilter.getStartDate()))
+				fdsb.with(new SearchCriteria("createdOn",fileDumpFilter.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
+
+			return greyListRepository.findAll(fdsb.build());
+		}
+
+		catch(Exception e) {
+			e.getMessage();
+			List<GreylistDb> greyListData=new ArrayList<GreylistDb>();
+			return greyListData; 
+
+		}
+	}
+
+
+	public List<GreylistDbHistory> greyListHistoryDataByCreatedOn(FileDumpFilter fileDumpFilter){
+
+		try {
+			SpecificationBuilder<GreylistDbHistory> fdsb = new SpecificationBuilder<GreylistDbHistory>(propertiesReader.dialect);
+
+			if(Objects.nonNull(fileDumpFilter.getStartDate()))
+				fdsb.with(new SearchCriteria("createdOn",fileDumpFilter.getStartDate() , SearchOperation.EQUALITY, Datatype.DATE));
+
+			return greyListTrackRepository.findAll(fdsb.build());
+		}
+
+		catch(Exception e) {
+			e.getMessage();
+			List<GreylistDbHistory> greyListData=new ArrayList<GreylistDbHistory>();
+			return greyListData;
+		}
+	}
 }

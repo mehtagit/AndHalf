@@ -41,11 +41,12 @@ public class ListFileDetailsImpl {
 
 	private static final Logger logger = LogManager.getLogger(ListFileDetailsImpl.class);
 
-
 	@Autowired
 	FileDumpMgmtRepository fileDumpMgmtRepository;
+
 	@Autowired
 	PropertiesReader propertiesReader;
+
 	@Autowired
 	FileStorageProperties fileStorageProperties;
 
@@ -60,21 +61,42 @@ public class ListFileDetailsImpl {
 		}
 	}
 
-	
+	public FileDumpMgmt topDataByDumpType(String dumpType) {
+		try {
+			return fileDumpMgmtRepository.findTopByDumpTypeOrderByIdDesc(dumpType);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			FileDumpMgmt fileDumpMgmt=new FileDumpMgmt();
+			return fileDumpMgmt;
+		}
+	}
+
+	public FileDumpMgmt saveFileDumpMgmt(FileDumpMgmt fileDumpMgmt) {
+		try {
+			return fileDumpMgmtRepository.save(fileDumpMgmt);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			FileDumpMgmt fileData=new FileDumpMgmt();
+			return fileData;
+		}
+	}
+
 	public Page<FileDumpMgmt> getFilterPagination( FileDumpFilterRequest filterRequest, Integer pageNo, Integer pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "createdOn"));
 			FileDumpSpecificationBuilder osb = new FileDumpSpecificationBuilder(propertiesReader.dialect);
-			
+
 			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().equals(""))
 				osb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-			
+
 			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().equals(""))
 				osb.with(new SearchCriteria("createdOn",filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-			
+
 			if(Objects.nonNull(filterRequest.getFileType()) && !filterRequest.getFileType().equals(-1))
 				osb.with(new SearchCriteria("fileType", filterRequest.getFileType(), SearchOperation.EQUALITY, Datatype.INT));
-			
+
 			if(Objects.nonNull(filterRequest.getServiceDump()) && !filterRequest.getServiceDump().equals(-1))
 				osb.with(new SearchCriteria("serviceDump", filterRequest.getServiceDump(), SearchOperation.EQUALITY, Datatype.INT));
 
@@ -96,7 +118,7 @@ public class ListFileDetailsImpl {
 		}
 
 	}
-	
+
 	public FileDetails getFilterInFile(FileDumpFilterRequest filterRequest, Integer pageNo, Integer pageSize) {
 		String fileName = null;
 		Writer writer   = null;
@@ -137,7 +159,7 @@ public class ListFileDetailsImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public ResponseCountAndQuantity getFileDumpCount( Integer serviceDump ) {
 		try {
 			logger.info("Going to get FileDump count for serviceDump["+serviceDump+"].");

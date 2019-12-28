@@ -104,7 +104,15 @@ public class SpecificationBuilder<T> {
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
 						return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
-					}else {
+					}
+					
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+						return cb.equal(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+					}
+					
+					else {
 						return null;
 					}
 				});

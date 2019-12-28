@@ -18,9 +18,7 @@ public class App {
 	public static void main( String[] args ){
 		
 		ctx = SpringApplication.run(App.class, args);
-		
 		FileActionControlling fetch = ctx.getBean(FileActionControlling.class);
 		new Thread(fetch).start();
-
 	}
 }

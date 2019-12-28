@@ -10,10 +10,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
@@ -73,6 +75,17 @@ public class ConfigurationManagementServiceImpl {
 	public List<SystemConfigurationDb> getAllInfo(){
 		try {
 			return systemConfigurationDbRepository.findAll();
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public Page<SystemConfigurationDb> filter(FilterRequest filterRequest){
+		try {
+			// TODO
+			// return systemConfigurationDbRepository.findAll();
+			return null;
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

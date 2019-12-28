@@ -33,29 +33,29 @@ import com.gl.ceir.config.repository.WebActionDbRepository;
 public class StockRegisterServiceImpl implements WebActionService{
 
 	private Logger log = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	Util util;
-	
+
 	@Autowired
 	@Qualifier("fileProperties")
 	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
-	
+
 	@Autowired
 	StockManagementRepository stockManagementRepository;
-	
+
 	@Autowired
 	PrototypeBeanProvider<ConsignmentFileParser> fileParser;
-	
+
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
-	
+
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
-	
+
 	@Override
 	public boolean process(WebActionDb webActionDb) {
 		try {
@@ -68,13 +68,13 @@ public class StockRegisterServiceImpl implements WebActionService{
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(webActionDb.getTxnId());
 			stockMgmt.setStockStatus(StockStatus.PROCESSING.getCode());
 			stockManagementRepository.save(stockMgmt);
-			
+
 			log.info("File Status is update as processing ");
 			StringBuffer filePathBuffer = new StringBuffer().append(fileStorageProperties.getStockDir())
 					.append(webActionDb.getTxnId())
 					.append(Separator.SLASH)
 					.append(stockMgmt.getFileName()); 
-			
+
 			Path filePath = Paths.get(filePathBuffer.toString());
 
 			String errorFilePath = "";
@@ -84,16 +84,16 @@ public class StockRegisterServiceImpl implements WebActionService{
 			List<String> contents = Files.readAllLines(filePath);
 
 			log.info("File reading starts = " + contents);
-			
+
 			deviceBufferMap = new ConcurrentHashMap<String, String>();
 
 			for(String content : contents) {
 				DeviceDb device = fileParser.getBean().parse(content);
-				
+
 				if(Objects.isNull(device)) {
 					continue;
 				}
-				
+
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(Long.valueOf(stockMgmt.getUserId()));
 
@@ -102,7 +102,7 @@ public class StockRegisterServiceImpl implements WebActionService{
 				if(Objects.isNull(value)) {
 					deviceBufferMap.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
 					devices.add(device);
-					
+
 				}else {
 					String header = "ErrorCode, Description";	
 					String record = "";
