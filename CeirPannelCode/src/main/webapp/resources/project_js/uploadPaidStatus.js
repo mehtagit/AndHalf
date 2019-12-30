@@ -692,47 +692,8 @@ populateCountries
 
 function taxPaidStatus(){
 	var request={
-			"country":null,
-			"createdOn": null,
-			"currency": null,
-			"currencyInterp": null,
-			"deviceIdType": null,
-			"deviceIdTypeInterp": null,
-			"deviceSerialNumber": null,
-			"deviceStatus": null,
-			"deviceType": null,
-			"deviceTypeInterp": null,
-			"endUserDB": {
-				"country": null,
-				"createdOn": null,
-				"email": null,
-				"firstName": null,
-				"id": null,
-				"lastName": null,
-				"locality": null,
-				"middleName": null,
-				"modifiedOn": null,
-				"nid": null,
-				"phoneNo": null,
-				"propertyLocation": null,
-				"province": null,
-				"regularizeDeviceDbs": [
-					null
-					],
-					"street": null
-			},
-			"firstImei": parseInt(window.taxIMEI),
-			"fourthImei": 0,
-			"id": 0,
-			"modifiedOn": null,
-			"multiSimStatus": null,
-			"nid": $('#Search').val(),
-			"price": null,
-			"secondImei": null,
-			"taxPaidStatus":0,
-			"taxPaidStatusInterp": null,
-			"thirdImei": null,
-			"txnId": null
+			"firstImei": parseInt(window.taxIMEI),			
+			"taxPaidStatus":0
 	}
 	$.ajax({
 		url: './tax-paid/status',

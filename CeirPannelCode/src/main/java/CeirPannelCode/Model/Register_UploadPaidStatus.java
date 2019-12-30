@@ -19,12 +19,15 @@ public class Register_UploadPaidStatus {
 	private String province;
 	private String country;
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
+	private Long firstImei;
+	private Integer taxPaidStatus;
 	@Override
 	public String toString() {
-		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName=" + lastName
-				+ ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", nid=" + nid
-				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality + ", province="
-				+ province + ", country=" + country + ", regularizeDeviceDbs=" + regularizeDeviceDbs + "]";
+		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", nid=" + nid
+				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
+				+ ", province=" + province + ", country=" + country + ", regularizeDeviceDbs=" + regularizeDeviceDbs
+				+ ", firstImei=" + firstImei + ", taxPaidStatus=" + taxPaidStatus + "]";
 	}
 	public String getFirstName() {
 		return firstName;
@@ -103,6 +106,18 @@ public class Register_UploadPaidStatus {
 	}
 	public void setRegularizeDeviceDbs(List<UplodPaidStatusModel> regularizeDeviceDbs) {
 		this.regularizeDeviceDbs = regularizeDeviceDbs;
+	}
+	public Long getFirstImei() {
+		return firstImei;
+	}
+	public void setFirstImei(Long firstImei) {
+		this.firstImei = firstImei;
+	}
+	public Integer getTaxPaidStatus() {
+		return taxPaidStatus;
+	}
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
+		this.taxPaidStatus = taxPaidStatus;
 	}
 
 

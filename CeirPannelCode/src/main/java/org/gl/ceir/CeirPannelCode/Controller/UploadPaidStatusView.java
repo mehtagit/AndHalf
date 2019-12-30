@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -189,4 +191,19 @@ public class UploadPaidStatusView {
 		return response;
 
 		}
+	
+	
+	
+	
+	
+
+
+	@ResponseBody
+	@PutMapping("tax-paid/status")
+	public GenricResponse taxPaidStatusUpdate(@RequestBody Register_UploadPaidStatus model) {
+		GenricResponse response = userPaidStatusFeignClient.tax(model);
+		log.info("::::::::::model:::::::"+model);
+		log.info("---------response--------"+response);
+		return response;
+	}
 }
