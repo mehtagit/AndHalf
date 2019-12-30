@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
-import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
@@ -28,8 +27,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,8 +34,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-
-import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 
 
@@ -52,8 +47,6 @@ public class TrcController {
 	RegisterationImpl registerationImpl;
 	@Autowired
 	UtilDownload utildownload;
-	@Autowired
-	UserPaidStatusFeignClient userPaidStatusFeignClient;
 	@RequestMapping(value=
 		{"/manageTypeDevices"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
@@ -237,14 +230,6 @@ public class TrcController {
 
 		return "redirect:"+fileExportResponse.getUrl();
 	}
-
-
-	@ResponseBody
-	@PutMapping("tax-paid/status")
-	public GenricResponse taxPaidStatusUpdate(@RequestBody Register_UploadPaidStatus model) {
-		GenricResponse response = userPaidStatusFeignClient.tax(model);
-		log.info("---------response--------"+response);
-		return response;
-	}			
+			
 
 }

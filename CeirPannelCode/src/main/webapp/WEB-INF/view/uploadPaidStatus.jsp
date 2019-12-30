@@ -742,7 +742,7 @@ input[type='search'] {
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="aprroveUser()" class="btn modal-trigger">Yes</a>
+                    <a onclick="aprroveDevice()" class="btn modal-trigger">Yes</a>
                     <button class="btn modal-close" style="margin-left: 10px;">No</button>
                       <span id="userId" hidden></span>
                        <span id="adminCurrentStatus" hidden></span>
@@ -763,50 +763,16 @@ input[type='search'] {
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./registrationRequest">ok</a>
+                     <a class="btn modal-close" onclick="refreshContent()">ok</a>
                    
                 </div>
             </div>
         </div>
     </div>
     
-    <div id="rejectInformation" class="modal" style="width: 40%; z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
-            <div class="row">
-                <form action="">
-                    <h6 class="modal-header">Reject</h6>
-                    <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
-                    </div>
-                    <h6>Do you want to reject?</h6>
-                    
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger">Yes</a>
-                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
-                </div>
-            </div>
-        </div>
-    </div>
+  
     
-    <div id="confirmRejectInformation" class="modal" style="width: 40%; z-index: 1005; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
-            <div class="row">
-                <form action="">
-                    <h6 class="modal-header">Reject</h6>
-                    <h6>An email on the register mail ID of the user has been sent with rejection reason.</h6>
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./registrationRequest">ok</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

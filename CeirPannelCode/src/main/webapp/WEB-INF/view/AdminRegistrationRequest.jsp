@@ -102,11 +102,12 @@
 	</section>
 
    
-	<div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
+	<div id="approveInformation" class="modal">
+           <h6 class="modal-header">Approve</h6>
+           <div class="modal-content">
             <div class="row">
                 <form action="">
-                    <h6 class="modal-header">Approve</h6>
+                 
                     <h6>Do you want to Approve the request</h6>
                 </form>
             </div>
@@ -121,10 +122,11 @@
         </div>
     </div>
 	<div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
+               <h6 class="modal-header">Approve</h6>
+                <div class="modal-content">
             <div class="row">
                 <form action="">
-                    <h6 class="modal-header">Approve</h6>
+            
                     <h6>An email on the register mail ID of the user has been sent with <br> Registration ID <span id="RegistrationId"></span>
                         and registration date <span id="registrationDate"></span>.</h6>
                    
@@ -138,11 +140,12 @@
             </div>
         </div>
     </div>
-	<div id="rejectInformation" class="modal" style="width: 40%; z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
+	<div id="rejectInformation" class="modal">
+           <h6 class="modal-header">Reject</h6>
+            <div class="modal-content">
             <div class="row">
                 <form action="">
-                    <h6 class="modal-header">Reject</h6>
+                
                     <div class="input-field" style="margin-top: 30px;">
                         <textarea id="Reason" class="materialize-textarea"></textarea>
                         <label for="textarea1" style="margin-left: -10px;">Reason</label>
@@ -159,11 +162,12 @@
             </div>
         </div>
     </div>
-	<div id="confirmRejectInformation" class="modal" style="width: 40%; z-index: 1005; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
+	<div id="confirmRejectInformation" class="modal">
+         <h6 class="modal-header">Reject</h6>
+          <div class="modal-content">
             <div class="row">
                 <form action="">
-                    <h6 class="modal-header">Reject</h6>
+                  
                     <h6>An email on the register mail ID of the user has been sent with rejection reason.</h6>
                 </form>
             </div>

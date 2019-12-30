@@ -238,10 +238,11 @@ function filter()
 }
 
 
-
+var nationalId =localStorage.getItem("nationalId") == 'null' ? null : localStorage.getItem("nationalId");
 function table(url,dataUrl){
 	//var nid=$('#nationalID').val(In);
-	var nationalId =localStorage.getItem("nationalId");
+
+	
 	var request={
 			"modifiedOn":$('#endDate').val(),
 			"createdOn":$('#startDate').val(),
@@ -256,6 +257,7 @@ function table(url,dataUrl){
 			"consignmentStatus": null,
 	/*		"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : null,*/
 					"nid":nationalId
+					
 	}
 
 
@@ -507,7 +509,7 @@ function historytable(url,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify({						
-							"nid":$('#Search').val(),
+							"nid": nationalId,
 							"taxPaidStatus":3
 						}); 
 					}
@@ -690,47 +692,8 @@ populateCountries
 
 function taxPaidStatus(){
 	var request={
-			"country":null,
-			"createdOn": null,
-			"currency": null,
-			"currencyInterp": null,
-			"deviceIdType": null,
-			"deviceIdTypeInterp": null,
-			"deviceSerialNumber": null,
-			"deviceStatus": null,
-			"deviceType": null,
-			"deviceTypeInterp": null,
-			"endUserDB": {
-				"country": null,
-				"createdOn": null,
-				"email": null,
-				"firstName": null,
-				"id": null,
-				"lastName": null,
-				"locality": null,
-				"middleName": null,
-				"modifiedOn": null,
-				"nid": null,
-				"phoneNo": null,
-				"propertyLocation": null,
-				"province": null,
-				"regularizeDeviceDbs": [
-					null
-					],
-					"street": null
-			},
-			"firstImei": parseInt(window.taxIMEI),
-			"fourthImei": 0,
-			"id": 0,
-			"modifiedOn": null,
-			"multiSimStatus": null,
-			"nid": $('#Search').val(),
-			"price": null,
-			"secondImei": null,
-			"taxPaidStatus":0,
-			"taxPaidStatusInterp": null,
-			"thirdImei": null,
-			"txnId": null
+			"firstImei": parseInt(window.taxIMEI),			
+			"taxPaidStatus":0
 	}
 	$.ajax({
 		url: './tax-paid/status',
@@ -869,12 +832,37 @@ function regularizedCount(){
 		}
 	});
 }
-function deviceApprovalPopup(imei1){
-
-	//alert("called")
-}  
 
 
 function refreshContent(){
 	$('#payNowTaxPayment,#confirmDeleteMsg').closeModal();
+}
+
+function deviceApprovalPopup(imei){
+	$('#approveInformation').openModal();
+	window.imei=imei;
+}  
+
+
+function aprroveDevice(){
+	$.ajax({
+		url : "./delete/"+window.imei,
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'DELETE',
+		success : function(data, textStatus, xhr) {
+
+			$('#confirmDeleteMsg').openModal();
+			$('#deleteMsg').closeModal();
+			/*if(data.errorCode == 200){
+				$("#responseMsg").text(data.message);
+			}else if(data.errorCode == 0){
+				$("#responseMsg").text(data.message);
+			}*/
+		},
+		error : function() {
+			console.log("Error");
+		}
+	});
+	
 }

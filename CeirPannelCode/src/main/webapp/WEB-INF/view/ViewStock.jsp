@@ -365,8 +365,9 @@
         </div>
     </div>
     <div id="ApproveStock" class="modal">
+        <h6 class="modal-header">Approve Stock</h6>
         <div class="modal-content">
-            <h6 class="modal-header">Approve Stock</h6>
+            
             <div class="row">
                 <h6>The stock with Transaction ID : <span id="approveStockTxnId"> </span> has been
                     successfully paid.</h6>
