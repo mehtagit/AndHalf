@@ -238,10 +238,11 @@ function filter()
 }
 
 
-
+var nationalId =localStorage.getItem("nationalId") == 'null' ? null : localStorage.getItem("nationalId");
 function table(url,dataUrl){
 	//var nid=$('#nationalID').val(In);
-	var nationalId =localStorage.getItem("nationalId");
+
+	
 	var request={
 			"modifiedOn":$('#endDate').val(),
 			"createdOn":$('#startDate').val(),
@@ -256,6 +257,7 @@ function table(url,dataUrl){
 			"consignmentStatus": null,
 	/*		"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : null,*/
 					"nid":nationalId
+					
 	}
 
 
@@ -507,7 +509,7 @@ function historytable(url,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify({						
-							"nid":$('#Search').val(),
+							"nid": nationalId,
 							"taxPaidStatus":3
 						}); 
 					}
