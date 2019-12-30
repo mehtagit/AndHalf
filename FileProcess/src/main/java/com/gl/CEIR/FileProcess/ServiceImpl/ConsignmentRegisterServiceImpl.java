@@ -25,6 +25,7 @@ import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
 import com.gl.CEIR.FileProcess.model.entity.ConsignmentMgmt;
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
 import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
@@ -90,9 +91,10 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 			log.info("File reading starts = " + contents);
 			
 			deviceBufferMap = new ConcurrentHashMap<String, String>();
-
+			ConsignmentFileParser consignmentFileParser = fileParser.getConsignmentFileParserBean();
+			
 			for(String content : contents) {
-				DeviceDb device = fileParser.getConsignmentFileParserBean().parse(content);
+				DeviceDb device = consignmentFileParser.parse(content);
 				
 				if(Objects.isNull(device)) {
 					continue;
