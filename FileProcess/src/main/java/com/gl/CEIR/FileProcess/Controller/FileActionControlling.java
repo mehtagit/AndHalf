@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.gl.ceir.fileprocess.ServiceImpl.FileActionServiceImpl;
-import com.gl.ceir.fileprocess.conf.AppConfig;
-import com.gl.ceir.fileprocess.model.entity.WebActionDb;
-import com.gl.ceir.fileprocess.service.WebActionFactory;
+import com.gl.CEIR.FileProcess.ServiceImpl.FileActionServiceImpl;
+import com.gl.CEIR.FileProcess.conf.AppConfig;
+import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.CEIR.FileProcess.service.WebActionFactory;
 
 @Service
 public class FileActionControlling implements Runnable {

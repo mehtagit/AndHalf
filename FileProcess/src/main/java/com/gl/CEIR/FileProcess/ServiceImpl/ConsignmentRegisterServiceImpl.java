@@ -16,20 +16,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.gl.ceir.fileprocess.Utility.Util;
-import com.gl.ceir.fileprocess.conf.FileStorageProperties;
-import com.gl.ceir.fileprocess.factory.PrototypeBeanProvider;
-import com.gl.ceir.fileprocess.model.constants.ConsignmentStatus;
-import com.gl.ceir.fileprocess.model.constants.Separator;
-import com.gl.ceir.fileprocess.model.constants.WebActionStatus;
-import com.gl.ceir.fileprocess.model.entity.ConsignmentMgmt;
-import com.gl.ceir.fileprocess.model.entity.DeviceDb;
-import com.gl.ceir.fileprocess.model.entity.WebActionDb;
-import com.gl.ceir.fileprocess.parse.impl.ConsignmentFileParser;
-import com.gl.ceir.fileprocess.repository.ConsignmentRepository;
-import com.gl.ceir.fileprocess.repository.StokeDetailsRepository;
-import com.gl.ceir.fileprocess.repository.WebActionDbRepository;
-import com.gl.ceir.fileprocess.service.WebActionService;
+import com.gl.CEIR.FileProcess.Utility.Util;
+import com.gl.CEIR.FileProcess.conf.FileStorageProperties;
+import com.gl.CEIR.FileProcess.factory.PrototypeBeanProvider;
+import com.gl.CEIR.FileProcess.model.constants.ConsignmentStatus;
+import com.gl.CEIR.FileProcess.model.constants.Separator;
+import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
+import com.gl.CEIR.FileProcess.model.entity.ConsignmentMgmt;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
+import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
+import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
+import com.gl.CEIR.FileProcess.service.WebActionService;
 
 @Service
 public class ConsignmentRegisterServiceImpl implements WebActionService {	
@@ -53,7 +52,7 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 	StokeDetailsRepository stokeDetailsRepository;
 	
 	@Autowired
-	PrototypeBeanProvider<ConsignmentFileParser> fileParser;
+	PrototypeBeanProvider fileParser;
 
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
@@ -93,7 +92,7 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 			deviceBufferMap = new ConcurrentHashMap<String, String>();
 
 			for(String content : contents) {
-				DeviceDb device = fileParser.getBean().parse(content);
+				DeviceDb device = fileParser.getConsignmentFileParserBean().parse(content);
 				
 				if(Objects.isNull(device)) {
 					continue;
@@ -126,8 +125,12 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 
 			// TODO Update only if it is Complete success.
 			// TODO Alter Db Name -> Device_Info_DB.
-			stokeDetailsRepository.saveAll(devices);
+			
+			log.info("Entities to save : " + devices);
+			List<DeviceDb> savedEntities = stokeDetailsRepository.saveAll(devices);
 
+			log.info("Saved Entities : " + savedEntities);
+			
 			// TODO Save in consignment history DB
 			consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
 			consignmentRepository.save(consignmentMgmt);
