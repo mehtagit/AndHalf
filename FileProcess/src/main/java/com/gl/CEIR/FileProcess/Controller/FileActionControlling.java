@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.gl.CEIR.FileProcess.ServiceImpl.FileActionServiceImpl;
 import com.gl.CEIR.FileProcess.conf.AppConfig;
+import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.service.WebActionFactory;
-import com.gl.ceir.config.model.WebActionDb;
 
 @Service
 public class FileActionControlling implements Runnable {

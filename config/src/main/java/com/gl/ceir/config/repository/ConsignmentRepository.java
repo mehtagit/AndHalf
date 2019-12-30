@@ -13,6 +13,7 @@ import io.lettuce.core.dynamic.annotation.Param;
 
 public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>, JpaSpecificationExecutor<ConsignmentMgmt> {
 
+	@SuppressWarnings("unchecked")
 	public ConsignmentMgmt save(ConsignmentMgmt consignment);
 
 	public ConsignmentMgmt getByConsignmentNumber(String consignmEntNumber);

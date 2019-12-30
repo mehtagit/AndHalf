@@ -33,6 +33,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.constants.Datatype;
@@ -88,23 +89,29 @@ public class RegularizedDeviceServiceImpl {
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
 	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
+	
+	@Autowired	
+	EmailUtil emailUtil;
+	
+	@Autowired
 	InterpSetter interpSetter;
 
 	@Autowired
 	StatusSetter statusSetter;
 
-	@Autowired	
-	EmailUtil emailUtil;
-
 	@Autowired
 	UserProfileRepository userProfileRepository;
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
+		List<StateMgmtDb> stateList = null;
+		
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
+			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			
 			System.out.println("dialect : " + propertiesReader.dialect);
-
 			SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
 			if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
@@ -133,6 +140,13 @@ public class RegularizedDeviceServiceImpl {
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 
+				for(StateMgmtDb stateMgmtDb : stateList) {
+					if(regularizeDeviceDb.getStatus() == stateMgmtDb.getState()) {
+						regularizeDeviceDb.setStateInterp(stateMgmtDb.getInterp()); 
+						break; 
+					} 
+				}
+				
 				regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
 
 				regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
@@ -235,8 +249,13 @@ public class RegularizedDeviceServiceImpl {
 
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
 
-					statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-
+					// statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					
+					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
+						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					}
+					
+					logger.info(">>>>>>>>>>>>>>>>>" + endUserDB.getRegularizeDeviceDbs());
 					// End user is not registered with CEIR system.
 					if(Objects.isNull(endUserDB2)) {
 						endUserDbRepository.save(endUserDB);

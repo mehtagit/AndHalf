@@ -1,4 +1,4 @@
-package com.gl.CEIR.FileProcess.model;
+package com.gl.CEIR.FileProcess.model.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -8,14 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class ConsignmentMgmt implements Serializable {
-
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,24 +29,24 @@ public class ConsignmentMgmt implements Serializable {
 
 	private String supplierId;
 
-	@NotNull
+	// @NotNull
 	private String supplierName;
 
 	@Column(length = 15)
 	private String consignmentNumber;
 
 	@Column(length = 10)
-	private String taxPaidStatus;
-
+	private Integer taxPaidStatus;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-
 
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	private Long userId  ;
+	@NotNull
+	private Integer userId;
 
 	@NotNull
 	@Column(length = 20)
@@ -53,6 +57,8 @@ public class ConsignmentMgmt implements Serializable {
 	@Column(length = 3)
 	private int consignmentStatus;
 
+	private int previousConsignmentStatus;
+
 	private String organisationCountry;
 
 	@Column(length = 25)
@@ -61,12 +67,28 @@ public class ConsignmentMgmt implements Serializable {
 	@Column(length = 25)
 	private String expectedArrivaldate;
 
+
 	@Column(length = 10)
 	private String expectedArrivalPort;
 
 	private int quantity;
 
 	private String remarks;
+
+	private Integer currency;
+
+	private Double totalPrice;
+	
+	@Transient
+	private String stateInterp;
+	
+	@Transient
+	private String taxInterp;
+
+	// @NotNull
+	@OneToOne
+	@JoinColumn(name="local_user_id", updatable = false)
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -76,7 +98,7 @@ public class ConsignmentMgmt implements Serializable {
 		this.id = id;
 	}
 
-	public String getSupplierId() {
+	public String getSupplierld() {
 		return supplierId;
 	}
 
@@ -100,11 +122,11 @@ public class ConsignmentMgmt implements Serializable {
 		this.consignmentNumber = consignmentNumber;
 	}
 
-	public String getTaxPaidStatus() {
+	public Integer getTaxPaidStatus() {
 		return taxPaidStatus;
 	}
 
-	public void setTaxPaidStatus(String taxPaidStatus) {
+	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
 
@@ -124,12 +146,17 @@ public class ConsignmentMgmt implements Serializable {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Long getUserId() {
+
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getSupplierId() {
+		return supplierId;
 	}
 
 	public String getTxnId() {
@@ -205,11 +232,103 @@ public class ConsignmentMgmt implements Serializable {
 	}
 
 
+	public User getUser() {
+		return user;
+	}
+
+	public ConsignmentMgmt setUser(User user) {
+		this.user = user;
+		return this;
+	}
+
+	public int getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(int currency) {
+		this.currency = currency;
+	}
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 
+	public int getPreviousConsignmentStatus() {
+		return previousConsignmentStatus;
+	}
 
+	public void setPreviousConsignmentStatus(int previousConsignmentStatus) {
+		this.previousConsignmentStatus = previousConsignmentStatus;
+	}
 
+	public String getStateInterp() {
+		return stateInterp;
+	}
 
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
 
+	public String getTaxInterp() {
+		return taxInterp;
+	}
 
+	public void setTaxInterp(String taxInterp) {
+		this.taxInterp = taxInterp;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConsignmentMgmt [id=");
+		builder.append(id);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", consignmentNumber=");
+		builder.append(consignmentNumber);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", previousConsignmentStatus=");
+		builder.append(previousConsignmentStatus);
+		builder.append(", organisationCountry=");
+		builder.append(organisationCountry);
+		builder.append(", expectedDispatcheDate=");
+		builder.append(expectedDispatcheDate);
+		builder.append(", expectedArrivaldate=");
+		builder.append(expectedArrivaldate);
+		builder.append(", expectedArrivalPort=");
+		builder.append(expectedArrivalPort);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }

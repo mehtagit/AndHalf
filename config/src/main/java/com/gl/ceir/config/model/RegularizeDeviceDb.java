@@ -14,14 +14,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.gl.ceir.config.util.State;
-import com.gl.ceir.config.util.StatusSetter;
 
 @Entity
-public class RegularizeDeviceDb extends State implements Serializable {
+public class RegularizeDeviceDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -91,6 +88,8 @@ public class RegularizeDeviceDb extends State implements Serializable {
 
 	//@NotNull
 	private Integer status;
+	@Transient
+	private String stateInterp;
 	
 	@ManyToOne 
 	@JoinColumn(name = "userId") 
@@ -308,17 +307,30 @@ public class RegularizeDeviceDb extends State implements Serializable {
 		this.status = status;
 	}
 
+	
+	public String getStateInterp() {
+		return stateInterp;
+	}
+
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("UserCustomDb [id=");
+		builder.append("RegularizeDeviceDb [id=");
 		builder.append(id);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
+		builder.append(", deviceStatusInterp=");
+		builder.append(deviceStatusInterp);
 		builder.append(", taxPaidStatus=");
 		builder.append(taxPaidStatus);
 		builder.append(", taxPaidStatusInterp=");
@@ -339,8 +351,6 @@ public class RegularizeDeviceDb extends State implements Serializable {
 		builder.append(deviceSerialNumber);
 		builder.append(", txnId=");
 		builder.append(txnId);
-		builder.append(", nid=");
-		builder.append(nid);
 		builder.append(", price=");
 		builder.append(price);
 		builder.append(", currency=");
@@ -355,6 +365,12 @@ public class RegularizeDeviceDb extends State implements Serializable {
 		builder.append(thirdImei);
 		builder.append(", fourthImei=");
 		builder.append(fourthImei);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", endUserDB=");
+		builder.append(endUserDB);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -1,4 +1,4 @@
-package com.gl.CEIR.FileProcess.Repository;
+package com.gl.CEIR.FileProcess.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

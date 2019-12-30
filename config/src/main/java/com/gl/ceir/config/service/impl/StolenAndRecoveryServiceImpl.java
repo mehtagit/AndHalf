@@ -120,8 +120,6 @@ public class StolenAndRecoveryServiceImpl {
 		}
 	}
 
-
-
 	@Transactional
 	public GenricResponse v2uploadDetails(StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
@@ -129,7 +127,7 @@ public class StolenAndRecoveryServiceImpl {
 			// Single = 4
 			if(stolenandRecoveryDetails.getSourceType() == 4){
 				SingleImeiDetails singleImeiDetails = new SingleImeiDetails();	
-				singleImeiDetails.setImei(stolenandRecoveryDetails.getImei());
+				singleImeiDetails.setFirstImei(stolenandRecoveryDetails.getImei());
 				singleImeiDetails.setsARm(stolenandRecoveryDetails);
 				stolenandRecoveryDetails.setSingleImeiDetails(singleImeiDetails);
 
@@ -399,7 +397,7 @@ public class StolenAndRecoveryServiceImpl {
 				if (stolenandRecoveryMgmt.getSourceType() == 4){
 
 					SingleImeiHistoryDb singleImeiHistoryDb = new SingleImeiHistoryDb();
-					singleImeiHistoryDb.setImei(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getImei());
+					singleImeiHistoryDb.setImei(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getFirstImei());
 					singleImeiHistoryDb.setProcessState(stolenandRecoveryMgmtInfo.getSingleImeiDetails().getProcessState());
 					singleImeiHistoryDb.setTxnId(stolenandRecoveryMgmt.getId());
 

@@ -1,4 +1,4 @@
-package com.gl.CEIR.FileProcess.Repository;
+package com.gl.CEIR.FileProcess.repository;
 
 import java.util.List;
 
@@ -7,10 +7,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.gl.CEIR.FileProcess.model.ConsignmentMgmt;
 
+public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>, JpaSpecificationExecutor<ConsignmentMgmt> {
 
-
-public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long> {
-	
+	@SuppressWarnings("unchecked")
 	public ConsignmentMgmt save(ConsignmentMgmt consignment);
 
 	public ConsignmentMgmt getByConsignmentNumber(String consignmEntNumber);
@@ -18,5 +17,7 @@ public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Lo
 	public List<ConsignmentMgmt> getByUserIdOrderByIdDesc(Long userId);
 
 	public ConsignmentMgmt getByTxnId(String txnId);
+
+	public List<ConsignmentMgmt> findByUser_id(int id);
 
 }

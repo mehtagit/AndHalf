@@ -11,10 +11,13 @@ public final class StatusSetter {
 
 	public List<RegularizeDeviceDb> setStatus(List<RegularizeDeviceDb> target, Integer state) {
 		try {
-			
-			target.forEach(o -> o.setState(state));
+
+			for(RegularizeDeviceDb regularizeDeviceDb : target) {
+				regularizeDeviceDb.setStatus(state);
+			}
+
 			return target;
-			
+
 		}catch (Exception e) {
 			// TODO: handle exception
 			return null;

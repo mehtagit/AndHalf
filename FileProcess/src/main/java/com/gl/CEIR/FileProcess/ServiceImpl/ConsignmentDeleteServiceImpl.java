@@ -9,17 +9,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.CEIR.FileProcess.Utility.Validation;
+import com.gl.CEIR.FileProcess.model.ConsignmentMgmt;
+import com.gl.CEIR.FileProcess.model.DeviceDb;
+import com.gl.CEIR.FileProcess.model.DeviceDbHistory;
+import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
+import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
+import com.gl.CEIR.FileProcess.repository.StockDetailsOperationRepository;
+import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
+import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
-import com.gl.ceir.config.model.ConsignmentMgmt;
-import com.gl.ceir.config.model.DeviceDb;
-import com.gl.ceir.config.model.DeviceDbHistory;
-import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
-import com.gl.ceir.config.model.constants.WebActionStatus;
-import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.StockDetailsOperationRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
-import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Service
 public class ConsignmentDeleteServiceImpl implements WebActionService{
@@ -36,10 +35,10 @@ public class ConsignmentDeleteServiceImpl implements WebActionService{
 	StokeDetailsRepository stokeDetailsRepository;
 
 	@Autowired
-	Validation validation;
-
-	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
+	
+	@Autowired
+	Validation validation;
 
 	@Override
 	@Transactional
@@ -68,15 +67,15 @@ public class ConsignmentDeleteServiceImpl implements WebActionService{
 
 			}else {
 
-				for(DeviceDb deivceDetails : deviceList) {
+				for(DeviceDb deviceDetails : deviceList) {
 
-					deviceDbHistory.setDeviceAction(deivceDetails.getDeviceAction());
-					deviceDbHistory.setDeviceIdType(deivceDetails.getDeviceIdType());
-					deviceDbHistory.setDeviceLaunchDate(deivceDetails.getDeviceLaunchDate());
-					deviceDbHistory.setSnOfDevice(deivceDetails.getSnOfDevice());
-					deviceDbHistory.setDeviceStatus(deivceDetails.getDeviceStatus());
-					deviceDbHistory.setImeiEsnEeid(deivceDetails.getImeiEsnMeid());
-					deviceDbHistory.setMultipleSimStatus(deivceDetails.getMultipleSimStatus());
+					deviceDbHistory.setDeviceAction(deviceDetails.getDeviceAction());
+					deviceDbHistory.setDeviceIdType(deviceDetails.getDeviceIdType());
+					deviceDbHistory.setDeviceLaunchDate(deviceDetails.getDeviceLaunchDate());
+					deviceDbHistory.setSnOfDevice(deviceDetails.getSnOfDevice());
+					deviceDbHistory.setDeviceStatus(deviceDetails.getDeviceStatus());
+					deviceDbHistory.setImeiEsnEeid(deviceDetails.getImeiEsnMeid());
+					deviceDbHistory.setMultipleSimStatus(deviceDetails.getMultipleSimStatus());
 					deviceDbHistory.setOperation(1);
 					deviceDbHistory.setRoleType(webActionDb.getFeature());
 					deviceDbHistory.setTxnId(webActionDb.getTxnId());
