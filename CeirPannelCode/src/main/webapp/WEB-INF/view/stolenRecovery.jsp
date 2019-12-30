@@ -204,11 +204,7 @@
 	<div id="DeleteConsignment" class="modal">
 		<h6 class="modal-header">Delete</h6>
 		<div class="modal-content">
-
-			
-			<hr>
-
-			<div class="row">
+	<div class="row">
 				<h6>
 					Are you sure you want to withdraw the consignment details for (<span
 						id="transID"></span>)
@@ -239,7 +235,7 @@
 			<h6>Update Consignment</h6>
 			<div class="modal-content">
 		
-			<hr>
+			
 
 			<div class="row">
 				<h6 id="sucessMessage"></h6>
@@ -259,11 +255,11 @@
 	<!-- Delete confirmation Modal start   -->
 
 	<div id="confirmDeleteConsignment" class="modal">
-		<h6>Delete Consignment</h6>
+		<h6 class="modal-header">Delete Consignment</h6>
 		<div class="modal-content">
 
 			
-			<hr>
+			
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
 			<div class="row">
@@ -284,11 +280,11 @@
 
 	<!-- Update Modal Start -->
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
-			<h6>Edit Consignment</h6>
+			<h6 class="modal-header">Edit Consignment</h6>
 			<div class="modal-content">
 
 		
-			<hr>
+			
 
 
 			<div class="row myRow">
@@ -422,7 +418,7 @@
 		<div class="modal-content">
 
 			
-			<hr>
+			
 
 			<div class="row">
 				<h6>The following devices marked as stolen has been received
@@ -438,11 +434,11 @@
 	</div>
 
 	<div id="updateMarkAsStolen" class="modal">
-		<h6>Mark As Stolen</h6>
+		<h6 class="modal-header">Mark As Stolen</h6>
 		<div class="modal-content">
 
 			
-			<hr>
+			
 
 			<div class="row">
 				<h6 id="editMessageTextStoleRecovery"></h6>
@@ -548,7 +544,7 @@
 			<div class="row">
 				<div class="col s12 m12">
 					
-					<hr>
+					
 					<div class="row">
 						<h6 style="color: #000;">
 							Upload Bulk Devices Information <span class="star">*</span>
@@ -649,16 +645,17 @@
 	</div>
 
 	<div id="editFileStolenModal" class="modal">
-		<div class="modal-content">
-			<div class="row">
-				<div class="col s12 m12">
-					<h6 class="modal-header">
+		<h6 class="modal-header">
 						Update Stolen request for this transaction id ( <span
 							id="editFileStolenTxnId"></span> ).
 					</h6>
+					<div class="modal-content">
+			<div class="row">
+				<div class="col s12 m12">
+					
 					<input type="text" id="editFileStolenRequestType"
 						style="display: none;">
-					<hr>
+					
 					<div class="row">
 						<h6 style="color: #000;">
 							Upload Bulk Devices Information <span class="star">*</span>
@@ -768,7 +765,7 @@
 			<div class="row">
 				<div class="col s12 m12">
 					<h6 class="modal-header">Mark As Recovered</h6>
-					<hr>
+					
 					<div class="row">
 						<h6 style="color: #000;">
 							Upload Bulk Devices Information <span class="star">*</span>
@@ -834,7 +831,7 @@
 						Update Recovery request for this transaction id ( <span
 							id="editFileRecoveryTxnId"></span> ).
 					</h6>
-					<hr>
+					
 					<div class="row">
 						<h6 style="color: #000;">
 							Upload Bulk Devices Information <span class="star">*</span>
@@ -895,7 +892,7 @@
 	<div id="markAsRecoverDone" class="modal">
 		<div class="modal-content">
 			<h6 class="modal-header">Mark As Recovered</h6>
-			<hr>
+			
 			<div class="row">
 				<h6>The following devices marked as recover has been recieved
 					successfully.</h6>
@@ -912,7 +909,7 @@
 		<div class="modal-content">
 
 			<h6 class="modal-header">Mark As Recover</h6>
-			<hr>
+			
 
 			<div class="row">
 				<h6>Do you want to recover the devices for the following
@@ -930,7 +927,7 @@
 	<div id="markAsRecoveryDone" class="modal">
 		<div class="modal-content">
 			<h6 class="modal-header">Mark As Recover</h6>
-			<hr>
+			
 			<div class="row">
 				<h6>The following Transaction ID's devices marked as
 					recovered..</h6>
