@@ -114,7 +114,7 @@ function submitBlockImei()
 		var blockUnblockRemark = $('#blockbulkRemark').val();
 		
 		var ModeType='2';
-		var requestType='1';
+		var requestType='2';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
 		console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
@@ -171,7 +171,7 @@ function submitUnBlockImei()
 	    var bulkunBlockdeviceCategory=$('#bulkunBlockdeviceCategory').val();
 		var unblockbulkRemark = $('#unblockbulkRemark').val();
 		var ModeType='2';
-		var requestType='2';
+		var requestType='3';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
 		//console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
@@ -229,7 +229,7 @@ function submitSingleBlockDevicesRequest()
 	var IMEI2=$('#singleblockIMEI2').val();
 	var IMEI3=$('#singleblockIMEI3').val();
 	var IMEI4=$('#singleblockIMEI4').val();
-	var requestType=1;
+	var requestType=2;
 	
 	console.log("****");
 	console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
@@ -294,7 +294,7 @@ function submitSingleUnBlockDevicesRequest()
 	var IMEI2=$('#unbockSingleIMEI2').val();
 	var IMEI3=$('#unbockSingleIMEI3').val();
 	var IMEI4=$('#unbockSingleIMEI4').val();
-	var requestType=2;
+	var requestType=3;
 	var roleType = $("body").attr("data-roleType");
 	
 	console.log("****");
