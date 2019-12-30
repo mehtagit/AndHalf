@@ -107,7 +107,7 @@ public class RegularizedDeviceServiceImpl {
 
 			SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
-			if(Objects.nonNull(filterRequest.getNid()))
+			if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
 				specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
@@ -140,6 +140,8 @@ public class RegularizedDeviceServiceImpl {
 				regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
 
 				regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setConfigInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
+				
+				regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
 			}
 
 			return page;
@@ -264,7 +266,7 @@ public class RegularizedDeviceServiceImpl {
 
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
-				return new GenricResponse(0, "Update Successfully.",userCustomDbDetails.getDeviceSerialNumber());
+				return new GenricResponse(0, "Update Successfully.", Long.toString(userCustomDbDetails.getFirstImei()));
 
 			}else {
 				return  new GenricResponse(4,"TxnId Does Not exist.", "");

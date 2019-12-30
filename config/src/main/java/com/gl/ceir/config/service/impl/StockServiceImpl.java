@@ -90,13 +90,13 @@ public class StockServiceImpl {
 
 	@Autowired	
 	EmailUtil emailUtil;
-	
+
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
-	
+
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
-	
+
 	@Autowired
 	InterpSetter interpSetter;
 
@@ -109,7 +109,7 @@ public class StockServiceImpl {
 				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
 				stackholderRequest.setUserId(new Long(user.getId()));
 				stackholderRequest.setUser(user);
-				
+
 			}
 
 			stockManagementRepository.save(stackholderRequest);
@@ -153,7 +153,7 @@ public class StockServiceImpl {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler(propertiesReader.dialect);
-			
+
 			/*
 			 * if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
 			 * filterRequest.setUserType("Custom"); }
@@ -164,7 +164,7 @@ public class StockServiceImpl {
 					"Retailer".equalsIgnoreCase(filterRequest.getUserType()) || 
 					"Manufacturer".equalsIgnoreCase(filterRequest.getUserType())
 					) {
-				
+
 				if(Objects.nonNull(filterRequest.getUserId()) )
 					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
@@ -186,7 +186,7 @@ public class StockServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			}else {
 				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
@@ -211,19 +211,21 @@ public class StockServiceImpl {
 			}
 
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
-			// stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId();
+			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
-			
+
 			for(StockMgmt stockMgmt : page.getContent()) {
-				
-				/*for(StateMgmtDb stateMgmtDb : stateInterpList) {
+
+
+				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
 						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
-						// break;
-					}
-				}*/
-				
-				interpSetter.setStateInterp(filterRequest.getFeatureId(), filterRequest.getUserTypeId(), stockMgmt.getStockStatus());
+						// break; 
+					} 
+				}
+
+
+				// interpSetter.setStateInterp(filterRequest.getFeatureId(), filterRequest.getUserTypeId(), stockMgmt.getStockStatus());
 			}
 
 			return page;
@@ -312,15 +314,15 @@ public class StockServiceImpl {
 			return new GenricResponse(0, "Update SuccessFully",distributerManagement.getTxnId());
 		}
 	}
-	
+
 	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
 		String fileName = null;
 		Writer writer   = null;
 		StockFileModel sfm = null;
-		
+
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String filePath  = fileStorageProperties.getStockDownloadDir();
-		
+
 		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
 		StatefulBeanToCsv<StockFileModel> csvWriter = null;
 		List< StockFileModel > fileRecords = null;
@@ -328,7 +330,7 @@ public class StockServiceImpl {
 		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<StockMgmt> stockMgmts = getAllFilteredData(filterRequest, pageNo, pageSize).getContent();
-			
+
 			if( !stockMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
 					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
@@ -338,35 +340,35 @@ public class StockServiceImpl {
 			}else {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
 			}
-			
+
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
-			
+
 			if( !stockMgmts.isEmpty() ) {
-				
+
 				fileRecords = new ArrayList<>();
 				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
-				
+
 				for( StockMgmt stockMgmt : stockMgmts ) {
 					sfm = new StockFileModel();
-					
+
 					sfm.setStockId(stockMgmt.getId());
 					sfm.setStockStatus(stockMgmt.getStateInterp());
 					sfm.setTxnId( stockMgmt.getTxnId());
 					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
 					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
 					sfm.setFileName( stockMgmt.getFileName());
-					
+
 					logger.debug(sfm);
-					
+
 					fileRecords.add(sfm);
 				}
-				
+
 				csvWriter.write(fileRecords);
 			}
 			return new FileDetails( fileName, filePath, fileStorageProperties.getStockDownloadLink() + fileName ); 
-			
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -374,7 +376,7 @@ public class StockServiceImpl {
 			try {
 
 				if( Objects.nonNull(writer) )
-				writer.close();
+					writer.close();
 			} catch (IOException e) {}
 		}
 	}

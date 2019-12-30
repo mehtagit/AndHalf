@@ -108,7 +108,7 @@ public class ConsignmentServiceImpl {
 
 	@Autowired
 	InterpSetter interpSetter;
-	
+
 	@Transactional
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
@@ -137,9 +137,9 @@ public class ConsignmentServiceImpl {
 			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.INIT.getCode());
 			consignmentFileRequest.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 			webActionDbRepository.save(webActionDb);
-            
+
 			// Set user for mapping.
-            consignmentFileRequest.setUser(new User().setId(Long.valueOf(consignmentFileRequest.getUserId())));
+			consignmentFileRequest.setUser(new User().setId(Long.valueOf(consignmentFileRequest.getUserId())));
 			consignmentRepository.save(consignmentFileRequest);
 
 			return new GenricResponse(0, "Register Successfully", consignmentFileRequest.getTxnId());
@@ -165,7 +165,7 @@ public class ConsignmentServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
 			System.out.println("dialect : " + propertiesReader.dialect);
-			
+
 			SpecificationBuilder<ConsignmentMgmt> specificationBuilder = new SpecificationBuilder<ConsignmentMgmt>(propertiesReader.dialect);
 
 			if(Objects.nonNull(consignmentMgmt.getUserId()))
@@ -244,7 +244,7 @@ public class ConsignmentServiceImpl {
 					}
 				}
 			}
-			
+
 			if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
 				cmsb.orSearch(new SearchCriteria("taxPaidStatus", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -254,20 +254,17 @@ public class ConsignmentServiceImpl {
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
-				/*
-				 * for(StateMgmtDb stateMgmtDb : featureList) {
-				 * if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
-				 * consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); break; } }
-				 */
-				
-				interpSetter.setStateInterp(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId(), consignmentMgmt2.getConsignmentStatus());
 
-				/*
-				 * for(SystemConfigListDb systemConfigListDb : customTaxStatusList) {
-				 * if(consignmentMgmt2.getTaxPaidStatus() == systemConfigListDb.getValue()) {
-				 * consignmentMgmt2.setTaxInterp(systemConfigListDb.getInterp()); break; } }
-				 */				
-				
+				for(StateMgmtDb stateMgmtDb : featureList) {
+					if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
+						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
+						break; 
+					} 
+				}
+
+
+				//interpSetter.setStateInterp(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId(), consignmentMgmt2.getConsignmentStatus());
+
 				consignmentMgmt2.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt2.getTaxPaidStatus()));
 			}
 
@@ -384,11 +381,11 @@ public class ConsignmentServiceImpl {
 			UserProfile userProfile = null;
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
-			
+
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
 			logger.debug("userProfile : " + userProfile);
-			
+
 			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {
 
@@ -468,7 +465,7 @@ public class ConsignmentServiceImpl {
 		Writer writer   = null;
 		ConsignmentFileModel cfm = null;
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-		
+
 		String filePath  = fileStorageProperties.getConsignmentDownloadDir();
 		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
 		StatefulBeanToCsv<ConsignmentFileModel> csvWriter = null;
@@ -486,43 +483,43 @@ public class ConsignmentServiceImpl {
 			}else {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignments.csv";
 			}
-			
+
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<ConsignmentFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
-			
+
 			if( !consignmentMgmts.isEmpty() ) {
-				
+
 				List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 				fileRecords = new ArrayList<>(); 
-				
+
 				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
 					cfm = new ConsignmentFileModel();
-					
+
 					cfm.setConsignmentId( consignmentMgmt.getId() );
 					cfm.setConsignmentStatus( consignmentMgmt.getStateInterp());
-					
+
 					for( SystemConfigListDb config : customTagStatusList ) {
-						
+
 						if( config.getValue() == consignmentMgmt.getTaxPaidStatus() ) {
 							cfm.setTaxPaidStatus(config.getInterp());
 						}
 					}
-					
+
 					cfm.setTxnId( consignmentMgmt.getTxnId());
 					cfm.setCreatedOn(consignmentMgmt.getCreatedOn().format(dtf));
 					cfm.setModifiedOn( consignmentMgmt.getModifiedOn().format(dtf));
 					cfm.setFileName( consignmentMgmt.getFileName());
-					
+
 					logger.debug(cfm);
-					
+
 					fileRecords.add(cfm);
 				}
-				
+
 				csvWriter.write(fileRecords);
 			}
 			return new FileDetails( fileName, filePath, fileStorageProperties.getConsignmentDownloadLink() + fileName ); 
-			
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -530,7 +527,7 @@ public class ConsignmentServiceImpl {
 			try {
 
 				if( Objects.nonNull(writer) )
-				writer.close();
+					writer.close();
 			} catch (IOException e) {}
 		}
 	}

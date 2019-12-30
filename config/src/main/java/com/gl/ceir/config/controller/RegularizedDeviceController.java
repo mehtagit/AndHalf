@@ -56,7 +56,7 @@ public class RegularizedDeviceController {
 		MappingJacksonValue mapping = null;
 		
 		if(file == 0) {
-			logger.info("Custom view info request " + filterRequest);
+			logger.info("Regularize Device view info request " + filterRequest);
 			Page<RegularizeDeviceDb> customInfo = regularizedDeviceServiceImpl.filter(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(customInfo);
 		}else {

@@ -31,6 +31,25 @@ public final class InterpSetter {
 		}
 	}
 	
+	public String setConfigInterp(String tag, int value, int start, int end) {
+		try {
+			
+			List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
+			return systemConfigListDbs.stream()
+					.filter(o -> o.getValue() == value)
+					.findAny()
+					.get()
+					.getInterp()
+					.substring(start, end);
+			
+		}catch (IndexOutOfBoundsException e) {
+			return "";
+		}catch (Exception e) {
+			// TODO: handle exception
+			return "";
+		}
+	}
+	
 	public String setStateInterp(int featureId, int userTypeId, int value) {
 		try {
 			

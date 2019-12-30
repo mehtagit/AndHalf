@@ -174,7 +174,7 @@ public class ConfigurationController {
 	}
 	
 	@ApiOperation(value = "Paginated view of policy Config.", response = SystemConfigurationDb.class)
-	@PostMapping("/filter/message-configuration")
+	@PostMapping("/filter/policy-configuration")
 	public MappingJacksonValue paginatedViewOfPolicyConfig(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,

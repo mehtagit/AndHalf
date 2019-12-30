@@ -89,7 +89,7 @@ public class RegularizeDeviceDb extends State implements Serializable {
 	
 	private String remark;
 
-	@NotNull
+	//@NotNull
 	private Integer status;
 	
 	@ManyToOne 
