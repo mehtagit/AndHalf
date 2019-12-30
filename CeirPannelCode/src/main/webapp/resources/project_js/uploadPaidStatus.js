@@ -178,10 +178,7 @@ function filter()
 		console.log("sesion value set to "+sessionFlag);
 	}
 	table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
-
-
 	localStorage.removeItem('sourceType');
-
 }
 
 
@@ -606,6 +603,8 @@ else{
 //$('#sucessMessage').text('');
 $('#regularisedDevice').openModal();
 $('#dynamicTxnId').text(data.txnId);
+ $('#sucessMessage').text('');
+ $('#sucessMessage').text(data.message);
 }
 },
 error: function (jqXHR, textStatus, errorThrown) {
@@ -683,15 +682,15 @@ function taxPaidStatus(){
 		'data' : JSON.stringify(request),
 		success: function (data, textStatus, jqXHR) {
 			console.log("success"+JSON.stringify(data))
-
+			var msg="The device status has been successfully updated";
 			$('#payTaxModal').closeModal();
 			$('#payNowTaxPayment').openModal();
 			/*if(data.errorCode==200){
-				$('#taxPaidMsg').text(data.message);
+				$('#taxPaidMsg').text(msg);
 
 			}
 			else{
-				$('#taxPaidMsg').text(data.message);
+				$('#taxPaidMsg').text(msg);
 			}*/
 
 		},

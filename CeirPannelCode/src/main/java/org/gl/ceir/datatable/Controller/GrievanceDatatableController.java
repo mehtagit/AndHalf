@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -309,6 +308,24 @@ public class GrievanceDatatableController {
 					datatableResponseModel.setData(finalList);
 					}
 					}
+				else if ("Manufacturer".equals(userType)) { 
+					log.info("<><><><> in Manufacturer CONTROLLER");
+					for (GrievanceContentModel dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String modifiedOn = dataInsideList.getModifiedOn();
+						String txnId = dataInsideList.getTxnId();
+						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+						String grievanceStatus = dataInsideList.getStateInterp();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+								StatusofGrievance, userStatus, userId);
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+				} 
 			}
 			// data set on ModelClass
 			datatableResponseModel.setRecordsTotal(grievancepaginationmodel.getNumberOfElements());

@@ -169,8 +169,6 @@ input[type='search'] {
 							</div>
 
 							<div class="row">
-							<c:choose>
-							<c:when  test = "${usertype=='Custom'}">
 								<div class="col s12 m12" style="margin-top: 20px;">
 									<div id="submitbtn">
 										<div class="input-field col s12 m1 l1">
@@ -186,28 +184,7 @@ input[type='search'] {
 										</div>
 									</div>
 								</div>
-								</c:when>
-								<c:otherwise>
-								<div>
-								<div class="col s12 m12" style="margin-top: 20px;">
-									<div id="submitbtn">
-										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10">CID :</label>
-										</div>
-										<div class="input-field col s12 m3 l3">
-											<input type="text" id="Search" name="Search"
-												placeholder="NID" />
-										</div>
-										<div class="input-field col s12 m2 l2">
-											<input type="button" class="btn" value="Submit"
-												onclick="hide();">
-										</div>
-									</div>
-								</div>
-								</div>
-								
-								</c:otherwise>
-								</c:choose>
+
 
 								<div id="user123" class="section" style="display: none;">
 									<form action="" onsubmit="return submitDeviceInfo()"

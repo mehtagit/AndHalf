@@ -51,17 +51,14 @@ public class UploadPaidStatusView {
 	@GetMapping("uploadPaidStatus")
 	public ModelAndView pageView() {
 		ModelAndView modelAndView = new ModelAndView("uploadPaidStatus");
+		
 		return modelAndView;
 	}
 	
 	
 	@GetMapping("add-device-information")
-	public ModelAndView deviceInformationView( HttpSession session) {
+	public ModelAndView deviceInformationView() {
 		ModelAndView modelAndView = new ModelAndView("addDeviceInformation");
-		
-		String usertype=session.getAttribute("usertype").toString();
-		log.info("usertype value=="+usertype);
-		modelAndView.addObject("usertype", usertype);
 		return modelAndView;
 	}
 	

@@ -88,52 +88,48 @@
                                         <div class="row">
                                             <div class="col s12">
                                                 <ul class="tabs">
-                                                    <li class="tab col s3"><a class="active" href="#Single">Single</a>
+                                                    <li class="tab col s3"><a class="active" onclick="showSingleImeiUnBlock()">Single</a>
                                                     </li>
-                                                    <li class="tab col s3"><a href="#Bulk">Bulk</a></li>
+                                                    <li class="tab col s3"><a onclick="showMultipleImeiUnBlock()">Bulk</a></li>
                                                 </ul>
                                             </div>
-                                            <div id="Single" class="col s12" style="margin-top: 30px;">
-                                                <form action="#">
+                                            <div id="SingleImeiUnBlock" class="col s12" style="margin-top: 30px;display: block">
+                                                 <form action="" onsubmit="return submitSingleUnBlockDevicesRequest()" method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="row">
                                         
                                                             <div class="col s12 m6">
                                                                 <label for="deviceType">Device Type <span class="star">*</span></label>
-                                                                <select class="browser-default" id="deviceType">
+                                                                <select class="browser-default" id="unbockSingledeviceType" required="required">
                                                                     <option value="" disabled selected>Device Type</option> 
-                                                                     <option value="Handheld">Handheld</option>
-                                                                    <option value="MobilePhone">Mobile Phone/Feature phone</option>
-                                                                    <option value="Vehicle">Vehicle</option>
-                                                                    <option value="Portable">Portable(include PDA)</option>
-                                                                    <option value="Module">Module</option>
-                                                                    <option value="Dongle">Dongle</option>
-                                                                    <option value="WLAN">WLAN Router</option>
-                                                                    <option value="Modem">Modem</option>
-                                                                    <option value="Smartphone">Smartphone</option>
-                                                                    <option value="Computer">Connected Computer</option>
-                                                                    <option value="Tablet">Tablet</option>
-                                                                    <option value="e-Book">e-Book</option>
+                                                                </select>
+                                                            </div>
+                                                             <div class="col s12 m6"><label for="UnblockdeviceIdType">Device ID
+                                                                    Type <span class="star">*</span></label>
+                                                                <select class="browser-default" id="UnblockdeviceIdType" required="required">
+                                                                    <option value="" disabled selected>Select Device ID
+                                                                        Type
+                                                                    </option>
+                                                                   
                                                                 </select>
                                                             </div>
                                         
                                                             <div class="col s12 m6">
                                                                 <label for="deviceType">Multiple Sim Status <span class="star">*</span></label>
-                                                                <select class="browser-default" id="multipleSimStatus">
+                                                                <select class="browser-default" id="unbockSingleMultipleSimStatus" required="required">
                                                                     <option value="" disabled selected>Multiple Sim Status</option>
-                                                                    <option value="Yes">Yes</option>
-                                                                    <option value="No">No</option>
+                                                                   
                                                                 </select>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="serialNumber" name="serialNumber" pattern="[0-9]"
-                                                                    title="Please enter your device serial number first" maxlength="20">
+                                                                <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[0-9]{1,15}"
+                                                                    required="required" title="Please enter your device serial number first" maxlength="15">
                                                                 <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="remark" class="materialize-textarea"></textarea>
+                                                                <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
                                                                 <label for="Remark">Remark <span class="star">*</span></label>
                                                             </div>
                                                         </div>
@@ -142,26 +138,26 @@
                                                                 <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
                                                             </div>
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
+                                                                <input type="text" id="unbockSingleIMEI1" required="required" name="IMEI1" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
                                                                 <label for="IMEI1">1 <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
+                                                                <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
                                                                 <label for="IMEI2">2</label>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"
+                                                                <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
                                                                 <label for="IMEI3">3</label>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"
+                                                                <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
                                                                 <label for="IMEI4">4</label>
@@ -173,18 +169,34 @@
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn modal-trigger" data-target="markAsUnblock">Submit</button>
-                                                        <a href="blockUnblockList.html" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                        <button class="btn" type="submit">Submit</button>
+                                                        <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
                                             </div>
-                                            <div id="Bulk" class="col s12">
-                                                <form action="#">
+                                            <div id="multipleImeiUnBlock" class="col s12" style="display: none">
+                                             <form action="" onsubmit="return submitUnBlockImei()" method="POST" enctype="multipart/form-data">
+                                                    
+                                                     <div class="col s12 m6"><label for="bulkBlockdeviceCategory">Category
+                                                            <span class="star">*</span></label>
+                                                        <select class="browser-default" id="bulkunBlockdeviceCategory"  required="required" >
+                                                            <option value="" disabled selected>Select Category
+                                                            </option>
+                                                          
+                                                        </select>
+                                                    </div>
+                                                    <div class="input-field col s12 m6 " style="margin-top: 22px;">
+                                                        <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,9}" title="Please enter  numbers upto 9 characters only"
+                                                         maxlength="16" required="required">
+                                                        <label for="unblockbulkquantity">Quantity <span class="star">*</span></label>
+                                                    </div>
+                                                    
+                                                    
                                                     <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
                                                         <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
                                                         <div class="btn">
                                                             <span>File</span>
-                                                            <input type="file">
+                                                            <input type="file" id="unblockBulkFile" required="required">
                                                         </div>
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" placeholder="Please select the file">
@@ -192,16 +204,16 @@
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="Remark1" class="materialize-textarea"></textarea>
-                                                        <label for="Remark1">Remark <span class="star">*</span></label>
+                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" required="required"></textarea>
+                                                        <label for="unblockbulkRemark">Remark <span class="star">*</span></label>
                                                     </div>
                                                     
-                                                    <p style="margin-left: 10px;"><a href="#">Download Sample Format</a></p>
+                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a></p>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn modal-trigger" data-target="markBulkAsUnblock">Submit</button>
-                                                        <a href="blockUnblockList.html" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                        <button class="btn "  type="submit">Submit</button>
+                                                        <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
                                             </div>
@@ -217,16 +229,14 @@
 
 
     <div id="markAsUnblock" class="modal">
+            <h6 class="modal-header">Mark As Unblock</h6>
         <div class="modal-content">
-            <h6>Mark As Unblock</h6>
-            <hr>
-
-            <div class="row">
+         <div class="row">
                 <h6>This device has been marked as unblock.</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="blockUnblockList.html" class="btn">ok</a>
+                    <a href="./blockUnblockDevices" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -234,16 +244,14 @@
     
     
     <div id="markBulkAsUnblock" class="modal">
+        <h6 class="modal-header">Mark As Unblock</h6>
         <div class="modal-content">
-            <h6>Mark As Unblock</h6>
-            <hr>
-
-            <div class="row">
+         <div class="row">
                 <h6>This file has been marked as unblock.</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="blockUnblockList.html" class="btn">ok</a>
+                    <a href="./blockUnblockDevices" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -280,6 +288,43 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+
+<script type="text/javascript"
+		src="${context}/resources/project_js/reportBlock.js"></script>
+
+
+		<script type="text/javascript">
+
+		$(document).ready(function () {
+			
+			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+					
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(data[i].value).text(data[i].interp)
+						.appendTo('#unbockSingledeviceType');
+						console.log('#unbockSingledeviceType')
+					}
+				});
+
+				$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+					
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(data[i].value).text(data[i].interp)
+						.appendTo('#unbockSingleMultipleSimStatus');
+						console.log('#unbockSingleMultipleSimStatus');
+					}
+				});
+				
+				$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+					
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(data[i].value).text(data[i].interp)
+						.appendTo('#UnblockdeviceIdType');
+						console.log('#UnblockdeviceIdType');
+					}
+				});
+		});
+		</script>
 
 </body>
 </html>

@@ -201,7 +201,9 @@ input[type='search'] {
 													<label for="country1">Country bought From <span
 														class="star">*</span></label> <select id="country1" 
 														class="browser-default" class="mySelect"
-														style="padding-left: 0;" required></select>
+														style="padding-left: 0;"  required="required">
+															<option value="" disabled selected>Country bought From
+														</select>
 												</div>
 
 												<div class="input-field col s12 m6"
@@ -1115,10 +1117,7 @@ input[type='search'] {
 			return false;
 
 			 } 
-/* 	
-	populateCountries(
-            "country1",
-            "state" ); */
+
    	 populateCountries
  	(   
  			"country1"
@@ -1126,10 +1125,12 @@ input[type='search'] {
 	
 	
 
-		 function defaultDeviceForm(){
+ function defaultDeviceForm(){
 		var allowed =parseInt(localStorage.getItem("allowed"));
 		var current =parseInt(localStorage.getItem("current"));
 		console.log("allowed="+allowed+"& current="+current)
+	
+		var incrementedCurrent='';
 		$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 			/* for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
@@ -1137,32 +1138,34 @@ input[type='search'] {
 				console.log("...........");} */
 				if(allowed>current)
 					{
-					console.log("-------------------");
+					//console.log("-------------------");
 		                $('#taxStatus1').prop('disabled', 'disabled');
 		                $('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
 					}
 				else{
-					console.log("++++++++++++=");
+					//console.log("++++++++++++=");
 					 for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#taxStatus1');
-					console.log("...........");} 
+					//console.log("...........");} 
 				    }
-				var incrementedCurrent=current+1;
-				console.log("set increment cuurent value="+incrementedCurrent);
-				localStorage.removeItem('incrementedCurrent');
-				localStorage.setItem("incrementedCurrent", incrementedCurrent);
+				
+			}
+				 incrementedCurrent=current+1;
+					console.log("set increment cuurent value="+incrementedCurrent);
+					localStorage.removeItem('incrementedCurrent');
+					localStorage.setItem("incrementedCurrent", incrementedCurrent);
 				var www =parseInt(localStorage.getItem("incrementedCurrent"));
-				console.log("#####"+www)
+				
+				
 		});
-
-
+		
 
 		$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#deviceType1');
-				console.log("...........");
+				//console.log("...........");
 			}
 		});
 
@@ -1172,7 +1175,7 @@ input[type='search'] {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#deviceIdType1');
-				console.log("...........");
+				//console.log("...........");
 			}
 		});
 		
@@ -1180,7 +1183,7 @@ input[type='search'] {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#Currency1');
-				console.log("...........");
+				//console.log("...........");
 			}
 		});
 		
@@ -1188,7 +1191,7 @@ input[type='search'] {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#multipleSimStatus1');
-				console.log("...........");
+				//console.log("...........");
 			}
 		});
 		
@@ -1196,7 +1199,7 @@ input[type='search'] {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#deviceStatus1');
-				console.log("...........");
+				//console.log("...........");
 			}
 		});
 		
@@ -1216,11 +1219,13 @@ input[type='search'] {
         var x = 1; //initlal text box count
         var id=2;
         
-        var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
-        console.log("&&&&&&&&&&&"+incrementedCurrent);
+      
         var allowed =parseInt(localStorage.getItem("allowed")); 
         $(add_button).click(function (e) { //on add input button click
             e.preventDefault();
+            var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
+            
+            console.log("&&&&&&&&&&&"+incrementedCurrent);
             if (x < max_fields) { //max input box allowed
                 x++; //text box increment
                
@@ -1263,6 +1268,9 @@ input[type='search'] {
             	});
 
 
+
+
+          
 
             	$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
             		var dropdownid=id-1;
@@ -1313,7 +1321,11 @@ input[type='search'] {
                 
             	
             	id++;
+            	 console.log("regularised before set session=="+regularised);
+                 localStorage.removeItem('incrementedCurrent');
+             	localStorage.setItem("incrementedCurrent", regularised);
             }
+           
         });
         $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
             e.preventDefault();
@@ -1324,10 +1336,12 @@ input[type='search'] {
 
 
        $(document).ready(function () {
-  	     defaultDeviceForm()
-         RegularisedDeviceForm()
-        }); 
+    	  	
+    	   
+    	   defaultDeviceForm()
         
+        }); 
+       RegularisedDeviceForm()
 
 
     </script>
