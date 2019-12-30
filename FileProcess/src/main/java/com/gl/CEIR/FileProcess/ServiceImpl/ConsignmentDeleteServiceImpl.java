@@ -9,16 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.CEIR.FileProcess.Utility.Validation;
-import com.gl.CEIR.FileProcess.model.ConsignmentMgmt;
-import com.gl.CEIR.FileProcess.model.DeviceDb;
-import com.gl.CEIR.FileProcess.model.DeviceDbHistory;
 import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
+import com.gl.CEIR.FileProcess.model.entity.ConsignmentMgmt;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDbHistory;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
 import com.gl.CEIR.FileProcess.repository.StockDetailsOperationRepository;
 import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
+import com.gl.ceir.config.model.constants.ConsignmentStatus;
 
 @Service
 public class ConsignmentDeleteServiceImpl implements WebActionService{

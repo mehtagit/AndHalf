@@ -9,18 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.CEIR.FileProcess.Utility.Validation;
+import com.gl.CEIR.FileProcess.model.constants.StockStatus;
+import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDbHistory;
+import com.gl.CEIR.FileProcess.model.entity.StockMgmt;
+import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
+import com.gl.CEIR.FileProcess.repository.StockDetailsOperationRepository;
+import com.gl.CEIR.FileProcess.repository.StockManagementRepository;
+import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
+import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
-import com.gl.ceir.config.model.DeviceDb;
-import com.gl.ceir.config.model.DeviceDbHistory;
-import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.constants.StockStatus;
-import com.gl.ceir.config.model.constants.WebActionStatus;
-import com.gl.ceir.config.repository.ConsignmentRepository;
-import com.gl.ceir.config.repository.StockDetailsOperationRepository;
-import com.gl.ceir.config.repository.StockManagementRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
-import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Service
 public class StockDeleteServiceImpl implements WebActionService{

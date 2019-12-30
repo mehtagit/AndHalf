@@ -18,16 +18,16 @@ import com.gl.CEIR.FileProcess.Utility.Util;
 import com.gl.CEIR.FileProcess.conf.FileStorageProperties;
 import com.gl.CEIR.FileProcess.factory.PrototypeBeanProvider;
 import com.gl.CEIR.FileProcess.model.constants.Separator;
+import com.gl.CEIR.FileProcess.model.constants.StockStatus;
+import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.StockMgmt;
+import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
+import com.gl.CEIR.FileProcess.repository.StockManagementRepository;
+import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
+import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
-import com.gl.ceir.config.model.DeviceDb;
-import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.constants.StockStatus;
-import com.gl.ceir.config.model.constants.WebActionStatus;
-import com.gl.ceir.config.repository.StockManagementRepository;
-import com.gl.ceir.config.repository.StokeDetailsRepository;
-import com.gl.ceir.config.repository.WebActionDbRepository;
 
 @Service
 public class StockRegisterServiceImpl implements WebActionService{

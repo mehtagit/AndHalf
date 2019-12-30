@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.CEIR.FileProcess.model.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
 
 public interface StokeDetailsRepository extends JpaRepository<DeviceDb, Long> {
 
