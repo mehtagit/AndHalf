@@ -181,7 +181,7 @@ public class DatatableHeaders implements HeaderInterface{
 			
 			//adminUserPaidStatus Headers 
 			else if("adminUserPaidStatus".equals(role)) {
-				String[] headers = {HeadersTitle.sNo,HeadersTitle.date,HeadersTitle.nid,HeadersTitle.deviceIDType,HeadersTitle.deviceType,HeadersTitle.price,HeadersTitle.country,HeadersTitle.Status,HeadersTitle.action};		
+				String[] headers = {HeadersTitle.sNo,HeadersTitle.date,HeadersTitle.nid,HeadersTitle.deviceIDType,HeadersTitle.deviceType,HeadersTitle.price,HeadersTitle.country,HeadersTitle.taxPaidStatus,HeadersTitle.Status,HeadersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}

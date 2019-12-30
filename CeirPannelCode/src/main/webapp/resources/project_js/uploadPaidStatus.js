@@ -255,10 +255,12 @@ function table(url,dataUrl){
 			"deviceType":parseInt($('#deviceType').val()),
 			"txnId":$('#Search').val(),
 			"consignmentStatus": null,
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 	/*		"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : null,*/
-					"nid":nationalId
+			"nid":nationalId
 					
 	}
+	
 
 
 	$.ajax({
@@ -838,31 +840,96 @@ function refreshContent(){
 	$('#payNowTaxPayment,#confirmDeleteMsg').closeModal();
 }
 
-function deviceApprovalPopup(imei){
+function deviceApprovalPopup(imei,date){
 	$('#approveInformation').openModal();
 	window.imei=imei;
+	window.date=date.replace("="," ");
 }  
 
 
 function aprroveDevice(){
+	var approveRequest={
+			"action" : 0,
+			"imei1": window.imei,
+			"featureId":parseInt(featureId),
+			"remarks": "",
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": "",
+			"userId":parseInt(userId),
+			"userType": $("body").attr("data-roleType")	  	
+	}
+	
 	$.ajax({
-		url : "./delete/"+window.imei,
+		url : './approveRejectDevice',
+		data : JSON.stringify(approveRequest),
 		dataType : 'json',
+		'async' : false,
 		contentType : 'application/json; charset=utf-8',
-		type : 'DELETE',
-		success : function(data, textStatus, xhr) {
-
-			$('#confirmDeleteMsg').openModal();
-			$('#deleteMsg').closeModal();
-			/*if(data.errorCode == 200){
-				$("#responseMsg").text(data.message);
-			}else if(data.errorCode == 0){
-				$("#responseMsg").text(data.message);
-			}*/
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			if(data.errorCode==0){
+				confirmApproveInformation(window.imei,window.date);
+				console.log("inside Approve Success")
+			}
+			
 		},
 		error : function() {
-			console.log("Error");
+			alert("Failed");
 		}
 	});
+}
 	
+
+function confirmApproveInformation(imei,date){
+	$('#approveInformation').closeModal(); 
+	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+}
+
+
+function userRejectPopup(imei){
+	$('#rejectInformation').openModal();
+	window.imei=imei;
+}
+
+
+
+function rejectUser(){
+var rejectRequest={
+		"action" : 1,
+		"imei1": window.imei,
+		"featureId":parseInt(featureId),
+		"remarks": $("#Reason").val(),
+		"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+		"txnId": "",
+		"userId":parseInt(userId),
+		"userType": $("body").attr("data-roleType")	  	
+}
+
+$.ajax({
+	url : './approveRejectDevice',
+	data : JSON.stringify(rejectRequest),
+	dataType : 'json',
+	'async' : false,
+	contentType : 'application/json; charset=utf-8',
+	type : 'PUT',
+	success : function(data) {
+		console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+		if(data.errorCode==0){
+			confirmApproveInformation();
+			console.log("inside Reject Success")
+		}
+		
+	},
+	error : function() {
+		alert("Failed");
+	}
+});
+}
+
+
+
+function confirmRejectInformation(){
+	$('#rejectInformation').closeModal();
+	$('#confirmRejectInformation').openModal();
 }

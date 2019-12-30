@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -182,10 +183,10 @@ public class UploadPaidStatusView {
 	
 	//********************************************Admin Approve/Reject Controller******************************************
 	
-	@RequestMapping(value="/approveRejectDevice",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-	public @ResponseBody GenricResponse approveRejectDevice (@RequestParam("nid") String nId)  {
-		log.info("request send to the approveRejectDevice api="+nId);
-		GenricResponse response= uploadPaidStatusFeignClient.countByNid(nId);
+	@PutMapping("approveRejectDevice") 
+	public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
+		log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
+		GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
 
 		log.info("response from currency api "+response);
 		return response;

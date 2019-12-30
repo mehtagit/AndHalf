@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserPaidStatusContent {
 	private Integer id;
+	private Integer status;
+	private String stateInterp;
 	private String createdOn;
 	private String modifiedOn;
 	private String nid;
@@ -21,6 +23,7 @@ public class UserPaidStatusContent {
 	private String country;
 	private String deviceSerialNumber;
 	private String txnId;
+	private String deviceStatusInterp;
 	private Double price;
 	private Integer currency;
 	private String currencyInterp;
@@ -29,12 +32,23 @@ public class UserPaidStatusContent {
 	private Long thirdImei;
 	private Long fourthImei;
 	private Object endUserDB;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
 	}
 	public String getCreatedOn() {
 		return createdOn;
@@ -120,6 +134,12 @@ public class UserPaidStatusContent {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getDeviceStatusInterp() {
+		return deviceStatusInterp;
+	}
+	public void setDeviceStatusInterp(String deviceStatusInterp) {
+		this.deviceStatusInterp = deviceStatusInterp;
+	}
 	public Double getPrice() {
 		return price;
 	}
@@ -168,22 +188,20 @@ public class UserPaidStatusContent {
 	public void setEndUserDB(Object endUserDB) {
 		this.endUserDB = endUserDB;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
 	@Override
 	public String toString() {
-		return "UserPaidStatusContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
-				+ nid + ", deviceStatus=" + deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp="
-				+ taxPaidStatusInterp + ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp
-				+ ", deviceIdType=" + deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus="
-				+ multiSimStatus + ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId="
-				+ txnId + ", price=" + price + ", currency=" + currency + ", currencyInterp=" + currencyInterp
-				+ ", firstImei=" + firstImei + ", secondImei=" + secondImei + ", thirdImei=" + thirdImei
-				+ ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", additionalProperties="
-				+ additionalProperties + "]";
+		return "UserPaidStatusContent [id=" + id + ", status=" + status + ", stateInterp=" + stateInterp
+				+ ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", deviceStatus="
+				+ deviceStatus + ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp
+				+ ", deviceType=" + deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType="
+				+ deviceIdType + ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus
+				+ ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId
+				+ ", deviceStatusInterp=" + deviceStatusInterp + ", price=" + price + ", currency=" + currency
+				+ ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
+				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + "]";
 	}
-	}
+	
+	
+	
+	
+}
