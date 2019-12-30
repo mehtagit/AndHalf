@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
-import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
-import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
+import com.gl.ceir.fileprocess.model.constants.WebActionStatus;
+import com.gl.ceir.fileprocess.model.entity.WebActionDb;
+import com.gl.ceir.fileprocess.repository.WebActionDbRepository;
 
 @Service
 public class FileActionServiceImpl {

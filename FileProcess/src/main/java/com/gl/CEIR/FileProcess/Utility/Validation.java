@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.ceir.fileprocess.model.entity.DeviceDb;
 
 @Component
 public class Validation {

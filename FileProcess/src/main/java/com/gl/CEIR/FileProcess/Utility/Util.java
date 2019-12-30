@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.gl.CEIR.FileProcess.model.constants.Separator;
+import com.gl.ceir.fileprocess.model.constants.Separator;
 
 @Component
 public class Util {

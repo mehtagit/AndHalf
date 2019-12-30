@@ -8,18 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gl.CEIR.FileProcess.Utility.Validation;
-import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
-import com.gl.CEIR.FileProcess.model.entity.ConsignmentMgmt;
-import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
-import com.gl.CEIR.FileProcess.model.entity.DeviceDbHistory;
-import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
-import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
-import com.gl.CEIR.FileProcess.repository.StockDetailsOperationRepository;
-import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
-import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
-import com.gl.CEIR.FileProcess.service.WebActionService;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
+import com.gl.ceir.fileprocess.Utility.Validation;
+import com.gl.ceir.fileprocess.model.constants.ConsignmentStatus;
+import com.gl.ceir.fileprocess.model.constants.WebActionStatus;
+import com.gl.ceir.fileprocess.model.entity.ConsignmentMgmt;
+import com.gl.ceir.fileprocess.model.entity.DeviceDb;
+import com.gl.ceir.fileprocess.model.entity.DeviceDbHistory;
+import com.gl.ceir.fileprocess.model.entity.WebActionDb;
+import com.gl.ceir.fileprocess.repository.ConsignmentRepository;
+import com.gl.ceir.fileprocess.repository.StockDetailsOperationRepository;
+import com.gl.ceir.fileprocess.repository.StokeDetailsRepository;
+import com.gl.ceir.fileprocess.repository.WebActionDbRepository;
+import com.gl.ceir.fileprocess.service.WebActionService;
 
 @Service
 public class ConsignmentDeleteServiceImpl implements WebActionService{

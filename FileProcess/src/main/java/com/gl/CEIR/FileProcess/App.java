@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-import com.gl.CEIR.FileProcess.Controller.FileActionControlling;
+import com.gl.ceir.fileprocess.Controller.FileActionControlling;
 
 @SpringBootApplication
 @EnableAutoConfiguration

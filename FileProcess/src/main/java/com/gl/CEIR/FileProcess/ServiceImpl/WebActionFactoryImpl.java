@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
-import com.gl.CEIR.FileProcess.service.WebActionFactory;
-import com.gl.CEIR.FileProcess.service.WebActionService;
+import com.gl.ceir.fileprocess.model.entity.WebActionDb;
+import com.gl.ceir.fileprocess.service.WebActionFactory;
+import com.gl.ceir.fileprocess.service.WebActionService;
 
 @Component("WebActionFactoryImpl")
 public class WebActionFactoryImpl implements WebActionFactory {

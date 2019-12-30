@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import com.gl.CEIR.FileProcess.model.entity.StockMgmt;
+import com.gl.ceir.fileprocess.model.entity.StockMgmt;
 
 public interface StockManagementRepository extends JpaRepository<StockMgmt, Long>, JpaSpecificationExecutor<StockMgmt> {
 

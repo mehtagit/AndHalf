@@ -2,7 +2,7 @@ package com.gl.CEIR.FileProcess.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.CEIR.FileProcess.model.GreylistDb;
+import com.gl.ceir.fileprocess.model.GreylistDb;
 
 
 public interface GreyListRepository extends JpaRepository<GreylistDb, Long> {

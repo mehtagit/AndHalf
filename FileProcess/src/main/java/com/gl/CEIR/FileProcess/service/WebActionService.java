@@ -1,6 +1,6 @@
 package com.gl.CEIR.FileProcess.service;
 
-import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.ceir.fileprocess.model.entity.WebActionDb;
 
 public interface WebActionService {
 	
