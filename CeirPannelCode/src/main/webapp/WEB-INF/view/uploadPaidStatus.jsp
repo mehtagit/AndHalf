@@ -709,7 +709,7 @@ input[type='search'] {
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<button class="modal-close btn">ok</button>
+					<button class="btn" onclick="refreshContent();">ok</button>
 				</div>
 			</div>
 		</div>
@@ -725,7 +725,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close btn">ok</button>
+						<button class="btn" onclick="refreshContent()">ok</button>
 					</div>
 				</div>
 			</div>

@@ -330,14 +330,14 @@
 	</div>
 	
 	  <div id="markAsMultipleStolen" class="modal">
-       <h6>Mark As Stolen</h6>
+       <h6 class="modal-header">Mark As Stolen</h6>
         <div class="modal-content">
 
             
             
 
             <div class="row">
-                <h6 class="modal-header">Do you want to mark the following transaction  as stolen?</h6>
+                <h6>Do you want to mark the following transaction  as stolen?</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

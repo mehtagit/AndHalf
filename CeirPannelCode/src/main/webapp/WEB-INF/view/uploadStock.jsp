@@ -217,9 +217,7 @@ opacity: 0;
         <div id="cancelMessage" class="modal">
              <h6 class="modal-header">Cancel</h6>
              <div class="modal-content">
-       
-            <hr>
-            <div class="row">
+       <div class="row">
                 <h6>Are you sure you want to close this window. The form data will be lost</h6>
             </div>
             <div class="row">
@@ -238,8 +236,7 @@ opacity: 0;
        <h6 class="modal-header">Submit Stock</h6>
         <div class="modal-content">
             
-            <hr>
-
+    
             <div class="row">
                 <h6 id="stockSuccessMessage">Your form has been successfully submitted. The transaction id for future reference is (Tr12345678)
                 </h6>

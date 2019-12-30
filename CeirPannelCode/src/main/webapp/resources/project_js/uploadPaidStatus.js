@@ -5,6 +5,7 @@ var featureId =12;
 $(window).load(function() {
 
 	var In = sessionStorage.getItem("nationalId") == undefined ? null : sessionStorage.getItem("nationalId") == undefined ? "" : sessionStorage.getItem("nationalId");
+	//var In = sessionStorage.getItem("nationalId") == null ? sessionStorage.getItem("nationalId") : sessionStorage.getItem("nationalId") ;
 
 	if(In == ''){
 		window.location.replace("./uploadPaidStatus");
@@ -252,7 +253,8 @@ function table(url,dataUrl){
 			"deviceIdType":parseInt($('#deviceIDType').val()),
 			"deviceType":parseInt($('#deviceType').val()),
 			"txnId":$('#Search').val(),
-			"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : 3,
+			"consignmentStatus": null,
+	/*		"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : null,*/
 					"nid":nationalId
 	}
 
@@ -869,5 +871,10 @@ function regularizedCount(){
 }
 function deviceApprovalPopup(imei1){
 
-	alert("called")
-}   
+	//alert("called")
+}  
+
+
+function refreshContent(){
+	$('#payNowTaxPayment,#confirmDeleteMsg').closeModal();
+}
