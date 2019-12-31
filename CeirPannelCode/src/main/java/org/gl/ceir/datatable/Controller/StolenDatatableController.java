@@ -54,7 +54,9 @@ public class StolenDatatableController {
 			@RequestParam(name = "type", defaultValue = "stolen", required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,
 			HttpServletRequest request, HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
-
+		
+		log.info("session value user Type=="+session.getAttribute("usertype"));
+		String userType = (String) session.getAttribute("usertype");
 		// FilterRequest filterrequest = request.getParameter("FilterRequest");
 		//FilterRequest filterrequest = new FilterRequest();
 		String filter = request.getParameter("filter");
@@ -99,7 +101,28 @@ public class StolenDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
-				}else {
+				}else if("Operator".equals(userType)) {
+					log.info("in Opertator Controler-----" +userType);
+					for (StolenContent dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String txnId = dataInsideList.getTxnId();
+						String fileName = dataInsideList.getRequestType();
+						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						String stolenStatusName = dataInsideList.getStateInterp();
+						String source =dataInsideList.getSourceTypeInterp();
+						String requestType = dataInsideList.getRequestType(); 
+						String requestTypeName = dataInsideList.getRequestTypeInterp();
+						int id = dataInsideList.getId();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty());
+						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,action};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+				}
+				else {
 					log.info("viaExistingRecovery");
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
@@ -146,77 +169,135 @@ public class StolenDatatableController {
 		String userStatus = (String) session.getAttribute("userStatus");
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
-		pageElement.setPageTitle("Stolen/Recovery");
-
+		
+		log.info("session value user Type=="+session.getAttribute("usertype"));
+		String userType = (String) session.getAttribute("usertype");
+		
+		if("Operator".equals(userType)) {
+		pageElement.setPageTitle("Block/Unblock");
+		}else {
+			pageElement.setPageTitle("Stolen/Recovery");
+		}
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-		String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
-				"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
-		for (int i = 0; i < names.length; i++) {
-			button = new Button();
-
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}
-		pageElement.setButtonList(buttonList);
-
-
-		//input type date list	
-		String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "","text","Transaction ID","transactionID",""};
-		for (int i = 0; i < dateParam.length; i++) {
-			dateRelatedFields = new InputFields();
-			dateRelatedFields.setType(dateParam[i]);
-			i++;
-			dateRelatedFields.setTitle(dateParam[i]);
-			i++;
-			dateRelatedFields.setId(dateParam[i]);
-			i++;
-			dateRelatedFields.setClassName(dateParam[i]);
-			inputTypeDateList.add(dateRelatedFields);
-		}
-
-		String[] selectParam = { "select", "Status", "status", "", "select",
-				"Source", "sourceStatus", "","select", "Request Type", "requestType","" };	
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
-
-
-
-		if("viaExistingRecovery".equals(sourceType)) {
-			//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
-			String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","redirectToViewStolenPage()","cancel"};
-			for (int i = 0; i < footerBtn.length; i++) {
+		
+		if("Operator".equals(userType)) {
+			String[] names = { "HeaderButton", "Report Block/Unblock", "./selectblockUnblockPage",
+					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
+			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
-				button.setType(footerBtn[i]);
+				button.setType(names[i]);
 				i++;
-				button.setButtonTitle(footerBtn[i]);
+				button.setButtonTitle(names[i]);
 				i++;
-				button.setButtonURL(footerBtn[i]);
+				button.setButtonURL(names[i]);
 				i++;
-				button.setId(footerBtn[i]);
+				button.setId(names[i]);
 				buttonList.add(button);
 			}
 			pageElement.setButtonList(buttonList);
+			
+			//input type date list	
+			String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", ""};
+			for (int i = 0; i < dateParam.length; i++) {
+				dateRelatedFields = new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+			
+		
+
+			String[] selectParam = { "select", "Request Type", "requestType", "", "select",
+					"Mode", "mode", "","select", "Status", "status","" };	
+			for (int i = 0; i < selectParam.length; i++) {
+				inputFields = new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+			pageElement.setDropdownList(dropdownList);
+		
+		}else {
+			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
+					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
+			for (int i = 0; i < names.length; i++) {
+				button = new Button();
+
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}
+			pageElement.setButtonList(buttonList);
+			
+			//input type date list	
+			String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "","text","Transaction ID","transactionID",""};
+			for (int i = 0; i < dateParam.length; i++) {
+				dateRelatedFields = new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+			
+		
+
+			String[] selectParam = { "select", "Status", "status", "", "select",
+					"Source", "sourceStatus", "","select", "Request Type", "requestType","" };	
+			for (int i = 0; i < selectParam.length; i++) {
+				inputFields = new InputFields();
+				inputFields.setType(selectParam[i]);
+				i++;
+				inputFields.setTitle(selectParam[i]);
+				i++;
+				inputFields.setId(selectParam[i]);
+				i++;
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
+			}
+			pageElement.setDropdownList(dropdownList);
+			
+			if("viaExistingRecovery".equals(sourceType)) {
+				//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
+				String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","redirectToViewStolenPage()","cancel"};
+				for (int i = 0; i < footerBtn.length; i++) {
+					button = new Button();
+
+					button.setType(footerBtn[i]);
+					i++;
+					button.setButtonTitle(footerBtn[i]);
+					i++;
+					button.setButtonURL(footerBtn[i]);
+					i++;
+					button.setId(footerBtn[i]);
+					buttonList.add(button);
+				}
+				pageElement.setButtonList(buttonList);
+			}
 		}
+		
+	
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK);

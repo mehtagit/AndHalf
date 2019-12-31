@@ -188,6 +188,15 @@ public class DatatableHeaders implements HeaderInterface{
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			//adminUserPaidStatus Headers 
+			else if("blockUnblock".equals(role)) {
+				String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.requestType,HeadersTitle.mode,HeadersTitle.Status,HeadersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};		
