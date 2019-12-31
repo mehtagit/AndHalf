@@ -5,6 +5,7 @@ import java.util.List;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
+import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -70,5 +71,13 @@ public interface GrievanceFeignClient {
 	@RequestMapping(value="/filedump/downloadFile" ,method=RequestMethod.GET) 
 	public @ResponseBody Object downloadOperatorFeign(@RequestParam("fileName") String fileName);
 	
+
+
+
+	// ******************************************** single imei block device ********************************************************************************
+	@RequestMapping(value="/stakeholder/uploadSingle/block" ,method=RequestMethod.POST) 
+	public GenricResponse singleImeiBlockDevices(@RequestBody SingleImeiDetailsModel singleImeiDetailsModel) ;
+
+
 
 }

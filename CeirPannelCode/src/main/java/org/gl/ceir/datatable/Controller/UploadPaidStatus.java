@@ -130,13 +130,14 @@ public class UploadPaidStatus {
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
-					String status = contentModelList.getTaxPaidStatusInterp();
-
+					String taxStatus = contentModelList.getTaxPaidStatusInterp();
+					String status = contentModelList.getStateInterp();
+					
 					//params for action 
 					Long imei1 = contentModelList.getFirstImei();
-					String action = iconState.adminUserPaidStatusIcon(imei1);
+					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn);
 
-					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,status,action};
+					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,taxStatus,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);

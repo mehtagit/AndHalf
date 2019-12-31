@@ -1,17 +1,42 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+
+import javax.servlet.http.HttpSession;
+
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
+import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
+
+import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class BlockUnblock {
+	
+	
+	@Autowired
+
+	FeignCleintImplementation feignCleintImplementation;
+	@Autowired
+	UtilDownload utildownload;
+	
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	ModelAndView mv = new ModelAndView();
@@ -47,20 +72,166 @@ public class BlockUnblock {
 			log.info("unBlock page");
 			mv.setViewName("reportUnblock");
 		}
-		log.info("entry point in  open block or unblock   page.");
+		log.info("exit point in  open block or unblock   page.");
 		return mv;
 	}
 	
 	@RequestMapping(value="/blockSingleDevices",method = {RequestMethod.GET,RequestMethod.POST} )
-	public @ResponseBody GenricResponse blockSingleDevices(@RequestParam(name="",required = false) String deviceType )
+	public @ResponseBody GenricResponse blockSingleDevices(@RequestBody SingleImeiDetailsModel singleImeiDetailsModel,HttpSession session )
 	{
-		log.info("entry point in  select block or unblock option  page.");
+		log.info("entry point in  save  single imei block");
+		int userId= (int) session.getAttribute("userid"); 
+		String roletype=session.getAttribute("usertype").toString();
+		String blockTxnNumber=utildownload.getTxnId();
+		blockTxnNumber = "B"+blockTxnNumber;
+		log.info("Random transaction id number="+blockTxnNumber);
 		
-		log.info("entry point in  select block or unblock option  page.");
-		response.setErrorCode("0");
-		response.setMessage("sucess");
+		singleImeiDetailsModel.setTxnId(blockTxnNumber);
+		singleImeiDetailsModel.setUserId(userId);
+		singleImeiDetailsModel.setUserType(roletype);
+		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
+		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
+		log.info("response from save signle Imei block devices="+response);
 		return response;
 		
 	}
+	
+	@RequestMapping(value="/blockUnBlockSingleDevices",method = {RequestMethod.GET,RequestMethod.POST} )
+	public @ResponseBody GenricResponse UnblockSingleDevices(@RequestBody SingleImeiDetailsModel singleImeiDetailsModel,HttpSession session )
+	{
+		log.info("entry point in  save  single imei block");
+		int userId= (int) session.getAttribute("userid"); 
+		String roletype=session.getAttribute("usertype").toString();
+		String blockTxnNumber=utildownload.getTxnId();
+		blockTxnNumber = "B"+blockTxnNumber;
+		log.info("Random transaction id number="+blockTxnNumber);
+		singleImeiDetailsModel.setTxnId(blockTxnNumber);
+		singleImeiDetailsModel.setUserId(userId);
+		singleImeiDetailsModel.setUserType(roletype);
+		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
+		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
+		log.info("response from save signle Imei block devices="+response);
+		return response;
+		
+	}
+	
+	
+	 
+//*************************************************** block bulk file ****************************************************************************
+	  
+	  @RequestMapping(value={"/reportblockBulkFile"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+			  RequestMethod.POST}) 
+	  public @ResponseBody GenricResponse FileTypeStolen(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
+			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
+			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
+			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
+			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark)
+	  {	
+		  log.info(" file stolen entry point .");
+		 
+		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
+		    GenricResponse response= new GenricResponse();
+			String stlnTxnNumber=utildownload.getTxnId();
+			stlnTxnNumber = "B"+stlnTxnNumber;
+			log.info("Random transaction id number="+stlnTxnNumber);
+		  	try {
+				byte[] bytes = file.getBytes();
+				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) 
+					dir.mkdirs();
+				// Create the file on server
+				// Calendar now = Calendar.getInstance();
+
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			stolenRecoveryModel.setBlockingTimePeriod(blockingTimePeriod);
+			stolenRecoveryModel.setBlockingType(blockingType);
+			stolenRecoveryModel.setFileName(file.getOriginalFilename());
+			stolenRecoveryModel.setRequestType(requestType);
+			stolenRecoveryModel.setSourceType(sourceType);
+			stolenRecoveryModel.setUserId(userId);
+			stolenRecoveryModel.setRoleType(roleType);
+			stolenRecoveryModel.setTxnId(stlnTxnNumber);
+			stolenRecoveryModel.setQty(qty);
+			stolenRecoveryModel.setRemark(remark);
+			stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
+			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
+			log.info("respondse from file stolen api="+response);
+			log.info(" file stolen api exist point .");
+		  	return response;
+	
+	  }
+	  
+	  
+//************************************************************ unblock bulk file ********************************************************************
+	  
+	  @RequestMapping(value={"/reportUnblockBulkFile"},method={org.springframework.web. bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.
+			  RequestMethod.POST}) 
+	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
+			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
+			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
+			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark)
+	  {	
+		  
+		  log.info(" file Recovery api entry point .");
+		  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
+		  GenricResponse response= new GenricResponse();
+			String stlnTxnNumber=utildownload.getTxnId();
+			stlnTxnNumber = "B"+stlnTxnNumber;
+			log.info("Random transaction id number="+stlnTxnNumber);
+		  	try {
+				byte[] bytes = file.getBytes();
+				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				File dir = new File(rootPath + File.separator);
+
+				if (!dir.exists()) 
+					dir.mkdirs();
+				// Create the file on server
+				// Calendar now = Calendar.getInstance();
+
+				File serverFile = new File(rootPath+file.getOriginalFilename());
+				log.info("uploaded file path on server" + serverFile);
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				stream.write(bytes);
+				stream.close();
+
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			
+			stolenRecoveryModel.setFileName(file.getOriginalFilename());
+			stolenRecoveryModel.setRequestType(requestType);
+			stolenRecoveryModel.setSourceType(sourceType);
+			stolenRecoveryModel.setUserId(userId);
+			stolenRecoveryModel.setRoleType(roleType);
+			stolenRecoveryModel.setTxnId(stlnTxnNumber);
+			stolenRecoveryModel.setQty(qty);
+			stolenRecoveryModel.setRemark(remark);
+			stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
+			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
+			log.info("request sent to file Recovery api ="+response);
+			log.info(" file Recovery api exist point .");
+			
+			return response;
+	
+	  }
+
+	  
+	  
 	
 }

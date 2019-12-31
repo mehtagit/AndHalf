@@ -1,6 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-import org.springframework.web.multipart.MultipartFile;
+
 
 public class StolenRecoveryModel {
 	
@@ -11,10 +11,10 @@ public class StolenRecoveryModel {
 	private int id;
 	private int requestType;
 	private String roleType;
-	private String  txnId;
+	private String  txnId,remark;
 	private int userId;
 	private int sourceType;
-	private Integer qty;
+	private Integer qty,deviceCaegory;
 	public String getBlockingTimePeriod() {
 		return blockingTimePeriod;
 	}
@@ -63,6 +63,12 @@ public class StolenRecoveryModel {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	public int getUserId() {
 		return userId;
 	}
@@ -81,12 +87,20 @@ public class StolenRecoveryModel {
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
+	public Integer getDeviceCaegory() {
+		return deviceCaegory;
+	}
+	public void setDeviceCaegory(Integer deviceCaegory) {
+		this.deviceCaegory = deviceCaegory;
+	}
 	@Override
 	public String toString() {
 		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
 				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
-				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", userId=" + userId + ", sourceType="
-				+ sourceType + ", qty=" + qty + "]";
+				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", remark=" + remark + ", userId="
+				+ userId + ", sourceType=" + sourceType + ", qty=" + qty + ", deviceCaegory=" + deviceCaegory + "]";
 	}
+	
+	
 	
 }
