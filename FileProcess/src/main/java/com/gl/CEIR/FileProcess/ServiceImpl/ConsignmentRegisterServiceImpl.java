@@ -54,6 +54,9 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 	
 	@Autowired
 	PrototypeBeanProvider fileParser;
+	
+	@Autowired
+	DeviceDbManipulatorImpl deviceDbManipulatorImpl;
 
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
@@ -99,6 +102,9 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 				if(Objects.isNull(device)) {
 					continue;
 				}
+				
+				// Setting default values to avoid not null issues while executing queries.
+				deviceDbManipulatorImpl.setDefault(device);
 				
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(Long.valueOf(consignmentMgmt.getUserId()));

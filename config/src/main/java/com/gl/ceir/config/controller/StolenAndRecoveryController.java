@@ -59,7 +59,7 @@ public class StolenAndRecoveryController {
 	@RequestMapping(path = "/stakeholder/Stolen", method = RequestMethod.POST)
 	public GenricResponse uploadStolenDetails(@RequestBody StolenandRecoveryMgmt stolenandRecoveryDetails)
 	{
-		logger.info("Stolen upload Request="+stolenandRecoveryDetails);
+		logger.info("Stolen upload Request = " + stolenandRecoveryDetails);
 
 		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
 		mapping.setListType("BlackList");
@@ -137,7 +137,7 @@ public class StolenAndRecoveryController {
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		
-		logger.info("Record Response of Stolen And Recovery Info="+mapping);
+		logger.info("Record Response of Stolen And Recovery Info = " + mapping);
 
 		return mapping;
 	}
