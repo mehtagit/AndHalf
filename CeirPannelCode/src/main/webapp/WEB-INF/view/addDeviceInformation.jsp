@@ -143,7 +143,7 @@ input[type='search'] {
 }
 </style>
 </head>
-<body>
+<body session-value="${not empty param.NID ? param.NID : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -1040,10 +1040,10 @@ input[type='search'] {
 
 
 	<script>
-	
+	 var nationalID = $("body").attr("session-value");
+
 	function submitDeviceInfo(){
-		 var formData= new FormData();
-		 var nationalID = sessionStorage.getItem("nationalId");
+		 var formData= new FormData();	
 		 var fieldId=1;	
 			 var regularizeDeviceDbs =[];
 			 $('.deviceInformation').each(function() {	

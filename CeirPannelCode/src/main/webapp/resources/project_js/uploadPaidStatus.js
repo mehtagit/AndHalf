@@ -333,6 +333,7 @@ function pageButtons(url){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
 					$('#'+button[i].id).attr("href", button[i].buttonURL);
+					$('#'+button[i].id).attr("href", "./add-device-information?NID="+$("body").attr("session-value")+"");
 				}
 				else{
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
