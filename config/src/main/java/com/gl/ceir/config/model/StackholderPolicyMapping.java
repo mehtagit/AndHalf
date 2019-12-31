@@ -3,16 +3,10 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 public class StackholderPolicyMapping implements Serializable {
@@ -32,6 +26,7 @@ public class StackholderPolicyMapping implements Serializable {
 	private int deviceMaxValue;
 	private int graceTimePeriod;
 	private String gracePeriodUnit;
+	
 	public Long getId() {
 		return id;
 	}

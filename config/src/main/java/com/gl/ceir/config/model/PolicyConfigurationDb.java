@@ -24,10 +24,21 @@ public class PolicyConfigurationDb implements Serializable {
 
 	@UpdateTimestamp
 	private Date modifiedOn;
+	
 	private String tag;
+	
 	private String value;
+	
 	private String description;
 
+	private String period;
+	
+	private String status;
+	
+	private String remark;
+	
+	private int order;
+	
 	public Long getId() {
 		return id;
 	}
@@ -64,11 +75,32 @@ public class PolicyConfigurationDb implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-
-
-
-
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	public int getOrder() {
+		return order;
+	}
+	public void setOrder(int order) {
+		this.order = order;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 }

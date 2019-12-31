@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -149,7 +150,7 @@ public class StolenAndRecoveryController {
 		logger.info("Record Delete request ="+stolenandRecoveryRequest);
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
 
-		logger.info("Response send ="+genricResponse);
+		logger.info("Response send = " + genricResponse);
 
 		return genricResponse;
 	}
@@ -157,12 +158,13 @@ public class StolenAndRecoveryController {
 	@ApiOperation(value = "Update Stolen and  Recovery Details.", response = GenricResponse.class)
 	@RequestMapping(path = "/stakeholder/update", method = RequestMethod.PUT)
 	public GenricResponse updateRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
-		logger.info("Record update request="+stolenandRecoveryRequest);
+		logger.info("Record update request = " + stolenandRecoveryRequest);
 
 		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
 		mapping.setListType("BlackList");
-		if(stolenandRecoveryRequest.getBlockingType() == null || stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
-				stolenandRecoveryRequest.getBlockingType() == "") {
+		if(stolenandRecoveryRequest.getBlockingType() == null || 
+				stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
+				stolenandRecoveryRequest.getBlockingType().isEmpty()) {
 
 			StackholderPolicyMapping config = stackholderPolicyMappingServiceImpl.getPocessListConfigDetails(mapping);
 			String newTime = utility.newDate(config.getGraceTimePeriod());
@@ -179,7 +181,7 @@ public class StolenAndRecoveryController {
 
 	}
 
-	@ApiOperation(value = "View Stolen and  Recovery Details.", response = StolenandRecoveryMgmt.class)
+	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
 	@RequestMapping(path = "/stakeholder/view", method = RequestMethod.POST)
 	public MappingJacksonValue viewRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest)
 	{
@@ -192,11 +194,18 @@ public class StolenAndRecoveryController {
 		return mapping;
 
 	}
+	
+	@ApiOperation(value = "View Stolen and  Recovery Details By txn Id.", response = StolenandRecoveryMgmt.class)
+	@PostMapping("/stolen-and-recovery/by-txnId")
+	public MappingJacksonValue getByTxnId(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest)
+	{
+		logger.info("view Stolen and recovery request by txn id = " + stolenandRecoveryRequest);
 
-	/*@ApiOperation(value = "Get total count.", response = ResponseCountAndQuantity.class)
-	@RequestMapping(path = "/stakeholder/count", method = RequestMethod.POST)
-	public MappingJacksonValue getStolenAndRecoveryCount( @RequestBody RequestCountAndQuantityWithLongUserId request, @RequestParam(value = "requestType") String requestType) {
-		ResponseCountAndQuantity response = stolenAndRecoveryServiceImpl.getStolenAndRecoveryCount( request, requestType);
-		return new MappingJacksonValue(response);
-	}*/
+		StolenandRecoveryMgmt mgmt = stolenAndRecoveryServiceImpl.getByTxnId(stolenandRecoveryRequest);
+		logger.info("View details Response send =" + mgmt);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(mgmt);
+		return mapping;
+
+	}
 }

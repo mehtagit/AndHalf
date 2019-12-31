@@ -58,6 +58,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 	
 	private Integer qty;
 	
+	private String remark;
+	
 	@Transient
 	private String sourceTypeInterp;
 	
@@ -154,7 +156,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
-	
 	public String getRequestTypeInterp() {
 		return requestTypeInterp;
 	}
@@ -182,6 +183,13 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
