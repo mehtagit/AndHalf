@@ -149,7 +149,7 @@ input[type='search'] {
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}">
+	data-selected-consignmentStatus="${consignmentStatus}" session-value="${param.NID}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -731,8 +731,7 @@ input[type='search'] {
 			</div>
 		</div>
 	</div>
-	
-	<div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
+<div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
         <h6 class="modal-header">Approve</h6>
         <div class="modal-content">
             <div class="row">
@@ -812,7 +811,6 @@ input[type='search'] {
         </div>
     </div>
 	
-    
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

@@ -54,7 +54,7 @@ public class UploadPaidStatusView {
 
 
 	@GetMapping("uploadPaidStatus")
-	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,HttpSession session) {
+	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
 			modelAndView.setViewName("uploadPaidStatus");
@@ -102,7 +102,8 @@ public class UploadPaidStatusView {
 
 		log.info(""+regularizeDeviceDbs.toString());
 		log.info(" upload status  entry point.");
-		try { byte[] bytes = file.getBytes();
+		try {
+			byte[] bytes = file.getBytes();
 		String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; 
 		File dir = new File(rootPath + File.separator);
 

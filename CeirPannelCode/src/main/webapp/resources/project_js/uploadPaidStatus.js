@@ -2,17 +2,16 @@ var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 var featureId =12;
-$(window).load(function() {
-
+$( document ).ready(function() {
 	var In = sessionStorage.getItem("nationalId") == undefined ? null : sessionStorage.getItem("nationalId") == undefined ? "" : sessionStorage.getItem("nationalId");
 	//var In = sessionStorage.getItem("nationalId") == null ? sessionStorage.getItem("nationalId") : sessionStorage.getItem("nationalId") ;
-
+//var In = $("body").attr("session-value");
 	if(In == ''){
 		window.location.replace("./uploadPaidStatus");
 		$('#btnLink').css({"display":"block"});
 	}
 	else if(In == null){
-		sessionStorage.setItem("admin","CEIRAdmin");
+		
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -20,7 +19,7 @@ $(window).load(function() {
 			type : 'GET',
 			success : function(data) {
 
-				sessionStorage.removeItem('nationalId');
+				//sessionStorage.removeItem('nationalId');
 
 				if (data.errorCode == 1) {
 					$("#user123").css("display", "none");
@@ -66,7 +65,7 @@ $(window).load(function() {
 			type : 'GET',
 			success : function(data) {
 
-				sessionStorage.removeItem('nationalId');
+			//	sessionStorage.removeItem('nationalId');
 
 				if (data.errorCode == 1) {
 					$("#user123").css("display", "none");
@@ -95,11 +94,7 @@ $(window).load(function() {
 			}
 		}); 
 		sessionStorage.setItem("nationalId", In);
-		localStorage.setItem("nationalId", In);
-		//localStorage.removeItem('incrementedCurrent');
-		//var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
-		// console.log("******"+incrementedCurrent);
-		//localStorage.removeItem('current');	
+		localStorage.setItem("nationalId", In);	
 		pageRendering();
 		filter();
 
@@ -107,7 +102,6 @@ $(window).load(function() {
 	}
 
 });
-
 
 
 
@@ -240,29 +234,23 @@ function filter()
 
 var nationalId =localStorage.getItem("nationalId") == 'null' ? null : localStorage.getItem("nationalId");
 function table(url,dataUrl){
-	//var nid=$('#nationalID').val(In);
 
-	
 	var request={
-			"modifiedOn":$('#endDate').val(),
-			"createdOn":$('#startDate').val(),
-			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
-			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),	
-			"deviceIdType":parseInt($('#deviceIDType').val()),
-			"deviceType":parseInt($('#deviceType').val()),
-			"txnId":$('#Search').val(),
-			"consignmentStatus": null,
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-	/*		"consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1  : null,*/
-			"nid":nationalId
-					
+	"modifiedOn":$('#endDate').val(),
+	"createdOn":$('#startDate').val(),
+	"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
+	"userId":parseInt(userId),
+	"featureId":parseInt(featureId),
+	"userTypeId": parseInt($("body").attr("data-userTypeID")),
+	"userType":$("body").attr("data-roleType"),
+	"deviceIdType":parseInt($('#deviceIDType').val()),
+	"deviceType":parseInt($('#deviceTypeFilter').val()),
+	"txnId":$('#Search').val(),
+	"consignmentStatus": null,
+	"userTypeId": parseInt($("body").attr("data-userTypeID")),
+	/* "consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1 : null,*/
+	"nid": $('#nId').val()
 	}
-	
-
-
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -559,7 +547,7 @@ function submitDeviceInfo(){
 	var formData= new FormData();
 
 
-	var nationalID=$('#nationalID').val();
+	//var nationalID=$('#nationalID').val();
 	var csvUploadFile=$('#csvUploadFile').val();
 	var firstName=$('#firstName').val();
 	var middleName=$('#middleName').val();
@@ -607,7 +595,7 @@ function submitDeviceInfo(){
 			"multiSimStatus": deviceStatus1,
 			"price": parseFloat(Price1),
 			"taxPaidStatus": parseInt(taxStatus1),
-			"nid":nationalID,
+			"nid":$('#nationalID').val(),
 			"txnId":""
 
 		}
@@ -631,7 +619,7 @@ function submitDeviceInfo(){
 			"lastName": lastName,
 			"locality": locality,
 			"middleName": middleName,
-			"nid": nationalID,
+			"nid": $('#nationalID').val(),
 			"phoneNo": phone,
 			"propertyLocation": address,
 			"province": state,
@@ -809,7 +797,8 @@ $(document).ready(function () {
 
 
 function regularizedCount(){
-	var nid=$('#nationalID').val();
+	var nid= localStorage.getItem("nationalId") == 'null' ? null : localStorage.getItem("nationalId")
+	//var nid=$('#nationalID').val();
 	console.log("nid==&&&&&&&&&&&&&&&&&"+nid);
 	$.ajax({
 		url: './countByNid?nid='+nid,
@@ -834,11 +823,14 @@ function regularizedCount(){
 		}
 	});
 }
+  
 
 
 function refreshContent(){
 	$('#payNowTaxPayment,#confirmDeleteMsg').closeModal();
+	window.location.reload(true);
 }
+
 
 function deviceApprovalPopup(imei,date){
 	$('#approveInformation').openModal();
