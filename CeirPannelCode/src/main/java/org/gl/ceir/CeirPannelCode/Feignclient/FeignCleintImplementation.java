@@ -208,6 +208,14 @@ public interface FeignCleintImplementation {
 
 		@RequestMapping(value="/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}" ,method=RequestMethod.GET) 
 		public List<Dropdown> asTypeList(@PathVariable("tagId") String tag, @PathVariable("userTypeId") Integer userTypeId);
+
+		// fetch block/Unblock(bulk) devices.
+		
+		//edit stock feign  controller
+		@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
+		public @ResponseBody StolenRecoveryModel fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
+
+
 }
 
 

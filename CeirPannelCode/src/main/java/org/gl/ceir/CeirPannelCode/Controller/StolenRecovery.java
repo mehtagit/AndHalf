@@ -231,7 +231,8 @@ public class StolenRecovery {
 			  public @ResponseBody GenricResponse updateFileTypeStolenRecovery(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
 					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
-					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) int id)
+					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) int id,
+					  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark)
 			  {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
@@ -279,6 +280,8 @@ public class StolenRecovery {
 					stolenRecoveryModel.setRoleType(roleType);
 					stolenRecoveryModel.setTxnId(txnId);
 					stolenRecoveryModel.setId(id);
+					stolenRecoveryModel.setCategory(deviceCaegory);
+					stolenRecoveryModel.setRemark(remark);
 					
 					log.info("request passed to the update file stolen api ="+stolenRecoveryModel);
 					response=feignCleintImplementation.updateFileStolen(stolenRecoveryModel);

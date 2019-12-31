@@ -13,8 +13,20 @@ public class StolenRecoveryModel {
 	private String roleType;
 	private String  txnId,remark;
 	private int userId;
-	private int sourceType;
+	private int sourceType,category;
 	private Integer qty,deviceCaegory;
+	private String categoryInterp;
+	
+	
+	
+	@Override
+	public String toString() {
+		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
+				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
+				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", remark=" + remark + ", userId="
+				+ userId + ", sourceType=" + sourceType + ", category=" + category + ", qty=" + qty + ", deviceCaegory="
+				+ deviceCaegory + ", categoryInterp=" + categoryInterp + "]";
+	}
 	public String getBlockingTimePeriod() {
 		return blockingTimePeriod;
 	}
@@ -81,6 +93,12 @@ public class StolenRecoveryModel {
 	public void setSourceType(int sourceType) {
 		this.sourceType = sourceType;
 	}
+	public int getCategory() {
+		return category;
+	}
+	public void setCategory(int category) {
+		this.category = category;
+	}
 	public Integer getQty() {
 		return qty;
 	}
@@ -93,13 +111,13 @@ public class StolenRecoveryModel {
 	public void setDeviceCaegory(Integer deviceCaegory) {
 		this.deviceCaegory = deviceCaegory;
 	}
-	@Override
-	public String toString() {
-		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
-				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
-				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", remark=" + remark + ", userId="
-				+ userId + ", sourceType=" + sourceType + ", qty=" + qty + ", deviceCaegory=" + deviceCaegory + "]";
+	public String getCategoryInterp() {
+		return categoryInterp;
 	}
+	public void setCategoryInterp(String categoryInterp) {
+		this.categoryInterp = categoryInterp;
+	}
+	
 	
 	
 	
