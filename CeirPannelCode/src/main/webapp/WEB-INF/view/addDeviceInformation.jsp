@@ -943,7 +943,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="./uploadPaidStatus" class="btn">ok</a>
+						<a href="./uploadPaidStatus?via=other" class="btn">ok</a>
 					</div>
 				</div>
 			</div>
