@@ -48,10 +48,9 @@ public class GreyListService implements Runnable{
 			fullDumpProcess.fullDumpProcess(filePath.getValue());
 		    increDumpProcess.incrementalDumpProcess(filePath.getValue());	
 			log.info("exit from grey List dump process");
-			//Thread.sleep(3000000);
 		
 		try {
-			Thread.sleep(86400000);
+			Thread.sleep(3600000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

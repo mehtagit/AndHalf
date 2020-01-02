@@ -61,10 +61,11 @@ public class IncrementalDumpProcess {
 	public void incrementalDumpFileProcess(String filePath) {
 		log.info("createdOn column value: "+topDataForIncdump.getCreatedOn());
 		String configDate=utility.convertToDateformat(topDataForIncdump.getCreatedOn());
-		
 		log.info("date from file dump table if dumpType is Incremental: "+configDate);
 		yesterdayDate=utility.getYesterdayDateString();
-		if(configDate!=yesterdayDate) {
+		currentDate=utility.currentDate();
+		if(!configDate.equals(currentDate)) {
+			log.info("if files not created today");
 			currentDate=utility.currentDate();
 			log.info("currentDate:  "+currentDate);
 			long differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
@@ -118,6 +119,7 @@ public class IncrementalDumpProcess {
 		fileDumpMgmt.setDumpType("Incremental");
 		fileDumpMgmt.setFileName(fileName);
 		fileDumpMgmt.setCreatedOn(new Date());
+		fileDumpMgmt.setServiceDump("0");
 		listFileDetailsImpl.saveFileDumpMgmt(fileDumpMgmt);
 	}
 }

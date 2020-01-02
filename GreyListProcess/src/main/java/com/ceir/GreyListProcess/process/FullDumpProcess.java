@@ -72,8 +72,10 @@ public class FullDumpProcess {
 		String configDate=utility.convertToDateformat(topDataForFulldump.getCreatedOn());
 		log.info("date from file dump table if dumpType is Full: "+configDate);
 		yesterdayDate=utility.getYesterdayDateString();
-		if(configDate!=yesterdayDate) {
-			currentDate=utility.currentDate();
+		currentDate=utility.currentDate();
+		if(!configDate.equals(currentDate)) {
+			log.info("if files not created today");
+			
 			log.info("currentDate:  "+currentDate);
 			long differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
 			log.info("difference from currentDate and dump table date: "+differenceOfDates);
@@ -130,6 +132,7 @@ public class FullDumpProcess {
 		String filename=fileName;
 		fileDumpMgmt.setFileName(filename);
 		fileDumpMgmt.setCreatedOn(new Date());
+		fileDumpMgmt.setServiceDump("0");
 		listFileDetailsImpl.saveFileDumpMgmt(fileDumpMgmt);
 	}
 }
