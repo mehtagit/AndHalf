@@ -897,5 +897,63 @@ public class IconsState {
 
 	}
 	
+	
+	/********************************** Icons for AdminMEssage Management**********************************/ 
+
+	public String adminMessageIcons(String userStatus) { 
+		
+		String editAction="";
+		String viewAction="";
+		
+		// state related Code 
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			
+		}
+
+		String action=view.concat(edit);	
+		return action;
+
+	}
+	
+	
+	/********************************** Icons for AdminConfig Management**********************************/ 
+
+	public String adminConfigIcons(String userStatus) { 
+		
+		String editAction="";
+		String viewAction="";
+		
+		// state related Code 
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			
+		}
+
+		String action=view.concat(edit);	
+		return action;
+
+	}
+
+	
+	
 }
 
