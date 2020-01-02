@@ -148,95 +148,14 @@
                                                 <td>Single</td>
                                                 <td></td>
                                                 <td>Success</td>
-                                                <td>
-                                                    <a href="#"><i class="fa fa-exclamation-circle error-disable-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-disable-icon"
-                                                            aria-hidden="true" title="download"></i></a>
-                                                    <a href="#editDevice" class="modal-trigger"><i
-                                                            class="fa fa-pencil edit-icon" aria-hidden="true"
-                                                            title="edit"></i></a>
+                                              <td style="width: 150px;">
+                                                    <a href="#"><i class="fa fa-exclamation-circle " title="ErrorFile"></i></a>
+                                                    <a href="#" download="download"><i class="fa fa-download download" aria-hidden="true" title="download"></i></a>
+                                                    <a onclick="viewDeviceDetails(B3112201912345)"> <i class="fa fa-eye " aria-hidden="true" title="view"></i></a>
+                                                    <a href="#editDevice" class="modal-trigger"><i class="fa fa-pencil" aria-hidden="true" title="edit"></i></a>
                                                 </td>
                                             </tr>
-
-                                            <tr>
-                                                <td>10/05/2019</td>
-                                                <td>Tr12345678</td>
-                                                <td>Unblock</td>
-                                                <td>Single</td>
-                                                <td></td>
-                                                <td>Success</td>
-                                                <td>
-                                                    <a href="#"><i class="fa fa-exclamation-circle error-disable-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-disable-icon"
-                                                            aria-hidden="true" title="download"
-                                                            download="download"></i></a>
-                                                    <a href="#editDevice" class="modal-trigger"><i
-                                                            class="fa fa-pencil edit-icon" aria-hidden="true"
-                                                            title="edit"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>10/05/2019</td>
-                                                <td>Tr12345678</td>
-                                                <td>Block</td>
-                                                <td>Bulk</td>
-                                                <td>fileName.csv</td>
-                                                <td>INIT</td>
-                                                <td>
-                                                    <a href="#"><i class="fa fa-exclamation-circle error-disable-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-icon" aria-hidden="true"
-                                                            title="download" download="download"></i></a>
-                                                    <a href="#editBlockUnblock" class="modal-trigger"><i
-                                                            class="fa fa-pencil edit-icon" aria-hidden="true"
-                                                            title="edit"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>10/05/2019</td>
-                                                <td>Tr12345678</td>
-                                                <td>Unblock</td>
-                                                <td>Bulk</td>
-                                                <td>fileName.csv</td>
-                                                <td>Error</td>
-                                                <td>
-                                                    <a href="#"><i class="fa fa-exclamation-circle error-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-icon" aria-hidden="true"
-                                                            title="download" download="download"></i></a>
-                                                    <a href="#"><i class="fa fa-pencil edit-disable-icon"
-                                                            aria-hidden="true" title="edit"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>10/05/2019</td>
-                                                <td>Tr12345678</td>
-                                                <td>Unblock</td>
-                                                <td>Bulk</td>
-                                                <td>fileName.csv</td>
-                                                <td>Processing</td>
-                                                <td>
-                                                    <a href="#"><i class="fa fa-exclamation-circle error-disable-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-icon" aria-hidden="true"
-                                                            title="download" download="download"></i></a>
-                                                    <a href="#editBlockUnblock" class="modal-trigger"><i
-                                                            class="fa fa-pencil edit-icon" aria-hidden="true"
-                                                            title="edit"></i></a>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
+ </tbody>
                                     </table>
                                 </div>
 
@@ -246,6 +165,241 @@
                 </div>
                 <!--end container-->
             </section>
+            
+              
+           <div id="viewBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
+		<h6 class="modal-header">View Block Devices</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			
+                                            <form action="#" style="margin-top: 30px;">
+                                                    
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockCategory" name="Category" pattern="[0-9]"
+                                                            title="" maxlength="16" value="Contract Violation" disabled>
+                                                        <label for="viewBulkBlockCategory">Category</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
+                                                        <label for="viewBulkBlockRemark">Remark </label>
+                                                    </div>
+
+                                                    
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockuploadFile" name="uploadFile" pattern="[0-9]"
+                                                            title="" maxlength="16" value="file.csv" disabled>
+                                                        <label for="viewBulkBlockuploadFile">Upload Bulk Devices</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockquantity" name="quantity" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="viewBulkBlockquantity">Quantity</label>
+                                                    </div>
+                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockTxnId" name="viewBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="viewBulkBulkTxnId">Transaction Id</label>
+                                                    </div>
+
+                                                   
+
+
+                                                    <div class="input-field col s12 center">
+                                                       
+                                                        <a href="blockUnblockList.html" class="btn">Cancel</a>
+                                                    </div>
+                                                </form>
+            </div></div>
+            
+            <div id="editBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
+		<h6 class="modal-header">View Block Devices</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			
+                                            <form action="#" style="margin-top: 30px;">
+                                                    
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockCategory" name="editBulkBlockCategory" pattern="[0-9]"
+                                                            title="" maxlength="16" value="Contract Violation" disabled>
+                                                        <label for="editBulkBlockCategory">Category</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
+                                                        <label for="editBulkBlockRemark">Remark </label>
+                                                    </div>
+
+                                                    
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockuploadFile" name="editBulkBlockuploadFile" pattern="[0-9]"
+                                                            title="" maxlength="16" value="file.csv" disabled>
+                                                        <label for="editBulkBlockuploadFile">Upload Bulk Devices</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockquantity" name="editBulkBlockquantity" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="editBulkBlockquantity">Quantity</label>
+                                                    </div>
+                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="editBulkBlockTxnId">Transaction Id</label>
+                                                        <input type="text" style="display:none" id="editBulkBlockrequestType">
+                                                    </div>
+
+                                                   
+
+
+                                                    <div class="input-field col s12 center">
+                                                        	<button class="waves-effect waves-light modal-trigger btn"
+						type="button" onclick="updateBulkDevice()">Update</button>
+                                                        <a href="./" class="btn">Cancel</a>
+                                                    </div>
+                                                </form>
+            </div></div>
+            
+           <div id="viewSingleDeviceModal" class="modal-form" style="overflow-y: hidden;">
+		<h6 class="modal-header">View Consignment</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			
+			
+			
+			  <form action="#">
+                                                    <div class="row">
+                                                        <div class="row">
+
+
+                                                            <div class="input-field col s12 m6"
+                                                                style="margin-top: 21px;">
+                                                                <input type="text" id="viewSingledeviceType" name="deviceType"
+                                                                    pattern="[0-9]" value="Handheld" disabled
+                                                                    title="Please enter your device serial number first"
+                                                                    maxlength="20">
+                                                                <label for="deviceType">Device Type </label>
+                                                            </div>
+
+                                                          
+
+                                                            <div class="input-field col s12 m6"
+                                                                style="margin-top: 21px;">
+                                                                <input type="text" id="simStatus" name="simStatus"
+                                                                    pattern="[0-9]" value="Yes" disabled
+                                                                    title="Please enter your device serial number first"
+                                                                    maxlength="20">
+                                                                <label for="simStatus">Multiple Sim Status </label>
+                                                            </div>
+
+                                                            <div class="input-field col s12 m6"
+                                                                style="margin-top: 21px;">
+                                                                <input type="text" id="serialNumber" name="serialNumber"
+                                                                    pattern="[0-9]" value="GHJ1425376565" disabled
+                                                                    title="Please enter your device serial number first"
+                                                                    maxlength="20">
+                                                                <label for="serialNumber">Device Serial Number </label>
+                                                            </div>
+
+                                                            <div class="input-field col s12 m6">
+                                                                <textarea id="Remark" placeholder="kjdshfkjdshfkdsjhfkdsj" disabled
+                                                                    class="materialize-textarea"></textarea>
+                                                                <label for="Remark">Remark </label>
+                                                            </div>
+
+
+                                                            <div class="input-field col s12 m6"
+                                                                style="margin-top: 21px;">
+                                                                <input type="text" id="deviceIdType" name="deviceIdType"
+                                                                    pattern="[0-9]" value="IMEI" disabled
+                                                                    title="Please enter your device serial number first"
+                                                                    maxlength="20">
+                                                                <label for="deviceIdType">Device ID Type </label>
+                                                            </div>
+
+                                                        
+
+                                                            <div class="input-field col s12 m6"
+                                                                style="margin-top: 21px;">
+                                                                <input type="text" id="Category" name="Category"
+                                                                    pattern="[0-9]" value="Contract Violation" disabled
+                                                                    title="Please enter your device serial number first"
+                                                                    maxlength="20">
+                                                                <label for="Category">Category </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row input_fields_wrap">
+                                                            <div class="col s12 m12">
+                                                                <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+                                                            </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="IMEI1" name="IMEI1"
+                                                                    pattern="[0-9]" value="867564534243556" disabled
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="IMEI1">1 </label>
+                                                            </div>
+
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="IMEI2" name="IMEI2"
+                                                                    pattern="[0-9]" value="968764537586978" disabled
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="IMEI2">2</label>
+                                                            </div>
+
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="IMEI3" name="IMEI3"
+                                                                    pattern="[0-9]" disabled
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="IMEI3">3</label>
+                                                            </div>
+
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="IMEI4" name="IMEI4[]"
+                                                                    pattern="[0-9]" disabled
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="IMEI4">4</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="input-field col s12 center">
+                                                        <!-- <button class="btn modal-trigger"
+                                                            data-target="markAsBlock">Submit</button> -->
+                                                        <a href="blockUnblockList.html" class="btn">Cancel</a>
+                                                    </div>
+                                                </form>
+			
+
+
+
+		</div>
+	</div>
+	
+	
+    <div id="confirmEditBlockUnblock" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Update Device Information</h6>
+            <div class="row">
+                <h6>The following details has been updated successfully</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <button class="modal-close btn">ok</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            
             
             
 <!--materialize js-->
@@ -279,6 +433,8 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/reportBlock.js"></script>
 
   <script type="text/javascript">
             $('#blockUnblockDataTable').DataTable(

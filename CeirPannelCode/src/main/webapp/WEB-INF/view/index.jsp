@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -75,7 +77,7 @@ var contextpath = "${context}";
             <div class="section">
                 <div class="row">
                     <div class="col s12 m12 l12">
-                        <h1 style="text-align: center;">Welcome To Central Equipment Identity Register</h1>
+                        <h1 style="text-align: center;"><spring:message code="welcome.title" /></h1>
                         <img src="${context}/resources/images/TELECOMMUNICATIONS-4.jpg" alt="" class="responsive-img">
                     </div>
                 </div>
@@ -126,7 +128,7 @@ var contextpath = "${context}";
     <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
         <div class="footer-copyright">
             <div class="container">
-                <span class="right">Copyright © 2018 Sterlite Technologies Ltd, All rights reserved.</span>
+                <span class="right">Copyright Â© 2018 Sterlite Technologies Ltd, All rights reserved.</span>
             </div>
         </div>
     </footer>

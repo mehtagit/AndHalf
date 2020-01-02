@@ -3,15 +3,9 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 var featureId =12;
 $( document ).ready(function() {
-	var In = sessionStorage.getItem("nationalId") == undefined ? null : sessionStorage.getItem("nationalId") == undefined ? "" : sessionStorage.getItem("nationalId");
-	//var In = sessionStorage.getItem("nationalId") == null ? sessionStorage.getItem("nationalId") : sessionStorage.getItem("nationalId") ;
-//var In = $("body").attr("session-value");
-	if(In == ''){
-		window.location.replace("./uploadPaidStatus");
-		$('#btnLink').css({"display":"block"});
-	}
-	else if(In == null){
-		
+	var In = $("body").attr("session-value");
+	if(In.length > 0 && In !='null' ){
+
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -19,53 +13,7 @@ $( document ).ready(function() {
 			type : 'GET',
 			success : function(data) {
 
-				//sessionStorage.removeItem('nationalId');
-
-				if (data.errorCode == 1) {
-					$("#user123").css("display", "none");
-					$("#user456").css("display", "block");
-					$("#addbutton").css("display", "block");
-					$("#submitbtn").css("display", "none");
-				} 
-				else if (data.errorCode == 0 && In == null) {
-					$("#user123").css("display", "none");
-					$("#user456").css("display", "block");
-					$("#addbutton").css("display", "block");
-					$("#submitbtn").css("display", "none");
-				} 
-				else
-				{
-					$("#user123").css("display", "block");
-					$("#user456").css("display", "none");
-					$("#addbutton").css("display", "none");
-					$("#submitbtn").css("display", "none");	
-				}
-				$('#nationalID').val(In);
-				regularizedCount();
-			},
-			error : function() {
-				console.log("Failed");
-			}
-		}); 
-		sessionStorage.setItem("nationalId", In);
-		localStorage.setItem("nationalId", In);
-		//localStorage.removeItem('incrementedCurrent');
-		//var incrementedCurrent =parseInt(localStorage.getItem("incrementedCurrent"));
-		// console.log("******"+incrementedCurrent);
-		//localStorage.removeItem('current');	
-		pageRendering();
-		filter();
-
-	}
-	else if(In.length > 0 ){
-		$.ajax({
-			url : "./paid-status/"+In,
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'GET',
-			success : function(data) {
-
-			//	sessionStorage.removeItem('nationalId');
+				//	sessionStorage.removeItem('nationalId');
 
 				if (data.errorCode == 1) {
 					$("#user123").css("display", "none");
@@ -100,6 +48,51 @@ $( document ).ready(function() {
 
 		$("#btnLink").css({display: "block"});
 	}
+	else{
+		//sessionStorage.setItem("admin","CEIRAdmin");
+		$.ajax({
+			url : "./paid-status/"+In,
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'GET',
+			success : function(data) {
+
+				//	sessionStorage.removeItem('nationalId');
+
+				if (data.errorCode == 1) {
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+				} 
+				else if (data.errorCode == 0 && In == null) {
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+				} 
+				else
+				{
+					$("#user123").css("display", "block");
+					$("#user456").css("display", "none");
+					$("#addbutton").css("display", "none");
+					$("#submitbtn").css("display", "none");	
+				}
+				$('#nationalID').val(In);
+				regularizedCount();
+			},
+			error : function() {
+				console.log("Failed");
+			}
+		}); 
+		pageRendering();
+		filter();
+		
+		$("#btnLink").css({display: "none"});
+
+	}
+
+
 
 });
 
@@ -216,40 +209,32 @@ $(document).ready(function () {
 var sourceType =localStorage.getItem("sourceType");
 function filter()
 {       
-	var roleType= sessionStorage.getItem("roleType");
-
 	var sessionFlag=0;
-
 	if(roleType=="Custom"){
-
 		table('./headers?type=userPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
 	}
-	else if(sessionStorage.getItem("admin")=="CEIRAdmin"){
-
+	else if(roleType == "CEIRAdmin"){
 		table('./headers?type=adminUserPaidStatus','./user-paid-status-data?sessionFlag='+sessionFlag);
+
 	}
-	sessionStorage.removeItem('roleType');
 }
 
 
-var nationalId =localStorage.getItem("nationalId") == 'null' ? null : localStorage.getItem("nationalId");
+var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
 function table(url,dataUrl){
-
 	var request={
-	"modifiedOn":$('#endDate').val(),
-	"createdOn":$('#startDate').val(),
-	"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
-	"userId":parseInt(userId),
-	"featureId":parseInt(featureId),
-	"userTypeId": parseInt($("body").attr("data-userTypeID")),
-	"userType":$("body").attr("data-roleType"),
-	"deviceIdType":parseInt($('#deviceIDType').val()),
-	"deviceType":parseInt($('#deviceTypeFilter').val()),
-	"txnId":$('#Search').val(),
-	"consignmentStatus": null,
-	"userTypeId": parseInt($("body").attr("data-userTypeID")),
-	/* "consignmentStatus": $("body").attr("data-userTypeID") == 8 ? 1 : null,*/
-	"nid": $('#nId').val()
+			"modifiedOn":$('#endDate').val(),
+			"createdOn":$('#startDate').val(),
+			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"deviceIdType":parseInt($('#deviceIDType').val()),
+			"deviceType":parseInt($('#deviceTypeFilter').val()),
+			"txnId":$('#Search').val(),
+			"consignmentStatus": null,
+			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}
 	$.ajax({
 		url: url,
@@ -276,9 +261,6 @@ function table(url,dataUrl){
 				},
 				"columns": result
 			});
-
-			//	$('div#initialloader').delay(300).fadeOut('slow');
-			/*	$('div#initialloader').fadeOut('slow');*/
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -302,7 +284,7 @@ function pageButtons(url){
 		dataType: "json",
 		success: function(data){
 			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
-			
+
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
@@ -351,6 +333,7 @@ function pageButtons(url){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
 					$('#'+button[i].id).attr("href", button[i].buttonURL);
+					$('#'+button[i].id).attr("href", "./add-device-information?NID="+$("body").attr("session-value")+"");
 				}
 				else{
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -390,10 +373,10 @@ function pageButtons(url){
 			});
 		}
 	}); 	
-	
+
 	if(sessionStorage.getItem("admin")=="CEIRAdmin"){
 		$("#btnLink").css({display: "none"});
-		}
+	}
 }
 
 
@@ -595,7 +578,7 @@ function submitDeviceInfo(){
 			"multiSimStatus": deviceStatus1,
 			"price": parseFloat(Price1),
 			"taxPaidStatus": parseInt(taxStatus1),
-			"nid":$('#nationalID').val(),
+			"nid":nationalId,
 			"txnId":""
 
 		}
@@ -619,7 +602,7 @@ function submitDeviceInfo(){
 			"lastName": lastName,
 			"locality": locality,
 			"middleName": middleName,
-			"nid": $('#nationalID').val(),
+			"nid": nationalId,
 			"phoneNo": phone,
 			"propertyLocation": address,
 			"province": state,
@@ -797,9 +780,9 @@ $(document).ready(function () {
 
 
 function regularizedCount(){
-	var nid= localStorage.getItem("nationalId") == 'null' ? null : localStorage.getItem("nationalId")
-	//var nid=$('#nationalID').val();
-	console.log("nid==&&&&&&&&&&&&&&&&&"+nid);
+	var nid= nationalId == 'null' ? null : nationalId;
+			//var nid=$('#nationalID').val();
+			console.log("nid==&&&&&&&&&&&&&&&&&"+nid);
 	$.ajax({
 		url: './countByNid?nid='+nid,
 		type: 'GET',
@@ -823,11 +806,11 @@ function regularizedCount(){
 		}
 	});
 }
-  
+
 
 
 function refreshContent(){
-	$('#payNowTaxPayment,#confirmDeleteMsg').closeModal();
+	$('#payNowTaxPayment,#confirmDeleteMsg,#regularisedDevice').closeModal();
 	window.location.reload(true);
 }
 
@@ -850,7 +833,7 @@ function aprroveDevice(){
 			"userId":parseInt(userId),
 			"userType": $("body").attr("data-roleType")	  	
 	}
-	
+
 	$.ajax({
 		url : './approveRejectDevice',
 		data : JSON.stringify(approveRequest),
@@ -864,14 +847,14 @@ function aprroveDevice(){
 				confirmApproveInformation(window.imei,window.date);
 				console.log("inside Approve Success")
 			}
-			
+
 		},
 		error : function() {
 			alert("Failed");
 		}
 	});
 }
-	
+
 
 function confirmApproveInformation(imei,date){
 	$('#approveInformation').closeModal(); 
@@ -887,36 +870,36 @@ function userRejectPopup(imei){
 
 
 function rejectUser(){
-var rejectRequest={
-		"action" : 1,
-		"imei1": window.imei,
-		"featureId":parseInt(featureId),
-		"remarks": $("#Reason").val(),
-		"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
-		"txnId": "",
-		"userId":parseInt(userId),
-		"userType": $("body").attr("data-roleType")	  	
-}
-
-$.ajax({
-	url : './approveRejectDevice',
-	data : JSON.stringify(rejectRequest),
-	dataType : 'json',
-	'async' : false,
-	contentType : 'application/json; charset=utf-8',
-	type : 'PUT',
-	success : function(data) {
-		console.log("approveRequest----->"+JSON.stringify(rejectRequest));
-		if(data.errorCode==0){
-			confirmApproveInformation();
-			console.log("inside Reject Success")
-		}
-		
-	},
-	error : function() {
-		alert("Failed");
+	var rejectRequest={
+			"action" : 1,
+			"imei1": window.imei,
+			"featureId":parseInt(featureId),
+			"remarks": $("#Reason").val(),
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": "",
+			"userId":parseInt(userId),
+			"userType": $("body").attr("data-roleType")	  	
 	}
-});
+
+	$.ajax({
+		url : './approveRejectDevice',
+		data : JSON.stringify(rejectRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+			if(data.errorCode==0){
+				confirmApproveInformation();
+				console.log("inside Reject Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
 }
 
 

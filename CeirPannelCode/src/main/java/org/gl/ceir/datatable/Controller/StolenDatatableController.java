@@ -216,7 +216,7 @@ public class StolenDatatableController {
 		
 
 			String[] selectParam = { "select", "Request Type", "requestType", "", "select",
-					"Mode", "mode", "","select", "Status", "status","" };	
+					"Mode", "sourceStatus", "","select", "Status", "status","" };	
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);

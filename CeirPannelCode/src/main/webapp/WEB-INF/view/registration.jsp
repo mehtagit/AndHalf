@@ -144,7 +144,7 @@ var contextpath = "${context}";
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("name") %> Registration</h5>
+							<h5><%=request.getParameter("name") %> <spring:message code="welcome.message" /></h5>
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
                <input type="hidden" id="usertypeId" value="${usertypeId}">

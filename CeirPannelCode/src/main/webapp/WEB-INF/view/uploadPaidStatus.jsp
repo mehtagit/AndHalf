@@ -149,7 +149,7 @@ input[type='search'] {
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}" session-value="${param.NID}">
+	data-selected-consignmentStatus="${consignmentStatus}" session-value="${not empty param.NID ? param.NID : 'null'}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -643,24 +643,7 @@ input[type='search'] {
 	</div>
 	<!-- Modal End -->
 
-	<!-- Pay Tax Modal start   -->
-	<%-- <div id="regularisedDevice" class="modal">
-        <div class="modal-content">
-            <h6 class="modal-header">Upload Paid Device</h6><hr>
-
-            <div class="row">
-                <h6 id="sucessMessage">Your form has been successfully submitted. The Transaction ID for future reference is <span id="dynamicTxnId"></span></h6>
-                <input type="text" style="display:none" id="errorCode">
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                <form action="${context}/Consignment/viewConsignment" id="closeOkPop" method="POST">
-                    <a  onclick="closeConfirmation()" class="btn">ok</a>
-                </form>
-                </div>
-            </div>
-        </div>
-    </div> --%>
+	
 
 	<div id="regularisedDevice" class="modal">
 		<h6 class="modal-header">Upload Paid Device</h6>
@@ -674,7 +657,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="./uploadPaidStatus" class="btn">ok</a>
+						<button class="btn" onclick="refreshContent();">ok</button>
 					</div>
 				</div>
 			</div>

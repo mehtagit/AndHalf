@@ -199,9 +199,14 @@ var roleType = $("body").attr("data-roleType");
 var featureId =12;
 function hide() {
 	var In = $('#Search').val();
+	
+	if(In.length == 0){
+		console.log("please field input");
+	}else{
 		sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("nationalId", In);
 	  window.location.replace("./uploadPaidStatus?via=other&NID="+In);
+	}
 }
 	    </script>
 </body>
