@@ -97,7 +97,7 @@ public class ConfigurationManagementServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			SpecificationBuilder<SystemConfigurationDb> sb = new SpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
 			
-			if(Objects.nonNull(filterRequest.getUserId()))
+			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 			
 			return systemConfigurationDbRepository.findAll(sb.build(), pageable);
@@ -160,13 +160,13 @@ public class ConfigurationManagementServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			SpecificationBuilder<MessageConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
 			
-			if(Objects.nonNull(filterRequest.getUserId()))
+			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			return messageConfigurationDbRepository.findAll(sb.build(), pageable);
 			
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -227,7 +227,7 @@ public class ConfigurationManagementServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			SpecificationBuilder<PolicyConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
 			
-			if(Objects.nonNull(filterRequest.getUserId()))
+			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			return policyConfigurationDbRepository.findAll(sb.build(), pageable);

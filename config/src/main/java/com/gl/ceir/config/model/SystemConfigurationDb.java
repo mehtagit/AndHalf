@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class SystemConfigurationDb implements Serializable {
 
@@ -22,9 +24,11 @@ public class SystemConfigurationDb implements Serializable {
 	private Long id;
 
 	@CreationTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 
 	@UpdateTimestamp
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;
 	
 	private String tag;
