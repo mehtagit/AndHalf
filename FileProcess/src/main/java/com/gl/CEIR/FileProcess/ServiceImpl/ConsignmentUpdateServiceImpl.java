@@ -46,11 +46,14 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 	StokeDetailsRepository stokeDetailsRepository;
 	
 	@Autowired
-	PrototypeBeanProvider fileParser;
+	PrototypeBeanProvider prototypeBeanProvider;
 	
 	@Autowired
 	@Qualifier("fileProperties")
 	FileStorageProperties fileStorageProperties;
+	
+	@Autowired
+	DeviceDbManipulatorImpl deviceDbManipulatorImpl;
 
 	@Override
 	public boolean process(WebActionDb webActionDb){
@@ -75,8 +78,13 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 			List<DeviceDb> devices = new ArrayList<DeviceDb>();
 			List<String> contents = Files.readAllLines(filePath);
 
+			ConsignmentFileParser consignmentFileParser = prototypeBeanProvider.getConsignmentFileParserBean();
+			
 			for(String content : contents) {
-				DeviceDb device = fileParser.getConsignmentFileParserBean().parse(content);
+				DeviceDb device = consignmentFileParser.parse(content);
+				
+				// Setting default values to avoid not null issues while executing queries.
+				deviceDbManipulatorImpl.setDefault(device);
 				
 				if(Objects.isNull(device)) {
 					continue;
@@ -88,7 +96,7 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 				devices.add(device);
 			}
 
-			//check for save the data in DB is pending 
+			// Check for save the data in DB is pending 
 			for(DeviceDb device : devices) {
 
 				/*DeviceDb deviceDetails = stokeDetailsRepository.getByImeiEsnMeid(device.getImeiEsnMeid());

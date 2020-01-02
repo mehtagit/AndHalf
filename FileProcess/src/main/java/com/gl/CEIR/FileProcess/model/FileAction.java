@@ -10,12 +10,10 @@ import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 @Entity
 public class FileAction implements Serializable{
-
-
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -83,10 +81,5 @@ public class FileAction implements Serializable{
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-
-
-
-
-
 
 }
