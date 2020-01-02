@@ -71,4 +71,15 @@ public class HeadersTitle {
 	//Block/unblock
 	public static final String mode= "Mode";
 	
+	//Admin Message Management
+	public static final String parameterName= "Parameter Name";
+	public static final String description= "Description";
+	public static final String value= "Value";
+	
+	//Admin Config Management
+	public static final String type="Type";
+	public static final String remarks="Remark";
+	
+	
+	
 }

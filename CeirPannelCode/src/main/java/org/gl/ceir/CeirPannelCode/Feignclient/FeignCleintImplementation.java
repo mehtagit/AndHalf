@@ -215,8 +215,25 @@ public interface FeignCleintImplementation {
 		@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
 		public @ResponseBody StolenRecoveryModel fetchBulkDeviceByTxnId(StolenRecoveryModel stolenRecoveryModel) ;
 
+		
+		//***************************************************Admin System message Management Feign********************************
+		
+		@RequestMapping(value="/filter/message-configuration" ,method=RequestMethod.POST) 
+		public Object adminMessageFeign(@RequestBody FilterRequest filterRequest,
+				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+				@RequestParam(value = "file", defaultValue = "0") Integer file) ;
 
-}
+		
+		//***************************************************Admin System Config Management Feign********************************
+		
+		@RequestMapping(value="/filter/system-configuration" ,method=RequestMethod.POST) 
+		public Object adminConfigFeign(@RequestBody FilterRequest filterRequest,
+				@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+				@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+				@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+		
+	}
 
 
 

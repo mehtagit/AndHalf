@@ -197,6 +197,25 @@ public class DatatableHeaders implements HeaderInterface{
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			//adminSystemMessage Headers 
+			else if("adminSystemMessage".equals(role)) {
+				String[] headers = {HeadersTitle.date,HeadersTitle.parameterName,HeadersTitle.value,HeadersTitle.description,HeadersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//adminConfigMessage Headers 
+			
+			else if("adminConfigMessage".equals(role)) {
+				String[] headers = {HeadersTitle.date,HeadersTitle.parameterName,HeadersTitle.value,HeadersTitle.description,HeadersTitle.type,HeadersTitle.remarks,HeadersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {HeadersTitle.date,HeadersTitle.transactionID,HeadersTitle.fileName,HeadersTitle.stockStatus,HeadersTitle.action};		

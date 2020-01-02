@@ -1,7 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag;
 	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType;
 	public String getStartDate() {
 		return startDate;
@@ -44,6 +44,12 @@ public class FilterRequest {
 	}
 	public void setGrievanceId(String grievanceId) {
 		this.grievanceId = grievanceId;
+	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -133,11 +139,13 @@ public class FilterRequest {
 	public String toString() {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
 				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
-				+ grievanceId + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus="
-				+ consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus="
-				+ fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus="
-				+ grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType
-				+ ", serviceDump=" + serviceDump + ", fileType=" + fileType + "]";
+				+ grievanceId + ", tag=" + tag + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus
+				+ ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId
+				+ ", fileStatus=" + fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType
+				+ ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status
+				+ ", asType=" + asType + ", serviceDump=" + serviceDump + ", fileType=" + fileType + "]";
 	}
+	
+	
 	
 }
