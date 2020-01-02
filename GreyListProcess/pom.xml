@@ -38,12 +38,12 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+	<!-- 	<dependency>
 			<groupId>com.gl.ceir</groupId>
 			<artifactId>config</artifactId>
 			<version>1.0.12</version>
 			<classifier>import-lib</classifier>
-			<!-- <scope>system</scope> <systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath> -->
+			<scope>system</scope> <systemPath>D:\CEIR\ConfigJar\config-1.0.2.jar</systemPath>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework.boot</groupId>
@@ -79,7 +79,7 @@
 				</exclusion>
 
 			</exclusions>
-		</dependency>
+		</dependency> -->
 
 <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,8 +92,25 @@
 			<artifactId>spring-boot-starter</artifactId>
 			<!-- <version>${spring.boot.version}</version> -->
 		</dependency>
-		
-		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+			<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-hateoas</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.12</version>
+		</dependency>
 		
 		</dependencies>
 

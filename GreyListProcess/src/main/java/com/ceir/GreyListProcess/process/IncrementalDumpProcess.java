@@ -7,15 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ceir.GreyListProcess.model.FileDumpFilter;
+import com.ceir.GreyListProcess.model.FileDumpMgmt;
+import com.ceir.GreyListProcess.model.GreylistDbHistory;
+import com.ceir.GreyListProcess.model.SystemConfigurationDb;
+import com.ceir.GreyListProcess.repositoryImpl.ConfigurationManagementServiceImpl;
+import com.ceir.GreyListProcess.repositoryImpl.ListFileDetailsImpl;
+import com.ceir.GreyListProcess.repositoryImpl.NationalislmServiceImpl;
 import com.ceir.GreyListProcess.util.Utility;
-import com.gl.ceir.config.model.FileDumpFilter;
-import com.gl.ceir.config.model.FileDumpMgmt;
-import com.gl.ceir.config.model.GreylistDbHistory;
-import com.gl.ceir.config.model.SystemConfigurationDb;
-import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
-import com.gl.ceir.config.service.impl.ListFileDetailsImpl;
-import com.gl.ceir.config.service.impl.NationalislmServiceImpl;
-
 @Service
 public class IncrementalDumpProcess {
 	@Autowired
@@ -37,58 +36,70 @@ public class IncrementalDumpProcess {
 	SystemConfigurationDb startWeekOfDay=new SystemConfigurationDb();
 	String currentDate=new String();
 	String yesterdayDate=new String();
+	String yesterdayId=new String();
 	String currentTime=new String();
 	FileDumpMgmt topDataForIncdump=new FileDumpMgmt();
 
 	public void incrementalDumpProcess(String filePath) {
-		try {
-			log.info("inside full dump process");
+			log.info("inside incremental dump process");
 			topDataForIncdump=listFileDetailsImpl.topDataByDumpType("Incremental");	
 			systemConfigurationDb.setTag("GREYLIST_FILEPATH");
-			if(topDataForIncdump.getId()!=0) {
+			if(topDataForIncdump!=null) {
 				incrementalDumpFileProcess(filePath);
 			}
 			else {
+				yesterdayId=utility.getYesterdayId();
 				currentTime=utility.getTxnId();
 				FileDumpFilter filter=new FileDumpFilter();
-				String fileName=filePath+currentTime+".csv";
+				String fileName=filePath+"GreyList_"+yesterdayId+".csv";
 				saveDataIntoFile(filter,fileName,filePath);	
 			}
-//			startWeekOfDay=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
-			log.info("exit from full dump process");
-		}
-
-		catch(Exception e) {
-			log.info("error occur in full dump process");
-			log.info(e.getMessage());
-		}
+			//			startWeekOfDay=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
+			log.info("exit from incremental dump process");
 	}
 
 	public void incrementalDumpFileProcess(String filePath) {
+		log.info("createdOn column value: "+topDataForIncdump.getCreatedOn());
 		String configDate=utility.convertToDateformat(topDataForIncdump.getCreatedOn());
+		
 		log.info("date from file dump table if dumpType is Incremental: "+configDate);
 		yesterdayDate=utility.getYesterdayDateString();
 		if(configDate!=yesterdayDate) {
-			long differenceOfDates=utility.getDifferenceDays(currentDate, configDate);
+			currentDate=utility.currentDate();
+			log.info("currentDate:  "+currentDate);
+			long differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
 			log.info("difference from currentDate and dump table date: "+differenceOfDates);
+			systemConfigurationDb.setTag("GREY_LIST_INCR_DUMP_FREQ_IN_DAYS");
+			frequencyInDays=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
+			log.info("total frequency In Days for incremental dump: "+frequencyInDays.getValue().toString());
+			int daysUnit=Integer.parseInt(frequencyInDays.getValue());
+			int days=0;
+			Date dateForConfig=topDataForIncdump.getCreatedOn();
 			while(differenceOfDates>Long.parseLong(frequencyInDays.getValue())){
 				log.info("if difference between dates greater than total days of frequency");
 				currentTime=utility.getTxnId();
-				String DayAdded=utility.addDaysInDate(Integer.parseInt(frequencyInDays.getValue()), topDataForIncdump.getCreatedOn());
+				String DayAdded=utility.addDaysInDate(days,dateForConfig);
+				log.info("day added + "+DayAdded);
+				log.info("days: "+days);
 				Date stringToDate=utility.stringToDate(DayAdded);
+				log.info("day added date:  "+stringToDate);
 				FileDumpFilter filter=new FileDumpFilter();
 				filter.setStartDate(topDataForIncdump.getCreatedOn());
 				filter.setEndDate(stringToDate);
+				yesterdayId=utility.getYesterdayId();
 				log.info("fetch data from greylist db between dates : "+topDataForIncdump.getCreatedOn() +"to "+ stringToDate);
-				String fileName=filePath+currentTime+".csv";
+				String fileName=filePath+"GreyList_"+utility.convertToDateIdformat(stringToDate)+".csv";
 				log.info("file path and name is:  "+fileName);
 				saveDataIntoFile(filter,fileName,filePath);
+				DayAdded=utility.addDaysInDate(days, dateForConfig);
 				configDate=DayAdded;
-				differenceOfDates=utility.getDifferenceDays(currentDate, configDate);
+				//dateForConfig=stringToDate;
+				days=days+daysUnit;
+				differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
+				log.info("differenceOfDates after file created: "+differenceOfDates);
 			}
 		}
 	}
-
 	public void saveDataIntoFile(FileDumpFilter fileDataFilter,String fileName,String filePath) {
 		String header=new String();
 		List<GreylistDbHistory> greyListData=nationalislmServiceImpl.greyListHistoryDataByCreatedOn(fileDataFilter);
@@ -105,10 +116,8 @@ public class IncrementalDumpProcess {
 		}
 		FileDumpMgmt fileDumpMgmt=new FileDumpMgmt();
 		fileDumpMgmt.setDumpType("Incremental");
-		String filename=filePath+currentTime+".csv";
-		fileDumpMgmt.setFileName(filename);
+		fileDumpMgmt.setFileName(fileName);
 		fileDumpMgmt.setCreatedOn(new Date());
+		listFileDetailsImpl.saveFileDumpMgmt(fileDumpMgmt);
 	}
-
-
 }

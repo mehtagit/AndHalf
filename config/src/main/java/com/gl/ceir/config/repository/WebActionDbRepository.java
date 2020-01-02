@@ -1,10 +1,11 @@
 package com.gl.ceir.config.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.gl.ceir.config.model.WebActionDb;
 
-public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long> {
+public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long>,JpaSpecificationExecutor<WebActionDb> {
 
 	@SuppressWarnings("unchecked")
 	public WebActionDb save(WebActionDb webActionDb);

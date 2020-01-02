@@ -8,15 +8,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ceir.GreyListProcess.model.FileDumpFilter;
+import com.ceir.GreyListProcess.model.FileDumpMgmt;
+import com.ceir.GreyListProcess.model.GreylistDb;
+import com.ceir.GreyListProcess.model.SystemConfigurationDb;
+import com.ceir.GreyListProcess.repository.SystemConfigurationDbRepository;
+import com.ceir.GreyListProcess.repositoryImpl.ConfigurationManagementServiceImpl;
+import com.ceir.GreyListProcess.repositoryImpl.ListFileDetailsImpl;
+import com.ceir.GreyListProcess.repositoryImpl.NationalislmServiceImpl;
 import com.ceir.GreyListProcess.util.Utility;
-import com.gl.ceir.config.model.FileDumpFilter;
-import com.gl.ceir.config.model.FileDumpMgmt;
-import com.gl.ceir.config.model.GreylistDb;
-import com.gl.ceir.config.model.SystemConfigurationDb;
-import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
-import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
-import com.gl.ceir.config.service.impl.ListFileDetailsImpl;
-import com.gl.ceir.config.service.impl.NationalislmServiceImpl;
+
+
 @Service
 public class FullDumpProcess {
 
@@ -40,37 +42,29 @@ public class FullDumpProcess {
 	SystemConfigurationDb systemConfigurationDb=new SystemConfigurationDb();
 	SystemConfigurationDb frequencyInDays=new SystemConfigurationDb();
 	SystemConfigurationDb startWeekOfDay=new SystemConfigurationDb();
-	//SystemConfigurationDb filePath=new SystemConfigurationDb();
 	String currentDate=new String();
 	String yesterdayDate=new String();
 	String currentTime=new String();
-	
+	String yesterdayTime=new String();
 	FileDumpMgmt topDataForFulldump=new FileDumpMgmt();
 	
 	public void fullDumpProcess(String filePath) {
-		try {
-			log.info("inside full dump process");
-			topDataForFulldump=listFileDetailsImpl.topDataByDumpType("Full");
-			systemConfigurationDb.setTag("GREYLIST_FILEPATH");
-	
-			if(topDataForFulldump.getId()!=0) {
+		log.info("inside full dump process");
+		topDataForFulldump=listFileDetailsImpl.topDataByDumpType("Full");
+		systemConfigurationDb.setTag("GREYLIST_FILEPATH");
+
+			if(topDataForFulldump!=null) {
+				log.info("topDataForFulldump: "+topDataForFulldump.toString());
 				fullDumpFileProcess(filePath);
 			}
 			else {
-				currentTime=utility.getTxnId();
 				FileDumpFilter filter=new FileDumpFilter();
-				String fileName=filePath+currentTime+".csv";
+				yesterdayTime=utility.getYesterdayId();
+				log.info("yesterdayTime: "+yesterdayTime);
+				String fileName=filePath+"GreyList_"+yesterdayTime+".csv";
 				saveDataIntoFile(filter,fileName,filePath);
-		
 			}
 			log.info("exit from full dump process");
-
-		}
-		catch(Exception e){
-			log.info("error occur in full dump process");
-			log.info(e.getMessage());
-			//return null;
-		}
 	}
 
 	public void fullDumpFileProcess(String filePath) {
@@ -79,31 +73,36 @@ public class FullDumpProcess {
 		log.info("date from file dump table if dumpType is Full: "+configDate);
 		yesterdayDate=utility.getYesterdayDateString();
 		if(configDate!=yesterdayDate) {
-			log.info("if file dump type data file not created yesterday ");
 			currentDate=utility.currentDate();
+			log.info("currentDate:  "+currentDate);
+			long differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
+			log.info("difference from currentDate and dump table date: "+differenceOfDates);
 			systemConfigurationDb.setTag("GREY_LIST_FULL_DUMP_FREQ_IN_DAYS");
 			frequencyInDays=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
-			log.info("total frequency In Days for full dump: "+frequencyInDays);
-			//systemConfigurationDb.setTag("GREY_LIST_START_OF_WEEK");
-	//	startWeekOfDay=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
-			
-			long differenceOfDates=utility.getDifferenceDays(currentDate, configDate);
-			log.info("difference of current date and date of dump table: "+frequencyInDays);
+			log.info("total frequency In Days for incremental dump: "+frequencyInDays.getValue().toString());
+			int daysUnit=Integer.parseInt(frequencyInDays.getValue());
+			int days=0;
+			Date dateForConfig=topDataForFulldump.getCreatedOn();
 			while(differenceOfDates>Long.parseLong(frequencyInDays.getValue())){
 				log.info("if difference between dates greater than total days of frequency");
 				currentTime=utility.getTxnId();
-			
-				String DayAdded=utility.addDaysInDate(Integer.parseInt(frequencyInDays.getValue()), topDataForFulldump.getCreatedOn());
+				String DayAdded=utility.addDaysInDate(days,dateForConfig);
+				log.info("day added + "+DayAdded);
 				Date stringToDate=utility.stringToDate(DayAdded);
+				log.info("day added date:  "+stringToDate);
 				FileDumpFilter filter=new FileDumpFilter();
 				filter.setStartDate(topDataForFulldump.getCreatedOn());
 				filter.setEndDate(stringToDate);
 				log.info("fetch data from greylist db between dates : "+topDataForFulldump.getCreatedOn() +"to "+ stringToDate);
-				String fileName=filePath+currentTime+".csv";
+				String fileName=filePath+"GreyList_"+utility.convertToDateIdformat(stringToDate)+".csv";
 				log.info("file path and name is:  "+fileName);
 				saveDataIntoFile(filter,fileName,filePath);
+				DayAdded=utility.addDaysInDate(days, dateForConfig);
 				configDate=DayAdded;
-				differenceOfDates=utility.getDifferenceDays(currentDate, configDate);
+				//dateForConfig=stringToDate;
+				days=days+daysUnit;
+				differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
+				log.info("differenceOfDates after file created: "+differenceOfDates);
 			}
 		}
 	}
@@ -111,7 +110,10 @@ public class FullDumpProcess {
 
 	public void saveDataIntoFile(FileDumpFilter fileDataFilter,String fileName,String filePath) {
         String header=new String();
+        log.info("going to save data into file");
+        log.info("f");
 		List<GreylistDb> greyListData=nationalislmServiceImpl.greyListDataByCreatedOn(fileDataFilter);
+		log.info("greyListData data for full dump:  "+greyListData.toString());
 		if(!greyListData.isEmpty()) {
 			log.info("if grey list is not empty");
 			header="imei";
@@ -125,8 +127,9 @@ public class FullDumpProcess {
 		}
 		FileDumpMgmt fileDumpMgmt=new FileDumpMgmt();
 		fileDumpMgmt.setDumpType("Full");
-		String filename=filePath+currentTime+".csv";
+		String filename=fileName;
 		fileDumpMgmt.setFileName(filename);
 		fileDumpMgmt.setCreatedOn(new Date());
+		listFileDetailsImpl.saveFileDumpMgmt(fileDumpMgmt);
 	}
 }

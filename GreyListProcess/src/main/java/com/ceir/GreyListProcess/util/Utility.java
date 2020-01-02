@@ -12,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
 
-import com.gl.ceir.config.model.GreylistDb;
-import com.gl.ceir.config.model.GreylistDbHistory;
+import com.ceir.GreyListProcess.model.GreylistDb;
+import com.ceir.GreyListProcess.model.GreylistDbHistory;
 
 
 @Component
@@ -24,11 +24,19 @@ public class Utility {
 		cal.add(Calendar.DATE, -1);
 		return cal.getTime();
 	}
-
-
+	
+	
 	public	String getYesterdayDateString() {
-		DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(yesterday());
+	}
+	
+	public String getYesterdayId() {
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+		String transactionId = dateFormat.format(yesterday());	
+		return transactionId;
+
 	}
 
 	public	String getYesterDayMonth() {
@@ -109,7 +117,7 @@ public class Utility {
 
 	public String getTxnId() {
 
-		DateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmm");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 		Date date = new Date();
 		String transactionId = dateFormat.format(date);	
 		return transactionId;
@@ -117,14 +125,20 @@ public class Utility {
 	}
 
 	public String currentDate() {
-		DateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
+		DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		Date date=new Date();
 		String currentDate=dateFormat.format(date);
 		return currentDate;
 	}
 	
 	public String convertToDateformat(Date date) {
-		DateFormat dateFormat=new SimpleDateFormat("YYYY-MM-dd");
+		DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+		String currentDate=dateFormat.format(date);
+		return currentDate;
+	}
+	
+	public String convertToDateIdformat(Date date) {
+		DateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmm");
 		String currentDate=dateFormat.format(date);
 		return currentDate;
 	}
@@ -132,7 +146,7 @@ public class Utility {
 	public  long getDifferenceDays(String input1, String input2) {
 
 		try {
-			SimpleDateFormat sdf=new SimpleDateFormat("YYYY-MM-dd");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 			Date d1=sdf.parse(input1);
 		    Date d2;
 			d2 = sdf.parse(input2);
@@ -147,7 +161,7 @@ public class Utility {
 	}
 	
 	public String addDaysInDate(Integer days,Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.setTime(date); 
 		c.add(Calendar.DATE, days); // Adding days
@@ -158,7 +172,7 @@ public class Utility {
 
 		    Date date1;
 			try {
-				date1 = new SimpleDateFormat("YYYY-MM-dd").parse(date);
+				date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				return date1;
 			} catch (ParseException e) {
 				e.printStackTrace();

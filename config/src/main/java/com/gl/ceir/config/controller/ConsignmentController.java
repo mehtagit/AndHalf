@@ -46,6 +46,7 @@ public class ConsignmentController {
 
 	@Autowired
 	Utility utility;
+	
 
 	@ApiOperation(value = "Add new consignment.", response = GenricResponse.class)
 	@RequestMapping(path = "/consignment/register", method = RequestMethod.POST)

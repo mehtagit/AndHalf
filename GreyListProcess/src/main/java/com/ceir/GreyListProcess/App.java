@@ -1,15 +1,10 @@
 package com.ceir.GreyListProcess;
-
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
-
 import com.ceir.GreyListProcess.service.GreyListService;
-
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.ceir.GreyListProcess")
@@ -17,10 +12,10 @@ public class App
 {
     public static void main( String[] args )
     {
+    	System.out.println("inside main function");
     	ConfigurableApplicationContext	ctx =SpringApplication.run(App.class, args);
-		 
 		GreyListService greyListService=ctx.getBean(GreyListService.class);
 		new Thread(greyListService).start();
+		System.out.println("exit from main function");
     }
-    
 }

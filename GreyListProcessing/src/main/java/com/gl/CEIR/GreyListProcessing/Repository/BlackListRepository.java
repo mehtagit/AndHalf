@@ -31,7 +31,6 @@ public class BlackListRepository {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-
 	public ConfigurationDetails getConfigurationDetails() {
 		try {
 

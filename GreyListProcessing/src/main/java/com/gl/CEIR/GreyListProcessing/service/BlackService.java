@@ -36,12 +36,12 @@ public class BlackService implements  Runnable{
 				log.info("Configuration Details="+configurationDetails);
 
 				if(configurationDetails.getUnit().equalsIgnoreCase("DAY")) {
-
-					millis = 86400000 * configurationDetails.getTime();
+					
+					millis  = 86400000 * configurationDetails.getTime();
 				}
 				else if(configurationDetails.getUnit().equalsIgnoreCase("HOUR")) {
 
-					millis = 3600000 * configurationDetails.getTime();
+					millis = 3600000 * configurationDetails.getTime();   
 				}
 				else if(configurationDetails.getUnit().equalsIgnoreCase("MINUTE")) {
 
@@ -78,18 +78,15 @@ public class BlackService implements  Runnable{
 
 				}else if(configurationDetails.getDumptype().equals("Incremental")) {
 
-
 					List<DumpDetails> dumpDetails =	blackListRepo.getpartiallyDumpDetails(configurationDetails.getUnit(),configurationDetails.getTime());
 					log.info("Dump Details ="+dumpDetails);
 
 					if(dumpDetails != null) {
 						for(DumpDetails details :dumpDetails) {
-
 							String header="IMEI,Operation";
 							String record=details.getImei()+","+details.getOperation();
 							String fileName="/home/ubuntu/ceir_api/files/blackListFile/BlackList_"+currentTime+".csv";
 							utility.writeInFile(fileName, header, record);
-
 						}
 					}else {
 
@@ -97,7 +94,6 @@ public class BlackService implements  Runnable{
 						String record="No data available in BlackList.";
 						String fileName="/home/ubuntu/ceir_api/files/blackListFile/BlackList_"+currentTime+".csv";
 						utility.writeInFile(fileName, header, record);
-
 
 					}
 
@@ -117,7 +113,6 @@ public class BlackService implements  Runnable{
 			try {
 				Thread.sleep(millis);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

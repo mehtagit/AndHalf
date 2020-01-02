@@ -260,7 +260,6 @@ public class NationalislmServiceImpl {
 
 			return greyListRepository.findAll(fdsb.build());
 		}
-
 		catch(Exception e) {
 			e.getMessage();
 			List<GreylistDb> greyListData=new ArrayList<GreylistDb>();

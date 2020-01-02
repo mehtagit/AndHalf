@@ -15,7 +15,6 @@ public class FilterRequest {
 	private Integer featureId;
 	private Integer userTypeId;
 	private String searchString;
-	
 	public Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;
