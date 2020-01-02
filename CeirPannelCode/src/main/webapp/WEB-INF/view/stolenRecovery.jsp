@@ -976,6 +976,8 @@
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/reportBlock.js"></script>
 
 </body>
 </html>

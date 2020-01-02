@@ -353,11 +353,6 @@ var singleImeiBlockDetail={
 
 
 
-function viewDeviceDetails(){
-	
-	
-	
-}
 
 
 //*******************************************View Pop up data *************************************************************************************************
@@ -384,7 +379,7 @@ function viewDeviceDetails(txnId,popUpType){
 
 
 function setViewBulkPopUp(data,popUpType){
-	console.log("_________________++++++++++"+popUpType);
+	console.log("++++++++++"+popUpType);
 	if(popUpType=='view'){	
 	$("#viewBlockDeviceModal").openModal();
 	$("#viewBulkBlockCategory").val(data.categoryInterp);

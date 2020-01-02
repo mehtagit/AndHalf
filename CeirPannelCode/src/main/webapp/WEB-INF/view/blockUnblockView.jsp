@@ -433,6 +433,8 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/reportBlock.js"></script>
 
   <script type="text/javascript">
             $('#blockUnblockDataTable').DataTable(
