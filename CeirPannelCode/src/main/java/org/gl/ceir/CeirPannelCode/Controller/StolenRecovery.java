@@ -231,14 +231,17 @@ public class StolenRecovery {
 			  public @ResponseBody GenricResponse updateFileTypeStolenRecovery(@RequestParam(name="blockingType",required = false) String blockingType,@RequestParam(name="blockingTimePeriod",required = false) String blockingTimePeriod,
 					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
-					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) int id,
-					  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark)
+					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) Integer id,
+					  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName)
 			  {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
 				  log.info(" update file stolen/recovery entry point .");
 				  log.info("Random transaction id number="+txnId);
 				  	try {
+				  		if(file==null) {
+				  			stolenRecoveryModel.setFileName(fileName);
+				  		}{				  		
 				  		String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
 				  		boolean exists = tmpDir.exists();
@@ -265,7 +268,8 @@ public class StolenRecovery {
 						BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 						stream.write(bytes);
 						stream.close();
-
+						stolenRecoveryModel.setFileName(file.getOriginalFilename());
+				  		}	
 					}
 					catch (Exception e) {
 						// TODO: handle exception
@@ -273,13 +277,13 @@ public class StolenRecovery {
 					}
 					stolenRecoveryModel.setBlockingTimePeriod(blockingTimePeriod);
 					stolenRecoveryModel.setBlockingType(blockingType);
-					stolenRecoveryModel.setFileName(file.getOriginalFilename());
+					
 					stolenRecoveryModel.setRequestType(requestType);
 					stolenRecoveryModel.setSourceType(sourceType);
 					stolenRecoveryModel.setUserId(userId);
 					stolenRecoveryModel.setRoleType(roleType);
 					stolenRecoveryModel.setTxnId(txnId);
-					stolenRecoveryModel.setId(id);
+					
 					stolenRecoveryModel.setCategory(deviceCaegory);
 					stolenRecoveryModel.setRemark(remark);
 					
