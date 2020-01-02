@@ -2,7 +2,13 @@ var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-stolenselected-roleType");  
 var role = currentRoleType == null ? roleType : currentRoleType;
-var featureId="5";
+
+var userType = $("body").attr("data-roleType");
+if(userType == "Operator"){
+	var featureId="7";
+}else{
+	var featureId="5";
+}
 
 
 $(document).ready(function(){
@@ -294,10 +300,12 @@ populateCountries
 
 
 
-
-var sourceType = localStorage.getItem("sourceType");	 
+var userType = $("body").attr("data-roleType");
+var sourceType = localStorage.getItem("sourceType");
 function filterStolen(){
-	if(sourceType !="viaExistingRecovery" ){
+	if(userType=="Operator"){
+		Datatable('./headers?type=blockUnblock','stolenData')
+	}else if(sourceType !="viaExistingRecovery"){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){
 		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
@@ -438,14 +446,17 @@ function pageElements(url){
 				}	
 
 			}else{
+				
 				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
 				$("#consignmentTableDIv").append("<div class='col s12 m4'><a href='JavaScript:void(0);' onclick='exportStolenRecoveryData()'  class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
-					if(button[i].type === "HeaderButton"){
+					if(button[i].type === "HeaderButton" && userType != "Operator" ){
 						$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
-					}
-					else{
+					}else if(button[i].type === "HeaderButton" && userType == "Operator" ){
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+						
+					}else{
 						$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 					}
 				}
@@ -878,7 +889,14 @@ function setAllDropdowns(){
 	$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].state).text(data[i].interp)
-			.appendTo('#status');
+			.appendTo('#status'); 
+		}
+	});
+	
+	$.getJSON('./getTypeDropdownList/SOURCE_TYPE/'+$("body").attr("data-userTypeID"), function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#mode');
 		}
 	});
 }

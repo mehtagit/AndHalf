@@ -10,6 +10,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
+import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
@@ -232,6 +233,54 @@ public class BlockUnblock {
 	  }
 
 	  
+	// *********************************************** open register page or edit popup ******************************
+		@RequestMapping(value="/openblockUnblockView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		public @ResponseBody SingleImeiDetailsModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
+		{
+			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
+			SingleImeiDetailsModel stockUploadModel= new SingleImeiDetailsModel();
+			//StockUploadModel stockUploadModelResponse;
+			stockUploadModel.setTxnId(txnId);
+			//stockUploadModel.setRoleType(role);
+			log.info("request passed to the fetch Device api="+stockUploadModel);
+			stockUploadModel.setCategory(1);
+			stockUploadModel.setCategoryInterp("other");
+			stockUploadModel.setDeviceIdType(1);
+			stockUploadModel.setDeviceIdTypeInterp("Imei");
+			stockUploadModel.setDeviceTypeInterp("Handheld");
+			stockUploadModel.setDeviceType(1);
+			stockUploadModel.setMultipleSimStatus(1);
+			stockUploadModel.setMultipleSimStatusInterp("yes");
+			stockUploadModel.setDeviceSerialNumber(123453);
+			stockUploadModel.setRemark("remark for block");
+			stockUploadModel.setFirstImei(111111111);
+			stockUploadModel.setSecondImei(22222222);
+			stockUploadModel.setThirdImei(33333333);
+			stockUploadModel.setFourthImei(44444444);
+			stockUploadModel.setTxnId("B3112201912345");
+			//stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+				//log.info("response from fetch stock api="+stockUploadModelResponse);
+				return stockUploadModel;
+		}
+		
+		@RequestMapping(value="/openbulkView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		public @ResponseBody StolenRecoveryModel openBulkFile(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
+		{
+			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
+			StolenRecoveryModel viewbulkDevices= new StolenRecoveryModel();
+			int userId= (int) session.getAttribute("userid"); 
+			String roletype=session.getAttribute("usertype").toString();
+			StolenRecoveryModel stolenRecoveryModel;
+			viewbulkDevices.setTxnId(txnId);
+			viewbulkDevices.setUserId(userId);
+			viewbulkDevices.setRoleType(roletype);
+			
+			log.info("request passed to the fetch Device api="+viewbulkDevices);
+			stolenRecoveryModel=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
+			//log.info("response from fetch stock api="+stockUploadModelResponse);
+				return stolenRecoveryModel;
+		}
+		
 	  
 	
 }

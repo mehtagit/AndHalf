@@ -351,3 +351,111 @@ var singleImeiBlockDetail={
 
 
 
+
+
+function viewDeviceDetails(){
+	
+	
+	
+}
+
+
+//*******************************************View Pop up data *************************************************************************************************
+function viewDeviceDetails(txnId,popUpType){
+
+	
+	var role = currentRoleType == null ? roleType : currentRoleType;
+	console.log("popUpType=="+popUpType);
+	$.ajax({
+		url : "./openbulkView?reqType=editPage&txnId="+txnId+'&modeType=singleDeivce',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'GET',
+		async :false,
+		success : function(data) {
+			console.log(data);
+			setViewBulkPopUp(data,popUpType);
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+
+function setViewBulkPopUp(data,popUpType){
+	console.log("_________________++++++++++"+popUpType);
+	if(popUpType=='view'){	
+	$("#viewBlockDeviceModal").openModal();
+	$("#viewBulkBlockCategory").val(data.categoryInterp);
+	$("#viewBulkBlockRemark").val(data.remark);
+	$("#viewBulkBlockuploadFile").val(data.fileName);
+	$("#viewBulkBlockquantity").val(data.qty);
+	$("#viewBulkBlockTxnId").val(data.txnId);
+	}
+	else
+	{
+	$("#editBulkBlockDeviceModal").openModal();
+	$("#editBulkBlockCategory").val(data.categoryInterp);
+	$("#editBulkBlockRemark").val(data.remark);
+	$("#editBulkBlockuploadFile").val(data.fileName);
+	$("#editBulkBlockquantity").val(data.qty);
+	$("#editBulkBlockTxnId").val(data.txnId);
+	$("#editBulkBlockrequestType").val(data.requestType);
+	}
+}
+
+
+function updateBulkDevice(){
+
+	
+var categoryInterp=	$("#editBulkBlockCategory").val();
+var remark=	$("#editBulkBlockRemark").val();
+var fileName=$("#editBulkBlockuploadFile").val();
+var qty=$("#editBulkBlockquantity").val();
+var txnId=$("#editBulkBlockTxnId").val();
+var requestType=$("#editBulkBlockrequestType").val();
+var ModeType=3
+
+var formData = new FormData();
+formData.append('file', $('#unblockBulkFile')[0].files[0]);
+formData.append('qty', unblockbulkquantity);
+formData.append('deviceCaegory', bulkunBlockdeviceCategory);
+formData.append('remark', unblockbulkRemark);
+formData.append('sourceType', ModeType);
+formData.append('requestType', requestType);
+formData.append('userId',userId);
+formData.append('roleType',roleType);
+$.ajax({
+	url: './updateFileTypeStolenRecovery',
+	type: 'POST',
+	data: formData,
+	processData: false,
+	contentType: false,
+	success: function (data, textStatus, jqXHR) {
+	console.log(data);
+// console.log(data);
+	$('#confirmEditBlockUnblock').openModal();
+		//if(data.errorCode==200){
+		/* 
+						 $('#stockSucessMessage').text('');
+						 $('#stockSucessMessage').text('Operation is not allowed');
+							 }
+						 else{
+							 $('#stockSucessMessage').text('');
+			 				 $('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+						 } */ 
+		// $('#updateConsignment').modal('open'); 
+		//alert("success");
+
+	},
+	error: function (jqXHR, textStatus, errorThrown) {
+		console.log("error in ajax")
+	}
+});
+
+
+}
+
+
+

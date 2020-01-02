@@ -836,5 +836,66 @@ public class IconsState {
 		return action;
 	
 	}
+	
+	
+	
+	
+	/********************************** Icons for Stolen **********************************/ 
+
+	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty) {
+		// URL link 
+		String file = fileName == null ? null : fileName.replace(" ", "%20");
+		String emptyURL="JavaScript:void(0);"; 
+		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
+		String editAction="viewDeviceDetails("+txnId+",'edit')";
+		String viewAction="viewDeviceDetails("+txnId+",'view')";
+		
+
+
+		// state related Code 
+		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+				+errorIconTitle+" ></i></a>";
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>"; 
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		
+
+
+		if("0".equals(status) || "2".equals(status) && "Approved".equals(userStatus) ) {
+			
+		}
+		else if( "1".equals(status) && "Approved".equals(userStatus)) {
+			
+			
+		}
+
+		else  if("2".equals(status) && "Approved".equals(userStatus) ) {
+		
+		} 
+
+
+		else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			
+		}
+
+		String action=error.concat(download).concat(view).concat(edit);	
+		return action;
+
+	}
+	
 }
 

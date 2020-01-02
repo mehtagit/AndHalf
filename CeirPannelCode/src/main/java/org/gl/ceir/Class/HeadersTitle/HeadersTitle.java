@@ -68,6 +68,7 @@ public class HeadersTitle {
 	public static final String updatedOn= "Updated On";
 	public static final String fileType= "File Type";
 	
-		
+	//Block/unblock
+	public static final String mode= "Mode";
 	
 }
