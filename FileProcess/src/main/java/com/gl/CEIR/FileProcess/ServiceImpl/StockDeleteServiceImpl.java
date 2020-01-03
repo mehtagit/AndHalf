@@ -16,9 +16,9 @@ import com.gl.CEIR.FileProcess.model.entity.DeviceDbHistory;
 import com.gl.CEIR.FileProcess.model.entity.StockMgmt;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
+import com.gl.CEIR.FileProcess.repository.DeviceDbRepository;
 import com.gl.CEIR.FileProcess.repository.StockDetailsOperationRepository;
 import com.gl.CEIR.FileProcess.repository.StockManagementRepository;
-import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 
@@ -34,7 +34,7 @@ public class StockDeleteServiceImpl implements WebActionService{
 	ConsignmentRepository consignmentRepository;
 
 	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
+	DeviceDbRepository deviceDbRepository;
 
 	@Autowired
 	Validation validation;
@@ -59,7 +59,7 @@ public class StockDeleteServiceImpl implements WebActionService{
 
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(webActionDb.getTxnId());
 
-			List<DeviceDb> deviceList = stokeDetailsRepository.getByImporterTxnId(webActionDb.getTxnId());
+			List<DeviceDb> deviceList = deviceDbRepository.getByImporterTxnId(webActionDb.getTxnId());
 
 			boolean result = validation.deviceExistValidator(deviceList);
 

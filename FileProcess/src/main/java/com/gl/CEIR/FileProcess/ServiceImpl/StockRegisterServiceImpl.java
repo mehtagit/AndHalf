@@ -23,9 +23,8 @@ import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
 import com.gl.CEIR.FileProcess.model.entity.StockMgmt;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
-import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
+import com.gl.CEIR.FileProcess.repository.DeviceDbRepository;
 import com.gl.CEIR.FileProcess.repository.StockManagementRepository;
-import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 
@@ -51,7 +50,7 @@ public class StockRegisterServiceImpl implements WebActionService{
 	PrototypeBeanProvider fileParser;
 
 	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
+	DeviceDbRepository deviceDbRepository;
 
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
@@ -110,7 +109,7 @@ public class StockRegisterServiceImpl implements WebActionService{
 				}
 			}
 
-			stokeDetailsRepository.saveAll(devices);
+			deviceDbRepository.saveAll(devices);
 
 			stockMgmt.setStockStatus(StockStatus.SUCCESS.getCode());
 			stockManagementRepository.save(stockMgmt);

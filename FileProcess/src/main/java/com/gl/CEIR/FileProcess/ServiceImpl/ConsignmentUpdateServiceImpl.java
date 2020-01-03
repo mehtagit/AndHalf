@@ -24,7 +24,7 @@ import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
-import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
+import com.gl.CEIR.FileProcess.repository.DeviceDbRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.WebActionService;
 
@@ -43,7 +43,7 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 	ConsignmentRepository consignmentRepository;
 
 	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
+	DeviceDbRepository deviceDbRepository;
 	
 	@Autowired
 	PrototypeBeanProvider prototypeBeanProvider;
@@ -105,7 +105,7 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 					stokeDetailsRepository.save(deviceDetails);
 				}else {*/
 
-				stokeDetailsRepository.save(device);
+				deviceDbRepository.save(device);
 				//}
 			}
 

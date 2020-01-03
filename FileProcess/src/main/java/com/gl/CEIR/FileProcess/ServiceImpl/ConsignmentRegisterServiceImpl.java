@@ -29,8 +29,8 @@ import com.gl.CEIR.FileProcess.model.entity.ErrorCodes;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
+import com.gl.CEIR.FileProcess.repository.DeviceDbRepository;
 import com.gl.CEIR.FileProcess.repository.ErrorCodesRepository;
-import com.gl.CEIR.FileProcess.repository.StokeDetailsRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
 import com.gl.CEIR.FileProcess.service.DeviceDbValidator;
 import com.gl.CEIR.FileProcess.service.WebActionService;
@@ -59,7 +59,7 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 	ConsignmentRepository consignmentRepository;
 
 	@Autowired
-	StokeDetailsRepository stokeDetailsRepository;
+	DeviceDbRepository deviceDbRepository;
 
 	@Autowired
 	PrototypeBeanProvider prototypeBeanProvider;
@@ -131,7 +131,7 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 				if(Objects.isNull(value)) {
 					deviceBufferMap.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
 
-					Object object = deviceDbValidator.validate(device);
+					Object object = deviceDbValidator.staticValidation(device);
 					if(object instanceof ErrorCodes) {
 						createAndAddErrorCodeInBuffer(object, device.getImeiEsnMeid());
 					}else if(object instanceof Boolean) {
@@ -166,7 +166,7 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 				util.writeInFile(errorFilePath, header, errorBuffer, moveFIlePath);
 			}else {
 				log.info("Entities to save : " + devices);
-				List<DeviceDb> savedEntities = stokeDetailsRepository.saveAll(devices);
+				List<DeviceDb> savedEntities = deviceDbRepository.saveAll(devices);
 				log.info("Saved Entities : " + savedEntities);
 			}
 

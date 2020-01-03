@@ -1,5 +1,7 @@
 package com.gl.CEIR.FileProcess.service;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.gl.CEIR.FileProcess.exception.NullArgumentsNotAllowedException;
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
 import com.gl.CEIR.FileProcess.model.entity.ErrorCodes;
+import com.gl.CEIR.FileProcess.repository.DeviceDbRepository;
 import com.gl.CEIR.FileProcess.validate.Validator;
 
 @Component
@@ -20,8 +23,11 @@ public class DeviceDbValidator {
 	
 	@Autowired
 	Validator validatorImpl;
+	
+	@Autowired
+	DeviceDbRepository deviceDbRepository;
 
-	public Object validate(DeviceDb deviceDb) {
+	public Object staticValidation(DeviceDb deviceDb) {
 		try {
 			
 			// DEVICE_TYPE
@@ -100,12 +106,34 @@ public class DeviceDbValidator {
 				return new ErrorCodes("015");
 			}
 			
-		} catch (NullArgumentsNotAllowedException e) {
+		}catch (NullArgumentsNotAllowedException e) {
+			log.error(e.getMessage(), e);
+			return Boolean.FALSE;
+		}catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return Boolean.FALSE;
 		}
 		
 		return Boolean.TRUE;
 	}
-	
+
+	public Object dynamicValidation(DeviceDb deviceDb) {
+		try {
+			
+			// Check if Entry is available in device_db.
+			Optional<DeviceDb> deviceDbOptional = deviceDbRepository.getByImeiEsnMeid(deviceDb.getImeiEsnMeid());
+			if(deviceDbOptional.isPresent()) {
+				return new ErrorCodes("101");
+			}
+			
+			// 
+
+		}catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return Boolean.FALSE;
+		}
+		
+		return Boolean.TRUE;
+	}
+
 }
