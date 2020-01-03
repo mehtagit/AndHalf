@@ -25,19 +25,24 @@ public class ConsignmentFileParser extends AbstractCsvParser<DeviceDb> {
 			skipFirstLine = false;
 			return null;
 		}
-		
+
 		String data[] = content.split(Separator.COMMA);
 		log.info("Content size = " + data.length);
 
 		DeviceDb device = new DeviceDb();
 		try {
-			device.setDeviceType(data[0]);
-			device.setDeviceIdType(data[1]);
-			device.setMultipleSimStatus(data[2]);
-			device.setSnOfDevice(data[3]);
-			device.setImeiEsnMeid(data[4]);
-			device.setDeviceLaunchDate(LocalDateTime.parse(data[5], DateTimeFormatter.ofPattern("DDMMYYYY")));
-			device.setDeviceStatus(data[6]);
+			if(data.length == 7) {
+				device.setDeviceType(data[0]);
+				device.setDeviceIdType(data[1]);
+				device.setMultipleSimStatus(data[2]);
+				device.setSnOfDevice(data[3]);
+				device.setImeiEsnMeid(data[4]);
+				device.setDeviceLaunchDate(LocalDateTime.parse(data[5], DateTimeFormatter.ofPattern("DDMMYYYY")));
+				device.setDeviceStatus(data[6]);
+
+			}else {
+				
+			}
 
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
