@@ -566,6 +566,8 @@ $.getJSON('./getDropdownList/GRIEVANCE_CATEGORY', function(data) {
 			}
 		});
 
+		
+		
 		$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 			
 			for (i = 0; i < data.length; i++) {
