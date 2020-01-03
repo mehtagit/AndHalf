@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySources({
-@PropertySource("classpath:messages_de.properties"),
-@PropertySource("classpath:messages_en.properties")
+@PropertySource("classpath:messages.properties")
 			})
 
 public class HeadersTitle {

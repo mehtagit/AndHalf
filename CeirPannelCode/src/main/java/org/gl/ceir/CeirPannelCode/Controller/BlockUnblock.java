@@ -3,6 +3,8 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -115,7 +117,24 @@ public class BlockUnblock {
 		return response;
 		
 	}
-	
+	@RequestMapping(value="/updateBlockUnBlockSingleDevices",method = {RequestMethod.GET,RequestMethod.POST} )
+	public @ResponseBody GenricResponse updateBlockUnBlockSingleDevices(@RequestBody SingleImeiDetailsModel singleImeiDetailsModel,HttpSession session )
+	{
+		log.info("entry point in  update  single imei block");
+		int userId= (int) session.getAttribute("userid"); 
+		String roletype=session.getAttribute("usertype").toString();
+		String blockTxnNumber=utildownload.getTxnId();
+		blockTxnNumber = "B"+blockTxnNumber;
+		log.info("Random transaction id number="+blockTxnNumber);
+		singleImeiDetailsModel.setTxnId(blockTxnNumber);
+		singleImeiDetailsModel.setUserId(userId);
+		singleImeiDetailsModel.setUserType(roletype);
+		log.info("request send to the upate signle Imei block devices="+singleImeiDetailsModel);
+		response= grievanceFeignClient.updateSingleImeiBlockDevices(singleImeiDetailsModel);
+		log.info("response from update signle Imei block devices="+response);
+		return response;
+		
+	}
 	
 	 
 //*************************************************** block bulk file ****************************************************************************
@@ -281,6 +300,21 @@ public class BlockUnblock {
 				return stolenRecoveryModel;
 		}
 		
-	  
+//******************************************************* fetch singleImei details through txnId************************************************************		
+		
+		@RequestMapping(value="/openSingleImeiForm",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		public @ResponseBody List<SingleImeiDetailsModel> openSingleImeiForm(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
+		{
+			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
+			
+			List<SingleImeiDetailsModel> singleImeiDetails= new ArrayList<SingleImeiDetailsModel>();
+			log.info("request passed to the fetch Device api="+txnId);
+			singleImeiDetails=grievanceFeignClient.fetchSingleDevicebyTxnId(txnId);
+			log.info("response from fetch Single device  api="+singleImeiDetails);
+				return singleImeiDetails;
+		}
+		
+		
+		
 	
 }

@@ -141,7 +141,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="consignmentTableLibraryTbody">
-                                            <tr>
+                                           <!--  <tr>
                                                 <td>10/05/2019</td>
                                                 <td>Tr12345678</td>
                                                 <td>Block</td>
@@ -154,7 +154,7 @@
                                                     <a onclick="viewDeviceDetails(B3112201912345)"> <i class="fa fa-eye " aria-hidden="true" title="view"></i></a>
                                                     <a href="#editDevice" class="modal-trigger"><i class="fa fa-pencil" aria-hidden="true" title="edit"></i></a>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
  </tbody>
                                     </table>
                                 </div>
@@ -167,64 +167,25 @@
             </section>
             
               
-           <div id="viewBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
-		<h6 class="modal-header">View Block Devices</h6>
-		<div class="modal-content" style="margin-top: 5px;">
-			
-                                            <form action="#" style="margin-top: 30px;">
-                                                    
 
-                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="viewBulkBlockCategory" name="Category" pattern="[0-9]"
-                                                            title="" maxlength="16" value="Contract Violation" disabled>
-                                                        <label for="viewBulkBlockCategory">Category</label>
-                                                    </div>
-
-                                                    <div class="input-field col s12 m6">
-                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
-                                                        <label for="viewBulkBlockRemark">Remark </label>
-                                                    </div>
-
-                                                    
-
-                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="viewBulkBlockuploadFile" name="uploadFile" pattern="[0-9]"
-                                                            title="" maxlength="16" value="file.csv" disabled>
-                                                        <label for="viewBulkBlockuploadFile">Upload Bulk Devices</label>
-                                                    </div>
-
-                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="viewBulkBlockquantity" name="quantity" pattern="[0-9]"
-                                                            title="" maxlength="16" value="1500" disabled>
-                                                        <label for="viewBulkBlockquantity">Quantity</label>
-                                                    </div>
-                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="viewBulkBlockTxnId" name="viewBulkBlockTxnId" pattern="[0-9]"
-                                                            title="" maxlength="16" value="1500" disabled>
-                                                        <label for="viewBulkBulkTxnId">Transaction Id</label>
-                                                    </div>
-
-                                                   
-
-
-                                                    <div class="input-field col s12 center">
-                                                       
-                                                        <a href="blockUnblockList.html" class="btn">Cancel</a>
-                                                    </div>
-                                                </form>
-            </div></div>
             
-            <div id="editBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
+            <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
 		<h6 class="modal-header">View Block Devices</h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			
                                             <form action="#" style="margin-top: 30px;">
                                                     
-
+									
                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="editBulkBlockCategory" name="editBulkBlockCategory" pattern="[0-9]"
+                                                        <!-- <input type="text" id="editBulkBlockCategory" name="editBulkBlockCategory" pattern="[0-9]"
                                                             title="" maxlength="16" value="Contract Violation" disabled>
-                                                        <label for="editBulkBlockCategory">Category</label>
+                                                        <label for="editBulkBlockCategory">Category</label> -->
+                                                        
+                                                        <select class="browser-default" id="editBulkBlockCategory" required="required" >
+                                                            <option value="" disabled selected>Select Category
+                                                            </option>
+                                                            
+                                                        </select>
                                                     </div>
 
                                                     <div class="input-field col s12 m6">
@@ -264,7 +225,7 @@
             </div></div>
             
            <div id="viewSingleDeviceModal" class="modal-form" style="overflow-y: hidden;">
-		<h6 class="modal-header">View Consignment</h6>
+		<h6 class="modal-header">View Device</h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			
 			
@@ -400,11 +361,40 @@
         </div>
     </div>
             
-            
+         <div id="editBlockUnblock" class="modal">
+        <div class="modal-content">
+            <h6 class="modal-header">Edit Device Information</h6>
+            <form action="">
+                <div class="row">
+                    <div class="file-field input-field col s12 m6">
+                        <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
+                        <div class="btn">
+                            <span>File</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" value="file.csv" placeholder="Please select the file">
+                        </div>
+                    </div>
+                    <div class="input-field col s12 m6" style="margin-top: 52px;">
+                        <textarea id="Remark1" class="materialize-textarea" placeholder="kdjhfkdshfkjdshfkdsjhfkdsjhfkdsjhfkdsjhfkdsjhfkdsjhfdskjfhdskjfhdskjhfkdsjhfkdshfkdsjhfkdsjhfkdsjhfkdsjhfkdshfkdsjhfkdsjhfkdshfks"></textarea>
+                        <label for="Remark1">Remark <span class="star">*</span></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <button class="modal-close modal-trigger btn"
+                            data-target="confirmEditBlockUnblock">Update</button>
+                        <button class="modal-close btn" style="margin-left: 10px;">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>    
             
 <!--materialize js-->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<!-- <script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 

@@ -211,9 +211,9 @@
                                                     <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a></p>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
-                                                    <div class="input-field col s12 center">
+                                                   <div class="input-field col s12 center">
                                                         <button class="btn "  type="submit">Submit</button>
-                                                        <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                        <a href=./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
                                             </div>
@@ -236,7 +236,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./blockUnblockDevices" class="btn">ok</a>
+                    <a href="./stolenRecovery" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -251,7 +251,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./blockUnblockDevices" class="btn">ok</a>
+                    <a href="./stolenRecovery" class="btn">ok</a>
                 </div>
             </div>
         </div>

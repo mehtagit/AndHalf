@@ -842,15 +842,26 @@ public class IconsState {
 	
 	/********************************** Icons for Stolen **********************************/ 
 
-	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty) {
+	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
+		
+		String viewAction="";
+		String editAction="";
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
-		String editAction="viewDeviceDetails("+txnId+",'edit')";
-		String viewAction="viewDeviceDetails("+txnId+",'view')";
-		
+		if(source.equals("2")) {
+			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
+			 viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+				
+		}
+		else if(source.equals("4")) {
+			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
+			 viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+			
+		}
+		 
 
 
 		// state related Code 

@@ -940,7 +940,324 @@
 			</div>
 		</div>
 	</div>
+	            <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
+		<h6 class="modal-header">Edit Device Information</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			
+                                            <form action="#" style="margin-top: 30px;">
+                        
+                        <div class="row">
+                                          <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                       <!--  <input type="text" id="editBulkBlockCategory" name="editBulkBlockCategory" pattern="[0-9]"
+                                                            title="" maxlength="16" value="Contract Violation" >
+                                                        <label for="editBulkBlockCategory">Category</label> -->
+                                                         <select class="browser-default" id="editBulkBlockCategory" required="required" >
+                                                            <option value="" disabled selected>Select Category
+                                                            </option>
+                                                            
+                                                        </select>
+                                                    </div>
 
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockquantity" name="editBulkBlockquantity" pattern="[0-9]"
+                                                            title="" maxlength="16" value="" placeholder="" >
+                                                        <label for="editBulkBlockquantity">Quantity</label>
+                                                    </div>
+                                                    
+
+                                                   </div> 
+                             <div class="row">
+                                                   <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
+                                                        <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
+                                                        <div class="btn">
+                                                            <span>File</span>
+                                                            <input type="file" id="editselectBulkBlockuploadFile" required="required">
+                                                        </div>
+                                                        <div class="file-path-wrapper">
+                                                            <input class="file-path validate" type="text" id="editBulkBlockuploadFile" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" placeholder="" ></textarea>
+                                                        <label for="editBulkBlockRemark">Remark </label>
+                                                   <!--      <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled> -->
+                                                            <input type="text" style="display:none" id="editBulkBlockrequestType">
+                                                            <input type="text" style="display:none" id="editBulkBlockTxnId">
+                                                    </div>
+
+                                                  <!--    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="editBulkBlockTxnId">Transaction Id</label>
+                                                        <input type="text" style="display:none" id="editBulkBlockrequestType">
+                                                    </div> -->
+                                                    </div>
+                <div class="row">
+                    <div class="input-field col s12 center">
+                                                        	<button class=" btn"
+						type="button" onclick="updateBulkDevice()">Update</button>
+                                                        <a href="./stolenRecovery" class="btn">Cancel</a>
+                                                    </div>
+                </div>
+                                                </form>
+            </div></div>
+
+
+
+
+           <div id="viewBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
+		<h6 class="modal-header">View Block Devices</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			
+                                            <form action="#" style="margin-top: 30px;">
+                                                    
+                                                   <div class="row">
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockCategory" name="Category" pattern="[0-9]"
+                                                            title="" maxlength="16" value="Contract Violation" disabled>
+                                                        <label for="viewBulkBlockCategory">Category</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="viewBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
+                                                        <label for="viewBulkBlockRemark">Remark </label>
+                                                    </div>
+														</div>	
+                                                    <div class="row">
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockuploadFile" name="uploadFile" pattern="[0-9]"
+                                                            title="" maxlength="16" value="file.csv" disabled>
+                                                        <label for="viewBulkBlockuploadFile">Upload Bulk Devices</label>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockquantity" name="quantity" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="viewBulkBlockquantity">Quantity</label>
+                                                    </div>
+                                                    </div>
+                                                    <div class="row">
+                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="viewBulkBlockTxnId" name="viewBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="viewBulkBulkTxnId">Transaction Id</label>
+                                                    </div>
+                                                    </div>
+													
+                                                   
+
+
+                                                    <div class="input-field col s12 center">
+                                                        <button class="modal-close btn">Close</button>
+                                                        
+                                                    </div>
+                                                </form>
+            </div></div>
+
+
+
+
+           <div id="viewblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
+		<h6 class="modal-header">View Block Devices</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			   <form action=""  method="POST" enctype="multipart/form-data">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                       		<div class="row">
+                                        					<div class="col s12 m6">
+                                                                <label for="viewblockdeviceType">Device Type <span class="star">*</span></label>
+                                                                <select class="browser-default" id="viewblockdeviceType" required="required" disabled="disabled">
+                                                                    <option value="" disabled selected>Device Type</option> 
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <div class="col s12 m6"><label for="viewblockdeviceIdType">Device ID
+                                                                    Type <span class="star">*</span></label>
+                                                                <select class="browser-default" id="viewblockdeviceIdType" disabled="disabled" required="required">
+                                                                    <option value="" disabled selected>Select Device ID
+                                                                        Type
+                                                                    </option>
+                                                                   
+                                                                </select>
+                                                            </div>
+                                                            </div>
+                                        					<div class="row">
+                                                            <div class="col s12 m6">
+                                                                <label for="viewblockmultipleSimStatus">Multiple Sim Status <span class="star">*</span></label>
+                                                                <select class="browser-default" id="viewblockmultipleSimStatus" disabled="disabled" required="required">
+                                                                    <option value="" disabled selected>Multiple Sim Status</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                        
+                                                            <div class="input-field col s12 m6" style="margin-top: 21px;">
+                                                                <input type="text" id="viewsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,15}" required="required"
+                                                                    title="Please enter your device serial number first" disabled="disabled" maxlength="15">
+                                                                <label for="viewsingleblockserialNumber">Device Serial Number <span class="star">*</span></label>
+                                                            </div>
+                                                            </div>
+                                                             <div class="row">
+                                                            <div class="input-field col s12 m6">
+                                                                <textarea id="viewsingleblockremark" disabled="disabled" placeholder="" class="materialize-textarea" required="required"></textarea>
+                                                                <label for="viewsingleblockremark">Remark <span class="star">*</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                        <div class="row input_fields_wrap">
+                                                            <div class="col s12 m12">
+                                                                <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+                                                            </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="viewsingleblockIMEI1" name="IMEI1" placeholder="" disabled="disabled" pattern="[0-9]{15,16}" required="required"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+                                                                <label for="viewsingleblockIMEI1">1 <span class="star">*</span></label>
+                                                            </div>
+                                        
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="viewsingleblockIMEI2" name="IMEI2" placeholder="" disabled="disabled" pattern="[0-9]{15,16}"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+                                                                <label for="viewsingleblockIMEI2">2</label>
+                                                            </div>  
+                                                            
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="viewsingleblockIMEI3" name="IMEI3" placeholder="" disabled="disabled" pattern="[0-9]{15,16}"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="viewsingleblockIMEI3">3</label>
+                                                            </div>
+            
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="viewsingleblockIMEI4" name="IMEI4[]" placeholder="" disabled="disabled" pattern="[0-9]{15,16}"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="viewsingleblockIMEI4">4</label>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <span> Required Field are marked with <span class="star">*</span></span>
+                                                    </div>
+
+                                                    </div>
+
+                                                    <div class="input-field col s12 center">
+                                                       <!--  <button class="btn" type="submit">Submit</button> -->
+                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                    </div>
+                                                </form>
+                                           
+            </div></div>
+            
+                     <div id="editblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
+		<h6 class="modal-header">edit Block Devices</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			   <form action=""  method="POST" enctype="multipart/form-data">
+                                                    <div class="row">
+                                                        <div class="row">
+                                                       		<div class="row">
+                                        					<div class="col s12 m6">
+                                                                <label for="editblockdeviceType">Device Type <span class="star">*</span></label>
+                                                                <select class="browser-default" id="editblockdeviceType" required="required" >
+                                                                    <option value="" disabled selected>Device Type</option> 
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <div class="col s12 m6"><label for="editblockdeviceIdType">Device ID
+                                                                    Type <span class="star">*</span></label>
+                                                                <select class="browser-default" id="editblockdeviceIdType"  required="required">
+                                                                    <option value="" disabled selected>Select Device ID
+                                                                        Type
+                                                                    </option>
+                                                                   
+                                                                </select>
+                                                            </div>
+                                                            </div>
+                                        					<div class="row">
+                                                            <div class="col s12 m6">
+                                                                <label for="editblockmultipleSimStatus">Multiple Sim Status <span class="star">*</span></label>
+                                                                <select class="browser-default" id="editblockmultipleSimStatus"  required="required">
+                                                                    <option value="" disabled selected>Multiple Sim Status</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                        
+                                                            <div class="input-field col s12 m6" style="margin-top: 21px;">
+                                                                <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,15}" required="required"
+                                                                    title="Please enter your device serial number first"  maxlength="15">
+                                                                <label for="editsingleblockserialNumber">Device Serial Number <span class="star">*</span></label>
+                                                            </div>
+                                                            </div>
+                                                             <div class="row">
+                                                            <div class="input-field col s12 m6">
+                                                                <textarea id="editsingleblockremark"  placeholder="" class="materialize-textarea" required="required"></textarea>
+                                                                <label for="editsingleblockremark">Remark <span class="star">*</span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                        <div class="row input_fields_wrap">
+                                                            <div class="col s12 m12">
+                                                                <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+                                                            </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder=""  pattern="[0-9]{15,16}" required="required"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+                                                                <label for="editsingleblockIMEI1">1 <span class="star">*</span></label>
+                                                            </div>
+                                        
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""  pattern="[0-9]{15,16}"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+                                                                <label for="editsingleblockIMEI2">2</label>
+                                                            </div>  
+                                                            
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""  pattern="[0-9]{15,16}"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="editsingleblockIMEI3">3</label>
+                                                            </div>
+            
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""  pattern="[0-9]{15,16}"
+                                                                    title="Please enter minimum 15 and maximum 16 digit only"
+                                                                    maxlength="16">
+                                                                <label for="editsingleblockIMEI4">4</label>
+                                                                <input type="text" id="editsingleblockTxnid" style="display: none">
+                                                                <input type="text" id="editsingleblocRequestType" style="display: none">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <span> Required Field are marked with <span class="star">*</span></span>
+                                                    </div>
+
+                                                    </div>
+
+                                                    <div class="input-field col s12 center">
+                                                        <button class="btn" type="button" onclick="updateSingleBlockDevicesRequest()">Submit</button>
+                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                    </div>
+                                                </form>
+                                           
+            </div></div>
+ <div id="confirmEditBlockUnblock" class="modal">
+  <h6 class="modal-header">Update Device Information</h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6>The following details has been updated successfully</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a  href ="./stolenRecovery" class=" btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 	<script type="text/javascript"

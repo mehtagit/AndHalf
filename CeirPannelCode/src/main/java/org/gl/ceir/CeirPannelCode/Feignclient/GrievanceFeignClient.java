@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
@@ -10,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,6 +79,18 @@ public interface GrievanceFeignClient {
 	// ******************************************** single imei block device ********************************************************************************
 	@RequestMapping(value="/stakeholder/uploadSingle/block" ,method=RequestMethod.POST) 
 	public GenricResponse singleImeiBlockDevices(@RequestBody SingleImeiDetailsModel singleImeiDetailsModel) ;
+
+	// ******************************************** single imei block device ********************************************************************************
+		@RequestMapping(value="/stakeholder/updateSingle/blockUnblock" ,method=RequestMethod.POST) 
+		public GenricResponse updateSingleImeiBlockDevices(@RequestBody SingleImeiDetailsModel singleImeiDetailsModel) ;
+
+	
+
+	//***************************************************Admin Registration as Type Dropdown********************************
+
+
+	@RequestMapping(value="/stakeholder/view/singleImei" ,method=RequestMethod.POST) 
+	public List<SingleImeiDetailsModel> fetchSingleDevicebyTxnId(@RequestParam("txnId") String txnId );
 
 
 
