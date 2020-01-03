@@ -41,7 +41,7 @@ public class PolicyConfigurationDb implements Serializable {
 	
 	private String remark;
 	
-	private int order;
+	private int policyOrder;
 	
 	public Long getId() {
 		return id;
@@ -97,11 +97,11 @@ public class PolicyConfigurationDb implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public int getOrder() {
-		return order;
+	public int getPolicyOrder() {
+		return policyOrder;
 	}
-	public void setOrder(int order) {
-		this.order = order;
+	public void setPolicyOrder(int policyOrder) {
+		this.policyOrder = policyOrder;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
