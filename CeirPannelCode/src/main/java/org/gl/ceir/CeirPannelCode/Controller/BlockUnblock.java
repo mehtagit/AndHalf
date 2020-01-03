@@ -123,10 +123,11 @@ public class BlockUnblock {
 		log.info("entry point in  update  single imei block");
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
-		String blockTxnNumber=utildownload.getTxnId();
-		blockTxnNumber = "B"+blockTxnNumber;
-		log.info("Random transaction id number="+blockTxnNumber);
-		singleImeiDetailsModel.setTxnId(blockTxnNumber);
+		/*
+		 * String blockTxnNumber=utildownload.getTxnId(); blockTxnNumber =
+		 * "B"+blockTxnNumber; log.info("Random transaction id number="+blockTxnNumber);
+		 * singleImeiDetailsModel.setTxnId(blockTxnNumber);
+		 */
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
 		log.info("request send to the upate signle Imei block devices="+singleImeiDetailsModel);

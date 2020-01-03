@@ -78,6 +78,7 @@ var contextpath = "${context}";
                 <div class="row">
                     <div class="col s12 m12 l12">
                         <h1 style="text-align: center;"><spring:message code="welcome.title" /></h1>
+                     <%--  <h5> <spring:message code="table.creationDate" /></h5> --%>
                         <img src="${context}/resources/images/TELECOMMUNICATIONS-4.jpg" alt="" class="responsive-img">
                     </div>
                 </div>
