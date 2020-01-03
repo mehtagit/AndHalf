@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
 
-public interface StokeDetailsRepository extends JpaRepository<DeviceDb, Long> {
+public interface DeviceDbRepository extends JpaRepository<DeviceDb, Long> {
 
 	public	List<DeviceDb>  getByImporterTxnId(String txnId); 
 
