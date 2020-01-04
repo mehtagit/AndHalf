@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -61,8 +62,12 @@ public class TRC implements CRUD{
 			 @RequestParam(name="sessionFlag",
 			 required = false) Integer sessionFlag) {
 		// TODO Auto-generated method stub
+		String userType = (String) session.getAttribute("usertype");
+		log.info("userType in TRC----"+userType);
+		
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
+		
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		
@@ -81,25 +86,43 @@ public class TRC implements CRUD{
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else {
-				
-				for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
-					String requestedDate = trcContentModelList.getRequestDate();
-					String manufacturerName = trcContentModelList.getManufacturerName();
-					String country = trcContentModelList.getCountry();
-					String tac = trcContentModelList.getTac();
-					Integer status = trcContentModelList.getStatus();
-					String statusInterp = trcContentModelList.getStateInterp();
-					String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-					String txnId= trcContentModelList.getTxnId();
-					String fileName=trcContentModelList.getFile();
-					String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName,txnId);
-					
-					Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
-					
-					List<Object> datatableList = Arrays.asList(data);
-					finalList.add(datatableList);
-					datatableResponseModel.setData(finalList);
+				if("CEIRAdmin".equals(userType)){
+					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String requestedDate = trcContentModelList.getRequestDate();
+						String manufacturerName = trcContentModelList.getManufacturerName();
+						String country = trcContentModelList.getCountry();
+						String tac = trcContentModelList.getTac();
+						String status = trcContentModelList.getStateInterp();
+						String statusInterp = trcContentModelList.getStateInterp();
+						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
+						String adminState = trcContentModelList.getAdminStateInterp();
+						String txnId= trcContentModelList.getTxnId();
+						String fileName=trcContentModelList.getFile();
+						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName,txnId);
+						Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
+						List<Object> datatableList = Arrays.asList(data);
+						finalList.add(datatableList);
+						datatableResponseModel.setData(finalList);
+					}
+				}else {
+					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String requestedDate = trcContentModelList.getRequestDate();
+						String manufacturerName = trcContentModelList.getManufacturerName();
+						String country = trcContentModelList.getCountry();
+						String tac = trcContentModelList.getTac();
+						String status = trcContentModelList.getStateInterp();
+						String statusInterp = trcContentModelList.getStateInterp();
+						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
+						String txnId= trcContentModelList.getTxnId();
+						String fileName=trcContentModelList.getFile();
+						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName,txnId);
+						Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
+						List<Object> datatableList = Arrays.asList(data);
+						finalList.add(datatableList);
+						datatableResponseModel.setData(finalList);
+					}
 				}
+				
 		}
 			datatableResponseModel.setRecordsTotal(trcPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(trcPaginationModel.getTotalElements());

@@ -1,4 +1,4 @@
-var featureId = 16;
+var featureId = 13;
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
@@ -29,7 +29,7 @@ function configManagementDatatable(){
 	}
 	
 	$.ajax({
-		url: 'headers?type=adminConfigMessage',
+		url: 'headers?type=adminPolicyManagement',
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -44,7 +44,7 @@ function configManagementDatatable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : 'adminConfigData',
+					url : 'policyConfigData',
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
@@ -72,7 +72,7 @@ function configManagementDatatable(){
 
 function pageRendering(){
 	$.ajax({
-		url: 'configManagement/pageRendering',
+		url: 'policyConfig/pageRendering',
 		type: 'POST',
 		dataType: "json",
 		success: function(data){
@@ -221,13 +221,14 @@ function exportButton(){
 	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
+
 function viewDetails(tag){
-	$("#viewAdminSystemModel").openModal();
+	$("#viewPolicyConfigModel").openModal();
 	var RequestData = {
 			"tag" : tag
 	} 
 	$.ajax({
-		url : "./system/viewTag",
+		url : "./policy/viewTag",
 		data :	JSON.stringify(RequestData),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
@@ -245,8 +246,12 @@ function viewDetails(tag){
 function setViewPopupData(data){
 	$("#viewTag").val(data.tag);
 	$("#viewValue").val(data.value);
-	$("#viewtype").val(data.type);
+	$("#viewPeriod").val(data.period);
 	$("#description").val(data.description);
+	$("#viewstatus").val(data.status);
 	$("#remarks").val(data.remark);
+	$("#viewpolicyOrder").val(data.policyOrder);
 }
+
+
 

@@ -73,6 +73,7 @@ public class HeadersTitle {
 	public   String country = "Country";
 	public   String tac = "TAC";
 	public   String approveRejectionDate = "Approve/Rejection Date";
+	public   String adminStatus = "CEIR Admin Status";
 
 
 	//User Paid Status
@@ -98,5 +99,9 @@ public class HeadersTitle {
 		public  String type="Type";
 		public  String remarks="Remark";
 		
+	
+		//Admin Config Management
+		public  String period="Period";
+		public  String policyOrder="Policy Order";
 		
 }

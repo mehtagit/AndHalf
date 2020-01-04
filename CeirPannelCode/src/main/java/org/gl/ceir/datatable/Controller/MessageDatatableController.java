@@ -76,13 +76,13 @@ public class MessageDatatableController {
 					for(MessageContentModel dataInsideList : paginationContentList) 
 					{
 					   String createdOn = (String) dataInsideList.getCreatedOn();
-					   String parameterName = dataInsideList.getTag();
+					   String tag = dataInsideList.getTag();
 					   String value = dataInsideList.getValue();
 					   String description = dataInsideList.getDescription();
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
-					   String action=iconState.adminMessageIcons(userStatus);			   
-					   Object[] finalData={createdOn,parameterName,value,description,action}; 
+					   String action=iconState.adminMessageIcons(userStatus,tag);			   
+					   Object[] finalData={createdOn,tag,value,description,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	
