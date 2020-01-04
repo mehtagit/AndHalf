@@ -20,6 +20,10 @@
 <!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
  -->
 
+		<script type="text/javascript">
+var path="${context}";
+</script>
+
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -103,9 +107,10 @@
 	</section>
 	
 	<div id="replyModal" class="modal">
-        <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
+        <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header">Reply</h6>
              <div class="modal-content">
+             <form id="replymessageForm">
             <div class="row">
                 <div class="col s12 m12">
                     <h6 style="font-weight: bold;">Grievance ID: <span id="grievanceIdToSave"></span></h6>
@@ -120,8 +125,8 @@
                 </div>
                
                 <div class="col s12 m12">
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark"></textarea>
-                    <h6 style="color: #000;">Upload Supporting Document *</h6>
+                    <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark *"></textarea>
+                    <h6 style="color: #000;">Upload Supporting Document </h6>
                 </div>
                 <div class="file-field col s12 m12">
                     <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
@@ -139,7 +144,7 @@
                             <input type="checkbox" id="closeTicketCheck" />
                         </label>
                     </p> <br>
-				<a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br>
+				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
 			
 
 			<span> Required Field are marked with <span class="star">*</span></span>
@@ -155,6 +160,7 @@
                     <a onclick="saveGrievanceReply()" class="modal-close modal-trigger waves-effect waves-green btn right">Reply</a>
                 </div>
             </div>
+            </form>
         </div>
     </div>
     
@@ -192,6 +198,7 @@
 </div>
 </div>
 </div>  
+	
 
 	<!--materialize js-->
 	<script type="text/javascript"
@@ -227,5 +234,6 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
 		
+	
 </body>
 </html>

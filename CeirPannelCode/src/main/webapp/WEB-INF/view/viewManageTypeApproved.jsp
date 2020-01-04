@@ -340,6 +340,38 @@ textarea {
 	
 		<!--end container-->
 	</section>
+	
+		<!-- -----------------------------------------------------------------Approved Model------------------------------------------------------------------------------ -->
+
+
+	<div id="ApproveTAC" class="modal">
+		<h6 class="modal-header">Approve</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<h6>
+					The tax against the consignment with <span id="ManufacturerName"></span>
+					having Transaction ID : ( <span id="TACnumber"></span>
+					) has been successfully paid.
+				</h6>
+			</div>
+			<div class="row">
+				<h6>Do you approve the TAC?</h6>
+				<input type="text" id="setApproveConsignmentTxnId"
+					style="display: none">
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="approveSubmit(0)">Yes</button>
+						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!--materialize js-->
 	<script type="text/javascript"

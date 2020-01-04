@@ -851,6 +851,7 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
+		
 		if(source.equals("2")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			 viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";

@@ -7,10 +7,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrcContentModel {
 
-	private Integer id,userID,status,approveStatus;
+	private Integer id,userID,status,approveStatus,adminApproveStatus;
 	private String manufacturerId, manufacturerName,country,requestDate,tac;
 	private String approveDisapproveDate, remark,file,createdOn,modifiedOn,txnId,stateInterp;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	
+	public Integer getAdminApproveStatus() {
+		return adminApproveStatus;
+	}
+	public void setAdminApproveStatus(Integer adminApproveStatus) {
+		this.adminApproveStatus = adminApproveStatus;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -116,11 +123,13 @@ public class TrcContentModel {
 	@Override
 	public String toString() {
 		return "TrcContentModel [id=" + id + ", userID=" + userID + ", status=" + status + ", approveStatus="
-				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
-				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
-				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
-				+ ", additionalProperties=" + additionalProperties + "]";
+				+ approveStatus + ", adminApproveStatus=" + adminApproveStatus + ", manufacturerId=" + manufacturerId
+				+ ", manufacturerName=" + manufacturerName + ", country=" + country + ", requestDate=" + requestDate
+				+ ", tac=" + tac + ", approveDisapproveDate=" + approveDisapproveDate + ", remark=" + remark + ", file="
+				+ file + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", txnId=" + txnId
+				+ ", stateInterp=" + stateInterp + ", additionalProperties=" + additionalProperties + "]";
 	}
+	
+	
 	
 }

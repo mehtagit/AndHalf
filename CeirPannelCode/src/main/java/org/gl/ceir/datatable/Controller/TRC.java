@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -26,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -185,4 +188,30 @@ public class TRC implements CRUD{
 		
 		
 	}
+	
+
+	//*********************************************** update consignment Status *******************************************************************************/
+
+	@RequestMapping(value= {"/typeApprove/Approved"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+	public @ResponseBody GenricResponse updateApprovedStatus(@RequestBody ConsignmentUpdateRequest consignmentUpdateRequest,HttpSession session) {
+	ConsignmentUpdateRequest request= new ConsignmentUpdateRequest ();
+	log.info("enter in update consignment status ."+consignmentUpdateRequest);
+
+
+	request.setAction(consignmentUpdateRequest.getAction());
+	request.setTxnId(consignmentUpdateRequest.getTxnId());
+	request.setRoleType((String) session.getAttribute("usertype"));
+	request.setRoleTypeUserId((int) session.getAttribute("usertypeId"));
+	request.setUserId((int) session.getAttribute("userid"));
+	request.setRemarks(consignmentUpdateRequest.getRemarks());
+	request.setTxnId(consignmentUpdateRequest.getTxnId());
+	request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+	log.info(" request passed to the update consignment status="+request);
+	//GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
+	//log.info("response after update consignment status="+response);
+	return null;
+
+	}
+
+
 }

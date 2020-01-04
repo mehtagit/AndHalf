@@ -299,3 +299,59 @@ function exportTacData()
 	
 	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
+
+
+
+
+
+function openApproveTACPopUp(txnId,	manufacturerName)
+{
+	manufacturerName=manufacturerName.replace("+20"," " );
+	$('#ApproveTAC').openModal();
+	$('#ApproveManageTypeTxnId').text(txnId);
+	$('#setApproveConsignmentTxnId').val(txnId);
+	$('#displayname').text(displayName);
+	console.log(displayName);
+	
+
+
+}
+function approveSubmit(actiontype){
+	var txnId=$('#setApproveConsignmentTxnId').val();
+	var userId = $("body").attr("data-userID");
+	var userType=$("body").attr("data-roleType");
+	var actiontype=1;
+	var approveRequest={
+			"adminApproveStatus": actiontype,
+			"txnId":txnId,
+			"featureId":11,
+			"adminUserId":userTypeId,
+			"adminUserType":userType
+			
+	}
+	$.ajax({
+		url : "./typeApprove/Approved",
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			$('#confirmApproveConsignment').openModal();
+			if(data.errorCode==0){
+
+				$('#approveSuccessMessage').text('');
+				$('#approveSuccessMessage').text(data.message);
+			}
+			else{
+				$('#approveSuccessMessage').text('');
+				$('#approveSuccessMessage').text(data.message);
+			}
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+
+
