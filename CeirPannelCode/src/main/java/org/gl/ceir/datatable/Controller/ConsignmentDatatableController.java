@@ -395,7 +395,7 @@ public class ConsignmentDatatableController {
 	inputTypeDateList.add(dateRelatedFields);
 	}
 	}else {
-	String[] names= {"HeaderButton",Translator.toLocale("button.registerConsignment"),"./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton",Translator.toLocale("button.filter"),"filterConsignment()","submitFilter"};
+	String[] names= {"HeaderButton",Translator.toLocale("button.registerConsignment"),"./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton",Translator.toLocale("button.filter"),"filterConsignment(window.parent.$('#langlist').val())","submitFilter"};
 	for(int i=0; i< names.length ; i++) {
 	button = new Button();
 	button.setType(names[i]);

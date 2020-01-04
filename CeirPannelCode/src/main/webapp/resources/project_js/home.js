@@ -3,7 +3,16 @@ var userType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var featureId="3";
 var requestType="0";
+
+
+var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
+window.parent.$('#langlist').on('change', function() {
+	 window.location.reload(true);
+	});
+
+
 $(document).ready(function(){
+	
 	$('div#initialloader').fadeIn('fast');
 	var url;
 	$.ajax({
@@ -33,7 +42,7 @@ $(document).ready(function(){
 			
 		}
 	});
-	notificationDatatable();
+	notificationDatatable(sessionLang);
 });
 
 
@@ -54,8 +63,13 @@ function notificationDatatable(){
 			"featureId" : 3
 	}
 
+	
+	if(sessionLang=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}
+	
 	$.ajax({
-		url: 'headers?type=dashboardNotification',
+		url: 'headers?type=dashboardNotification&lang='+sessionLang,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
