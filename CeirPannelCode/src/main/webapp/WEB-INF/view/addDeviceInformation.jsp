@@ -266,7 +266,7 @@ input[type='search'] {
 														<div class='row'>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
-																	pattern="[0-9]{15,16}"
+																	pattern="[0-9]{15,16}" required
 																	title="Please enter minimum 15 and maximum 16 digit only"
 																	maxlength="16"> <label for="IMEIA1">1 <span
 																	class="star">*</span></label>
@@ -1109,16 +1109,18 @@ input[type='search'] {
 					console.log(data);
 				   
 					// $('#updateConsignment').modal();
-					if(data.errorCode==200){
+					if(data.errorCode==0){
 
 					//	$('#sucessMessage').text('');
-					$('#regularisedDevice').openModal();
+					    $('#regularisedDevice').openModal();
 						$('#dynamicTxnId').text(data.txnId);
 					}
 					else{
 						//$('#sucessMessage').text('');
 						$('#regularisedDevice').openModal();
-						$('#dynamicTxnId').text(data.txnId);
+						$('#sucessMessage').text();
+						$('#sucessMessage').text(data.message);
+						
 					}
 					//sessionStorage.removeItem("nationalId");
 				},
