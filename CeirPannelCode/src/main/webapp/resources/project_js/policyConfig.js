@@ -253,5 +253,7 @@ function setViewPopupData(data){
 	$("#viewpolicyOrder").val(data.policyOrder);
 }
 
-
+function updateDetails(){
+	$("#editPolicyConfigModel").openModal();
+}
 

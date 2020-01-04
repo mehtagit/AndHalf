@@ -214,7 +214,7 @@ public class DatatableHeaders {
 			
 			//adminSystemMessage Headers 
 			else if("adminSystemMessage".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.parameterName,headersTitle.value,headersTitle.description,headersTitle.action};		
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.channel,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -224,7 +224,7 @@ public class DatatableHeaders {
 			//adminConfigMessage Headers 
 			
 			else if("adminConfigMessage".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.parameterName,headersTitle.value,headersTitle.description,headersTitle.type,headersTitle.remarks,headersTitle.action};		
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.type,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}

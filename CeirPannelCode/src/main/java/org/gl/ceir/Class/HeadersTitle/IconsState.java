@@ -914,7 +914,7 @@ public class IconsState {
 
 	public String adminMessageIcons(String userStatus, String tag) { 
 		
-		String editAction="";
+		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
@@ -942,7 +942,7 @@ public class IconsState {
 
 	public String adminConfigIcons(String userStatus, String tag) { 
 		
-		String editAction="";
+		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
@@ -971,7 +971,7 @@ public class IconsState {
 
 	public String policyConfigIcons(String userStatus, String tag) { 
 		
-		String editAction="";
+		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
