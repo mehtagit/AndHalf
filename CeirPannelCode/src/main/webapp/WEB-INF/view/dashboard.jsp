@@ -72,8 +72,21 @@ var contextpath = "${context}";
 							</h1> 
 						</li>
 					</ul>
+					
+					
 				<ul id="chat-out" class="right hide-on-med-and-down"
 style="overflow: inherit !important;">
+
+<li><div id="divLang" style="display:flex;margin: 8px 6px;">
+			<div id="iconLable"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
+			<div><select id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
+					<option value="en">English</option>
+					<option value="km">Khmer</option>
+					</select></div>
+			</div>
+			</li>
+					
+					
 <li><a
 class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 href="#" data-activates="profile-dropdown" style="height: 65px;"><i

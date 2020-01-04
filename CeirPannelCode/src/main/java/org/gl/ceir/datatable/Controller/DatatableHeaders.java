@@ -29,10 +29,9 @@ public class DatatableHeaders {
 
 			// CONSIGNMENT DATATABLE HEADERS			
 			if("consignment".equals(role)) {
-				String[] headers = {headersTitle.creationDate,headersTitle.transactionID,headersTitle.supplierName,headersTitle.consignmentStatus,headersTitle.taxPaidStatus,headersTitle.action};		
-				System.out.println(":::::::::::::::headers:::::::::"+headers);
+				String[] headers = {"table.creationDate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}

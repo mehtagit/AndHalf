@@ -7,16 +7,18 @@ var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
 var userType=$("body").attr("data-roleType");
 var featureId="3";
-
-$('#changeLang').on('change', function() {
+var sessionLang=window.parent.$('#langlist').val();
+window.parent.$('#langlist').on('change', function() {
 	//$("body").attr("session-value",this.value);
-	sessionStorage.setItem("session-value",this.value);
+	/*sessionStorage.setItem("session-value",this.value);
+	alert(sessionStorage.getItem("session-value"))*/
 	  window.location.reload(true);
 	});
-
+ 
 $(document).ready(function(){
+	
 	$('div#initialloader').fadeIn('fast');
-	var lang=sessionStorage.getItem("session-value") == 'km' ? sessionStorage.getItem("session-value",'km') : sessionStorage.getItem("session-value",'en');
+	var lang=sessionLang == 'km' ? 'km' : 'en';
 	filterConsignment(lang);
 	sessionStorage.removeItem("session-value");
 	pageRendering();
@@ -257,7 +259,7 @@ function table(url,dataUrl){
 			"txnId":$('#transactionID').val(),
 			"userType":$("body").attr("data-roleType")
 	}
-	if(sessionStorage.getItem("session-value")=='km'){
+	if(sessionLang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
 	$.ajax({
