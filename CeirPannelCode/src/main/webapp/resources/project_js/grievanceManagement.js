@@ -443,9 +443,12 @@ function saveGrievanceReply()
 	});
 }
 
-function viewGrievanceHistory(grievanceId)
+function viewGrievanceHistory(grievanceId,filename)
 {
 
+	
+	
+	console.log("http://13.233.39.58:8080"+path);
 	$.ajax({
 		url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
 		type: 'GET',
@@ -456,10 +459,12 @@ function viewGrievanceHistory(grievanceId)
 			console.log(JSON.stringify(data));
 			$('#chatMsg').empty();
 			$('#manageAccount').openModal();
+			var projectpath="http://13.233.39.58:8080"+path+"/Consignment/dowloadFiles/actual";
+			console.log("--projectpath--"+projectpath);
 			for(var i=0; i<data.length; ++i)
 			{
 
-				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p><hr></div>");
+				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p><a href='"+projectpath+"/"+data[i].fileName+"/"+data[i].grievanceId+"'>"+data[i].fileName+"</a><hr></div>");
 
 
 			}
@@ -526,3 +531,12 @@ function grievanceCategory()
 $(document).ready(function(){
 	grievanceCategory();
 	});
+
+
+
+
+function cleanReplyPopUp()
+{
+	console.log("reset form function");
+	$('#replymessageForm').trigger("reset");
+}

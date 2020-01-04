@@ -106,6 +106,12 @@ public class SingleImeiDetailsModel {
 	public void setRequestType(Integer requestType) {
 		this.requestType = requestType;
 	}
+	public Integer getSourceType() {
+		return sourceType;
+	}
+	public void setSourceType(Integer sourceType) {
+		this.sourceType = sourceType;
+	}
 	public long getDeviceSerialNumber() {
 		return deviceSerialNumber;
 	}
@@ -147,12 +153,6 @@ public class SingleImeiDetailsModel {
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public Integer getSourceType() {
-		return sourceType;
-	}
-	public void setSourceType(Integer sourceType) {
-		this.sourceType = sourceType;
 	}
 	
 	
