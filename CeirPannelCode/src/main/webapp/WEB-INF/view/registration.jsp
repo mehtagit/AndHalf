@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -145,6 +145,7 @@ var contextpath = "${context}";
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
 							<h5><%=request.getParameter("name") %> <spring:message code="welcome.message" /></h5>
+							
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
                <input type="hidden" id="usertypeId" value="${usertypeId}">
@@ -803,7 +804,8 @@ var contextpath = "${context}";
                 $("#passportNo").prop('required',true);
                 $("#companyName").prop('required',false);
                 $("#file").prop('required',true);
-            } else {
+            } else 
+            {
                 document.getElementById("uploadFile").style.display = "none";
                 document.getElementById("passportNumberDiv").style.display = "none";
                 document.getElementById("companyNames").style.display = "block";
