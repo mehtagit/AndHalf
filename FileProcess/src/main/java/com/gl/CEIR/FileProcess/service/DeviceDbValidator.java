@@ -102,9 +102,10 @@ public class DeviceDbValidator {
 			}
 			
 			// LAUNCH DATE
-			if(!validatorImpl.isEmpty(deviceDb.getDeviceLaunchDate().toString())) {
-				return new ErrorCodes("015");
-			}
+			/*
+			 * if(!validatorImpl.isEmpty(deviceDb.getDeviceLaunchDate().toString())) {
+			 * return new ErrorCodes("015"); }
+			 */
 			
 		}catch (NullArgumentsNotAllowedException e) {
 			log.error(e.getMessage(), e);

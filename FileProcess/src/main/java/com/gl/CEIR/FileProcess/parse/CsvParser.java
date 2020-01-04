@@ -1,6 +1,6 @@
 package com.gl.CEIR.FileProcess.parse;
 
-public interface CsvParser<T> {
+public interface CsvParser {
 	
-	public T parse(String content);
+	public Object parse(String content);
 }

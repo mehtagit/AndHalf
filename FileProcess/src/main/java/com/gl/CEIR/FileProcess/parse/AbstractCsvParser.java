@@ -1,5 +1,5 @@
 package com.gl.CEIR.FileProcess.parse;
 
-public abstract class AbstractCsvParser<T> implements CsvParser<T>{
+public abstract class AbstractCsvParser implements CsvParser{
 	protected boolean skipFirstLine = true;
 }

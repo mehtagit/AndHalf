@@ -114,11 +114,22 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 			DeviceDbValidator deviceDbValidator = prototypeBeanProvider.getDeviceDbValidatorBean();
 
 			for(String content : contents) {
-				DeviceDb device = consignmentFileParser.parse(content);
+				DeviceDb device = null;
+				Object parsedData = consignmentFileParser.parse(content);
 
-				if(Objects.isNull(device)) {
+				if(Objects.isNull(parsedData)) {
 					continue;
 				}
+				
+				if(parsedData instanceof DeviceDb) {
+					device =  (DeviceDb) parsedData;
+				}else {
+					// TODO Discuss
+					ErrorCodes errorCodes = (ErrorCodes) parsedData;
+					// errorBuffer.add
+					continue;
+				}
+				
 
 				// Setting default values to avoid not null issues while executing queries.
 				deviceDbManipulatorImpl.setDefault(device);
@@ -131,18 +142,18 @@ public class ConsignmentRegisterServiceImpl implements WebActionService {
 				if(Objects.isNull(value)) {
 					deviceBufferMap.put(device.getImeiEsnMeid(), device.getImeiEsnMeid());
 
-					Object object = deviceDbValidator.staticValidation(device);
-					if(object instanceof ErrorCodes) {
-						createAndAddErrorCodeInBuffer(object, device.getImeiEsnMeid());
-					}else if(object instanceof Boolean) {
-						Boolean isValidated = (Boolean) object;
+					Object validation = deviceDbValidator.staticValidation(device);
+					if(validation instanceof ErrorCodes) {
+						createAndAddErrorCodeInBuffer(validation, device.getImeiEsnMeid());
+					}else if(validation instanceof Boolean) {
+						Boolean isValidated = (Boolean) validation;
 						if(isValidated) {
 							devices.add(device);
 						}else {
 
 						}
 					}else {
-						
+
 					}
 				}else {
 					createAndAddErrorCodeInBuffer(device.getImeiEsnMeid(), "016", "Duplicate IMEI/ESN/MEID");

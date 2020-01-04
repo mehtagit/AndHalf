@@ -11,16 +11,17 @@ import org.springframework.stereotype.Component;
 
 import com.gl.CEIR.FileProcess.model.constants.Separator;
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.ErrorCodes;
 import com.gl.CEIR.FileProcess.parse.AbstractCsvParser;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class ConsignmentFileParser extends AbstractCsvParser<DeviceDb> {
+public class ConsignmentFileParser extends AbstractCsvParser {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public DeviceDb parse(String content) {
+	public Object parse(String content) {
 		if (skipFirstLine) {
 			skipFirstLine = false;
 			return null;
@@ -37,11 +38,16 @@ public class ConsignmentFileParser extends AbstractCsvParser<DeviceDb> {
 				device.setMultipleSimStatus(data[2]);
 				device.setSnOfDevice(data[3]);
 				device.setImeiEsnMeid(data[4]);
-				device.setDeviceLaunchDate(LocalDateTime.parse(data[5], DateTimeFormatter.ofPattern("DDMMYYYY")));
+				
+				if(!data[5].isEmpty())
+					device.setDeviceLaunchDate(LocalDateTime.parse(data[5], DateTimeFormatter.ofPattern("DDMMYYYY")));
+				else
+					device.setDeviceLaunchDate(null);
+				
 				device.setDeviceStatus(data[6]);
 
 			}else {
-				
+				return new ErrorCodes("017");
 			}
 
 		} catch (Exception e) {

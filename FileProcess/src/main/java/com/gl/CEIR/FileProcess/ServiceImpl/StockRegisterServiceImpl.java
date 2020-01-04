@@ -21,8 +21,10 @@ import com.gl.CEIR.FileProcess.model.constants.Separator;
 import com.gl.CEIR.FileProcess.model.constants.StockStatus;
 import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.ErrorCodes;
 import com.gl.CEIR.FileProcess.model.entity.StockMgmt;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
+import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.repository.DeviceDbRepository;
 import com.gl.CEIR.FileProcess.repository.StockManagementRepository;
 import com.gl.CEIR.FileProcess.repository.WebActionDbRepository;
@@ -51,6 +53,9 @@ public class StockRegisterServiceImpl implements WebActionService{
 
 	@Autowired
 	DeviceDbRepository deviceDbRepository;
+	
+	@Autowired
+	PrototypeBeanProvider prototypeBeanProvider;
 
 	ConcurrentHashMap<String, String> deviceBufferMap;
 	ConcurrentHashMap<String, String> errorBufferMap;
@@ -85,14 +90,26 @@ public class StockRegisterServiceImpl implements WebActionService{
 			log.info("File reading starts = " + contents);
 
 			deviceBufferMap = new ConcurrentHashMap<String, String>();
+			
+			ConsignmentFileParser consignmentFileParser = prototypeBeanProvider.getConsignmentFileParserBean();
 
 			for(String content : contents) {
-				DeviceDb device = fileParser.getConsignmentFileParserBean().parse(content);
+				DeviceDb device = null;
+				Object parsedData = consignmentFileParser.parse(content);
 
-				if(Objects.isNull(device)) {
+				if(Objects.isNull(parsedData)) {
 					continue;
 				}
-
+				
+				if(parsedData instanceof DeviceDb) {
+					device =  (DeviceDb) parsedData;
+				}else {
+					// TODO Discuss
+					ErrorCodes errorCodes = (ErrorCodes) parsedData;
+					// errorBuffer.add
+					continue;
+				}
+				
 				device.setImporterTxnId(webActionDb.getTxnId());
 				device.setImporterUserId(Long.valueOf(stockMgmt.getUserId()));
 

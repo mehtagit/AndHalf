@@ -21,6 +21,7 @@ import com.gl.CEIR.FileProcess.model.constants.Separator;
 import com.gl.CEIR.FileProcess.model.constants.WebActionStatus;
 import com.gl.CEIR.FileProcess.model.entity.ConsignmentMgmt;
 import com.gl.CEIR.FileProcess.model.entity.DeviceDb;
+import com.gl.CEIR.FileProcess.model.entity.ErrorCodes;
 import com.gl.CEIR.FileProcess.model.entity.WebActionDb;
 import com.gl.CEIR.FileProcess.parse.impl.ConsignmentFileParser;
 import com.gl.CEIR.FileProcess.repository.ConsignmentRepository;
@@ -81,7 +82,21 @@ public class ConsignmentUpdateServiceImpl implements WebActionService{
 			ConsignmentFileParser consignmentFileParser = prototypeBeanProvider.getConsignmentFileParserBean();
 			
 			for(String content : contents) {
-				DeviceDb device = consignmentFileParser.parse(content);
+				DeviceDb device = null;
+				Object parsedData = consignmentFileParser.parse(content);
+
+				if(Objects.isNull(parsedData)) {
+					continue;
+				}
+				
+				if(parsedData instanceof DeviceDb) {
+					device =  (DeviceDb) parsedData;
+				}else {
+					// TODO Discuss
+					ErrorCodes errorCodes = (ErrorCodes) parsedData;
+					// errorBuffer.add
+					continue;
+				}
 				
 				// Setting default values to avoid not null issues while executing queries.
 				deviceDbManipulatorImpl.setDefault(device);
