@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,34 +16,36 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class SystemConfigController {
-	
-	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+public class PolicyConfigController {
+		
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@RequestMapping(value=
-		{"/systempConfigManagement"},method={org.springframework.web.bind.annotation.
+		{"/policyManagement"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewConfigManagement(HttpSession session) {
+	    public ModelAndView viewPolicyManagement(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 log.info(" view ConfigManagement entry point."); 
-		 mv.setViewName("viewConfigManagement");
-		log.info(" view ConfigManagement exit point."); 
+		 log.info(" view PolicyManagement entry point."); 
+		 mv.setViewName("policyConfig");
+		log.info(" view PolicyManagement exit point."); 
 		return mv; 
 	}
+
 	
 	
-	@PostMapping("/system/viewTag") 
-	public @ResponseBody ConfigContentModel SystemConfigViewTag (@RequestBody FilterRequest filterRequest)  {
-		log.info("request send to the SystemConfigViewTag api="+filterRequest);
-		ConfigContentModel response= feignCleintImplementation.viewAdminFeign(filterRequest);
+	
+	@PostMapping("/policy/viewTag") 
+	public @ResponseBody PolicyConfigContent policyViewTag (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the policyViewTag api="+filterRequest);
+		PolicyConfigContent response= feignCleintImplementation.viewPolicyConfigFeign(filterRequest);
 
 		log.info("response from currency api "+response);
 		return response;
 
 		}
+	
 	
 }

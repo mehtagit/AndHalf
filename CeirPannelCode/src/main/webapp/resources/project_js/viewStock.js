@@ -174,12 +174,9 @@ function confirmantiondelete(){
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
 			console.log(data);
-			if(data.errorCode == 200){
+			
 				$("#stockModalText").text(data.message);
-			}else if(data.errorCode == 0){
-				$("#stockModalText").text(data.message);
-			}
-			$("#materialize-lean-overlay-3").css("display","none");
+			    $("#materialize-lean-overlay-3").css("display","none");
 		},
 		error : function() {
 			console.log("Error");

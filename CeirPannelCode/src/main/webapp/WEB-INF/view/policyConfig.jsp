@@ -78,9 +78,9 @@
 
 								<a href="" class="boton right" id="btnLink" hidden></a>
 							</div>
-							<form action="${context}/messageManagement"
+							<form action="${context}/policyManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="messageTableDiv"
+								<div class="col s12 m12 l12" id="configTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -88,7 +88,7 @@
 									</div>
 								</div>
 							</form>
-							<table id="messageLibraryTable"
+							<table id="configLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -100,11 +100,11 @@
 		</div>
 		<!--end container-->
 	</section>
-	
-	<!-- Modal 2 start   -->
 
-	<div id="viewMessageModel" class="modal">
-		<h6 class="modal-header">View Message Management</h6>
+   <!-- Modal 2 start   -->
+
+	<div id="viewPolicyConfigModel" class="modal">
+		<h6 class="modal-header">View Policy Configuration</h6>
 		<div class="modal-content">
 
 			<div class="row">
@@ -123,6 +123,11 @@
 
 					</div>
 
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="period" id="viewPeriod"
+							placeholder="" disabled style="height: 28px;">
+						<label for="period">Period</label>
+					</div>
 
 					<div class="input-field col s12 m6">
 					<textarea id="description" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
@@ -130,11 +135,27 @@
 
 					</div>
 
-					
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewstatus" name="status"
+							placeholder="" maxlength="20" disabled style="height: 28px;">
+						<label for="status">Status</label>
+					</div>
 
+					<div class="input-field col s12 m6">
+					<textarea id="remarks" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+					<label for="remarks" class="">Remarks</label>
+
+					</div>
 				</div>
 
-				
+				<div class="row">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="policyOrder" id="viewpolicyOrder"
+							placeholder="" disabled style="height: 28px;">
+						<label for="policyOrder">Policy Order</label>
+					</div>
+
+				</div>
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
@@ -146,9 +167,6 @@
 		</div>
 	</div>
 	<!-- Modal End -->
-	
-
-   
 
 	
 	<!--materialize js-->
@@ -181,7 +199,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/viewMessageManagement.js"></script>
+		src="${context}/resources/project_js/policyConfig.js"></script>
 		
 </body>
 </html>

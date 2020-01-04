@@ -8,13 +8,18 @@ var userId = $("body").attr("data-userID");
 var userType=$("body").attr("data-roleType");
 var featureId="3";
 
+$('#changeLang').on('change', function() {
+	//$("body").attr("session-value",this.value);
+	sessionStorage.setItem("session-value",this.value);
+	  window.location.reload(true);
+	});
+
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterConsignment();
+	var lang=sessionStorage.getItem("session-value") == 'km' ? sessionStorage.getItem("session-value",'km') : sessionStorage.getItem("session-value",'en');
+	filterConsignment(lang);
+	sessionStorage.removeItem("session-value");
 	pageRendering();
-	/*var x = '19 December, 2019'; 
-	var formattedDate = moment(x).format('YYYY-MM-DD h:mm:ss');
-*/
 
 });
 
@@ -205,7 +210,7 @@ function setEditPopupData(data){
 
 
 var sourceType =localStorage.getItem("sourceType");
-function filterConsignment()
+function filterConsignment(lang)
 {       	 
 	console.log("source type value=="+sourceType);
 	var sessionFlag;
@@ -219,20 +224,20 @@ function filterConsignment()
 	}
 	
 	if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
-			table('../headers?type=consignment','../consignmentData?sessionFlag='+sessionFlag);
+			table('../headers?lang='+lang+'&type=consignment','../consignmentData?sessionFlag='+sessionFlag);
 		}
 
 		else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
-			table('../headers?type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
+			table('../headers?lang='+lang+'&type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
 		}
 
 		else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
-			table('../headers?type=adminConsignment','../consignmentData?sessionFlag='+sessionFlag);
+			table('../headers?lang='+lang+'&type=adminConsignment','../consignmentData?sessionFlag='+sessionFlag);
 		}  
 
 		else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
 			
-			table('../headers?type=stolenconsignment','../consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag);
+			table('../headers?lang='+lang+'&type=stolenconsignment','../consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag);
 		}
 		localStorage.removeItem('sourceType');
 	
@@ -252,8 +257,12 @@ function table(url,dataUrl){
 			"txnId":$('#transactionID').val(),
 			"userType":$("body").attr("data-roleType")
 	}
+	if(sessionStorage.getItem("session-value")=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}
 	$.ajax({
 		url: url,
+	/*	headers: {"Accept-Language": "en"},*/
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -266,6 +275,9 @@ function table(url,dataUrl){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+			        "sUrl": langFile  
+			    },
 				ajax: {
 					url : dataUrl,
 					type: 'POST',

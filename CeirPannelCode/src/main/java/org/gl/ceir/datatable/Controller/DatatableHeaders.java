@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.gl.ceir.Class.HeadersTitle.DatatableHeaderModel;
 import org.gl.ceir.Class.HeadersTitle.HeadersTitle;
+import org.gl.ceir.configuration.Translator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DatatableHeaders {
-
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	HeadersTitle headersTitle;
 
@@ -49,9 +52,10 @@ public class DatatableHeaders {
 
 			//CUSTOM DATATABLE HEADERS
 			else if("customConsignment".equals(role)) {
-				String[] headers = {headersTitle.creationDate,headersTitle.transactionID,headersTitle.ImporterCompanyName,headersTitle.consignmentStatus,headersTitle.taxPaidStatus,headersTitle.action};		
+				String[] headers = {"table.creationDate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					log.info("Translator.toLocale(header)----"+Translator.toLocale(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
@@ -226,6 +230,28 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			
+			//adminPolicyManagement Headers 
+			
+			else if("adminPolicyManagement".equals(role)) {
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.period,headersTitle.Status,headersTitle.policyOrder,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//AdmintrcManageType Headers 
+			
+			else if("AdmintrcManageType".equals(role)) {
+				String[] headers = {headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.Status,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			
 			//DEFAULT PORTION  
 			else {

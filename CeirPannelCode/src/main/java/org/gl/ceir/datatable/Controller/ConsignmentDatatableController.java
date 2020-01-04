@@ -13,6 +13,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -50,7 +51,7 @@ public class ConsignmentDatatableController {
 	IconsState iconState;
 	@Autowired
 	UserProfileModel userprofileModel;	
-	
+
 	/*
 	 * @Autowired ConsignmentService consignmentService;
 	 */
@@ -324,7 +325,7 @@ public class ConsignmentDatatableController {
 	InputFields inputFields = new InputFields();
 	InputFields dateRelatedFields;
 
-	pageElement.setPageTitle("Consignment");
+	pageElement.setPageTitle(Translator.toLocale("view.consignment"));
 
 	List<Button> buttonList = new ArrayList<>();
 	List<InputFields> dropdownList = new ArrayList<>();
@@ -334,7 +335,7 @@ public class ConsignmentDatatableController {
 	log.info("sourceType in rendering $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" +sourceType);
 
 	if("Importer".equals(userType) && "viaStolen".equals(sourceType)){
-	String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
+	String[] names= {"HeaderButton",Translator.toLocale("button.registerConsignment"),"./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filterConsignment()","submitFilter"};
 	for(int i=0; i< names.length ; i++) {
 	button = new Button();
 	button.setType(names[i]);
@@ -349,7 +350,7 @@ public class ConsignmentDatatableController {
 	pageElement.setButtonList(buttonList);
 
 
-	String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","redirectToViewPage()","cancel"};
+	String[] footerBtn= {"FooterButton", Translator.toLocale("button.markAsStolen"),"markedstolen()","markedstolen","FooterButton", Translator.toLocale("button.cancel"),"redirectToViewPage()","cancel"};
 	for(int i=0; i< footerBtn.length ; i++) {
 	button = new Button();
 	button.setType(footerBtn[i]);
@@ -366,7 +367,7 @@ public class ConsignmentDatatableController {
 
 
 	//Dropdown items	
-	String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
+	String[] selectParam= {"select",Translator.toLocale("input.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("input.taxPaidStatus"),"taxPaidStatus",""};
 	for(int i=0; i< selectParam.length; i++) {
 	inputFields= new InputFields();
 	inputFields.setType(selectParam[i]);
@@ -381,7 +382,7 @@ public class ConsignmentDatatableController {
 	pageElement.setDropdownList(dropdownList);
 
 	//input type date list	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaqq11111111111111111111111111111111111111111111111111111
-	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+	String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 	for(int i=0; i< dateParam.length; i++) {
 	dateRelatedFields= new InputFields();
 	dateRelatedFields.setType(dateParam[i]);
@@ -394,7 +395,7 @@ public class ConsignmentDatatableController {
 	inputTypeDateList.add(dateRelatedFields);
 	}
 	}else {
-	String[] names= {"HeaderButton","Register Consignment","./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", "filter","filterConsignment()","submitFilter"};
+	String[] names= {"HeaderButton",Translator.toLocale("button.registerConsignment"),"./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton",Translator.toLocale("button.filter"),"filterConsignment()","submitFilter"};
 	for(int i=0; i< names.length ; i++) {
 	button = new Button();
 	button.setType(names[i]);
@@ -409,7 +410,7 @@ public class ConsignmentDatatableController {
 	pageElement.setButtonList(buttonList);
 
 	//Dropdown items	
-	String[] selectParam= {"select","Consignment Status","filterConsignmentStatus","","select","Tax Paid Status","taxPaidStatus",""};
+	String[] selectParam= {"select",Translator.toLocale("input.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("input.taxPaidStatus"),"taxPaidStatus",""};
 	for(int i=0; i< selectParam.length; i++) {
 	inputFields= new InputFields();
 	inputFields.setType(selectParam[i]);
@@ -424,7 +425,7 @@ public class ConsignmentDatatableController {
 	pageElement.setDropdownList(dropdownList);
 
 	//input type date list	
-	String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+	String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 	for(int i=0; i< dateParam.length; i++) {
 	dateRelatedFields= new InputFields();
 	dateRelatedFields.setType(dateParam[i]);
@@ -436,7 +437,6 @@ public class ConsignmentDatatableController {
 	dateRelatedFields.setClassName(dateParam[i]);
 	inputTypeDateList.add(dateRelatedFields);
 	}
-
 
 	}
 

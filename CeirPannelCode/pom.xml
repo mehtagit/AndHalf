@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>CeirPanelCode</name>
+	<name>Ceir4jan</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -144,7 +144,7 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>${artifactId}</finalName>
+		<finalName>${name}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

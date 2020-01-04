@@ -314,7 +314,6 @@ var singleImeiBlockDetail={
 		'requestType':requestType,
 		'remark':remark,
 		'sourceType':4
-	
 }
 		
 		console.log(JSON.stringify(singleImeiBlockDetail));
@@ -637,7 +636,7 @@ var singleImeiBlockDetail={
 		'requestType':requestType,
 		'remark':remark,
 		'txnId':txnId,
-		'sourceType':4
+		'sourceType': 4
 }
 		
 		console.log(JSON.stringify(singleImeiBlockDetail));

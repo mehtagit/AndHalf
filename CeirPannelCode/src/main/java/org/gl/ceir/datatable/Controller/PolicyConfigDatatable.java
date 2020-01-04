@@ -15,10 +15,8 @@ import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.ConfigContentModel;
-import org.gl.ceir.pagination.model.ConfigPaginationModel;
-import org.gl.ceir.pagination.model.MessageContentModel;
-import org.gl.ceir.pagination.model.MessagePaginationModel;
+import org.gl.ceir.pagination.model.PolicyConfigContent;
+import org.gl.ceir.pagination.model.PolicyConfigPagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 @RestController
-public class ConfigDatatableController {
-
-private final Logger log = LoggerFactory.getLogger(getClass());
+public class PolicyConfigDatatable {
 	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	IconsState iconState;
 	@Autowired
@@ -46,12 +43,13 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
-	ConfigContentModel configContentModel;
+	PolicyConfigContent policyConfigContent;
 	@Autowired
-	ConfigPaginationModel configPaginationModel;
+	PolicyConfigPagination policyConfigPagination;
 	
-	@PostMapping("adminConfigData")
-	public ResponseEntity<?> viewAdminConfig(@RequestParam(name="type",defaultValue = "Config",required = false) String role, HttpServletRequest request,HttpSession session) {
+	
+	@PostMapping("policyConfigData")
+	public ResponseEntity<?> viewPolicyConfig(@RequestParam(name="type",defaultValue = "PolicyConfig",required = false) String role, HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
 		// Data set on this List
@@ -64,53 +62,55 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 				
-		try {
-			log.info("request send to the filter api ="+filterrequest);
-			Object response = feignCleintImplementation.adminConfigFeign(filterrequest, pageNo, pageSize, file);
-			log.info("response in datatable"+response);
-			Gson gson= new Gson(); 
-			String apiResponse = gson.toJson(response);
-			configPaginationModel = gson.fromJson(apiResponse, ConfigPaginationModel.class);
-			List<ConfigContentModel> paginationContentList = configPaginationModel.getContent();
-			if(paginationContentList.isEmpty()) {
-				datatableResponseModel.setData(Collections.emptyList());
-			}else {
-				for(ConfigContentModel dataInsideList : paginationContentList) 
-				{
-				   String createdOn = (String) dataInsideList.getCreatedOn();
-				   String tag = dataInsideList.getTag();
-				   String value = dataInsideList.getValue();
-				   String description = dataInsideList.getDescription();
-				   String type = (String) dataInsideList.getType();
-				   String remark = (String) dataInsideList.getRemark();
-				   String userStatus = (String) session.getAttribute("userStatus");
-				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
-				   String action=iconState.adminConfigIcons(userStatus,tag);			   
-				   Object[] finalData={createdOn,tag,value,description,type,remark,action}; 
-					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);	
+			try {
+				log.info("request send to the filter api ="+filterrequest);
+				Object response = feignCleintImplementation.policyManagementFeign(filterrequest, pageNo, pageSize, file);
+				log.info("response in datatable"+response);
+				Gson gson= new Gson(); 
+				String apiResponse = gson.toJson(response);
+				
+				policyConfigPagination = gson.fromJson(apiResponse, PolicyConfigPagination.class);
+				List<PolicyConfigContent> paginationContentList = policyConfigPagination.getContent();
+				if(paginationContentList.isEmpty()) {
+					datatableResponseModel.setData(Collections.emptyList());
+				}else {
+					for(PolicyConfigContent dataInsideList : paginationContentList) 
+					{
+					   String createdOn = (String) dataInsideList.getCreatedOn();
+					   String modifiedOn = (String) dataInsideList.getModifiedOn();
+					   String description = dataInsideList.getDescription();
+					   String value = dataInsideList.getValue();
+					   String tag = dataInsideList.getTag();
+					   Object period = dataInsideList.getPeriod();
+					   Object status = dataInsideList.getStatus();
+					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
+					   String userStatus = (String) session.getAttribute("userStatus");
+					   String action=iconState.policyConfigIcons(userStatus,tag);			   
+					   Object[] finalData={createdOn,modifiedOn,value,description,period,status,policyOrder,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);	
+				}
 			}
-		}
-			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(configPaginationModel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(configPaginationModel.getTotalElements());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-		
-		}catch(Exception e) {
+				
+				//data set on ModelClass
+				datatableResponseModel.setRecordsTotal(policyConfigPagination.getNumberOfElements());
+				datatableResponseModel.setRecordsFiltered(policyConfigPagination.getTotalElements());
+				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 			
-			datatableResponseModel.setRecordsTotal(null);
-			datatableResponseModel.setRecordsFiltered(null);
-			datatableResponseModel.setData(Collections.emptyList());
-			log.error(e.getMessage(),e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-		}		
+			}catch(Exception e) {
+				
+				datatableResponseModel.setRecordsTotal(null);
+				datatableResponseModel.setRecordsFiltered(null);
+				datatableResponseModel.setData(Collections.emptyList());
+				log.error(e.getMessage(),e);
+				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			}		
+			
+		}
 		
-	}
 	
-	
-
-	@PostMapping("configManagement/pageRendering")
+	@PostMapping("policyConfig/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "Config",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
@@ -119,7 +119,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("System Config Management");
+		pageElement.setPageTitle("Policy Management");
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -144,7 +144,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		
 			
 			//Dropdown items			
-			String[] selectParam= {"select","Type","type","",};
+			String[] selectParam= {"select","Type","type","","select","Status","status",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);

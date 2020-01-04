@@ -3,7 +3,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html class="no-js">
 <head>
 <title>Dashboard</title>
 
@@ -59,18 +59,27 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
 </head>
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}">
+	data-selected-consignmentStatus="${consignmentStatus}" session-value="en">
 
+<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
 		<div id="initialloader"></div>
+		<select id="changeLang">
+		<option>language</option>
+		<option value='en'>en</option>
+		<option value='km'>km</option>
+		</select>
+		
+		
 		<!--start container-->
 		<div class="container">
 			<div class="section">
