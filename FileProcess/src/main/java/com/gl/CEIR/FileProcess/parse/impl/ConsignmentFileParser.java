@@ -40,7 +40,7 @@ public class ConsignmentFileParser extends AbstractCsvParser {
 				device.setImeiEsnMeid(data[4]);
 				
 				if(!data[5].isEmpty())
-					device.setDeviceLaunchDate(LocalDateTime.parse(data[5], DateTimeFormatter.ofPattern("DDMMYYYY")));
+					device.setDeviceLaunchDate(LocalDateTime.parse(data[5], DateTimeFormatter.ofPattern(DATE_FORMAT)));
 				else
 					device.setDeviceLaunchDate(null);
 				
