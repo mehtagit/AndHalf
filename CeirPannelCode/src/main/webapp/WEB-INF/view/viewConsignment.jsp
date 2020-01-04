@@ -59,6 +59,7 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
 </head>
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"

@@ -257,6 +257,9 @@ function table(url,dataUrl){
 			"txnId":$('#transactionID').val(),
 			"userType":$("body").attr("data-roleType")
 	}
+	if(sessionStorage.getItem("session-value")=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}
 	$.ajax({
 		url: url,
 	/*	headers: {"Accept-Language": "en"},*/
@@ -272,6 +275,9 @@ function table(url,dataUrl){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+			        "sUrl": langFile  
+			    },
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
