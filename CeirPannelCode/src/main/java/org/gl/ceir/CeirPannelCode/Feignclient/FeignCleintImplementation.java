@@ -5,11 +5,15 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.RequestCountAndQuantity;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
+import org.gl.ceir.pagination.model.ConfigContentModel;
+import org.gl.ceir.pagination.model.MessageContentModel;
+import org.gl.ceir.pagination.model.PolicyConfigContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -233,8 +237,36 @@ public interface FeignCleintImplementation {
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 						@RequestParam(value = "file", defaultValue = "0") Integer file) ;
 				
-			}
+		
 
+			
+//***************************************************Admin System Config Management Feign********************************
+
+@RequestMapping(value="/filter/policy-configuration" ,method=RequestMethod.POST) 
+public Object policyManagementFeign(@RequestBody FilterRequest filterRequest,
+		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+		@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+
+	
+
+//************************************************ view Policy Config Feign *****************************************
+
+@PostMapping("/policy/viewTag")
+public @ResponseBody PolicyConfigContent viewPolicyConfigFeign(FilterRequest filterRequest);
+
+
+
+//************************************************ view icon Message Management Feign *****************************************
+
+@PostMapping("/message/viewTag")
+public @ResponseBody MessageContentModel viewMessageFeign(FilterRequest filterRequest);
+
+
+@PostMapping("/system/viewTag")
+public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterRequest);
+
+}
 
 
 

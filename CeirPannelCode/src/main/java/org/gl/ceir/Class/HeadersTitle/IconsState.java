@@ -748,7 +748,7 @@ public class IconsState {
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcManageIcons(Integer status,Integer id,String fileName,String txnId) {	
+	public String trcManageIcons(String status,Integer id,String fileName,String txnId) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
@@ -909,12 +909,12 @@ public class IconsState {
 	}
 	
 	
-	/********************************** Icons for AdminMEssage Management**********************************/ 
+	/********************************** Icons for Admin MEssage Management**********************************/ 
 
-	public String adminMessageIcons(String userStatus) { 
+	public String adminMessageIcons(String userStatus, String tag) { 
 		
 		String editAction="";
-		String viewAction="";
+		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -939,10 +939,10 @@ public class IconsState {
 	
 	/********************************** Icons for AdminConfig Management**********************************/ 
 
-	public String adminConfigIcons(String userStatus) { 
+	public String adminConfigIcons(String userStatus, String tag) { 
 		
 		String editAction="";
-		String viewAction="";
+		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -965,6 +965,53 @@ public class IconsState {
 	}
 
 	
+
+	/********************************** Icons for Policy Config Management**********************************/ 
+
+	public String policyConfigIcons(String userStatus, String tag) { 
+		
+		String editAction="";
+		String viewAction="viewDetails('"+tag+"')";
+		
+		// state related Code 
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			
+		}
+
+		String action=view.concat(edit);	
+		return action;
+
+	}
+	
+	
+	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
+
+
+	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
+		
+		String approveAction ="JavaScript:void(0);"; 
+		String rejectAction= "JavaScript:void(0);"; 
+		
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+
+		
+		String action = approve.concat(reject);
+		return action;
+
+	}
 	
 }
 

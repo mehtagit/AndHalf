@@ -9,9 +9,26 @@ $(document).ready(function(){
 });
 
 
-//**************************************************Type Approved table**********************************************
+
+
+var userType = $("body").attr("data-roleType");
 
 function typeApprovedDataTable(){
+	if(userType=="CEIRAdmin"){
+		Datatable('headers?type=AdmintrcManageType','./trc');
+	}else{
+		Datatable('headers?type=trcManageType','./trc');
+	}
+	
+}
+
+
+
+
+
+//**************************************************Type Approved table**********************************************
+
+function Datatable(Url,dataUrl){
 	var filterRequest={
 	"endDate":$('#endDate').val(),
 	"startDate":$('#startDate').val(),
@@ -23,7 +40,7 @@ function typeApprovedDataTable(){
 	"status" : parseInt($('#Status').val()),
 	}
 	$.ajax({
-		url: 'headers?type=trcManageType',
+		url: Url,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -37,7 +54,7 @@ function typeApprovedDataTable(){
 				"bInfo" : true,
 				"bSearchable" : true,
 				ajax: {
-					url : './trc',
+					url : dataUrl,
 					type: 'POST',
 					dataType: "json",
 					data : function(d) {
@@ -104,7 +121,7 @@ function pageRendering(){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option>"+dropdown[i].title+
+							"<option value = '-1'>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+

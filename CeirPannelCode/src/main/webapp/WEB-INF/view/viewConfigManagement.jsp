@@ -101,6 +101,63 @@
 		<!--end container-->
 	</section>
 
+
+	 <!-- Modal 2 start   -->
+
+	<div id="viewAdminSystemModel" class="modal">
+		<h6 class="modal-header">View System Configuration</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<div class="row">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="tag" id="viewTag"
+							placeholder="tag" disabled
+							style="height: 28px;"> <label for="tag">Tag</label>
+					</div>
+
+					
+					
+					<div class="input-field col s12 m6">
+					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+					<label for="viewValue" class="">Value</label>
+
+					</div>
+
+
+					<div class="input-field col s12 m6">
+					<textarea id="description" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+					<label for="description" class="">Description</label>
+
+					</div>
+
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewtype" name="type"
+							placeholder="" maxlength="20" disabled style="height: 28px;">
+						<label for="type">type</label>
+					</div>
+
+					<div class="input-field col s12 m6">
+					<textarea id="remarks" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+					<label for="remarks" class="">Remarks</label>
+
+					</div>
+				</div>
+
+
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+				</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+	
+   
+   
    
 
 	

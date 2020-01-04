@@ -231,6 +231,28 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			
+			//adminPolicyManagement Headers 
+			
+			else if("adminPolicyManagement".equals(role)) {
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.period,headersTitle.Status,headersTitle.policyOrder,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//AdmintrcManageType Headers 
+			
+			else if("AdmintrcManageType".equals(role)) {
+				String[] headers = {headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.Status,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};		

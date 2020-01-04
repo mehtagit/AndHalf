@@ -7,7 +7,7 @@ var endDate=$('#endDate').val();
 
 $(document).ready(function(){
 	messageManagementDatatable();
-	pageRendering();
+	/*pageRendering();*/
 	
 });
 
@@ -198,3 +198,30 @@ function exportButton(){
 	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
+function viewDetails(tag){
+	$("#viewMessageModel").openModal();
+	var RequestData = {
+			"tag" : tag
+	} 
+	$.ajax({
+		url : "./message/viewTag",
+		data :	JSON.stringify(RequestData),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(data);
+			setViewPopupData(data);
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function setViewPopupData(data){
+	$("#viewTag").val(data.tag);
+	$("#viewValue").val(data.value);
+	$("#description").val(data.description);
+
+}

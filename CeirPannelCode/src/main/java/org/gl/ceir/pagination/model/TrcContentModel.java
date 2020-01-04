@@ -7,33 +7,33 @@ import org.springframework.stereotype.Component;
 @Component
 public class TrcContentModel {
 
-	private Integer id,userID,status,approveStatus;
-	private String manufacturerId, manufacturerName,country,requestDate,tac;
-	private String approveDisapproveDate, remark,file,createdOn,modifiedOn,txnId,stateInterp;
+	private Integer id;
+	private String manufacturerId;
+	private String manufacturerName;
+	private String country;
+	private String requestDate;
+	private String tac;
+	private Integer approveStatus;
+	private Integer adminApproveStatus;
+	private Integer userId;
+	private Object userType;
+	private Object adminUserId;
+	private Object adminUserType;
+	private String approveDisapproveDate;
+	private String remark;
+	private Object adminRemark;
+	private String file;
+	private String createdOn;
+	private String modifiedOn;
+	private String txnId;
+	private String stateInterp;
+	private String adminStateInterp;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	public Integer getUserID() {
-		return userID;
-	}
-	public void setUserID(Integer userID) {
-		this.userID = userID;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	public Integer getApproveStatus() {
-		return approveStatus;
-	}
-	public void setApproveStatus(Integer approveStatus) {
-		this.approveStatus = approveStatus;
 	}
 	public String getManufacturerId() {
 		return manufacturerId;
@@ -65,6 +65,42 @@ public class TrcContentModel {
 	public void setTac(String tac) {
 		this.tac = tac;
 	}
+	public Integer getApproveStatus() {
+		return approveStatus;
+	}
+	public void setApproveStatus(Integer approveStatus) {
+		this.approveStatus = approveStatus;
+	}
+	public Integer getAdminApproveStatus() {
+		return adminApproveStatus;
+	}
+	public void setAdminApproveStatus(Integer adminApproveStatus) {
+		this.adminApproveStatus = adminApproveStatus;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Object getUserType() {
+		return userType;
+	}
+	public void setUserType(Object userType) {
+		this.userType = userType;
+	}
+	public Object getAdminUserId() {
+		return adminUserId;
+	}
+	public void setAdminUserId(Object adminUserId) {
+		this.adminUserId = adminUserId;
+	}
+	public Object getAdminUserType() {
+		return adminUserType;
+	}
+	public void setAdminUserType(Object adminUserType) {
+		this.adminUserType = adminUserType;
+	}
 	public String getApproveDisapproveDate() {
 		return approveDisapproveDate;
 	}
@@ -76,6 +112,12 @@ public class TrcContentModel {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public Object getAdminRemark() {
+		return adminRemark;
+	}
+	public void setAdminRemark(Object adminRemark) {
+		this.adminRemark = adminRemark;
 	}
 	public String getFile() {
 		return file;
@@ -107,6 +149,12 @@ public class TrcContentModel {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
+	public String getAdminStateInterp() {
+		return adminStateInterp;
+	}
+	public void setAdminStateInterp(String adminStateInterp) {
+		this.adminStateInterp = adminStateInterp;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -115,12 +163,14 @@ public class TrcContentModel {
 	}
 	@Override
 	public String toString() {
-		return "TrcContentModel [id=" + id + ", userID=" + userID + ", status=" + status + ", approveStatus="
-				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
-				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
-				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
-				+ ", additionalProperties=" + additionalProperties + "]";
+		return "TrcContentModel [id=" + id + ", manufacturerId=" + manufacturerId + ", manufacturerName="
+				+ manufacturerName + ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac
+				+ ", approveStatus=" + approveStatus + ", adminApproveStatus=" + adminApproveStatus + ", userId="
+				+ userId + ", userType=" + userType + ", adminUserId=" + adminUserId + ", adminUserType="
+				+ adminUserType + ", approveDisapproveDate=" + approveDisapproveDate + ", remark=" + remark
+				+ ", adminRemark=" + adminRemark + ", file=" + file + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp + ", adminStateInterp="
+				+ adminStateInterp + ", additionalProperties=" + additionalProperties + "]";
 	}
 	
 }
