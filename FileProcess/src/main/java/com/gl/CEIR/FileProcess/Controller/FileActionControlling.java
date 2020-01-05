@@ -43,7 +43,7 @@ public class FileActionControlling implements Runnable {
 					webActionFactory.create(webActionDb).process(webActionDb);
 				}
 				
-				// Thread.sleep(1000/appConfig.tps);
+				// Thread.sleep(1000/appConfig.tps); 
 
 			} catch (Exception e) {
 				log.error(e.getMessage(), e);
