@@ -100,7 +100,7 @@ public class DatatableHeaders {
 
 			//Grievance Headers
 			else if("grievanceHeaders".equals(role)) {
-				String[] headers = {headersTitle.raisedDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.grievanceId,headersTitle.recentStatus,headersTitle.action};	
+				String[] headers = {headersTitle.raisedDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.grievanceId,headersTitle.grievanceStatus,headersTitle.action};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}

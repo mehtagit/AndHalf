@@ -109,38 +109,43 @@
 		<div class="modal-content">
 
 			<div class="row">
-				<div class="row">
+				<div class="row" style="margin-top:10px">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
 							placeholder="tag" disabled
 							style="height: 28px;"> <label for="tag">Tag</label>
 					</div>
-
-					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+						<input type="text" id="viewtype" name="type"
+							placeholder="Type" maxlength="20" disabled style="height: 28px;">
+						<label for="type">Type</label>
+					</div>	
+					
+					<div class="input-field col s12 m6" style="margin-top:30px">
+					<input type="text" id="viewValue" class="materialize-textarea" style="height: 22px;" placeholder="Value" readonly="readonly">
 					<label for="viewValue" class="">Value</label>
 
 					</div>
+					
 
-
-					<div class="input-field col s12 m6">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+					
+					<div class="row input_fields_wrap">
+					
+					<div class="input-field col s12 m6" style="margin-top:37px">
+					<textarea id="description" class="materialize-textarea" style="height: 22px;" placeholder="Description" readonly="readonly"></textarea>
 					<label for="description" class="">Description</label>
 
 					</div>
 
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewtype" name="type"
-							placeholder="" maxlength="20" disabled style="height: 28px;">
-						<label for="type">type</label>
+					
 					</div>
-
+					<div class="row input_fields_wrap">	
 					<div class="input-field col s12 m6">
-					<textarea id="remarks" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
+					<textarea id="remarks" class="materialize-textarea" style="height: 22px;" placeholder="Remarks" readonly="readonly"></textarea>
 					<label for="remarks" class="">Remarks</label>
 
+					</div>
 					</div>
 				</div>
 

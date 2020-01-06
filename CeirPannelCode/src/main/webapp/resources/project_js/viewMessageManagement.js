@@ -57,7 +57,10 @@ function messageManagementDatatable(){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 100, targets: result.length - 1 }
+		            { width: 100, targets: result.length - 1 },
+		            { width: 125, targets: 0 },
+		            { width: 125, targets: 1 }
+
 		        ]
 			});
 		},

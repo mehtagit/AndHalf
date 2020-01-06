@@ -61,7 +61,7 @@ public class HeadersTitle {
 	public   String raisedDate = "Raised Date";
 	public   String lastUpdateDate = "Last Update Date";
 	public   String grievanceId = "Grievance ID";
-	public   String recentStatus = "Recent Status";
+	public   String grievanceStatus = "Grievance Status";
 
 	//Dashboard Notification Table
 	public   String sNo = "S.No.";
