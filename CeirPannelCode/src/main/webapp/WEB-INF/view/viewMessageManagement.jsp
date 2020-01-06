@@ -108,7 +108,7 @@
 		<div class="modal-content">
 
 			<div class="row">
-				<div class="row">
+				<div class="row" style="margin-top:10px">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
 							placeholder="tag" disabled
@@ -117,7 +117,7 @@
 
 					
 					
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6"  style="margin-top: -9px">
 					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
 					<label for="viewValue" class="">Value</label>
 
