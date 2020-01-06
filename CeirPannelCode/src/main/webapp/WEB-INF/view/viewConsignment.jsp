@@ -73,11 +73,7 @@
 	<!-- START CONTENT -->
 	<section id="content">
 		<div id="initialloader"></div>
-		<select id="changeLang">
-		<option>language</option>
-		<option value='en'>en</option>
-		<option value='km'>km</option>
-		</select>
+
 		
 		
 		<!--start container-->

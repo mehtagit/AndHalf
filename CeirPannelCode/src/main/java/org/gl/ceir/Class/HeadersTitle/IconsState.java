@@ -941,7 +941,7 @@ public class IconsState {
 	/********************************** Icons for AdminConfig Management**********************************/ 
 
 	public String adminConfigIcons(String userStatus, String tag) { 
-		
+			
 		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
@@ -965,6 +965,10 @@ public class IconsState {
 
 	}
 
+	
+
+	
+	
 	
 
 	/********************************** Icons for Policy Config Management**********************************/ 
@@ -1000,8 +1004,9 @@ public class IconsState {
 
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
 		
-		String approveAction ="JavaScript:void(0);"; 
-		String rejectAction= "JavaScript:void(0);"; 
+		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+		
 		
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
@@ -1013,6 +1018,5 @@ public class IconsState {
 		return action;
 
 	}
-	
 }
 

@@ -123,7 +123,7 @@ textarea {
 						<input type="text" id="viewmanufacturerName" name="manufacturerName"
 							placeholder="ABC Name" disabled="disabled"> <label
 							for="manufacturerName" class="active">Manufacturer Name <span
-							class="star">*</span></label>
+							class="star"></span></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
@@ -189,7 +189,7 @@ textarea {
 							style="color: #ff4081"><i class="fa fa-calendar"
 							aria-hidden="true" style="float: right; margin-top: -37px;"></i></span>
 						<label for="bdate2" class="active">Approve/Rejection Date
-							<span class="star">*</span>
+							<span class="star"></span>
 						</label>
 					</div>
 
@@ -200,8 +200,8 @@ textarea {
 					</div>
 				</div>
 				<div class="center" style="margin-top: 30px;">
-					<a href="./manageTypeDevices" class="btn" id="Cancel"
-						style="margin-left: 10px;">Cancel</a>
+					<button class="modal-close btn" type="button" id="Cancel"
+						style="margin-left: 10px;">Cancel</button>
 				</div>
 
 
@@ -345,20 +345,20 @@ textarea {
 
 
 	<div id="ApproveTAC" class="modal">
-		<h6 class="modal-header">Approve</h6>
+		<h6 class="modal-header">Approve TAC status</h6>
 		<div class="modal-content">
 
 
 			<div class="row">
-				<h6>
+				<!-- <h6>
 					The tax against the consignment with <span id="ManufacturerName"></span>
 					having Transaction ID : ( <span id="TACnumber"></span>
 					) has been successfully paid.
-				</h6>
+				</h6> -->
 			</div>
 			<div class="row">
-				<h6>Do you approve the TAC?</h6>
-				<input type="text" id="setApproveConsignmentTxnId"
+				<h6>Do you want to approve the TAC status ?</h6>
+				<input type="text" id="setApproveTacTxnId"
 					style="display: none">
 			</div>
 			<div class="row">
@@ -372,6 +372,69 @@ textarea {
 			</div>
 		</div>
 	</div>
+	
+	     <div id="confirmApproveTAC" class="modal">
+                <h6 class="modal-header">Approve TAC</h6>
+                <div class="modal-content">
+    
+            <div class="row">
+                <h6 id="approveSuccessMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./manageTypeDevices" class="modal-close btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="RejectTAC" class="modal">
+		<h6 class="modal-header">Reject TAC status</h6>
+		<div class="modal-content">
+
+
+			<div class="row">
+				<!-- <h6>
+					The tax against the consignment with <span id="ManufacturerName"></span>
+					having Transaction ID : ( <span id="TACnumber"></span>
+					) has been successfully paid.
+				</h6> -->
+			</div>
+			<div class="row">
+				<h6>Do you want to Reject the TAC status ?</h6>
+				<input type="text" id="setRejectTacTxnId"
+					style="display: none">
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close modal-trigger btn"
+							onclick="rejectSubmit(0)">Yes</button>
+						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	     <div id="confirmRejectTAC" class="modal">
+                <h6 class="modal-header">Approve TAC</h6>
+                <div class="modal-content">
+    
+            <div class="row">
+                <h6 id="rejectSuccessMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./manageTypeDevices" class="modal-close btn">ok</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 	<!--materialize js-->
 	<script type="text/javascript"

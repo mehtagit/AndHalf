@@ -183,8 +183,8 @@ input[type='search'] {
 											</div>
 											<div class="col s12 m12" style="margin-top: 20px;">
 												<div class="input-field col s12 m6">
-													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{12,12}" title="Please enter alphabets and numbers upto 15 characters only"
-													  required="required" maxlength="12" name="nationalID"placeholder="" value="" /> <label for="nationalID"
+													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" title="Please enter alphabets and numbers upto 15 characters only"
+													  required="required" maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
 														class="center-align ml-10">NID </label>
 												</div>
 

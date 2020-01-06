@@ -29,10 +29,9 @@ public class DatatableHeaders {
 
 			// CONSIGNMENT DATATABLE HEADERS			
 			if("consignment".equals(role)) {
-				String[] headers = {headersTitle.creationDate,headersTitle.transactionID,headersTitle.supplierName,headersTitle.consignmentStatus,headersTitle.taxPaidStatus,headersTitle.action};		
-				System.out.println(":::::::::::::::headers:::::::::"+headers);
+				String[] headers = {"table.creationDate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
@@ -42,9 +41,9 @@ public class DatatableHeaders {
 
 			//STOLEN DATATABLE HEADERS
 			else if("stolen".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.Status,headersTitle.source,headersTitle.requestType,headersTitle.action };		
+				String[] headers = {"table.date","table.transactionID","table.fileName","table.status","table.source","table.requestType","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
@@ -63,27 +62,27 @@ public class DatatableHeaders {
 
 			//Admin DATATABLE HEADERS
 			else if("adminConsignment".equals(role)) {
-				String[] headers = {headersTitle.submissionDate,headersTitle.transactionID,headersTitle.ImporterCompanyName,headersTitle.consignmentStatus,headersTitle.taxPaidStatus,headersTitle.action};		
+				String[] headers = {"table.submissiondate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
 
 			//consignments from stolen headers
 			else if("stolenconsignment".equals(role)) {
-				String[] headers = {headersTitle.blankHeader,headersTitle.requestDate,headersTitle.transactionID,headersTitle.supplierName,headersTitle.consignmentStatus,headersTitle.taxPaidStatus};		
+				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
 
 			//stock headers
 			else if("stockcheckHeaders".equals(role)) {
-				String[] headers = {headersTitle.blankHeader,headersTitle.requestDate,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus};		
+				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.fileName","table.stockStatus"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
@@ -91,9 +90,9 @@ public class DatatableHeaders {
 
 			//stolen headers
 			else if("stolenCheckHeaders".equals(role)) {
-				String[] headers = {headersTitle.blankHeader,headersTitle.requestDate,headersTitle.transactionID,headersTitle.fileName,headersTitle.Status,headersTitle.source,headersTitle.requestType};		
+				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.fileName","table.status","table.source","table.requestType"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
@@ -139,9 +138,9 @@ public class DatatableHeaders {
 
 			//DashBoard dataTable Headers
 			else if("dashboardNotification".equals(role)) {
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.transactionID,headersTitle.feature,headersTitle.message,headersTitle.action};	
+				String[] headers = {"table.sno","table.date","table.transactionID","table.feature","table.message","table.action"};	
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
@@ -225,6 +224,27 @@ public class DatatableHeaders {
 			
 			else if("adminConfigMessage".equals(role)) {
 				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.type,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			
+			//adminPolicyManagement Headers 
+			
+			else if("adminPolicyManagement".equals(role)) {
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.period,headersTitle.Status,headersTitle.policyOrder,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//AdmintrcManageType Headers 
+			
+			else if("AdmintrcManageType".equals(role)) {
+				String[] headers = {headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.Status,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}

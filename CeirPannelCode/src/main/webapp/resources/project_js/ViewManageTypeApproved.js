@@ -29,11 +29,16 @@ function typeApprovedDataTable(){
 //**************************************************Type Approved table**********************************************
 
 function Datatable(Url,dataUrl){
+if(userType=="CEIRAdmin"){
+		var userId = 0;
+	}else{
+		var userId = parseInt($("body").attr("data-userID"))
+	}
 	var filterRequest={
 	"endDate":$('#endDate').val(),
 	"startDate":$('#startDate').val(),
   	"tac" : $('#tac').val(),
-  	"userId":parseInt($("body").attr("data-userID")),
+  	"userId":userId,
 	"featureId":parseInt(featureId),
 	"userTypeId": parseInt($("body").attr("data-userTypeID")),
 	"userType":$("body").attr("data-roleType"),
@@ -157,6 +162,9 @@ function pageRendering(){
 	}); 
 };
 
+if(userType=="CEIRAdmin"){
+	$("#btnLink").css({display: "none"});
+	}
 
 function viewByID(id,actionType){
 	
@@ -318,42 +326,34 @@ function exportTacData()
 }
 
 
-
-
-
 function openApproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
 	$('#ApproveTAC').openModal();
-	$('#ApproveManageTypeTxnId').text(txnId);
-	$('#setApproveConsignmentTxnId').val(txnId);
-	$('#displayname').text(displayName);
-	console.log(displayName);
-	
-
+	$('#setApproveTacTxnId').val(txnId);
 
 }
 function approveSubmit(actiontype){
-	var txnId=$('#setApproveConsignmentTxnId').val();
+	var txnId=$('#setApproveTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var actiontype=1;
+	var adminApproveStatus=0;
 	var approveRequest={
-			"adminApproveStatus": actiontype,
+			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
 			"featureId":11,
-			"adminUserId":userTypeId,
+			"adminUserId":userId,
 			"adminUserType":userType
 			
 	}
 	$.ajax({
-		url : "./typeApprove/Approved",
+		url : "./TACAprroveDisapprove",
 		data : JSON.stringify(approveRequest),
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			$('#confirmApproveConsignment').openModal();
+			$('#confirmApproveTAC').openModal();
 			if(data.errorCode==0){
 
 				$('#approveSuccessMessage').text('');
@@ -362,6 +362,53 @@ function approveSubmit(actiontype){
 			else{
 				$('#approveSuccessMessage').text('');
 				$('#approveSuccessMessage').text(data.message);
+			}
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+
+
+
+function openDisapproveTACPopUp(txnId,	manufacturerName)
+{
+	manufacturerName=manufacturerName.replace("+20"," " );
+	$('#RejectTAC').openModal();
+	$('#setRejectTacTxnId').val(txnId);
+
+}
+function rejectSubmit(actiontype){
+	var txnId=$('#setRejectTacTxnId').val();
+	var userId = $("body").attr("data-userID");
+	var userType=$("body").attr("data-roleType");
+	var adminApproveStatus=1;
+	var approveRequest={
+			"adminApproveStatus":adminApproveStatus,
+			"txnId":txnId,
+			"featureId":11,
+			"adminUserId":userId,
+			"adminUserType":userType
+			
+	}
+	$.ajax({
+		url : "./TACAprroveDisapprove",
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			$('#confirmRejectTAC').openModal();
+			if(data.errorCode==0){
+
+				$('#rejectSuccessMessage').text('');
+				$('#rejectSuccessMessage').text(data.message);
+			}
+			else{
+				$('#rejectSuccessMessage').text('');
+				$('#rejectSuccessMessage').text(data.message);
 			}
 		},
 		error : function() {
