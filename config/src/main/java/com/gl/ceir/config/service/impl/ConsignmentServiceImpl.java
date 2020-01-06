@@ -198,12 +198,12 @@ public class ConsignmentServiceImpl {
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
 			Integer pageSize) {
 
-		List<StateMgmtDb> featureList = null;
+		List<StateMgmtDb> statusList = null;
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
 			SpecificationBuilder<ConsignmentMgmt> cmsb = new SpecificationBuilder<ConsignmentMgmt>(propertiesReader.dialect);
 
@@ -230,17 +230,17 @@ public class ConsignmentServiceImpl {
 
 				if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
-					List<Integer> consignmentStatus = new LinkedList<Integer>();
+					List<Integer> consignmentStatus = new LinkedList<>();
 					// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
-					logger.debug(featureList);
+					logger.debug(statusList);
 
-					if(Objects.nonNull(featureList)) {	
-						for(StateMgmtDb stateDb : featureList ) {
+					if(Objects.nonNull(statusList)) {	
+						for(StateMgmtDb stateDb : statusList ) {
 							consignmentStatus.add(stateDb.getState());
 						}
 						logger.info("Array list to add is = " + consignmentStatus);
 
-						cmsb.addSpecification(cmsb.in(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT),consignmentStatus));
+						cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
 					}
 				}
 			}
@@ -253,15 +253,13 @@ public class ConsignmentServiceImpl {
 			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
-
-
-				for(StateMgmtDb stateMgmtDb : featureList) {
+				
+				for(StateMgmtDb stateMgmtDb : statusList) {
 					if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
 						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
 						break; 
 					} 
 				}
-
 
 				//interpSetter.setStateInterp(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId(), consignmentMgmt2.getConsignmentStatus());
 
@@ -342,6 +340,16 @@ public class ConsignmentServiceImpl {
 	@Transactional
 	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest, String userType) {
 		try {
+			if(Objects.isNull(consignmentRequest.getTxnId())) {
+				logger.info("TxnId is null in the request.");
+				return new GenricResponse(1001, "TxnId is null in the request.", consignmentRequest.getTxnId());
+			}
+			
+			if(Objects.isNull(userType)) {
+				logger.info("userType is null in the request.");
+				return new GenricResponse(1002, "TxnId is null in the request.", consignmentRequest.getTxnId());
+			}
+			
 			ConsignmentMgmt consignment = consignmentRepository.getByTxnId(consignmentRequest.getTxnId());
 
 			if(Objects.isNull(consignment)) {
@@ -353,7 +361,7 @@ public class ConsignmentServiceImpl {
 			else if("IMPORTER".equalsIgnoreCase(userType))
 				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
 			else
-				return new GenricResponse(1, "userType is invalid.", consignmentRequest.getTxnId());
+				return new GenricResponse(1, "UserType is invalid.", consignmentRequest.getTxnId());
 
 			consignment.setRemarks(consignmentRequest.getRemarks());
 

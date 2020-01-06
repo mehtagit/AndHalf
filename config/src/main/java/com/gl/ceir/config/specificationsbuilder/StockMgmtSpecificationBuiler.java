@@ -106,10 +106,10 @@ public class StockMgmtSpecificationBuiler {
 		return specifications;
 	}
 
-	public Specification<ConsignmentMgmt> in(SearchCriteria searchCriteria, List<Integer> status){
+	public Specification<ConsignmentMgmt> in(String key, List<Integer> status){
 		return (root, query, cb) -> {
 			logger.info("In query save ");
-			return cb.in(root.get(searchCriteria.getKey())).value(status);
+			return cb.in(root.get(key)).value(status);
 		};
 	}
 }

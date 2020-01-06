@@ -144,7 +144,6 @@ public class StockServiceImpl {
 
 	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
-		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
 
 		try {
@@ -152,12 +151,8 @@ public class StockServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
+			// stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler(propertiesReader.dialect);
-
-			/*
-			 * if("CEIRAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
-			 * filterRequest.setUserType("Custom"); }
-			 */
 
 			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 					"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -190,40 +185,36 @@ public class StockServiceImpl {
 			}else {
 				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
-					List<Integer> consignmentStatus = new LinkedList<Integer>();
-					// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+					List<Integer> stockStatus = new LinkedList<>();
 					logger.debug(statusList);
 
 					if(Objects.nonNull(statusList)) {	
 						for(StateMgmtDb stateDb : statusList ) {
-							consignmentStatus.add(stateDb.getState());
+							stockStatus.add(stateDb.getState());
 						}
-						logger.info("Array list to add is = " + consignmentStatus);
-
-						smsb.addSpecification(smsb.in(new SearchCriteria("consignmentStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT), consignmentStatus));
+						
+						logger.info("Array list to add is = " + stockStatus);
+						smsb.addSpecification(smsb.in("stockStatus", stockStatus));
 					}
 				}
 			}
 
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				smsb.orSearch(new SearchCriteria("taxPaidStatus", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				smsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			}
 
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
-			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			logger.info(stateInterpList);
+			
+			logger.info(statusList);
 
 			for(StockMgmt stockMgmt : page.getContent()) {
 
-
-				for(StateMgmtDb stateMgmtDb : stateInterpList) {
+				for(StateMgmtDb stateMgmtDb : statusList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
 						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
 						// break; 
 					} 
 				}
-
 
 				// interpSetter.setStateInterp(filterRequest.getFeatureId(), filterRequest.getUserTypeId(), stockMgmt.getStockStatus());
 			}
@@ -249,14 +240,32 @@ public class StockServiceImpl {
 	}
 
 	@Transactional
-	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt) {
+	public GenricResponse deleteStockDetailes(StockMgmt stockMgmt, String userType) {
 		try {
 
-			StockMgmt txnRecord	= stockManagementRepository.findByRoleTypeAndTxnId(stockMgmt.getRoleType(), stockMgmt.getTxnId());
+			if(Objects.isNull(stockMgmt.getTxnId())) {
+				logger.info("TxnId is null in the request.");
+				return new GenricResponse(1001, "TxnId is null in the request.", stockMgmt.getTxnId());
+			}
+			
+			if(Objects.isNull(userType)) {
+				logger.info("userType is null in the request.");
+				return new GenricResponse(1002, "TxnId is null in the request.", stockMgmt.getTxnId());
+			}
+			
+			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(stockMgmt.getTxnId());
 
 			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.", stockMgmt.getTxnId());
 			}else {
+				
+				if("CEIRADMIN".equalsIgnoreCase(userType))
+					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
+				else
+					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_USER.getCode());
+
+				txnRecord.setRemarks(stockMgmt.getRemarks());
+				stockManagementRepository.save(txnRecord);
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.STOCK.getName());

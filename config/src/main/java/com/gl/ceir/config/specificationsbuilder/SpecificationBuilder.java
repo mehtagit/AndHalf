@@ -82,7 +82,6 @@ public class SpecificationBuilder<T> {
 		try {
 			for(SearchCriteria searchCriteria : params) {
 				specifications.add((root, query, cb)-> {
-					// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
 					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
@@ -125,10 +124,10 @@ public class SpecificationBuilder<T> {
 		return specifications;
 	}
 
-	public Specification<T> in(SearchCriteria searchCriteria, List<Integer> status){
+	public Specification<T> in(String key, List<Integer> status){
 		return (root, query, cb) -> {
 			logger.info("In query save ");
-			return cb.in(root.get(searchCriteria.getKey())).value(status);
+			return cb.in(root.get(key)).value(status);
 		};
 	}
 
