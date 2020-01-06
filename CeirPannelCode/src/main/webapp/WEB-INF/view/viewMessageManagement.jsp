@@ -148,6 +148,53 @@
 	<!-- Modal End -->
 	
 
+	<!-- Modal 3 start   -->
+
+	<div id="editMessageModel" class="modal">
+		<h6 class="modal-header">Edit Message Management</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<div class="row">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="tag" id="viewTag"
+							placeholder="tag"
+							style="height: 28px;"> <label for="tag">Tag</label>
+					</div>
+
+					
+					
+					<div class="input-field col s12 m6">
+					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;"></textarea>
+					<label for="viewValue" class="">Value</label>
+
+					</div>
+
+
+					<div class="input-field col s12 m6">
+					<textarea id="description" class="materialize-textarea" style="height: 22px;"></textarea>
+					<label for="description" class="">Description</label>
+
+					</div>
+
+					
+
+				</div>
+
+				
+
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;">Update</button>
+				</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+	
+   
    
 
 	

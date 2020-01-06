@@ -4,6 +4,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
+import org.gl.ceir.CeirPannelCode.Model.TypeApprovedStatusModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -39,4 +40,8 @@ public interface TypeApprovedFeignImpl {
 	@PostMapping("/TypeApproved/update") 
 	public GenricResponse updateApproved(@RequestBody TRCRegisteration model) ;
 	
-	}
+
+	@PostMapping("/TypeApproved/approveReject") 
+	public GenricResponse TypeApproveReject(@RequestBody TypeApprovedStatusModel model) ;
+	
+}

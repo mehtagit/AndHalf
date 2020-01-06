@@ -914,7 +914,7 @@ public class IconsState {
 
 	public String adminMessageIcons(String userStatus, String tag) { 
 		
-		String editAction="";
+		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
@@ -941,8 +941,8 @@ public class IconsState {
 	/********************************** Icons for AdminConfig Management**********************************/ 
 
 	public String adminConfigIcons(String userStatus, String tag) { 
-		
-		String editAction="";
+			
+		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
@@ -967,11 +967,15 @@ public class IconsState {
 
 	
 
+	
+	
+	
+
 	/********************************** Icons for Policy Config Management**********************************/ 
 
 	public String policyConfigIcons(String userStatus, String tag) { 
 		
-		String editAction="";
+		String editAction="updateDetails()";
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
@@ -1000,8 +1004,9 @@ public class IconsState {
 
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
 		
-		String approveAction ="JavaScript:void(0);"; 
-		String rejectAction= "JavaScript:void(0);"; 
+		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+		
 		
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
@@ -1013,6 +1018,5 @@ public class IconsState {
 		return action;
 
 	}
-	
 }
 

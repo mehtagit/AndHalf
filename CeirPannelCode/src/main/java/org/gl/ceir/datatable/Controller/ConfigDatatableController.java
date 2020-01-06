@@ -78,15 +78,15 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				for(ConfigContentModel dataInsideList : paginationContentList) 
 				{
 				   String createdOn = (String) dataInsideList.getCreatedOn();
-				   String tag = dataInsideList.getTag();
-				   String value = dataInsideList.getValue();
+				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String description = dataInsideList.getDescription();
+				   String value = dataInsideList.getValue();
 				   String type = (String) dataInsideList.getType();
-				   String remark = (String) dataInsideList.getRemark();
+				   String tag = dataInsideList.getTag();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 				   String action=iconState.adminConfigIcons(userStatus,tag);			   
-				   Object[] finalData={createdOn,tag,value,description,type,remark,action}; 
+				   Object[] finalData={createdOn,modifiedOn,description,value,type,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -157,20 +157,6 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				dropdownList.add(inputFields);
 			}
 			pageElement.setDropdownList(dropdownList);
-			
-			//input type date list		
-			String[] dateParam= {"text","Parameter Name","parametername",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
 			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);

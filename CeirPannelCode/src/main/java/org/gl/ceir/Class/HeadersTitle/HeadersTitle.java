@@ -94,6 +94,7 @@ public class HeadersTitle {
 		public String parameterName= "Parameter Name";
 		public  String description= "Description";
 		public  String value= "Value";
+		public  String channel= "Channel";
 		
 		//Admin Config Management
 		public  String type="Type";

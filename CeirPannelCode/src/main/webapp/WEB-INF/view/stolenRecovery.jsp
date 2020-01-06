@@ -1237,7 +1237,8 @@
 
                                                     <div class="input-field col s12 center">
                                                         <button class="btn" type="button" onclick="updateSingleBlockDevicesRequest()">Submit</button>
-                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                
+                                                        <button type="button" class="modal-close btn">Cancel</button>
                                                     </div>
                                                 </form>
                                            

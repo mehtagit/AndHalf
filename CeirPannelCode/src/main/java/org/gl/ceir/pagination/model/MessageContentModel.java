@@ -1,8 +1,5 @@
 package org.gl.ceir.pagination.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +11,7 @@ public class MessageContentModel {
 	private String tag;
 	private String value;
 	private String description;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String channel;
 	public Integer getId() {
 		return id;
 	}
@@ -51,17 +48,16 @@ public class MessageContentModel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getChannel() {
+		return channel;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setChannel(String channel) {
+		this.channel = channel;
 	}
 	@Override
 	public String toString() {
 		return "MessageContentModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
-				+ tag + ", value=" + value + ", description=" + description + ", additionalProperties="
-				+ additionalProperties + "]";
+				+ tag + ", value=" + value + ", description=" + description + ", channel=" + channel + "]";
 	}
 	
 	
