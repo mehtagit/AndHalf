@@ -156,7 +156,7 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.deviceIDType,headersTitle.deviceType,headersTitle.price,headersTitle.country,headersTitle.Status,headersTitle.action};		
+				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.deviceIDType,headersTitle.deviceType,headersTitle.price,headersTitle.country,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
