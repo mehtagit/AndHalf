@@ -3,11 +3,11 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -37,8 +37,9 @@ public class SystemConfigurationDb implements Serializable {
 	
 	private String description;
 	
-	@Column(length = 10)
-	private String type; // have two values USER/SYSTEM.
+	private Integer type; // have two values USER/SYSTEM.
+	@Transient
+	private String typeInterp;
 	
 	private String remark;
 	
@@ -78,10 +79,10 @@ public class SystemConfigurationDb implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getType() {
+	public Integer getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 	public String getRemark() {
@@ -92,6 +93,12 @@ public class SystemConfigurationDb implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public String getTypeInterp() {
+		return typeInterp;
+	}
+	public void setTypeInterp(String typeInterp) {
+		this.typeInterp = typeInterp;
 	}
 
 }

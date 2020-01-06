@@ -41,6 +41,8 @@ public class PolicyConfigurationDb implements Serializable {
 	
 	private String remark;
 	
+	private Integer type;
+	
 	private int policyOrder;
 	
 	public Long getId() {
@@ -105,6 +107,12 @@ public class PolicyConfigurationDb implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 }

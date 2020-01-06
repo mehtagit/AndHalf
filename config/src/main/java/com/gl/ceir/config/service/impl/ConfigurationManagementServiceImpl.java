@@ -32,6 +32,7 @@ import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.MessageConfigurationHistoryDbRepository;
@@ -43,6 +44,7 @@ import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.util.InterpSetter;
 
 @Service
 public class ConfigurationManagementServiceImpl {
@@ -78,9 +80,12 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
-	
+
 	@Autowired
 	PropertiesReader propertiesReader;
+
+	@Autowired
+	InterpSetter interpSetter;
 
 	public List<SystemConfigurationDb> getAllInfo(){
 		try {
@@ -90,18 +95,26 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
-			
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			SpecificationBuilder<SystemConfigurationDb> sb = new SpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
-			
+
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
-			
-			return systemConfigurationDbRepository.findAll(sb.build(), pageable);
-			
+
+			if(Objects.nonNull(filterRequest.getType()))
+				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			Page<SystemConfigurationDb> page = systemConfigurationDbRepository.findAll(sb.build(), pageable);
+
+			for(SystemConfigurationDb systemConfigurationDb : page.getContent()) {	
+				systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
+			}
+			return page;
+
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -153,18 +166,26 @@ public class ConfigurationManagementServiceImpl {
 		}	
 
 	}
-	
+
 	public Page<MessageConfigurationDb> filterMessageConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
-			
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			SpecificationBuilder<MessageConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
-			
+
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			return messageConfigurationDbRepository.findAll(sb.build(), pageable);
-			
+			if(Objects.nonNull(filterRequest.getChannel()))
+				sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(sb.build(), pageable);
+
+			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
+				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
+			}
+			return page;
+
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -220,18 +241,18 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
-	
+
 	public Page<PolicyConfigurationDb> filterPolicyConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {
-			
+
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
 			SpecificationBuilder<PolicyConfigurationDb> sb = new SpecificationBuilder<>(propertiesReader.dialect);
-			
+
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			return policyConfigurationDbRepository.findAll(sb.build(), pageable);
-			
+
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -339,21 +360,21 @@ public class ConfigurationManagementServiceImpl {
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
 			List<SystemConfigListDb> systemConfigListDbResult = new LinkedList<>();
-			
+
 			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findByTag(tagId);
 			List<SystemConfigUserwiseDb> systemConfigUserwiseDbs = systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId);
 
 			for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
 
 				for(SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
-					
+
 					if(systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
 						systemConfigListDbResult.add(systemConfigListDb);
 						break;
 					}
 				}
 			}
-			
+
 			return systemConfigListDbResult;
 
 		} catch (Exception e) {

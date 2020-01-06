@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -35,6 +36,11 @@ public class MessageConfigurationDb implements Serializable {
 	@Column(length = 1000)
 	private String value;
 	private String description;
+	
+	private Integer channel;
+	@Transient
+	private String channelInterp;
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,10 +77,20 @@ public class MessageConfigurationDb implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-
-
-
-
-
+	public Integer getChannel() {
+		return channel;
+	}
+	public void setChannel(Integer channel) {
+		this.channel = channel;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getChannelInterp() {
+		return channelInterp;
+	}
+	public void setChannelInterp(String channelInterp) {
+		this.channelInterp = channelInterp;
+	}
+	
 }

@@ -19,6 +19,8 @@ public class FilterRequest {
 	public Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;
+	private Integer type;
+	private Integer channel;
 	
 	private String tag;
 
@@ -126,6 +128,18 @@ public class FilterRequest {
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public Integer getChannel() {
+		return channel;
+	}
+	public void setChannel(Integer channel) {
+		this.channel = channel;
 	}
 	
 	@Override

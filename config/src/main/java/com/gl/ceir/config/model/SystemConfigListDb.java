@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +38,9 @@ public class SystemConfigListDb implements Serializable {
 	private Integer value;
 	
 	private String interp;
+	
+	@Column(length = 10)
+	private String tagId;
 	
 	public Long getId() {
 		return id;
@@ -76,6 +80,12 @@ public class SystemConfigListDb implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public String getTagId() {
+		return tagId;
+	}
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
 	}
 	
 	@Override

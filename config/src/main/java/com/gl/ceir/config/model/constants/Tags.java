@@ -10,5 +10,10 @@ public interface Tags {
 	String DEVICE_TYPE = "DEVICE_TYPE";
 	String CURRENCY = "CURRENCY";
 	String DEVICE_STATUS = "DEVICE_STATUS";
-	
+	String FILE_TYPE = "FILE_TYPE";
+	String BLOCK_CATEGORY = "BLOCK_CATEGORY";
+	String CONFIG_TYPE = "CONFIG_TYPE";
+	String DOC_TYPE = "DOC_TYPE";
+	String CHANNEL = "CHANNEL";
+		
 }
