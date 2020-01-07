@@ -66,6 +66,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private String stateInterp;
 	
+	private Integer operatorTypeId;
+	@Transient
+	private String operatorTypeIdInterp;
+	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
 	
@@ -189,7 +193,18 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
+	public String getOperatorTypeIdInterp() {
+		return operatorTypeIdInterp;
+	}
+	public void setOperatorTypeIdInterp(String operatorTypeIdInterp) {
+		this.operatorTypeIdInterp = operatorTypeIdInterp;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

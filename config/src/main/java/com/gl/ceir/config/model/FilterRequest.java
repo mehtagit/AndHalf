@@ -24,6 +24,8 @@ public class FilterRequest {
 	
 	private String tag;
 	private Integer status;
+	
+	private Integer operatorTypeId;
 
 	public Integer getUserId() {
 		return userId;
@@ -147,6 +149,14 @@ public class FilterRequest {
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
 	}
 	@Override
 	public String toString() {

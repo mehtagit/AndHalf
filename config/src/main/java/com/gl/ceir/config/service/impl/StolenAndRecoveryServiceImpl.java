@@ -63,6 +63,7 @@ import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -110,6 +111,9 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	EmailUtil emailUtil;
+
+	@Autowired
+	InterpSetter interpSetter;
 
 	@Transactional
 	public GenricResponse uploadDetails( StolenandRecoveryMgmt stolenandRecoveryDetails) {
@@ -201,7 +205,11 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(filterRequest.getSourceType())) {
 				srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
-			
+
+			if(Objects.nonNull(filterRequest.getOperatorTypeId())) {
+				srsb.with(new SearchCriteria("operatorTypeId", filterRequest.getOperatorTypeId(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
+
 			if(Objects.nonNull(filterRequest.getRequestType())) {
 				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 			}else {
@@ -214,11 +222,11 @@ public class StolenAndRecoveryServiceImpl {
 						for(SystemConfigListDb systemConfigListDb : systemConfigListDbs ) {
 							configuredRequestTypeOfFeature.add(systemConfigListDb.getValue());
 						}
-						logger.info("List of configuredRequestTypeOfFeature = " + configuredRequestTypeOfFeature);
 
-						if(!configuredRequestTypeOfFeature.isEmpty())
+						if(!configuredRequestTypeOfFeature.isEmpty()) {
+							logger.info("List of configuredRequestTypeOfFeature = " + configuredRequestTypeOfFeature);
 							srsb.addSpecification(srsb.in("requestType", configuredRequestTypeOfFeature));
-						else{
+						}else{
 							logger.info("No predefined request type is configured for this request.");
 						}
 					}
@@ -234,7 +242,6 @@ public class StolenAndRecoveryServiceImpl {
 				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
 					List<Integer> configuredStatus = new LinkedList<Integer>();
-					// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 					logger.debug(statusList);
 
 					if(Objects.nonNull(statusList)) {	
@@ -242,7 +249,7 @@ public class StolenAndRecoveryServiceImpl {
 							configuredStatus.add(stateDb.getState());
 						}
 						logger.info("Array list to add is = " + configuredStatus);
-						
+
 						if(!configuredStatus.isEmpty())
 							srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
 						else{
@@ -284,6 +291,8 @@ public class StolenAndRecoveryServiceImpl {
 						break;
 					}
 				}
+
+				// stolenandRecoveryMgmt.setOperatorTypeIdInterp(interpSetter.setConfigInterp(Tags.OPERATOR, stolenandRecoveryMgmt.getOperatorTypeId()));
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());

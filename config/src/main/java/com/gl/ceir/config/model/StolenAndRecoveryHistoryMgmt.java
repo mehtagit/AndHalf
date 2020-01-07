@@ -46,6 +46,7 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	
 	private Integer sourceType;
 	
+	
 	public StolenAndRecoveryHistoryMgmt() {
 
 	}
@@ -127,7 +128,11 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
 	}
-	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
