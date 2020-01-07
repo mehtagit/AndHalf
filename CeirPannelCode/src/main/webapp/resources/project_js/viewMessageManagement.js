@@ -124,6 +124,13 @@ function pageRendering(){
 		}
 
 	}); 
+	//status-----------dropdown
+	$.getJSON('./getDropdownList/CHANNEL', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#channel');
+		}
+	});
 };
 
 

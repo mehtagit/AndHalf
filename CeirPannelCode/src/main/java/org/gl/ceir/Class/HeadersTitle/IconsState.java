@@ -1025,5 +1025,41 @@ public class IconsState {
 		return action;
 
 	}
+	
+	/********************************** Icons for adminBlockUnblock **********************************/ 
+
+	public String adminBlockUnblock(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+		
+		String viewAction="JavaScript:void(0);";
+		String downloadURL = "JavaScript:void(0);";
+		String approveAction = "JavaScript:void(0);";
+		String rejectAction= "JavaScript:void(0);";
+		
+		// state related Code 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>";
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+		
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+		
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+		
+			
+		}
+
+		String action= view.concat(download).concat(approve).concat(reject);	
+		return action;
+
+	}
 }
 

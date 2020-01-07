@@ -121,6 +121,27 @@ public class StolenDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
+				}else if("CEIRAdmin".equals(userType)) {
+					log.info("in CEIRAdmin Controler-----" +userType);
+					for (StolenContent dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String txnId = dataInsideList.getTxnId();
+						String operator = "";
+						String fileName = dataInsideList.getRequestType();
+						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						String stolenStatusName = dataInsideList.getStateInterp();
+						String source =dataInsideList.getSourceTypeInterp();
+						String requestType = dataInsideList.getRequestType(); 
+						String requestTypeName = dataInsideList.getRequestTypeInterp();
+						int id = dataInsideList.getId();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,action};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
 				}
 				else {
 					log.info("viaExistingRecovery");
@@ -173,7 +194,7 @@ public class StolenDatatableController {
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
 		
-		if("Operator".equals(userType)) {
+		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
 		pageElement.setPageTitle("Block/Unblock");
 		}else {
 			pageElement.setPageTitle("Stolen/Recovery");
@@ -182,7 +203,7 @@ public class StolenDatatableController {
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 		
-		if("Operator".equals(userType)) {
+		if("Operator".equals(userType) || "CEIRAdmin".equals(userType)) {
 			String[] names = { "HeaderButton", "Report Block/Unblock", "./selectblockUnblockPage",
 					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
@@ -213,22 +234,41 @@ public class StolenDatatableController {
 				inputTypeDateList.add(dateRelatedFields);
 			}
 			
-		
-
-			String[] selectParam = { "select", "Request Type", "requestType", "", "select",
-					"Mode", "sourceStatus", "","select", "Status", "status","" };	
-			for (int i = 0; i < selectParam.length; i++) {
-				inputFields = new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
+		//This is for Operator Dropdown for CEIRadmin
+			if("CEIRAdmin".equals(userType)|| "CEIRAdmin".equals(userType)) {
+				String[] selectParam = { "select", "Operator", "operator", "","select", "Request Type", "requestType", "", "select",
+						"Mode", "sourceStatus", "","select", "Status", "status","" };	
+				for (int i = 0; i < selectParam.length; i++) {
+					inputFields = new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
+				pageElement.setDropdownList(dropdownList);
+				
+			}else {
+				String[] selectParam = { "select", "Request Type", "requestType", "", "select",
+						"Mode", "sourceStatus", "","select", "Status", "status","" };	
+				for (int i = 0; i < selectParam.length; i++) {
+					inputFields = new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
+				pageElement.setDropdownList(dropdownList);
 			}
-			pageElement.setDropdownList(dropdownList);
+			
+	
 		
 		}else {
 			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
