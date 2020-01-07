@@ -140,7 +140,15 @@ function pageRendering(){
 			.appendTo('#type');
 		}
 	});
-};
+	
+	$.getJSON('./getDropdownList/IS_ACTIVE', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#status');
+		}
+		});
+	
+}
 
 
 
