@@ -439,7 +439,7 @@ function setViewPopupData(data){
 	console.log("**************data*******"+JSON.stringify(data));
 	$("#viewdeviceType").val(data.deviceTypeInterp);
 	$("#viewdeviceIdType").val(data.deviceIdTypeInterp);
-	$("#viewsimStatus").val(data.multiSimStatus);
+	$("#viewsimStatus").val(data.multiSimStatusInterp);
 	$("#viewcountryBought").val(data.country);
 	$("#viewserialNumber").val(data.deviceSerialNumber);
 	$("#viewtaxStatus").val(data.taxPaidStatusInterp);

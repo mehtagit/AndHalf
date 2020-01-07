@@ -156,26 +156,31 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
-	
 
-							<div class="row">
-							 <div class="col s12 m12" style="margin-top: 20px;">
-									<div id="submitbtn">
-										<div class="input-field col s12 m1 l1">
-											<label for="Search" class="center-align ml-10">NID :</label>
-										</div>
-										<div class="input-field col s12 m3 l3">
-											<input type="text" id="Search" name="Search" pattern="[A-Za-z0-9]{1,12}" maxlength="12" placeholder="NID" />
-										</div>
-										<div class="input-field col s12 m2 l2">
-											<input type="button" class="btn" value="Submit"
-												onclick="hide();">
-										</div>
-									</div>
-								</div>
-								</div>
-								</section>
-								<script type="text/javascript"
+		<div class="row card-panel">
+			<div class="container-fluid pageHeader">
+				<p class="PageHeading">Register Device</p>
+			</div>
+			<div class="row">
+				<div class="col s12 m12" style="margin-top: 20px;">
+					<div id="submitbtn">
+						<div class="input-field col s12 m1 l1">
+							<label for="Search" class="center-align ml-10">NID/Passport No. :</label>
+						</div>
+						<div class="input-field col s12 m3 l3">
+							<input type="text" id="Search" name="Search"
+								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
+								placeholder="NID/Passport No." />
+						</div>
+						<div class="input-field col s12 m2 l2">
+							<input type="button" class="btn" value="Submit" onclick="hide();">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
@@ -190,8 +195,8 @@ input[type='search'] {
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-		
-		<script type="text/javascript">
+
+	<script type="text/javascript">
 $('#btnLink').css({"display":"none"});	
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");

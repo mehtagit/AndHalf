@@ -227,7 +227,7 @@ public class UploadPaidStatus {
 			}
 			}else {
 			//input type date list
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","NID","nId",""};
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","NID/Passport No.","nId",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);
