@@ -91,6 +91,7 @@ public class TRC implements CRUD{
 			else {
 				if("CEIRAdmin".equals(userType)){
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String createdOn = trcContentModelList.getCreatedOn();
 						String requestedDate = trcContentModelList.getRequestDate();
 						String manufacturerName = trcContentModelList.getManufacturerName();
 						String country = trcContentModelList.getCountry();
@@ -102,13 +103,14 @@ public class TRC implements CRUD{
 						String txnId= trcContentModelList.getTxnId();
 						String fileName=trcContentModelList.getFile();
 						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName,txnId);
-						Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
+						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
 					}
 				}else {
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String createdOn = trcContentModelList.getCreatedOn();
 						String requestedDate = trcContentModelList.getRequestDate();
 						String manufacturerName = trcContentModelList.getManufacturerName();
 						String country = trcContentModelList.getCountry();
@@ -119,7 +121,7 @@ public class TRC implements CRUD{
 						String txnId= trcContentModelList.getTxnId();
 						String fileName=trcContentModelList.getFile();
 						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName,txnId);
-						Object[] data = {requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
+						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -176,20 +178,41 @@ public class TRC implements CRUD{
 			}			
 			pageElement.setButtonList(buttonList);
 			
-			//Dropdown items			
-			String[] selectParam= {"select","Status ","Status",""};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
+			
+			if("CEIRAdmin".equals(userType)) {
+				//Dropdown items
+				String[] selectParam= {"select","CEIR Admin Status ","Status",""};
+				for(int i=0; i< selectParam.length; i++) {
+					inputFields= new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
+				pageElement.setDropdownList(dropdownList);
+			}else {
+				//Dropdown items
+				String[] selectParam= {"select","Status ","Status",""};
+				for(int i=0; i< selectParam.length; i++) {
+					inputFields= new InputFields();
+					inputFields.setType(selectParam[i]);
+					i++;
+					inputFields.setTitle(selectParam[i]);
+					i++;
+					inputFields.setId(selectParam[i]);
+					i++;
+					inputFields.setClassName(selectParam[i]);
+					dropdownList.add(inputFields);
+				}
+				pageElement.setDropdownList(dropdownList);
 			}
-			pageElement.setDropdownList(dropdownList);
+						
+			
+			
 			
 			//input type date list		
 			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","TAC","tac",""};

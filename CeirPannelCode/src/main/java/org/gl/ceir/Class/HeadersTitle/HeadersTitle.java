@@ -74,7 +74,7 @@ public class HeadersTitle {
 	public   String tac = "TAC";
 	public   String approveRejectionDate = "Approve/Rejection Date";
 	public   String adminStatus = "CEIR Admin Status";
-
+	public   String trcStatus = "TRC Status";
 
 	//User Paid Status
 	public   String deviceIDType= "Device ID Type";
