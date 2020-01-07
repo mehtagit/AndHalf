@@ -240,7 +240,12 @@ public class ConsignmentServiceImpl {
 						}
 						logger.info("Array list to add is = " + consignmentStatus);
 
-						cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
+						if(!consignmentStatus.isEmpty()) {
+							cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
+						}else {
+							logger.warn("no status are predefined foe the user.");
+						}
+							
 					}
 				}
 			}
@@ -253,7 +258,7 @@ public class ConsignmentServiceImpl {
 			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
-				
+
 				for(StateMgmtDb stateMgmtDb : statusList) {
 					if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
 						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
@@ -344,12 +349,12 @@ public class ConsignmentServiceImpl {
 				logger.info("TxnId is null in the request.");
 				return new GenricResponse(1001, "TxnId is null in the request.", consignmentRequest.getTxnId());
 			}
-			
+
 			if(Objects.isNull(userType)) {
 				logger.info("userType is null in the request.");
 				return new GenricResponse(1002, "TxnId is null in the request.", consignmentRequest.getTxnId());
 			}
-			
+
 			ConsignmentMgmt consignment = consignmentRepository.getByTxnId(consignmentRequest.getTxnId());
 
 			if(Objects.isNull(consignment)) {

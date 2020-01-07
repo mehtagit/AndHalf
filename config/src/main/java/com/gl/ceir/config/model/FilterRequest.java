@@ -23,6 +23,7 @@ public class FilterRequest {
 	private Integer channel;
 	
 	private String tag;
+	private Integer status;
 
 	public Integer getUserId() {
 		return userId;
@@ -141,7 +142,12 @@ public class FilterRequest {
 	public void setChannel(Integer channel) {
 		this.channel = channel;
 	}
-	
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

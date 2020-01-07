@@ -183,6 +183,7 @@ public class ConfigurationManagementServiceImpl {
 			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
 				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
 			}
+			
 			return page;
 
 		} catch (Exception e) {
@@ -252,6 +253,9 @@ public class ConfigurationManagementServiceImpl {
 			if(Objects.nonNull(filterRequest.getTag()))
 				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getStatus()))
+				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			return policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
 		} catch (Exception e) {

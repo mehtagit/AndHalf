@@ -198,6 +198,10 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getSourceType())) {
+				srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
+			
 			if(Objects.nonNull(filterRequest.getRequestType())) {
 				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 			}else {
