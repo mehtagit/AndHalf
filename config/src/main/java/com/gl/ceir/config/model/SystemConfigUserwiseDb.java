@@ -34,6 +34,8 @@ public class SystemConfigUserwiseDb implements Serializable {
 	@NotNull
 	private Integer userTypeId;
 	
+	private Integer featureId;
+	
 	@NotNull
 	private Integer value;
 	
@@ -98,6 +100,13 @@ public class SystemConfigUserwiseDb implements Serializable {
 
 	public void setInterp(String interp) {
 		this.interp = interp;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
 	}
 
 	@Override

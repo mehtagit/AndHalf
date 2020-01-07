@@ -198,8 +198,28 @@ public class StolenAndRecoveryServiceImpl {
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getRequestType()))
+			if(Objects.nonNull(filterRequest.getRequestType())) {
 				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
+			}else {
+				if(Objects.nonNull(filterRequest.getFeatureId())) {
+					List<Integer> configuredRequestTypeOfFeature = new LinkedList<Integer>();
+					List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTagAndFeatureId(Tags.REQ_TYPE, filterRequest.getFeatureId());
+					logger.debug(systemConfigListDbs);
+
+					if(Objects.nonNull(systemConfigListDbs)) {	
+						for(SystemConfigListDb systemConfigListDb : systemConfigListDbs ) {
+							configuredRequestTypeOfFeature.add(systemConfigListDb.getValue());
+						}
+						logger.info("List of configuredRequestTypeOfFeature = " + configuredRequestTypeOfFeature);
+
+						if(!configuredRequestTypeOfFeature.isEmpty())
+							srsb.addSpecification(srsb.in("requestType", configuredRequestTypeOfFeature));
+						else{
+							logger.info("No predefined request type is configured for this request.");
+						}
+					}
+				}
+			}
 
 			if(Objects.nonNull(filterRequest.getSourceType())) 
 				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -218,8 +238,12 @@ public class StolenAndRecoveryServiceImpl {
 							configuredStatus.add(stateDb.getState());
 						}
 						logger.info("Array list to add is = " + configuredStatus);
-
-						srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
+						
+						if(!configuredStatus.isEmpty())
+							srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
+						else{
+							logger.info("No predefined status is configured for this request.");
+						}
 					}
 				}
 			}

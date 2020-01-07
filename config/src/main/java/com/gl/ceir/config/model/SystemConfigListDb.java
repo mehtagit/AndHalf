@@ -87,7 +87,6 @@ public class SystemConfigListDb implements Serializable {
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -103,8 +102,10 @@ public class SystemConfigListDb implements Serializable {
 		builder.append(value);
 		builder.append(", interp=");
 		builder.append(interp);
+		builder.append(", tagId=");
+		builder.append(tagId);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }

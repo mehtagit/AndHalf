@@ -261,18 +261,34 @@ public class ConfigurationController {
 		return mapping;
 	}
 	
-	@ApiOperation(value = "System Config List DB - view All Data", response = SystemConfigListDb.class)
+	@ApiOperation(value = "System Config List DB - by-tag-and-usertype", response = SystemConfigListDb.class)
 	@GetMapping("/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}")
 	public MappingJacksonValue findSystemConfigListByTagAndUserType(@PathVariable("tagId") String tagId, 
 			@PathVariable("userTypeId") int userTypeId) {
 
-		logger.info("Request to get system all details");
+		logger.info("Request to get system all details by by-tag-and-featureid/{" + tagId + "}/{" + userTypeId + "}");
 
 		List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTagAndUserType(tagId, userTypeId);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDbs);
 
-		logger.info("Response to send = " + systemConfigListDbs);
+		logger.info("Response to send on by-tag-and-usertype= " + systemConfigListDbs);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "System Config List DB - by-tag-and-featureid", response = SystemConfigListDb.class)
+	@GetMapping("/system-config-list/by-tag-and-featureid/{tagId}/{featureId}")
+	public MappingJacksonValue findSystemConfigListByTagAndfeatureId(@PathVariable("tagId") String tagId, 
+			@PathVariable("featureId") int featureId) {
+
+		logger.info("Request to get system all details by by-tag-and-featureid/{" + tagId + "}/{" + featureId + "}");
+
+		List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTagAndFeatureId(tagId, featureId);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDbs);
+
+		logger.info("Response to send on by-tag-and-featureid = " + systemConfigListDbs);
 
 		return mapping;
 	}

@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -341,7 +340,6 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	@Cacheable("system_config_list")
 	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
 		try {
 
@@ -355,34 +353,48 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	@Cacheable("system_config_list")
 	public List<SystemConfigListDb> getSystemConfigListByTagAndUserType(String tagId, int userTypeId){
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			List<SystemConfigListDb> systemConfigListDbResult = new LinkedList<>();
-
-			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findByTag(tagId);
-			List<SystemConfigUserwiseDb> systemConfigUserwiseDbs = systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId);
-
-			for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
-
-				for(SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
-
-					if(systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
-						systemConfigListDbResult.add(systemConfigListDb);
-						break;
-					}
-				}
-			}
-
-			return systemConfigListDbResult;
+			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+	
+	public List<SystemConfigListDb> getSystemConfigListByTagAndFeatureId(String tagId, int featureId){
+		try {
+
+			logger.debug("getSystemConfigListByTag : " + tagId);
+
+			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	private List<SystemConfigListDb> getSystemConfigListDb(List<SystemConfigListDb> systemConfigListDbs, List<SystemConfigUserwiseDb> systemConfigUserwiseDbs){
+		
+		List<SystemConfigListDb> systemConfigListDbResult = new LinkedList<>();
+		
+		for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
+
+			for(SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
+
+				if(systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
+					systemConfigListDbResult.add(systemConfigListDb);
+					break;
+				}
+			}
+		}
+		
+		return systemConfigListDbResult;
 	}
 
 }

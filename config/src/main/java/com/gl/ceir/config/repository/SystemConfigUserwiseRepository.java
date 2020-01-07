@@ -9,4 +9,6 @@ import com.gl.ceir.config.model.SystemConfigUserwiseDb;
 public interface SystemConfigUserwiseRepository extends JpaRepository<SystemConfigUserwiseDb, Long> {
 	
 	public List<SystemConfigUserwiseDb> findByTagIdAndUserTypeId(String tagId, int userTypeId);
+	
+	public List<SystemConfigUserwiseDb> findByTagIdAndFeatureId(String tagId, int featureId);
 }
