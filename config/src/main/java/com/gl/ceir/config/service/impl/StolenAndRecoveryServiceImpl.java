@@ -233,9 +233,6 @@ public class StolenAndRecoveryServiceImpl {
 				}
 			}
 
-			if(Objects.nonNull(filterRequest.getSourceType())) 
-				srsb.with(new SearchCriteria("sourceType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
-
 			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 				srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}else {
