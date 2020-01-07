@@ -1029,12 +1029,20 @@ public class IconsState {
 	/********************************** Icons for adminBlockUnblock **********************************/ 
 
 	public String adminBlockUnblock(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+		String file = fileName == null ? null : fileName.replace(" ", "%20");
 		
-		String viewAction="JavaScript:void(0);";
-		String downloadURL = "JavaScript:void(0);";
+		String viewAction="";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
 		String approveAction = "JavaScript:void(0);";
 		String rejectAction= "JavaScript:void(0);";
 		
+		if(source.equals("2")) {
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+		}
+		else if(source.equals("4")) {
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+		}
+		 
 		// state related Code 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";

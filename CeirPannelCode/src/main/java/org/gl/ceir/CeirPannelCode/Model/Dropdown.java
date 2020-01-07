@@ -9,6 +9,7 @@ public class Dropdown {
 	private Integer state;
 	private String interp;
 	private String value;
+	private String tagId;
 	public Integer getId() {
 		return id;
 	}
@@ -57,11 +58,19 @@ public class Dropdown {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	public String getTagId() {
+		return tagId;
+	}
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
+	}
 	@Override
 	public String toString() {
 		return "Dropdown [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", featureId="
 				+ featureId + ", userTypeId=" + userTypeId + ", state=" + state + ", interp=" + interp + ", value="
-				+ value + "]";
+				+ value + ", tagId=" + tagId + "]";
 	}
+	
+	
 	
 }

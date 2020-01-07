@@ -876,7 +876,7 @@ function redirectToViewStolenPage()
 
 function setAllDropdowns(){
 	//Request Type status-----------dropdown
-	$.getJSON('./getDropdownList/REQ_TYPE', function(data) {
+	$.getJSON('./getSourceTypeDropdown/REQ_TYPE/'+featureId+'', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#requestType');
@@ -884,7 +884,7 @@ function setAllDropdowns(){
 	});
 
 	//Source Type-----------dropdown
-	$.getJSON('./getDropdownList/SOURCE_TYPE', function(data) {
+	$.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#sourceStatus');
