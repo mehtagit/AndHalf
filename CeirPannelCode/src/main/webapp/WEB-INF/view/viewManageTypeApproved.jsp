@@ -214,27 +214,27 @@ textarea {
 		<h6 class="modal-header" > Update Report Type-Approve Devices</h6>
 		<div class="modal-content">
                                     
-
+<form action="" onsubmit="return updateReportTypeDevice()" method="post" style="margin-top: 30px;">
                                    
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editmanufacturerId" name="manufacturerId"
-                                                    placeholder="GHJ6487328" />
+                                                <input type="text" id="editmanufacturerId" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="10" name="manufacturerId"
+                                                    placeholder="" />
                                                 <label for="manufacturerId">Manufacturer ID</label>
                                                 <input type="text" id="transactionid" style="display: none">
                                                 <input type="text" id="columnid" style="display: none">
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editmanufacturerName" name="manufacturerName"
-                                                    placeholder="ABC Name" />
-                                                <label for="manufacturerName">Manufacturer Name <span
+                                                <input type="text" id="editmanufacturerName" name="manufacturerName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
+                                                    required="required" />
+                                                <label for="editmanufacturerName">Manufacturer Name <span
                                                         class="star">*</span></label>
                                             </div>
 
                                             <div class="col s12 m6 l6">
                                                 <label for="country">Country <span class="star">*</span></label>
-                                                <select id="editcountry" class="browser-default" class="mySelect"
+                                                <select id="editcountry"  required="required" class="browser-default" class="mySelect"
                                                     required></select>
                                             </div>
 
@@ -261,13 +261,13 @@ textarea {
 
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="edittac" name="tac" placeholder="FGJB263572" />
+                                                <input type="text" id="edittac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required" />
                                                 <label for="tac">TAC <span class="star">*</span></label>
                                             </div>
 
                                             <div class="col s12 m6 l6">
                                                 <label for="deviceType">Status <span class="star">*</span></label>
-                                                <select class="browser-default" id="editdeviceType">
+                                                <select class="browser-default" required="required" id="editdeviceType">
                                                     <option value="" disabled selected>Select Status</option>
                                                     <option value="0">Approved</option>
                                                     <option value="1">Rejected</option>
@@ -289,7 +289,7 @@ textarea {
 
                                             <div class="input-field col s12 m6 l6" style="margin-top: 9px;">
                                                 <textarea id="editRemark" class="materialize-textarea" style="padding: 0"
-                                                    placeholder="kjshdksahdkjsahdksajhdksad"></textarea>
+                                                    placeholder="" ></textarea>
                                                 <label for="Remark" style="margin-top: 7px">Remark </label>
                                             </div>
                                         </div>
@@ -300,10 +300,10 @@ textarea {
                                             <div class="file-field col s12 m6">
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input id="editUploadFile" type="file" multiple>
+                                                    <input id="editUploadFile" type="file"  multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
-                                                    <input class="file-path validate" type="text" id="editFileName" placeholder="file.csv"
+                                                    <input class="file-path validate" required="required" type="text" id="editFileName" placeholder=""
                                                         multiple>
                                                     <div>
                                                         <p id="myFiles"></p>
@@ -314,13 +314,14 @@ textarea {
                                         <span style="margin-left: 5px;"> Required Field are marked with <span
                                                 class="star">*</span></span>
                                             <div class="center" >
-                                                <button class="btn " onclick="updateReportTypeDevice()"
-                                                    type="submit">Update</button>
+                                                <button class="btn " type="submit">Update</button>
                                                 <!-- <a href="manageTypeDevices.html" class="btn" id="Cancel"
                                                     style="margin-left: 10px;">Cancel</a> -->
                                                     <button class="modal-close btn" style="margin-left: 10px;">Cancel</button>
                                             </div>
+                                            </form>
                                     </div>
+                                    
                                 </div>	
                                 
      <div id="updateManageTypeDevice" class="modal">

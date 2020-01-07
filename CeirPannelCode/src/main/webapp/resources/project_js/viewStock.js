@@ -163,7 +163,7 @@ function confirmantiondelete(){
 	var txnId= $("#stockdeleteTxnId").text();
 	var obj ={
 			"txnId" : txnId,
-			"roleType":role
+			"userType":role
 	}
 
 	$.ajax({
@@ -174,9 +174,12 @@ function confirmantiondelete(){
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
 			console.log(data);
-			
+			if(data.errorCode == 200){
 				$("#stockModalText").text(data.message);
-			    $("#materialize-lean-overlay-3").css("display","none");
+			}else if(data.errorCode == 0){
+				$("#stockModalText").text(data.message);
+			}
+			$("#materialize-lean-overlay-3").css("display","none");
 		},
 		error : function() {
 			console.log("Error");

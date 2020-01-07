@@ -86,7 +86,7 @@ public class PolicyConfigDatatable {
 					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   String action=iconState.policyConfigIcons(userStatus,tag);			   
-					   Object[] finalData={createdOn,modifiedOn,value,description,period,status,policyOrder,action}; 
+					   Object[] finalData={createdOn,modifiedOn,description,value,period,status,policyOrder,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	
@@ -158,19 +158,7 @@ public class PolicyConfigDatatable {
 			}
 			pageElement.setDropdownList(dropdownList);
 			
-			//input type date list		
-			String[] dateParam= {"text","Parameter Name","parametername",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
+		
 			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);

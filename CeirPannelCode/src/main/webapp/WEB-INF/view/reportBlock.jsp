@@ -69,6 +69,13 @@
 	href="${context}/resources/project_css/viewStock.css">
 <%-- <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css"> --%>
+	
+
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
@@ -96,7 +103,7 @@
                                                 </ul>
                                             </div>
                                             <div id="SingleImeiBlock" class="col s12" style="display:block; margin-top: 30px;">
-                                                 <form action="" onsubmit="return submitSingleBlockDevicesRequest()" method="POST" enctype="multipart/form-data">
+                                                 <form action="" id="SingleImeiBlockform" onsubmit="return submitSingleBlockDevicesRequest()" method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="row">
                                         
@@ -126,7 +133,7 @@
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[0-9]{1,15}" required="required"
+                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" required="required"
                                                                     title="Please enter your device serial number first" maxlength="15">
                                                                 <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
@@ -135,6 +142,56 @@
                                                                 <textarea id="singleblockremark" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="blockRemark">Remark <span class="star">*</span></label>
                                                             </div>
+                                                              <div class="col s12 m6"><label for="singleDeviceCategory">Category
+                                                            <span class="star">*</span></label>
+                                                        <select class="browser-default" id="singleDeviceCategory" required="required" >
+                                                            <option value="" disabled selected>Select Category
+                                                            </option>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                    
+                                                    
+               <div class="" style="margin-left: 36%; margin-top: -25px;">
+				BlockingType
+				<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+					value="Immediate"
+					onclick="document.getElementById('calender').style.display = 'none';"
+					name="stolenBlockPeriod" checked> Immediate
+				</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+					value="Default"
+					onclick="document.getElementById('calender').style.display = 'none';"
+					name="stolenBlockPeriod"> Default
+				</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+					onclick="document.getElementById('calender').style.display = 'block';"
+					name="stolenBlockPeriod"> Later
+				</label>
+				<div class="col s6 m2 responsiveDiv"
+					style="display: none; width: 30%;" id="calender">
+					<div id="startdatepicker" class="input-group date">
+						<input  type="text" id="stolenDatePeriod"
+							style="margin-top: -9px" /> <span class="input-group-addon"
+							style="color: #ff4081"><i class="fa fa-calendar"
+							aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+					</div>
+
+				</div>
+
+
+				<div class="col s12 m2 l2" style="width: 40%; display: none"
+					id="stolenDate">
+
+					<label for="TotalPrice" class="center-align">Till date</label>
+					<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+
+						<input class="form-control" name="inputsaves" type="text"
+							id="startDateFilter" readonly /> <span class="input-group-addon"
+							style="color: #ff4081"><i
+							class="glyphicon glyphicon-calendar"
+							onclick="_Services._selectstartDate()"></i></span>
+					</div>
+				</div>
+			</div>
                                                         </div>
                                                         <div class="row input_fields_wrap">
                                                             <div class="col s12 m12">
@@ -178,7 +235,7 @@
                                                 </form>
                                             </div>
                                             <div id="multipleImeiBlock" style="display: none" class="col s12">
-                                                <form action="" onsubmit="return submitBlockImei()" method="POST" enctype="multipart/form-data">
+                                                <form action="" id="multipleImeiBlockform" onsubmit="return submitBlockImei()" method="POST" enctype="multipart/form-data">
                                                 
                                                 <div class="col s12 m6"><label for="bulkBlockdeviceCategory">Category
                                                             <span class="star">*</span></label>
@@ -237,7 +294,7 @@
             
 
             <div class="row">
-                <h6>This file has been marked as block.</h6>
+                <h6>This file has been marked as block.The Transaction ID for future reference is : <span id="txnIdsingleImei"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -250,7 +307,7 @@
          <h6  class="modal-header">Mark As Block</h6>
         <div class="modal-content">
           <div class="row">
-                <h6 id="singleDeviceBlockMessage"> This device has been marked as block.</h6>
+                <h6 id="singleDeviceBlockMessage"> This device has been marked as block.The Transaction ID for future reference is : <span id="txnIdblockBulkDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -263,17 +320,13 @@
 
 <!--materialize js-->
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-
-
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+
+
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -283,6 +336,8 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/Validator.js"></script>
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -325,6 +380,23 @@
 				console.log('#blockdeviceIdType');
 			}
 		});
+		$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+			
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#bulkBlockdeviceCategory');
+				console.log('#bulkBlockdeviceCategory');
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#singleDeviceCategory');
+				console.log('#singleDeviceCategory');
+			}
+		});
+		
+		
+		
+		
+		
+		
 		</script>
 
 </body>

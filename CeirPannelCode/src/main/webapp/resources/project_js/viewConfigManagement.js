@@ -250,3 +250,7 @@ function setViewPopupData(data){
 	$("#remarks").val(data.remark);
 }
 
+
+function updateDetails(){
+	$("#editAdminSystemModel").openModal();
+}

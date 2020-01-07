@@ -144,7 +144,7 @@
 								<div class="row" style="margin-top: 5px;">
 
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="tac" pattern="[0-9]{7,7}" title="Please enter 7 digits tac number"  maxlength="7" required="required"
+										<input type="text" id="tac" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required"
 										 name="tac" /> <label for="tac">TAC
 											<span class="star">*</span>
 										</label>

@@ -7,7 +7,7 @@ var endDate=$('#endDate').val();
 
 $(document).ready(function(){
 	messageManagementDatatable();
-	/*pageRendering();*/
+	pageRendering();
 	
 });
 
@@ -88,6 +88,25 @@ function pageRendering(){
 				}
 				
 			} 
+			
+			// dynamic dropdown portion
+			var dropdown=data.dropdownList;
+			for(i=0; i<dropdown.length; i++){
+				var dropdownDiv=
+					$("#messageTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+							"<br>"+
+							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+							"<span class='caret'>"+"</span>"+
+							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+							"<option value='-1'>"+dropdown[i].title+
+							"</option>"+
+							"</select>"+
+							"</div>"+
+					"</div>");
+			}
+			
 			
 			$("#messageTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
 			for(i=0; i<button.length; i++){
@@ -224,4 +243,8 @@ function setViewPopupData(data){
 	$("#viewValue").val(data.value);
 	$("#description").val(data.description);
 
+}
+
+function updateDetails(){
+	$("#editMessageModel").openModal();
 }

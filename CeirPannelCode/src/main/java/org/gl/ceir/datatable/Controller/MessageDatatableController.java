@@ -76,13 +76,15 @@ public class MessageDatatableController {
 					for(MessageContentModel dataInsideList : paginationContentList) 
 					{
 					   String createdOn = (String) dataInsideList.getCreatedOn();
+					   String modifiedOn = (String) dataInsideList.getModifiedOn();
 					   String tag = dataInsideList.getTag();
-					   String value = dataInsideList.getValue();
 					   String description = dataInsideList.getDescription();
+					   String value = dataInsideList.getValue();
+					   String channel = "";
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 					   String action=iconState.adminMessageIcons(userStatus,tag);			   
-					   Object[] finalData={createdOn,tag,value,description,action}; 
+					   Object[] finalData={createdOn,modifiedOn,description,value,channel,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	
@@ -141,19 +143,20 @@ public class MessageDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			
-			//input type date list		
-			String[] dateParam= {"text","Parameter Name","parametername",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
+			//Dropdown items			
+			String[] selectParam= {"select","Channel","channel","",};
+			for(int i=0; i< selectParam.length; i++) {
+				inputFields= new InputFields();
+				inputFields.setType(selectParam[i]);
 				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
+				inputFields.setTitle(selectParam[i]);
 				i++;
-				dateRelatedFields.setId(dateParam[i]);
+				inputFields.setId(selectParam[i]);
 				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
+				inputFields.setClassName(selectParam[i]);
+				dropdownList.add(inputFields);
 			}
+			pageElement.setDropdownList(dropdownList);
 			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);

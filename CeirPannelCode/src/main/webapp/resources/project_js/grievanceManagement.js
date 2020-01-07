@@ -530,6 +530,15 @@ function grievanceCategory()
 
 $(document).ready(function(){
 	grievanceCategory();
+	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+	
+		for (i = 0; i < data.length; i++) {
+			console.log(data[i].interp);
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#docTypetag1');
+			
+		}
+	});
 	});
 
 
@@ -540,3 +549,45 @@ function cleanReplyPopUp()
 	console.log("reset form function");
 	$('#replymessageForm').trigger("reset");
 }
+
+
+
+
+
+
+    var max_fields = 15; //maximum input boxes allowed
+    var wrapper = $(".mainDiv"); //Fields wrapper
+    var add_button = $(".add_field_button"); //Add button ID
+    var x = 1; //initlal text box count
+    var id=2;
+    $(".add_field_button").click(function (e) { //on add input button click
+        e.preventDefault();
+        
+        if (x < max_fields) { //max input box allowed
+            x++; //text box increment
+            $(wrapper).append(
+                '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" name="files[]" id="filer_input" multiple="multiple" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">-</div></div></div>'
+            ); //add input box
+        }
+    	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+    	
+    		
+    		for (i = 0; i < data.length; i++) {
+    			console.log(data[i].interp);
+    			var optionId=id-1;
+    			$('<option>').val(data[i].value).text(data[i].interp)
+    			.appendTo('#docTypetag'+optionId);
+    			console.log('#docTypetag'+optionId);
+    			
+    		}
+    	});
+    	id++;
+    	
+    });
+    $(".mainDiv").on("click", ".remove_field", function (e) { //user click on remove text
+        e.preventDefault();
+        $(this).parent('div').remove();
+        x--;
+        id--
+    })
+

@@ -29,7 +29,7 @@ function typeApprovedDataTable(){
 //**************************************************Type Approved table**********************************************
 
 function Datatable(Url,dataUrl){
-	if(userType=="CEIRAdmin"){
+if(userType=="CEIRAdmin"){
 		var userId = 0;
 	}else{
 		var userId = parseInt($("body").attr("data-userID"))
@@ -232,6 +232,7 @@ populateCountries
 
 function updateReportTypeDevice()
 {
+	
 	var manufacturerId=$("#editmanufacturerId").val();
 	var manufacturerName=$("#editmanufacturerName").val();
 	 var country=$("#editcountry").val();
@@ -269,28 +270,13 @@ function updateReportTypeDevice()
 			
 				console.log(data);
 				$('#updateManageTypeDevice').openModal();
-				/*if(data.errorCode=="200")
-				 {
-				 console.log("status code = 0");
-				$('#updateTacMessage').text('');
-				$('#updateTacMessage').append(data.message);
-				$('#errorCode').val(data.errorCode);
-				 }
-				else if(data.errorCode=="204")
-				 {
-				console.log("status code = 3"); 
-				$('#updateTacMessage').text('');
-				$('#updateTacMessage').text(data.message);
-				$('#errorCode').val(data.errorCode);
-				 }
-				// $('#updateConsignment').modal('open'); 
-				//alert("success");
-*/				 
+					 
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
 			}
 		});
+		return false;
 }
 
 
@@ -324,9 +310,6 @@ function exportTacData()
 	
 	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
-
-
-
 
 
 function openApproveTACPopUp(txnId,	manufacturerName)

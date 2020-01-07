@@ -100,7 +100,9 @@ public class UploadPaidStatus {
 			}
 			else if("Custom".equals(userType)) {
 				log.info("in Custom Userpaid Status---" +userType);
+				
 				for(UserPaidStatusContent contentModelList : contentList) {
+					String nid = contentModelList.getNid();
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
@@ -114,7 +116,7 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
-					Object[] data = {sno,createdOn,deviceIDInterp,deviceTypeInterp,price,country,status,action};
+					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
