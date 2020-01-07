@@ -78,7 +78,7 @@ public class EmailUtil {
 		javaMailSender.send(message);
 	}
 
-	public boolean sendMessageAndSaveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
+	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
 			String featureName, String subFeature, String featureTxnId, String subject) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag(tag);

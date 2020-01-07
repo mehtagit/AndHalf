@@ -2,7 +2,12 @@ package com.gl.ceir.config.model.constants;
 
 public enum StolenStatus {
 	
-	INIT(0, "INIT"), PROCESSING(1, "Processing"), SUCCESS(2, "Success"), ERROR(3, "Error");
+	INIT(0, "INIT"), 
+	PROCESSING(1, "Processing"), 
+	PENDING_APPROVAL_FROM_CEIR_ADMIN(2, "Pending Approval From CEIR Admin"), 
+	ERROR(3, "Error"),
+	REJECTED_BY_CEIR_ADMIN(4, "Rejected CEIR Admin"),
+	APPROVED_BY_CEIR_ADMIN(4, "Approved CEIR Admin");
 
 	private int code;
 	private String desc;

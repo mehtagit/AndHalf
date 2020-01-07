@@ -22,10 +22,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -38,12 +41,15 @@ import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.StolenStatus;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
@@ -54,8 +60,9 @@ import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
+import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
-import com.gl.ceir.config.specificationsbuilder.StolenAndRecoverySpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -97,6 +104,12 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
+
+	@Autowired
+	UserProfileRepository userProfileRepository;
+
+	@Autowired
+	EmailUtil emailUtil;
 
 	@Transactional
 	public GenricResponse uploadDetails( StolenandRecoveryMgmt stolenandRecoveryDetails) {
@@ -166,10 +179,12 @@ public class StolenAndRecoveryServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			StolenAndRecoverySpecificationBuilder srsb = new StolenAndRecoverySpecificationBuilder(propertiesReader.dialect);
+			SpecificationBuilder<StolenandRecoveryMgmt> srsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
-			if(Objects.nonNull(filterRequest.getUserId()))
-				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
+				if(Objects.nonNull(filterRequest.getUserId()))
+					srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
 
 			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 				srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -204,7 +219,7 @@ public class StolenAndRecoveryServiceImpl {
 						}
 						logger.info("Array list to add is = " + configuredStatus);
 
-						srsb.addSpecification(srsb.in(new SearchCriteria("consignmentStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.INT), configuredStatus));
+						srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
 					}
 				}
 			}
@@ -470,7 +485,7 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public StolenandRecoveryMgmt getByTxnId(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
 			return stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
@@ -500,5 +515,99 @@ public class StolenAndRecoveryServiceImpl {
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
+	}
+
+	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
+		try {
+			UserProfile userProfile = null;
+			StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
+
+			// Fetch user_profile to update user over mail/sms regarding the action.
+			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
+
+			if(Objects.isNull(stolenandRecoveryMgmt)) {
+				String message = "TxnId Does not Exist";
+				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
+				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
+			}
+
+			// 0 - Accept, 1 - Reject
+			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				String mailTag = null;
+				String action = null;
+				if(consignmentUpdateRequest.getAction() == 0) {
+					action = SubFeatures.ACCEPT;
+
+					if(consignmentUpdateRequest.getRequestType() == 0) {
+						mailTag = "STOLEN_APPROVED_BY_CEIR_ADMIN";
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_APPROVED_BY_CEIR_ADMIN";
+					}else if(consignmentUpdateRequest.getRequestType() == 2){
+						mailTag = "BLOCK_APPROVED_BY_CEIR_ADMIN";
+					}else if(consignmentUpdateRequest.getRequestType() == 3){
+						mailTag = "UNBLOCK_APPROVED_BY_CEIR_ADMIN";
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+					}
+
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.APPROVED_BY_CEIR_ADMIN.getCode());
+
+				}else {
+					action = SubFeatures.REJECT;
+
+					if(consignmentUpdateRequest.getRequestType() == 0) {
+						mailTag = "STOLEN_REJECT_BY_CEIR_ADMIN";
+					}else if(consignmentUpdateRequest.getRequestType() == 1){
+						mailTag = "RECOVERY_REJECT_BY_CEIR_ADMIN";
+					}else if(consignmentUpdateRequest.getRequestType() == 2){
+						mailTag = "BLOCK_REJECT_BY_CEIR_ADMIN";
+					}else if(consignmentUpdateRequest.getRequestType() == 3){
+						mailTag = "UNBLOCK_REJECT_BY_CEIR_ADMIN";
+					}else {
+						logger.warn("unknown request type received for stolen and recovery.");
+						return new GenricResponse(2, "unknown request type received for stolen and recovery.", consignmentUpdateRequest.getTxnId());
+					}
+
+					stolenandRecoveryMgmt.setFileStatus(StolenStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					stolenandRecoveryMgmt.setRemark(consignmentUpdateRequest.getRemarks());
+
+				}
+
+				if(!updateStatusWithHistory(stolenandRecoveryMgmt)) {
+					logger.warn("Unable to update Stolen and recovery entity.");
+					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
+				}else {
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							consignmentUpdateRequest.getFeatureId(),
+							Features.STOLEN_RECOVERY,
+							action,
+							consignmentUpdateRequest.getTxnId(),
+							MailSubjects.SUBJECT);
+					logger.info("Notfication have been saved.");
+				}
+			}else {
+				logger.warn("Accept/reject of Stock not allowed to you.");
+				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
+			}
+
+			return new GenricResponse(0, "Stolen/Block request Updated SuccessFully.", consignmentUpdateRequest.getTxnId());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@Transactional
+	private boolean updateStatusWithHistory(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		boolean status = Boolean.FALSE;
+
+		stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
+		stolenAndRecoveryHistoryMgmtRepository.save(
+				new StolenAndRecoveryHistoryMgmt(stolenandRecoveryMgmt.getTxnId(), stolenandRecoveryMgmt.getFileStatus())
+				);
+		status = Boolean.TRUE;
+		return status;
 	}
 }

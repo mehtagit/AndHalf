@@ -3,18 +3,13 @@ package com.gl.ceir.config.model;
 public class ConsignmentUpdateRequest {
 
 	private int action;
-	
 	private String roleType;
-	
 	private Long userId;
-	
 	private Long roleTypeUserId;
-	
 	private String txnId;
-	
 	private String remarks;
-	
 	private Integer featureId;
+	private Integer requestType;
 	
 	public int getAction() {
 		return action;
@@ -58,7 +53,12 @@ public class ConsignmentUpdateRequest {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
-	
+	public Integer getRequestType() {
+		return requestType;
+	}
+	public void setRequestType(Integer requestType) {
+		this.requestType = requestType;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

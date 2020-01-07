@@ -435,7 +435,7 @@ public class StockServiceImpl {
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
 					stockManagementRepository.save(stockMgmt);	
 
-					emailUtil.sendMessageAndSaveNotification("STOCK_APPROVED_BY_CEIR_ADMIN", 
+					emailUtil.saveNotification("STOCK_APPROVED_BY_CEIR_ADMIN", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,
@@ -448,7 +448,7 @@ public class StockServiceImpl {
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					stockManagementRepository.save(stockMgmt);
 
-					emailUtil.sendMessageAndSaveNotification("STOCK_REJECT_BY_CEIR_ADMIN", 
+					emailUtil.saveNotification("STOCK_REJECT_BY_CEIR_ADMIN", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,

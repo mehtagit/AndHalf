@@ -406,7 +406,7 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
 						consignmentRepository.save(consignmentMgmt);	
 
-						emailUtil.sendMessageAndSaveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
+						emailUtil.saveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT,
@@ -419,7 +419,7 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentRepository.save(consignmentMgmt);
 
-						emailUtil.sendMessageAndSaveNotification("Consignment_Approved_CustomImporter_Email_Message", 
+						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT, 
@@ -436,7 +436,7 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentRepository.save(consignmentMgmt);
 
-					emailUtil.sendMessageAndSaveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
+					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
@@ -450,7 +450,7 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					consignmentRepository.save(consignmentMgmt);
 
-					emailUtil.sendMessageAndSaveNotification("Consignment_Rejected_Custom_Email_Message", 
+					emailUtil.saveNotification("Consignment_Rejected_Custom_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,

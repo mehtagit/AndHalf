@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -206,6 +207,16 @@ public class StolenAndRecoveryController {
 
 		MappingJacksonValue mapping = new MappingJacksonValue(mgmt);
 		return mapping;
+	}
+	
+	@ApiOperation(value = "Accept Reject Stolen/Recovery/Block/Unblock.", response = GenricResponse.class)
+	@RequestMapping(path = "accept-reject/stolen-recovery-block-unblock", method = RequestMethod.PUT)
+	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest acceptRejectRequest) {
 
+		logger.info("Request to accept/reject the stolen-recovery-block-unblock = " + acceptRejectRequest);
+
+		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.acceptReject(acceptRejectRequest);
+
+		return genricResponse ;
 	}
 }

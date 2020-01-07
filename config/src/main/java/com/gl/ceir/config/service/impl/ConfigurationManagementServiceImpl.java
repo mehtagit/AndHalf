@@ -198,7 +198,7 @@ public class ConfigurationManagementServiceImpl {
 			return messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
@@ -208,9 +208,11 @@ public class ConfigurationManagementServiceImpl {
 		try {
 
 			MessageConfigurationDb mcd = messageConfigurationDbRepository.getById(messageConfigurationDb.getId());
+			
 			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
+			
 			MessageConfigurationHistoryDb mshb = new MessageConfigurationHistoryDb();
 			mshb.setDescription(mcd.getDescription());
 			mshb.setTag(mcd.getTag());
@@ -226,7 +228,7 @@ public class ConfigurationManagementServiceImpl {
 
 		} catch (Exception e) {
 
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
 		}
 	}
@@ -237,7 +239,7 @@ public class ConfigurationManagementServiceImpl {
 			return policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
@@ -254,7 +256,7 @@ public class ConfigurationManagementServiceImpl {
 			return policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -265,7 +267,7 @@ public class ConfigurationManagementServiceImpl {
 			return policyConfigurationDbRepository.findAll();
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
@@ -295,7 +297,7 @@ public class ConfigurationManagementServiceImpl {
 
 		} catch (Exception e) {
 
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
 		}
 	}
@@ -308,7 +310,7 @@ public class ConfigurationManagementServiceImpl {
 
 			return new GenricResponse(0, "Audit trail save Sucess fully", "");
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -320,7 +322,7 @@ public class ConfigurationManagementServiceImpl {
 			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
@@ -334,7 +336,7 @@ public class ConfigurationManagementServiceImpl {
 
 			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}

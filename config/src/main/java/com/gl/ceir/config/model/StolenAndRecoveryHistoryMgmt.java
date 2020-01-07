@@ -45,6 +45,15 @@ public class StolenAndRecoveryHistoryMgmt implements Serializable {
 	private String blockingTimePeriod;
 	
 	private Integer sourceType;
+	
+	public StolenAndRecoveryHistoryMgmt() {
+
+	}
+	
+	public StolenAndRecoveryHistoryMgmt(String txnId, int fileStatus) {
+		this.txnId = txnId;
+		this.fileStatus = fileStatus;
+	}
 
 	public Long getId() {
 		return id;
