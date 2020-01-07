@@ -4,10 +4,10 @@ var currentRoleType = $("body").attr("data-stolenselected-roleType");
 var role = currentRoleType == null ? roleType : currentRoleType;
 
 var userType = $("body").attr("data-roleType");
-if(userType == "Operator"){
+if(userType == "Operator" || userType == "CEIRAdmin" ){
 	var featureId="7";
 }else{
-	var featureId="5";
+	var featureId="5"; //this check is for stolen & recovery
 }
 
 
@@ -305,6 +305,8 @@ var sourceType = localStorage.getItem("sourceType");
 function filterStolen(){
 	if(userType=="Operator"){
 		Datatable('./headers?type=blockUnblock','stolenData')
+	}else if(userType =="CEIRAdmin"){
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData')
 	}else if(sourceType !="viaExistingRecovery"){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){
@@ -319,10 +321,11 @@ function Datatable(url,dataUrl){
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"txnId":$('#transactionID').val(),
-			"consignmentStatus":parseInt($('#status').val()),
+			//"consignmentStatus":parseInt($('#status').val()),
 			"requestType":parseInt($('#requestType').val()),
 			"sourceType":parseInt($('#sourceStatus').val()),
-			"roleType": role,
+			"fileStatus" : parseInt($('#status').val()),
+			//"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -470,6 +473,10 @@ function pageElements(url){
 	}); 
 
 	setAllDropdowns();
+	if(userType=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+		}
+
 }	 
 
 function fileStolenReport(){
@@ -869,7 +876,7 @@ function redirectToViewStolenPage()
 
 function setAllDropdowns(){
 	//Request Type status-----------dropdown
-	$.getJSON('./getDropdownList/STOLEN_REQ_TYPE', function(data) {
+	$.getJSON('./getDropdownList/REQ_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#requestType');
@@ -877,7 +884,7 @@ function setAllDropdowns(){
 	});
 
 	//Source Type-----------dropdown
-	$.getJSON('./getDropdownList/STOLEN_SOURCE_TYPE', function(data) {
+	$.getJSON('./getDropdownList/SOURCE_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#sourceStatus');
@@ -893,12 +900,7 @@ function setAllDropdowns(){
 		}
 	});
 	
-	$.getJSON('./getTypeDropdownList/SOURCE_TYPE/'+$("body").attr("data-userTypeID"), function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#mode');
-		}
-	});
+	
 }
 
 

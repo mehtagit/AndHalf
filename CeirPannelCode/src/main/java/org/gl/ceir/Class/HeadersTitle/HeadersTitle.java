@@ -89,6 +89,7 @@ public class HeadersTitle {
 
 	//Block/unblock
 	public   String mode= "Mode";
+	public   String operator= "Operator";
 
 	//Admin Message Management
 		public String parameterName= "Parameter Name";

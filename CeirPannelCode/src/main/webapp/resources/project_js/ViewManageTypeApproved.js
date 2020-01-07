@@ -38,6 +38,7 @@ if(userType=="CEIRAdmin"){
 	"endDate":$('#endDate').val(),
 	"startDate":$('#startDate').val(),
   	"tac" : $('#tac').val(),
+  	"txnId" : $('#transactionID').val(),
   	"userId":userId,
 	"featureId":parseInt(featureId),
 	"userTypeId": parseInt($("body").attr("data-userTypeID")),

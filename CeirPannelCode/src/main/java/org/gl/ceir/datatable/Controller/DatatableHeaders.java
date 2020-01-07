@@ -251,6 +251,16 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			//BlockUnblockCEIRAdmin Headers 
+			
+			else if("BlockUnblockCEIRAdmin".equals(role)) {
+				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.operator,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 		
 		
 			
