@@ -49,7 +49,7 @@ if(userType=="CEIRAdmin"){
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			var table=	$("#typeAprroveTable").DataTable({
+			var table=	$("#typeAprroveTable").removeAttr('width').DataTable({
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
@@ -68,7 +68,13 @@ if(userType=="CEIRAdmin"){
 					}
 
 				},
-				"columns": result
+				"columns": result,
+				fixedColumns: true,
+				columnDefs: [
+		            { width: 142, targets: result.length - 1 },
+		            { width: 143, targets: 0 },
+		            { width: 75, targets: 2 }
+			]
 			});
 			
 			$('#typeAprroveTable input').unbind();

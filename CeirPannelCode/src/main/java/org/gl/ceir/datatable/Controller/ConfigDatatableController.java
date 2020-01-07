@@ -119,7 +119,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("System Config Management");
+		pageElement.setPageTitle("System Management");
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
