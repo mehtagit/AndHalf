@@ -52,6 +52,15 @@ public class StockMgmtHistoryDb implements Serializable {
 	@Column(length = 3)
 	private int stockStatus;
 
+	public StockMgmtHistoryDb() {
+
+	}
+
+	public StockMgmtHistoryDb(String txnId, int status) {
+		this.txnId = txnId;
+		this.stockStatus = status;
+	}
+
 	public Long getId() {
 		return id;
 	}

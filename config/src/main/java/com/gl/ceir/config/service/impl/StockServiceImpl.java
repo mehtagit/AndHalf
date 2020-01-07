@@ -35,6 +35,7 @@ import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
@@ -49,11 +50,12 @@ import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
+import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
-import com.gl.ceir.config.specificationsbuilder.StockMgmtSpecificationBuiler;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -72,6 +74,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	StockManagementRepository stockManagementRepository;
+
+	@Autowired
+	StockMgmtHistoryRepository stockMgmtHistoryRepository;
 
 	@Autowired
 	StockDetailsOperationRepository stockDetailsOperationRepository;
@@ -152,7 +157,7 @@ public class StockServiceImpl {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
 			// stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			StockMgmtSpecificationBuiler smsb = new StockMgmtSpecificationBuiler(propertiesReader.dialect);
+			SpecificationBuilder<StockMgmt> smsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
 			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 					"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -192,9 +197,13 @@ public class StockServiceImpl {
 						for(StateMgmtDb stateDb : statusList ) {
 							stockStatus.add(stateDb.getState());
 						}
-						
+
 						logger.info("Array list to add is = " + stockStatus);
-						smsb.addSpecification(smsb.in("stockStatus", stockStatus));
+						if(!statusList.isEmpty()) {
+							smsb.addSpecification(smsb.in("stockStatus", stockStatus));
+						}else {
+							logger.warn("no predefined status are available.");
+						}
 					}
 				}
 			}
@@ -204,7 +213,7 @@ public class StockServiceImpl {
 			}
 
 			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
-			
+
 			logger.info(statusList);
 
 			for(StockMgmt stockMgmt : page.getContent()) {
@@ -247,18 +256,18 @@ public class StockServiceImpl {
 				logger.info("TxnId is null in the request.");
 				return new GenricResponse(1001, "TxnId is null in the request.", stockMgmt.getTxnId());
 			}
-			
+
 			if(Objects.isNull(userType)) {
 				logger.info("userType is null in the request.");
 				return new GenricResponse(1002, "TxnId is null in the request.", stockMgmt.getTxnId());
 			}
-			
+
 			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(stockMgmt.getTxnId());
 
 			if(Objects.isNull(txnRecord)) {
 				return new GenricResponse(1000, "No record found against this transactionId.", stockMgmt.getTxnId());
 			}else {
-				
+
 				if("CEIRADMIN".equalsIgnoreCase(userType))
 					txnRecord.setStockStatus(StockStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
 				else
@@ -412,8 +421,6 @@ public class StockServiceImpl {
 		}
 	}
 
-
-	@Transactional
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
@@ -430,32 +437,35 @@ public class StockServiceImpl {
 
 			// 0 - Accept, 1 - Reject
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
+				String mailTag = null;
+				String action = null;
+
 				if(consignmentUpdateRequest.getAction() == 0) {
-
+					action = SubFeatures.ACCEPT;
+					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
-					stockManagementRepository.save(stockMgmt);	
-
-					emailUtil.saveNotification("STOCK_APPROVED_BY_CEIR_ADMIN", 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.STOCK,
-							SubFeatures.ACCEPT,
-							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
-
 				}else {
+					action = SubFeatures.REJECT;
+					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					stockManagementRepository.save(stockMgmt);
+				}
 
-					emailUtil.saveNotification("STOCK_REJECT_BY_CEIR_ADMIN", 
+				// Update Stock and its history.
+				if(!updateStatusWithHistory(stockMgmt)){
+					logger.warn("Unable to update Stolen and recovery entity.");
+					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
+				}else {
+					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,
-							SubFeatures.REJECT,
+							action,
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT);
+					logger.info("Notfication have been saved.");
 				}
+				
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());
@@ -469,4 +479,15 @@ public class StockServiceImpl {
 		}
 	}
 
+	@Transactional
+	private boolean updateStatusWithHistory(StockMgmt stockMgmt) {
+		boolean status = Boolean.FALSE;
+
+		stockManagementRepository.save(stockMgmt);
+		stockMgmtHistoryRepository.save(
+				new StockMgmtHistoryDb(stockMgmt.getTxnId(), stockMgmt.getStockStatus())
+				);
+		status = Boolean.TRUE;
+		return status;
+	}
 }
