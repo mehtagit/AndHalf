@@ -95,12 +95,18 @@ public class StateMgmtServiceImpl {
 			logger.info("Going to get states by featureId and usertypeId ");
 
 			List<StateMgmtDb> stateMgmtDbs = stateMgmtRepository.getByFeatureIdAndUserTypeId(featureId, userTypeId);
-
+			
+			logger.info("StateMgmtDb : For featureId [" + featureId + "] and userTypeId [ " + userTypeId + "] " + stateMgmtDbs);
+			
 			for(StateMgmtDb stateMgmtDb : stateMgmtDbs) {
 
 				actionConfigDbs = actionConfigRepository.getByStateId(stateMgmtDb.getId());
+				logger.info("actionConfigDbs : For id [" + stateMgmtDb.getId() + "] " + actionConfigDbs);
+				
 				tableActions = new TableActions();
-
+				tableActions.setStateId(stateMgmtDb.getId());
+				tableActions.setState(stateMgmtDb.getState());
+				
 				for(ActionsConfigDb actionConfigDb : actionConfigDbs) {
 
 					switch(actionConfigDb.getAction()) {
@@ -127,6 +133,8 @@ public class StateMgmtServiceImpl {
 						break;
 					}
 				}
+				
+				tableActionsList.add(tableActions);
 			}
 
 			return tableActionsList;

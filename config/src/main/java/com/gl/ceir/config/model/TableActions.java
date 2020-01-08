@@ -8,7 +8,7 @@ public class TableActions implements Serializable {
 
 	private Integer state;
 	
-	private Integer stateId;
+	private Long stateId;
 
 	private String view;
 
@@ -32,11 +32,11 @@ public class TableActions implements Serializable {
 		this.state = state;
 	}
 
-	public Integer getStateId() {
+	public Long getStateId() {
 		return stateId;
 	}
 
-	public void setStateId(Integer stateId) {
+	public void setStateId(Long stateId) {
 		this.stateId = stateId;
 	}
 
