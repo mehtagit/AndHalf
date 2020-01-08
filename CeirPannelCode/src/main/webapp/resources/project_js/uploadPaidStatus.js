@@ -436,16 +436,16 @@ function viewDetails(imei){
 
 
 function setViewPopupData(data){
-	console.log("**************data*******"+data);
+	console.log("**************data*******"+JSON.stringify(data));
 	$("#viewdeviceType").val(data.deviceTypeInterp);
 	$("#viewdeviceIdType").val(data.deviceIdTypeInterp);
-	$("#viewsimStatus").val(data.multiSimStatus);
+	$("#viewsimStatus").val(data.multiSimStatusInterp);
 	$("#viewcountryBought").val(data.country);
 	$("#viewserialNumber").val(data.deviceSerialNumber);
 	$("#viewtaxStatus").val(data.taxPaidStatusInterp);
 	$("#viewdeviceStatus").val(data.deviceStatusInterp);
 	$("#viewPrice").val(data.price);
-	$("#viewcurrency").val(data.currency);
+	$("#viewcurrency").val(data.currencyInterp);
 	$("#viewIMEI1").val(data.firstImei);
 	$("#viewIMEI2").val(data.secondImei); 
 	$("#IMEI3").val(data.thirdImei);

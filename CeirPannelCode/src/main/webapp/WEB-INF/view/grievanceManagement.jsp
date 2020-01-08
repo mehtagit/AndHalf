@@ -125,7 +125,8 @@ var path="${context}";
                 </div>
                
                 <div class="col s12 m12">
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder="Remark *"></textarea>
+                  <label for="replyRemark" style="margin-top: 7px">Remark <span class="star">*</span></label>
+                    <textarea id="replyRemark" class="materialize-textarea" placeholder=""></textarea>
                     <h6 style="color: #000;">Upload Supporting Document </h6>
                 </div>
                 <div class="file-field col s12 m12">

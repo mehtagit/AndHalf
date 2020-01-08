@@ -1,20 +1,23 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class SingleImeiDetailsModel {
-	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,modifiedOn,multipleSimStatusInterp,remark,txnId,userType;
+	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,modifiedOn,multipleSimStatusInterp,remark,txnId,userType,blockingTimePeriod,blockingType;
 	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType;
 	private long  deviceSerialNumber,firstImei,fourthImei,secondImei,thirdImei,userId,id;
+	
+	
+	
 	@Override
 	public String toString() {
 		return "SingleImeiDetailsModel [categoryInterp=" + categoryInterp + ", createdOn=" + createdOn
 				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", deviceTypeInterp=" + deviceTypeInterp
 				+ ", modifiedOn=" + modifiedOn + ", multipleSimStatusInterp=" + multipleSimStatusInterp + ", remark="
-				+ remark + ", txnId=" + txnId + ", userType=" + userType + ", category=" + category + ", deviceIdType="
-				+ deviceIdType + ", deviceType=" + deviceType + ", multipleSimStatus=" + multipleSimStatus
-				+ ", processState=" + processState + ", requestType=" + requestType + ", sourceType=" + sourceType
-				+ ", deviceSerialNumber=" + deviceSerialNumber + ", firstImei=" + firstImei + ", fourthImei="
-				+ fourthImei + ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + ", userId=" + userId
-				+ ", id=" + id + "]";
+				+ remark + ", txnId=" + txnId + ", userType=" + userType + ", blockingTimePeriod=" + blockingTimePeriod
+				+ ", blockingType=" + blockingType + ", category=" + category + ", deviceIdType=" + deviceIdType
+				+ ", deviceType=" + deviceType + ", multipleSimStatus=" + multipleSimStatus + ", processState="
+				+ processState + ", requestType=" + requestType + ", sourceType=" + sourceType + ", deviceSerialNumber="
+				+ deviceSerialNumber + ", firstImei=" + firstImei + ", fourthImei=" + fourthImei + ", secondImei="
+				+ secondImei + ", thirdImei=" + thirdImei + ", userId=" + userId + ", id=" + id + "]";
 	}
 	public String getCategoryInterp() {
 		return categoryInterp;
@@ -153,6 +156,18 @@ public class SingleImeiDetailsModel {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	public String getBlockingTimePeriod() {
+		return blockingTimePeriod;
+	}
+	public void setBlockingTimePeriod(String blockingTimePeriod) {
+		this.blockingTimePeriod = blockingTimePeriod;
+	}
+	public String getBlockingType() {
+		return blockingType;
+	}
+	public void setBlockingType(String blockingType) {
+		this.blockingType = blockingType;
 	}
 	
 	

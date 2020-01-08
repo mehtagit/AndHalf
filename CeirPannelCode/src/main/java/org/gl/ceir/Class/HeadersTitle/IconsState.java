@@ -852,7 +852,8 @@ public class IconsState {
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
 		
-		if(source.equals("2")) {
+		
+		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			 viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
 				
@@ -1069,6 +1070,5 @@ public class IconsState {
 		return action;
 
 	}
-	
 }
 

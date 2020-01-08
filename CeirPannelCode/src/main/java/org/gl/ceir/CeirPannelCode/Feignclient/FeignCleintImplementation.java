@@ -266,8 +266,6 @@ public @ResponseBody MessageContentModel viewMessageFeign(FilterRequest filterRe
 @PostMapping("/system/viewTag")
 public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterRequest);
 
-//***************************************************Block/Unbock  Mode & Status Dropdown********************************
-
 
 		@RequestMapping(value="/system-config-list/by-tag-and-featureid/{tagId}/{featureId}" ,method=RequestMethod.GET) 
 		public List<Dropdown> modeType(@PathVariable("tagId") String tagId, @PathVariable("featureId") Integer featureId);

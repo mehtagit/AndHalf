@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySources({
-@PropertySource("classpath:messages.properties")
-			})
+	@PropertySource("classpath:messages.properties")
+})
 
 public class HeadersTitle {
 
@@ -80,7 +80,7 @@ public class HeadersTitle {
 	public   String deviceIDType= "Device ID Type";
 	public   String deviceType= "Device Type";
 	public   String price = "Price";
-	public   String nid = "NID";
+	public   String nid = "NID/Passport No.";
 
 
 	//operator Grey/Black List
@@ -92,18 +92,18 @@ public class HeadersTitle {
 	public   String operator= "Operator";
 
 	//Admin Message Management
-		public String parameterName= "Parameter Name";
-		public  String description= "Description";
-		public  String value= "Value";
-		public  String channel= "Channel";
-		
-		//Admin Config Management
-		public  String type="Type";
-		public  String remarks="Remark";
-		
-	
-		//Admin Config Management
-		public  String period="Period";
-		public  String policyOrder="Policy Order";
-		
+	public String parameterName= "Parameter Name";
+	public  String description= "Description";
+	public  String value= "Value";
+	public  String channel= "Channel";
+
+	//Admin Config Management
+	public  String type="Type";
+	public  String remarks="Remark";
+
+
+	//Admin Config Management
+	public  String period="Period";
+	public  String policyOrder="Policy Order";
+
 }

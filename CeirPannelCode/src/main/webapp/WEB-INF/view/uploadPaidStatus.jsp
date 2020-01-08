@@ -451,7 +451,7 @@ input[type='search'] {
 
 										<div class="col s12 m12 center" style="margin-top: 30px;">
 											<button class="btn " type="submit">Submit</button>
-											<a  href='./uploadPaidStatus' class="btn"
+											<a  href='./uploadPaidStatus?via=other' class="btn"
 												style="margin-left: 10px;">Cancel</a>
 										</div>
 

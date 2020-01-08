@@ -586,7 +586,7 @@
 						Range Device entry</a><br> <br>
 				</div>
 			</div>
-			<div style="margin-left: 36%; margin-top: -25px;">
+<!-- 			<div style="margin-left: 36%; margin-top: -25px;">
 				<label style="margin-right: 2%;"> <input type="radio" id=""
 					value="Immediate"
 					onclick="document.getElementById('calender').style.display = 'none';"
@@ -626,7 +626,7 @@
 							onclick="_Services._selectstartDate()"></i></span>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="col s12 m12">
 				<p style="margin-left: 10px;">
 					Required Field are marked with <span class="star">*</span>
@@ -944,13 +944,12 @@
 		<h6 class="modal-header">Edit Device Information</h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			
-                                            <form action="#" style="margin-top: 30px;">
+                                            <form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">
                         
-                        <div class="row">
-                                          <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                       <!--  <input type="text" id="editBulkBlockCategory" name="editBulkBlockCategory" pattern="[0-9]"
-                                                            title="" maxlength="16" value="Contract Violation" >
-                                                        <label for="editBulkBlockCategory">Category</label> -->
+                                            <div class="row">
+                                          <div class="col s12 m6" style="margin-top: 25px;">
+                                                      
+                                                         <label for="editBulkBlockCategory">Category<span class="star">*</span></label>
                                                          <select class="browser-default" id="editBulkBlockCategory" required="required" >
                                                             <option value="" disabled selected>Select Category
                                                             </option>
@@ -959,8 +958,9 @@
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="editBulkBlockquantity" name="editBulkBlockquantity" pattern="[0-9]"
-                                                            title="" maxlength="16" value="" placeholder="" >
+                                                   </div>
+                                                        <input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
+                                                            title="Please enter  numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
                                                         <label for="editBulkBlockquantity">Quantity <span class="star">*</span></label>
                                                     </div>
                                                     
@@ -971,15 +971,15 @@
                                                         <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
                                                         <div class="btn">
                                                             <span>File</span>
-                                                            <input type="file" id="editselectBulkBlockuploadFile" required="required">
+                                                            <input type="file" id="editselectBulkBlockuploadFile">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" id="editBulkBlockuploadFile" placeholder="">
+                                                            <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="input-field col s12 m6">
-                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" placeholder="" ></textarea>
+                                                    <div class="input-field col s12 m6">                            
+                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
                                                         <label for="editBulkBlockRemark">Remark <span class="star">*</span> </label>
                                                    <!--      <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
                                                             title="" maxlength="16" value="1500" disabled> -->
@@ -997,7 +997,8 @@
                 <div class="row">
                     <div class="input-field col s12 center">
                                                         	<button class=" btn"
-						type="button" onclick="updateBulkDevice()">Update</button>
+					  
+						type="submit" >Update</button>
                                                         <button type="button" class="modal-close btn">Cancel</button>
                                                     </div>
                 </div>
@@ -1137,7 +1138,7 @@
                                                             </div>
                                                         </div>
                                                         </div>
-                                                        <span> Required Field are marked with <span class="star">*</span></span>
+                                                  
                                                     </div>
 
                                                     </div>
@@ -1151,9 +1152,9 @@
             </div></div>
             
                      <div id="editblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
-		<h6 class="modal-header">edit Block Devices</h6>
+		<h6 class="modal-header">Update Block Devices</h6>
 		<div class="modal-content" style="margin-top: 5px;">
-			   <form action=""  method="POST" enctype="multipart/form-data">
+			   <form action=""  method="POST" onsubmit="return updateSingleBlockDevicesRequest()" id="editSingleImeiform" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="row">
                                                        		<div class="row">
@@ -1184,7 +1185,7 @@
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,15}" required="required"
+                                                                <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[A-Za-z0-9]{1,15}" required="required"
                                                                     title="Please enter your device serial number first"  maxlength="15">
                                                                 <label for="editsingleblockserialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
@@ -1194,6 +1195,54 @@
                                                                 <textarea id="editsingleblockremark"  placeholder="" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="editsingleblockremark">Remark <span class="star">*</span></label>
                                                             </div>
+                                                               <div class="col s12 m6"><label for="editbulkBlockdeviceCategory">Category
+                                                            <span class="star">*</span></label>
+                                                        <select class="browser-default" id="editbulkBlockdeviceCategory" required="required" >
+                                                            <option value="" disabled selected>Select Category
+                                                            </option>
+                                                            
+                                                        </select>
+                                                    </div>
+                                                            <div class="" style="margin-left: 36%; margin-top: -25px;">
+				BlockingType
+				<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+					value="Immediate"
+					onclick="document.getElementById('calender').style.display = 'none';"
+					name="stolenBlockPeriod" checked> Immediate
+				</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+					value="Default"
+					onclick="document.getElementById('calender').style.display = 'none';"
+					name="stolenBlockPeriod"> Default
+				</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+					onclick="document.getElementById('calender').style.display = 'block';"
+					name="stolenBlockPeriod"> Later
+				</label>
+				<div class="col s6 m2 responsiveDiv"
+					style="display: none; width: 30%;" id="calender">
+					<div id="startdatepicker" class="input-group date">
+						<input  type="text" id="stolenDatePeriodedit"
+							style="margin-top: -9px" /> <span class="input-group-addon"
+							style="color: #ff4081"><i class="fa fa-calendar"
+							aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+					</div>
+
+				</div>
+
+
+				<div class="col s12 m2 l2" style="width: 40%; display: none"
+					id="stolenDate">
+
+					<label for="TotalPrice" class="center-align">Till date</label>
+					<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+
+						<input class="form-control" name="inputsaves" type="text"
+							id="startDateFilter" readonly /> <span class="input-group-addon"
+							style="color: #ff4081"><i
+							class="glyphicon glyphicon-calendar"
+							onclick="_Services._selectstartDate()"></i></span>
+					</div>
+				</div>
+			</div>
                                                         </div>
                                                         <div class="row">
                                                         <div class="row input_fields_wrap">
@@ -1236,9 +1285,10 @@
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="button" onclick="updateSingleBlockDevicesRequest()">Submit</button>
+                                                   
+                                                        <button class="btn" type="submit" >Update</button>
                                                 
-                                                        <button type="button" class="modal-close btn">Cancel</button>
+                                                        <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
                                                     </div>
                                                 </form>
                                            

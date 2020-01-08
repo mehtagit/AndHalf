@@ -138,7 +138,7 @@ public class DatatableHeaders {
 
 			//DashBoard dataTable Headers
 			else if("dashboardNotification".equals(role)) {
-				String[] headers = {"table.sno","table.date","table.transactionID","table.feature","table.message","table.action"};	
+				String[] headers = {"table.date","table.transactionID","table.feature","table.message","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -156,7 +156,7 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.deviceIDType,headersTitle.deviceType,headersTitle.price,headersTitle.country,headersTitle.Status,headersTitle.action};		
+				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.deviceIDType,headersTitle.deviceType,headersTitle.price,headersTitle.country,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -251,7 +251,7 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
-			//BlockUnblockCEIRAdmin Headers 
+//BlockUnblockCEIRAdmin Headers 
 			
 			else if("BlockUnblockCEIRAdmin".equals(role)) {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.operator,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
@@ -260,8 +260,6 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
-			
-		
 		
 			
 			

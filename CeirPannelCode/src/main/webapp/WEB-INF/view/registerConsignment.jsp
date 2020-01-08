@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -139,7 +140,7 @@ section {
 									method="POST" enctype="multipart/form-data"
 									id="registerConsignment">
 									<div class="container-fluid pageHeader">
-										<p class="PageHeading">Register Consignment</p>
+										<p class="PageHeading"><spring:message code="registerconsignment.view.header.title" /></p>
 										<!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
                       data-target="modal1">Register Consignment</button> -->
 									</div>
@@ -149,8 +150,7 @@ section {
 											<input type="text" name="supplierId" id="supplierId"
 												pattern="[A-Za-z0-9]{0,15}"
 												title="Please enter alphabets and numbers upto 15 characters only"
-												maxlength="15" /> <label for="Name" class="center-align">Supplier/Manufacturer
-												ID</label>
+												maxlength="15" /> <label for="Name" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
@@ -158,7 +158,7 @@ section {
 												pattern="[A-Za-z  ]{0,50}"
 												title="Please enter alphabets  upto 50 characters only"
 												maxlength="50" required /> <label for="Name"
-												class="center-align">Supplier/Manufacturer Name <span
+												class="center-align"><spring:message code="input.suppliername" /> <span
 												class="star">*</span></label>
 										</div>
 									</div>
@@ -167,16 +167,14 @@ section {
 											<input type="text" name="consignmentNumber"
 												id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}"
 												title="Please enter alphabets and numbers upto 15 characters only"
-												maxlength="15" /> <label for="Name" class="center-align">Consignment
-												Number</label>
+												maxlength="15" /> <label for="Name" class="center-align"><spring:message code="input.consignmentnumber" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="expectedDispatcheDate"
 												id='expectedDispatcheDate' class='form-control datepick'
 												autocomplete='off' required="required"> <label
-												for="dispatchDate" class="center-align">Expected
-												Dispatch Date <span class="star">*</span>
+												for="dispatchDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
@@ -194,7 +192,7 @@ section {
 											<input name="expectedArrivaldate" id="expectedArrivaldate"
 												type="text" class='form-control datepick' autocomplete='off'
 												required="required"> <label for="dispatchDate"
-												class="center-align">Expected Arival Date <span
+												class="center-align"><spring:message code="input.arrivaldate" /> <span
 												class="star">*</span></label> <span class="input-group-addon"
 												style="color: #ff4081"><i class="fa fa-calendar"
 												aria-hidden="true"></i></span>
@@ -205,8 +203,7 @@ section {
 										<div class="input-field col s12 m6">
 											<select class="browser-default" id="expectedArrivalPort"
 												required="required" name="expectedArrivalPort">
-												<option value="" disabled selected>Expected Arrival
-													Port <span id="starColor">*</span></option>
+												<option value="" disabled selected><spring:message code="input.arrivalport" /> <span id="starColor">*</span></option>
 												<option value="Air">Air</option>
 												<option value="Land">Land</option>
 												<option value="Water">Water</option>
@@ -219,21 +216,21 @@ section {
 												pattern="[0-9]{0,7}"
 												title="Please enter numbers upto 7 characters only"
 												maxlength="7" required /> <label for="Quantity"
-												class="center-align">Quantity <span class="star">*</span></label>
+												class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label>
 										</div>
 
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="totalPrice" id="totalPrice"
 												maxlength="7" /> <label for="totalPrice"
-												class="center-align">Total Price</label>
+												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 
 										<div class="col s12 m6">
-											<label for="Currency">Currency<span class="star">*</span></label>
+											<label for="Currency"><spring:message code="input.currency" /><span class="star">*</span></label>
 											<select id="currency" class="browser-default"
 												required="required">
-												<option value="" disabled selected>Currency</option>
+												<option value="" disabled selected><spring:message code="input.currency" /></option>
 
 											</select>
 										</div>
@@ -242,12 +239,12 @@ section {
 
 									<div class="row myRow">
 										<h6 class="file-upload-heading" style="margin-left: 15px;">
-											Upload Bulk Devices Information<span class="star">*</span>
+											<spring:message code="input.bulkdevice" /><span class="star">*</span>
 										</h6>
 										<div class="file-field input-field col s12 m6"
 											style="margin-top: 5px;">
 											<div class="btn">
-												<span>Select File</span> <input type="file"
+												<span><spring:message code="input.selectfile" /></span> <input type="file"
 													required="required" name="file" id="file" accept=".csv">
 											</div>
 											<div class="file-path-wrapper">
@@ -257,17 +254,18 @@ section {
 										</div>
 										<br> <br>
 										<p style="margin-left: 15px;">
-											<a href="./sampleFileDownload/filetype=sample">Download
-												Sample Format</a>
+											<a href="./sampleFileDownload/filetype=sample"><spring:message code="input.downlaod.sample" /></a>
 										</p>
-										<span> Required Field are marked with <span
+										<span><spring:message code="input.requiredfields" /> <span
 											class="star">*</span></span>
 									</div>
 
 
 									<div class="row">
 										<div class="input-field col s12 center">
+									<%-- 	<spring:message code="input.submit" /> --%>
 											<button class=" btn" type="submit">Submit</button>
+									<%-- 		<spring:message code="input.cancel" /> --%>
 											<a href="#cancelMessage" class="btn modal-trigger"
 												type="cancel" style="margin-left: 10px;">Cancel</a>
 
@@ -306,18 +304,17 @@ section {
 		</div>
 	</div>
 	<div id="cancelMessage" class="modal">
-		<h6 class="modal-header">Cancel Request</h6>
+		<h6 class="modal-header"> <spring:message code="modal.cancelrequest" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6>Are you sure you want to close this window. The form data
-					will be lost</h6>
+				<h6><spring:message code="modal.message" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a href="${context}/Consignment/viewConsignment" class="btn">yes</a>
+						<a href="${context}/Consignment/viewConsignment" class="btn"><spring:message code="modal.yes" /></a>
 						<button class="modal-close waves-effect waves-light btn"
-							style="margin-left: 10px;">no</button>
+							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
@@ -365,6 +362,24 @@ section {
 
 
 	<script type="text/javascript">
+	
+	
+	
+
+	window.parent.$('#langlist').on('change', function() {
+
+		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+		window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
+	}); 
+	
+
+	
+	$(document).ready(function() {
+		ConsignmentCurrency();
+	});
+	
+	
+	
 		function registerConsignment() {
 			var supplierId = $('#supplierId').val();
 			var supplierName = $('#supplierName').val();
@@ -548,10 +563,7 @@ section {
 	<script>
 		populateCountries("country");
 
-		$(document).ready(function() {
-
-			ConsignmentCurrency();
-		});
+		
 
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

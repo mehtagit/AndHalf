@@ -7,12 +7,13 @@ var requestType="0";
 
 var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 window.parent.$('#langlist').on('change', function() {
-	 window.location.reload(true);
+	var lang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
+	window.location.assign("./Home?lang="+lang);
 	});
 
 
 $(document).ready(function(){
-	
+
 	$('div#initialloader').fadeIn('fast');
 	var url;
 	$.ajax({

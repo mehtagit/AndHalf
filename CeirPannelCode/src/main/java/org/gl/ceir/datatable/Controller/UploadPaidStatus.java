@@ -100,7 +100,9 @@ public class UploadPaidStatus {
 			}
 			else if("Custom".equals(userType)) {
 				log.info("in Custom Userpaid Status---" +userType);
+				
 				for(UserPaidStatusContent contentModelList : contentList) {
+					String nid = contentModelList.getNid();
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
@@ -114,7 +116,7 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
-					Object[] data = {sno,createdOn,deviceIDInterp,deviceTypeInterp,price,country,status,action};
+					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -225,7 +227,7 @@ public class UploadPaidStatus {
 			}
 			}else {
 			//input type date list
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","NID","nId",""};
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","NID/Passport No.","nId",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

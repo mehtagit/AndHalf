@@ -59,6 +59,13 @@ var contextpath = "${context}";
 				<div class="nav-wrapper">
 					<ul class="left">
 						<li>
+						<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
+            <a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
+                <img src="./resources/images/dmc_gl.png" class="darken-1 my-2">
+            </a>
+        </div>
+        </li>
+						<li>
 							<h1 class="logo-wrapper">
 							
 								<a href="#" class="brand-logo darken-1">CEIR -
@@ -77,9 +84,9 @@ var contextpath = "${context}";
 				<ul id="chat-out" class="right hide-on-med-and-down"
 style="overflow: inherit !important;">
 
-<li><div id="divLang" style="display:flex;margin: 8px 6px;">
-			<div id="iconLable"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
-			<div><select id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
+<li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
+			<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
+			<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
 					<option value="en">English</option>
 					<option value="km">Khmer</option>
 					</select></div>
@@ -94,7 +101,7 @@ class="mdi-action-account-circle"
 style="color: #fff; font-size: 40px;"></i></a>
 <ul id="profile-dropdown" class="dropdown-content">
 <li><a href="${context}/editProfile" target="mainArea"><i
-class="fa fa-pencil dropdownColor" style="float: left"></i><span
+class="fa fa-pencil dropdownColor" style="float: left;"></i><span
 style="float: left" class="dropdownColor">Edit Info</span></a></li>
 <li class="divider"></li>
 <li><a data-target="changePassword" class="modal-trigger"><i

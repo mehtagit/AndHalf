@@ -163,7 +163,7 @@ function confirmantiondelete(){
 	var txnId= $("#stockdeleteTxnId").text();
 	var obj ={
 			"txnId" : txnId,
-			"roleType":role
+			"userType":role
 	}
 
 	$.ajax({
