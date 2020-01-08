@@ -116,7 +116,7 @@ public class StockController {
 	public GenricResponse deleteStachHolderData(@RequestBody StockMgmt stockMgmt,
 			@RequestParam(value = "userType", required = false) String userType) {
 
-		logger.info("Stock Withdraw Request ="+stockMgmt.toString());
+		logger.info("Stock Withdraw Request = " + stockMgmt + " for usertype : " + userType);
 		GenricResponse genricResponse =	stackholderServiceImpl.deleteStockDetailes(stockMgmt, userType);
 
 		logger.info("Response to Delete ="+genricResponse.toString());

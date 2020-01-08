@@ -259,7 +259,7 @@ public class StockServiceImpl {
 
 			if(Objects.isNull(userType)) {
 				logger.info("userType is null in the request.");
-				return new GenricResponse(1002, "TxnId is null in the request.", stockMgmt.getTxnId());
+				return new GenricResponse(1002, "Usertype is null in the request.", stockMgmt.getTxnId());
 			}
 
 			StockMgmt txnRecord	= stockManagementRepository.getByTxnId(stockMgmt.getTxnId());
