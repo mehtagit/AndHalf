@@ -102,6 +102,37 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	UserProfileRepository userProfileRepository;
+	
+	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
+
+		List<StateMgmtDb> stateList = null;
+
+		try {
+			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			System.out.println("dialect : " + propertiesReader.dialect);
+
+			List<RegularizeDeviceDb> regularizeDeviceDbs = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build());
+
+			for(RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
+
+				for(StateMgmtDb stateMgmtDb : stateList) {
+					if(regularizeDeviceDb.getStatus() == stateMgmtDb.getState()) {
+						regularizeDeviceDb.setStateInterp(stateMgmtDb.getInterp()); 
+						break; 
+					} 
+				}
+
+				setInterp(regularizeDeviceDb);
+			}
+
+			return regularizeDeviceDbs;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Regularized Device Service", e.getMessage());
+		}
+	}
+	
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
 		List<StateMgmtDb> stateList = null;
@@ -112,31 +143,8 @@ public class RegularizedDeviceServiceImpl {
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
 			System.out.println("dialect : " + propertiesReader.dialect);
-			SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
-			if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
-				specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-				specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-				specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(filterRequest.getDeviceIdType()))
-				specificationBuilder.with(new SearchCriteria("deviceIdType", filterRequest.getDeviceIdType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getDeviceType()))
-				specificationBuilder.with(new SearchCriteria("deviceType", filterRequest.getDeviceType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getTaxPaidStatus()))
-				specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-				specificationBuilder.with(new SearchCriteria("status", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-
-			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(specificationBuilder.build(), pageable);
+			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
 
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
 
@@ -157,8 +165,8 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Regularized Device Service", e.getMessage());
 		}
 	}
-
-	public FileDetails getFilteredDeviceInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+	
+	public FileDetails getFilteredDeviceInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 		RegularizeDeviceFileModel rdfm = null;
@@ -170,7 +178,7 @@ public class RegularizedDeviceServiceImpl {
 		List< RegularizeDeviceFileModel > fileRecords = null;
 
 		try {
-			List<RegularizeDeviceDb> regularizeDevices = filter(filterRequest, pageNo, pageSize).getContent();
+			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest);
 
 			if( !regularizeDevices.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
@@ -427,6 +435,34 @@ public class RegularizedDeviceServiceImpl {
 			logger.error(e.getMessage(), e);
 			return -1L;
 		}
+	}
+	
+	private SpecificationBuilder<RegularizeDeviceDb> buildSpecification(FilterRequest filterRequest){
+		SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
+
+		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
+			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getDeviceIdType()))
+			specificationBuilder.with(new SearchCriteria("deviceIdType", filterRequest.getDeviceIdType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getDeviceType()))
+			specificationBuilder.with(new SearchCriteria("deviceType", filterRequest.getDeviceType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getTaxPaidStatus()))
+			specificationBuilder.with(new SearchCriteria("taxPaidStatus", filterRequest.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+			specificationBuilder.with(new SearchCriteria("status", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+		
+		return specificationBuilder;
 	}
 
 	private void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
