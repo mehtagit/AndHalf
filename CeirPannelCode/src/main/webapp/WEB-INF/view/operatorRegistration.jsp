@@ -40,9 +40,15 @@
     <script type="text/javascript" src="${context}/resources/js/country.js"></script>
 
     <style>
-        input[type="checkbox"] {
-            display: none;
-        }
+         input[type="checkbox"] {
+	background-color: initial;
+    cursor: default;
+    -webkit-appearance: checkbox;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+} 
 
         footer {
             padding-left: 0;
@@ -73,7 +79,7 @@
         }
 
         label {
-            font-size: 0.8rem;
+  /*           font-size: 0.8rem; */
         }
     </style>
 <script>
@@ -171,8 +177,8 @@ var contextpath = "${context}";
                                 </div>
 								</div>
 
-                            <div class="row">
-                               <div class="input-field col s12 m12 l12">
+                           	<div class="row">
+								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200"
 										pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
 										class="form-control boxBorder boxHeight"
@@ -181,8 +187,8 @@ var contextpath = "${context}";
 										for="propertyLocation">Address(Property Location) <span
 										class="star">*</span></label>
 								</div>
-								
-                                <div class="input-field col s12 m6 l6">
+
+								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
 										pattern="[A-Za-z0-9\s]{0,20}" required="required"
@@ -190,7 +196,14 @@ var contextpath = "${context}";
 									<label for="street">Street Number <span class="star">*</span>
 									</label>
 								</div>
-
+									<div class="input-field col s12 m6 l6">
+									<input type="text" name="village" maxlength="30"
+										class="form-control boxBorder boxHeight" id="village"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="village">Village <span class="star">*</span>
+									</label>
+								</div>
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
@@ -200,20 +213,52 @@ var contextpath = "${context}";
 									</label>
 								</div>
 
-                                <div class="input-field col s12 m6 l6">
-                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Country <span
-                                            class="star">*</span></p>
-                                    <select id="country" class="browser-default" class="mySelect"
-                                        style="padding-left: 0;" required></select>
-                                </div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="district" maxlength="30"
+										class="form-control boxBorder boxHeight" id="district"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="district">District <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="commune" maxlength="30"
+										class="form-control boxBorder boxHeight" id="commune"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="commune">Commune <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="postalCode" maxlength="30"
+										class="form-control boxBorder boxHeight" id="postalCode"
+										pattern="[A-Za-z0-9\s]{0,30}"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="postalCode">Postal Code</label>
+								</div>
+								
+								
+								
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Country <span class="star">*</span>
+									</p>
+									<select id="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
+								</div>
 
-                                <div class="input-field col s12 m6 l6">
-                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Province <span
-                                            class="star">*</span></p>
-                                    <select id="state" class="browser-default" class="mySelect" style="padding-left: 0;"
-                                        required></select>
-                                </div>
-                            </div>
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Province <span class="star">*</span>
+									</p>
+									<select id="state" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
+								</div>
+								
+								
+							</div>
 
                             <div class="row">
 
@@ -445,7 +490,12 @@ var contextpath = "${context}";
 							</span>
 						</div>
 						
-						
+						<p>
+      <label style="color: black!important;">
+        <input name="disclamer" type="checkbox" required="required" />
+        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+      </label>
+    </p>
                         </div>
 
                         <div class="row">

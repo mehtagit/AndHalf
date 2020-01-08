@@ -13,7 +13,6 @@ function forgotPassword(){
 			}    
 		}    
 	});
-
 	console.log("obj data:"+JSON.stringify(obj));
 	$.ajax({
 		type : 'POST',
@@ -38,10 +37,6 @@ function forgotPassword(){
 	});
 	return false;
 } 
-
-
-
-
 function udapteNewPassword(){
 	var obj="";
 	$("#changePassword").each(function(key, val){
@@ -70,7 +65,7 @@ function udapteNewPassword(){
 			else{
 				$("#changePassword #errorMsg").text(resp.response);
 			}
-			
+
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
@@ -92,7 +87,6 @@ function login(){
 			}    
 		}    
 	});
-
 	console.log("obj data:"+JSON.stringify(obj));
 	$.ajax({
 		type : 'POST',
@@ -108,11 +102,26 @@ function login(){
 			else{
 				$("#errorMsg").text(resp.response);
 			}
-			
+
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
-		
+
 		} 
 	});
 	return false;
+}
+function dataByTag(tag,divId){ 
+	$.ajax({
+		type : 'GET',
+		url :contextpath+'/dataByTag/'+tag+"/",
+		contentType : "application/json",
+		dataType : 'html',
+		success : function(data) {
+			var response=JSON.parse(data);                                    
+			var asTypeDropdown=$("#"+divId);  
+				asTypeDropdown.attr('href',response.value);
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
 }

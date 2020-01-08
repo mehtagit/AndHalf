@@ -7,11 +7,14 @@ import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
+import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.RequestCountAndQuantity;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
+import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -194,13 +197,20 @@ public interface FeignCleintImplementation {
 		
 		
 		
+		
 
 		//***************************************************Admin Registration as Type Dropdown********************************
 
 
 		@RequestMapping(value="/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}" ,method=RequestMethod.GET) 
 		public List<Dropdown> asTypeList(@PathVariable("tagId") String tag, @PathVariable("userTypeId") Integer userTypeId);
+
+
+		@PostMapping("/system/viewTag")    
+		public Dropdown dataByTag(Tag tag);       
+		
 }
+
 
 
 
