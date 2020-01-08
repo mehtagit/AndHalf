@@ -8788,7 +8788,7 @@ input[type=text] {
 .dropdown-content li>span {
   font-size: 13px;
   color: #ff4081;
-  display: block;
+  display: flex;
   line-height: 22px;
   padding: 6.5px 5px;
 }
@@ -9635,7 +9635,7 @@ textarea.materialize-textarea+label:after {
   }
 }
 
-.input-field label.active {
+.input-field  label.active {
   font-size: 0.8rem;
   -webkit-transform: translateY(-140%);
   -moz-transform: translateY(-140%);

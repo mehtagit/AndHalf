@@ -509,6 +509,14 @@ $('.navData li').removeClass("active");
 $(this).removeClass("inactive");
 $(this).addClass("active"); 
 });
+
+
+$('#profile-dropdown li').on('click', function() {
+	$('#profile-dropdown li:not(.inactive)').addClass("inactive");
+	$('#profile-dropdown li').removeClass("active");
+	$(this).removeClass("inactive");
+	$(this).addClass("active"); 
+	});
 </script>
 
 </body>

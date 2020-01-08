@@ -40,9 +40,7 @@
     <script type="text/javascript" src="${context}/resources/js/country.js"></script>
 
     <style>
-        input[type="checkbox"] {
-            display: none;
-        }
+        
 
         footer {
             padding-left: 0;
@@ -427,7 +425,7 @@ var contextpath = "${context}";
 						 <br>
                            <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
 								<div class="input-field col s12 m6 l12">
-									<input autocomplete="off" type="text" name="captcha"
+									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
 										required="required"> <label for="address">Enter
 										your captcha <span class="star">*</span>
@@ -436,9 +434,15 @@ var contextpath = "${context}";
 
 							</span>
 						</div>
+ <p>
+      <label style="color: black!important;">
+        <input name="disclamer" type="checkbox" required="required" class="declarationcheckbox"/>
+        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+      </label>
+    </p>
+
 						
-						
-                        </div>
+                       
 
                         <div class="row">
                             <span> Required Field are marked with <span class="star">*</span></span>
