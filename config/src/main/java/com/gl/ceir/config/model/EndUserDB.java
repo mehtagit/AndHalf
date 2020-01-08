@@ -57,7 +57,6 @@ public class EndUserDB implements Serializable {
 	private String village;
 	
 	@NotNull
-	@Column(length = 50)
 	private Integer postalCode;
 	
 	private String province;

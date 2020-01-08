@@ -13,7 +13,7 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.ActionConfigDb;
+import com.gl.ceir.config.model.ActionsConfigDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StatesInterpretationDb;
 import com.gl.ceir.config.model.TableActions;
@@ -87,7 +87,7 @@ public class StateMgmtServiceImpl {
 	public List<TableActions> getTableActionsByFeatureIdAndUserTypeId(Integer featureId, Integer userTypeId) {
 		try {
 			
-			List<ActionConfigDb> actionConfigDbs = null;
+			List<ActionsConfigDb> actionConfigDbs = null;
 			
 			TableActions tableActions = null;
 			List<TableActions> tableActionsList = new LinkedList<>();
@@ -101,7 +101,7 @@ public class StateMgmtServiceImpl {
 				actionConfigDbs = actionConfigRepository.getByStateId(stateMgmtDb.getId());
 				tableActions = new TableActions();
 
-				for(ActionConfigDb actionConfigDb : actionConfigDbs) {
+				for(ActionsConfigDb actionConfigDb : actionConfigDbs) {
 
 					switch(actionConfigDb.getAction()) {
 					case "VIEW":

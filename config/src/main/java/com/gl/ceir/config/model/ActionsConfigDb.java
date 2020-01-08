@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
-public class ActionConfigDb extends BaseEntity implements Serializable{
+public class ActionsConfigDb extends BaseEntity implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +32,7 @@ public class ActionConfigDb extends BaseEntity implements Serializable{
 	@Column(length = 1)
 	private String isEnable;
 
-	public ActionConfigDb() {
+	public ActionsConfigDb() {
 		
 	}
 

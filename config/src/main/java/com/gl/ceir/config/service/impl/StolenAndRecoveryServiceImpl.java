@@ -660,7 +660,9 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(stolenandRecoveryMgmt.getRequestType()))
 			stolenandRecoveryMgmt.setRequestTypeInterp(interpSetter.setConfigInterp(Tags.REQ_TYPE, stolenandRecoveryMgmt.getRequestType()));
-
+		
+		if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId()))
+			stolenandRecoveryMgmt.setOperatorTypeIdInterp(interpSetter.setConfigInterp(Tags.OPERATORS, stolenandRecoveryMgmt.getOperatorTypeId()));
 	}
 	
 }

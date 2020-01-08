@@ -44,7 +44,7 @@ public class SingleImeiDetails implements Serializable {
 	
 	private Integer multipleSimStatus;
 	
-	private Long deviceSerialNumber;
+	private String deviceSerialNumber;
 	
 	private String remark;
 	
@@ -135,10 +135,10 @@ public class SingleImeiDetails implements Serializable {
 	public void setMultipleSimStatus(Integer multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
 	}
-	public Long getDeviceSerialNumber() {
+	public String getDeviceSerialNumber() {
 		return deviceSerialNumber;
 	}
-	public void setDeviceSerialNumber(Long deviceSerialNumber) {
+	public void setDeviceSerialNumber(String deviceSerialNumber) {
 		this.deviceSerialNumber = deviceSerialNumber;
 	}
 	public String getRemark() {

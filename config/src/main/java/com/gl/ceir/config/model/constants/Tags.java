@@ -6,7 +6,7 @@ public interface Tags {
 	String CUSTOMS_PORT = "CUSTOMS_PORT";
 	String SOURCE_TYPE = "SOURCE_TYPE";
 	String REQ_TYPE = "REQ_TYPE";
-	String OPERATOR = "OPERATOR";
+	String OPERATORS = "OPERATORS";
 	String DEVICE_ID_TYPE = "DEVICE_ID_TYPE";
 	String DEVICE_TYPE = "DEVICE_TYPE";
 	String CURRENCY = "CURRENCY";

@@ -6,11 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import com.gl.ceir.config.model.ActionConfigDb;
+import com.gl.ceir.config.model.ActionsConfigDb;
 
 @Repository
-public interface ActionConfigRepository extends JpaRepository<ActionConfigDb, Long>, JpaSpecificationExecutor<ActionConfigDb> {
+public interface ActionConfigRepository extends JpaRepository<ActionsConfigDb, Long>, JpaSpecificationExecutor<ActionsConfigDb> {
 
-	public List<ActionConfigDb> getByStateId(long stateId);
+	public List<ActionsConfigDb> getByStateId(long stateId);
 
 }

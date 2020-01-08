@@ -7,7 +7,7 @@ public enum StolenStatus {
 	PENDING_APPROVAL_FROM_CEIR_ADMIN(2, "Pending Approval From CEIR Admin"), 
 	ERROR(3, "Error"),
 	REJECTED_BY_CEIR_ADMIN(4, "Rejected CEIR Admin"),
-	APPROVED_BY_CEIR_ADMIN(4, "Approved CEIR Admin");
+	APPROVED_BY_CEIR_ADMIN(5, "Approved CEIR Admin");
 
 	private int code;
 	private String desc;
