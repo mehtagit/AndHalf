@@ -60,9 +60,9 @@
 </head>
 
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
-	data-userID="${userid}"
+	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}">
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
 
 
 	<!-- START CONTENT -->
@@ -958,7 +958,6 @@
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                   </div>
                                                         <input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
                                                             title="Please enter  numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
                                                         <label for="editBulkBlockquantity">Quantity <span class="star">*</span></label>
@@ -978,7 +977,7 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="input-field col s12 m6">                            
+                                                    <div class="input-field col s12 m6">
                                                         <textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
                                                         <label for="editBulkBlockRemark">Remark <span class="star">*</span> </label>
                                                    <!--      <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
@@ -997,8 +996,7 @@
                 <div class="row">
                     <div class="input-field col s12 center">
                                                         	<button class=" btn"
-					  
-						type="submit" >Update</button>
+ 					type="submit" >Update</button>
                                                         <button type="button" class="modal-close btn">Cancel</button>
                                                     </div>
                 </div>
@@ -1285,8 +1283,7 @@
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                   
-                                                        <button class="btn" type="submit" >Update</button>
+                                                       <button class="btn" type="submit" >Update</button>
                                                 
                                                         <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
                                                     </div>
@@ -1305,6 +1302,91 @@
                     <div class="input-field col s12 center">
                         <a  href ="./stolenRecovery" class=" btn">ok</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!------------------------------------------ Approve Model ----------------------------------->
+    
+    
+    <div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Approve</h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                   
+                    <h6>Do you want to Approve the request</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="aprroveDevice()" class="btn modal-trigger">Yes</a>
+                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                      <span id="userId" hidden></span>
+                       <span id="adminCurrentStatus" hidden></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Approve</h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                    
+                    <h6>Device has been Approved Successfully.</h6>
+                   
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                     <a class="btn modal-close" href="./stolenRecovery">ok</a>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--------------------------------------------------- Reject Model--------------------------------------------->
+    
+        <div id="rejectInformation" class="modal">
+           <h6 class="modal-header">Reject</h6>
+            <div class="modal-content">
+            <div class="row">
+                <form action="">
+                
+                    <div class="input-field" style="margin-top: 30px;">
+                        <textarea id="Reason" class="materialize-textarea"></textarea>
+                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
+                    </div>
+                    <h6>Do you want to reject?</h6>
+                    
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="rejectUser()" class="btn modal-close modal-trigger">Yes</a>
+                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    	<div id="confirmRejectInformation" class="modal">
+         <h6 class="modal-header">Reject</h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6>Device has been Rejected Successfully.</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./stolenRecovery">ok</a>
                 </div>
             </div>
         </div>

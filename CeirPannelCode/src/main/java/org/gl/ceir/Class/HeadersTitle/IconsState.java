@@ -1034,8 +1034,8 @@ public class IconsState {
 		
 		String viewAction="";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
-		String approveAction = "JavaScript:void(0);";
-		String rejectAction= "JavaScript:void(0);";
+		String approveAction = "deviceApprovalPopup('"+txnId+"','"+requestType+"')";
+		String rejectAction= "userRejectPopup('"+txnId+"','"+requestType+"')";
 		
 		if(source.equals("2")) {
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";

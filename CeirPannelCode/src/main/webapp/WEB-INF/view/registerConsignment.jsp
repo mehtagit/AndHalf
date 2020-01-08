@@ -204,9 +204,7 @@ section {
 											<select class="browser-default" id="expectedArrivalPort"
 												required="required" name="expectedArrivalPort">
 												<option value="" disabled selected><spring:message code="input.arrivalport" /> <span id="starColor">*</span></option>
-												<option value="Air">Air</option>
-												<option value="Land">Land</option>
-												<option value="Water">Water</option>
+												
 											</select>
 
 										</div>
@@ -557,6 +555,9 @@ section {
 				}
 			});
 		}
+		
+		
+	
 	</script>
 
 

@@ -24,6 +24,7 @@ public class StolenContent {
 	private String taxInterp;
 	private String requestTypeInterp;
 	private String sourceTypeInterp;
+	private String operatorTypeIdInterp;
 	private Integer qty;
 	public Integer getId() {
 		return id;
@@ -121,16 +122,6 @@ public class StolenContent {
 	public void setTaxInterp(String taxInterp) {
 		this.taxInterp = taxInterp;
 	}
-	@Override
-	public String toString() {
-		return "StolenContent [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
-				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", requestType=" + requestType + ", source=" + source + ", roleType=" + roleType + ", blockingType="
-				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
-				+ ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + ", taxInterp="
-				+ taxInterp + ", requestTypeInterp=" + requestTypeInterp + ", sourceTypeInterp=" + sourceTypeInterp
-				+ ", qty=" + qty + "]";
-	}
 	public String getRequestTypeInterp() {
 		return requestTypeInterp;
 	}
@@ -143,11 +134,28 @@ public class StolenContent {
 	public void setSourceTypeInterp(String sourceTypeInterp) {
 		this.sourceTypeInterp = sourceTypeInterp;
 	}
+	public String getOperatorTypeIdInterp() {
+		return operatorTypeIdInterp;
+	}
+	public void setOperatorTypeIdInterp(String operatorTypeIdInterp) {
+		this.operatorTypeIdInterp = operatorTypeIdInterp;
+	}
 	public Integer getQty() {
 		return qty;
 	}
 	public void setQty(Integer qty) {
 		this.qty = qty;
 	}
+	@Override
+	public String toString() {
+		return "StolenContent [id=" + id + ", userId=" + userId + ", fileName=" + fileName + ", fileStatus="
+				+ fileStatus + ", txnId=" + txnId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
+				+ ", requestType=" + requestType + ", source=" + source + ", roleType=" + roleType + ", blockingType="
+				+ blockingType + ", blockingTimePeriod=" + blockingTimePeriod + ", sourceType=" + sourceType
+				+ ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + ", taxInterp="
+				+ taxInterp + ", requestTypeInterp=" + requestTypeInterp + ", sourceTypeInterp=" + sourceTypeInterp
+				+ ", operatorTypeIdInterp=" + operatorTypeIdInterp + ", qty=" + qty + "]";
+	}
+	
 	
 }

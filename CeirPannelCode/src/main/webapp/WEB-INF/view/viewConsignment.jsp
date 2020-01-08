@@ -209,7 +209,7 @@
 			<div class="row" style="padding: 20px 0 100px 0;">
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
-						class="modal-close btn" id="add_user">Cancel</button>
+						class="modal-close btn" id="add_user">Ok</button>
 				</div>
 			</div>
 
@@ -264,7 +264,7 @@
 
 
 			<div class="row">
-				<h6 id="sucessMessage"></h6>
+				<h6 id="sucessMessage"> Consignment updated Successfully</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -289,7 +289,7 @@
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
 			<div class="row">
-				<h6 id=consignmentText></h6>
+				<h6 id=consignmentText>Consignment deleted successfully</h6>
 			</div>
 
 			<div class="row">
@@ -570,9 +570,7 @@
 						class="browser-default" required>
 						<option value="" disabled selected>Expected arrival port
 							*</option>
-						<option value="Air">Air</option>
-						<option value="Land">Land</option>
-						<option value="Water">Water</option>
+				
 					</select>
 				</div>
 

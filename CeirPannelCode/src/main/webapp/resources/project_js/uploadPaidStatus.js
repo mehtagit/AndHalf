@@ -543,7 +543,11 @@ function submitDeviceInfo(){
 	var email=$('#email').val();
 	var phone=$('#phone').val();
 	var state=$('#state').val();
-
+	
+	var village=$('#village').val();
+	var district=$('#district').val();
+	var commune=$('#commune').val();
+	var postalcode=$('#postalcode').val();
 
 	var fieldId=1;
 	var regularizeDeviceDbs =[];
@@ -608,6 +612,10 @@ function submitDeviceInfo(){
 			"province": state,
 			"street": streetNumber,
 			"regularizeDeviceDbs":regularizeDeviceDbs,
+			"district":district,
+			"commune":commune,
+			"village":village,
+			"postalCode":postalcode
 
 	}
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
@@ -891,7 +899,7 @@ function rejectUser(){
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
-				confirmApproveInformation();
+				confirmRejectInformation();
 				console.log("inside Reject Success")
 			}
 
@@ -906,5 +914,5 @@ function rejectUser(){
 
 function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
-	$('#confirmRejectInformation').openModal();
+	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
 }
