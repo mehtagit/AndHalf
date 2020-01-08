@@ -114,7 +114,7 @@ public class ConsignmentController {
 			mapping = new MappingJacksonValue(consignment);
 		}else {
 			logger.info("Request to export filtered consignment = " + filterRequest);
-			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFile(filterRequest, pageNo, pageSize);
+			FileDetails fileDetails = consignmentServiceImpl.getFilteredConsignmentInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 

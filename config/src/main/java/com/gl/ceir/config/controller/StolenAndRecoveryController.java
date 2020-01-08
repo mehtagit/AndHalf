@@ -135,7 +135,7 @@ public class StolenAndRecoveryController {
 			mapping = new MappingJacksonValue(stolenandRecoveryDetailsResponse);
 		}else {
 			logger.info("Request to export filtered Stolen And Recovery = " + stolenandRecoveryDetails);
-			FileDetails fileDetails = stolenAndRecoveryServiceImpl.getFilteredStolenAndRecoveryInFile(stolenandRecoveryDetails, pageNo, pageSize);
+			FileDetails fileDetails = stolenAndRecoveryServiceImpl.getFilteredStolenAndRecoveryInFile(stolenandRecoveryDetails);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 		

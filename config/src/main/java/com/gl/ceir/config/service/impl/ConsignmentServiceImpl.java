@@ -113,21 +113,6 @@ public class ConsignmentServiceImpl {
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
-
-			/*
-			 * if(consignmentFileRequest.getConsignmentNumber() != null ||
-			 * consignmentFileRequest.getConsignmentNumber() != " ") {
-			 * 
-			 * ConsignmentMgmt consignmentMgmt =
-			 * consignmentRepository.getByConsignmentNumber(consignmentFileRequest.
-			 * getConsignmentNumber());
-			 * 
-			 * if(consignmentMgmt != null) {
-			 * 
-			 * return new
-			 * GenricResponse(3,"Consignment Already Exist",consignmentFileRequest.getTxnId(
-			 * )); } }
-			 */
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.CONSIGNMENT_REGISTER.getName());
@@ -166,33 +151,39 @@ public class ConsignmentServiceImpl {
 
 			System.out.println("dialect : " + propertiesReader.dialect);
 
-			SpecificationBuilder<ConsignmentMgmt> specificationBuilder = new SpecificationBuilder<ConsignmentMgmt>(propertiesReader.dialect);
-
-			if(Objects.nonNull(consignmentMgmt.getUserId()))
-				specificationBuilder.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(consignmentMgmt.getStartDate()))
-				specificationBuilder.with(new SearchCriteria("createdOn", consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(consignmentMgmt.getEndDate()))
-				specificationBuilder.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus()))
-				specificationBuilder.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
-				specificationBuilder.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			List<ConsignmentMgmt> data = consignmentRepository.findByUser_id(consignmentMgmt.getUserId());
-			logger.info("Data to be fetch in db using jioin = " + data);
-
-			return consignmentRepository.findAll(specificationBuilder.build(), pageable).getContent();
+			return consignmentRepository.findAll(buildSpecification(consignmentMgmt, null).build(), pageable).getContent();
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 
+	}
+	
+	private List<ConsignmentMgmt> getAll(FilterRequest filterRequest){
+		try {
+			
+			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build());
+
+			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
+
+				for(StateMgmtDb stateMgmtDb : statusList) {
+					if(consignmentMgmt2.getConsignmentStatus() == stateMgmtDb.getState()) {
+						consignmentMgmt2.setStateInterp(stateMgmtDb.getInterp()); 
+						break; 
+					} 
+				}
+
+				setInterp(consignmentMgmt2);
+			}
+
+			return consignmentMgmts;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
 	}
 
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo, 
@@ -205,57 +196,7 @@ public class ConsignmentServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 
-			SpecificationBuilder<ConsignmentMgmt> cmsb = new SpecificationBuilder<ConsignmentMgmt>(propertiesReader.dialect);
-
-			if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType())) {
-				if(Objects.nonNull(consignmentMgmt.getUserId()))
-					cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-
-			if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
-				cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
-				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(consignmentMgmt.getEndDate()) && !consignmentMgmt.getEndDate().isEmpty())
-				cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
-				cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}else {
-
-				if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
-
-					List<Integer> consignmentStatus = new LinkedList<>();
-					// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
-					logger.debug(statusList);
-
-					if(Objects.nonNull(statusList)) {	
-						for(StateMgmtDb stateDb : statusList ) {
-							consignmentStatus.add(stateDb.getState());
-						}
-						logger.info("Array list to add is = " + consignmentStatus);
-
-						if(!consignmentStatus.isEmpty()) {
-							cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
-						}else {
-							logger.warn("no status are predefined foe the user.");
-						}
-
-					}
-				}
-			}
-
-			if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
-				cmsb.orSearch(new SearchCriteria("taxPaidStatus", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
-
-			Page<ConsignmentMgmt> page = consignmentRepository.findAll(cmsb.build(), pageable);
+			Page<ConsignmentMgmt> page = consignmentRepository.findAll(buildSpecification(consignmentMgmt, statusList).build(), pageable);
 
 			for(ConsignmentMgmt consignmentMgmt2 : page.getContent()) {
 
@@ -479,7 +420,7 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	public FileDetails getFilteredConsignmentInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+	public FileDetails getFilteredConsignmentInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 		ConsignmentFileModel cfm = null;
@@ -492,7 +433,7 @@ public class ConsignmentServiceImpl {
 
 		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
-			List<ConsignmentMgmt> consignmentMgmts = getFilterPaginationConsignments(filterRequest, pageNo, pageSize).getContent();
+			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);
 			if( !consignmentMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
 					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + consignmentMgmts.get(0).getUser().getUsername()+"_Consignments.csv";
@@ -571,6 +512,61 @@ public class ConsignmentServiceImpl {
 			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
+	}
+	
+	private SpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
+		SpecificationBuilder<ConsignmentMgmt> cmsb = new SpecificationBuilder<>(propertiesReader.dialect);
+
+		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType())) {
+			if(Objects.nonNull(consignmentMgmt.getUserId()))
+				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+
+		if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
+			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(consignmentMgmt.getEndDate()) && !consignmentMgmt.getEndDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
+			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
+			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		}else {
+
+			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
+
+				List<Integer> consignmentStatus = new LinkedList<>();
+				// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
+				logger.debug(statusList);
+
+				if(Objects.nonNull(statusList)) {	
+					for(StateMgmtDb stateDb : statusList ) {
+						consignmentStatus.add(stateDb.getState());
+					}
+					logger.info("Array list to add is = " + consignmentStatus);
+
+					if(!consignmentStatus.isEmpty()) {
+						cmsb.addSpecification(cmsb.in("consignmentStatus", consignmentStatus));
+					}else {
+						logger.warn("no status are predefined foe the user.");
+					}
+
+				}
+			}
+		}
+
+		if(Objects.nonNull(consignmentMgmt.getSearchString()) && !consignmentMgmt.getSearchString().isEmpty()){
+			cmsb.orSearch(new SearchCriteria("taxPaidStatus", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
+
+		
+		return cmsb;
 	}
 
 	private void setInterp(ConsignmentMgmt consignmentMgmt) {

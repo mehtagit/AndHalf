@@ -183,80 +183,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
-			SpecificationBuilder<StolenandRecoveryMgmt> srsb = new SpecificationBuilder<>(propertiesReader.dialect);
-
-			if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
-				if(Objects.nonNull(filterRequest.getUserId()))
-					srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-
-			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-				srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-				srsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-				srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getRoleType()))
-				srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getSourceType())) {
-				srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-
-			if(Objects.nonNull(filterRequest.getOperatorTypeId())) {
-				srsb.with(new SearchCriteria("operatorTypeId", filterRequest.getOperatorTypeId(), SearchOperation.EQUALITY, Datatype.STRING));
-			}
-
-			if(Objects.nonNull(filterRequest.getRequestType())) {
-				srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
-			}else {
-				if(Objects.nonNull(filterRequest.getFeatureId())) {
-					List<Integer> configuredRequestTypeOfFeature = new LinkedList<Integer>();
-					List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTagAndFeatureId(Tags.REQ_TYPE, filterRequest.getFeatureId());
-					logger.debug(systemConfigListDbs);
-
-					if(Objects.nonNull(systemConfigListDbs)) {	
-						for(SystemConfigListDb systemConfigListDb : systemConfigListDbs ) {
-							configuredRequestTypeOfFeature.add(systemConfigListDb.getValue());
-						}
-
-						if(!configuredRequestTypeOfFeature.isEmpty()) {
-							logger.info("List of configuredRequestTypeOfFeature = " + configuredRequestTypeOfFeature);
-							srsb.addSpecification(srsb.in("requestType", configuredRequestTypeOfFeature));
-						}else{
-							logger.info("No predefined request type is configured for this request.");
-						}
-					}
-				}
-			}
-
-			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-				srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			}else {
-				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
-
-					List<Integer> configuredStatus = new LinkedList<Integer>();
-					logger.debug(statusList);
-
-					if(Objects.nonNull(statusList)) {	
-						for(StateMgmtDb stateDb : statusList ) {
-							configuredStatus.add(stateDb.getState());
-						}
-						logger.info("Array list to add is = " + configuredStatus);
-
-						if(!configuredStatus.isEmpty())
-							srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
-						else{
-							logger.info("No predefined status is configured for this request.");
-						}
-					}
-				}
-			}
-
-			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(srsb.build(), pageable);
+			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
@@ -266,20 +193,7 @@ public class StolenAndRecoveryServiceImpl {
 			requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
 			logger.info(requestTypes);
 
-			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {
-
-				/*
-				 * for(SystemConfigListDb configListDb : sourceTypes) {
-				 * if(stolenandRecoveryMgmt.getSourceType() == configListDb.getValue()) {
-				 * stolenandRecoveryMgmt.setSourceTypeInterp(configListDb.getInterp()); break; }
-				 * }
-				 * 
-				 * for(SystemConfigListDb configListDb : requestTypes) {
-				 * if(stolenandRecoveryMgmt.getRequestType() == configListDb.getValue()) {
-				 * stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp()); break;
-				 * } }
-				 */
-
+			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {				
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
 						stolenandRecoveryMgmt.setStateInterp(stateMgmtDb.getInterp()); 
@@ -289,7 +203,6 @@ public class StolenAndRecoveryServiceImpl {
 
 				setInterp(stolenandRecoveryMgmt);
 
-				// stolenandRecoveryMgmt.setOperatorTypeIdInterp(interpSetter.setConfigInterp(Tags.OPERATOR, stolenandRecoveryMgmt.getOperatorTypeId()));
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
@@ -301,8 +214,124 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
+	
+	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest){
 
-	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+		List<SystemConfigListDb> sourceTypes = null;
+		List<SystemConfigListDb> requestTypes = null;
+		List<StateMgmtDb> stateInterpList = null;
+		List<StateMgmtDb> statusList = null;
+
+		try {
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList).build());
+			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			logger.info(stateInterpList);
+
+			sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
+			logger.info(sourceTypes);
+
+			requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
+			logger.info(requestTypes);
+
+			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts) {				
+				for(StateMgmtDb stateMgmtDb : stateInterpList) {
+					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
+						stolenandRecoveryMgmt.setStateInterp(stateMgmtDb.getInterp()); 
+						break;
+					}
+				}
+
+				setInterp(stolenandRecoveryMgmt);
+			}
+
+			return stolenandRecoveryMgmts;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}	
+	}
+	
+	private SpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
+		SpecificationBuilder<StolenandRecoveryMgmt> srsb = new SpecificationBuilder<>(propertiesReader.dialect);
+
+		if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.nonNull(filterRequest.getUserId()))
+				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			srsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			srsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
+			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getRoleType()))
+			srsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getSourceType())) {
+			srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+
+		if(Objects.nonNull(filterRequest.getOperatorTypeId())) {
+			srsb.with(new SearchCriteria("operatorTypeId", filterRequest.getOperatorTypeId(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+
+		if(Objects.nonNull(filterRequest.getRequestType())) {
+			srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
+		}else {
+			if(Objects.nonNull(filterRequest.getFeatureId())) {
+				List<Integer> configuredRequestTypeOfFeature = new LinkedList<Integer>();
+				List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTagAndFeatureId(Tags.REQ_TYPE, filterRequest.getFeatureId());
+				logger.debug(systemConfigListDbs);
+
+				if(Objects.nonNull(systemConfigListDbs)) {	
+					for(SystemConfigListDb systemConfigListDb : systemConfigListDbs ) {
+						configuredRequestTypeOfFeature.add(systemConfigListDb.getValue());
+					}
+
+					if(!configuredRequestTypeOfFeature.isEmpty()) {
+						logger.info("List of configuredRequestTypeOfFeature = " + configuredRequestTypeOfFeature);
+						srsb.addSpecification(srsb.in("requestType", configuredRequestTypeOfFeature));
+					}else{
+						logger.info("No predefined request type is configured for this request.");
+					}
+				}
+			}
+		}
+
+		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+			srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		}else {
+			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
+
+				List<Integer> configuredStatus = new LinkedList<Integer>();
+				logger.debug(statusList);
+
+				if(Objects.nonNull(statusList)) {	
+					for(StateMgmtDb stateDb : statusList ) {
+						configuredStatus.add(stateDb.getState());
+					}
+					logger.info("Array list to add is = " + configuredStatus);
+
+					if(!configuredStatus.isEmpty())
+						srsb.addSpecification(srsb.in("fileStatus", configuredStatus));
+					else{
+						logger.info("No predefined status is configured for this request.");
+					}
+				}
+			}
+		}
+		
+		return srsb;
+	}
+
+	public FileDetails getFilteredStolenAndRecoveryInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 		StolenAndRecoveryFileModel srfm = null;
@@ -316,7 +345,7 @@ public class StolenAndRecoveryServiceImpl {
 
 		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
-			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAllInfo(filterRequest, pageNo, pageSize).getContent();
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
 
 			if( !stolenandRecoveryMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {

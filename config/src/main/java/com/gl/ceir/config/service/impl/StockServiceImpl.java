@@ -155,77 +155,17 @@ public class StockServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-
-			// stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			SpecificationBuilder<StockMgmt> smsb = new SpecificationBuilder<>(propertiesReader.dialect);
-
-			if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
-					"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
-					"Retailer".equalsIgnoreCase(filterRequest.getUserType()) || 
-					"Manufacturer".equalsIgnoreCase(filterRequest.getUserType())
-					) {
-
-				if(Objects.nonNull(filterRequest.getUserId()) )
-					smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-				if(Objects.nonNull(filterRequest.getUserId()))
-					smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
-			} 
-
-			if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-				smsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-				smsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
-
-			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-				smsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
-				smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-				smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
-			}else {
-				if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
-
-					List<Integer> stockStatus = new LinkedList<>();
-					logger.debug(statusList);
-
-					if(Objects.nonNull(statusList)) {	
-						for(StateMgmtDb stateDb : statusList ) {
-							stockStatus.add(stateDb.getState());
-						}
-
-						logger.info("Array list to add is = " + stockStatus);
-						if(!statusList.isEmpty()) {
-							smsb.addSpecification(smsb.in("stockStatus", stockStatus));
-						}else {
-							logger.warn("no predefined status are available.");
-						}
-					}
-				}
-			}
-
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				smsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			}
-
-			Page<StockMgmt> page = stockManagementRepository.findAll(smsb.build(), pageable);
-
 			logger.info(statusList);
+			
+			Page<StockMgmt> page = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
 
 			for(StockMgmt stockMgmt : page.getContent()) {
 
 				for(StateMgmtDb stateMgmtDb : statusList) {
 					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
 						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
-						// break; 
 					} 
 				}
-
-				// interpSetter.setStateInterp(filterRequest.getFeatureId(), filterRequest.getUserTypeId(), stockMgmt.getStockStatus());
 			}
 
 			return page;
@@ -234,7 +174,93 @@ public class StockServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+	
+	private List<StockMgmt> getAll(FilterRequest filterRequest){
+		List<StateMgmtDb> statusList = null;
 
+		try {
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
+			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build());
+
+			logger.info(statusList);
+
+			for(StockMgmt stockMgmt : stockMgmts) {
+
+				for(StateMgmtDb stateMgmtDb : statusList) {
+					if(stockMgmt.getStockStatus() == stateMgmtDb.getState()) {
+						stockMgmt.setStateInterp(stateMgmtDb.getInterp()); 
+						// break; 
+					} 
+				}
+			}
+
+			return stockMgmts;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	private SpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
+		SpecificationBuilder<StockMgmt> smsb = new SpecificationBuilder<>(propertiesReader.dialect);
+
+		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
+				"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
+				"Retailer".equalsIgnoreCase(filterRequest.getUserType()) || 
+				"Manufacturer".equalsIgnoreCase(filterRequest.getUserType())
+				) {
+
+			if(Objects.nonNull(filterRequest.getUserId()) )
+				smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+
+			if(Objects.nonNull(filterRequest.getUserId()))
+				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
+		} 
+
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			smsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			smsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
+			smsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
+			smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+			smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		}else {
+			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
+
+				List<Integer> stockStatus = new LinkedList<>();
+				logger.debug(statusList);
+
+				if(Objects.nonNull(statusList)) {	
+					for(StateMgmtDb stateDb : statusList ) {
+						stockStatus.add(stateDb.getState());
+					}
+
+					logger.info("Array list to add is = " + stockStatus);
+					if(!statusList.isEmpty()) {
+						smsb.addSpecification(smsb.in("stockStatus", stockStatus));
+					}else {
+						logger.warn("no predefined status are available.");
+					}
+				}
+			}
+		}
+
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			smsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		
+		return smsb;
 	}
 
 	public StockMgmt view(StockMgmt stockMgmt) {
@@ -340,7 +366,7 @@ public class StockServiceImpl {
 		}
 	}
 
-	public FileDetails getFilteredStockInFile(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
+	public FileDetails getFilteredStockInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
 		StockFileModel sfm = null;
@@ -354,7 +380,7 @@ public class StockServiceImpl {
 
 		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
-			List<StockMgmt> stockMgmts = getAllFilteredData(filterRequest, pageNo, pageSize).getContent();
+			List<StockMgmt> stockMgmts = getAll(filterRequest);
 
 			if( !stockMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
