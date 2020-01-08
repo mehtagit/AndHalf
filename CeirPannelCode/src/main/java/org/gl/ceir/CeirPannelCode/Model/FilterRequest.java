@@ -1,8 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -50,6 +50,12 @@ public class FilterRequest {
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -135,16 +141,76 @@ public class FilterRequest {
 	public void setFileType(Integer fileType) {
 		this.fileType = fileType;
 	}
+	public Integer getAction() {
+		return action;
+	}
+	public void setAction(Integer action) {
+		this.action = action;
+	}
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
 	@Override
 	public String toString() {
-		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
-				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
-				+ grievanceId + ", tag=" + tag + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus
-				+ ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId
-				+ ", fileStatus=" + fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType
-				+ ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status
-				+ ", asType=" + asType + ", serviceDump=" + serviceDump + ", fileType=" + fileType + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("FilterRequest [startDate=");
+		builder.append(startDate);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", grievanceId=");
+		builder.append(grievanceId);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", taxPaidStatus=");
+		builder.append(taxPaidStatus);
+		builder.append(", consignmentStatus=");
+		builder.append(consignmentStatus);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", fileStatus=");
+		builder.append(fileStatus);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append(", grievanceStatus=");
+		builder.append(grievanceStatus);
+		builder.append(", userRoleTypeId=");
+		builder.append(userRoleTypeId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", asType=");
+		builder.append(asType);
+		builder.append(", serviceDump=");
+		builder.append(serviceDump);
+		builder.append(", fileType=");
+		builder.append(fileType);
+		builder.append(", action=");
+		builder.append(action);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append("]");
+		return builder.toString();
 	}
+	
+	
 	
 	
 	

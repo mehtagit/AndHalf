@@ -51,9 +51,14 @@ public class StolenDatatableController {
 
 	@PostMapping("stolenData")
 	public ResponseEntity<?> viewStolenList(
-			@RequestParam(name = "type", defaultValue = "stolen", required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,
+			@RequestParam(name = "type", defaultValue = "stolen", required = false) String role,
+			@RequestParam(name="sourceType",required = false) String sourceType,
+			@RequestParam(name="featureId",required = false) Integer featureId,
+			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
 			HttpServletRequest request, HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
+		
+		log.info("featureId------->"+featureId+"---userTypeId------>"+userTypeId);
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
@@ -70,7 +75,8 @@ public class StolenDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
-
+			Object actionResponse = feignCleintImplementation.tableActionFeign(featureId, userTypeId);
+			log.info("actionResponse::::::::::::"+actionResponse);
 			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();
@@ -126,7 +132,7 @@ public class StolenDatatableController {
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
-						String operator = "";
+						String operator = dataInsideList.getOperatorTypeIdInterp();
 						String fileName = dataInsideList.getRequestType();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();

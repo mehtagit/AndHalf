@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
@@ -25,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -326,4 +328,20 @@ public class StolenRecovery {
 					
 					return "redirect:"+fileExportResponse.getUrl();
 				}
+				
+				
+				
+				//******************************* Block Unblock Approve/Reject Devices ********************************
+				
+				
+				@PutMapping("blockUnblockApproveReject") 
+				public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest FilterRequest)  {
+					log.info("request send to the approveRejectDevice api="+FilterRequest);
+					GenricResponse response= feignCleintImplementation.approveRejectFeign(FilterRequest);
+
+					log.info("response from currency api "+response);
+					return response;
+
+					}
+				
 }

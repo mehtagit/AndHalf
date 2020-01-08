@@ -18,6 +18,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -269,6 +270,19 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 
 		@RequestMapping(value="/system-config-list/by-tag-and-featureid/{tagId}/{featureId}" ,method=RequestMethod.GET) 
 		public List<Dropdown> modeType(@PathVariable("tagId") String tagId, @PathVariable("featureId") Integer featureId);
+		
+		
+		
+		//******************************* Block Unblock Approve/Reject Devices Feign ********************************
+		
+		@PutMapping("/accept-reject/stolen-recovery-block-unblock")
+		public @ResponseBody GenricResponse approveRejectFeign(FilterRequest FilterRequest);
+		
+		
+		//************************************ Table Actions Feign  *************************************************
+		
+		@RequestMapping(value="/table-actions/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
+		public List<Dropdown> tableActionFeign(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
 		
 }
 
