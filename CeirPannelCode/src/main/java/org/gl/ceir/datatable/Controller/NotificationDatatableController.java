@@ -80,14 +80,14 @@ public class NotificationDatatableController {
 			}else {
 				for(NotificationContent dataInsideList : paginationContentList) 
 				{
-				  Integer id = dataInsideList.getId();
+				//  Integer id = dataInsideList.getId();
 				  String createdOn = (String) dataInsideList.getCreatedOn();
 				  String txnID = dataInsideList.getFeatureTxnId();
 				  String featureName = dataInsideList.getFeatureName();
 				  String message =  dataInsideList.getMessage();
 				  String userStatus = (String) session.getAttribute("userStatus");
 				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId());			   
-				  Object[] finalData={id,createdOn,txnID,featureName,message,action}; 
+				  Object[] finalData={createdOn,txnID,featureName,message,action}; 
 				  List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				  finalList.add(finalDataList);
 				  datatableResponseModel.setData(finalList);	

@@ -276,28 +276,13 @@ function updateReportTypeDevice()
 			
 				console.log(data);
 				$('#updateManageTypeDevice').openModal();
-				/*if(data.errorCode=="200")
-				 {
-				 console.log("status code = 0");
-				$('#updateTacMessage').text('');
-				$('#updateTacMessage').append(data.message);
-				$('#errorCode').val(data.errorCode);
-				 }
-				else if(data.errorCode=="204")
-				 {
-				console.log("status code = 3"); 
-				$('#updateTacMessage').text('');
-				$('#updateTacMessage').text(data.message);
-				$('#errorCode').val(data.errorCode);
-				 }
-				// $('#updateConsignment').modal('open'); 
-				//alert("success");
-*/				 
+					 
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
 			}
 		});
+		return false;
 }
 
 

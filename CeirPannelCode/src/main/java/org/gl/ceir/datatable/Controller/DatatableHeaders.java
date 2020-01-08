@@ -138,7 +138,7 @@ public class DatatableHeaders {
 
 			//DashBoard dataTable Headers
 			else if("dashboardNotification".equals(role)) {
-				String[] headers = {"table.sno","table.date","table.transactionID","table.feature","table.message","table.action"};	
+				String[] headers = {"table.date","table.transactionID","table.feature","table.message","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

@@ -40,5 +40,12 @@ public class ProjectDropdownController {
 		List<Dropdown> dropdown = feignCleintImplementation.asTypeList(tag, userTypeId);
 		return dropdown;
 	}
-
+	
+	@ResponseBody
+	@GetMapping("getSourceTypeDropdown/{tagId}/{featureId}")
+	public List<Dropdown> asRequestType(@PathVariable("tagId") String tagId, @PathVariable("featureId") Integer featureId ) {
+		List<Dropdown> dropdown = feignCleintImplementation.modeType(tagId, featureId);
+		return dropdown;
+	}
+	
 }
