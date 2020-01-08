@@ -239,8 +239,15 @@ public class StockServiceImpl {
 
 	public StockMgmt view(StockMgmt stockMgmt) {
 		try {
+			logger.info("Going to get Stock Record Info for txnId : " + stockMgmt.getTxnId());
 
-			return stockManagementRepository.getByTxnId(stockMgmt.getTxnId());
+			if(Objects.isNull(stockMgmt.getTxnId())) {
+				throw new IllegalArgumentException();
+			}
+
+			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(stockMgmt.getTxnId()); 
+
+			return stockMgmt2;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -465,7 +472,7 @@ public class StockServiceImpl {
 							MailSubjects.SUBJECT);
 					logger.info("Notfication have been saved.");
 				}
-				
+
 			}else {
 				logger.warn("Accept/reject of Stock not allowed to you.");
 				new GenricResponse(1, "Operation not Allowed", consignmentUpdateRequest.getTxnId());

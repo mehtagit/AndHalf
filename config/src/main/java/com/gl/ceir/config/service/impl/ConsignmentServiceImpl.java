@@ -245,7 +245,7 @@ public class ConsignmentServiceImpl {
 						}else {
 							logger.warn("no status are predefined foe the user.");
 						}
-							
+
 					}
 				}
 			}
@@ -266,9 +266,7 @@ public class ConsignmentServiceImpl {
 					} 
 				}
 
-				//interpSetter.setStateInterp(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId(), consignmentMgmt2.getConsignmentStatus());
-
-				consignmentMgmt2.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt2.getTaxPaidStatus()));
+				setInterp(consignmentMgmt2);
 			}
 
 			return page;
@@ -282,8 +280,16 @@ public class ConsignmentServiceImpl {
 
 	public ConsignmentMgmt getRecordInfo(String txnId) {
 		try {
-			logger.info("Going to get  Cosignment Record Info");
-			return consignmentRepository.getByTxnId(txnId);
+			logger.info("Going to get Cosignment Record Info for txnId : " + txnId);
+
+			if(Objects.isNull(txnId)) {
+				throw new IllegalArgumentException();
+			}
+
+			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(txnId);
+			setInterp(consignmentMgmt);
+
+			return consignmentMgmt;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -567,4 +573,14 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
+	private void setInterp(ConsignmentMgmt consignmentMgmt) {
+		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
+			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
+		
+		if(Objects.nonNull(consignmentMgmt.getCurrency()))
+			consignmentMgmt.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, consignmentMgmt.getCurrency()));
+		
+		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
+			consignmentMgmt.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt.getTaxPaidStatus()));
+	}
 }

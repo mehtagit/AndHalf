@@ -268,19 +268,17 @@ public class StolenAndRecoveryServiceImpl {
 
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {
 
-				for(SystemConfigListDb configListDb : sourceTypes) {
-					if(stolenandRecoveryMgmt.getSourceType() == configListDb.getValue()) {
-						stolenandRecoveryMgmt.setSourceTypeInterp(configListDb.getInterp());
-						break;
-					}
-				}
-
-				for(SystemConfigListDb configListDb : requestTypes) {
-					if(stolenandRecoveryMgmt.getRequestType() == configListDb.getValue()) {
-						stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp());
-						break;
-					}
-				}
+				/*
+				 * for(SystemConfigListDb configListDb : sourceTypes) {
+				 * if(stolenandRecoveryMgmt.getSourceType() == configListDb.getValue()) {
+				 * stolenandRecoveryMgmt.setSourceTypeInterp(configListDb.getInterp()); break; }
+				 * }
+				 * 
+				 * for(SystemConfigListDb configListDb : requestTypes) {
+				 * if(stolenandRecoveryMgmt.getRequestType() == configListDb.getValue()) {
+				 * stolenandRecoveryMgmt.setRequestTypeInterp(configListDb.getInterp()); break;
+				 * } }
+				 */
 
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
@@ -288,6 +286,8 @@ public class StolenAndRecoveryServiceImpl {
 						break;
 					}
 				}
+
+				setInterp(stolenandRecoveryMgmt);
 
 				// stolenandRecoveryMgmt.setOperatorTypeIdInterp(interpSetter.setConfigInterp(Tags.OPERATOR, stolenandRecoveryMgmt.getOperatorTypeId()));
 			}
@@ -522,7 +522,16 @@ public class StolenAndRecoveryServiceImpl {
 
 	public StolenandRecoveryMgmt getByTxnId(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		try {
-			return stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
+			logger.info("Going to get Stolen and recovery Info for txnId : " + stolenandRecoveryMgmt.getTxnId());
+
+			if(Objects.isNull(stolenandRecoveryMgmt.getTxnId())) {
+				throw new IllegalArgumentException();
+			}
+
+			StolenandRecoveryMgmt stolenandRecoveryMgmt2 = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
+			setInterp(stolenandRecoveryMgmt2);
+
+			return stolenandRecoveryMgmt2;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -644,4 +653,14 @@ public class StolenAndRecoveryServiceImpl {
 		status = Boolean.TRUE;
 		return status;
 	}
+
+	private void setInterp(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		if(Objects.nonNull(stolenandRecoveryMgmt.getSourceType()))
+			stolenandRecoveryMgmt.setSourceTypeInterp(interpSetter.setConfigInterp(Tags.SOURCE_TYPE, stolenandRecoveryMgmt.getSourceType()));
+
+		if(Objects.nonNull(stolenandRecoveryMgmt.getRequestType()))
+			stolenandRecoveryMgmt.setRequestTypeInterp(interpSetter.setConfigInterp(Tags.REQ_TYPE, stolenandRecoveryMgmt.getRequestType()));
+
+	}
+	
 }

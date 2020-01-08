@@ -3,6 +3,7 @@ package com.gl.ceir.config.model.constants;
 public interface Tags {
 
 	String CUSTOMS_TAX_STATUS = "CUSTOMS_TAX_STATUS";
+	String CUSTOMS_PORT = "CUSTOMS_PORT";
 	String SOURCE_TYPE = "SOURCE_TYPE";
 	String REQ_TYPE = "REQ_TYPE";
 	String OPERATOR = "OPERATOR";

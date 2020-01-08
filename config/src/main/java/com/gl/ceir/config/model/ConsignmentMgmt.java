@@ -67,15 +67,17 @@ public class ConsignmentMgmt implements Serializable {
 	@Column(length = 25)
 	private String expectedArrivaldate;
 
-
-	@Column(length = 10)
-	private String expectedArrivalPort;
+	private Integer expectedArrivalPort;
+	@Transient
+	private String expectedArrivalPortInterp;
 
 	private int quantity;
 
 	private String remarks;
 
 	private Integer currency;
+	@Transient
+	private String currencyInterp;
 
 	private Double totalPrice;
 	
@@ -207,11 +209,11 @@ public class ConsignmentMgmt implements Serializable {
 		this.expectedArrivaldate = expectedArrivaldate;
 	}
 
-	public String getExpectedArrivalPort() {
+	public Integer getExpectedArrivalPort() {
 		return expectedArrivalPort;
 	}
 
-	public void setExpectedArrivalPort(String expectedArrivalPort) {
+	public void setExpectedArrivalPort(Integer expectedArrivalPort) {
 		this.expectedArrivalPort = expectedArrivalPort;
 	}
 
@@ -280,6 +282,30 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setTaxInterp(String taxInterp) {
 		this.taxInterp = taxInterp;
+	}
+
+	public String getExpectedArrivalPortInterp() {
+		return expectedArrivalPortInterp;
+	}
+
+	public void setExpectedArrivalPortInterp(String expectedArrivalPortInterp) {
+		this.expectedArrivalPortInterp = expectedArrivalPortInterp;
+	}
+
+	public String getCurrencyInterp() {
+		return currencyInterp;
+	}
+
+	public void setCurrencyInterp(String currencyInterp) {
+		this.currencyInterp = currencyInterp;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setCurrency(Integer currency) {
+		this.currency = currency;
 	}
 
 	@Override

@@ -90,10 +90,10 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
-	
+
 	@Autowired	
 	EmailUtil emailUtil;
-	
+
 	@Autowired
 	InterpSetter interpSetter;
 
@@ -105,12 +105,12 @@ public class RegularizedDeviceServiceImpl {
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
 		List<StateMgmtDb> stateList = null;
-		
+
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			
+
 			System.out.println("dialect : " + propertiesReader.dialect);
 			SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
@@ -146,16 +146,8 @@ public class RegularizedDeviceServiceImpl {
 						break; 
 					} 
 				}
-				
-				regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
 
-				regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
-
-				regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
-
-				regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setConfigInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
-				
-				regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
+				setInterp(regularizeDeviceDb);
 			}
 
 			return page;
@@ -250,11 +242,11 @@ public class RegularizedDeviceServiceImpl {
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
 
 					// statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-					
+
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					}
-					
+
 					logger.info(">>>>>>>>>>>>>>>>>" + endUserDB.getRegularizeDeviceDbs());
 					// End user is not registered with CEIR system.
 					if(Objects.isNull(endUserDB2)) {
@@ -297,40 +289,17 @@ public class RegularizedDeviceServiceImpl {
 
 	public RegularizeDeviceDb viewDeviceInfoByImei1(long imei) {
 		try {
+			logger.info("Going to get deviceInfo Info for imei : " + imei);
 
-			return regularizedDeviceDbRepository.getByFirstImei(imei);
+			if(Objects.isNull(imei)) {
+				throw new IllegalArgumentException();
+			}
 
-			/*if(userDetails != null) {
-				return userDetails;
-			}else {
+			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
+			setInterp(regularizeDeviceDb);
 
-				RegularizeDeviceDb deviceDbFetchDetails = new  RegularizeDeviceDb();
-				List<DeviceDb> deviceDb = stokeDetailsRepository.getByDeviceNumber(UserCustomDb.getDeviceSerialNumber());
+			return regularizeDeviceDb;
 
-				for(int i=0;i < deviceDb.size();i++) {
-					if(i == 0) {
-						deviceDbFetchDetails.setFirstImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-						deviceDbFetchDetails.setMultiSimStatus(deviceDb.get(i).getMultipleSimStatus());
-						deviceDbFetchDetails.setNid(deviceDb.get(i).getEndUserUserId());
-						deviceDbFetchDetails.setTaxPaidStatus(deviceDb.get(i).getEndUserDeviceStatus());
-						deviceDbFetchDetails.setTxnId(deviceDb.get(i).getEndUserTxnId());
-						deviceDbFetchDetails.setCountry(deviceDb.get(i).getEndUserCountry());
-						// deviceDbFetchDetails.setDeviceType(deviceDb.get(i).getDeviceType());
-					}
-					if(i == 1) {
-						deviceDbFetchDetails.setSecondImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-					}
-					if(i == 2) {
-						deviceDbFetchDetails.setThirdImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-					}
-					if(i == 3) {
-						deviceDbFetchDetails.setFourthImei(Long.parseLong(deviceDb.get(i).getImeiEsnMeid()));
-					}
-
-				}
-
-				return deviceDbFetchDetails;
-			}*/
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
@@ -458,5 +427,22 @@ public class RegularizedDeviceServiceImpl {
 			logger.error(e.getMessage(), e);
 			return -1L;
 		}
+	}
+
+	private void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
+		if(Objects.nonNull(regularizeDeviceDb.getTaxPaidStatus()))
+			regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
+		
+		if(Objects.nonNull(regularizeDeviceDb.getDeviceIdType()))
+			regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
+		
+		if(Objects.nonNull(regularizeDeviceDb.getDeviceType()))
+			regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
+		
+		if(Objects.nonNull(regularizeDeviceDb.getDeviceStatus()))
+			regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setConfigInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
+		
+		if(Objects.nonNull(regularizeDeviceDb.getCurrency()))
+			regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
 	}
 }
