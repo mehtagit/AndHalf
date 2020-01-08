@@ -105,7 +105,7 @@ public interface FeignCleintImplementation {
 
 	//delete stock feign  controller
 	@RequestMapping(value="/stock/delete" ,method=RequestMethod.POST) 
-	public @ResponseBody GenricResponse deleteStock(StockUploadModel stockUploadModel) ;
+	public @ResponseBody GenricResponse deleteStock(StockUploadModel stockUploadModel,@RequestParam("userType") String userType) ;
 
 
 	//edit stock feign  controller

@@ -60,9 +60,9 @@
 </head>
 
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
-	data-userID="${userid}"
+	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}">
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
 
 
 	<!-- START CONTENT -->

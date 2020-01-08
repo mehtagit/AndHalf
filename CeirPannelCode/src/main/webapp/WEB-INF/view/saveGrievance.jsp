@@ -72,8 +72,7 @@
 
                                     <form  onsubmit="return saveGrievance()" method="POST" enctype="multipart/form-data"  id="saveGrievance">
                                         <div class="row" style="margin-top: 10px;">
-                                        <div id="mainDiv" class="mainDiv">
-                                        <div id="filediv" class="fileDiv">
+                                 
                                         <div class="row" >
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
@@ -117,6 +116,8 @@
                                                 </div>
                                             </div>
                                         </div> -->
+                                               <div id="mainDiv" class="mainDiv">
+                                        <div id="filediv" class="fileDiv">
                                          <div class="row">
                                          <div class="file-field col s12 m6">
                                                 <h6 style="color: #000;">Upload Supporting Document</h6>
@@ -150,14 +151,8 @@
 									   
 											</div>
 
-                                        
-                                        <div class="fileDiv">  <p>
-				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a> -->
-			</p>
-
 			<span> Required Field are marked with <span class="star">*</span></span>
 			
-                </div>
                                         <div class="center" style="margin-top: 50px;">
                                             <button class="btn"
                                                  type="submit" >Submit</button>

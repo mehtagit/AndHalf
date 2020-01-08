@@ -255,7 +255,7 @@
 
 				<div class="row myRow">
 					<h6 style="color: #000; margin-left: 10px; font-size: 16px;">
-						Upload Bulk Stock <span class="star">*</span>
+						Upload Bulk Stock
 					</h6>
 					<div class="file-field input-field col s12 m6"
 						style="margin-top: 5px;">
@@ -271,13 +271,11 @@
 					</div>
 					<br>
 					<br>
-					<p style="margin-left: 10px;">
-						<a href="#">Download Sample Format</a>
-					</p>
+					
 				</div>
 
 				<div class="row center">
-					<a onclick="closeViewModal()" class="btn" type="cancel">Cancel</a>
+					<a onclick="closeViewModal()" class="btn" type="cancel">Ok</a>
 				</div>
 			</form>
 		</div>
@@ -300,6 +298,12 @@
 				<h6>Are you sure you want to withdraw the stock details for
 					transaction ID: <span id="stockdeleteTxnId"></span></h6>
 			</div>
+			<div class="row">
+				<div class="input-field col s12 m12">
+					<textarea id="deleteStockremark" class="materialize-textarea"></textarea>
+					<label for="textarea1" class="">Remarks</label>
+				</div>
+			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -318,7 +322,7 @@
 			
 			<div class="row">
 
-				<h6 id="stockModalText"></h6>
+				<h6 id="stockModalText">Stock Deleted Successfully </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -392,7 +396,7 @@
              <div class="modal-content">
        
             <div class="row">
-                <h6 id="stockApproveSucessMessage"></h6>
+                <h6 id="stockApproveSucessMessage">Stock Approved SuccessFully</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
@@ -433,7 +437,7 @@
                 <div class="modal-content">
     
             <div class="row">
-                <h6 id="stockDisapproveSucessMessage"></h6>
+                <h6 id="stockDisapproveSucessMessage">Stock Rejected SuccessFully </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

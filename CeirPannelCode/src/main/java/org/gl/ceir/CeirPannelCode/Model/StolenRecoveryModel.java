@@ -12,7 +12,7 @@ public class StolenRecoveryModel {
 	private int requestType;
 	private String roleType;
 	private String  txnId,remark;
-	private int userId;
+	private int userId,operatorTypeId;
 	private int sourceType,category;
 	private Integer qty,deviceCaegory;
 	private String categoryInterp;
@@ -24,8 +24,15 @@ public class StolenRecoveryModel {
 		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
 				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
 				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", remark=" + remark + ", userId="
-				+ userId + ", sourceType=" + sourceType + ", category=" + category + ", qty=" + qty + ", deviceCaegory="
-				+ deviceCaegory + ", categoryInterp=" + categoryInterp + "]";
+				+ userId + ", operatorTypeId=" + operatorTypeId + ", sourceType=" + sourceType + ", category="
+				+ category + ", qty=" + qty + ", deviceCaegory=" + deviceCaegory + ", categoryInterp=" + categoryInterp
+				+ "]";
+	}
+	public int getOperatorTypeId() {
+		return operatorTypeId;
+	}
+	public void setOperatorTypeId(int operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
 	}
 	public String getBlockingTimePeriod() {
 		return blockingTimePeriod;

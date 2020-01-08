@@ -146,12 +146,13 @@ public class BlockUnblock {
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark)
+			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
 	  {	
 		  log.info(" file stolen entry point .");
 		 
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
+		    int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
 			log.info("Random transaction id number="+stlnTxnNumber);
@@ -187,6 +188,8 @@ public class BlockUnblock {
 			stolenRecoveryModel.setQty(qty);
 			stolenRecoveryModel.setRemark(remark);
 			stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
+			
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);
@@ -203,7 +206,8 @@ public class BlockUnblock {
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark)
+			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark,HttpSession session
+			  )
 	  {	
 		  
 		  log.info(" file Recovery api entry point .");
@@ -211,6 +215,7 @@ public class BlockUnblock {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
+			int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
@@ -243,6 +248,7 @@ public class BlockUnblock {
 			stolenRecoveryModel.setQty(qty);
 			stolenRecoveryModel.setRemark(remark);
 			stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
 			log.info("request sent to file Recovery api ="+response);
@@ -251,37 +257,41 @@ public class BlockUnblock {
 			return response;
 	
 	  }
-
-	  
-	// *********************************************** open register page or edit popup ******************************
-		@RequestMapping(value="/openblockUnblockView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-		public @ResponseBody SingleImeiDetailsModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)
-		{
-			log.info("entry point of  fetch block/unclock devices in the bases of transaction id .");
-			SingleImeiDetailsModel stockUploadModel= new SingleImeiDetailsModel();
-			//StockUploadModel stockUploadModelResponse;
-			stockUploadModel.setTxnId(txnId);
-			//stockUploadModel.setRoleType(role);
-			log.info("request passed to the fetch Device api="+stockUploadModel);
-			stockUploadModel.setCategory(1);
-			stockUploadModel.setCategoryInterp("other");
-			stockUploadModel.setDeviceIdType(1);
-			stockUploadModel.setDeviceIdTypeInterp("Imei");
-			stockUploadModel.setDeviceTypeInterp("Handheld");
-			stockUploadModel.setDeviceType(1);
-			stockUploadModel.setMultipleSimStatus(1);
-			stockUploadModel.setMultipleSimStatusInterp("yes");
-			stockUploadModel.setDeviceSerialNumber(123453);
-			stockUploadModel.setRemark("remark for block");
-			stockUploadModel.setFirstImei(111111111);
-			stockUploadModel.setSecondImei(22222222);
-			stockUploadModel.setThirdImei(33333333);
-			stockUploadModel.setFourthImei(44444444);
-			stockUploadModel.setTxnId("B3112201912345");
-			//stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
-				//log.info("response from fetch stock api="+stockUploadModelResponse);
-				return stockUploadModel;
-		}
+	/*
+	 * 
+	 * // *********************************************** open register page or edit
+	 * popup ******************************
+	 * 
+	 * @RequestMapping(value="/openblockUnblockView",method
+	 * ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	 * public @ResponseBody SingleImeiDetailsModel
+	 * openRegisterConsignmentPopup(@RequestParam(name="reqType") String
+	 * reqType,@RequestParam(name="txnId",required = false) String
+	 * txnId,@RequestParam(name="singleDeivce",required = false) String
+	 * singleDeivce,HttpSession session) { log.
+	 * info("entry point of  fetch block/unclock devices in the bases of transaction id ."
+	 * ); SingleImeiDetailsModel stockUploadModel= new SingleImeiDetailsModel();
+	 * //StockUploadModel stockUploadModelResponse;
+	 * stockUploadModel.setTxnId(txnId); //stockUploadModel.setRoleType(role);
+	 * log.info("request passed to the fetch Device api="+stockUploadModel);
+	 * stockUploadModel.setCategory(1); stockUploadModel.setCategoryInterp("other");
+	 * stockUploadModel.setDeviceIdType(1);
+	 * stockUploadModel.setDeviceIdTypeInterp("Imei");
+	 * stockUploadModel.setDeviceTypeInterp("Handheld");
+	 * stockUploadModel.setDeviceType(1); stockUploadModel.setMultipleSimStatus(1);
+	 * stockUploadModel.setMultipleSimStatusInterp("yes");
+	 * //stockUploadModel.setDeviceSerialNumber(123453);
+	 * stockUploadModel.setRemark("remark for block");
+	 * stockUploadModel.setFirstImei(111111111);
+	 * stockUploadModel.setSecondImei(22222222);
+	 * stockUploadModel.setThirdImei(33333333);
+	 * stockUploadModel.setFourthImei(44444444);
+	 * stockUploadModel.setTxnId("B3112201912345");
+	 * //stockUploadModelResponse=feignCleintImplementation.
+	 * fetchUploadedStockByTxnId(stockUploadModel);
+	 * //log.info("response from fetch stock api="+stockUploadModelResponse); return
+	 * stockUploadModel; }
+	 */
 		
 		@RequestMapping(value="/openbulkView",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 		public @ResponseBody StolenRecoveryModel openBulkFile(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="singleDeivce",required = false) String singleDeivce,HttpSession session)

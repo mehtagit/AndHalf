@@ -179,7 +179,7 @@ else {
 
 		log.info("enter in  delete stock.");
 		log.info("request passed to the deleteStock Api="+stockUpload);
-		GenricResponse response=feignCleintImplementation.deleteStock(stockUpload);
+		GenricResponse response=feignCleintImplementation.deleteStock(stockUpload,stockUpload.getUserType());
 		log.info("response after delete Stock."+response);
 		log.info("exit point of delete stock.");
 		return response;

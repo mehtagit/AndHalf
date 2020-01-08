@@ -115,42 +115,24 @@ textarea {
 				<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewmanufacturerId" name="manufacturerId"
-							placeholder="GHJ6487328" disabled=""> <label
+							placeholder="" disabled=""> <label
 							for="manufacturerId" class="active">Manufacturer ID</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewmanufacturerName" name="manufacturerName"
-							placeholder="ABC Name" disabled="disabled"> <label
+							placeholder="" disabled="disabled"> <label
 							for="manufacturerName" class="active">Manufacturer Name <span
 							class="star"></span></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewcountry" name="Country"
-							placeholder="ABC Country" disabled=""> <label
+							placeholder="" disabled=""> <label
 							for="Country" class="active">Country </label>
 					</div>
-
-					<div class="input-field col s12 m6 l6">
-						<input type="text" id="viewDeviceType" name="deviceType"
-							placeholder="Handheld" disabled=""> <label
-							for="deviceType" class="active">Device Type </label>
-					</div>
-
-
-				</div>
-
-				<div class="row" style="margin-top: 5px;">
-					<div class="input-field col s12 m6 l6">
-						<input type="text" id="viewdeviceTypeID" name="deviceType"
-							placeholder="IMEI" disabled=""> <label for="deviceType"
-							class="active">Device ID Type</label>
-					</div>
-
-
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewrequestDate"
+			<div class="input-field col s12 m6 l6">
+			 			<input type="text" id="viewrequestDate"
 							class="datepicker picker__input" name="requestDate" pattern="[]"
 							title="" maxlength="20" placeholder="" disabled="" readonly=""
 							tabindex="-1" aria-haspopup="true" aria-expanded="false"
@@ -160,19 +142,37 @@ textarea {
 							style="float: right; margin-top: -37px;"></i></span> <label
 							for="dateRequested" class="active">Request Date </label>
 					</div>
+					<!-- <div class="input-field col s12 m6 l6">
+						<input type="text" id="viewDeviceType" name="deviceType"
+							placeholder="" disabled=""> <label
+							for="deviceType" class="active">Device Type </label>
+					</div> -->
+
+
+				</div>
+
+				<!-- <div class="row" style="margin-top: 5px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewdeviceTypeID" name="deviceType"
+							placeholder="" disabled=""> <label for="deviceType"
+							class="active">Device ID Type</label>
+					</div> -->
+
+
+					<div class="row">
 
 					<div class="input-field col s12 m6 l6">
-						<input type="text" id="viewtac" name="tac" placeholder="67458392"
+						<input type="text" id="viewtac" name="tac" placeholder=""
 							disabled=""> <label for="tac" class="active">TAC
 						</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="status" name="Status"
-							placeholder="Approved" disabled=""> <label for="Status"
+							placeholder="" disabled=""> <label for="Status"
 							class="active">Status </label>
 					</div>
-					
+					</div>
 			
 									
 									
@@ -183,7 +183,7 @@ textarea {
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewapproveDisapproveDate" class="datepicker picker__input"
 							name="approveRejectionDate" pattern="[]" title="" maxlength="20"
-							placeholder="5/12/2019" disabled="" readonly="" tabindex="-1"
+							placeholder="" disabled="" readonly="" tabindex="-1"
 							aria-haspopup="true" aria-expanded="false" aria-readonly="false"
 							aria-owns="bdate2_root"> <span class="input-group-addon"
 							style="color: #ff4081"><i class="fa fa-calendar"
@@ -201,7 +201,7 @@ textarea {
 				</div>
 				<div class="center" style="margin-top: 30px;">
 					<button class="modal-close btn" type="button" id="Cancel"
-						style="margin-left: 10px;">Cancel</button>
+						style="margin-left: 10px;">Ok</button>
 				</div>
 
 

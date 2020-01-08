@@ -13,7 +13,15 @@ public class StockUploadModel {
 	private int stockStatus;
 	private String supplierId;
 	private int userId;
-	private String userType;
+	private String userType,remarks;
+	
+	
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
 	public String getFileName() {
 		return fileName;
 	}
@@ -86,8 +94,9 @@ public class StockUploadModel {
 		return "StockUploadModel [fileName=" + fileName + ", id=" + id + ", invoiceNumber=" + invoiceNumber
 				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
 				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId
-				+ ", userType=" + userType + "]";
+				+ ", userType=" + userType + ", remarks=" + remarks + "]";
 	}
+	
 	
 
 	

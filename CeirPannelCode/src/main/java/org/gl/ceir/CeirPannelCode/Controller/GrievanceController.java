@@ -15,11 +15,14 @@ import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
+import org.gl.ceir.CeirPannelCode.Model.MultipleFileModel;
+import org.gl.ceir.CeirPannelCode.Model.MultipleFileRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -59,45 +62,34 @@ public class GrievanceController {
 	
 	@RequestMapping(value= {"/saveGrievance"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="categoryId",required = false) int categoryId
-			,@RequestParam(name="remarks",required = false) String remarks,@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
+			,@RequestParam(name="remarks",required = false) String remarks,@RequestBody MultipleFileRequest multirequest,HttpSession session,@RequestParam(name="docTypeValue[]",required = false) ArrayList<MultipleFileModel> filedetails) {
 
 		int userId= (int) session.getAttribute("userid");
 		String roletype=(String) session.getAttribute("usertype");
 
-		
-		log.info("save grievance  entry point.");
+		log.info("11");
+		log.info("save grievance  entry point."+filedetails);
 
 		String grevnceId=utildownload.getTxnId();
 		grevnceId = "G"+grevnceId;
 		log.info("Random  genrated transaction number ="+grevnceId);
 
-		
-		try {
-			if(file==null) {
-				grievance.setFileName("");
-			}
-			else {
-			byte[] bytes = file.getBytes();
-			String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grevnceId+"/";
-			File dir = new File(rootPath + File.separator);
-
-			if (!dir.exists()) 
-				dir.mkdirs();
-			// Create the file on server
-			// Calendar now = Calendar.getInstance();
-
-			File serverFile = new File(rootPath+file.getOriginalFilename());
-			log.info("uploaded file path on server" + serverFile);
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			stream.write(bytes);
-			stream.close();
-			}
-			grievance.setFileName(file.getOriginalFilename());
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+		/*
+		 * try { if(file==null) { grievance.setFileName(""); } else { byte[] bytes =
+		 * file.getBytes(); String rootPath =
+		 * "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grevnceId+"/"; File dir =
+		 * new File(rootPath + File.separator);
+		 * 
+		 * if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now
+		 * = Calendar.getInstance();
+		 * 
+		 * File serverFile = new File(rootPath+file.getOriginalFilename());
+		 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		 * stream.write(bytes); stream.close(); }
+		 * grievance.setFileName(file.getOriginalFilename()); } catch (Exception e) { //
+		 * TODO: handle exception e.printStackTrace(); }
+		 */
 		// set reaquest parameters into model class
 		
 		

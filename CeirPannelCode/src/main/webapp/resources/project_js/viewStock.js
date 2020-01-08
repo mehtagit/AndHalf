@@ -130,9 +130,13 @@ function editUploadStock(){
 				$('#stockSucessMessage').text('');
 				$('#stockSucessMessage').text('Operation is not allowed');
 			}
-			else{
+			else if (data.errorCode==0){
 				$('#stockSucessMessage').text('');
 				$('#stockSucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+			}
+			else{
+				$('#stockSucessMessage').text('');
+				$('#stockSucessMessage').text('something happens wrong.');
 			}
 //			$('#updateConsignment').modal('open'); 
 //			alert("success");
@@ -161,9 +165,12 @@ function DeleteStockRecord(txnId){
 function confirmantiondelete(){
 	var role = currentRoleType == null ? roleType : currentRoleType;
 	var txnId= $("#stockdeleteTxnId").text();
+	var stockRemark= $("#deleteStockremark").val();
+	console.log("roleType=="+role+" ==stockRemark=="+stockRemark);
 	var obj ={
 			"txnId" : txnId,
-			"userType":role
+			"userType":role,
+			"remarks":stockRemark
 	}
 
 	$.ajax({
@@ -174,11 +181,12 @@ function confirmantiondelete(){
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
 			console.log(data);
-			if(data.errorCode == 200){
-				$("#stockModalText").text(data.message);
-			}else if(data.errorCode == 0){
-				$("#stockModalText").text(data.message);
+			//$("#stockModalText").text(data.message);
+			
+			if(data.errorCode == 0){
+				$("#stockModalText").text("Stock Deleted Successfully ");
 			}
+			else{	$("#stockModalText").text(data.message);}
 			$("#materialize-lean-overlay-3").css("display","none");
 		},
 		error : function() {
@@ -505,7 +513,7 @@ function approveStockSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#stockApproveSucessMessage').text('');
-				$('#stockApproveSucessMessage').text(data.message);
+				$('#stockApproveSucessMessage').text('Stock Approved SuccessFully');
 			}
 			else{
 				$('#stockApproveSucessMessage').text('');
@@ -552,7 +560,7 @@ console.log("txnId =="+txnId+" Remark="+Remark );
 			if(data.errorCode==0){
 
 				$('#stockDisapproveSucessMessage').text('');
-				$('#stockDisapproveSucessMessage').text(data.message);
+				$('#stockDisapproveSucessMessage').text('Stock Rejected SuccessFully');
 			}
 			else{
 				$('#stockDisapproveSucessMessage').text('');

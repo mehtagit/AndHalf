@@ -207,9 +207,7 @@ section {
 												required="required" name="expectedArrivalPort">
 												<option value="" disabled selected>Expected Arrival
 													Port <span id="starColor">*</span></option>
-												<option value="Air">Air</option>
-												<option value="Land">Land</option>
-												<option value="Water">Water</option>
+												
 											</select>
 
 										</div>
@@ -542,6 +540,9 @@ section {
 				}
 			});
 		}
+		
+		
+	
 	</script>
 
 
@@ -551,6 +552,15 @@ section {
 		$(document).ready(function() {
 
 			ConsignmentCurrency();
+			
+			$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
+				$("#expectedArrivalPort").empty();
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#expectedArrivalPort');
+					
+				}
+			});
 		});
 
 		$('.datepick').datepicker({
