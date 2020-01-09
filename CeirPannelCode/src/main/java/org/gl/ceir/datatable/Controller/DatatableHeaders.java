@@ -100,7 +100,7 @@ public class DatatableHeaders {
 
 			//Grievance Headers
 			else if("grievanceHeaders".equals(role)) {
-				String[] headers = {headersTitle.raisedDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.grievanceId,headersTitle.recentStatus,headersTitle.action};	
+				String[] headers = {headersTitle.raisedDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.grievanceId,headersTitle.grievanceStatus,headersTitle.action};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -138,7 +138,7 @@ public class DatatableHeaders {
 
 			//DashBoard dataTable Headers
 			else if("dashboardNotification".equals(role)) {
-				String[] headers = {"table.sno","table.date","table.transactionID","table.feature","table.message","table.action"};	
+				String[] headers = {"table.date","table.transactionID","table.feature","table.message","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -147,7 +147,7 @@ public class DatatableHeaders {
 
 			//TRC Manage Type dataTable Headers
 			else if("trcManageType".equals(role)) {
-				String[] headers = {headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.Status,headersTitle.approveRejectionDate,headersTitle.action};
+				String[] headers = {headersTitle.creationDate,headersTitle.transactionID,headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.trcStatus,headersTitle.approveRejectionDate,headersTitle.action};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -244,33 +244,23 @@ public class DatatableHeaders {
 			//AdmintrcManageType Headers 
 			
 			else if("AdmintrcManageType".equals(role)) {
-				String[] headers = {headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.Status,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
+				String[] headers = {headersTitle.creationDate,headersTitle.transactionID,headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.trcStatus,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+//BlockUnblockCEIRAdmin Headers 
 			
-			//adminPolicyManagement Headers 
-			
-			else if("adminPolicyManagement".equals(role)) {
-				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.period,headersTitle.Status,headersTitle.policyOrder,headersTitle.action};		
+			else if("BlockUnblockCEIRAdmin".equals(role)) {
+				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.operator,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
-			
-			//AdmintrcManageType Headers 
-			
-			else if("AdmintrcManageType".equals(role)) {
-				String[] headers = {headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.Status,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
-			}
+		
 			
 			
 			//DEFAULT PORTION  

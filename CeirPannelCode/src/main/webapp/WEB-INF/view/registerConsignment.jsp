@@ -219,8 +219,7 @@ section {
 
 
 										<div class="input-field col s12 m6">
-											<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												title="Please enter price in numbers"
+											<input type="text" name="totalPrice" id="totalPrice"
 												maxlength="7" /> <label for="totalPrice"
 												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
@@ -375,14 +374,6 @@ section {
 	
 	$(document).ready(function() {
 		ConsignmentCurrency();
-		$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
-			/* $("#expectedArrivalPort").empty(); */
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#expectedArrivalPort');
-				
-			}
-		});
 	});
 	
 	
@@ -573,7 +564,19 @@ section {
 	<script>
 		populateCountries("country");
 
-		
+		$(document).ready(function() {
+
+			ConsignmentCurrency();
+			
+			$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
+				$("#expectedArrivalPort").empty();
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#expectedArrivalPort');
+					
+				}
+			});
+		});
 
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

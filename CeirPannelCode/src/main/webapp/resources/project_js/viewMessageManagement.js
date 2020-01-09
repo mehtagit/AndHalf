@@ -57,7 +57,10 @@ function messageManagementDatatable(){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 100, targets: result.length - 1 }
+		            { width: 100, targets: result.length - 1 },
+		            { width: 125, targets: 0 },
+		            { width: 125, targets: 1 }
+
 		        ]
 			});
 		},
@@ -121,6 +124,13 @@ function pageRendering(){
 		}
 
 	}); 
+	//status-----------dropdown
+	$.getJSON('./getDropdownList/CHANNEL', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#channel');
+		}
+	});
 };
 
 

@@ -1202,6 +1202,7 @@
                                                                 <textarea id="editsingleblockremark"  placeholder="" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="editsingleblockremark">Remark <span class="star">*</span></label>
                                                             </div>
+                                                           
                                                                <div class="col s12 m6"><label for="editbulkBlockdeviceCategory">Category
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="editbulkBlockdeviceCategory" required="required" >

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @PropertySources({
-@PropertySource("classpath:messages.properties")
-			})
+	@PropertySource("classpath:messages.properties")
+})
 
 public class HeadersTitle {
 
@@ -61,7 +61,7 @@ public class HeadersTitle {
 	public   String raisedDate = "Raised Date";
 	public   String lastUpdateDate = "Last Update Date";
 	public   String grievanceId = "Grievance ID";
-	public   String recentStatus = "Recent Status";
+	public   String grievanceStatus = "Grievance Status";
 
 	//Dashboard Notification Table
 	public   String sNo = "S.No.";
@@ -74,13 +74,13 @@ public class HeadersTitle {
 	public   String tac = "TAC";
 	public   String approveRejectionDate = "Approve/Rejection Date";
 	public   String adminStatus = "CEIR Admin Status";
-
+	public   String trcStatus = "TRC Status";
 
 	//User Paid Status
 	public   String deviceIDType= "Device ID Type";
 	public   String deviceType= "Device Type";
 	public   String price = "Price";
-	public   String nid = "NID";
+	public   String nid = "NID/Passport No.";
 
 
 	//operator Grey/Black List
@@ -89,20 +89,21 @@ public class HeadersTitle {
 
 	//Block/unblock
 	public   String mode= "Mode";
+	public   String operator= "Operator";
 
 	//Admin Message Management
-		public String parameterName= "Parameter Name";
-		public  String description= "Description";
-		public  String value= "Value";
-		public  String channel= "Channel";
-		
-		//Admin Config Management
-		public  String type="Type";
-		public  String remarks="Remark";
-		
-	
-		//Admin Config Management
-		public  String period="Period";
-		public  String policyOrder="Policy Order";
-		
+	public String parameterName= "Parameter Name";
+	public  String description= "Description";
+	public  String value= "Value";
+	public  String channel= "Channel";
+
+	//Admin Config Management
+	public  String type="Type";
+	public  String remarks="Remark";
+
+
+	//Admin Config Management
+	public  String period="Period";
+	public  String policyOrder="Policy Order";
+
 }

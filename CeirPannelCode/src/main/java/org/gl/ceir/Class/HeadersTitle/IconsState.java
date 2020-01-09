@@ -852,6 +852,7 @@ public class IconsState {
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
 		
+		
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			 viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
@@ -1003,18 +1004,69 @@ public class IconsState {
 
 
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
-		
+		String viewAction="viewByID("+id+",'view')";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 		
 		
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>";
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 		
-		String action = approve.concat(reject);
+		String action = view.concat(download).concat(approve).concat(reject);
+		return action;
+
+	}
+	
+	/********************************** Icons for adminBlockUnblock **********************************/ 
+
+	public String adminBlockUnblock(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+		String file = fileName == null ? null : fileName.replace(" ", "%20");
+		
+		String viewAction="";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
+		String approveAction = "deviceApprovalPopup('"+txnId+"','"+requestType+"')";
+		String rejectAction= "userRejectPopup('"+txnId+"','"+requestType+"')";
+		
+		if(source.equals("2")) {
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+		}
+		else if(source.equals("4")) {
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+		}
+		 
+		// state related Code 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>";
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
+		
+		
+		if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+		
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+		
+			
+		}
+
+		String action= view.concat(download).concat(approve).concat(reject);	
 		return action;
 
 	}

@@ -3,7 +3,6 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -92,6 +91,7 @@ public class GrievanceController {
 		 * TODO: handle exception e.printStackTrace(); }
 		 */
 		// set reaquest parameters into model class
+
 		
 		
 		grievance.setCategoryId(categoryId);

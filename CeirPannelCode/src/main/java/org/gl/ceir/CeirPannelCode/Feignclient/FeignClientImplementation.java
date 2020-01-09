@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Operator;
+import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,7 +84,10 @@ public interface FeignClientImplementation {
 
 		@GetMapping("/system-config-list/{tag}")    
 		public List<Operator> operatorList(@PathVariable("tag")String tag);       
-		     
+		
+		
+	
+	    	     
 	/*
 	 * @PostMapping("/MobileOperators/") public void saveOperator(@RequestBody
 	 * Operator operator);

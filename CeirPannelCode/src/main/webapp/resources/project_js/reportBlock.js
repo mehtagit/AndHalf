@@ -339,7 +339,7 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 
 
 function setViewBulkPopUp(data,popUpType,requestType){
-
+	
 $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
 		$('#editBulkBlockCategory').empty();
 		for (i = 0; i < data.length; i++) {

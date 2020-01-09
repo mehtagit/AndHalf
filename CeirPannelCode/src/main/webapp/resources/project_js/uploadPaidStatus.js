@@ -256,6 +256,7 @@ function table(url,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(request); 
+						console.log(JSON.stringify(request));
 					}
 
 				},
@@ -513,15 +514,15 @@ function exportpaidStatus(){
 	var taxPaidStatus = $('#taxPaidStatus').val();
 	var deviceIdType = $('#deviceIDType').val();
 	var deviceType = $('#deviceTypeFilter').val();
-
-
+	var nid = $('#nId').val();
+	
 	var table = $('#data-table-simple').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType)
-	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType+"nid = "+nid)
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
 

@@ -13,10 +13,15 @@ public class Registration {
 	private String companyName;
 	private String propertyLocation;
 	private String street;
+	private String village;
 	private String locality;
+	private String district;
+	private String commune;
+	private Integer postalCode;
 	private String province;
 	private String country; 
 	private String type;
+	private String asTypeName;
 	private Integer vatStatus; 
 	private String vatNo; 
 	private ArrayList<QuestionPair> questionList;
@@ -26,7 +31,6 @@ public class Registration {
 	private Long[] roles;
 	private String captcha;
 	private long usertypeId;
-
 	private String employeeId;
 	private String natureOfEmployment;
 	private String designation;
@@ -38,6 +42,8 @@ public class Registration {
 	private String nidFilename;
 	private String photoFilename;
 	private String idCardFilename;
+	private Integer arrivalPort;
+	private String arrivalPortName;
 
 	public Registration() {};
 	public ArrayList<QuestionPair> getQuestionList() {
@@ -93,6 +99,12 @@ public class Registration {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getAsTypeName() {
+		return asTypeName;
+	}
+	public void setAsTypeName(String asTypeName) {
+		this.asTypeName = asTypeName;
 	}
 	public Integer getVatStatus() {
 		return vatStatus;
@@ -269,19 +281,58 @@ public class Registration {
 	public void setIdCardFilename(String idCardFilename) {
 		this.idCardFilename = idCardFilename;
 	}
+	
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+	public Integer getArrivalPort() {
+		return arrivalPort;
+	}
+	public void setArrivalPort(Integer arrivalPort) {
+		this.arrivalPort = arrivalPort;
+	}
+	public String getArrivalPortName() {
+		return arrivalPortName;
+	}
+	public void setArrivalPortName(String arrivalPortName) {
+		this.arrivalPortName = arrivalPortName;
+	}
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo
 				+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
-				+ ", locality=" + locality + ", province=" + province + ", country=" + country + ", type=" + type
+				+ ", village=" + village + ", locality=" + locality + ", district=" + district + ", commune=" + commune
+				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password="
-				+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + Arrays.toString(roles) + ", captcha="
+				+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + roles + ", captcha="
 				+ captcha + ", usertypeId=" + usertypeId + ", employeeId=" + employeeId + ", natureOfEmployment="
 				+ natureOfEmployment + ", designation=" + designation + ", authorityName=" + authorityName
 				+ ", authorityEmail=" + authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo
-				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename=" 
-				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename + "]";
+				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename="
+				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename
+				+ ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName + "]";
 	}
 	
 

@@ -352,6 +352,7 @@ function editRegisterConsignment(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('#updateModal').closeModal();
+
 			$('#updateConsignment').openModal();
 			if(data.errorCode==200){
 
@@ -359,6 +360,7 @@ function editRegisterConsignment(){
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(data.message);
 			}
+
 			else if (data.errorCode==0){
 			
 				$('#sucessMessage').text('');

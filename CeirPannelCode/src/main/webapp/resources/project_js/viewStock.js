@@ -181,6 +181,7 @@ function confirmantiondelete(){
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
 			console.log(data);
+
 			//$("#stockModalText").text(data.message);
 			$("#DeleteStockconfirmationModal").closeModal();
 

@@ -1,16 +1,15 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
-import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
-import org.gl.ceir.CeirPannelCode.Model.RequestCountAndQuantity;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
+import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.MessageContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
@@ -18,6 +17,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -206,12 +206,18 @@ public interface FeignCleintImplementation {
 		
 		
 		
+		
 
 		//***************************************************Admin Registration as Type Dropdown********************************
 
 
 		@RequestMapping(value="/system-config-list/by-tag-and-usertype/{tagId}/{userTypeId}" ,method=RequestMethod.GET) 
 		public List<Dropdown> asTypeList(@PathVariable("tagId") String tag, @PathVariable("userTypeId") Integer userTypeId);
+
+
+		@PostMapping("/system/viewTag")    
+		public Dropdown dataByTag(Tag tag);       
+		
 
 		// fetch block/Unblock(bulk) devices.
 		
@@ -266,7 +272,25 @@ public @ResponseBody MessageContentModel viewMessageFeign(FilterRequest filterRe
 @PostMapping("/system/viewTag")
 public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterRequest);
 
-}
+
+		@RequestMapping(value="/system-config-list/by-tag-and-featureid/{tagId}/{featureId}" ,method=RequestMethod.GET) 
+		public List<Dropdown> modeType(@PathVariable("tagId") String tagId, @PathVariable("featureId") Integer featureId);
+		
+		//******************************* Block Unblock Approve/Reject Devices Feign ********************************
+		
+				@PutMapping("/accept-reject/stolen-recovery-block-unblock")
+				public @ResponseBody GenricResponse approveRejectFeign(FilterRequest FilterRequest);
+				
+				
+				//************************************ Table Actions Feign  *************************************************
+				
+				@RequestMapping(value="/table-actions/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
+				public List<ActionModel> tableActionFeign(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+				
+		}
+
+
+
 
 
 

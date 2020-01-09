@@ -96,6 +96,7 @@ select {
 var contextpath = "${context}";
 </script>
 </head>
+
 <body>
 
 <!-- Modal End --> 
@@ -144,8 +145,7 @@ var contextpath = "${context}";
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("name") %> <spring:message code="welcome.message" /></h5>
-							
+							<h5><%=request.getParameter("name") %> Registration</h5>
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
                <input type="hidden" id="usertypeId" value="${usertypeId}">
@@ -271,7 +271,7 @@ var contextpath = "${context}";
 								</div> -->
 							</div>
 
-							<div class="row">
+								<div class="row">
 								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200"
 										pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
@@ -290,7 +290,14 @@ var contextpath = "${context}";
 									<label for="street">Street Number <span class="star">*</span>
 									</label>
 								</div>
-
+									<div class="input-field col s12 m6 l6">
+									<input type="text" name="village" maxlength="30"
+										class="form-control boxBorder boxHeight" id="village"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="village">Village <span class="star">*</span>
+									</label>
+								</div>
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
@@ -300,29 +307,52 @@ var contextpath = "${context}";
 									</label>
 								</div>
 
-<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="district" maxlength="30"
+										class="form-control boxBorder boxHeight" id="district"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="district">District <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="commune" maxlength="30"
+										class="form-control boxBorder boxHeight" id="commune"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="commune">Commune <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="postalCode" maxlength="30"
+										class="form-control boxBorder boxHeight" id="postalCode"
+										pattern="[A-Za-z0-9\s]{0,30}"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="postalCode">Postal Code</label>
+								</div>
+								
+								
+								
+								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Country <span class="star">*</span>
 									</p>
-									<select id="country" name="country" class="browser-default"
-										class="mySelect" style="padding-left: 0;" required>
-
-									</select>
-									<!-- <label for="country">Country <span class="star">*</span></label> -->
+									<select id="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
 								</div>
-								
-								
+
 								<div class="input-field col s12 m6 l6">
-                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Province <span
-                                            class="star">*</span></p>
-                                    <select id="state" class="browser-default" class="mySelect" style="padding-left: 0;"
-                                        required></select>
-                                </div>
-
-								
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Province <span class="star">*</span>
+									</p>
+									<select id="state" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
+								</div>
 							</div>
-
+							
+							
 							<!-- <div class="row">
 								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
 									<label for="vatNumber">VAT Registration <span
@@ -362,27 +392,29 @@ var contextpath = "${context}";
 									<div class=" boxHeight">
 										<label><input class="with-gap vatStatus" value="1"
 											name="vatStatus" type="radio"
-											onclick="document.getElementById('vatNumberField').style.display = 'block';">
+											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFile').style.display = 'block'">
 											<span>Yes</span> </label> <label> <input
 											class="with-gap vatStatus" name="vatStatus" type="radio"
 											style="margin-left: 20px;" value="0"
-											onclick="document.getElementById('vatNumberField').style.display = 'none';"
+											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFile').style.display = 'none'"
 											checked /> <span>No</span>
 										</label>
 									</div>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<p
+									<!-- <p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Role Type <span class="star">*</span>
-									</p>
+									</p> -->
 
-									<select  name="roles" id="usertypes" multiple required>
+									<select  name="roles" class="validate" id="usertypes" multiple required>
 										<option value="" disabled>Role Type <span
 												class="star"></span></option>
 
 									</select>
+									<label  data-error="Please select at least one option"  for="usertypes">Role Type <span class="star">*</span></label>
 								</div>
+								<div class="row">
 								<div class="input-field col s12 m6 l6" style="display: none;"
 									id="vatNumberField">
 									<input type="text" name="vatNo" maxlength="15"
@@ -391,61 +423,15 @@ var contextpath = "${context}";
 										title="Please enter alphanumeric upto 15 characters only">
 									<label for="vatNo">VAT Number <span class="star">*</span></label>
 								</div>
-							</div>
-
-							<%-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Role Type <span class="star">*</span>
-									</p> 
-									<select multiple required name="roles"  >
-										<option value="" disabled>Role Type <span
-												class="star"></span></option>
-								<c:forEach items="${usertypes}" var="usertype" >
-								<c:if test="${usertype.usertypeName!='admin'}">
-								<option  value="${usertype.id}">${usertype.usertypeName}</option>
-								</c:if> 
-								</c:forEach>	
-								</select>  
-								</div> --%>
-
-
-
-							<!-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Type <span class="star">*</span>
-									</p>
-									<select class="browser-default" name="type" id="mySelect"
-										onchange="myFunction()" required>
-										<option value="" disabled selected>Type</option>
-										<option value="Individual">Individual</option>
-										<option value="Company">Company</option>
-										<option value="Organization">Organization</option>
-										<option value="Government">Government</option>
-									</select>
-								</div> -->
-						</div>
-
-						<!-- div class="row myRow" style="display: none;" id="uploadFile">
-								<h6 class="file-upload-heading" style="margin-left: 15px;">
-									Upload Nationality Information<span class="star">*</span>
-								</h6>
-								<div class="file-field input-field col s12 m6"
-									style="margin-top: 5px;">
-									<div class="btn">
-										<span>Select File</span> <input name="file" type="file" id="csvUploadFile"
-											accept=".pfg">     
-									</div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate responsive-file-div"
-											type="text">
-									</div>
+								
+								<div class="input-field col s12 m6 l6" style="display: none;"
+									id="vatNumberField">
+									<input type="file" name="vatFile"
+										class="form-control boxBorder boxHeight" id="vatFile">
+									<label for="vatFile">VAT File <span class="star">*</span></label>
 								</div>
-								<br> <br>
-								<p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p>
-							</div> -->
-
+								</div>
+							</div>
 						<div class="row">
 							<div class="input-field col s12 m6 l6">
 								<input type="password" name="password"
@@ -466,21 +452,6 @@ var contextpath = "${context}";
 								</label>
 							</div>
 						</div>
-
-
-						<!-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Country <span class="star">*</span>
-									</p>
-									<select id="country" name="country" class="browser-default" class="mySelect"
-										style="padding-left: 0;" required>
-									
-										</select>
-									<label for="country">Country <span class="star">*</span></label>
-								</div>
-							</div> -->
-
 						<div class="row securityQuestionDiv">
 							<div class="input-field col s12 m6 l6">
 								<p
@@ -491,11 +462,6 @@ var contextpath = "${context}";
 									class="browser-default questionId" id="questionId0"
 									name="questionId" required>
 									<option value="" disabled selected>Security Question 1</option>
-									<%--<c:forEach items="${questions}" var="question"> 
-									<c:if test="${question.category=='1'}">
-									<option value="${question.id}">${question.question}</option>
-									</c:if>
-									</c:forEach>  --%>
 								</select>
 							</div>
 
@@ -576,7 +542,20 @@ var contextpath = "${context}";
 
 							</span>
 						</div>
+						   <p>
+      <label style="color: black!important;">
+        <input name="disclamer" type="checkbox" required="required" />
+        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+      </label>
+    </p>
+    
+    <!-- <div class="input-field no-margin col s12 m9">
+    <input type="checkbox" name="accept" id="regTOS" required class="validate">
+    <label for="regTOS" data-error="You must accept the Terms of Service">I accept the Terms of Service</label>
+</div> -->
 
+							                         </div>
+                         
 						<div class="row">
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
@@ -780,16 +759,13 @@ var contextpath = "${context}";
                "state" );
        
        
-       var password = document.getElementById("password")
-       , confirm_password = document.getElementById("confirm_password");
-
-     function validatePassword(){
-       if(password.value != confirm_password.value) {
-         confirm_password.setCustomValidity("Passwords Don't Match");
-       } else {
-         confirm_password.setCustomValidity('');
-       }
-     }
+       function validatePassword(){
+           if(password.value != confirm_password.value) {
+             confirm_password.setCustomValidity("Passwords Don't Match");
+           } else {
+             confirm_password.setCustomValidity('');
+           }
+         }
 
      password.onchange = validatePassword;
      confirm_password.onkeyup = validatePassword;
@@ -803,14 +779,15 @@ var contextpath = "${context}";
                 document.getElementById("companyNames").style.display = "none";
                 $("#passportNo").prop('required',true);
                 $("#companyName").prop('required',false);
+                $("#companyName").val("");
                 $("#file").prop('required',true);
-            } else 
-            {
+            } else {
                 document.getElementById("uploadFile").style.display = "none";
                 document.getElementById("passportNumberDiv").style.display = "none";
                 document.getElementById("companyNames").style.display = "block";
                 $("#companyName").prop('required',true);
                 $("#passportNo").prop('required',false);
+                $("#passportNo").val("");
                 $("#file").prop('required',false);
             }
         }

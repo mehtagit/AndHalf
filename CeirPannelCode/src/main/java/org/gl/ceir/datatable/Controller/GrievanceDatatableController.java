@@ -377,7 +377,7 @@ public class GrievanceDatatableController {
 		pageElement.setButtonList(buttonList);
 
 		// Dropdown items
-		String[] selectParam = { "select", "Recent Status ", "recentStatus", "" };
+		String[] selectParam = { "select", "Grievance Status ", "recentStatus", "" };
 		for (int i = 0; i < selectParam.length; i++) {
 			inputFields = new InputFields();
 			inputFields.setType(selectParam[i]);
