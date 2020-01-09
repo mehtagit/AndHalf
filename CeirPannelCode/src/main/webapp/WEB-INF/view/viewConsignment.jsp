@@ -242,7 +242,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<a class="btn" onclick="confirmantiondelete()">ok</a>
-						<button class="modal-close btn" onclick="closeUpdateModal()"
+						<button class="modal-close btn" type="button" onclick="closeUpdateModal()"
 							style="margin-left: 10px;">No</button>
 					</div>
 				</div>
