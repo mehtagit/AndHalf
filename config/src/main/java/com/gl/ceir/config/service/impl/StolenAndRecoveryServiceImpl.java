@@ -217,8 +217,6 @@ public class StolenAndRecoveryServiceImpl {
 	
 	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest){
 
-		List<SystemConfigListDb> sourceTypes = null;
-		List<SystemConfigListDb> requestTypes = null;
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
 
@@ -320,6 +318,10 @@ public class StolenAndRecoveryServiceImpl {
 					}
 				}
 			}
+		}
+		
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			srsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		
 		return srsb;

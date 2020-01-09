@@ -205,7 +205,7 @@ public class StockServiceImpl {
 	}
 	
 	private SpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
-		SpecificationBuilder<StockMgmt> smsb = new SpecificationBuilder<>(propertiesReader.dialect);
+		SpecificationBuilder<StockMgmt> specificationBuilder = new SpecificationBuilder<>(propertiesReader.dialect);
 
 		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 
@@ -214,26 +214,26 @@ public class StockServiceImpl {
 				) {
 
 			if(Objects.nonNull(filterRequest.getUserId()) )
-				smsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 			if(Objects.nonNull(filterRequest.getUserId()))
-				smsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 		} 
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
-			smsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
-			smsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
+			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			smsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
-			smsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-			smsb.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
@@ -248,7 +248,7 @@ public class StockServiceImpl {
 
 					logger.info("Array list to add is = " + stockStatus);
 					if(!statusList.isEmpty()) {
-						smsb.addSpecification(smsb.in("stockStatus", stockStatus));
+						specificationBuilder.addSpecification(specificationBuilder.in("stockStatus", stockStatus));
 					}else {
 						logger.warn("no predefined status are available.");
 					}
@@ -257,10 +257,10 @@ public class StockServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			smsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		
-		return smsb;
+		return specificationBuilder;
 	}
 
 	public StockMgmt view(StockMgmt stockMgmt) {
