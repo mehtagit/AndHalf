@@ -564,7 +564,6 @@ public class ConsignmentServiceImpl {
 			cmsb.orSearch(new SearchCriteria("taxPaidStatus", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-
 		
 		return cmsb;
 	}

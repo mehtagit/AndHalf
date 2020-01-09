@@ -229,12 +229,6 @@ public class StolenAndRecoveryServiceImpl {
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
 
-			sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
-			logger.info(sourceTypes);
-
-			requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
-			logger.info(requestTypes);
-
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts) {				
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {
 					if(stolenandRecoveryMgmt.getFileStatus() == stateMgmtDb.getState()) {
@@ -692,6 +686,9 @@ public class StolenAndRecoveryServiceImpl {
 		
 		if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId()))
 			stolenandRecoveryMgmt.setOperatorTypeIdInterp(interpSetter.setConfigInterp(Tags.OPERATORS, stolenandRecoveryMgmt.getOperatorTypeId()));
+		
+		if(Objects.nonNull(stolenandRecoveryMgmt.getBlockCategory()))
+			stolenandRecoveryMgmt.setBlockCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getBlockCategory()));
 	}
 	
 }

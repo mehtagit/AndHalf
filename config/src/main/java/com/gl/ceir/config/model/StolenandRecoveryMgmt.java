@@ -70,6 +70,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private String operatorTypeIdInterp;
 	
+	private Integer blockCategory;
+	@Transient
+	private String blockCategoryInterp;
+	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	SingleImeiDetails singleImeiDetails;  
 	
@@ -204,6 +208,19 @@ public class StolenandRecoveryMgmt implements Serializable {
 	}
 	public void setOperatorTypeIdInterp(String operatorTypeIdInterp) {
 		this.operatorTypeIdInterp = operatorTypeIdInterp;
+	}
+	
+	public Integer getBlockCategory() {
+		return blockCategory;
+	}
+	public void setBlockCategory(Integer blockCategory) {
+		this.blockCategory = blockCategory;
+	}
+	public String getBlockCategoryInterp() {
+		return blockCategoryInterp;
+	}
+	public void setBlockCategoryInterp(String blockCategoryInterp) {
+		this.blockCategoryInterp = blockCategoryInterp;
 	}
 	@Override
 	public String toString() {
