@@ -1,6 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
@@ -282,7 +283,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 		//************************************ Table Actions Feign  *************************************************
 		
 		@RequestMapping(value="/table-actions/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
-		public List<Dropdown> tableActionFeign(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+		public List<ActionModel> tableActionFeign(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
 		
 }
 
