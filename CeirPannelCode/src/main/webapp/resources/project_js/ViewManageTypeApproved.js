@@ -31,20 +31,32 @@ function typeApprovedDataTable(){
 function Datatable(Url,dataUrl){
 if(userType=="CEIRAdmin"){
 		var userId = 0;
+		var filterRequest={
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+			  	"tac" : $('#tac').val(),
+			  	"txnId" : $('#transactionID').val(),
+			  	"userId":userId,
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"adminStatus" : parseInt($('#Status').val()),
+				}
 	}else{
 		var userId = parseInt($("body").attr("data-userID"))
+			var filterRequest={
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+			  	"tac" : $('#tac').val(),
+			  	"txnId" : $('#transactionID').val(),
+			  	"userId":userId,
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"status" : parseInt($('#Status').val()),
+				}
 	}
-	var filterRequest={
-	"endDate":$('#endDate').val(),
-	"startDate":$('#startDate').val(),
-  	"tac" : $('#tac').val(),
-  	"txnId" : $('#transactionID').val(),
-  	"userId":userId,
-	"featureId":parseInt(featureId),
-	"userTypeId": parseInt($("body").attr("data-userTypeID")),
-	"userType":$("body").attr("data-roleType"),
-	"status" : parseInt($('#Status').val()),
-	}
+	
 	$.ajax({
 		url: Url,
 		type: 'POST',
