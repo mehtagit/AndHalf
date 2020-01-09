@@ -132,9 +132,9 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
-			if(Objects.isNull(systemConfigurationDb.getTag())) {
-				logger.info("Receiving tag as null.");
-				return new GenricResponse(1, "Receiving tag as null.","");
+			GenricResponse genricResponse = validateUpdateRequest(systemConfigurationDb.getTag(), systemConfigurationDb.getValue());
+			if(genricResponse.getErrorCode() != 0) {
+				return genricResponse;
 			}
 			
 			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
@@ -210,9 +210,9 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updateMessageInfo(MessageConfigurationDb messageConfigurationDb) {
 		try {
-			if(Objects.isNull(messageConfigurationDb.getTag())) {
-				logger.info("Receiving tag as null.");
-				return new GenricResponse(1, "Receiving tag as null.","");
+			GenricResponse genricResponse = validateUpdateRequest(messageConfigurationDb.getTag(), messageConfigurationDb.getValue());
+			if(genricResponse.getErrorCode() != 0) {
+				return genricResponse;
 			}
 
 			MessageConfigurationDb mcd = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
@@ -297,9 +297,9 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updatePolicyInfo(PolicyConfigurationDb policyConfigurationDb) {
 		try {
-			if(Objects.isNull(policyConfigurationDb.getTag())) {
-				logger.info("Receiving tag as null.");
-				return new GenricResponse(1, "Receiving tag as null.","");
+			GenricResponse genricResponse = validateUpdateRequest(policyConfigurationDb.getTag(), policyConfigurationDb.getValue());
+			if(genricResponse.getErrorCode() != 0) {
+				return genricResponse;
 			}
 			
 			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getByTag(policyConfigurationDb.getTag());
@@ -424,4 +424,16 @@ public class ConfigurationManagementServiceImpl {
 		return systemConfigListDbResult;
 	}
 
+	private GenricResponse validateUpdateRequest(String tag, String value) {
+		if(Objects.isNull(tag)) {
+			logger.info("Receiving tag as null.");
+			return new GenricResponse(1, "Receiving tag as null.","");
+		}
+		if(Objects.isNull(value) && !value.isEmpty()) {
+			logger.info("Value of a tag can't be set to null or empty.");
+			return new GenricResponse(2, "Value of a tag can't be set to null or empty.","");
+		}
+		
+		return new GenricResponse(0, "","");
+	}
 }
