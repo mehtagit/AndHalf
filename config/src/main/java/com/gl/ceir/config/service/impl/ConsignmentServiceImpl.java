@@ -446,7 +446,7 @@ public class ConsignmentServiceImpl {
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<ConsignmentFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( !consignmentMgmts.isEmpty() ) {
 

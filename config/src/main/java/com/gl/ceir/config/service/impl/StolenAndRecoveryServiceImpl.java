@@ -355,7 +355,7 @@ public class StolenAndRecoveryServiceImpl {
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( !stolenandRecoveryMgmts.isEmpty() ) {
 
