@@ -2,26 +2,50 @@ function openRegistrationPage(){
 	var usertypeDropdown=$("#usertypes option:selected"); 
 	var usertypeDropdownText=usertypeDropdown.text();
 	var usertypeDropdownVal=usertypeDropdown.val(); 
-	if(usertypeDropdownText=="Importer"){   
+	if(usertypeDropdownVal=="4"){   
 		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Importer";
 	}
-	else if(usertypeDropdownText=="Distributor"){   
+	else if(usertypeDropdownVal=="5"){   
 		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Distributor";
 	}
-	else if(usertypeDropdownText=="Retailer"){   
+	else if(usertypeDropdownVal=="6"){   
 		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Retailer";
 	}
-	else if(usertypeDropdownText=="Custom"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal;
-	}     
+	else if(usertypeDropdownVal=="7"){
+		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=Custom";
+	}
+	else if(usertypeDropdownVal=="10"){
+		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=TRC";
+	}
+	else if(usertypeDropdownVal=="12"){
+		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=Manufacturer";
+	}
 
-	else if(usertypeDropdownText=="Operator"){
+	else if(usertypeDropdownVal=="9"){
 		window.location.href=contextpath+"/operatorRegistration?usertypeId="+usertypeDropdownVal;
 	} 
 	else{
 	}
 }
-
+function portDropDownData(){ 
+	$.ajax({
+		type : 'GET',
+		url : contextpath + '/getDropdownList/CUSTOMS_PORT',
+		contentType : "application/json",
+		dataType : 'html',
+		async:false,
+		success : function(data) {
+			var response=JSON.parse(data);                                    
+			var asTypeDropdown=$("#arrivalPort");  
+			for(var i=0; i<response.length; i++){
+					var data2='<option value="'+response[i].value+'">'+response[i].interp+'</option>';
+					asTypeDropdown.append(data2);
+			}    
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
+}
 function verifyOtp(){
 	$("#otpVerifyBtn").prop('disabled', true);
 	var obj="";
@@ -35,7 +59,6 @@ function verifyOtp(){
 					userid: val.find('#userid').val()
 			} 
 		}
-
 	});
 	$.ajax({     
 		type : 'POST',
@@ -66,7 +89,6 @@ function verifyOtp(){
 	});
 	return false;
 } 
-
 function resendOtp(){
 	var id=document.getElementById("userid").value;
 	$.ajax({
@@ -124,14 +146,9 @@ function usertypeData(){
 			var response=JSON.parse(data);                                    
 			var usertypeDropdown=$("#usertypes");  
 			for(var i=0; i<response.length; i++){
-				if(response[i].usertypeName=='Importer' || response[i].usertypeName=='Distributor' || response[i].usertypeName=='Retailer' ){
 					var data2='<option value="'+response[i].id+'">'+response[i].usertypeName+'</option>';
 					usertypeDropdown.append(data2);
-				}  
-				else{
-
-				}
-			}    
+							}    
 			setTimeout(function(){ 
 				$('.dropdown-trigger').dropdown();
 				$('select').formSelect();
@@ -178,13 +195,8 @@ function usertypeDropDownData(){
 			var response=JSON.parse(data);                                    
 			var usertypeDropdown=$("#usertypes");  
 			for(var i=0; i<response.length; i++){
-				if(response[i].usertypeName!='admin' ){
 					var data2='<option value="'+response[i].id+'">'+response[i].usertypeName+'</option>';
 					usertypeDropdown.append(data2);
-				}  
-				else{
-
-				}
 			}    
 		},    
 		error: function (xhr, ajaxOptions, thrownError) {
@@ -276,7 +288,11 @@ function saveRegistration(){
 					phoneNo:val.find('#phoneNo').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
 					street:val.find('#street').val(),
+					village:val.find("#village").val(),
 					locality:val.find('#locality').val(),
+					district:val.find('#district').val(),
+					commune:val.find('#commune').val(),
+					postalCode:val.find('#postalCode').val(),
 					province:val.find('#state').val(),
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
@@ -331,9 +347,13 @@ function saveCustomRegistration(){
 					lastName: val.find('#lastName').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
 					street:val.find('#street').val(),
+					village:val.find("#village").val(),
 					locality:val.find('#locality').val(),
+					district:val.find('#district').val(),
+					commune:val.find('#commune').val(),
+					postalCode:val.find('#postalCode').val(),
 					country:val.find('#country').val(),
-					state:val.find('#state').val(),
+					province:val.find('#state').val(),
 					passportNo:val.find('#passportNo').val(),
 					employeeId:val.find("#employeeId").val(),
 					natureOfEmployment:val.find("#natureOfEmployment").val(),
@@ -342,13 +362,13 @@ function saveCustomRegistration(){
 					authorityEmail:val.find("#authorityEmail").val(),
 					authorityPhoneNo:val.find("#authorityPhoneNo").val(),
 					email:val.find('#email').val(),
-					province:val.find('#state').val(),
 					phoneNo:val.find('#phoneNo').val(),
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					arrivalPort:val.find('#arrivalPort').val(),
 					questionList:questionData,
 					type:val.find('#type').val()
 
@@ -397,10 +417,13 @@ function saveOperatorRegistration(){
 					lastName: val.find('#lastName').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
 					street:val.find('#street').val(),
+					village:val.find("#village").val(),
 					locality:val.find('#locality').val(),
+					district:val.find('#district').val(),
+					commune:val.find('#commune').val(),
+					postalCode:val.find('#postalCode').val(),
 					country:val.find('#country').val(),
 					province:val.find('#state').val(),
-					state:val.find('#state').val(),
 					passportNo:val.find('#passportNo').val(),
 					employeeId:val.find("#employeeId").val(),
 					natureOfEmployment:val.find("#natureOfEmployment").val(),
@@ -420,7 +443,6 @@ function saveOperatorRegistration(){
 					operatorTypeName:val.find('#operatorType option:selected').text(),
 					type:val.find('#type').val(),
 					questionList:questionData 
-
 			}    
 		} 
 	});
@@ -435,7 +457,6 @@ function saveOperatorRegistration(){
 	console.log("data=  "+formData);
 	registrationAjax(formData);
 	return false;
-	
 }
 function registrationAjax(obj){
 	$.ajax({   
@@ -449,13 +470,10 @@ function registrationAjax(obj){
 			console.log("response from server:  "+JSON.stringify(respData));
 			if(respData.statusCode==200){
 				//window.location.href='./verifyOtpPage/?userid='+respData.userId;
-				
 				$("#userid").val(response.userId);
 				//window.location.href='#otpMsgModal';
 				$("#otpMsgModal").openModal();
 				$("#otpMsg").text(response.response);
-				 
-				
 			}
 			else{
 				$("#registrationForm #msg").text(respData.response);
@@ -465,9 +483,5 @@ function registrationAjax(obj){
 		error: function (xhr, ajaxOptions, thrownError) {
 			$("#btnSave").prop('disabled', false);
 		}
-
 	});
-
 }
-
-

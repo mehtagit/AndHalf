@@ -183,12 +183,17 @@ function editProfile(){
 			$("#registrationForm #middleName").val(resp.middleName);
 			$("#registrationForm #lastName").val(resp.lastName);
 			$("#registrationForm #type").val(resp.type);        
+			$("#registrationForm #asTypeName").val(resp.asTypeName);
 			$("#registrationForm #email").val(resp.email); 
 			$("#registrationForm #phoneNo").val(resp.phoneNo);
 			$("#registrationForm #propertyLocation").val(resp.propertyLocation);
 			$("#registrationForm #street").val(resp.street);
+			$("#registrationForm #village").val(resp.village);
+			$("#registrationForm #district").val(resp.district);
+			$("#registrationForm #commune").val(resp.commune);
+			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
-			$("#registrationForm #province").val(resp.province);
+			$("#registrationForm #state").val(resp.province);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
 			$("#registrationForm #country").val(resp.country);  
@@ -256,8 +261,13 @@ function updateProfile(){
 					phoneNo:val.find('#phoneNo').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
 					street:val.find('#street').val(),
+					village:val.find('#village').val(),
 					locality:val.find('#locality').val(),
-					province:val.find('#province').val(),
+					district:val.find('#district').val(),
+					commune:val.find('#commune').val(),
+					postalCode:val.find('#postalCode').val(),
+					country:val.find('#country').val(),
+					province:val.find('#state').val(),
 					companyName:val.find('#companyName').val(),
 					passportNo:val.find('#passportNo').val(),
 					country:val.find('#country').val(),
@@ -314,4 +324,3 @@ function passwordPopup(){
 	$("#passwordModal").openModal();
 	return false;
 }
-

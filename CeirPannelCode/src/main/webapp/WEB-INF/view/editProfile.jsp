@@ -183,7 +183,8 @@ var contextpath = "${context}";
 <div class="input-field col s12 m6 l6">
                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">AsType <span
                                             class="star">*</span></p>
-                                        <input type="text" readonly="readonly" id="type" name="type"  />                         
+                                        <input type="text" readonly="readonly" id="asTypeName" name="type"  />
+                                        <input type="hidden"  id="type" name="type"  />                         
                                    <!--  <select name="type" class="browser-default" id="type" onchange="myFunction()" required>
                                         <option value="" disabled selected>Type</option>
                                         <option value="Individual"> Individual</option>
@@ -265,59 +266,86 @@ var contextpath = "${context}";
 									</label>
 								</div> -->
 							</div>
-
-							<div class="row">
+															<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input  placeholder="" type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
+									<input type="text" maxlength="200"
+										pattern="[A-Za-z0-9\s]{0,200}" placeholder="" name="propertyLocation"
 										class="form-control boxBorder boxHeight"
-									title="Please enter alphanumeric with special character upto 200 characters only"	
-										 id="propertyLocation" required="required">
-									<label  >Address(Property Location) <span
+										title="Please enter alphanumeric with special character upto 200 characters only"
+										id="propertyLocation" required="required"> <label
+										for="propertyLocation">Address(Property Location) <span
 										class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" placeholder=""
+									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
-										 pattern="[A-Za-z0-9\s]{0,20}" required="required" 
-									title="Please enter alphanumeric with special character upto 20 characters only"	 
-										 > <label >Street
-										Number <span class="star">*</span>
+										pattern="[A-Za-z0-9\s]{0,20}" placeholder="" required="required"
+										title="Please enter alphanumeric with special character upto 20 characters only">
+									<label for="street">Street Number <span class="star">*</span>
 									</label>
 								</div>
-
+									<div class="input-field col s12 m6 l6">
+									<input type="text" name="village" maxlength="30"
+										class="form-control boxBorder boxHeight" id="village"
+										pattern="[A-Za-z0-9\s]{0,30}" placeholder="" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="village">Village <span class="star">*</span>
+									</label>
+								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" placeholder=""  maxlength="30"
+									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
-										pattern="[A-Za-z0-9\s]{0,30}" required="required"
-										title="Please enter alphanumeric with special character upto 30 characters only"
-										> <label >Locality
-										<span class="star">*</span>
+										pattern="[A-Za-z0-9\s]{0,30}" placeholder="" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="locality">Locality <span class="star">*</span>
 									</label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="province" maxlength="20"
-										class="form-control  boxBorder boxHeight" id="province"
-									pattern="[A-Za-z\s]{0,20}"  placeholder=""  required="required"  
-									title="Please enter alphanumeric with special character upto 20 characters only"
-									> <label>Province<span
-										class="star">*</span></label>
+									<input type="text" name="district" placeholder="" maxlength="30"
+										class="form-control boxBorder boxHeight" id="district"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="district">District <span class="star">*</span>
+									</label>
 								</div>
-
+								<div class="input-field col s12 m6 l6">
+									<input type="text" placeholder="" name="commune" maxlength="30"
+										class="form-control boxBorder boxHeight" id="commune"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="commune">Commune <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" placeholder="" name="postalCode" maxlength="30"
+										class="form-control boxBorder boxHeight" id="postalCode"
+										pattern="[A-Za-z0-9\s]{0,30}"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="postalCode">Postal Code</label>
+								</div>
+								
+								
+								
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Country <span class="star">*</span>
 									</p>
-									<select id="country" name="country" class="browser-default" class="mySelect"
-										style="padding-left: 0;" required>
-									
-										</select>
-									<!-- <label for="country">Country <span class="star">*</span></label> -->
+									<select id="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Province <span class="star">*</span>
+									</p>
+									<select id="state" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
 								</div>
 							</div>
-
 							<!-- <div class="row">
 								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
 									<label for="vatNumber">VAT Registration <span
@@ -815,7 +843,9 @@ var contextpath = "${context}";
             /* $('.dropdown-trigger').dropdown();
             $('select').formSelect(); */
         }); 
-        populateCountries("country", "");
+        populateCountries("country", "state");
+        populateStates( "country",
+        "state" );
         function myFunction() { 
             var x = document.getElementById("type").value;
             if (x == 'Individual') {

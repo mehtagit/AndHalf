@@ -291,8 +291,6 @@ $('.datepicker').on('mousedown',function(event){
 
 
 
-
-
 function saveGrievance(){
 
 
@@ -304,28 +302,41 @@ function saveGrievance(){
 	var fileInfo =[];
 	var formData= new FormData();
 	var fileData = [];
+	
 	var x;
+	var filename='';
+	var filediv;
+	var i=0;
+	var formData= new FormData();
 	$('.fileDiv').each(function() {	
 
-		x={
+		
+		/*x={
 				"file":fileData.push($('#docTypeFile'+fieldId)[0].files[0]),
 				"number": $('#docTypetag'+fieldId).val()
 		}
-		fileInfo.push(x);
+		fileInfo.push(x);*/
+		
+		//fileData.push($('#docTypeFile'+fieldId)[0].files[0]);
+		formData.append('file['+i+']',$('#docTypeFile'+fieldId)[0].files[0]);
+		/*filename=$('#docTypeFile'+fieldId)[0].files[0];
+		console.log(filename);
+		fileInfo.push(filename);*/
 		fieldId++;
+		i++;
 	});
-	var multirequest={
-		"multifile":fileInfo,
-		"txnId":$('#TransactionId').val(),
-		"categoryId":$('#TransactionId').val(),
-		"remarks":$('#TransactionId').val()
-	}
+	console.log(fileData.length);
+	console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
+	
+	/*formData.append('file',fileData);*/
+	formData.append('txnId',txnId);
+	formData.append('categoryId',category);
+	formData.append('remarks',remark);
 
-	console.log("form---------"+JSON.stringify(multirequest));
 	$.ajax({
 		url: './saveGrievance',
 		type: 'POST',
-		data: JSON.stringify(multirequest),
+		data: formData,
 		processData: false,
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
@@ -353,9 +364,10 @@ function saveGrievance(){
 		}
 	});
 
-	return false;
 
 }
+
+
 
 function grievanceReply(userId,grievanceId,txnId)
 {
@@ -455,6 +467,7 @@ function saveGrievanceReply()
 			console.log("error in ajax")
 		}
 	});
+	return false;
 }
 
 function viewGrievanceHistory(grievanceId,filename)

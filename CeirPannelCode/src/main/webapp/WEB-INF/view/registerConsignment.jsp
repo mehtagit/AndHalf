@@ -564,7 +564,19 @@ section {
 	<script>
 		populateCountries("country");
 
-		
+		$(document).ready(function() {
+
+			ConsignmentCurrency();
+			
+			$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
+				$("#expectedArrivalPort").empty();
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#expectedArrivalPort');
+					
+				}
+			});
+		});
 
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

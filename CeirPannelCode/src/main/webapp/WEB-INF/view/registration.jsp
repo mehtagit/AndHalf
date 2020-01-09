@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html>
+<html> 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
@@ -34,12 +34,10 @@
 <!-- CORE CSS-->
 
 
-
 <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">-->
 <!-- Compiled and minified CSS -->
-<link href="${context}/resources/css/materialize.css" type="text/css"
-	rel="stylesheet" media="screen,projection">
-
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
@@ -57,6 +55,10 @@
 <!-- Country -->
 <!-- <script type="text/javascript" src="js/country.js"></script> -->
 <style>
+input[type="checkbox"] {
+	display: none;
+}
+
 footer {
 	padding-left: 0;
 }
@@ -65,97 +67,70 @@ footer {
 	height: auto;
 }
 
+.star {
+	color: red;
+}
+
 .dropdown-content li>a, .dropdown-content li>span {
 	color: #444;
 }
 
-h6 {
-	font-size: 1rem;
-	line-height: 110%;
-	margin: 0rem 0 0.4rem 0;
-	margin-top: -20px !important;
-}
-
-.file-upload-heading {
-	margin-left: 0;
+.input-field>label {
+	color: #444 !important;
 }
 
 select {
-	height: 2.2rem !important;
-}
-
-label {
-	font-size: 0.8rem;
-}
-
-.select-wrapper input.select-dropdown {
-	position: relative;
-	cursor: pointer;
 	background-color: transparent;
 	border: none;
 	border-bottom: 1px solid #9e9e9e;
-	outline: none;
-	height: 3rem;
-	line-height: 3rem;
-	width: 100%;
-	font-size: 16px;
-	margin: 0 0 8px 0;
 	padding: 0;
-	display: block;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	z-index: 1;
+	margin-top: 7px;
+	;
+}
+
+[type="radio"]:not (:checked ), [type="radio"]:checked {
+	opacity: 0;
 }
 </style>
 <script>
 var contextpath = "${context}";
 </script>
 </head>
+
 <body>
 
-	<!-- Modal End -->
+<!-- Modal End --> 
 	<!-- ================================================
     Scripts
     ================================================ -->
-	<!-- jQuery Library -->
-	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js"></script>
-	<!--materialize js-->
-	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
-	<!-- Compiled and minified JavaScript -->
-
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
-	<!--prism
+	 <!-- jQuery Library -->
+    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
+  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+      <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+    <!--materialize js-->
+    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
+    <!-- Compiled and minified JavaScript -->
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
+    <!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
-	<!--scrollbar-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
+    <!--scrollbar-->
+    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <!-- chartist -->
+    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
-	<!-- data-tables -->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+    <!-- data-tables -->
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
-	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript"
-		src="${context}/resources/js/custom-script.js"></script>
+    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+    <!--<script type="text/javascript" src="js/plugins.js"></script>-->
+    <!--custom-script.js - Add your own theme custom JS-->
+    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -165,18 +140,15 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm" onsubmit="return saveRegistration()">
-					<div class="card-panel registration-form">
+					<div class="card-panel registration-form" >
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("name") %>
-								<spring:message code="welcome.message" />
-							</h5>
-
+							<h5><%=request.getParameter("name") %> Registration</h5>
 							<hr>
-							<span id="msg" style="color: red;">${msg}</span> <input
-								type="hidden" id="usertypeId" value="${usertypeId}">
+							<span id="msg" style="color: red;">${msg}</span>
+               <input type="hidden" id="usertypeId" value="${usertypeId}">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -247,13 +219,14 @@ var contextpath = "${context}";
 											<div class="btn">
 												<span>Select File</span> <input name="file" type="file"
 													id="file" accept=".pdf">
-											</div>
+											</div>  
 											<div class="file-path-wrapper">
 												<input class="file-path validate responsive-file-div"
 													type="text">
 											</div>
 										</div>
-										<br> <br>
+										<br>
+										<br>
 									</div>
 									<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
 								</div>
@@ -298,7 +271,7 @@ var contextpath = "${context}";
 								</div> -->
 							</div>
 
-							<div class="row">
+								<div class="row">
 								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200"
 										pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
@@ -317,7 +290,14 @@ var contextpath = "${context}";
 									<label for="street">Street Number <span class="star">*</span>
 									</label>
 								</div>
-
+									<div class="input-field col s12 m6 l6">
+									<input type="text" name="village" maxlength="30"
+										class="form-control boxBorder boxHeight" id="village"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="village">Village <span class="star">*</span>
+									</label>
+								</div>
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
@@ -328,17 +308,39 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
+									<input type="text" name="district" maxlength="30"
+										class="form-control boxBorder boxHeight" id="district"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="district">District <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="commune" maxlength="30"
+										class="form-control boxBorder boxHeight" id="commune"
+										pattern="[A-Za-z0-9\s]{0,30}" required="required"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="commune">Commune <span class="star">*</span>
+									</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="postalCode" maxlength="30"
+										class="form-control boxBorder boxHeight" id="postalCode"
+										pattern="[A-Za-z0-9\s]{0,30}"
+										title="Please enter alphanumeric with special character upto 30 characters only">
+									<label for="postalCode">Postal Code</label>
+								</div>
+								
+								
+								
+								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Country <span class="star">*</span>
 									</p>
-									<select id="country" name="country" class="browser-default"
-										class="mySelect" style="padding-left: 0;" required>
-
-									</select>
-									<!-- <label for="country">Country <span class="star">*</span></label> -->
+									<select id="country" class="browser-default" class="mySelect"
+										style="padding-left: 0;" required></select>
 								</div>
-
 
 								<div class="input-field col s12 m6 l6">
 									<p
@@ -348,10 +350,9 @@ var contextpath = "${context}";
 									<select id="state" class="browser-default" class="mySelect"
 										style="padding-left: 0;" required></select>
 								</div>
-
-
 							</div>
-
+							
+							
 							<!-- <div class="row">
 								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
 									<label for="vatNumber">VAT Registration <span
@@ -391,25 +392,29 @@ var contextpath = "${context}";
 									<div class=" boxHeight">
 										<label><input class="with-gap vatStatus" value="1"
 											name="vatStatus" type="radio"
-											onclick="document.getElementById('vatNumberField').style.display = 'block';">
+											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFile').style.display = 'block'">
 											<span>Yes</span> </label> <label> <input
 											class="with-gap vatStatus" name="vatStatus" type="radio"
 											style="margin-left: 20px;" value="0"
-											onclick="document.getElementById('vatNumberField').style.display = 'none';"
+											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFile').style.display = 'none'"
 											checked /> <span>No</span>
 										</label>
 									</div>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<p
+									<!-- <p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 										Role Type <span class="star">*</span>
-									</p>
-									<select name="roles" id="usertypes" multiple required>
-										<option value="" disabled>Role Type<span class="star"></span></option>
+									</p> -->
+
+									<select  name="roles" class="validate" id="usertypes" multiple required>
+										<option value="" disabled>Role Type <span
+												class="star"></span></option>
 
 									</select>
+									<label  data-error="Please select at least one option"  for="usertypes">Role Type <span class="star">*</span></label>
 								</div>
+								<div class="row">
 								<div class="input-field col s12 m6 l6" style="display: none;"
 									id="vatNumberField">
 									<input type="text" name="vatNo" maxlength="15"
@@ -418,99 +423,35 @@ var contextpath = "${context}";
 										title="Please enter alphanumeric upto 15 characters only">
 									<label for="vatNo">VAT Number <span class="star">*</span></label>
 								</div>
-							</div>
-
-							<%-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Role Type <span class="star">*</span>
-									</p> 
-									<select multiple required name="roles"  >
-										<option value="" disabled>Role Type <span
-												class="star"></span></option>
-								<c:forEach items="${usertypes}" var="usertype" >
-								<c:if test="${usertype.usertypeName!='admin'}">
-								<option  value="${usertype.id}">${usertype.usertypeName}</option>
-								</c:if> 
-								</c:forEach>	
-								</select>  
-								</div> --%>
-
-
-
-							<!-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Type <span class="star">*</span>
-									</p>
-									<select class="browser-default" name="type" id="mySelect"
-										onchange="myFunction()" required>
-										<option value="" disabled selected>Type</option>
-										<option value="Individual">Individual</option>
-										<option value="Company">Company</option>
-										<option value="Organization">Organization</option>
-										<option value="Government">Government</option>
-									</select>
-								</div> -->
-						</div>
-
-						<!-- div class="row myRow" style="display: none;" id="uploadFile">
-								<h6 class="file-upload-heading" style="margin-left: 15px;">
-									Upload Nationality Information<span class="star">*</span>
-								</h6>
-								<div class="file-field input-field col s12 m6"
-									style="margin-top: 5px;">
-									<div class="btn">
-										<span>Select File</span> <input name="file" type="file" id="csvUploadFile"
-											accept=".pfg">     
-									</div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate responsive-file-div"
-											type="text">
-									</div>
+								
+								<div class="input-field col s12 m6 l6" style="display: none;"
+									id="vatNumberField">
+									<input type="file" name="vatFile"
+										class="form-control boxBorder boxHeight" id="vatFile">
+									<label for="vatFile">VAT File <span class="star">*</span></label>
 								</div>
-								<br> <br>
-								<p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p>
-							</div> -->
-
+								</div>
+							</div>
 						<div class="row">
 							<div class="input-field col s12 m6 l6">
 								<input type="password" name="password"
 									class="form-control boxBorder boxHeight" id="password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
-									min="8"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
 									required="required"> <label for="password">Password
 									<span class="star">*</span>
-								</label>
+								</label>  
 							</div>
 
 							<div class="input-field col s12 m6 l6">
-								<input type="password" name="rePassword"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
-									class="form-control boxBorder boxHeight" id="confirm_password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
-									min="8" required="required"> <label
-									for="confirm_password">Retype Password <span
-									class="star">*</span>
+								<input type="password" name="rePassword" 
+	title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length" class="form-control boxBorder boxHeight" id="confirm_password"
+									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
+									required="required"> <label for="confirm_password">Retype
+									Password <span class="star">*</span>
 								</label>
 							</div>
 						</div>
-
-
-						<!-- <div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Country <span class="star">*</span>
-									</p>
-									<select id="country" name="country" class="browser-default" class="mySelect"
-										style="padding-left: 0;" required>
-									
-										</select>
-									<label for="country">Country <span class="star">*</span></label>
-								</div>
-							</div> -->
-
 						<div class="row securityQuestionDiv">
 							<div class="input-field col s12 m6 l6">
 								<p
@@ -521,19 +462,13 @@ var contextpath = "${context}";
 									class="browser-default questionId" id="questionId0"
 									name="questionId" required>
 									<option value="" disabled selected>Security Question 1</option>
-									<%--<c:forEach items="${questions}" var="question"> 
-									<c:if test="${question.category=='1'}">
-									<option value="${question.id}">${question.question}</option>
-									</c:if>
-									</c:forEach>  --%>
 								</select>
 							</div>
 
 							<div class="input-field col s12 m6 l6">
 								<input type="text" placeholder="" name="answer"
 									class="form-control boxBorder boxHeight answer" id="answer0"
-									pattern="[A-Za-z0-9\s]{0,50}" required="required"
-									maxlength="50"
+									pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
 									title="Please enter alphanumeric upto 50 characters only">
 								<label>Answer <span class="star">*</span>
 								</label>
@@ -574,7 +509,7 @@ var contextpath = "${context}";
 									name="questionId" id="questionId2"
 									class="browser-default questionId" required>
 									<option value="" disabled selected>Security Question 3</option>
-
+								
 								</select>
 							</div>
 
@@ -582,9 +517,8 @@ var contextpath = "${context}";
 								<input type="text" name="answer" placeholder=""
 									class="form-control boxBorder boxHeight answer" id="answer2"
 									title="Please enter alphanumeric upto 50 characters only"
-									maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
-									required="required"> <label>Answer <span
-									class="star">*</span>
+									maxlength="50" pattern="[A-Za-z0-9\s]{0,50}" required="required">
+								<label>Answer <span class="star">*</span>
 								</label>
 							</div>
 						</div>
@@ -592,14 +526,14 @@ var contextpath = "${context}";
 						<div class="form-group form-actions">
 							<span class="input-icon"> <img id="captchaImage"
 								src="${context}/captcha">
-								<button style="background: none; border: none; outline: none;"
+							<button style="background: none; border: none; outline: none;"
 									type="button" onclick="refreshCaptcha('captchaImage')">
 									<i class="fa fa-refresh"></i>
 								</button> <%-- <img src="${context}/captcha"" id="captchaImage">
 						 <br>
                            <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
 								<div class="input-field col s12 m6 l12">
-									<input type="text" autocomplete="off" name="captcha"
+									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
 										required="required"> <label for="address">Enter
 										your captcha <span class="star">*</span>
@@ -608,25 +542,26 @@ var contextpath = "${context}";
 
 							</span>
 						</div>
-						<p>
-							<label style="color: black !important;"> <input
-								name="disclamer" type="checkbox" required="required"
-								class="declarationcheckbox" /> <span> <span class="star">*</span>
-									I certify that all the above information provided by me is true
-									to the best of my knowledge. I am aware that if any of the
-									above information is found to be incorrect/incomplete , CEIR
-									Admin may take disciplinary action as applicable. There would
-									be a checkbox. User must click checkbox during registration
-							</span>
-							</label>
-						</p>
+						   <p>
+      <label style="color: black!important;">
+        <input name="disclamer" type="checkbox" required="required" />
+        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+      </label>
+    </p>
+    
+    <!-- <div class="input-field no-margin col s12 m9">
+    <input type="checkbox" name="accept" id="regTOS" required class="validate">
+    <label for="regTOS" data-error="You must accept the Terms of Service">I accept the Terms of Service</label>
+</div> -->
 
+							                         </div>
+                         
 						<div class="row">
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave" type="submit"
-									style="margin-left: 10px;">submit</button>
+								<button class="btn" id="btnSave" 
+									type="submit" style="margin-left: 10px;">submit</button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
 							</div>
 						</div>
@@ -663,9 +598,7 @@ var contextpath = "${context}";
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="otpVerification.html"
-						class="btn waves-effect waves-light btn modal-trigger">Verify
-						OTP</a>
+					<a href="otpVerification.html" class="btn waves-effect waves-light btn modal-trigger">Verify OTP</a>
 				</div>
 			</div>
 		</div>
@@ -721,90 +654,86 @@ var contextpath = "${context}";
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	 <!-- START MAIN -->
+    <div id="">
+        <!-- START WRAPPER -->
+        <div class="wrapper">
+            <!-- START CONTENT -->
+            <section id="content">
+                <!--start container-->
+                <div class="container">
+                    <div class="section">
+                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%;">
+                            <h5 class="center">Verify OTP</h5>
+                            <p style="padding:10px;" class="center" id="otpMsg"></p>
 
+                            <a href="#otpVerification" class="btn modal-trigger"
+                               style="margin-left: 3%;width: 94%;background-color: #ff4081;margin-bottom:30px;" >verify otp</a>
+ 
+                        </div>
+                    </div>
+                </div>
+                <!--end container-->
+            </section>
+            <!-- END CONTENT -->
+        </div>
+    </div>
+    
+    <div id="otpMessage" class="modal">
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <div class="modal-content">
 
+            <div class="row">  
+                <h6 id="otpResponse"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="${context}/login" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <!-- modal start -->
 
-	<!-- START MAIN -->
-	<div id="">
-		<!-- START WRAPPER -->
-		<div class="wrapper">
-			<!-- START CONTENT -->
-			<section id="content">
-				<!--start container-->
-				<div class="container">
-					<div class="section">
-						<div id="otpMsgModal" class="modal"
-							style="width: 40%; margin-left: 30%;">
-							<h5 class="center">Verify OTP</h5>
-							<p style="padding: 10px;" class="center" id="otpMsg"></p>
-
-							<a href="#otpVerification" class="btn modal-trigger"
-								style="margin-left: 3%; width: 94%; background-color: #ff4081; margin-bottom: 30px;">verify
-								otp</a>
-
-						</div>
-					</div>
-				</div>
-				<!--end container-->
-			</section>
-			<!-- END CONTENT -->
-		</div>
-	</div>
-
-	<div id="otpMessage" class="modal">
-		<button type="button"
-			class="modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<div class="modal-content">
-
-			<div class="row">
-				<h6 id="otpResponse"></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="${context}/login" class="btn">ok</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-
-	<!-- modal start -->
-
-	<div id="otpVerification" class="modal" style="width: 40%;">
-		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+    <div id="otpVerification" class="modal" style="width: 40%;">
+        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-		<div class="modal-content">
-			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
-				<h5 class="center">Enter OTP</h5>
-				<p class="center" id="resendOtp" style="display: none;"></p>
-				<input type="hidden" id="userid" name="userid" value="${userId}">
-				<div class="row">
-					<div class="input-field col s12 m12">
-						<input type="text" name="emailOtp" maxlength="6"
-							title="Please enter number characters only" required="required"
-							id="emailOtp" placeholder="Enter OTP of Email" />
-					</div>
+        <div class="modal-content">  
+                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+                        <h5 class="center">Enter OTP</h5>  
+                        <p class="center" id="resendOtp" style="display: none;"></p>
+                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <div class="row">          
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="emailOtp" maxlength="6"
+                               
+										title="Please enter number characters only"
+                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                            </div> 
+                   
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="phoneOtp" maxlength="6" 
+                                
+										title="Please enter number characters only" 
+                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                            </div>
+                        </div>
 
-					<div class="input-field col s12 m12">
-						<input type="text" name="phoneOtp" maxlength="6"
-							title="Please enter number characters only" required="required"
-							id="phoneOtp" placeholder="Enter OTP of Phone" />
-					</div>
-				</div>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
 
-				<a href="#"
-					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
-					class="right">Resend OTP</a>
-
-				<button type="submit" id="otpVerifyBtn" class="btn"
-					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
-			</form>
-		</div>
-	</div>
-
-
+                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+                    </form>
+        </div>
+    </div>
+    
+	
 	<script> 
         $(document).ready(function () {
         	$('.modal-trigger').leanModal({
@@ -830,16 +759,13 @@ var contextpath = "${context}";
                "state" );
        
        
-       var password = document.getElementById("password")
-       , confirm_password = document.getElementById("confirm_password");
-
-     function validatePassword(){
-       if(password.value != confirm_password.value) {
-         confirm_password.setCustomValidity("Passwords Don't Match");
-       } else {
-         confirm_password.setCustomValidity('');
-       }
-     }
+       function validatePassword(){
+           if(password.value != confirm_password.value) {
+             confirm_password.setCustomValidity("Passwords Don't Match");
+           } else {
+             confirm_password.setCustomValidity('');
+           }
+         }
 
      password.onchange = validatePassword;
      confirm_password.onkeyup = validatePassword;
@@ -853,14 +779,15 @@ var contextpath = "${context}";
                 document.getElementById("companyNames").style.display = "none";
                 $("#passportNo").prop('required',true);
                 $("#companyName").prop('required',false);
+                $("#companyName").val("");
                 $("#file").prop('required',true);
-            } else 
-            {
+            } else {
                 document.getElementById("uploadFile").style.display = "none";
                 document.getElementById("passportNumberDiv").style.display = "none";
                 document.getElementById("companyNames").style.display = "block";
                 $("#companyName").prop('required',true);
                 $("#passportNo").prop('required',false);
+                $("#passportNo").val("");
                 $("#file").prop('required',false);
             }
         }

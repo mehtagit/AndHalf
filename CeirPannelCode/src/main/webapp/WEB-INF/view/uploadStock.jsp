@@ -168,7 +168,8 @@ opacity: 0;
                                             </div>
 
                                             <div class="input-field col s12 m6">
-                                                <input type="text" name="invoiceNumber" id="invoiceNumber"  maxlength="15"/>
+                                                <input type="text" name="invoiceNumber" id="invoiceNumber"
+                                                pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15"/>
                                                 <label for="InvoiceNumber" class="center-align">Invoice Number</label>
                                             </div>
                                         </div>
@@ -180,7 +181,7 @@ opacity: 0;
                                             <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input type="file" id="file" size=50 maxlength=50 accept=".csv">
+                                                    <input type="file" id="file" required="required" size=50 maxlength=50 accept=".csv">
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate responsive-file-div" type="text">

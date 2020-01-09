@@ -110,7 +110,7 @@ var path="${context}";
         <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header">Reply</h6>
              <div class="modal-content">
-             <form id="replymessageForm">
+             <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col s12 m12">
                     <h6 style="font-weight: bold;">Grievance ID: <span id="grievanceIdToSave"></span></h6>
@@ -126,7 +126,7 @@ var path="${context}";
                
                 <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px">Remark <span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder=""></textarea>
+                    <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
                     <h6 style="color: #000;">Upload Supporting Document </h6>
                 </div>
                 <div class="file-field col s12 m12">
@@ -158,7 +158,7 @@ var path="${context}";
                             <input type="checkbox" id="closeTicketCheck" />
                         </label>
                     </p>
-                    <a onclick="saveGrievanceReply()" class="modal-close modal-trigger waves-effect waves-green btn right">Reply</a>
+                    <button class="right btn" type="submit">Reply</button>
                 </div>
             </div>
             </form>

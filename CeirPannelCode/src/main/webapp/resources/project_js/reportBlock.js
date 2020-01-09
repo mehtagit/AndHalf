@@ -339,9 +339,9 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 
 
 function setViewBulkPopUp(data,popUpType,requestType){
-
+	
 $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
-		
+		$('#editBulkBlockCategory').empty();
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#editBulkBlockCategory');
@@ -536,6 +536,14 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 	$("#viewsingleblockremark").val(data[i].remark);
 	$("#viewsingleblockIMEI1").val(data[i].firstImei);
 	$("#viewsingleblocTxnid").val(data[i].txnId);
+	$("#viewsingleblockCategory").val(data[i].categoryInterp);
+	if(data[i].blockingType=='tilldate')
+		{
+		$("#viewsingleblockingType").val(data[i].blockingTimePeriod);
+		}
+	else{
+	$("#viewsingleblockingType").val(data[i].blockingType);
+	}
 	}
 	}
 	else
@@ -587,7 +595,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		$("#editsingleblockIMEI1").val(data[i].firstImei);
 		$("#editsingleblockTxnid").val(data[i].txnId);
 		$("#editbulkBlockdeviceCategory").val(data[i].category);
-		
+		$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingTimePeriod+']').attr('checked', true); 
 		$("#editsingleblocRequestType").val(requestType);
 		}
 	}

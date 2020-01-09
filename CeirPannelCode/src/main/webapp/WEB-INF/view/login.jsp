@@ -152,8 +152,7 @@ var contextpath = "${context}";
 											</span>
 										</div>
 
-										<a href="${context}/forgotPassword" class="right"> Forgot
-											Password?</a>
+										
 
 
 										<div class="row" style="margin-top: 30px;">
@@ -163,6 +162,9 @@ var contextpath = "${context}";
 													style="width: 100%;"  value="Login">Login</button>
 											</div>
 										</div>
+
+							<a href="${context}/forgotPassword" class="right"> Forgot Password?</a> <br>
+							<a href="#" id="newUserLink" class="right"> New User</a>	
 
 									</div>
 
@@ -227,10 +229,14 @@ var contextpath = "${context}";
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
-	
+<script type="text/javascript">
 
 
-
+$(document).ready(function () {
+	dataByTag("link_dmc_portal","newUserLink");
+        });   
+        
+</script>
 </body>
 
 </html>

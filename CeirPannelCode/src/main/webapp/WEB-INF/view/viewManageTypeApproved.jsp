@@ -317,7 +317,7 @@ textarea {
                                                 <button class="btn " type="submit">Update</button>
                                                 <!-- <a href="manageTypeDevices.html" class="btn" id="Cancel"
                                                     style="margin-left: 10px;">Cancel</a> -->
-                                                    <button class="modal-close btn" style="margin-left: 10px;">Cancel</button>
+                                                    <button class="modal-close btn" type="button" style="margin-left: 10px;">Cancel</button>
                                             </div>
                                             </form>
                                     </div>

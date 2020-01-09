@@ -316,6 +316,7 @@ function table(url,dataUrl){
 //******************************************************************************************************************************************************************888888   
 
 function editRegisterConsignment(){
+	
 	var supplierId=$('#supplierIdEdit').val();
 	var supplierName=$('#supplierNameEdit').val();
 	var consignmentNumber=$('#consignmentNumberEdit').val();
@@ -351,15 +352,17 @@ function editRegisterConsignment(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('#updateModal').closeModal();
-			
+
+			$('#updateConsignment').openModal();
 			if(data.errorCode==200){
 
-				$('#updateConsignment').modal();
+				
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(data.message);
 			}
+
 			else if (data.errorCode==0){
-				$('#updateConsignment').modal();
+			
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
@@ -374,7 +377,8 @@ function editRegisterConsignment(){
 			console.log("error in ajax")
 		}
 	});
-
+	
+	return false;
 }
 
 

@@ -242,7 +242,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<a class="btn" onclick="confirmantiondelete()">ok</a>
-						<button class="modal-close btn" onclick="closeUpdateModal()"
+						<button class="modal-close btn" type="button" onclick="closeUpdateModal()"
 							style="margin-left: 10px;">No</button>
 					</div>
 				</div>
@@ -507,6 +507,7 @@
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
 		<h6 class="modal-header">Edit Consignment</h6>
 		<div class="modal-content">
+		<form action="" onsubmit="return editRegisterConsignment()"	method="POST" enctype="multipart/form-data">
 	<div class="row myRow" style="margin-top: 5px;">
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierId" id="supplierIdEdit"
@@ -518,7 +519,7 @@
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierName" id="supplierNameEdit"
-						pattern="[A-Za-z]{0,50}"
+						pattern="[A-Za-z  ]{0,50}"
 						title="Please enter alphabets  upto 50 characters only"
 						maxlength="50" placeholder="Supplier/Manufacturer Name" required />
 					<label for="Name" class="center-align">Supplier/Manufacturer
@@ -591,7 +592,7 @@
 
 
 				<div class="input-field col s12 m6">
-					<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
+					<input type="text" name="totalPrice" id="totalPrice" maxlength="7" pattern="[0-9]{0,7}" title="Please enter price in numbers"
 						required placeholder="" /> <label for="totalPrice"
 						class="center-align">Total Price</label>
 				</div>
@@ -601,7 +602,7 @@
 						class="browser-default">
 						<option value="" disabled selected>Currency</option>
 
-					</select> <input type="text" id="hideCurrency" style="display: none;">
+					</select> <input type="text" required="required" id="hideCurrency" style="display: none;">
 				</div>
 
 				<div class="file-field input-field col s12 m6"
@@ -610,7 +611,7 @@
 						Upload Bulk Devices Information <span class="star">*</span>
 					</h6>
 					<div class="btn">
-						<span>Select File</span> <input type="file" name="file"
+						<span>Select File</span> <input type="file" name="file" 
 							id="csvUploadFile" accept=".csv">
 					</div>
 					<div class="file-path-wrapper">
@@ -632,12 +633,13 @@
 			</span>
 			</div>
 				<div class="input-field col s12 center">
-					<button class="waves-effect waves-light modal-trigger btn"
-						type="button" onclick="editRegisterConsignment()">Update</button>
+					<button class=" btn"
+						type="submit">Update</button>
 					<button class="modal-close btn" onclick="closeUpdateModal()"
 						style="margin-left: 10px;">Cancel</button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 
