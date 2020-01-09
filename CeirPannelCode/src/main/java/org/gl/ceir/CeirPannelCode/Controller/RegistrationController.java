@@ -92,7 +92,7 @@ public class RegistrationController {
 		ModelAndView mv=registrationService.operatorRegistrationView(usertypeId);
 		return mv; 
 	} 
-
+	
 	@RequestMapping(value = "/saveRegistration",method = {RequestMethod.POST})
 	@ResponseBody     
 	public OtpResponse saveRegistration(@RequestParam(name = "data",required = true) String data,
@@ -100,8 +100,9 @@ public class RegistrationController {
 			@RequestParam(name = "photo",required = false)MultipartFile photo,
 			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
 			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
+			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
 			HttpSession session) throws IOException{
-		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,session);  
+		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session);  
 		return response;             
 	}
 

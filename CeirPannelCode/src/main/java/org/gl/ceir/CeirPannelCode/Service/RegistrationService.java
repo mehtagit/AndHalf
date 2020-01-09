@@ -78,25 +78,27 @@ public class RegistrationService {
 		return mv;                
 	}                    
 
-	public OtpResponse saveRegistration(String data, MultipartFile file,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,HttpSession session) throws IOException {
+	public OtpResponse saveRegistration(String data, MultipartFile file,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,MultipartFile vatFile,HttpSession session) throws IOException {
 		Gson gson=new Gson();                       
 		Registration registration=gson.fromJson(data, Registration.class);
 		log.info("save registration page starting point");
-		
 		log.info("registration data:  "+registration);        
 		String validCaptcha=(String)session.getAttribute("captcha_security");      
 		log.info("captcha from session:  "+validCaptcha); 
 		if(registration.getCaptcha().equals(validCaptcha)) {
 			log.info("if captcha match");  
 			if(registration.getRePassword().equals(registration.getPassword())) {
+				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
 				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
+				log.info("filepath is : "+combinedPath);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
-				String idCardPath=new String(combinedPath+"/IDCard");          
-				if(registration.getType()==null) {
-					  
+				String idCardPath=new String(combinedPath+"/IDCard");  
+				String vatFilePath=new String(combinedPath+"/Vat");
+				if(registration.getAuthorityEmail()!=null) {
+					log.info("if authority email is not null");
 					if(nationalIdImage.isEmpty()==false) {
 						log.info("if user is individual  "); 
 						log.info("file name: " +nationalIdImage.getOriginalFilename());
@@ -148,7 +150,23 @@ public class RegistrationService {
 					
 				}
 				else {
-				if("Individual".equals(registration.getType())){
+				if(registration.getVatStatus()==1) {
+					if(vatFile.isEmpty()==false) {
+						log.info("file name: " +vatFile.getOriginalFilename());
+						log.info("finalPath:   "+vatFilePath);
+						log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
+						File dir = new File(vatFilePath);
+						if (!dir.exists()) dir.mkdirs();
+						byte barr[]=vatFile.getBytes();
+						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+						bout.write(barr);
+						bout.flush();
+						bout.close();
+						registration.setVatFilename(vatFile.getOriginalFilename());
+					}
+				}
+				else {}
+				if(registration.getType()==0){
 					log.info("if user is individual");       
 					if(file.isEmpty()==true) { 
 						log.info("if file is empty");

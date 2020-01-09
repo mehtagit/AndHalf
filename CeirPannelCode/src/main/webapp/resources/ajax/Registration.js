@@ -256,7 +256,7 @@ function questionData(){
 
 function saveRegistration(){ 
 	$("#btnSave").prop('disabled', true);
-
+    alert("inside save registration function");
 	var obj="";
 	var oj2=""; 
 	var questionData=[];
@@ -312,6 +312,8 @@ function saveRegistration(){
 	formData = new FormData();
 	formData.append( 'file', $( '#file' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));
+	formData.append('vatFile',$('#vatFile')[0].files[0]);
+	
 	console.log("data=  "+formData);
 	registrationAjax(formData);
 	//$("#btnSave").prop('disabled', true);
