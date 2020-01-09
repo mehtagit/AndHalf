@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,14 +16,11 @@ import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
-import org.gl.ceir.CeirPannelCode.Model.MultipleFileModel;
-import org.gl.ceir.CeirPannelCode.Model.MultipleFileRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -60,15 +58,18 @@ public class GrievanceController {
 	}
 	
 	
+	 
+	
 	@RequestMapping(value= {"/saveGrievance"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="categoryId",required = false) int categoryId
-			,@RequestParam(name="remarks",required = false) String remarks,@RequestBody MultipleFileRequest multirequest,HttpSession session,@RequestParam(name="docTypeValue[]",required = false) ArrayList<MultipleFileModel> filedetails) {
+			,@RequestParam(name="remarks",required = false) String remarks,HttpSession session,@RequestParam(name="file",required = false) ArrayList<MultipartFile> fileUpload) {
 
 		int userId= (int) session.getAttribute("userid");
 		String roletype=(String) session.getAttribute("usertype");
 
-		log.info("11");
-		log.info("save grievance  entry point."+filedetails);
+		log.info("filelength11="+fileUpload.size());
+		
+		//log.info("save grievance  entry point."+filedetails);
 
 		String grevnceId=utildownload.getTxnId();
 		grevnceId = "G"+grevnceId;

@@ -38,6 +38,7 @@ if(userType=="CEIRAdmin"){
 	"endDate":$('#endDate').val(),
 	"startDate":$('#startDate').val(),
   	"tac" : $('#tac').val(),
+  	"txnId" : $('#transactionID').val(),
   	"userId":userId,
 	"featureId":parseInt(featureId),
 	"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -49,7 +50,7 @@ if(userType=="CEIRAdmin"){
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			var table=	$("#typeAprroveTable").DataTable({
+			var table=	$("#typeAprroveTable").removeAttr('width').DataTable({
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
@@ -68,7 +69,13 @@ if(userType=="CEIRAdmin"){
 					}
 
 				},
-				"columns": result
+				"columns": result,
+				fixedColumns: true,
+				columnDefs: [
+		            { width: 142, targets: result.length - 1 },
+		            { width: 143, targets: 0 },
+		            { width: 75, targets: 2 }
+			]
 			});
 			
 			$('#typeAprroveTable input').unbind();
@@ -160,7 +167,8 @@ function pageRendering(){
 		}
 		
 	}); 
-};
+}
+
 
 if(userType=="CEIRAdmin"){
 	$("#btnLink").css({display: "none"});
@@ -232,7 +240,6 @@ populateCountries
 
 function updateReportTypeDevice()
 {
-	
 	var manufacturerId=$("#editmanufacturerId").val();
 	var manufacturerName=$("#editmanufacturerName").val();
 	 var country=$("#editcountry").val();
@@ -415,4 +422,14 @@ function rejectSubmit(actiontype){
 }
 
 
-
+$(document).on('keypress' , '#tac', validateNumber);
+function validateNumber(event) {
+var key = window.event ? event.keyCode : event.which;
+if (event.keyCode === 8 || event.keyCode === 46) {
+return true;
+} else if ( key < 48 || key > 57 ) {
+return false;
+} else {
+return true;
+}
+}

@@ -996,7 +996,7 @@
                 <div class="row">
                     <div class="input-field col s12 center">
                                                         	<button class=" btn"
-						type="submit" >Update</button>
+ 					type="submit" >Update</button>
                                                         <button type="button" class="modal-close btn">Cancel</button>
                                                     </div>
                 </div>
@@ -1103,6 +1103,15 @@
                                                                 <textarea id="viewsingleblockremark" disabled="disabled" placeholder="" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="viewsingleblockremark">Remark</label>
                                                             </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="viewsingleblockCategory" name="" placeholder="" disabled="disabled">
+                                                                <label for="viewsingleblockCategory">Category</label>
+                                                              </div> 
+                                                              <div class="input-field col s12 m6">
+            													<input type="text" id="viewsingleblockingType" name="" placeholder="" disabled="disabled">
+                                                                <label for="viewsingleblockingType">blockingType</label>		
+                                                              </div>
+                                                            
                                                         </div>
                                                         <div class="row">
                                                         <div class="row input_fields_wrap">
@@ -1203,16 +1212,16 @@
                                                     </div>
                                                             <div class="" style="margin-left: 36%; margin-top: -25px;">
 				BlockingType
-				<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+				<label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 					value="Immediate"
-					onclick="document.getElementById('calender').style.display = 'none';"
+					onchange="document.getElementById('calender').style.display = 'none';"
 					name="stolenBlockPeriod" checked> Immediate
-				</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+				</label> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"
 					value="Default"
-					onclick="document.getElementById('calender').style.display = 'none';"
+					onchange="document.getElementById('calender').style.display = 'none';"
 					name="stolenBlockPeriod"> Default
-				</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
-					onclick="document.getElementById('calender').style.display = 'block';"
+				</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required" value="tilldate" class="blocktypeRadio"
+					onchange="document.getElementById('calender').style.display = 'block';"
 					name="stolenBlockPeriod"> Later
 				</label>
 				<div class="col s6 m2 responsiveDiv"
@@ -1283,7 +1292,7 @@
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit" >Update</button>
+                                                       <button class="btn" type="submit" >Update</button>
                                                 
                                                         <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
                                                     </div>
@@ -1302,6 +1311,91 @@
                     <div class="input-field col s12 center">
                         <a  href ="./stolenRecovery" class=" btn">ok</a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!------------------------------------------ Approve Model ----------------------------------->
+    
+    
+    <div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Approve</h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                   
+                    <h6>Do you want to Approve the request</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="aprroveDevice()" class="btn modal-trigger">Yes</a>
+                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                      <span id="userId" hidden></span>
+                       <span id="adminCurrentStatus" hidden></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Approve</h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                    
+                    <h6>Device has been Approved Successfully.</h6>
+                   
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                     <a class="btn modal-close" href="./stolenRecovery">ok</a>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!--------------------------------------------------- Reject Model--------------------------------------------->
+    
+        <div id="rejectInformation" class="modal">
+           <h6 class="modal-header">Reject</h6>
+            <div class="modal-content">
+            <div class="row">
+                <form action="">
+                
+                    <div class="input-field" style="margin-top: 30px;">
+                        <textarea id="Reason" class="materialize-textarea"></textarea>
+                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
+                    </div>
+                    <h6>Do you want to reject?</h6>
+                    
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="rejectUser()" class="btn modal-close modal-trigger">Yes</a>
+                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    	<div id="confirmRejectInformation" class="modal">
+         <h6 class="modal-header">Reject</h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6>Device has been Rejected Successfully.</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./stolenRecovery">ok</a>
                 </div>
             </div>
         </div>

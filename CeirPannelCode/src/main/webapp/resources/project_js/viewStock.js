@@ -124,7 +124,7 @@ function editUploadStock(){
 
 			console.log(data);
 			$('#editStockModal').closeModal();
-			$('#successUpdateStockModal').modal();
+			$('#successUpdateStockModal').openModal();
 			if(data.errorCode==200){
 
 				$('#stockSucessMessage').text('');
@@ -146,7 +146,7 @@ function editUploadStock(){
 			console.log("error in ajax")
 		}
 	});
-
+return false;
 }
 
 
@@ -182,7 +182,9 @@ function confirmantiondelete(){
 		success : function(data, textStatus, xhr) {
 			console.log(data);
 			//$("#stockModalText").text(data.message);
-			
+			$("#DeleteStockconfirmationModal").closeModal();
+
+			$("#closeDeleteModal").openModal();
 			if(data.errorCode == 0){
 				$("#stockModalText").text("Stock Deleted Successfully ");
 			}
@@ -193,9 +195,7 @@ function confirmantiondelete(){
 			console.log("Error");
 		}
 	});
-	$("#DeleteStockconfirmationModal").closeModal();
-
-	$("#closeDeleteModal").openModal();
+	
 	/* 
 $(".lean-overlay").remove(); */ 
 

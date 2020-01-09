@@ -439,7 +439,7 @@ function setViewPopupData(data){
 	console.log("**************data*******"+JSON.stringify(data));
 	$("#viewdeviceType").val(data.deviceTypeInterp);
 	$("#viewdeviceIdType").val(data.deviceIdTypeInterp);
-	$("#viewsimStatus").val(data.multiSimStatus);
+	$("#viewsimStatus").val(data.multiSimStatusInterp);
 	$("#viewcountryBought").val(data.country);
 	$("#viewserialNumber").val(data.deviceSerialNumber);
 	$("#viewtaxStatus").val(data.taxPaidStatusInterp);
@@ -899,7 +899,7 @@ function rejectUser(){
 		success : function(data) {
 			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
 			if(data.errorCode==0){
-				confirmApproveInformation();
+				confirmRejectInformation();
 				console.log("inside Reject Success")
 			}
 
@@ -914,5 +914,5 @@ function rejectUser(){
 
 function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
-	$('#confirmRejectInformation').openModal();
+	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
 }

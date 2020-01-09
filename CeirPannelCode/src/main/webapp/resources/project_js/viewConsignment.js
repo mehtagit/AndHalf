@@ -9,10 +9,7 @@ var userType=$("body").attr("data-roleType");
 var featureId="3";
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 window.parent.$('#langlist').on('change', function() {
-	//$("body").attr("session-value",this.value);
-	/*sessionStorage.setItem("session-value",this.value);
-	alert(sessionStorage.getItem("session-value"))*/
-	  window.location.reload(true);
+	 window.location.reload(true);
 	}); 
 $(document).ready(function(){
 	
@@ -27,18 +24,6 @@ $(document).ready(function(){
 $('.datepick').datepicker({
 	dateFormat: "yy-mm-dd"
 	});
-/*$('body').on('click',".datepicker", function(){
-    $(this).datepicker({
-            	dateFormat: "yy-mm-dd"});
-});*/
-/*$('#startDate').datepicker({
-showAnim: "fold",
-dateFormat: "yy-mm-dd"
-});
-$('.datepicker').datepicker({
-showAnim: "fold",
-dateFormat: "yy-mm-dd"
-});*/
 
 
 
@@ -331,6 +316,7 @@ function table(url,dataUrl){
 //******************************************************************************************************************************************************************888888   
 
 function editRegisterConsignment(){
+	
 	var supplierId=$('#supplierIdEdit').val();
 	var supplierName=$('#supplierNameEdit').val();
 	var consignmentNumber=$('#consignmentNumberEdit').val();
@@ -366,15 +352,15 @@ function editRegisterConsignment(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('#updateModal').closeModal();
-			
+			$('#updateConsignment').openModal();
 			if(data.errorCode==200){
 
-				$('#updateConsignment').modal();
+				
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(data.message);
 			}
 			else if (data.errorCode==0){
-				$('#updateConsignment').modal();
+			
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
@@ -389,7 +375,8 @@ function editRegisterConsignment(){
 			console.log("error in ajax")
 		}
 	});
-
+	
+	return false;
 }
 
 

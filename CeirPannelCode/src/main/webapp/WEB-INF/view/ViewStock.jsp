@@ -137,36 +137,36 @@
 				<div class="modal-content">
 	
 			
-			<form action="" style="margin-top: 10px;">
+			<form action="" onsubmit="return editUploadStock()" method="POST" enctype="multipart/form-data"  style="margin-top: 10px;">
 				<div class="row myRow">
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierId" id="editSupplierId"
-							placeholder="ABCD12345" maxlength="15" /> <label
+							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
 							for="SupplierId" class="center-align">Supplier ID
 							<span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
-						<input type="text" name="SupplierName" id="editSupplierName"
-							placeholder="Abcd" maxlength="15" /> <label for="SupplierName"
+						<input type="text" name="SupplierName" id="editSupplierName" required="required"
+							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="SupplierName"
 							class="center-align">Supplier Name <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
-							placeholder="120" maxlength="7" required /> <label
+							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
 							for="Quantity" class="center-align">Quantity <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
-							placeholder="12345678" maxlength="15" /> <label
+							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15"/> <label
 							for="InvoiceNumber" class="center-align">Invoice Number</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="TransactionId" id="editTransactionId"
-							placeholder="TR12345678" disabled maxlength="15" /> <label
+							placeholder="" disabled maxlength="15" /> <label
 							for="TransactionId" class="center-align">Transaction ID</label>
 					</div>
 				</div>
@@ -199,9 +199,8 @@
 
 				<div class="row">
 					<div class="input-field col s12 center">
-						<button class="waves-effect waves-light modal-trigger btn"
-							data-target="submitStock" onclick="editUploadStock()"
-							type="button">Update</button>
+						<button class="btn"
+							type="submit">Update</button>
 						<a onclick="closeEditModal();" class="btn" type="cancel"
 							style="margin-left: 10px;">Cancel</a>
 

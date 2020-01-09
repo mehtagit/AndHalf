@@ -100,11 +100,13 @@
                                             </div>
                                         </div>
 
+
 <!--                                         <div class="row">
                                             <h6 style="color: #000; margin-left: 10px;">Upload Supporting Document</h6>
                                             <div class="file-field col s12 m6">
                                                 <div class="btn">
                                                     <span>Select File</span>
+
                                                     <input id="myInput" type="file" accept=".csv"  multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
@@ -145,6 +147,7 @@
                                             <button class="btn right add_field_button"><span
                                                     style="font-size: 20px;">+</span> Add More files</button>
                                         </div>
+                         
                                            </div>
                                          
 											</div>
