@@ -1074,5 +1074,3 @@ function confirmRejectInformation(){
 
 
 	
-	
-y

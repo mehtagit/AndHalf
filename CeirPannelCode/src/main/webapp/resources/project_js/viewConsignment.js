@@ -26,6 +26,13 @@ $('.datepick').datepicker({
 	});
 
 
+
+
+
+
+
+
+
 function DeleteConsignmentRecord(txnId){
 	$("#DeleteConsignment").openModal();
 	$("#transID").text(txnId);
@@ -47,9 +54,15 @@ function confirmantiondelete(){
 		type : 'POST',
 		success : function(data, textStatus, xhr) {
 			if(data.errorCode == 200){
+				$("#consignmentText").text('');
 				$("#consignmentText").text(data.message);
+				
 			}else if(data.errorCode == 0){
-				$("#consignmentText").text(data.message);
+				$("#consignmentText").text('');
+				$("#consignmentText").text('Consignment Deleted Successfully');
+			}
+			else{
+				$("#consignmentText").text('Something happens wrong');
 			}
 		},
 		error : function() {
@@ -59,7 +72,14 @@ function confirmantiondelete(){
 	$("#DeleteConsignment").closeModal();
 	$("#confirmDeleteConsignment").openModal();
 }
-
+$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
+	$("#expectedArrivalPortEdit").empty();
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#expectedArrivalPortEdit');
+		
+	}
+});
 
 function EditConsignmentDetails(txnId){ 	
 	$.ajax({
@@ -68,8 +88,13 @@ function EditConsignmentDetails(txnId){
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			setEditPopupData(data) ;
+			
+/*	$("#expectedArrivalPortEdit").empty();*/
+			
+		
 			ConsignmentCurrency();
+		
+			setEditPopupData(data) ;
 		},
 		error : function() {
 			alert("Failed");
@@ -116,7 +141,7 @@ function viewConsignmentCurrency()
 		success: function (data, textStatus, jqXHR) {
 			console.log(data);
 
-			$('#viewcurrency').empty();
+		/*	$('#viewcurrency').empty();*/
 			for (i = 0; i < data.length; i++){
 				var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 				//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
@@ -156,7 +181,7 @@ function setViewPopupData(data){
 	$("#expectedDispatcheDate").val(data.expectedDispatcheDate);
 	$("#countryview").val(data.organisationCountry);
 	$("#expectedArrivaldate").val(data.expectedArrivaldate);
-	$("#expectedArrivalPort").val(data.expectedArrivalPort);
+	$("#expectedArrivalPort").val(data.expectedArrivalPortInterp);
 	$("#Quantity").val(data.quantity);
 	$("#TransactionId").val(data.txnId);
 	$("#remark").val(data.remarks);
@@ -169,6 +194,8 @@ function setViewPopupData(data){
 }
 
 function setEditPopupData(data){
+	
+
 	$("#supplierIdEdit").val(data.supplierId);
 	$("#supplierNameEdit").val(data.supplierName);
 	$("#consignmentNumberEdit").val(data.consignmentNumber);
@@ -289,6 +316,7 @@ function table(url,dataUrl){
 //******************************************************************************************************************************************************************888888   
 
 function editRegisterConsignment(){
+	
 	var supplierId=$('#supplierIdEdit').val();
 	var supplierName=$('#supplierNameEdit').val();
 	var consignmentNumber=$('#consignmentNumberEdit').val();
@@ -324,22 +352,33 @@ function editRegisterConsignment(){
 		contentType: false,
 		success: function (data, textStatus, jqXHR) {
 			$('#updateModal').closeModal();
-			$('#updateConsignment').modal();
+
+			$('#updateConsignment').openModal();
 			if(data.errorCode==200){
 
+				
 				$('#sucessMessage').text('');
-				$('#sucessMessage').text('Operation is not allowed');
+				$('#sucessMessage').text(data.message);
 			}
-			else{
+
+			else if (data.errorCode==0){
+			
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
+			else 
+				{
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text(data.message);
+				}
+			 
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
 		}
 	});
-
+	
+	return false;
 }
 
 
@@ -623,11 +662,11 @@ function approveSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text('The consignment has been successfully approved');
 			}
 			else{
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text("something happend wrong.");
 			}
 		},
 		error : function() {
@@ -669,11 +708,11 @@ function disapproveSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#disapproveSuccessMessage').text('');
-				$('#disapproveSuccessMessage').text(data.message);
+				$('#disapproveSuccessMessage').text("The consignment has been marked as rejected.");
 			}
 			else{
 				$('#disapproveSuccessMessage').text('');
-				$('#disapproveSuccessMessage').text(data.message);
+				$('#disapproveSuccessMessage').text("something happend wrong");
 			}
 		},
 		error : function() {
@@ -772,3 +811,6 @@ function exportConsignmentData()
 	console.log(" consignmentStartDate  ="+consignmentStartDate+"  consignmentEndDate=="+consignmentEndDate+"  consignmentTxnId="+consignmentTxnId+" filterConsignmentStatus ="+filterConsignmentStatus+"consignmentTaxPaidStatus  "+consignmentTaxPaidStatus)
 	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
+
+
+

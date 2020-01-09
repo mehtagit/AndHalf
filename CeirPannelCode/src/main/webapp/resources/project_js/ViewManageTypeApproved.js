@@ -276,7 +276,18 @@ function updateReportTypeDevice()
 			success : function(data, textStatus, jqXHR) {
 			
 				console.log(data);
-				$('#updateManageTypeDevice').openModal();
+				
+			
+					
+					 if (data.errorCode==0){
+						$('#updateManageTypeDevice').openModal();
+					}
+					 else {
+
+							$('#updateManageTypeDevice').openModal();
+							$('#updateTacMessage').text('');
+							$('#updateTacMessage').text(data.message);
+						}
 					 
 			},
 			error : function(jqXHR, textStatus, errorThrown) {

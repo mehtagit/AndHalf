@@ -75,8 +75,10 @@ public class StolenDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
-			Object actionResponse = feignCleintImplementation.tableActionFeign(featureId, userTypeId);
-			log.info("actionResponse::::::::::::"+actionResponse);
+			/*
+			 * Object actionResponse = feignCleintImplementation.tableActionFeign(featureId,
+			 * userTypeId); log.info("actionResponse::::::::::::"+actionResponse);
+			 */
 			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();

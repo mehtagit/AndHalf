@@ -254,6 +254,17 @@ input[type='search'] {
 														class="star">*</span>
 													</label>
 												</div>
+													<div class="input-field col s12 m6 l6">
+													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+														title="Please enter alphabets and numbers upto 50 characters only"
+														name="streetNumber"
+														class="form-control boxBorder boxHeight" id="village"
+														maxlength="50" required="required"> <label
+														for="village">Vllage <span
+														class="star">*</span>
+													</label>
+												</div>
+												
 
 												<div class="input-field col s12 m6 l6">
 													<input type="text" name="locality"
@@ -265,6 +276,36 @@ input[type='search'] {
 													</label>
 												</div>
 
+													<div class="input-field col s12 m6 l6">
+													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+														title="Please enter alphabets and numbers upto 50 characters only"
+														name="streetNumber"
+														class="form-control boxBorder boxHeight" id="district"
+														maxlength="50" required="required"> <label
+														for="district">District <span
+														class="star">*</span>
+													</label>
+												</div>
+												<div class="input-field col s12 m6 l6">
+													<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+														title="Please enter alphabets and numbers upto 50 characters only"
+														name="streetNumber"
+														class="form-control boxBorder boxHeight" id="commune"
+														maxlength="50" required="required"> <label
+														for=""commune"">Commune <span
+														class="star">*</span>
+													</label>
+												</div>
+												<div class="input-field col s12 m6 l6">
+													<input type="text" pattern="[0-9]{6,10}"
+														title="Please enter Postel code upto 10 Numbers only"
+														name="streetNumber"
+														class="form-control boxBorder boxHeight" id="postalcode"
+														maxlength="20" required="required"> <label
+														for="postalcode">PostalCode <span
+														class="star">*</span>
+													</label>
+												</div>
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
@@ -634,7 +675,7 @@ input[type='search'] {
 					</div>
 
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-						<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+						<button class="btn modal-close" style="margin-left: 10px;">Ok</button>
 					</div>
 
 				</div>

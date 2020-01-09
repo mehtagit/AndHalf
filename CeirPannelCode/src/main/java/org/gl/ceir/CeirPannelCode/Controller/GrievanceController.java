@@ -57,48 +57,41 @@ public class GrievanceController {
 	}
 	
 	
+	 
+	
 	@RequestMapping(value= {"/saveGrievance"},method={org.springframework.web.bind.annotation.RequestMethod.POST}) 
 	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="categoryId",required = false) int categoryId
-			,@RequestParam(name="remarks",required = false) String remarks,@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
+			,@RequestParam(name="remarks",required = false) String remarks,HttpSession session,@RequestParam(name="file",required = false) ArrayList<MultipartFile> fileUpload) {
 
 		int userId= (int) session.getAttribute("userid");
 		String roletype=(String) session.getAttribute("usertype");
 
+		log.info("filelength11="+fileUpload.size());
 		
-		log.info("save grievance  entry point.");
+		//log.info("save grievance  entry point."+filedetails);
 
 		String grevnceId=utildownload.getTxnId();
 		grevnceId = "G"+grevnceId;
 		log.info("Random  genrated transaction number ="+grevnceId);
 
-		
-		try {
-			if(file==null) {
-				grievance.setFileName("");
-			}
-			else {
-			byte[] bytes = file.getBytes();
-			String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grevnceId+"/";
-			File dir = new File(rootPath + File.separator);
-
-			if (!dir.exists()) 
-				dir.mkdirs();
-			// Create the file on server
-			// Calendar now = Calendar.getInstance();
-
-			File serverFile = new File(rootPath+file.getOriginalFilename());
-			log.info("uploaded file path on server" + serverFile);
-			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			stream.write(bytes);
-			stream.close();
-			}
-			grievance.setFileName(file.getOriginalFilename());
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+		/*
+		 * try { if(file==null) { grievance.setFileName(""); } else { byte[] bytes =
+		 * file.getBytes(); String rootPath =
+		 * "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grevnceId+"/"; File dir =
+		 * new File(rootPath + File.separator);
+		 * 
+		 * if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now
+		 * = Calendar.getInstance();
+		 * 
+		 * File serverFile = new File(rootPath+file.getOriginalFilename());
+		 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		 * stream.write(bytes); stream.close(); }
+		 * grievance.setFileName(file.getOriginalFilename()); } catch (Exception e) { //
+		 * TODO: handle exception e.printStackTrace(); }
+		 */
 		// set reaquest parameters into model class
+
 		
 		
 		grievance.setCategoryId(categoryId);

@@ -91,11 +91,11 @@ function submitBlockImei()
 		var blockbulkquantity = $('#blockbulkquantity').val();
 		//var blockBulkFile = $('#blockBulkFile').val();
 		var blockbulkRemark = $('#blockbulkRemark').val();
-		
 		var ModeType='3';
 		var requestType='2';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
+
 		console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockbulkRemark)
 		
 		var formData = new FormData();
@@ -107,6 +107,7 @@ function submitBlockImei()
 		formData.append('requestType', requestType);
 		formData.append('userId',userId);
 		formData.append('roleType',roleType);
+		
 			
 
 		$.ajax({
@@ -143,6 +144,7 @@ function submitUnBlockImei()
 		var requestType='3';
 		var roleType = $("body").attr("data-roleType");
 		var userId = $("body").attr("data-userID");
+
 		//console.log("bulkBlockdeviceCategory="+bulkBlockdeviceCategory+" blockbulkquantity=="+blockbulkquantity+" blockUnblockRemark="+blockUnblockRemark)
 		var formData = new FormData();
 		formData.append('file', $('#unblockBulkFile')[0].files[0]);
@@ -153,6 +155,7 @@ function submitUnBlockImei()
 		formData.append('requestType', requestType);
 		formData.append('userId',userId);
 		formData.append('roleType',roleType);
+
 $.ajax({
 			url: './reportUnblockBulkFile',
 			type: 'POST',
@@ -190,6 +193,7 @@ function submitSingleBlockDevicesRequest()
 	var IMEI4=$('#singleblockIMEI4').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
+	var category= $('#singleDeviceCategory').val();
 	
 	var requestType=2;
 	
@@ -206,12 +210,13 @@ var singleImeiBlockDetail={
 		'secondImei':IMEI2,
 		'thirdImei':IMEI3,
 		'fourthImei':IMEI4,
-		'requestType':requestType,		
 		'requestType':requestType,
 		'remark':remark,
 		'sourceType':4,
 		'blockingTimePeriod':blockingTimePeriod,
-		'blockingType':blockingType
+		'blockingType':blockingType,
+		'category':category
+		
 		
 }
 		
@@ -255,8 +260,11 @@ function submitSingleUnBlockDevicesRequest()
 	var roleType = $("body").attr("data-roleType");
 	var blockingTimePeriod=$('#stolenDatePeriodUnblock').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
+	var category= $('#singleDeviceUnblock').val();
+
+
 	
-	console.log("****");
+	console.log("****  operatorTypeId "+operatorTypeId);
 	console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
 var singleImeiBlockDetail={
@@ -273,7 +281,9 @@ var singleImeiBlockDetail={
 		'remark':remark,
 		'sourceType':4,
 		'blockingTimePeriod':blockingTimePeriod,
-		'blockingType':blockingType
+		'blockingType':blockingType,
+		'category':category
+	
 }
 		
 		console.log(JSON.stringify(singleImeiBlockDetail));
@@ -329,9 +339,9 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 
 
 function setViewBulkPopUp(data,popUpType,requestType){
-
+	
 $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
-		
+		$('#editBulkBlockCategory').empty();
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#editBulkBlockCategory');
@@ -481,6 +491,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 });
 
 
+
 function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 
@@ -525,6 +536,14 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 	$("#viewsingleblockremark").val(data[i].remark);
 	$("#viewsingleblockIMEI1").val(data[i].firstImei);
 	$("#viewsingleblocTxnid").val(data[i].txnId);
+	$("#viewsingleblockCategory").val(data[i].categoryInterp);
+	if(data[i].blockingType=='tilldate')
+		{
+		$("#viewsingleblockingType").val(data[i].blockingTimePeriod);
+		}
+	else{
+	$("#viewsingleblockingType").val(data[i].blockingType);
+	}
 	}
 	}
 	else
@@ -576,7 +595,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		$("#editsingleblockIMEI1").val(data[i].firstImei);
 		$("#editsingleblockTxnid").val(data[i].txnId);
 		$("#editbulkBlockdeviceCategory").val(data[i].category);
-		
+		$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingTimePeriod+']').attr('checked', true); 
 		$("#editsingleblocRequestType").val(requestType);
 		}
 	}

@@ -72,8 +72,7 @@
 
                                     <form  onsubmit="return saveGrievance()" method="POST" enctype="multipart/form-data"  id="saveGrievance">
                                         <div class="row" style="margin-top: 10px;">
-                                        <div id="mainDiv" class="mainDiv">
-                                        <div id="filediv" class="fileDiv">
+                                 
                                         <div class="row" >
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
@@ -101,12 +100,13 @@
                                             </div>
                                         </div>
 
-                                             <div class="row">
+
+<!--                                         <div class="row">
                                             <h6 style="color: #000; margin-left: 10px;">Upload Supporting Document</h6>
                                             <div class="file-field col s12 m6">
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input id="myInput" type="file" accept=".csv"  multiple>
+
                                                     <input id="myInput" type="file" accept=".csv"  multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
@@ -118,6 +118,8 @@
                                                 </div>
                                             </div>
                                         </div> -->
+                                               <div id="mainDiv" class="mainDiv">
+                                        <div id="filediv" class="fileDiv">
                                          <div class="row">
                                          <div class="file-field col s12 m6">
                                                 <h6 style="color: #000;">Upload Supporting Document</h6>
@@ -145,21 +147,15 @@
                                             <button class="btn right add_field_button"><span
                                                     style="font-size: 20px;">+</span> Add More files</button>
                                         </div>
-                              		</p>
+                         
                                            </div>
                                          
 											</div>
 									   
 											</div>
 
-                                        
-                                        <div class="fileDiv">  <p>
-				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a> -->
-			</p>
-
 			<span> Required Field are marked with <span class="star">*</span></span>
 			
-                </div>
                                         <div class="center" style="margin-top: 50px;">
                                             <button class="btn"
                                                  type="submit" >Submit</button>

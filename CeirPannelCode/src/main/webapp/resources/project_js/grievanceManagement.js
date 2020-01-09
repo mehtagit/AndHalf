@@ -27,19 +27,19 @@ function grievanceDataTable(){
 	var grievanceStatus=$('#recentStatus').val();
 	console.log("grievanceStatus=="+grievanceStatus);
 	if(grievanceStatus==null)
-		{
+	{
 		grievanceStatus=-1;
 		console.log("**********"+grievanceStatus);
-		}
+	}
 	else{
 		console.log("selected user status==*"+grievanceStatus);
 		grievanceStatus=$('#recentStatus').val();
 	}
 	if(grievancePageSource=="viaDashBoard")
-		{
+	{
 		grievanceSessionUsesFlag=1;
 		console.log("1111111");
-		}
+	}
 	else{
 		grievanceSessionUsesFlag=0;
 		console.log("00000000");
@@ -58,7 +58,7 @@ function grievanceDataTable(){
 			"txnId":$('#transactionID').val(),
 			"grievanceId":$('#grievanceID').val(),
 			"userType":$("body").attr("data-roleType"),
-			
+
 	}
 	$.ajax({
 		url: 'headers?type=grievanceHeaders',
@@ -89,12 +89,12 @@ function grievanceDataTable(){
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
 			$('#grivanceLibraryTable input').unbind();
-		    $('#grivanceLibraryTable input').bind('keyup', function (e) {
-		        if (e.keyCode == 13) {
-		            table.search(this.value).draw();
-		        }
-		        
-		    });
+			$('#grivanceLibraryTable input').bind('keyup', function (e) {
+				if (e.keyCode == 13) {
+					table.search(this.value).draw();
+				}
+
+			});
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -166,34 +166,34 @@ function pageRendering(){
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 				}
 			}
-			
+
 			if(cierRoletype=="CEIRAdmin"){
 				$("#btnLink").css({display: "none"});
-				}
-			
+			}
+
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#recentStatus');
 				}
-				
-				
-				 var grievanceStatus= $("body").attr("data-grievanceStatus");
-				 console.log("#################33"+grievanceStatus);
-				 if(grievanceStatus=="")
-					 {
-					 console.log("grievance status is blank ");
-					 
-					 }
-				 else{
-					 console.log(" grievanceStatus is Not blank ");
-					 $("#recentStatus").val(grievanceStatus).change();
-				 
-					 
-				
-				 }
+
+
+				var grievanceStatus= $("body").attr("data-grievanceStatus");
+				console.log("#################33"+grievanceStatus);
+				if(grievanceStatus=="")
+				{
+					console.log("grievance status is blank ");
+
+				}
+				else{
+					console.log(" grievanceStatus is Not blank ");
+					$("#recentStatus").val(grievanceStatus).change();
+
+
+
+				}
 			});
-			
+
 			var grievanceId = $("body").attr("data-grievanceId");
 			var txnid = $("body").attr("data-grievanceTxnId");
 
@@ -201,20 +201,20 @@ function pageRendering(){
 			$('#transactionID').val(txnid);
 			$('#grievanceID').val(grievanceId);
 			if(txnid=="" )
-				{
+			{
 				console.log("txnid is null");
-				}
+			}
 			else{
 				console.log("txnid is not null")
 				$('label[for=TransactionID]').remove();
-				
+
 			}
-			
+
 			//cierRoletype=="Importer"? $("#btnLink").css({display: "block"}) : $("#btnLink").css({display: "none"});
 			/*sourceType=="viaStolen" ? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "none"});*/
 			$('.datepicker').datepicker({
-			    dateFormat: "yy-mm-dd"
-			    });
+				dateFormat: "yy-mm-dd"
+			});
 		}
 
 	}); 
@@ -291,8 +291,6 @@ $('.datepicker').on('mousedown',function(event){
 
 
 
-
-
 function saveGrievance(){
 
 
@@ -300,10 +298,37 @@ function saveGrievance(){
 	var txnId=$('#TransactionId').val();
 	var remark=$('#Remark').val();
 	var file=$('#myInput').val();
-
-	console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
+	var fieldId=1;
+	var fileInfo =[];
 	var formData= new FormData();
-	formData.append('file', $('#myInput')[0].files[0]);
+	var fileData = [];
+	
+	var x;
+	var filename='';
+	var filediv;
+	var i=0;
+	var formData= new FormData();
+	$('.fileDiv').each(function() {	
+
+		
+		/*x={
+				"file":fileData.push($('#docTypeFile'+fieldId)[0].files[0]),
+				"number": $('#docTypetag'+fieldId).val()
+		}
+		fileInfo.push(x);*/
+		
+		//fileData.push($('#docTypeFile'+fieldId)[0].files[0]);
+		formData.append('file['+i+']',$('#docTypeFile'+fieldId)[0].files[0]);
+		/*filename=$('#docTypeFile'+fieldId)[0].files[0];
+		console.log(filename);
+		fileInfo.push(filename);*/
+		fieldId++;
+		i++;
+	});
+	console.log(fileData.length);
+	console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
+	
+	/*formData.append('file',fileData);*/
 	formData.append('txnId',txnId);
 	formData.append('categoryId',category);
 	formData.append('remarks',remark);
@@ -339,9 +364,10 @@ function saveGrievance(){
 		}
 	});
 
-	return false;
 
 }
+
+
 
 function grievanceReply(userId,grievanceId,txnId)
 {
@@ -363,10 +389,10 @@ function grievanceReply(userId,grievanceId,txnId)
 			$("#viewPreviousMessage").empty();
 			for(var i=0; i<data.length; ++i)
 			{
-				
+
 				$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
-				
-				
+
+
 			}
 			if(usertype=='CEIRAdmin')
 			{
@@ -392,7 +418,7 @@ function saveGrievanceReply()
 	if ($('#closeTicketCheck').is(":checked"))
 	{
 		grievanceTicketStatus=3;
-		
+
 	}
 	else{
 		grievanceTicketStatus=0;
@@ -441,13 +467,14 @@ function saveGrievanceReply()
 			console.log("error in ajax")
 		}
 	});
+	return false;
 }
 
 function viewGrievanceHistory(grievanceId,filename)
 {
 
-	
-	
+
+
 	console.log("http://13.233.39.58:8080"+path);
 	$.ajax({
 		url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
@@ -491,8 +518,8 @@ function exportData()
 
 	var table = $('#grivanceLibraryTable').DataTable();
 	var info = table.page.info(); 
-   var pageNo=info.page;
-    var pageSize =info.length;
+	var pageNo=info.page;
+	var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
 	console.log(" grievanceStartDate  ="+grievanceStartDate+"  grievanceEndDate=="+grievanceEndDate+"  grievancetxnId="+grievancetxnId+" grievanceId ="+grievanceId+"grievanceStatus  "+grievanceStatus)
 	window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
@@ -501,46 +528,45 @@ function exportData()
 //************************************************ category dropdown function ******************************************************************
 function grievanceCategory()
 {
-		var grievanceCategory="GRIEVANCE_CATEGORY";
-	 	 $.ajax({
-			url: './Consignment/consignmentCurency?currency='+grievanceCategory,
-			type: 'GET',
-			processData: false,
-			contentType: false,
-			success: function (data, textStatus, jqXHR) {
-				 console.log(data);
-				 
-		    	$('#category').empty();
-		    	$('#category').append('<option value="">Select Category *</option>');
-		    	
-		    	for (i = 0; i < data.length; i++){
-		    		
-		    		var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
-					//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
-					$('#category').append(html);	
-					}
-		    	/* $('#currency').val($("#langid").val()); */
-				
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
+	var grievanceCategory="GRIEVANCE_CATEGORY";
+	$.ajax({
+		url: './Consignment/consignmentCurency?currency='+grievanceCategory,
+		type: 'GET',
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			console.log(data);
+
+			$('#category').empty();
+			$('#category').append('<option value="">Select Category *</option>');
+
+			for (i = 0; i < data.length; i++){
+
+				var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+				//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
+				$('#category').append(html);	
 			}
-		});
+			/* $('#currency').val($("#langid").val()); */
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
 }
 
 $(document).ready(function(){
 	grievanceCategory();
-	
 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-	
+		console.log("@@@@@"+JSON.stringify(data));
 		for (i = 0; i < data.length; i++) {
 			console.log(data[i].interp);
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#docTypetag1');
-			
+
 		}
 	});
-	});
+});
 
 
 
@@ -556,39 +582,39 @@ function cleanReplyPopUp()
 
 
 
-    var max_fields = 15; //maximum input boxes allowed
-    var wrapper = $(".mainDiv"); //Fields wrapper
-    var add_button = $(".add_field_button"); //Add button ID
-    var x = 1; //initlal text box count
-    var id=2;
-    $(".add_field_button").click(function (e) { //on add input button click
-        e.preventDefault();
-        
-        if (x < max_fields) { //max input box allowed
-            x++; //text box increment
-            $(wrapper).append(
-                '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" name="files[]" id="filer_input" multiple="multiple" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">-</div></div></div>'
-            ); //add input box
-        }
-    	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-    	
-    		
-    		for (i = 0; i < data.length; i++) {
-    			console.log(data[i].interp);
-    			var optionId=id-1;
-    			$('<option>').val(data[i].value).text(data[i].interp)
-    			.appendTo('#docTypetag'+optionId);
-    			console.log('#docTypetag'+optionId);
-    			
-    		}
-    	});
-    	id++;
-    	
-    });
-    $(".mainDiv").on("click", ".remove_field", function (e) { //user click on remove text
-        e.preventDefault();
-        $(this).parent('div').remove();
-        x--;
-        id--
-    })
+var max_fields = 15; //maximum input boxes allowed
+var wrapper = $(".mainDiv"); //Fields wrapper
+var add_button = $(".add_field_button"); //Add button ID
+var x = 1; //initlal text box count
+var id=2;
+$(".add_field_button").click(function (e) { //on add input button click
+	e.preventDefault();
+
+	if (x < max_fields) { //max input box allowed
+		x++; //text box increment
+		$(wrapper).append(
+				'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" name="files[]" id="filer_input" multiple="multiple" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">-</div></div></div>'
+		); //add input box
+	}
+	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+
+
+		for (i = 0; i < data.length; i++) {
+			console.log(data[i].interp);
+			var optionId=id-1;
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#docTypetag'+optionId);
+			console.log('#docTypetag'+optionId);
+
+		}
+	});
+	id++;
+
+});
+$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+	e.preventDefault();
+	$(this).parent('div').remove();
+	x--;
+	id--;
+})
 

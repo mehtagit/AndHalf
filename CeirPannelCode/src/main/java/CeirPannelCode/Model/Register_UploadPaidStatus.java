@@ -17,17 +17,19 @@ public class Register_UploadPaidStatus {
 	private String street;
 	private String locality;
 	private String province;
-	private String country;
+	private String country,district,commune,village;
+	
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private Long firstImei;
-	private Integer taxPaidStatus;
+	private Integer taxPaidStatus,postalCode;
 	@Override
 	public String toString() {
 		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", nid=" + nid
 				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
-				+ ", province=" + province + ", country=" + country + ", regularizeDeviceDbs=" + regularizeDeviceDbs
-				+ ", firstImei=" + firstImei + ", taxPaidStatus=" + taxPaidStatus + "]";
+				+ ", province=" + province + ", country=" + country + ", district=" + district + ", commune=" + commune
+				+ ", village=" + village + ", regularizeDeviceDbs=" + regularizeDeviceDbs + ", firstImei=" + firstImei
+				+ ", taxPaidStatus=" + taxPaidStatus + ", postalCode=" + postalCode + "]";
 	}
 	public String getFirstName() {
 		return firstName;
@@ -101,6 +103,24 @@ public class Register_UploadPaidStatus {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
 	public List<UplodPaidStatusModel> getRegularizeDeviceDbs() {
 		return regularizeDeviceDbs;
 	}
@@ -119,6 +139,13 @@ public class Register_UploadPaidStatus {
 	public void setTaxPaidStatus(Integer taxPaidStatus) {
 		this.taxPaidStatus = taxPaidStatus;
 	}
-
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+	
+	
 
 }

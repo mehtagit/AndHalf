@@ -60,9 +60,9 @@
 </head>
 
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
-	data-userID="${userid}"
+	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}">
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
 
 
 	<!-- START CONTENT -->
@@ -958,7 +958,6 @@
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                   </div>
                                                         <input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
                                                             title="Please enter  numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
                                                         <label for="editBulkBlockquantity">Quantity <span class="star">*</span></label>
@@ -978,7 +977,7 @@
                                                         </div>
                                                     </div>
                                                     
-                                                    <div class="input-field col s12 m6">                            
+                                                    <div class="input-field col s12 m6">
                                                         <textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
                                                         <label for="editBulkBlockRemark">Remark <span class="star">*</span> </label>
                                                    <!--      <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
@@ -997,8 +996,7 @@
                 <div class="row">
                     <div class="input-field col s12 center">
                                                         	<button class=" btn"
-					  
-						type="submit" >Update</button>
+ 					type="submit" >Update</button>
                                                         <button type="button" class="modal-close btn">Cancel</button>
                                                     </div>
                 </div>
@@ -1105,6 +1103,15 @@
                                                                 <textarea id="viewsingleblockremark" disabled="disabled" placeholder="" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="viewsingleblockremark">Remark</label>
                                                             </div>
+                                                            <div class="input-field col s12 m6">
+                                                                <input type="text" id="viewsingleblockCategory" name="" placeholder="" disabled="disabled">
+                                                                <label for="viewsingleblockCategory">Category</label>
+                                                              </div> 
+                                                              <div class="input-field col s12 m6">
+            													<input type="text" id="viewsingleblockingType" name="" placeholder="" disabled="disabled">
+                                                                <label for="viewsingleblockingType">blockingType</label>		
+                                                              </div>
+                                                            
                                                         </div>
                                                         <div class="row">
                                                         <div class="row input_fields_wrap">
@@ -1195,6 +1202,7 @@
                                                                 <textarea id="editsingleblockremark"  placeholder="" class="materialize-textarea" required="required"></textarea>
                                                                 <label for="editsingleblockremark">Remark <span class="star">*</span></label>
                                                             </div>
+                                                           
                                                                <div class="col s12 m6"><label for="editbulkBlockdeviceCategory">Category
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="editbulkBlockdeviceCategory" required="required" >
@@ -1205,16 +1213,16 @@
                                                     </div>
                                                             <div class="" style="margin-left: 36%; margin-top: -25px;">
 				BlockingType
-				<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+				<label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 					value="Immediate"
-					onclick="document.getElementById('calender').style.display = 'none';"
+					onchange="document.getElementById('calender').style.display = 'none';"
 					name="stolenBlockPeriod" checked> Immediate
-				</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+				</label> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"
 					value="Default"
-					onclick="document.getElementById('calender').style.display = 'none';"
+					onchange="document.getElementById('calender').style.display = 'none';"
 					name="stolenBlockPeriod"> Default
-				</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
-					onclick="document.getElementById('calender').style.display = 'block';"
+				</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required" value="tilldate" class="blocktypeRadio"
+					onchange="document.getElementById('calender').style.display = 'block';"
 					name="stolenBlockPeriod"> Later
 				</label>
 				<div class="col s6 m2 responsiveDiv"
@@ -1285,8 +1293,7 @@
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                   
-                                                        <button class="btn" type="submit" >Update</button>
+                                                       <button class="btn" type="submit" >Update</button>
                                                 
                                                         <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
                                                     </div>

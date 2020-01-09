@@ -1,23 +1,21 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class SingleImeiDetailsModel {
-	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,modifiedOn,multipleSimStatusInterp,remark,txnId,userType,blockingTimePeriod,blockingType;
+	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,deviceSerialNumber,modifiedOn,multipleSimStatusInterp,remark,txnId,userType,blockingTimePeriod,blockingType;
 	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType;
-	private long  deviceSerialNumber,firstImei,fourthImei,secondImei,thirdImei,userId,id;
-	
-	
-	
+	private long  firstImei,fourthImei,secondImei,thirdImei,userId,id;
 	@Override
 	public String toString() {
 		return "SingleImeiDetailsModel [categoryInterp=" + categoryInterp + ", createdOn=" + createdOn
 				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", deviceTypeInterp=" + deviceTypeInterp
-				+ ", modifiedOn=" + modifiedOn + ", multipleSimStatusInterp=" + multipleSimStatusInterp + ", remark="
-				+ remark + ", txnId=" + txnId + ", userType=" + userType + ", blockingTimePeriod=" + blockingTimePeriod
-				+ ", blockingType=" + blockingType + ", category=" + category + ", deviceIdType=" + deviceIdType
-				+ ", deviceType=" + deviceType + ", multipleSimStatus=" + multipleSimStatus + ", processState="
-				+ processState + ", requestType=" + requestType + ", sourceType=" + sourceType + ", deviceSerialNumber="
-				+ deviceSerialNumber + ", firstImei=" + firstImei + ", fourthImei=" + fourthImei + ", secondImei="
-				+ secondImei + ", thirdImei=" + thirdImei + ", userId=" + userId + ", id=" + id + "]";
+				+ ", deviceSerialNumber=" + deviceSerialNumber + ", modifiedOn=" + modifiedOn
+				+ ", multipleSimStatusInterp=" + multipleSimStatusInterp + ", remark=" + remark + ", txnId=" + txnId
+				+ ", userType=" + userType + ", blockingTimePeriod=" + blockingTimePeriod + ", blockingType="
+				+ blockingType + ", category=" + category + ", deviceIdType=" + deviceIdType + ", deviceType="
+				+ deviceType + ", multipleSimStatus=" + multipleSimStatus + ", processState=" + processState
+				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", firstImei=" + firstImei
+				+ ", fourthImei=" + fourthImei + ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + ", userId="
+				+ userId + ", id=" + id + "]";
 	}
 	public String getCategoryInterp() {
 		return categoryInterp;
@@ -42,6 +40,12 @@ public class SingleImeiDetailsModel {
 	}
 	public void setDeviceTypeInterp(String deviceTypeInterp) {
 		this.deviceTypeInterp = deviceTypeInterp;
+	}
+	public String getDeviceSerialNumber() {
+		return deviceSerialNumber;
+	}
+	public void setDeviceSerialNumber(String deviceSerialNumber) {
+		this.deviceSerialNumber = deviceSerialNumber;
 	}
 	public String getModifiedOn() {
 		return modifiedOn;
@@ -72,6 +76,18 @@ public class SingleImeiDetailsModel {
 	}
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+	public String getBlockingTimePeriod() {
+		return blockingTimePeriod;
+	}
+	public void setBlockingTimePeriod(String blockingTimePeriod) {
+		this.blockingTimePeriod = blockingTimePeriod;
+	}
+	public String getBlockingType() {
+		return blockingType;
+	}
+	public void setBlockingType(String blockingType) {
+		this.blockingType = blockingType;
 	}
 	public Integer getCategory() {
 		return category;
@@ -115,12 +131,6 @@ public class SingleImeiDetailsModel {
 	public void setSourceType(Integer sourceType) {
 		this.sourceType = sourceType;
 	}
-	public long getDeviceSerialNumber() {
-		return deviceSerialNumber;
-	}
-	public void setDeviceSerialNumber(long deviceSerialNumber) {
-		this.deviceSerialNumber = deviceSerialNumber;
-	}
 	public long getFirstImei() {
 		return firstImei;
 	}
@@ -157,18 +167,7 @@ public class SingleImeiDetailsModel {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getBlockingTimePeriod() {
-		return blockingTimePeriod;
-	}
-	public void setBlockingTimePeriod(String blockingTimePeriod) {
-		this.blockingTimePeriod = blockingTimePeriod;
-	}
-	public String getBlockingType() {
-		return blockingType;
-	}
-	public void setBlockingType(String blockingType) {
-		this.blockingType = blockingType;
-	}
+	
 	
 	
 	

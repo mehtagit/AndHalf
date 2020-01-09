@@ -544,7 +544,11 @@ function submitDeviceInfo(){
 	var email=$('#email').val();
 	var phone=$('#phone').val();
 	var state=$('#state').val();
-
+	
+	var village=$('#village').val();
+	var district=$('#district').val();
+	var commune=$('#commune').val();
+	var postalcode=$('#postalcode').val();
 
 	var fieldId=1;
 	var regularizeDeviceDbs =[];
@@ -609,6 +613,10 @@ function submitDeviceInfo(){
 			"province": state,
 			"street": streetNumber,
 			"regularizeDeviceDbs":regularizeDeviceDbs,
+			"district":district,
+			"commune":commune,
+			"village":village,
+			"postalCode":postalcode
 
 	}
 	formData.append('file', $('#csvUploadFile')[0].files[0]);

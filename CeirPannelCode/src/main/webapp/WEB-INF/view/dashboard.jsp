@@ -293,7 +293,7 @@ class="dropdownColor"> Logout</span></a></li>
 <%} else {} %>
 			<div class="input-field col s12 center">
 				<button class="btn" id="updateStatusBtn">Submit</button>
-				<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
+				<button type="button" class="btn modal-close" style="margin-left: 10px;">Cancel</button>
 			</div>
 			</form>
 		</div>
@@ -378,7 +378,7 @@ required="required"
 <div class="row" style="margin-top: 30px;">
 <div class="input-field col s12 center">
 <button class="btn" id="updateStatusBtn">Submit</button>
-<a href="" class="btn" style="margin-left: 10px;">Cancel</a>
+<button type="button"  class="btn modal-close" style="margin-left: 10px;">Cancel</button>
 </div>
 
 </div>
@@ -509,6 +509,14 @@ $('.navData li').removeClass("active");
 $(this).removeClass("inactive");
 $(this).addClass("active"); 
 });
+
+
+$('#profile-dropdown li').on('click', function() {
+	$('#profile-dropdown li:not(.inactive)').addClass("inactive");
+	$('#profile-dropdown li').removeClass("active");
+	$(this).removeClass("inactive");
+	$(this).addClass("active"); 
+	});
 </script>
 
 </body>

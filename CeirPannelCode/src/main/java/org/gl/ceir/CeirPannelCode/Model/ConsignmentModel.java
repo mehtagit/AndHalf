@@ -15,8 +15,8 @@ private String consignmentNumber;
 private String expectedArrivalDate;
 private String expectedArrivaldate;
 private String expectedDispatcheDate;
-private String expectedArrivalPort;
-private String organisationcountry;
+private Integer expectedArrivalPort;
+private String organisationcountry,expectedArrivalPortInterp;
 private String organisationCountry;
 private MultipartFile file;
 private String txnId;
@@ -99,11 +99,22 @@ return expectedDispatcheDate;
 public void setExpectedDispatcheDate(String expectedDispatcheDate) {
 this.expectedDispatcheDate = expectedDispatcheDate;
 }
-public String getExpectedArrivalPort() {
-return expectedArrivalPort;
+
+	
+	
+	
+	
+public Integer getExpectedArrivalPort() {
+	return expectedArrivalPort;
 }
-public void setExpectedArrivalPort(String expectedArrivalPort) {
-this.expectedArrivalPort = expectedArrivalPort;
+public void setExpectedArrivalPort(Integer expectedArrivalPort) {
+	this.expectedArrivalPort = expectedArrivalPort;
+}
+public String getExpectedArrivalPortInterp() {
+	return expectedArrivalPortInterp;
+}
+public void setExpectedArrivalPortInterp(String expectedArrivalPortInterp) {
+	this.expectedArrivalPortInterp = expectedArrivalPortInterp;
 }
 public String getOrganisationcountry() {
 return organisationcountry;
@@ -196,14 +207,12 @@ public String toString() {
 			+ ", importerId=" + importerId + ", consignmentNumber=" + consignmentNumber + ", expectedArrivalDate="
 			+ expectedArrivalDate + ", expectedArrivaldate=" + expectedArrivaldate + ", expectedDispatcheDate="
 			+ expectedDispatcheDate + ", expectedArrivalPort=" + expectedArrivalPort + ", organisationcountry="
-			+ organisationcountry + ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId="
-			+ txnId + ", importerName=" + importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName
-			+ ", fileStatus=" + fileStatus + ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity
-			+ ", userId=" + userId + ", remarks=" + remarks + ", roleType=" + roleType + ", currency=" + currency + "]";
+			+ organisationcountry + ", expectedArrivalPortInterp=" + expectedArrivalPortInterp
+			+ ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId=" + txnId + ", importerName="
+			+ importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName + ", fileStatus=" + fileStatus
+			+ ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity + ", userId=" + userId
+			+ ", remarks=" + remarks + ", roleType=" + roleType + ", currency=" + currency + "]";
 }
-
-
-
 
 
 
