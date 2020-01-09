@@ -243,6 +243,17 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
+	
+	public PolicyConfigurationDb getPolicyConfigDetailsByTag(String tag){
+		try {
+
+			return policyConfigurationDbRepository.getByTag(tag);
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}	
+	}
 
 	public Page<PolicyConfigurationDb> filterPolicyConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try {

@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
@@ -30,6 +31,7 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
@@ -394,7 +396,9 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
 		try {
-			return new GenricResponse(0, "", "", new Count(propertiesReader.defaultNoOfRegularizedDevices, regularizedDeviceDbRepository.countByNid(nid)));	
+			PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.max_end_user_device_count);
+			
+			return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNid(nid)));	
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
