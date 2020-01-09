@@ -132,8 +132,12 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
-
-			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getById(systemConfigurationDb.getId());
+			if(Objects.isNull(systemConfigurationDb.getTag())) {
+				logger.info("Receiving tag as null.");
+				return new GenricResponse(1, "Receiving tag as null.","");
+			}
+			
+			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
 
 			if(Objects.isNull(systemConfigurationDb2)) {
 				return new GenricResponse(15, "This Id does not exist", "");
@@ -183,7 +187,7 @@ public class ConfigurationManagementServiceImpl {
 			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
 				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
 			}
-			
+
 			return page;
 
 		} catch (Exception e) {
@@ -206,13 +210,17 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updateMessageInfo(MessageConfigurationDb messageConfigurationDb) {
 		try {
+			if(Objects.isNull(messageConfigurationDb.getTag())) {
+				logger.info("Receiving tag as null.");
+				return new GenricResponse(1, "Receiving tag as null.","");
+			}
 
-			MessageConfigurationDb mcd = messageConfigurationDbRepository.getById(messageConfigurationDb.getId());
-			
+			MessageConfigurationDb mcd = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
+
 			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This id does not exist","");
 			}
-			
+
 			MessageConfigurationHistoryDb mshb = new MessageConfigurationHistoryDb();
 			mshb.setDescription(mcd.getDescription());
 			mshb.setTag(mcd.getTag());
@@ -243,7 +251,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
-	
+
 	public PolicyConfigurationDb getPolicyConfigDetailsByTag(String tag){
 		try {
 
@@ -266,7 +274,7 @@ public class ConfigurationManagementServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getStatus()))
 				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			return policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
 		} catch (Exception e) {
@@ -289,10 +297,14 @@ public class ConfigurationManagementServiceImpl {
 	@Transactional
 	public GenricResponse updatePolicyInfo(PolicyConfigurationDb policyConfigurationDb) {
 		try {
-
-			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getById(policyConfigurationDb.getId());
+			if(Objects.isNull(policyConfigurationDb.getTag())) {
+				logger.info("Receiving tag as null.");
+				return new GenricResponse(1, "Receiving tag as null.","");
+			}
+			
+			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getByTag(policyConfigurationDb.getTag());
 			if(Objects.isNull(mcd)) {
-				return new GenricResponse(15, "This id does not exist","");
+				return new GenricResponse(15, "This tag does not exist", "");
 			}
 
 			PolicyConfigurationHistoryDb mshb = new PolicyConfigurationHistoryDb();
@@ -380,7 +392,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public List<SystemConfigListDb> getSystemConfigListByTagAndFeatureId(String tagId, int featureId){
 		try {
 
@@ -393,11 +405,11 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	private List<SystemConfigListDb> getSystemConfigListDb(List<SystemConfigListDb> systemConfigListDbs, List<SystemConfigUserwiseDb> systemConfigUserwiseDbs){
-		
+
 		List<SystemConfigListDb> systemConfigListDbResult = new LinkedList<>();
-		
+
 		for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
 
 			for(SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
@@ -408,7 +420,7 @@ public class ConfigurationManagementServiceImpl {
 				}
 			}
 		}
-		
+
 		return systemConfigListDbResult;
 	}
 
