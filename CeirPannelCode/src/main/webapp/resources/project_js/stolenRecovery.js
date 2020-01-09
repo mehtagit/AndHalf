@@ -4,10 +4,10 @@ var currentRoleType = $("body").attr("data-stolenselected-roleType");
 var role = currentRoleType == null ? roleType : currentRoleType;
 
 var userType = $("body").attr("data-roleType");
-if(userType == "Operator"){
+if(userType == "Operator" || userType == "CEIRAdmin" ){
 	var featureId="7";
 }else{
-	var featureId="5";
+	var featureId="5"; //this check is for stolen & recovery
 }
 
 
@@ -303,8 +303,11 @@ populateCountries
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 function filterStolen(){
+	var userTypeId = $("body").attr("data-userTypeID");
 	if(userType=="Operator"){
 		Datatable('./headers?type=blockUnblock','stolenData')
+	}else if(userType =="CEIRAdmin"){
+		Datatable('./headers?type=BlockUnblockCEIRAdmin','stolenData?featureId='+featureId+'&userTypeId='+userTypeId)
 	}else if(sourceType !="viaExistingRecovery"){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){
@@ -322,11 +325,12 @@ function Datatable(url,dataUrl){
 			"consignmentStatus":parseInt($('#status').val()),
 			"requestType":parseInt($('#requestType').val()),
 			"sourceType":parseInt($('#sourceStatus').val()),
-			"roleType": role,
+			//"roleType": role,
 			"userId": userId,
 			"featureId":featureId,
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"operatorTypeId" : parseInt($('#operator').val())
 	}
 
 	$.ajax({
@@ -470,6 +474,10 @@ function pageElements(url){
 	}); 
 
 	setAllDropdowns();
+	if(userType=="CEIRAdmin"){
+		$("#btnLink").css({display: "none"});
+		}
+
 }	 
 
 function fileStolenReport(){
@@ -868,8 +876,17 @@ function redirectToViewStolenPage()
 
 
 function setAllDropdowns(){
+	
+	//Source Operator-----------dropdown
+	$.getJSON('./getDropdownList/OPERATORS', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#operator');
+			}
+		});
+	
 	//Request Type status-----------dropdown
-	$.getJSON('./getDropdownList/STOLEN_REQ_TYPE', function(data) {
+$.getJSON('./getSourceTypeDropdown/REQ_TYPE/'+featureId+'', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#requestType');
@@ -877,7 +894,7 @@ function setAllDropdowns(){
 	});
 
 	//Source Type-----------dropdown
-	$.getJSON('./getDropdownList/STOLEN_SOURCE_TYPE', function(data) {
+$.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#sourceStatus');
@@ -893,12 +910,7 @@ function setAllDropdowns(){
 		}
 	});
 	
-	$.getJSON('./getTypeDropdownList/SOURCE_TYPE/'+$("body").attr("data-userTypeID"), function(data) {
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#mode');
-		}
-	});
+	
 }
 
 
@@ -969,3 +981,96 @@ function exportStolenRecoveryData()
 	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
 	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 }
+
+
+function deviceApprovalPopup(transactionId,requestType){
+	$('#approveInformation').openModal();
+	window.transactionId=transactionId;
+	window.requestType=requestType;
+}
+
+function aprroveDevice(){
+	var approveRequest={
+			"action" : 0,
+			"featureId":parseInt(featureId),
+			"requestType":parseInt(window.requestType),
+			"roleType": roleType,
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": window.transactionId,
+			"userId":parseInt(userId)
+	}
+
+	$.ajax({
+		url : './blockUnblockApproveReject',
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			if(data.errorCode==0){
+				confirmApproveInformation();
+				console.log("inside Approve Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function confirmApproveInformation(){
+	$('#approveInformation').closeModal(); 
+	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+}
+
+function userRejectPopup(transactionId,requestType){
+	$('#rejectInformation').openModal();
+	window.transactionId=transactionId;
+	window.requestType=requestType;
+}
+
+
+function rejectUser(){
+	var rejectRequest={
+			"action" : 1,
+			"featureId":parseInt(featureId),
+			"remarks": $("#Reason").val(),
+			"requestType":parseInt(window.requestType),
+			"roleType": roleType,
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": window.transactionId,
+			"userId":parseInt(userId)
+	}
+
+	$.ajax({
+		url : './blockUnblockApproveReject',
+		data : JSON.stringify(rejectRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+			if(data.errorCode==0){
+				confirmRejectInformation();
+				console.log("inside Reject Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function confirmRejectInformation(){
+	$('#rejectInformation').closeModal();
+	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
+}
+
+
+
+	
