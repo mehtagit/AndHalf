@@ -1,6 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Registration {
 	private long id;
@@ -20,7 +19,7 @@ public class Registration {
 	private Integer postalCode;
 	private String province;
 	private String country; 
-	private String type;
+	private Integer type;
 	private String asTypeName;
 	private Integer vatStatus; 
 	private String vatNo; 
@@ -44,7 +43,7 @@ public class Registration {
 	private String idCardFilename;
 	private Integer arrivalPort;
 	private String arrivalPortName;
-
+    private String vatFilename;
 	public Registration() {};
 	public ArrayList<QuestionPair> getQuestionList() {
 		return questionList;
@@ -94,10 +93,10 @@ public class Registration {
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
 	}
-	public String getType() {
+	public Integer getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 	public String getAsTypeName() {
@@ -318,6 +317,12 @@ public class Registration {
 	public void setArrivalPortName(String arrivalPortName) {
 		this.arrivalPortName = arrivalPortName;
 	}
+	public String getVatFilename() {
+		return vatFilename;
+	}
+	public void setVatFilename(String vatFilename) {
+		this.vatFilename = vatFilename;
+	}
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -325,14 +330,15 @@ public class Registration {
 				+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
 				+ ", village=" + village + ", locality=" + locality + ", district=" + district + ", commune=" + commune
 				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
-				+ ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList=" + questionList + ", password="
-				+ password + ", rePassword=" + rePassword + ", username=" + username + ", roles=" + roles + ", captcha="
-				+ captcha + ", usertypeId=" + usertypeId + ", employeeId=" + employeeId + ", natureOfEmployment="
-				+ natureOfEmployment + ", designation=" + designation + ", authorityName=" + authorityName
-				+ ", authorityEmail=" + authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo
-				+ ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId + ", nidFilename="
-				+ nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename=" + idCardFilename
-				+ ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName + "]";
+				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
+				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
+				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeId=" + usertypeId + ", employeeId="
+				+ employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation
+				+ ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo="
+				+ authorityPhoneNo + ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId
+				+ ", nidFilename=" + nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename="
+				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
+				+ ", vatFilename=" + vatFilename + "]";
 	}
 	
 

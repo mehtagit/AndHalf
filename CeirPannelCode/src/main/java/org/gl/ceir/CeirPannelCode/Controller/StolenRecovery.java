@@ -234,7 +234,7 @@ public class StolenRecovery {
 					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) Integer id,
-					  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName)
+					  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName)
 			  {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
@@ -286,7 +286,8 @@ public class StolenRecovery {
 					stolenRecoveryModel.setRoleType(roleType);
 					stolenRecoveryModel.setTxnId(txnId);
 					
-					stolenRecoveryModel.setCategory(deviceCaegory);
+					//stolenRecoveryModel.setCategory(deviceCaegory);
+					stolenRecoveryModel.setBlockCategory(blockCategory);
 					stolenRecoveryModel.setRemark(remark);
 					
 					log.info("request passed to the update file stolen api ="+stolenRecoveryModel);

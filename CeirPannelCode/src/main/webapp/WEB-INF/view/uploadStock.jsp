@@ -151,7 +151,7 @@ opacity: 0;
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <input type="text" name="supplierId" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15" required="required" id="supplierId" maxlength="15" />
-                                                <label for="SupplierId" class="center-align">Supplier ID <span class="star">*</span></label>
+                                                <label for="SupplierId" class="center-align">Supplier ID </label>
                                             </div>
 
                                             <div class="input-field col s12 m6">

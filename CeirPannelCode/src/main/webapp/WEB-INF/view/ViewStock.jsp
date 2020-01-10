@@ -141,9 +141,9 @@
 				<div class="row myRow">
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierId" id="editSupplierId"
+
 							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
-							for="SupplierId" class="center-align">Supplier ID
-							<span class="star">*</span></label>
+							for="SupplierId" class="center-align">Supplier ID</label>
 					</div>
 
 					<div class="input-field col s12 m6">
@@ -224,30 +224,30 @@
 				<div class="row myRow">
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierId" id="SupplierId"
-							placeholder="ABCD12345" disabled /> <label for="SupplierId"
+							placeholder="" disabled /> <label for="SupplierId"
 							class="center-align">Supplier ID</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierName" id="SupplierName"
-							placeholder="Abcd" disabled /> <label for="SupplierName"
+							placeholder="" disabled /> <label for="SupplierName"
 							class="center-align">Supplier Name</label>
 					</div>
 
 					<div class="input-field col s12 m6">
-						<input type="text" name="Quantity" id="Quantity" placeholder="120"
+						<input type="text" name="Quantity" id="Quantity" placeholder=""
 							disabled /> <label for="Quantity" class="center-align">Quantity</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"
-							placeholder="12345678" disabled /> <label for="InvoiceNumber"
+							placeholder="" disabled /> <label for="InvoiceNumber"
 							class="center-align">Invoice Number</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="TransactionId" id="TransactionId"
-							disabled placeholder="TR12345678" maxlength="15" /> <label
+							disabled placeholder="" maxlength="15" /> <label
 							for="TransactionId" class="center-align">Transaction ID</label>
 					</div>
 				</div>
@@ -258,10 +258,10 @@
 					</h6>
 					<div class="file-field input-field col s12 m6"
 						style="margin-top: 5px;">
-						<div class="btn">
+						<!-- <div class="btn">
 							<span>Select File</span> <input type="file" id="csvUploadFile"
 								accept=".csv" disabled>
-						</div>
+						</div> -->
 						<div class="file-path-wrapper">
 							<input class="file-path validate responsive-file-div"
 								placeholder="fileName.csv" id="csvUploadFileName" type="text"
@@ -274,7 +274,8 @@
 				</div>
 
 				<div class="row center">
-					<a onclick="closeViewModal()" class="btn" type="cancel">Ok</a>
+
+					<a onclick="closeViewModal()" class="btn" type="cancel">Close</a>
 				</div>
 			</form>
 		</div>

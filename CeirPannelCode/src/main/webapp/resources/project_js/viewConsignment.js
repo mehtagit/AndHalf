@@ -187,9 +187,9 @@ function setViewPopupData(data){
 	$("#remark").val(data.remarks);
 	$("#fileName").val(data.fileName); 
 	$("#viewcurrency").val(data.currency);
-	$("#viewtotalPrice").val(data.totalPrice);
+	$("#viewtotalPrice").val(parseInt(data.totalPrice,10));
 	$("#viewhideCurrency").val(data.currency);
-
+	
 
 }
 
@@ -207,7 +207,7 @@ function setEditPopupData(data){
 	$("#TransactionIdEdit").val(data.txnId);
 	$("#fileNameEdit").val(data.fileName);
 	$("#currency").val(data.currency);
-	$("#totalPrice").val(data.totalPrice);
+	$("#totalPrice").val(parseInt(data.totalPrice),10);
 	$("#hideCurrency").val(data.currency);
 
 

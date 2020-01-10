@@ -158,7 +158,7 @@ section {
 												pattern="[A-Za-z  ]{0,50}"
 												title="Please enter alphabets  upto 50 characters only"
 												maxlength="50" required /> <label for="Name"
-												class="center-align"><spring:message code="input.suppliername" /> <span
+												class="center-align"><spring:message code="input.suppliername"/> <span
 												class="star">*</span></label>
 										</div>
 									</div>
@@ -201,12 +201,9 @@ section {
 
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
-											<select class="browser-default" id="expectedArrivalPort"
-												required="required" name="expectedArrivalPort">
-												<option value="" disabled selected><spring:message code="input.arrivalport" /> <span id="starColor">*</span></option>
-												
-											</select>
-
+										<input type="text" name="totalPrice" id="totalPrice"
+												maxlength="7" /> <label for="totalPrice"
+												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
@@ -218,14 +215,18 @@ section {
 										</div>
 
 
-										<div class="input-field col s12 m6">
-											<input type="text" name="totalPrice" id="totalPrice"
-												maxlength="7" /> <label for="totalPrice"
-												class="center-align"><spring:message code="input.totalprice" /></label>
+										<div class=" col s12 m6">
+											
+												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /><span class="star">*</span></label>
+											<select class="browser-default" id="expectedArrivalPort"
+												required="required" name="expectedArrivalPort">
+												<%-- <spring:message code="input.arrivalport" /> --%>
+												<option value="" disabled selected> <spring:message code="input.arrivalport" /></option>
+											</select>
 										</div>
 
 										<div class="col s12 m6">
-											<label for="Currency"><spring:message code="input.currency" /><span class="star">*</span></label>
+											<label for="Currency"><spring:message code="input.currency" /></label>
 											<select id="currency" class="browser-default"
 												required="required">
 												<option value="" disabled selected><spring:message code="input.currency" /></option>
@@ -569,7 +570,7 @@ section {
 			ConsignmentCurrency();
 			
 			$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
-				$("#expectedArrivalPort").empty();
+				/* $("#expectedArrivalPort").empty(); */
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
 					.appendTo('#expectedArrivalPort');

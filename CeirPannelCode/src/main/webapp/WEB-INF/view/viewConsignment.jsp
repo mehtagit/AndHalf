@@ -132,26 +132,7 @@
 						placeholder="Consignment Number" readonly="readonly" /> <label
 						for="Name" class="center-align">Consignment Number</label>
 				</div>
-
-				<div class="input-field col s12 m6" style="color: #c4c4c4;">
-					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
-						Arival Date</p> -->
-					<input type="text" id="expectedArrivaldate"
-						placeholder="Expected Arival Date" readonly="readonly" placeholder="">
-					<label for="expectedArrivaldate" class="center-align">Expected Arival Date</label> <span
-						class="input-group-addon" style="color: #ff4081"><i
-						class="fa fa-calendar" aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<input type="text" id="countryview" class="browser-default"
-						readonly="readonly" class="mySelect"
-						placeholder="Device Origination Counrty*"> <label
-						for="Name" class="center-align"> Origination Country</label> <label
-						for="countryview" class="center-align"></label>
-				</div>
-
-
-				<div class="input-field col s12 m6">
+	<div class="input-field col s12 m6">
 					<!-- <p class="input-text-date" style="color: #c4c4c4;">Expected
 						Dispatch Date</p> -->
 					<input type="text" id="expectedDispatcheDate"
@@ -160,6 +141,25 @@
 					<span class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
+				
+				<div class="input-field col s12 m6">
+					<input type="text" id="countryview" class="browser-default"
+						readonly="readonly" class="mySelect"
+						placeholder="Device Origination Counrty*"> <label
+						for="Name" class="center-align"> Origination Country</label> <label
+						for="countryview" class="center-align"></label>
+				</div>
+
+                  <div class="input-field col s12 m6" style="color: #c4c4c4;">
+					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+						Arival Date</p> -->
+					<input type="text" id="expectedArrivaldate"
+						placeholder="Expected Arival Date" readonly="readonly" placeholder="">
+					<label for="expectedArrivaldate" class="center-align">Expected Arival Date</label> <span
+						class="input-group-addon" style="color: #ff4081"><i
+						class="fa fa-calendar" aria-hidden="true"></i></span>
+				</div>
+			
 				<div class="input-field col s12 m6">
 					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
 					<input type="text" id="expectedArrivalPort" readonly="readonly"
@@ -209,7 +209,8 @@
 			<div class="row" style="padding: 20px 0 100px 0;">
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
-						class="modal-close btn" id="add_user">Ok</button>
+	
+						class="modal-close btn" id="add_user">Close</button>
 				</div>
 			</div>
 
@@ -635,7 +636,7 @@
 				<div class="input-field col s12 center">
 					<button class=" btn"
 						type="submit">Update</button>
-					<button class="modal-close btn" onclick="closeUpdateModal()"
+					<button class="modal-close btn" type="button" onclick="closeUpdateModal()"
 						style="margin-left: 10px;">Cancel</button>
 				</div>
 			</div>
