@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
@@ -33,7 +35,7 @@ public class LoginController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/saveLogin",method = {RequestMethod.POST})
-	public LoginResponse saveLogin(@RequestBody User user,HttpSession session){
+	public LoginResponse saveLogin(@RequestBody User user,HttpSession session,HttpServletResponse http){
 			return loginService.checkLogin(user,session);
 	}
 	
@@ -42,7 +44,13 @@ public class LoginController {
 		return loginService.logout(session);
 
 	}
+	
+	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
+	public void indexSessionOut(HttpSession session,HttpServletResponse response) {
+		 loginService.indexPageSessionOut(session,response);
 
+	}
+    
 
 
 	@RequestMapping(value = "/forgotPassword",method = RequestMethod.GET)
