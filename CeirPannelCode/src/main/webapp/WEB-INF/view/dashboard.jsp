@@ -517,6 +517,17 @@ $('#profile-dropdown li').on('click', function() {
 	$(this).removeClass("inactive");
 	$(this).addClass("active"); 
 	});
+	
+	
+/* break back button */                                                                        
+window.onload=function(){                                                                      
+  var i=0; var previous_hash = window.location.hash;                                           
+  var x = setInterval(function(){                                                              
+    i++; window.location.hash = "/noop/" + i;                                                  
+    if (i==10){clearInterval(x);                                                               
+      window.location.hash = previous_hash;}                                                   
+  },10);
+}
 </script>
 
 </body>

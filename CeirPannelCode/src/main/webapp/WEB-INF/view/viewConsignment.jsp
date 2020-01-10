@@ -708,6 +708,7 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
 </body>
 </html>

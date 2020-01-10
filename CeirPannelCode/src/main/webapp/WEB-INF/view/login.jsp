@@ -117,7 +117,7 @@ var contextpath = "${context}";
 
 										<div class="input-field col s12">
 
-											<label for="newPassword"
+											<label for="username"
 												style="color: #000; font-size: 12px;">Username</label> <input
 												type="text" required="required" name="username"
 												id="username" class="" maxlength="10" />
@@ -125,7 +125,7 @@ var contextpath = "${context}";
 
 										<div class="input-field col s12">
 
-											<label for="confirmPassword"
+											<label for="password"
 												style="color: #000; font-size: 12px;">Password</label> <input
 												type="password" required="required" class="" name="password"
 												id="password" maxlength="10" />

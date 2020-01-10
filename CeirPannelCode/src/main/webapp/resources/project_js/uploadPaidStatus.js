@@ -514,8 +514,9 @@ function exportpaidStatus(){
 	var taxPaidStatus = $('#taxPaidStatus').val();
 	var deviceIdType = $('#deviceIDType').val();
 	var deviceType = $('#deviceTypeFilter').val();
-	var nid = $('#nId').val();
 	
+	
+	var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
