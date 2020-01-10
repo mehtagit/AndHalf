@@ -110,16 +110,24 @@ function login(){
 	});
 	return false;
 }
-function dataByTag(tag,divId){ 
+function dataByTag(tag,divId,input){ 
 	$.ajax({
 		type : 'GET',
 		url :contextpath+'/dataByTag/'+tag+"/",
 		contentType : "application/json",
 		dataType : 'html',
 		success : function(data) {
-			var response=JSON.parse(data);                                    
-			var asTypeDropdown=$("#"+divId);  
-				asTypeDropdown.attr('href',response.value);
+			var response=JSON.parse(data);
+			if(input==1){
+				var asTypeDropdown=$("#"+divId);  
+				asTypeDropdown.attr('href',response.value);			
+			}
+			else if(input==2){
+				var copyRightSpan=$("#"+divId);
+				copyRightSpan.empty();
+				copyRightSpan.append(response.value);	
+			}
+			else{}
 		},      
 		error: function (xhr, ajaxOptions, thrownError) {
 		}

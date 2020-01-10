@@ -57,15 +57,12 @@ public class UploadPaidStatusView {
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
-			log.info("1"+session.getAttribute("usertype"));
 			modelAndView.setViewName("uploadPaidStatus");
 		}
 		else if("other".equals(via)) {
-			log.info("2");
 			modelAndView.setViewName("uploadPaidStatus");
 		}
 		else {
-			log.info("3");
 			modelAndView.setViewName("nidForm");
 		}
 		return modelAndView;

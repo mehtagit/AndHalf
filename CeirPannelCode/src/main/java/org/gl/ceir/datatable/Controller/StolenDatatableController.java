@@ -19,7 +19,6 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.StolenContent;
 import org.gl.ceir.pagination.model.StolenPaginationModel;
-import org.gl.ceir.pagination.model.TableActionPagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +46,6 @@ public class StolenDatatableController {
 	Button button;
 	@Autowired
 	IconsState iconState;
-@Autowired
-TableActionPagination tableActionPagination;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
@@ -78,6 +75,7 @@ TableActionPagination tableActionPagination;
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
+			
 			List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
 			log.info("tableActionPagination::::::::::::"+actionResponse);
 			
@@ -132,6 +130,7 @@ TableActionPagination tableActionPagination;
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
+			
 				}else if("CEIRAdmin".equals(userType)) {
 					log.info("in CEIRAdmin Controler-----" +userType);
 					for (StolenContent dataInsideList : paginationContentList) {

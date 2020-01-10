@@ -248,7 +248,7 @@ class="dropdownColor"> Logout</span></a></li>
 	<footer class="page-footer">
 		<div class="footer-copyright">
 			<div class="container">
-				<span>Copyright © 2018 Sterlite Technologies Ltd, All rights
+				<span id="copyrightText">Copyright © 2018 Sterlite Technologies Ltd, All rights
 					reserved.</span>
 
 			</div>
@@ -471,6 +471,7 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
     <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+     <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -487,6 +488,12 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	dataByTag("copyright_footer","copyrightText",2);
+        });   
+</script>
+
 <script type="text/javascript">
 var password = document.getElementById("password")
 , confirm_password = document.getElementById("confirm_password");
@@ -511,12 +518,7 @@ $(this).addClass("active");
 });
 
 
-$('#profile-dropdown li').on('click', function() {
-	$('#profile-dropdown li:not(.inactive)').addClass("inactive");
-	$('#profile-dropdown li').removeClass("active");
-	$(this).removeClass("inactive");
-	$(this).addClass("active"); 
-	});
+
 </script>
 
 </body>

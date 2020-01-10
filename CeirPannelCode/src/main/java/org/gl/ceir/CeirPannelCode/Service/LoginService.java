@@ -45,7 +45,6 @@ public class LoginService {
 			ModelAndView mv=new ModelAndView();
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
-		  
 			log.info("login response:  "+response); 
 			if(response.getStatusCode()==200) { 
 				session.setAttribute("username", response.getUsername());
@@ -101,7 +100,7 @@ public class LoginService {
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
 		String status=(String)session.getAttribute("userStatus");
-		if(username!=null) {
+		if(username.trim()!=null) {
 			log.info("username from session:  "+username);
 			log.info("user status from session :   "+status); 
 			Integer userId=(Integer)session.getAttribute("userid");

@@ -19,9 +19,6 @@ pageEncoding="ISO-8859-1"%>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<!-- Favicons-->
-<!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
-<!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
@@ -392,11 +389,11 @@ var contextpath = "${context}";
 									<div class=" boxHeight">
 										<label><input class="with-gap vatStatus" value="1"
 											name="vatStatus" type="radio"
-											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFile').style.display = 'block'">
+											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFileDiv').style.display = 'block';vatChecked()">
 											<span>Yes</span> </label> <label> <input
 											class="with-gap vatStatus" name="vatStatus" type="radio"
 											style="margin-left: 20px;" value="0"
-											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFile').style.display = 'none'"
+											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFileDiv').style.display = 'none';vatChecked()"
 											checked /> <span>No</span>
 										</label>
 									</div>
@@ -424,12 +421,24 @@ var contextpath = "${context}";
 									<label for="vatNo">VAT Number <span class="star">*</span></label>
 								</div>
 								
-								<div class="input-field col s12 m6 l6" style="display: none;"
-									id="vatNumberField">
-									<input type="file" name="vatFile"
-										class="form-control boxBorder boxHeight" id="vatFile">
-									<label for="vatFile">VAT File <span class="star">*</span></label>
-								</div>
+								<div  id="vatFileDiv" class="col s12 m12" style="display: none;">
+										<h6 class="file-upload-heading">
+										VAT File<span class="star">*</span>
+										</h6>
+										<div class="file-field input-field col s12 m6"
+											style="margin-top: 5px; padding-left: 0;">
+											<div class="btn">
+												<span>Select File</span> <input name="file" type="file"
+													id="vatFile" accept=".pdf">
+											</div>  
+											<div class="file-path-wrapper">
+												<input  name="vatFile" class="file-path validate responsive-file-div"
+													type="text">
+											</div>
+										</div>
+										<br>
+										<br>
+									</div>
 								</div>
 							</div>
 						<div class="row">
@@ -744,9 +753,6 @@ var contextpath = "${context}";
             questionDataByCategory();
             
             usertypeData2(<%=request.getParameter("usertypeId")%>);
-            //$('.dropdown-trigger').dropdown();
-           
-          //  $('select').formSelect();
         }); 
         populateCountries(
                 "country",
@@ -790,6 +796,21 @@ var contextpath = "${context}";
                 $("#passportNo").val("");
                 $("#file").prop('required',false);
             }
+        }
+        
+        function vatChecked(){
+        	var radioValue = $("input[name='vatStatus']:checked").val();
+        	
+        	if(radioValue==1){
+        		$("#vatNo").prop('required',true);
+        		$("#vatFile").prop('required',true);
+        	}
+        	else{
+        		$("#vatNo").prop('required',false);
+        		$("#vatFile").prop('required',false);
+        		$("#vatNo").val("");
+        		$("#vatFile").val("");
+        	}
         }
     </script>
 </body>

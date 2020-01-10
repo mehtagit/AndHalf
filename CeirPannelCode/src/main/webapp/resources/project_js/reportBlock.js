@@ -100,7 +100,7 @@ function submitBlockImei()
 		
 		var formData = new FormData();
 		formData.append('file', $('#blockBulkFile')[0].files[0]);
-		formData.append('deviceCaegory', bulkBlockdeviceCategory);
+		formData.append('blockCategory', bulkBlockdeviceCategory);
 		formData.append('qty', blockbulkquantity);
 		formData.append('remark', blockbulkRemark);
 		formData.append('sourceType', ModeType);
@@ -149,7 +149,7 @@ function submitUnBlockImei()
 		var formData = new FormData();
 		formData.append('file', $('#unblockBulkFile')[0].files[0]);
 		formData.append('qty', unblockbulkquantity);
-		formData.append('deviceCaegory', bulkunBlockdeviceCategory);
+		formData.append('blockCategory', bulkunBlockdeviceCategory);
 		formData.append('remark', unblockbulkRemark);
 		formData.append('sourceType', ModeType);
 		formData.append('requestType', requestType);
@@ -264,7 +264,8 @@ function submitSingleUnBlockDevicesRequest()
 
 
 	
-	console.log("****  operatorTypeId "+operatorTypeId);
+	
+	
 	console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
 var singleImeiBlockDetail={
@@ -352,7 +353,7 @@ $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
 		console.log("++++++++++"+popUpType+"requestType="+requestType);
 		
 	$("#viewBulkBlockDeviceModal").openModal();
-	$("#viewBulkBlockCategory").val(data.categoryInterp);
+	$("#viewBulkBlockCategory").val(data.blockCategoryInterp);
 	$("#viewBulkBlockRemark").val(data.remark);
 	$("#viewBulkBlockuploadFile").val(data.fileName);
 	$("#viewBulkBlockquantity").val(data.qty);
@@ -362,7 +363,7 @@ $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
 	{
 		console.log("++++++++++"+popUpType+" requestType="+requestType);
 	$("#editBulkBlockDeviceModal").openModal();
-	$("#editBulkBlockCategory").val(data.category).change();
+	$("#editBulkBlockCategory").val(data.blockCategory).change();
 	$("#editBulkBlockRemark").val(data.remark);
 	$("#editBulkBlockuploadFile").val(data.fileName);
 	$("#editBulkBlockquantity").val(data.qty);
@@ -387,7 +388,7 @@ var userId = $("body").attr("data-userID");
 var formData = new FormData();
 formData.append('file', $('#editselectBulkBlockuploadFile')[0].files[0]);
 formData.append('qty', qty);
-formData.append('deviceCaegory', categoryInterp);
+formData.append('blockCategory', categoryInterp);
 formData.append('remark', remark);
 formData.append('sourceType', ModeType);
 formData.append('requestType', requestType);
@@ -489,6 +490,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 		
 	}
 });
+
 
 
 
@@ -678,6 +680,8 @@ var singleImeiBlockDetail={
 }
 
 
+
+
 $('#stolenDatePeriod').datepicker({
 	dateFormat: "yy-mm-dd"
 	});
@@ -693,6 +697,6 @@ $('#stolenDatePeriodUnblock').datepicker({
 
 function singleImeiFormClear(){
 	$('#editSingleImeiform').trigger("reset");
-	console.log("00");
+	
 }
 

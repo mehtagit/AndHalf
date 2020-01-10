@@ -30,7 +30,7 @@ function typeApprovedDataTable(){
 
 function Datatable(Url,dataUrl){
 if(userType=="CEIRAdmin"){
-		var userId = 0;
+var userId = 0;
 		var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
