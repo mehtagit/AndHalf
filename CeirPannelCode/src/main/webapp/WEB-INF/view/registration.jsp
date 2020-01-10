@@ -800,7 +800,7 @@ var contextpath = "${context}";
         
         function vatChecked(){
         	var radioValue = $("input[name='vatStatus']:checked").val();
-        	alert(radioValue);
+        	
         	if(radioValue==1){
         		$("#vatNo").prop('required',true);
         		$("#vatFile").prop('required',true);

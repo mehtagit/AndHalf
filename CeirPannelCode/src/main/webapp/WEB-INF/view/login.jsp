@@ -229,13 +229,11 @@ var contextpath = "${context}";
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
+
 <script type="text/javascript">
-
-
 $(document).ready(function () {
-	dataByTag("link_dmc_portal","newUserLink");
+	dataByTag("link_dmc_portal","newUserLink",1);
         });   
-        
 </script>
 </body>
 
