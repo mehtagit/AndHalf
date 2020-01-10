@@ -72,7 +72,8 @@ var contextpath = "${context}";
 							</h1> 
 						</li>
 					</ul>
-				<ul id="chat-out" class="right hide-on-med-and-down"
+		<a href="./homePage" id="newUserLink" style="color:white;text-align: center;margin-left: 50%">Home</a>			
+					<ul id="chat-out" class="right hide-on-med-and-down"
 style="overflow: inherit !important;">
 <li><a
 class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
