@@ -1,10 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html class="no-js">
+<html class="no-js" lang="en" dir="ltr">
 <head>
 <title>Dashboard</title>
 
@@ -66,17 +67,18 @@
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}" session-value="en">
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en">
 
-<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
+	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
 		<div id="initialloader"></div>
 
-		
-		
+
+
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -92,8 +94,6 @@
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
 									</div>
 								</div>
 							</form>
@@ -132,16 +132,17 @@
 						placeholder="Consignment Number" readonly="readonly" /> <label
 						for="Name" class="center-align">Consignment Number</label>
 				</div>
-	<div class="input-field col s12 m6">
+				<div class="input-field col s12 m6">
 					<!-- <p class="input-text-date" style="color: #c4c4c4;">Expected
 						Dispatch Date</p> -->
 					<input type="text" id="expectedDispatcheDate"
-						placeholder="Expected Dispatch Date" readonly="readonly" placeholder="">
-					<label for="expectedDispatcheDate">Expected Dispatch Date</label>
-					<span class="input-group-addon" style="color: #ff4081"><i
-						class="fa fa-calendar" aria-hidden="true"></i></span>
+						placeholder="Expected Dispatch Date" readonly="readonly"
+						placeholder=""> <label for="expectedDispatcheDate">Expected
+						Dispatch Date</label> <span class="input-group-addon"
+						style="color: #ff4081"><i class="fa fa-calendar"
+						aria-hidden="true"></i></span>
 				</div>
-				
+
 				<div class="input-field col s12 m6">
 					<input type="text" id="countryview" class="browser-default"
 						readonly="readonly" class="mySelect"
@@ -150,16 +151,17 @@
 						for="countryview" class="center-align"></label>
 				</div>
 
-                  <div class="input-field col s12 m6" style="color: #c4c4c4;">
+				<div class="input-field col s12 m6" style="color: #c4c4c4;">
 					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
 						Arival Date</p> -->
 					<input type="text" id="expectedArrivaldate"
-						placeholder="Expected Arival Date" readonly="readonly" placeholder="">
-					<label for="expectedArrivaldate" class="center-align">Expected Arival Date</label> <span
+						placeholder="Expected Arival Date" readonly="readonly"
+						placeholder=""> <label for="expectedArrivaldate"
+						class="center-align">Expected Arival Date</label> <span
 						class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
-			
+
 				<div class="input-field col s12 m6">
 					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
 					<input type="text" id="expectedArrivalPort" readonly="readonly"
@@ -209,7 +211,6 @@
 			<div class="row" style="padding: 20px 0 100px 0;">
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
-	
 						class="modal-close btn" id="add_user">Close</button>
 				</div>
 			</div>
@@ -243,8 +244,8 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<a class="btn" onclick="confirmantiondelete()">ok</a>
-						<button class="modal-close btn" type="button" onclick="closeUpdateModal()"
-							style="margin-left: 10px;">No</button>
+						<button class="modal-close btn" type="button"
+							onclick="closeUpdateModal()" style="margin-left: 10px;">No</button>
 					</div>
 				</div>
 			</div>
@@ -265,7 +266,7 @@
 
 
 			<div class="row">
-				<h6 id="sucessMessage"> Consignment updated Successfully</h6>
+				<h6 id="sucessMessage">Consignment updated Successfully</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -508,138 +509,138 @@
 	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
 		<h6 class="modal-header">Edit Consignment</h6>
 		<div class="modal-content">
-		<form action="" onsubmit="return editRegisterConsignment()"	method="POST" enctype="multipart/form-data">
-	<div class="row myRow" style="margin-top: 5px;">
-				<div class="input-field col s12 m6">
-					<input type="text" name="supplierId" id="supplierIdEdit"
-						pattern="[A-Za-z0-9]{0,15}"
-						title="Please enter alphabets and numbers upto 15 characters only"
-						placeholder="Supplier/Manufacturer ID" maxlength="15" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
-				</div>
+			<form action="" onsubmit="return editRegisterConsignment()"
+				method="POST" enctype="multipart/form-data">
+				<div class="row myRow" style="margin-top: 5px;">
+					<div class="input-field col s12 m6">
+						<input type="text" name="supplierId" id="supplierIdEdit"
+							pattern="[A-Za-z0-9]{0,15}"
+							title="Please enter alphabets and numbers upto 15 characters only"
+							placeholder="Supplier/Manufacturer ID" maxlength="15" /> <label
+							for="Name" class="center-align">Supplier/Manufacturer ID</label>
+					</div>
 
-				<div class="input-field col s12 m6">
-					<input type="text" name="supplierName" id="supplierNameEdit"
-						pattern="[A-Za-z  ]{0,50}"
-						title="Please enter alphabets  upto 50 characters only"
-						maxlength="50" placeholder="Supplier/Manufacturer Name" required />
-					<label for="Name" class="center-align">Supplier/Manufacturer
-						Name <span class="star">*</span>
-					</label>
-				</div>
-				<div class="input-field col s12 m6">
-					<input type="text" name="consignmentNumber"
-						id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}"
-						placeholder="Consignment Number" maxlength="15" /> <label
-						for="Name" class="center-align">Consignment Number</label>
-				</div>
+					<div class="input-field col s12 m6">
+						<input type="text" name="supplierName" id="supplierNameEdit"
+							pattern="[A-Za-z  ]{0,50}"
+							title="Please enter alphabets  upto 50 characters only"
+							maxlength="50" placeholder="Supplier/Manufacturer Name" required />
+						<label for="Name" class="center-align">Supplier/Manufacturer
+							Name <span class="star">*</span>
+						</label>
+					</div>
+					<div class="input-field col s12 m6">
+						<input type="text" name="consignmentNumber"
+							id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}"
+							placeholder="Consignment Number" maxlength="15" /> <label
+							for="Name" class="center-align">Consignment Number</label>
+					</div>
 
-				<div class="input-field col s12 m6">
-					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
+					<div class="input-field col s12 m6">
+						<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
                                                 Arrival Date <span class="star">*</span></p> -->
-					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
-					<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
-						required="required" placeholder="Expected Dispatch Date "
-						type="text" class='form-control datepick' autocomplete='off'>
-					<label for="dispatchDate" class="center-align">Expected
-						Dispatch Date <span class="star">*</span>
-					</label> <span class="input-group-addon" style="color: #ff4081"><i
-						class="fa fa-calendar" aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
-					<select id="country" name="organisationcountry" required="required"
-						class="browser-default" class="mySelect" required></select> <label
-						for="country" class="center-align"></label>
-				</div>
-
-
-				<div class="input-field col s12 m6">
-					<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
-					<!-- <label for="Name">Expected arrival Date</label> -->
-					<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
-						required="required" placeholder="Expected Arrival  Date"
-						type="text" class='form-control datepick' autocomplete='off'>
-					<label for="dispatchDate" class="center-align">Expected
-						Arrival Date <span class="star">*</span>
-					</label> <span class="input-group-addon" style="color: #ff4081"><i
-						class="fa fa-calendar" aria-hidden="true"></i></span>
-				</div>
-				<div class="input-field col s12 m6">
-					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
-					<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
-					<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
-						class="browser-default" required>
-						<option value="" disabled selected>Expected arrival port
-							*</option>
-				
-					</select>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="quantity" id="QuantityEdit"
-						pattern="[0-9]{0,7}"
-						title="Please enter numbers upto 7 characters only" maxlength="7"
-						placeholder="Quantity" required /> <label for="Quantity"
-						class="center-align">Quantity <span class="star">*</span></label>
-				</div>
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="txnId" id="TransactionIdEdit"
-						placeholder="Transaction ID" value="" readonly maxlength="15" />
-					<label for="TransactionId" class="center-align">Transaction
-						ID</label>
-				</div>
-
-
-				<div class="input-field col s12 m6">
-					<input type="text" name="totalPrice" id="totalPrice" maxlength="7" pattern="[0-9]{0,7}" title="Please enter price in numbers"
-						required placeholder="" /> <label for="totalPrice"
-						class="center-align">Total Price</label>
-				</div>
-
-				<div class="col s12 m6">
-					<label for="Currency">Currency</label> <select id="currency"
-						class="browser-default">
-						<option value="" disabled selected>Currency</option>
-
-					</select> <input type="text" required="required" id="hideCurrency" style="display: none;">
-				</div>
-
-				<div class="file-field input-field col s12 m6"
-					style="margin-top: 5px;">
-					<h6 class="file-upload-heading" style="margin-top: -5px;">
-						Upload Bulk Devices Information <span class="star">*</span>
-					</h6>
-					<div class="btn">
-						<span>Select File</span> <input type="file" name="file" 
-							id="csvUploadFile" accept=".csv">
+						<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
+						<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
+							required="required" placeholder="Expected Dispatch Date "
+							type="text" class='form-control datepick' autocomplete='off'>
+						<label for="dispatchDate" class="center-align">Expected
+							Dispatch Date <span class="star">*</span>
+						</label> <span class="input-group-addon" style="color: #ff4081"><i
+							class="fa fa-calendar" aria-hidden="true"></i></span>
 					</div>
-					<div class="file-path-wrapper">
-						<input class="file-path validate responsive-file-div"
-							id="fileNameEdit" type="text">
+					<div class="input-field col s12 m6">
+						<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
+						<select id="country" name="organisationcountry"
+							required="required" class="browser-default" class="mySelect"
+							required></select> <label for="country" class="center-align"></label>
+					</div>
+
+
+					<div class="input-field col s12 m6">
+						<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
+						<!-- <label for="Name">Expected arrival Date</label> -->
+						<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
+							required="required" placeholder="Expected Arrival  Date"
+							type="text" class='form-control datepick' autocomplete='off'>
+						<label for="dispatchDate" class="center-align">Expected
+							Arrival Date <span class="star">*</span>
+						</label> <span class="input-group-addon" style="color: #ff4081"><i
+							class="fa fa-calendar" aria-hidden="true"></i></span>
+					</div>
+					<div class="input-field col s12 m6">
+						<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+						<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
+						<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
+							class="browser-default" required>
+							<option value="" disabled selected>Expected arrival port
+								*</option>
+
+						</select>
+					</div>
+
+					<div class="input-field col s12 m6">
+						<input type="text" name="quantity" id="QuantityEdit"
+							pattern="[0-9]{0,7}"
+							title="Please enter numbers upto 7 characters only" maxlength="7"
+							placeholder="Quantity" required /> <label for="Quantity"
+							class="center-align">Quantity <span class="star">*</span></label>
+					</div>
+
+					<div class="input-field col s12 m6">
+						<input type="text" name="txnId" id="TransactionIdEdit"
+							placeholder="Transaction ID" value="" readonly maxlength="15" />
+						<label for="TransactionId" class="center-align">Transaction
+							ID</label>
+					</div>
+
+
+					<div class="input-field col s12 m6">
+						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
+							pattern="[0-9]{0,7}" title="Please enter price in numbers"
+							required placeholder="" /> <label for="totalPrice"
+							class="center-align">Total Price</label>
+					</div>
+
+					<div class="col s12 m6">
+						<label for="Currency">Currency</label> <select id="currency"
+							class="browser-default">
+							<option value="" disabled selected>Currency</option>
+
+						</select> <input type="text" required="required" id="hideCurrency"
+							style="display: none;">
+					</div>
+
+					<div class="file-field input-field col s12 m6"
+						style="margin-top: 5px;">
+						<h6 class="file-upload-heading" style="margin-top: -5px;">
+							Upload Bulk Devices Information <span class="star">*</span>
+						</h6>
+						<div class="btn">
+							<span>Select File</span> <input type="file" name="file"
+								id="csvUploadFile" accept=".csv">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate responsive-file-div"
+								id="fileNameEdit" type="text">
+						</div>
 					</div>
 				</div>
-			</div>
-			
 
 
-			<div class="row" style="padding-bottom: 15px">
-			<div class="col s12 m12" >
-			<a href="./sampleFileDownload/filetype=sample">Download Sample
-					Format</a></br>
-			
 
-			<span> Required Field are marked with <span class="star">*</span>
-			</span>
-			</div>
-				<div class="input-field col s12 center">
-					<button class=" btn"
-						type="submit">Update</button>
-					<button class="modal-close btn" type="button" onclick="closeUpdateModal()"
-						style="margin-left: 10px;">Cancel</button>
+				<div class="row" style="padding-bottom: 15px">
+					<div class="col s12 m12">
+						<a href="./sampleFileDownload/filetype=sample">Download Sample
+							Format</a></br> <span> Required Field are marked with <span
+							class="star">*</span>
+						</span>
+					</div>
+					<div class="input-field col s12 center">
+						<button class=" btn" type="submit">Update</button>
+						<button class="modal-close btn" type="button"
+							onclick="closeUpdateModal()" style="margin-left: 10px;">Cancel</button>
+					</div>
 				</div>
-			</div>
 			</form>
 		</div>
 	</div>
@@ -707,9 +708,41 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
+
 </body>
 </html>

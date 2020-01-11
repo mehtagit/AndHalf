@@ -262,11 +262,11 @@ section {
 
 									<div class="row">
 										<div class="input-field col s12 center">
-									<%-- 	<spring:message code="input.submit" /> --%>
-											<button class=" btn" type="submit">Submit</button>
-									<%-- 		<spring:message code="input.cancel" /> --%>
+									
+											<button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+									
 											<a href="#cancelMessage" class="btn modal-trigger"
-												type="cancel" style="margin-left: 10px;">Cancel</a>
+												type="cancel" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 
 
 										</div>
@@ -361,12 +361,7 @@ section {
 
 
 	<script type="text/javascript">
-	
-	
-	
-
 	window.parent.$('#langlist').on('change', function() {
-
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
 	}); 

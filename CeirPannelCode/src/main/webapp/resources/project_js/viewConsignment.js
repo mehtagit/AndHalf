@@ -7,23 +7,32 @@ var consignmentStatus=$('#filterConsignmentStatus').val();
 var userId = $("body").attr("data-userID");
 var userType=$("body").attr("data-roleType");
 var featureId="3";
+
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 window.parent.$('#langlist').on('change', function() {
-	 window.location.reload(true);
-	}); 
+	window.location.reload(true);
+}); 
+$.i18n().locale = lang;
+var i18n;
+$.i18n().load( {
+	'en': '../resources/i18n/en.json',
+	'km': '../resources/i18n/km.json'
+} ).done( function() { 
+	i18n=$.i18n('button.export');
+} );
 $(document).ready(function(){
-	
 	$('div#initialloader').fadeIn('fast');
 
 	filterConsignment(lang);
 	sessionStorage.removeItem("session-value");
 	pageRendering();
 
+
 });
 
 $('.datepick').datepicker({
 	dateFormat: "yy-mm-dd"
-	});
+});
 
 
 
@@ -56,7 +65,7 @@ function confirmantiondelete(){
 			if(data.errorCode == 200){
 				$("#consignmentText").text('');
 				$("#consignmentText").text(data.message);
-				
+
 			}else if(data.errorCode == 0){
 				$("#consignmentText").text('');
 				$("#consignmentText").text('Consignment Deleted Successfully');
@@ -74,10 +83,10 @@ function confirmantiondelete(){
 }
 $.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 	$("#expectedArrivalPortEdit").empty();
-		for (i = 0; i < data.length; i++) {
+	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#expectedArrivalPortEdit');
-		
+
 	}
 });
 
@@ -88,12 +97,12 @@ function EditConsignmentDetails(txnId){
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			
-/*	$("#expectedArrivalPortEdit").empty();*/
-			
-		
+
+			/*	$("#expectedArrivalPortEdit").empty();*/
+
+
 			ConsignmentCurrency();
-		
+
 			setEditPopupData(data) ;
 		},
 		error : function() {
@@ -141,7 +150,7 @@ function viewConsignmentCurrency()
 		success: function (data, textStatus, jqXHR) {
 			console.log(data);
 
-		/*	$('#viewcurrency').empty();*/
+			/*	$('#viewcurrency').empty();*/
 			for (i = 0; i < data.length; i++){
 				var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 				//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
@@ -189,12 +198,12 @@ function setViewPopupData(data){
 	$("#viewcurrency").val(data.currency);
 	$("#viewtotalPrice").val(parseInt(data.totalPrice,10));
 	$("#viewhideCurrency").val(data.currency);
-	
+
 
 }
 
 function setEditPopupData(data){
-	
+
 
 	$("#supplierIdEdit").val(data.supplierId);
 	$("#supplierNameEdit").val(data.supplierName);
@@ -228,27 +237,27 @@ function filterConsignment(lang)
 		sessionFlag=1;
 		console.log("sesion value set to "+sessionFlag);
 	}
-	
+
 	if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
-			table('../headers?lang='+lang+'&type=consignment','../consignmentData?sessionFlag='+sessionFlag);
-		}
+		table('../headers?lang='+lang+'&type=consignment','../consignmentData?sessionFlag='+sessionFlag);
+	}
 
-		else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
-			table('../headers?lang='+lang+'&type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
-		}
+	else if(cierRoletype=="Custom" && sourceType !="viaStolen"){
+		table('../headers?lang='+lang+'&type=customConsignment','../consignmentData?sessionFlag='+sessionFlag);
+	}
 
-		else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
-			table('../headers?lang='+lang+'&type=adminConsignment','../consignmentData?sessionFlag='+sessionFlag);
-		}  
+	else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
+		table('../headers?lang='+lang+'&type=adminConsignment','../consignmentData?sessionFlag='+sessionFlag);
+	}  
 
-		else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
-			
-			table('../headers?lang='+lang+'&type=stolenconsignment','../consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag);
-		}
-	
-	
-		localStorage.removeItem('sourceType');
-	
+	else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
+
+		table('../headers?lang='+lang+'&type=stolenconsignment','../consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag);
+	}
+
+
+	localStorage.removeItem('sourceType');
+
 }
 
 //**************************************************filter table**********************************************
@@ -265,13 +274,13 @@ function table(url,dataUrl){
 			"txnId":$('#transactionID').val(),
 			"userType":$("body").attr("data-roleType")
 	}
-	
+
 	if(lang=='km'){
 		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 	}
 	$.ajax({
 		url: url,
-	/*	headers: {"Accept-Language": "en"},*/
+		/*	headers: {"Accept-Language": "en"},*/
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -285,8 +294,8 @@ function table(url,dataUrl){
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {  
-			        "sUrl": langFile  
-			    },
+					"sUrl": langFile  
+				},
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
@@ -301,7 +310,7 @@ function table(url,dataUrl){
 			});
 
 			$('div#initialloader').delay(300).fadeOut('slow');
-		/*	$('div#initialloader').fadeOut('slow');*/
+			/*	$('div#initialloader').fadeOut('slow');*/
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax");
@@ -316,7 +325,7 @@ function table(url,dataUrl){
 //******************************************************************************************************************************************************************888888   
 
 function editRegisterConsignment(){
-	
+
 	var supplierId=$('#supplierIdEdit').val();
 	var supplierName=$('#supplierNameEdit').val();
 	var consignmentNumber=$('#consignmentNumberEdit').val();
@@ -356,28 +365,28 @@ function editRegisterConsignment(){
 			$('#updateConsignment').openModal();
 			if(data.errorCode==200){
 
-				
+
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(data.message);
 			}
 
 			else if (data.errorCode==0){
-			
+
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
 			}
 			else 
-				{
+			{
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(data.message);
-				}
-			 
+			}
+
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
 		}
 	});
-	
+
 	return false;
 }
 
@@ -492,12 +501,9 @@ function pageButtons(url){
 		dataType: "json",
 		success: function(data){
 			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
-
-
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
-
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
@@ -534,9 +540,10 @@ function pageButtons(url){
 
 			if(sourceType=="viaStolen"){
 				$("#btnLink").css({display: "none"});
-			$("#consignmentTableDIv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-				
+
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>"+i18n+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -560,8 +567,10 @@ function pageButtons(url){
 				}		
 
 			}else{
-				$("#consignmentTableDIv").append("<div class='col s12 m1'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
-				$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' onclick='exportConsignmentData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'>"+i18n+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+
+
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -584,17 +593,17 @@ function pageButtons(url){
 					$('<option>').val(data[i].state).text(data[i].interp)
 					.appendTo('#filterConsignmentStatus');
 				}
-				 var consignmentStatus= $("body").attr("data-selected-consignmentStatus");
-				 console.log("#################33"+consignmentStatus);
-				 if(consignmentStatus=="")
-					 {
-					 console.log("consignment status is blank ");
-					 
-					 }
-				 else{
-					 console.log("consignment status is Not blank ");
-				 $("#filterConsignmentStatus").val(consignmentStatus).change();
-				 }
+				var consignmentStatus= $("body").attr("data-selected-consignmentStatus");
+				console.log("#################33"+consignmentStatus);
+				if(consignmentStatus=="")
+				{
+					console.log("consignment status is blank ");
+
+				}
+				else{
+					console.log("consignment status is Not blank ");
+					$("#filterConsignmentStatus").val(consignmentStatus).change();
+				}
 			});
 
 
@@ -606,23 +615,23 @@ function pageButtons(url){
 					.appendTo('#taxPaidStatus');
 				}
 			});
-			
+
 			var txnid = $("body").attr("data-selected-consignmentTxnId");
 
 			console.log("*******************"+txnid+" consignmentStatus="+consignmentStatus);
 			$('#transactionID').val(txnid);$('#transactionID').attr("placeholder","" );
 			if(txnid=="")
-				{
+			{
 				console.log("txnid is null");
-				}
+			}
 			else{
 				console.log("txnid is not null")
 				$('label[for=TransactionID]').remove();
 			}
-			
+
 			$('.datepicker').datepicker({
 				dateFormat: "yy-mm-dd"
-				});
+			});
 		}
 	}); 	
 }
@@ -645,7 +654,7 @@ function openApprovePopUp(txnId,displayName)
 }
 function approveSubmit(actiontype){
 	var txnId=$('#setApproveConsignmentTxnId').val();
-	
+
 	var approveRequest={
 			"action": actiontype,
 			"txnId":txnId,
@@ -786,27 +795,27 @@ function exportConsignmentData()
 	var consignmentTxnId=$('#transactionID').val();
 	var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 	var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
-       if(isNaN(consignmentTaxPaidStatus) && isNaN(filterConsignmentStatus) )
-    	   {
-    	   consignmentTaxPaidStatus="";
-    	   filterConsignmentStatus='';
-    	   console.log('consignmentTaxPaidStatus='+consignmentTaxPaidStatus+" filterConsignmentStatus=="+filterConsignmentStatus);
-    	   }
-       else if(isNaN(consignmentTaxPaidStatus))
-    	   {
-    	   consignmentTaxPaidStatus="";
-    	   console.log('consignmentTaxPaidStatus=='+consignmentTaxPaidStatus);
-    	   }
-       else if(isNaN(filterConsignmentStatus))
-	   {
-    	   filterConsignmentStatus='';
-    	   console.log(" filterConsignmentStatus=="+filterConsignmentStatus);
-	   }
-   
+	if(isNaN(consignmentTaxPaidStatus) && isNaN(filterConsignmentStatus) )
+	{
+		consignmentTaxPaidStatus="";
+		filterConsignmentStatus='';
+		console.log('consignmentTaxPaidStatus='+consignmentTaxPaidStatus+" filterConsignmentStatus=="+filterConsignmentStatus);
+	}
+	else if(isNaN(consignmentTaxPaidStatus))
+	{
+		consignmentTaxPaidStatus="";
+		console.log('consignmentTaxPaidStatus=='+consignmentTaxPaidStatus);
+	}
+	else if(isNaN(filterConsignmentStatus))
+	{
+		filterConsignmentStatus='';
+		console.log(" filterConsignmentStatus=="+filterConsignmentStatus);
+	}
+
 	var table = $('#consignmentLibraryTable').DataTable();
 	var info = table.page.info(); 
-   var pageNo=info.page;
-    var pageSize =info.length;
+	var pageNo=info.page;
+	var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
 	console.log(" consignmentStartDate  ="+consignmentStartDate+"  consignmentEndDate=="+consignmentEndDate+"  consignmentTxnId="+consignmentTxnId+" filterConsignmentStatus ="+filterConsignmentStatus+"consignmentTaxPaidStatus  "+consignmentTaxPaidStatus)
 	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
