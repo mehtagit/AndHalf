@@ -19,7 +19,7 @@ $.i18n().load( {
 	'km': '../resources/i18n/km.json'
 } ).done( function() { 
 	i18n=$.i18n('button.export');
-} );
+});
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
 
