@@ -88,6 +88,36 @@ select {
 [type="radio"]:not (:checked ), [type="radio"]:checked {
 	opacity: 0;
 }
+
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=time],
+input[type=date],
+input[type=datetime-local],
+input[type=tel],
+input[type=number],
+input[type=search],
+textarea.materialize-textarea {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #9e9e9e !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  height: 2.6rem !important;
+  width: 100% !important;
+  font-size: 1rem !important;
+  margin: 0 0 5px 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+  transition: all .3s !important;
+}
 </style>
 <script>
 var contextpath = "${context}";
