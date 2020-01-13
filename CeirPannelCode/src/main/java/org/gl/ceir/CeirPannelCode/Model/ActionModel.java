@@ -1,32 +1,28 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Component;
 
 @Component
 public class ActionModel {
 	private Integer state;
-	private Integer stateId;
+	private Long stateId;
 	private String view;
-	private Object downloadErrorFile;
-	private Object edit;
+	private String downloadErrorFile;
+	private String edit;
 	private String downloadFile;
-	private Object delete;
+	private String delete;
 	private String approve;
 	private String reject;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getState() {
 		return state;
 	}
 	public void setState(Integer state) {
 		this.state = state;
 	}
-	public Integer getStateId() {
+	public Long getStateId() {
 		return stateId;
 	}
-	public void setStateId(Integer stateId) {
+	public void setStateId(Long stateId) {
 		this.stateId = stateId;
 	}
 	public String getView() {
@@ -35,16 +31,16 @@ public class ActionModel {
 	public void setView(String view) {
 		this.view = view;
 	}
-	public Object getDownloadErrorFile() {
+	public String getDownloadErrorFile() {
 		return downloadErrorFile;
 	}
-	public void setDownloadErrorFile(Object downloadErrorFile) {
+	public void setDownloadErrorFile(String downloadErrorFile) {
 		this.downloadErrorFile = downloadErrorFile;
 	}
-	public Object getEdit() {
+	public String getEdit() {
 		return edit;
 	}
-	public void setEdit(Object edit) {
+	public void setEdit(String edit) {
 		this.edit = edit;
 	}
 	public String getDownloadFile() {
@@ -53,10 +49,10 @@ public class ActionModel {
 	public void setDownloadFile(String downloadFile) {
 		this.downloadFile = downloadFile;
 	}
-	public Object getDelete() {
+	public String getDelete() {
 		return delete;
 	}
-	public void setDelete(Object delete) {
+	public void setDelete(String delete) {
 		this.delete = delete;
 	}
 	public String getApprove() {
@@ -71,37 +67,11 @@ public class ActionModel {
 	public void setReject(String reject) {
 		this.reject = reject;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ActionModel [state=");
-		builder.append(state);
-		builder.append(", stateId=");
-		builder.append(stateId);
-		builder.append(", view=");
-		builder.append(view);
-		builder.append(", downloadErrorFile=");
-		builder.append(downloadErrorFile);
-		builder.append(", edit=");
-		builder.append(edit);
-		builder.append(", downloadFile=");
-		builder.append(downloadFile);
-		builder.append(", delete=");
-		builder.append(delete);
-		builder.append(", approve=");
-		builder.append(approve);
-		builder.append(", reject=");
-		builder.append(reject);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
-		builder.append("]");
-		return builder.toString();
+		return "ActionModel [state=" + state + ", stateId=" + stateId + ", view=" + view + ", downloadErrorFile="
+				+ downloadErrorFile + ", edit=" + edit + ", downloadFile=" + downloadFile + ", delete=" + delete
+				+ ", approve=" + approve + ", reject=" + reject + "]";
 	}
 	
 	

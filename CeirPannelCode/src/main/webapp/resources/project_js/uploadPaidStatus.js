@@ -4,8 +4,8 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 var featureId =12;
 $( document ).ready(function() {
 	var In = $("body").attr("session-value");
-	if(In.length > 0 && In !='null' ){
 
+	if(In.length > 0 && In !='null' ){
 		$.ajax({
 			url : "./paid-status/"+In,
 			dataType : 'json',
@@ -65,7 +65,7 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 				} 
-				else if (data.errorCode == 0 && In == null) {
+				else if (data.errorCode == 0 && In == 'null') {
 					$("#user123").css("display", "none");
 					$("#user456").css("display", "block");
 					$("#addbutton").css("display", "block");
@@ -514,8 +514,9 @@ function exportpaidStatus(){
 	var taxPaidStatus = $('#taxPaidStatus').val();
 	var deviceIdType = $('#deviceIDType').val();
 	var deviceType = $('#deviceTypeFilter').val();
-	var nid = $('#nId').val();
 	
+	
+	var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
@@ -824,10 +825,11 @@ function refreshContent(){
 }
 
 
-function deviceApprovalPopup(imei,date){
+function deviceApprovalPopup(imei,date,txnId){
 	$('#approveInformation').openModal();
 	window.imei=imei;
 	window.date=date.replace("="," ");
+	$('#approveTxnId').text(txnId);
 }  
 
 
@@ -871,8 +873,9 @@ function confirmApproveInformation(imei,date){
 }
 
 
-function userRejectPopup(imei){
+function userRejectPopup(imei,txnId){
 	$('#rejectInformation').openModal();
+	$('#disapproveTxnId').text(txnId)
 	window.imei=imei;
 }
 

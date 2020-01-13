@@ -209,6 +209,7 @@
 			<div class="row" style="padding: 20px 0 100px 0;">
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
+	
 						class="modal-close btn" id="add_user">Close</button>
 				</div>
 			</div>
@@ -312,14 +313,15 @@
 
 
 			<div class="row">
-				<h6>
-					The tax against the consignment with <span id="displayname"></span>
+				<h6 id="approveConsignmnetHeading">
+					Clearing a consignment means that the taxes/duties against the consignment with <span id="displayname"></span>
 					having Transaction ID : ( <span id="ApproveConsignmentTxnid"></span>
-					) has been successfully paid.
+					)  has been successfully paid.
+				
 				</h6>
 			</div>
 			<div class="row">
-				<h6>Do you approve the consignment?</h6>
+				<h6 id="confirmationMessage"> Do you want to clear the consignment?</h6>
 				<input type="text" id="setApproveConsignmentTxnId"
 					style="display: none">
 			</div>
@@ -635,7 +637,7 @@
 				<div class="input-field col s12 center">
 					<button class=" btn"
 						type="submit">Update</button>
-					<button class="modal-close btn" onclick="closeUpdateModal()"
+					<button class="modal-close btn" type="button" onclick="closeUpdateModal()"
 						style="margin-left: 10px;">Cancel</button>
 				</div>
 			</div>
@@ -708,6 +710,7 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
 </body>
 </html>

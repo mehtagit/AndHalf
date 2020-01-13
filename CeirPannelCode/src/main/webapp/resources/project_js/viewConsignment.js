@@ -634,12 +634,26 @@ function pageButtons(url){
 
 function openApprovePopUp(txnId,displayName)
 {
+	
+	var userType=$("body").attr("data-roleType");
 	displayName=displayName.replace("+20"," " );
 	$('#ApproveConsignment').openModal();
-	$('#ApproveConsignmentTxnid').text(txnId);
-	$('#setApproveConsignmentTxnId').val(txnId);
-	$('#displayname').text(displayName);
-	console.log(displayName);
+	if(userType=='Custom'){
+		
+		$('#ApproveConsignmentTxnid').text(txnId);
+		$('#setApproveConsignmentTxnId').val(txnId);
+		$('#displayname').text(displayName);
+		console.log(displayName);	
+	}
+	else{
+		$('#approveConsignmnetHeading').text('');
+		$('#approveConsignmnetHeading').text('Do you want to approve the consignment having Transaction ID:'+txnId+'?');
+		$('#confirmationMessage').text('');
+		$('#setApproveConsignmentTxnId').val(txnId);
+		$('#displayname').text(displayName);
+		console.log(displayName);
+	}
+
 
 
 }

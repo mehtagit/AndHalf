@@ -265,6 +265,7 @@ function submitSingleUnBlockDevicesRequest()
 
 	
 	
+	
 	console.log("sucess include deviceType="+deviceType+" multipleSimStatus="+multipleSimStatus+" serialNumber="+serialNumber+" remark="+remark+" IMEI1="+IMEI1 );
 
 var singleImeiBlockDetail={
@@ -492,6 +493,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 
 
 
+
 function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 
@@ -527,7 +529,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 			$("#viewsingleblockIMEI4").val("");
 			}
 		else{
-			console.log("else############");
+			console.log("else############")
 		}
 	$("#viewblockdeviceType").val(data[i].deviceType).change();
 	$("#viewblockdeviceIdType").val(data[i].deviceIdType).change();
@@ -676,6 +678,8 @@ var singleImeiBlockDetail={
 	});
 		return false;
 }
+
+
 
 
 $('#stolenDatePeriod').datepicker({

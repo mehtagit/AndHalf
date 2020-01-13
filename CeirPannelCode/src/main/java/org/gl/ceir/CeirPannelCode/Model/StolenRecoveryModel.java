@@ -37,6 +37,7 @@ public class StolenRecoveryModel {
 		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
 				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
 				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", remark=" + remark + ", userId="
+	
 				+ userId + ", operatorTypeId=" + operatorTypeId + ", sourceType=" + sourceType + ", category="
 				+ category + ", qty=" + qty + ", deviceCaegory=" + deviceCaegory + ", blockCategory=" + blockCategory
 				+ ", categoryInterp=" + categoryInterp + ", blockCategoryInterp=" + blockCategoryInterp + "]";

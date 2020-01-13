@@ -985,6 +985,7 @@ function exportStolenRecoveryData()
 
 function deviceApprovalPopup(transactionId,requestType){
 	$('#approveInformation').openModal();
+	$('#blockApproveTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
 }
@@ -1028,6 +1029,7 @@ function confirmApproveInformation(){
 
 function userRejectPopup(transactionId,requestType){
 	$('#rejectInformation').openModal();
+	$('#rejectTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
 }

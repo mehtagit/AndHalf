@@ -358,7 +358,7 @@ textarea {
 				</h6> -->
 			</div>
 			<div class="row">
-				<h6>Do you want to approve the TAC status ?</h6>
+				<h6>Do you want to approve the TAC status having transaction Id:<span id="ApproveTacTxnId"></span> ?</h6>
 				<input type="text" id="setApproveTacTxnId"
 					style="display: none">
 			</div>
@@ -404,7 +404,7 @@ textarea {
 				</h6> -->
 			</div>
 			<div class="row">
-				<h6>Do you want to Reject the TAC status ?</h6>
+				<h6>Do you want to Reject the TAC status having  transaction ID: <span id="RejectTacTxnId"></span> ?</h6>
 				<input type="text" id="setRejectTacTxnId"
 					style="display: none">
 			</div>

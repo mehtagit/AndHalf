@@ -125,7 +125,7 @@
                                                 <h6 style="color: #000;">Upload Supporting Document</h6>
                                                 <div class="btn">
                                                     <span>Select File</span>
-                                                    <input  type="file" id="docTypeFile1" multiple>
+                                                    <input  type="file" name="files[]" id="docTypeFile1" multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate" type="text" multiple
@@ -138,6 +138,10 @@
                                                <div class="col s12 m6 l6" style="margin-top: 8px;">
                                                 <label for="Category">Document Type <span class="star">*</span></label>
                                                 <select class="browser-default" id="docTypetag1">
+                                                    <option value="" disabled selected>Select Document Type </option>
+                                                  
+                                                </select>
+                                                <select class="browser-default" id="docTypetagValue1" style="display: none;">
                                                     <option value="" disabled selected>Select Document Type </option>
                                                   
                                                 </select>

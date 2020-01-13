@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -46,7 +47,6 @@ public class StolenDatatableController {
 	@Autowired
 	IconsState iconState;
 
-
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@PostMapping("stolenData")
@@ -75,16 +75,17 @@ public class StolenDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
-			/*
-			 * Object actionResponse = feignCleintImplementation.tableActionFeign(featureId,
-			 * userTypeId); log.info("actionResponse::::::::::::"+actionResponse);
-			 */
+			
+			List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
+			log.info("tableActionPagination::::::::::::"+actionResponse);
+			
 			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			stolenPaginationModel = gson.fromJson(apiResponse, StolenPaginationModel.class);
 			List<StolenContent> paginationContentList = stolenPaginationModel.getContent();
+			
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
@@ -129,6 +130,7 @@ public class StolenDatatableController {
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
 					}
+			
 				}else if("CEIRAdmin".equals(userType)) {
 					log.info("in CEIRAdmin Controler-----" +userType);
 					for (StolenContent dataInsideList : paginationContentList) {
@@ -143,7 +145,7 @@ public class StolenDatatableController {
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+						String action = iconState.adminBlockUnblock(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
 						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));

@@ -1326,7 +1326,7 @@
             <div class="row">
                 <form action="">
                    
-                    <h6>Do you want to Approve the request</h6>
+                    <h6>Do you want to Approve the request having transaction ID:<span id="blockApproveTxnId"></span>?</h6>
                 </form>
             </div>
             <div class="row">
@@ -1366,13 +1366,14 @@
            <h6 class="modal-header">Reject</h6>
             <div class="modal-content">
             <div class="row">
+             <h6>Do you want to reject the request having transaction ID:<span id="rejectTxnId"></span> ?</h6>
                 <form action="">
                 
                     <div class="input-field" style="margin-top: 30px;">
                         <textarea id="Reason" class="materialize-textarea"></textarea>
                         <label for="textarea1" style="margin-left: -10px;">Reason</label>
                     </div>
-                    <h6>Do you want to reject?</h6>
+                   
                     
                 </form>
             </div>

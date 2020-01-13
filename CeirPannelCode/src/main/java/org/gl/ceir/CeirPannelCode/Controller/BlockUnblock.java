@@ -146,8 +146,9 @@ public class BlockUnblock {
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
+	
 			  @RequestParam(name="blockCategory",required = false) Integer deviceCategory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
-	  {	
+ {	
 		  log.info(" file stolen entry point .");
 		 
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
@@ -207,6 +208,7 @@ public class BlockUnblock {
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
+			 
 			  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,HttpSession session
 			  )
 	  {	
@@ -248,6 +250,7 @@ public class BlockUnblock {
 			stolenRecoveryModel.setTxnId(stlnTxnNumber);
 			stolenRecoveryModel.setQty(qty);
 			stolenRecoveryModel.setRemark(remark);
+
 			//stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
 			stolenRecoveryModel.setBlockCategory(blockCategory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
