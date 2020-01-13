@@ -308,6 +308,8 @@ function saveGrievance(){
 	var filediv;
 	var i=0;
 	var formData= new FormData();
+	var docTypeTagIdValue='';
+	var filename='';
 	$('.fileDiv').each(function() {	
 
 		
@@ -316,29 +318,42 @@ function saveGrievance(){
 				"number": $('#docTypetag'+fieldId).val()
 		}
 		fileInfo.push(x);*/
+		var x={
+		"docType":$('#docTypetag'+fieldId).val(),
+		"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		}
 		
 		//fileData.push($('#docTypeFile'+fieldId)[0].files[0]);
-		formData.append('file['+i+']',$('#docTypeFile'+fieldId)[0].files[0]);
+		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+		/*formData.append('docTypeTagIdValue',docTypeTagIdValue);*/
 		/*filename=$('#docTypeFile'+fieldId)[0].files[0];
-		console.log(filename);
-		fileInfo.push(filename);*/
+		*/
+		fileInfo.push(x);
+		
 		fieldId++;
 		i++;
 	});
 	console.log(fileData.length);
+	var multirequest={
+			"multifile":fileInfo,
+			"txnId":txnId,
+			"categoryId":category,
+			"remarks":remark
+		}
 	console.log("category="+category+" txnId="+txnId+" remark="+remark+" file="+file)
-	
-	/*formData.append('file',fileData);*/
-	formData.append('txnId',txnId);
-	formData.append('categoryId',category);
+	formData.append('fileInfo[]',JSON.stringify(fileInfo));
+	formData.append('multirequest',JSON.stringify(multirequest));
+	/*formData.append('categoryId',category);
 	formData.append('remarks',remark);
-
+*/
 	$.ajax({
 		url: './saveGrievance',
 		type: 'POST',
 		data: formData,
+		mimeType: 'multipart/form-data',
 		processData: false,
 		contentType: false,
+		
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
@@ -366,8 +381,6 @@ function saveGrievance(){
 
 
 }
-
-
 
 function grievanceReply(userId,grievanceId,txnId)
 {
@@ -561,9 +574,9 @@ $(document).ready(function(){
 		console.log("@@@@@"+JSON.stringify(data));
 		for (i = 0; i < data.length; i++) {
 			console.log(data[i].interp);
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#docTypetag1');
-
+			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+			$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue1');
+			$('#docTypetagValue1').val(data[i].value);
 		}
 	});
 });
@@ -593,7 +606,7 @@ $(".add_field_button").click(function (e) { //on add input button click
 	if (x < max_fields) { //max input box allowed
 		x++; //text box increment
 		$(wrapper).append(
-				'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" name="files[]" id="filer_input" multiple="multiple" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">-</div></div></div>'
+				'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;" class="remove_field btn right btn-info">-</div></div></div>'
 		); //add input box
 	}
 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -602,8 +615,8 @@ $(".add_field_button").click(function (e) { //on add input button click
 		for (i = 0; i < data.length; i++) {
 			console.log(data[i].interp);
 			var optionId=id-1;
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#docTypetag'+optionId);
+			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
+			$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
 			console.log('#docTypetag'+optionId);
 
 		}
@@ -618,3 +631,7 @@ $(wrapper).on("click", ".remove_field", function (e) { //user click on remove te
 	id--;
 })
 
+function saveDocTypeValue(){
+	$('#docTypetagValue').val(data[i].value).change();
+	$('#docTypetagValue').val(data[i].value).change();
+}

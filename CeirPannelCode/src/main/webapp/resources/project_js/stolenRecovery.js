@@ -980,11 +980,13 @@ function exportStolenRecoveryData()
 	console.log("--------"+pageSize+"---------"+pageNo);
 	console.log("stolenRecoveryStartDate  ="+stolenRecoveryStartDate+"  stolenRecoveryEndDate=="+stolenRecoveryEndDate+"  stolenRecoveryTxnId="+stolenRecoveryTxnId+" stolenRecoveryFileStatus ="+stolenRecoveryFileStatus+"=role="+role+" stolenRecoverySourceStatus="+stolenRecoverySourceStatus+" stolenRecoveryRequestType"+stolenRecoveryRequestType);
 	window.location.href="./exportStolenRecovery?stolenRecoveryStartDate="+stolenRecoveryStartDate+"&stolenRecoveryEndDate="+stolenRecoveryEndDate+"&stolenRecoveryTxnId="+stolenRecoveryTxnId+"&stolenRecoveryFileStatus="+stolenRecoveryFileStatus+"&stolenRecoverySourceStatus="+stolenRecoverySourceStatus+"&stolenRecoveryRequestType="+stolenRecoveryRequestType+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+
 }
 
 
 function deviceApprovalPopup(transactionId,requestType){
 	$('#approveInformation').openModal();
+	$('#blockApproveTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
 }
@@ -1028,6 +1030,7 @@ function confirmApproveInformation(){
 
 function userRejectPopup(transactionId,requestType){
 	$('#rejectInformation').openModal();
+	$('#rejectTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
 }

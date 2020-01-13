@@ -107,8 +107,8 @@
            <div class="modal-content">
             <div class="row">
                 <form action="">
-                 
-                    <h6>Do you want to Approve the request</h6>
+                 	<h6>The Registration with Transaction ID: <span id="registrationTxnId"> </span> is pending for approval.</h6>
+                    <p>Do you want to Approve the request</p>
                 </form>
             </div>
             <div class="row">

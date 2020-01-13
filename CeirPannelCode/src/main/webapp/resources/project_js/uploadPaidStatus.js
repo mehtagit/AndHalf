@@ -825,10 +825,11 @@ function refreshContent(){
 }
 
 
-function deviceApprovalPopup(imei,date){
+function deviceApprovalPopup(imei,date,txnId){
 	$('#approveInformation').openModal();
 	window.imei=imei;
 	window.date=date.replace("="," ");
+	$('#approveTxnId').text(txnId);
 }  
 
 
@@ -872,8 +873,9 @@ function confirmApproveInformation(imei,date){
 }
 
 
-function userRejectPopup(imei){
+function userRejectPopup(imei,txnId){
 	$('#rejectInformation').openModal();
+	$('#disapproveTxnId').text(txnId)
 	window.imei=imei;
 }
 

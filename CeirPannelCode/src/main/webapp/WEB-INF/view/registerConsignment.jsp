@@ -285,18 +285,17 @@ section {
 
 
 	<div id="submitConsignment" class="modal">
-		<h6 class="modal-header">Submit Consignment</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.submitConsignment" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Your form has been successfully
-					submitted. The Transaction ID for future reference is</h6>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" /></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<form action="${context}/Consignment/viewConsignment"
 						id="closeOkPop" method="POST">
-						<a onclick="closeConfirmation()" class="btn">ok</a>
+						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.close" /></a>
 					</form>
 				</div>
 			</div>
@@ -361,12 +360,22 @@ section {
 
 
 	<script type="text/javascript">
+	
 	window.parent.$('#langlist').on('change', function() {
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
 	}); 
 	
 
+	$.i18n().locale = lang;
+	var successMsg;
+	$.i18n().load( {
+		'en': '../resources/i18n/en.json',
+		'km': '../resources/i18n/km.json'
+	} ).done( function() { 
+		successMsg=$.i18n('successMsg');
+	});
+	
 	
 	$(document).ready(function() {
 		ConsignmentCurrency();
@@ -412,8 +421,7 @@ section {
 							if (data.errorCode == "0") {
 								console.log("status code = 0");
 								$('#sucessMessage')
-										.text(
-												'Your form has been successfully submitted. The Transaction ID for future reference is ');
+										.text(successMsg);
 								$('#sucessMessage').append(data.txnId);
 								$('#errorCode').val(data.errorCode);
 							} else if (data.errorCode == "3") {

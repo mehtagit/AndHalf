@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.util.List;
+
 public class GrievanceModel {
 	private int id;
 	private int categoryId;
@@ -14,6 +16,15 @@ public class GrievanceModel {
 	private String userType;
 	private String reply;
 	private String userDisplayName;
+	private List<MultipleFileModel> multifile;
+	
+	
+	public List<MultipleFileModel> getMultifile() {
+		return multifile;
+	}
+	public void setMultifile(List<MultipleFileModel> multifile) {
+		this.multifile = multifile;
+	}
 	public int getId() {
 		return id;
 	}
@@ -97,7 +108,8 @@ public class GrievanceModel {
 		return "GrievanceModel [id=" + id + ", categoryId=" + categoryId + ", grievanceStatus=" + grievanceStatus
 				+ ", userId=" + userId + ", fileName=" + fileName + ", grievanceId=" + grievanceId + ", modifiedOn="
 				+ modifiedOn + ", createdOn=" + createdOn + ", remarks=" + remarks + ", txnId=" + txnId + ", userType="
-				+ userType + ", reply=" + reply + ", userDisplayName=" + userDisplayName + "]";
+				+ userType + ", reply=" + reply + ", userDisplayName=" + userDisplayName + ", multifile=" + multifile
+				+ "]";
 	}
 	
 	

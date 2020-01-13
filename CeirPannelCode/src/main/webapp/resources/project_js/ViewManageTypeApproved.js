@@ -339,6 +339,7 @@ function exportTacData()
 	console.log("--------"+pageSize+"---------"+pageNo+" tacStartDate="+tacStartDate+" tacEndDate="+tacEndDate+" tacStatus= "+tacStatus);
 	
 	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+
 }
 
 
@@ -346,6 +347,7 @@ function openApproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
 	$('#ApproveTAC').openModal();
+	$('#ApproveTacTxnId').text(txnId);
 	$('#setApproveTacTxnId').val(txnId);
 
 }
@@ -393,6 +395,8 @@ function openDisapproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
 	$('#RejectTAC').openModal();
+	
+	$('#RejectTacTxnId').text(txnId);
 	$('#setRejectTacTxnId').val(txnId);
 
 }

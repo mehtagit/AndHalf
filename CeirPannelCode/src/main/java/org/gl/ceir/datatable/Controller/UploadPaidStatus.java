@@ -137,7 +137,7 @@ public class UploadPaidStatus {
 					
 					//params for action 
 					Long imei1 = contentModelList.getFirstImei();
-					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn);
+					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
 					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,taxStatus,status,action};
 
