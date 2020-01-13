@@ -104,6 +104,11 @@
                                             <input type="text" name="locality" id="locality" maxlength="20" value="${registration.locality}" disabled="" placeholder="">
                                             <label for="locality" class="active">Locality </label>
                                         </div>
+                                        
+                                        <div class="input-field col s12 m6 l6">
+                                                <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
+                                                <label for="commune" class="active">Commune </label>
+                                            </div>
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="country" id="country" maxlength="20"  value="${registration.country}" disabled="" placeholder="">

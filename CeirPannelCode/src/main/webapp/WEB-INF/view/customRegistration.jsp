@@ -340,7 +340,7 @@ var contextpath = "${context}";
 											placeholder="Upload Photo">
 									</div>
 								</div>
-
+	
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="employeeID" required="required"
 										id="employeeId" maxlength="30"> <label

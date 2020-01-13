@@ -81,7 +81,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String description = dataInsideList.getDescription();
 				   String value = dataInsideList.getValue();
-				   String type = (String) dataInsideList.getType();
+				   String type = String.valueOf(dataInsideList.getType());
 				   String tag = dataInsideList.getTag();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);

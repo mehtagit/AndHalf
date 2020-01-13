@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,5 +46,16 @@ public class SystemAdminController {
 		return response;
 
 		}
+	
+	
+	
+	@PutMapping("/message/update")
+	public @ResponseBody MessageContentModel updateMessage (@RequestBody MessageContentModel messageContentModel) {
+		log.info("request send update Messsage api="+messageContentModel);
+		messageContentModel = feignCleintImplementation.updateMessages(messageContentModel);
+		log.info("response from update Message api "+messageContentModel);
+		return messageContentModel;
+		
+	}
 	
 }

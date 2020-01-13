@@ -917,7 +917,7 @@ public class IconsState {
 
 	public String adminMessageIcons(String userStatus, String tag) { 
 
-		String editAction="updateDetails()";
+		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 
@@ -945,7 +945,7 @@ public class IconsState {
 
 	public String adminConfigIcons(String userStatus, String tag) { 
 
-		String editAction="updateDetails()";
+		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 
@@ -978,7 +978,7 @@ public class IconsState {
 
 	public String policyConfigIcons(String userStatus, String tag) { 
 
-		String editAction="updateDetails()";
+		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 
@@ -1069,10 +1069,6 @@ public class IconsState {
 								+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 
 					} else if (actionModel.getState() == 4 || actionModel.getState() == 5) {
-						view = "<a onclick=" + viewAction + "><i class=" + viewIcon + " aria-hidden=\"true\" title="
-								+ viewIconTitle + " ></i></a>";
-						download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
-								+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
 						approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 								+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 						reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
