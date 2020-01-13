@@ -336,7 +336,7 @@ public class StockDatatableController {
 				inputTypeDateList.add(dateRelatedFields); 
 			}
 		}
-		pageElement.setPageTitle("View Stock");
+		pageElement.setPageTitle("Stock Management");
 		pageElement.setButtonList(buttonList);
 		pageElement.setDropdownList(dropdownList);
 		pageElement.setInputTypeDateList(inputTypeDateList);

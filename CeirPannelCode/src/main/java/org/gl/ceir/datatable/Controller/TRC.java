@@ -155,7 +155,7 @@ public class TRC implements CRUD{
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("Manage Type-Approved Devices");
+		pageElement.setPageTitle("Manage Type-Approved");
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();

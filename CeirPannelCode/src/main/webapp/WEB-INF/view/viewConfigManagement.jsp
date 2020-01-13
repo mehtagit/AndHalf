@@ -170,35 +170,39 @@
 			<div class="row">
 				<div class="row">
 					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="viewTag"
-							placeholder="tag" 
-							style="height: 28px;"> <label for="tag">Tag</label>
+						<input type="text" name="Id" id="EditId"
+							placeholder="ID" disabled
+							style="height: 28px;"> <label for="viewId">Id</label>
 					</div>
-
 					
-					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="tag" id="editTag"
+							placeholder="tag" disabled
+							style="height: 28px;"> <label for="editTag">Tag</label>
+					</div>
+				
 					<div class="input-field col s12 m6">
-					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;"></textarea>
-					<label for="viewValue" class="">Value</label>
+					<textarea id="editValue" class="materialize-textarea" style="height: 22px;"></textarea>
+					<label for="editValue" class="">Value</label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;"></textarea>
-					<label for="description" class="">Description</label>
+					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;"></textarea>
+					<label for="editdescription" class="">Description</label>
 
 					</div>
 
 					<div class="input-field col s12 m6">
-						<input type="text" id="viewtype" name="type"
+						<input type="text" id="edittype" name="type"
 							placeholder="" maxlength="20"  style="height: 28px;">
 						<label for="type">type</label>
 					</div>
 
 					<div class="input-field col s12 m6">
-					<textarea id="remarks" class="materialize-textarea" style="height: 22px;" ></textarea>
-					<label for="remarks" class="">Remarks</label>
+					<textarea id="editremarks" class="materialize-textarea" style="height: 22px;" ></textarea>
+					<label for="editremarks" class="">Remarks</label>
 
 					</div>
 				</div>
@@ -206,13 +210,36 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;">Update</button>
+					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updateSystem()">Update</button>
+					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
 				</div>
 
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	
+		<!-- Modal 3 start   -->
+
+	<div id="confirmedUpdatedSystem" class="modal">
+		<h6 class="modal-header">Update System Management</h6>
+		<div class="modal-content">
+
+
+
+			<div class="row">
+				<h6 id="sucessMessage"> System updated Successfully</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/systempConfigManagement" class="btn">ok</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
    
    
    

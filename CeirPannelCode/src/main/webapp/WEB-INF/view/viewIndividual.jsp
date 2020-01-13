@@ -132,6 +132,11 @@
                                     <input type="text" name="locality" id="locality" value="${registration.locality}" maxlength="20" placeholder="" disabled="">
                                     <label for="locality" class="active">Locality </label>
                                 </div>
+                                
+                                 <div class="input-field col s12 m6 l6">
+                                                <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
+                                                <label for="commune" class="active">Commune </label>
+                                  </div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="province" id="province" value="${registration.province}" maxlength="20" placeholder="" disabled="">
