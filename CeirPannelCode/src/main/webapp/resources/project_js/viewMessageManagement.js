@@ -25,8 +25,8 @@ function messageManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val()
-			
+			"tag":$('#parametername').val(),
+			"channel" : parseInt($('#channel').val())
 	}
 	
 	$.ajax({
@@ -195,7 +195,7 @@ function setEditData(data){
 	$("#EditId").val(data.id);
 	$("#editValue").val(data.value);
 	$("#editdescription").val(data.description);
-	$("#editChannel").val(data.channel);
+	$("#editChannel").val(data.channelInterp);
 }
 
 
@@ -205,7 +205,7 @@ function updateMessage(){
 		 	 "tag" : $("#Edittag").val(),
 			 "value" : $("#editValue").val(),
 			 "description" : $("#editdescription").val(),
-			 "channel" : $("#editChannel").val()
+			 "channel" : parseInt($("#editChannel").val())
 	}
 	 
 	 $.ajax({

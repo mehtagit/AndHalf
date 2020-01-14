@@ -172,20 +172,20 @@
 				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" style="height: 22px;"></textarea>
+					<textarea id="editValue" class="materialize-textarea" style="height: 22px;" placeholder="" ></textarea>
 					<label for="editValue" class="">Value</label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="" style="height: 22px;" disabled></textarea>
 					<label for="editdescription" class="">Description</label>
 
 					</div>
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editChannel" class="materialize-textarea" style="height: 22px;" placeholder="Channel"></textarea>
+					<textarea id="editChannel" class="materialize-textarea" style="height: 22px;" placeholder="Channel" disabled></textarea>
 					<label for="editChannel" class="">Channel</label>
 
 					</div>

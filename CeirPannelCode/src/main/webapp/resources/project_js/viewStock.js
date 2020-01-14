@@ -18,8 +18,8 @@
 			sucessfullysupdated=$.i18n('modal.message.successfullyUpdated');
 			errorOccured=$.i18n('modal.message.errorOccured');
 			operationNotAllowed=$.i18n('modal.message.operation.notallowed');
-			stockDeleted=$.i18n('modal.message.stockDeleted');
-			console.log("done"+i18n);
+			stockDeleted=$.i18n('stockDeleted');
+			console.log("done"+stockDeleted);
 		});
 
 

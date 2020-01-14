@@ -26,6 +26,7 @@ function configManagementDatatable(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"tag":$('#parametername').val(),
+			"status":parseInt($('#status').val()),
 			"type": parseInt($("#type").val())
 	}
 	

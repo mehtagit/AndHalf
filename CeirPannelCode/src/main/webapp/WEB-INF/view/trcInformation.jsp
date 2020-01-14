@@ -73,9 +73,9 @@
 							<div class="card-panel">
                                 <div class="row">
                                     <div class="col s12 m12">
-                                        <h5>View Information</h5>
+                                        <h5>View TRC Information</h5>
                                         <hr>
-                                        <div class="row">
+                                        <div class="row" style="margin-top: 10px;">
                                             <div class="input-field col s12 m4 l4">
                                                 <input type="text" name="firstName" id="firstName" maxlength="20" value="${registration.firstName}" disabled="" placeholder="">
                                                 <label for="firstName" class="center-align active">First Name </label>
@@ -103,12 +103,33 @@
                                                 <input type="text" name="streetNumber" id="streetNumber" maxlength="30" value="${registration.street}" disabled="" placeholder="">
                                                 <label for="streetNumber" class="active">Street Number </label>
                                             </div>
+                                            
+                                            <div class="input-field col s12 m6 l6">
+												<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
+												<label for="village">Village</label>
+											</div>
+											
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="locality" id="locality" maxlength="20" value="${registration.locality}" disabled="" placeholder="">
                                                 <label for="locality" class="active">Locality </label>
                                             </div>
-
+											
+											<div class="input-field col s12 m6 l6">
+												<input type="text" name="district" id="district" maxlength="20" value="${registration.district	}" disabled="" placeholder="">
+												<label for="district">District</label>
+											</div>
+											
+											<div class="input-field col s12 m6 l6">
+                                      			 <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
+                                      			 <label for="commune" class="active">Commune </label>
+                                  			</div>
+                                  			
+                                  			<div class="input-field col s12 m6 l6">
+									 			 <input type="text" name="pin" id="pin" maxlength="20" value="${registration.postalCode}" disabled="" placeholder="">
+									  			<label for="pin">Postal code </label>
+											</div> 	
+											
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="country" id="country" maxlength="20" value="${registration.country}" disabled="" placeholder="">
                                                 <label for="country" class="active">Country </label>
@@ -122,18 +143,18 @@
 
                                         <div class="row">
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="NationalID" id="NationalID" maxlength="30" value="" disabled="" placeholder="">
+                                                <input type="text" name="NationalID" id="NationalID" maxlength="30" value="${registration.passportNo}" disabled="" placeholder="">
                                                 <label for="NationalID" class="active">National ID </label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadNationalId" id="uploadNationalId" maxlength="30" value="${registration.nidFilename}" disabled="">
-                                                <label for="uploadNationalId" class="active">Upload National ID </label>
+                                                <label for="uploadNationalId" class="active">Uploaded National ID </label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadPhoto" id="uploadPhoto" maxlength="30" value="${registration.photoFilename}" disabled="">
-                                                <label for="uploadPhoto" class="active">Upload Photo </label>
+                                                <label for="uploadPhoto" class="active">Uploaded Photo </label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -143,7 +164,7 @@
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadIdCard" id="uploadIdCard" maxlength="30" value="${registration.idCardFilename}" disabled="">
-                                                <label for="uploadIdCard" class="active">Upload ID Card </label>
+                                                <label for="uploadIdCard" class="active">Uploaded ID Card </label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">

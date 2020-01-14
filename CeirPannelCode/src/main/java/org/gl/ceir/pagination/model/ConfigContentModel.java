@@ -16,7 +16,7 @@ public class ConfigContentModel {
 	private String description;
 	private Integer type;
 	private String typeInterp;
-	private Object remark;
+	private String remark;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -66,10 +66,10 @@ public class ConfigContentModel {
 	public void setTypeInterp(String typeInterp) {
 		this.typeInterp = typeInterp;
 	}
-	public Object getRemark() {
+	public String getRemark() {
 		return remark;
 	}
-	public void setRemark(Object remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 	public Map<String, Object> getAdditionalProperties() {
@@ -84,9 +84,5 @@ public class ConfigContentModel {
 				+ tag + ", value=" + value + ", description=" + description + ", type=" + type + ", typeInterp="
 				+ typeInterp + ", remark=" + remark + ", additionalProperties=" + additionalProperties + "]";
 	}
-	
-	
-	
-	
 	
 }

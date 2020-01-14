@@ -193,20 +193,20 @@
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder="Policy Order"  style="height: 28px;">
+							placeholder="Policy Order"  style="height: 28px;" disabled>
 						<label for="policyOrder">Policy Order</label>
 					</div>	
 						
 					<div class="row" style="margin-top: 20px;">	
 					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
 						<input type="text" name="period" id="editPeriod"
-							placeholder="Period"  style="height: 28px;">
+							placeholder="Period"  style="height: 28px;" disabled>
 						<label for="period">Period</label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 20px;">
 						<input type="text" id="editstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status"  style="height: 28px;">
+							placeholder="" maxlength="20" placeholder="Status"  style="height: 28px;" disabled>
 						<label for="status">Status</label>
 					</div>
 					</div>	
@@ -221,7 +221,7 @@
 					
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px">
-					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;" placeholder="Description"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;" placeholder="Description" disabled></textarea>
 					<label for="description" class="">Description</label>
 
 					</div>
@@ -229,7 +229,7 @@
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder=""  style="height: 28px;">
+							placeholder=""  style="height: 28px;" disabled>
 						<label for="policyOrder">Policy Order</label>
 					</div>
 					

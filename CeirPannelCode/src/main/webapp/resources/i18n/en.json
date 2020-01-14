@@ -4,5 +4,6 @@
 "rejectedMsg":"The consignment has been marked as rejected.",
 "consignmentApproved":"The consignment has been successfully approved.",
 "errorMsg":"something happend wrong.",
-"havingTxnID":"Do you want to approve the consignment having Transaction ID:"
+"havingTxnID":"Do you want to approve the consignment having Transaction ID:",
+"stockDeleted":"Stock Deleted Successfully"
 }
