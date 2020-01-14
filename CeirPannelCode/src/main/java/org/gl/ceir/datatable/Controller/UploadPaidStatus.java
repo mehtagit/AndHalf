@@ -116,6 +116,7 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
+					
 					Object[] data = {sno,createdOn,nid,deviceTypeInterp,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);

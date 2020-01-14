@@ -244,8 +244,8 @@ input[type='search'] {
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="Price" id="Price1"
-															pattern="[0-9]{0,7}" required="required" maxlength="7">
-														<label for="Price1">Price <span class="star">*</span></label>
+															pattern="[0-9]{0,7}"  maxlength="7">
+														<label for="Price1">Price</label>
 													</div>
 
 													<div class="col s12 m6">

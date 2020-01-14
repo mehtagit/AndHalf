@@ -146,6 +146,17 @@ padding: 0;
 margin-top: 0;
 height: 2.6rem ;
 }
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+position: inherit;
+opacity: 1;
+pointer-events: none;
+}
+[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+display: none;
+}
+input[type="checkbox"] {
+display: block;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -610,9 +621,9 @@ var contextpath = "${context}";
 							</span>
 						</div>
 						   <p>
-      <label style="color: black!important;">
-        <input name="disclamer" type="checkbox" required="required" />
-        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+   <label style="color: black!important;padding-left: 16px;">
+        <input name="disclamer" type="checkbox" required="required" style="margin-left: 12px;">
+        <span style="margin-top=-18px !important;"> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
       </label>
     </p>
     

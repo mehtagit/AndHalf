@@ -104,7 +104,7 @@ padding: 0 !important;
                                             </div>
                                             <div id="SingleImeiUnBlock" class="col s12" style="margin-top: 30px;display: block">
                                                  <form action="" id="SingleImeiUnBlockform" onsubmit="return submitSingleUnBlockDevicesRequest()" method="POST" enctype="multipart/form-data">
-                                                    <div class="row">
+                                                  
                                                         <div class="row">
                                         
                                                             <div class="col s12 m6">
@@ -149,6 +149,10 @@ padding: 0 !important;
                                                                 <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
                                                                 <label for="Remark">Remark <span class="star">*</span></label>
                                                             </div>
+                                                            
+                                                        <div class="row input_fields_wrap">
+                                                        <div class="col s12 m12">
+                                                        <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px;">BlockingType</p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -173,7 +177,6 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 
 </div>
                                                         </div>
-                                                        <div class="row input_fields_wrap">
                                                             <div class="col s12 m12">
                                                                 <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
                                                             </div>
@@ -202,8 +205,12 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                     maxlength="16">
                                                                 <label for="IMEI4">4</label>
                                                             </div>
+                                                        	
+                                                        	<div class="col s12 m12"><span> Required Field are marked with <span class="star">*</span></span></div>
+                                                         </div>
                                                         </div>
-                                                        <span> Required Field are marked with <span class="star">*</span></span>
+                                                        
+                                                       
                                                     </div>
 
                                                     
@@ -253,7 +260,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 
                                                    <div class="input-field col s12 center">
                                                         <button class="btn "  type="submit">Submit</button>
-                                                        <a href=./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
                                             </div>

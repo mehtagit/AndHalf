@@ -367,7 +367,7 @@ public class ConsignmentDatatableController {
 
 
 	//Dropdown items	
-	String[] selectParam= {"select",Translator.toLocale("input.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("input.taxPaidStatus"),"taxPaidStatus",""};
+	String[] selectParam= {"select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
 	for(int i=0; i< selectParam.length; i++) {
 	inputFields= new InputFields();
 	inputFields.setType(selectParam[i]);
@@ -410,7 +410,7 @@ public class ConsignmentDatatableController {
 	pageElement.setButtonList(buttonList);
 
 	//Dropdown items	
-	String[] selectParam= {"select",Translator.toLocale("input.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("input.taxPaidStatus"),"taxPaidStatus",""};
+	String[] selectParam= {"select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
 	for(int i=0; i< selectParam.length; i++) {
 	inputFields= new InputFields();
 	inputFields.setType(selectParam[i]);

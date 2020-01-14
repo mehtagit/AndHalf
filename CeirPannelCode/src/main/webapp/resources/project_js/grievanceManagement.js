@@ -313,23 +313,12 @@ function saveGrievance(){
 	$('.fileDiv').each(function() {	
 
 		
-		/*x={
-				"file":fileData.push($('#docTypeFile'+fieldId)[0].files[0]),
-				"number": $('#docTypetag'+fieldId).val()
-		}
-		fileInfo.push(x);*/
 		var x={
 		"docType":$('#docTypetag'+fieldId).val(),
 		"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 		}
-		
-		//fileData.push($('#docTypeFile'+fieldId)[0].files[0]);
 		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
-		/*formData.append('docTypeTagIdValue',docTypeTagIdValue);*/
-		/*filename=$('#docTypeFile'+fieldId)[0].files[0];
-		*/
 		fileInfo.push(x);
-		
 		fieldId++;
 		i++;
 	});
@@ -356,10 +345,11 @@ function saveGrievance(){
 		async:false,
 	/*	method: 'POST',*/
 		success: function (data, textStatus, jqXHR) {
-
-			console.log(data);
+			var x=data;
+			var y= JSON.parse(x);
+			
 			$('#submitGrievance').openModal();
-			$('#greivanceId').text(data.txnId);
+			$('#greivanceId').text(y.txnId);
 			/*alert(data.errorCode);
 			if(data.errorCode=="0")
 			{
@@ -447,14 +437,48 @@ function saveGrievanceReply()
 	var  grievanceIdToSave= $('#grievanceIdToSave').text();
 	var  grievanceTxnId=  $('#grievanceTxnId').text();
 
-	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="
-			+grievanceTicketStatus);
+	console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="+grievanceTicketStatus);
+	var fieldId=1;
+	var fileInfo =[];
 	var formData= new FormData();
+	var fileData = [];
+	
+	var x;
+	var filename='';
+	var filediv;
+	var i=0;
+	var formData= new FormData();
+	var docTypeTagIdValue='';
+	var filename='';
+	$('.fileDiv').each(function() {	
+		var x={
+		"docType":$('#docTypetag'+fieldId).val(),
+		"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\',''),
+		"grievanceId":$('#grievanceIdToSave').text()
+		}
+		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+		fileInfo.push(x);
+		fieldId++;
+		i++;
+	});
+	
+	var multirequest={
+			"attachedFiles":fileInfo,
+			"txnId":grievanceTxnId,
+			"reply":remark,
+			"grievanceId":grievanceIdToSave,
+			"grievanceStatus":grievanceTicketStatus
+		}
+
+	formData.append('fileInfo[]',JSON.stringify(fileInfo));
+	formData.append('multirequest',JSON.stringify(multirequest));
+	
+	/*
 	formData.append('file', $('#replyFile')[0].files[0]);
 	formData.append('remark',remark);
 	formData.append('grievanceId',grievanceIdToSave);
 	formData.append('txnId',grievanceTxnId);
-	formData.append('grievanceStatus',grievanceTicketStatus);
+	formData.append('grievanceStatus',grievanceTicketStatus);*/
 
 	$.ajax({
 		url: './saveGrievanceMessage',
@@ -466,21 +490,19 @@ function saveGrievanceReply()
 
 			console.log(data);
 			$('#replyMsg').openModal();
+			console.log(data.txnId);
 			if(data.errorCode=="0")
 			{
-				$('#showReplyResponse').text('');
-				$('#showReplyResponse').text(data.message);
+				
+				$('#replyGrievanceId').text(data.txnId);
 
 			}
-			else if(data.errorCode=="3")
+			else 
 			{
-				console.log("status code = 3"); 
 				$('#showReplyResponse').text('');
 				$('#showReplyResponse').text(data.message);
 			}
-			// $('#updateConsignment').modal('open'); 
-			//alert("success");
-
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -509,14 +531,15 @@ function viewGrievanceHistory(grievanceId,filename)
 			console.log("--projectpath--"+projectpath);
 			for(var i=0; i<data.length; i++)
 			{
-				
+				console.log("iiiiiii"+i);
 				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p></div>");
-					for (var j=i ; j<data[i].attachedFiles.length;j++)
+					for (var j=0 ; j<data[i].attachedFiles.length;j++)
 					{
 						
-						
-						$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"'>"+data[i].attachedFiles[j].fileName+"</a><hr></div>");
+						console.log("jjjjjj"+j);
+						$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 					}
+					$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
 
 			}
 		},
@@ -617,7 +640,7 @@ $(".add_field_button").click(function (e) { //on add input button click
 	if (x < max_fields) { //max input box allowed
 		x++; //text box increment
 		$(wrapper).append(
-				'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+				'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>Select File</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">Document Type <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>Select Document Type </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>Select Document Type </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 		); //add input box
 	}
 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {

@@ -1041,7 +1041,6 @@ public class IconsState {
 		String approveAction = "deviceApprovalPopup('" + txnId + "','" + requestType + "')";
 		String rejectAction = "userRejectPopup('" + txnId + "','" + requestType + "')";
 		log.info("============actionResponse=======" + actionResponse);
-		
 		if(source.equals("3")) {
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
 
@@ -1049,7 +1048,6 @@ public class IconsState {
 		else if(source.equals("4")) {
 			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
 		}
-
 		// state related Code
 		String view="<a onclick="+viewAction+"><i class="
 				+viewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";

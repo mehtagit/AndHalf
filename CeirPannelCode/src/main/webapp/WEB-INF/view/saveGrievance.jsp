@@ -125,10 +125,10 @@ placeholder="Upload one or more files">
 <h6 style="color: #000;">Upload Supporting Document</h6>
 <div class="btn">
 <span>Select File</span>
-<input type="file" name="files[]" id="docTypeFile1" multiple>
+<input type="file" name="files[]" id="docTypeFile1" required >
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
+<input class="file-path validate" type="text" 
 placeholder="Upload one or more files">
 <div>
 <p id="myFiles"></p>
@@ -137,7 +137,7 @@ placeholder="Upload one or more files">
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category">Document Type <span class="star">*</span></label>
-<select class="browser-default" id="docTypetag1">
+<select class="browser-default" id="docTypetag1" required>
 <option value="" disabled selected>Select Document Type </option>
 
 </select>
@@ -147,15 +147,15 @@ placeholder="Upload one or more files">
 </select>
 </div>
 </div>
+
+
+</div>
+
+</div>
 <div class="col s12 m6 right">
 <button class="btn right add_field_button"><span
 style="font-size: 20px;">+</span> Add More files</button>
 </div>
-
-</div>
-
-</div>
-
 </div>
 
 <span> Required Field are marked with <span class="star">*</span></span>

@@ -111,6 +111,8 @@
                                             <label for="locality" class="active">Locality </label>
                                         </div>
                                         
+                                      
+                                        
                                          <div class="input-field col s12 m6 l6">
 												<input type="text" name="district" id="district" maxlength="20" value="${registration.district	}" disabled="" placeholder="">
 												 <label for="district">District</label>

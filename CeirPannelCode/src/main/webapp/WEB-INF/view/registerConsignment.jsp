@@ -112,9 +112,7 @@ textarea.materialize-textarea {
 	color: red;
 }
 
-select option:first-child {
-	color: red;
-}
+
 
 section {
 	margin-top: 10px;
