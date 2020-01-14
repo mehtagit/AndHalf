@@ -48,6 +48,7 @@ public class PolicyConfigController {
 
 		}
 	
+
 	
 	@PutMapping("/policy/update")
 	public @ResponseBody PolicyConfigContent updatePolicy (@RequestBody PolicyConfigContent policyConfigContent) {
@@ -57,5 +58,4 @@ public class PolicyConfigController {
 		return policyConfigContent;
 		
 	}
-	
 }

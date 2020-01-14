@@ -373,11 +373,12 @@
         <div class="modal-content">
             
             <div class="row">
-                <h6>The stock with Transaction ID : <span id="approveStockTxnId"> </span> has been
+                <h6 id="stockApproveMessage">The stock with Transaction ID : <span id="approveStockTxnId"> </span> has been
                     successfully paid.</h6>
+                    <input type="text" id="approveStockTransactionId" style="display: none;">
             </div>
             <div class="row">
-                <h6>Do you approve the stock?</h6>
+                <h6 id="stockAppapprove">Do you approve the stock?</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">

@@ -797,10 +797,11 @@ public class IconsState {
 
 
 	/********************************** Icons for AdminUPS **********************************/ 	
-	public String adminUserPaidStatusIcon(Long imei1,String createdOn) {
+	public String adminUserPaidStatusIcon(Long imei1,String createdOn,String txnId) {
 		String viewAction="viewDetails('"+imei1+"')";
-		String approveAction ="deviceApprovalPopup("+imei1+",'"+createdOn.replace(" ", "=")+"')";
-		String rejectAction= "userRejectPopup('"+imei1+"')";
+
+		String approveAction ="deviceApprovalPopup("+imei1+",'"+createdOn.replace(" ", "=")+"','"+txnId+"')";
+		String rejectAction= "userRejectPopup('"+imei1+"','"+txnId+"')";
 
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
@@ -916,9 +917,9 @@ public class IconsState {
 	/********************************** Icons for Admin MEssage Management**********************************/ 
 
 	public String adminMessageIcons(String userStatus, String tag) { 
-
 		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
+
 
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -947,6 +948,7 @@ public class IconsState {
 
 		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
+
 
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -1069,6 +1071,10 @@ public class IconsState {
 								+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 
 					} else if (actionModel.getState() == 4 || actionModel.getState() == 5) {
+						view = "<a onclick=" + viewAction + "><i class=" + viewIcon + " aria-hidden=\"true\" title="
+								+ viewIconTitle + " ></i></a>";
+						download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
+								+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
 						approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 								+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 						reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon

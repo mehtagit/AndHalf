@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.pagination.model.MessageContentModel;
-import org.gl.ceir.pagination.model.PolicyConfigContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,8 @@ public class SystemAdminController {
 		return mv; 
 	}
 	
+	
+
 	
 	
 	@PostMapping("/message/viewTag") 

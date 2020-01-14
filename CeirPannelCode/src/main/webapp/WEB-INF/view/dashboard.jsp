@@ -81,7 +81,8 @@ var contextpath = "${context}";
 					</ul>
 					
 					
-				<ul id="chat-out" class="right hide-on-med-and-down"
+				
+					<ul id="chat-out" class="right hide-on-med-and-down"
 style="overflow: inherit !important;">
 
 <li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
@@ -92,9 +93,9 @@ style="overflow: inherit !important;">
 					</select></div>
 			</div>
 			</li>
+		<li><a href="./homePage" id="newUserLink" style="color:white;">Home</a>	</li>			
 					
-					
-<li><a
+<li class="profileInfo"><a
 class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 href="#" data-activates="profile-dropdown" style="height: 65px;"><i
 class="mdi-action-account-circle"

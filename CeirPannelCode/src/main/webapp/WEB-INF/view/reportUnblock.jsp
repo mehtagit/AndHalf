@@ -29,6 +29,9 @@
       line-height: 1.5 !important;
       text-align: center;
     }
+    textarea.materialize-textarea {
+padding: 0 !important;
+}
     </style>
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
@@ -146,46 +149,29 @@
                                                                 <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
                                                                 <label for="Remark">Remark <span class="star">*</span></label>
                                                             </div>
-                                                                           <div class="" style="margin-left: 36%; margin-top: -25px;">
-				BlockingType
-				<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
-					value="Immediate"
-					onclick="document.getElementById('calender').style.display = 'none';"
-					name="stolenBlockPeriod" checked> Immediate
-				</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
-					value="Default"
-					onclick="document.getElementById('calender').style.display = 'none';"
-					name="stolenBlockPeriod"> Default
-				</label> <label> <input type="radio" value="tilldate" class="blocktypeRadio"
-					onclick="document.getElementById('calender').style.display = 'block';"
-					name="stolenBlockPeriod"> Later
-				</label>
-				<div class="col s6 m2 responsiveDiv"
-					style="display: none; width: 30%;" id="calender">
-					<div id="startdatepicker" class="input-group date">
-						<input  type="text" id="stolenDatePeriodUnblock" required="required"
-							style="margin-top: -9px" /> <span class="input-group-addon"
-							style="color: #ff4081"><i class="fa fa-calendar"
-							aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
-					</div>
+<p style="margin-top: 3px; margin-bottom: 5px;">BlockingType</p>
+<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+value="Immediate"
+onclick="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod" checked> Immediate
+</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+value="Default"
+onclick="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod"> Default
+</label> <label> <input type="radio" value="tilldate" class="blocktypeRadio"
+onclick="document.getElementById('calender').style.display = 'block';"
+name="stolenBlockPeriod"> Later
+</label>
+<div class="col s6 m2 responsiveDiv"
+style="display: none; width: 30%; float: right; margin-right: 30%; margin-top: -15px;" id="calender">
+<div id="startdatepicker" class="input-group date">
+<input type="text" id="stolenDatePeriodUnblock" required="required"
+style="margin-top: -9px" /> <span class="input-group-addon"
+style="color: #ff4081"><i class="fa fa-calendar"
+aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
 
-				</div>
-
-
-				<div class="col s12 m2 l2" style="width: 40%; display: none"
-					id="stolenDate">
-
-					<label for="TotalPrice" class="center-align">Till date</label>
-					<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
-
-						<input class="form-control" name="inputsaves" type="text"
-							id="startDateFilter" readonly /> <span class="input-group-addon"
-							style="color: #ff4081"><i
-							class="glyphicon glyphicon-calendar"
-							onclick="_Services._selectstartDate()"></i></span>
-					</div>
-				</div>
-			</div>
+</div>
                                                         </div>
                                                         <div class="row input_fields_wrap">
                                                             <div class="col s12 m12">

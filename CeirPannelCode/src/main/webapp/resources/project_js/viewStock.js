@@ -487,13 +487,27 @@ function setAllDropdowns(){
 
 function ApproveStock(txnId)
 {
-	console.log("stock txnid="+txnId);
-	$('#ApproveStock').openModal();
-	$('#approveStockTxnId').text(txnId);
+	var userType=$("body").attr("data-roleType");
+	if(userType=='Custom')
+		{
+		$('#ApproveStock').openModal();
+		$('#approveStockTxnId').text(txnId);
+		
+		}
+	else {
+		$('#ApproveStock').openModal();
+		$('#stockApproveMessage').text('');
+	    $('#stockApproveMessage').text('Do you want to approve the stock having Transaction ID:'+txnId);
+	    $('#stockAppapprove').text('');
+	
+	}
+	
+	$('#approveStockTransactionId').val(txnId);
+	
 }
 
 function approveStockSubmit(actiontype){
-	var txnId=$('#approveStockTxnId').text();
+	var txnId=$('#approveStockTransactionId').val();
 	console.log("txnId==="+txnId);
 	var approveRequest={
 			"action": actiontype,

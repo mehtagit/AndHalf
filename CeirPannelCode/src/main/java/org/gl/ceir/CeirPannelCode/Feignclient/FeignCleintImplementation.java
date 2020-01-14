@@ -287,8 +287,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				@RequestMapping(value="/table-actions/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
 				public List<ActionModel> tableActionFeign(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
 				
-				
-				//************************************ Policy update Feign  *************************************************
+		//************************************ Policy update Feign  *************************************************
 				
 				@PutMapping(value="/policy/update")
 				public @ResponseBody PolicyConfigContent updatePolicy(PolicyConfigContent policyConfigContent);
