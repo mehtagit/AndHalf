@@ -1041,10 +1041,13 @@ public class IconsState {
 		String approveAction = "deviceApprovalPopup('" + txnId + "','" + requestType + "')";
 		String rejectAction = "userRejectPopup('" + txnId + "','" + requestType + "')";
 		log.info("============actionResponse=======" + actionResponse);
-		if (source.equals("2")) {
-			viewAction = "viewDeviceDetails('" + txnId + "','view','" + requestType + "')";
-		} else if (source.equals("4")) {
-			viewAction = "viewblockImeiDevice('" + txnId + "','view','" + requestType + "')";
+		
+		if(source.equals("3")) {
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+
+		}
+		else if(source.equals("4")) {
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
 		}
 
 		// state related Code

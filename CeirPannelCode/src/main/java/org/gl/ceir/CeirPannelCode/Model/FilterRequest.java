@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
 	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -153,6 +153,18 @@ public class FilterRequest {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
+	public Integer getChannel() {
+		return channel;
+	}
+	public void setChannel(Integer channel) {
+		this.channel = channel;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -206,12 +218,12 @@ public class FilterRequest {
 		builder.append(action);
 		builder.append(", operatorTypeId=");
 		builder.append(operatorTypeId);
+		builder.append(", channel=");
+		builder.append(channel);
+		builder.append(", type=");
+		builder.append(type);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
-	
 	
 }

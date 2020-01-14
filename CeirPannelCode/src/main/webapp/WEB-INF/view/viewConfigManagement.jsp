@@ -172,36 +172,36 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="Id" id="EditId"
 							placeholder="ID" disabled
-							style="height: 28px;"> <label for="viewId">Id</label>
+							style="height: 28px;" hidden> 
 					</div>
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="editTag"
 							placeholder="tag" disabled
-							style="height: 28px;"> <label for="editTag">Tag</label>
+							style="height: 28px;" hidden>
 					</div>
 				
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" style="height: 22px;"></textarea>
+					<textarea id="editValue" class="materialize-textarea" Placeholder="" style="height: 22px;"></textarea>
 					<label for="editValue" class="">Value</label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" Placeholder="" style="height: 22px;" disabled></textarea>
 					<label for="editdescription" class="">Description</label>
 
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="edittype" name="type"
-							placeholder="" maxlength="20"  style="height: 28px;">
+							placeholder="" maxlength="20"  style="height: 28px;" disabled>
 						<label for="type">type</label>
 					</div>
 
 					<div class="input-field col s12 m6">
-					<textarea id="editremarks" class="materialize-textarea" style="height: 22px;" ></textarea>
+					<textarea id="editremarks" class="materialize-textarea" style="height: 22px;" disabled></textarea>
 					<label for="editremarks" class="">Remarks</label>
 
 					</div>

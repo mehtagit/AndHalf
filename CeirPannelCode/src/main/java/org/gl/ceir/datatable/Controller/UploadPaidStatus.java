@@ -116,7 +116,7 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
-					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,status,action};
+					Object[] data = {sno,createdOn,nid,deviceTypeInterp,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -139,7 +139,7 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
-					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,taxStatus,status,action};
+					Object[] data = {sno,createdOn,nid,deviceTypeInterp,country,taxStatus,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);

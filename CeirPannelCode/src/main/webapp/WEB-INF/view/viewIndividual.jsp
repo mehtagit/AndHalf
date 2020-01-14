@@ -69,9 +69,9 @@
                 <form id="registrationForm">
                     <div class="card-panel registration-form">
                         <div class="row">
-                            <h5>View Information</h5>
+                            <h5>View Individual Information</h5>
                             <hr>
-                            <div class="row">
+                            <div class="row" style="margin-top: 10px;">
                                 <div class="input-field col s12 m4 l4">
                                     <input type="text" name="firstName" id="firstName" value="${registration.firstName}" maxlength="20" placeholder="" disabled="">
                                     <label for="firstName" class="center-align active">First Name</label>
@@ -88,13 +88,13 @@
                                 </div>
 
                                 <div class="input-field col s12 m6">
-                                    <input type="text" name="asType" id="asType" value="${registration.type}" maxlength="20" placeholder="" disabled="">
+                                    <input type="text" name="asType" id="asType" value="${registration.asTypeName}" maxlength="20" placeholder="" disabled="">
                                     <label for="asType" class="active">As Type </label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6" id="passportNumberDiv">
                                     <input type="text" name="passportNumber" id="passportNumber" value="${registration.passportNo}" maxlength="20" placeholder="" disabled="">
-                                    <label for="passportNumber" class="active">National ID/Passport Number </label>
+                                    <label for="passportNumber" class="active">National ID</label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6">
@@ -127,46 +127,64 @@
                                     <input type="text" name="streetNumber" id="streetNumber" value="${registration.street}" maxlength="30" placeholder="" disabled="">
                                     <label for="streetNumber" class="active">Street Number</label>
                                 </div>
+                                
+                                <div class="input-field col s12 m6 l6">
+									<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
+									<label for="village">Village</label>
+								</div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="locality" id="locality" value="${registration.locality}" maxlength="20" placeholder="" disabled="">
                                     <label for="locality" class="active">Locality </label>
                                 </div>
                                 
-                                 <div class="input-field col s12 m6 l6">
-                                                <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
-                                                <label for="commune" class="active">Commune </label>
-                                  </div>
-
                                 <div class="input-field col s12 m6 l6">
-                                    <input type="text" name="province" id="province" value="${registration.province}" maxlength="20" placeholder="" disabled="">
-                                    <label for="province" class="active">Province</label>
-                                </div>
-
+									<input type="text" name="district" id="district" maxlength="20" value="${registration.district	}" disabled="" placeholder="">
+									<label for="district">District</label>
+								</div>
+                                
+                                
+                                 <div class="input-field col s12 m6 l6">
+                                       <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
+                                       <label for="commune" class="active">Commune </label>
+                                  </div>
+								
+								<div class="input-field col s12 m6 l6">
+									  <input type="text" name="pin" id="pin" maxlength="20" value="${registration.postalCode}" disabled="" placeholder="">
+									  <label for="pin">Postal code </label>
+								</div> 	
+									
+                                
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="country" id="country" value="${registration.country}" maxlength="20" placeholder="" disabled="">
                                     <label for="country" class="active">Country</label>
                                 </div>
-                            </div>
+                                
+                                
+                                <div class="input-field col s12 m6 l6">
+                                    <input type="text" name="province" id="province" value="${registration.province}" maxlength="20" placeholder="" disabled="">
+                                    <label for="province" class="active">Province</label>
+                                </div>
+						</div>
 
                             <div class="row">
                                     <div class="col s12 m6 l6">
                                             <label for="vatNumber">VAT Registration </label>
                                             <div class=" boxHeight">
-                                                <input class="with-gap" name="group3" type="radio" checked="" disabled="">
+                                                <input class="with-gap" name="group3" type="radio" disabled="">
                                                 Yes
                                                 <input class="with-gap" name="group3" type="radio" style="margin-left: 20px;" disabled="">
                                                 No
                                             </div>
-                                        </div>
+                               </div>
 
                                 <div class="input-field col s12 m6" id="vatNumberField">
-                                    <input type="text" name="roleType" id="roleType" value="${registration.roles}" maxlength="16" placeholder="" disabled="">
+                                    <input type="text" name="roleType" id="roleType" value="${registration.type}" maxlength="16" placeholder="" disabled="">
                                     <label for="roleType" class="active">Role Type </label>
                                 </div>
 
                                 <div class="input-field col s12 m6" id="vatNumberField">
-                                    <input type="text" name="vatNumber" id="vatNumber" value="${registration.vatNo}" maxlength="16" placeholder="" disabled="">
+                                    <input type="text" name="vatNumber" id="vatNumber" value="${registration.vatStatus}" maxlength="16" placeholder="" disabled="">
                                     <label for="vatNumber" class="active">VAT Number </label>
                                 </div>
                             </div>

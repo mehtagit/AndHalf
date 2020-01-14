@@ -25,7 +25,8 @@ function configManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val()
+			"tag":$('#parametername').val(),
+			"type" : parseInt($('#type').val())
 	}
 	
 	$.ajax({
@@ -171,7 +172,7 @@ function viewDetails(tag){
 function setViewPopupData(data){
 	$("#viewTag").val(data.tag);
 	$("#viewValue").val(data.value);
-	$("#viewtype").val(data.type);
+	$("#viewtype").val(data.typeInterp);
 	$("#description").val(data.description);
 	$("#remarks").val(data.remark);
 }
@@ -203,7 +204,7 @@ function setEditPopupData(data){
 	$("#EditId").val(data.id);
 	$("#editTag").val(data.tag);
 	$("#editValue").val(data.value);
-	$("#edittype").val(data.type);
+	$("#edittype").val(data.typeInterp);
 	$("#editdescription").val(data.description);
 	$("#editremarks").val(data.remark);
 }

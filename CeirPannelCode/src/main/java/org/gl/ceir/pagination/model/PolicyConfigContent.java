@@ -14,9 +14,10 @@ public class PolicyConfigContent {
 	private String tag;
 	private String value;
 	private String description;
-	private Object period;
-	private Object status;
-	private Object remark;
+	private String period;
+	private Integer status;
+	private String remark;
+	private Integer type;
 	private Integer policyOrder;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
@@ -55,23 +56,29 @@ public class PolicyConfigContent {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Object getPeriod() {
+	public String getPeriod() {
 		return period;
 	}
-	public void setPeriod(Object period) {
+	public void setPeriod(String period) {
 		this.period = period;
 	}
-	public Object getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(Object status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Object getRemark() {
+	public String getRemark() {
 		return remark;
 	}
-	public void setRemark(Object remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
 	}
 	public Integer getPolicyOrder() {
 		return policyOrder;
@@ -85,14 +92,35 @@ public class PolicyConfigContent {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	
 	@Override
 	public String toString() {
-		return "PolicyConfigContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
-				+ tag + ", value=" + value + ", description=" + description + ", period=" + period + ", status="
-				+ status + ", remark=" + remark + ", policyOrder=" + policyOrder + ", additionalProperties="
-				+ additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("PolicyConfigContent [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", policyOrder=");
+		builder.append(policyOrder);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append("]");
+		return builder.toString();
 	}
-	
 	
 }
