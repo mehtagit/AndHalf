@@ -119,7 +119,7 @@ else {
 	public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supplierId",required = false) String supplierId,@RequestParam(name="supplierName",required = false) String supplierName
 			,@RequestParam(name="invoiceNumber",required = false) String invoiceNumber,@RequestParam(name="quantity",required = false) int quantity,
 			@RequestParam(name="file",required = false) MultipartFile file,HttpSession session) {
-
+		GenricResponse response=null;
 		String userName=session.getAttribute("username").toString();
 		int userId= (int) session.getAttribute("userid");
 		String name=session.getAttribute("name").toString();
@@ -154,6 +154,11 @@ else {
 		catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+			response.setMessage("file is not selected ");
+			response.setErrorCode("500");
+			log.error(e.getMessage(), e);
+			log.info("response after exception="+response);
+			return response;
 		}
 		// set reaquest parameters into model class
 		stockUpload.setSupplierId(supplierId);
@@ -165,11 +170,24 @@ else {
 		stockUpload.setUserId(userId);
 		stockUpload.setRoleType(selectedRoletype);
 		stockUpload.setUserType(roletype);
-		log.info("stock form parameters passed to register consignment api "+stockUpload);
-		GenricResponse response = feignCleintImplementation.uploadStock(stockUpload);
-		log.info("response from register consignment api"+response);
+		log.info("stock form parameters passed to upload stock api "+stockUpload);
+		
+		try {
+		 response = feignCleintImplementation.uploadStock(stockUpload);
+		log.info("response from upload stock api"+response);
 		log.info("upload stock  exit point.");
 		return response;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			log.info("exception==."+response);
+			log.info("==========."+e);
+			response.setMessage("somtething wrong happend");
+			response.setErrorCode("500");
+			return response;
+			
+		}
+	
 
 
 	}

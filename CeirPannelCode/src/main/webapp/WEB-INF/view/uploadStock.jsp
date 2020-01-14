@@ -378,12 +378,52 @@ to {
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
 	<script>
 window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openUploadStock?reqType=formPage&lang="+lang);
 }); 
+$.i18n().locale = lang;
+var successMsg,invoiceNumberExist;
+$.i18n().load( {
+	'en': '../resources/i18n/en.json',
+	'km': '../resources/i18n/km.json'
+} ).done( function() { 
+	successMsg=$.i18n('successMsg');
+	invoiceNumberExist=$.i18n('invoiceNumberExist');
+	
+});
 
 
 function uploadStock(){
@@ -414,7 +454,7 @@ function uploadStock(){
 			 if(data.errorCode=="0")
 				 {
 				 console.log("status code = 0");
-				$('#stockSuccessMessage').text('Your form has been successfully submitted. The Transaction ID for future reference is ');
+				$('#stockSuccessMessage').text(successMsg);
 			 $('#stockSuccessMessage').append(data.txnId);
 			 //$('#errorCode').val(data.errorCode);
 				 }
@@ -422,9 +462,14 @@ function uploadStock(){
 				 {
 				console.log("status code = 3"); 
 				$('#sucessMessage').text('');
-				$('#sucessMessage').text("Invoice number already exist");
+				$('#sucessMessage').text(invoiceNumberExist);
 				 $('#errorCode').val(data.errorCode);
 				 }
+			 else if(data.errorCode=="1"){
+				    $('#stockSuccessMessage').text('');
+					$('#stockSuccessMessage').text(data.message);
+			 }
+			 
 		   // $('#updateConsignment').modal('open'); 
 			//alert("success");
 			

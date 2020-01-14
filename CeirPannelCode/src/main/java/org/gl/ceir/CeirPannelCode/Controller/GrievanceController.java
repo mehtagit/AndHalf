@@ -166,9 +166,7 @@ public class GrievanceController {
 		
 		//***************************************** view Grievance controller *********************************
 				@RequestMapping(value="/saveGrievanceMessage",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-				public @ResponseBody GenricResponse saveGrievance(@RequestParam(name="grievanceId",required = false) String grievanceId,@RequestParam(name="remark",required = false) String remark,
-						@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="file",required = false) MultipartFile file,
-						HttpSession session,@RequestParam(name="grievanceStatus") Integer grievanceTicketStatus)
+				public @ResponseBody GenricResponse saveGrievanceReply(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session)
 				{
 				
 
@@ -176,16 +174,24 @@ public class GrievanceController {
 					int userId= (int) session.getAttribute("userid"); 
 					String roletype=(String) session.getAttribute("usertype");
 				    log.info("userid=="+userId+" roletype="+roletype);
-					GrievanceModel grievanceModel=new GrievanceModel();
-
+				    
+				    String grievanceDetails=request.getParameter("multirequest");
+					log.info("grievanceDetails------"+grievanceDetails);
+					Gson gson= new Gson(); 	
+					GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+					grievanceRequest.setUserId(userId);
+					grievanceRequest.setUserType(roletype);
+					int i=0;
+					for( MultipartFile file : fileUpload) {
+						String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
 					try {
-						if(file==null)
+						if(fileUpload==null)
 						{
-							grievanceModel.setFileName("");
+							grievanceRequest.getAttachedFiles().get(i).setFileName("");
 						}
 						else {
 						byte[] bytes = file.getBytes();
-						String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grievanceId+"/";
+						String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 						File dir = new File(rootPath + File.separator);
 
 						if (!dir.exists()) 
@@ -199,25 +205,26 @@ public class GrievanceController {
 						stream.write(bytes);
 						stream.close();
 						}
-						grievanceModel.setFileName(file.getOriginalFilename());
+						
 						
 					}
 					catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
 					}
+					i++;
+					}
+		/*
+		 * grievanceModel.setTxnId(txnId); grievanceModel.setReply(remark);
+		 * grievanceModel.setGrievanceId(grievanceId); grievanceModel.setUserId(userId);
+		 * grievanceModel.setUserType(roletype);
+		 * grievanceModel.setGrievanceStatus(grievanceTicketStatus);
+		 */
 				
-				
-				grievanceModel.setTxnId(txnId);
-				grievanceModel.setReply(remark);
-				grievanceModel.setGrievanceId(grievanceId);
-				grievanceModel.setUserId(userId);
-				grievanceModel.setUserType(roletype);
-				grievanceModel.setGrievanceStatus(grievanceTicketStatus);
-				
-				log.info("request passed to the save grievance method="+grievanceModel);
-				response= grievanceFeignClient.saveGrievanceMessage(grievanceModel);
+				log.info("request passed to the save grievance method="+grievanceRequest);
+				response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
 				log.info("response  from   save grievance method="+response);	
+				response.setTxnId(grievanceRequest.getGrievanceId());
 				return response;
 			}
 

@@ -1074,7 +1074,8 @@ maxlength="16">
 
 </div>
 
-<div class="input-field col s12 center">
+
+<div class="input-field col s12 center popup-btn-div">
 <button class="btn" type="submit" >Update</button>
 
 <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
@@ -1230,7 +1231,7 @@ maxlength="16">
 
                                                     </div>
 
-                                                    <div class="input-field col s12 center">
+                                                    <div class="input-field col s12 center popup-btn-div">
                                                        <!--  <button class="btn" type="submit">Submit</button> -->
                                                          <button type="button" class="modal-close btn">OK</button>
                                                     </div>
@@ -1372,10 +1373,11 @@ maxlength="16">
 
                                                     </div>
 
-                                                    <div class="input-field col s12 center">
+                                                   
+                                                    <div class="input-field col s12 center popup-btn-div">
                                                        <button class="btn" type="submit" >Update</button>
                                                 
-                                                        <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
+                                                        <button type="button" class="modal-close btn popup-btn-div" onclick="singleImeiFormClear()">Cancel</button>
                                                     </div>
                                                 </form>
                                            

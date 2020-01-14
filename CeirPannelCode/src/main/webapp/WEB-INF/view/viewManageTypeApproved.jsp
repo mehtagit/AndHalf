@@ -179,8 +179,9 @@ textarea {
 
 				</div>
 
-				<div class="row">
-					<div class="input-field col s12 m6">
+				<div class="row ">
+				<div class="col s12 m12">
+					<div class="input-field  col s12 m6">
 						<input type="text" id="viewapproveDisapproveDate" class="datepicker picker__input"
 							name="approveRejectionDate" pattern="[]" title="" maxlength="20"
 							placeholder="" disabled="" readonly="" tabindex="-1"

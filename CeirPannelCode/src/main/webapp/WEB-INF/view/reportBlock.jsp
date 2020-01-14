@@ -151,7 +151,11 @@
                                                         </select>
                                                     </div>
                                                     
-<div class="col s12 m6">
+
+                                                        </div>
+                                                        <div class="row input_fields_wrap">
+                                                        
+                                                        <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px">BlockingType</p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -191,8 +195,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
 </div>
-                                                        </div>
-                                                        <div class="row input_fields_wrap">
+                                                        
                                                             <div class="col s12 m12">
                                                                 <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
                                                             </div>
