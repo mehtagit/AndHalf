@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
@@ -43,6 +44,9 @@ public class FileController {
 
 	@Autowired
 	private FileStorageService fileStorageService;
+	
+	@Autowired
+	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	private DocumentsService documentService;
@@ -125,5 +129,34 @@ public class FileController {
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
+	}
+	
+	@ApiOperation(value = "Download Sample Stoke File.", response = String.class)
+	@RequestMapping(path = "/Download/SampleFile", method = RequestMethod.GET)
+	public String downloadSampleFile(String samplFileType) {
+
+		String directoryPath = fileStorageProperties.getDownloadDir();
+		if("Stoke".equalsIgnoreCase(samplFileType)) {
+			directoryPath= "http://13.233.39.58:9090/CEIR/Design/SampleFiles/StokeSampleFile.csv";
+			return directoryPath;
+		}else {
+			directoryPath="http://13.233.39.58:9090/CEIR/Design/SampleFiles/StolenAndRecovery.csv";
+			return directoryPath;
+		}
+	}
+
+	@ApiOperation(value = "Download Stoke upload File.", response = String.class)
+	@RequestMapping(path = "/Download/uploadFile", method = RequestMethod.GET)
+	public String downloadStrokeFile(String fileName, String txnId, String fileType) {
+
+		String directoryPath = fileStorageProperties.getDownloadDir();
+
+		if("ERROR".equalsIgnoreCase(fileType)) {
+			directoryPath ="http://13.233.39.58:9090/CEIR/Design/"+txnId+"/error.csv";
+			return directoryPath;
+		}else {	
+			directoryPath = "http://13.233.39.58:9090/CEIR/Design/"+txnId+"/"+fileName;
+			return directoryPath;
+		}
 	}
 }

@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -37,13 +40,18 @@ public class PolicyConfigurationDb implements Serializable {
 
 	private String period;
 	
-	private String status;
+	private Integer status;
+	@Transient
+	private String statusInterp;
 	
 	private String remark;
 	
 	private Integer type;
 	
 	private int policyOrder;
+	
+	@NotNull
+	private Integer active;
 	
 	public Long getId() {
 		return id;
@@ -87,10 +95,10 @@ public class PolicyConfigurationDb implements Serializable {
 	public void setPeriod(String period) {
 		this.period = period;
 	}
-	public String getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	public String getRemark() {
@@ -113,6 +121,48 @@ public class PolicyConfigurationDb implements Serializable {
 	}
 	public void setType(Integer type) {
 		this.type = type;
+	}
+	
+	public Integer getActive() {
+		return active;
+	}
+	public void setActive(Integer active) {
+		this.active = active;
+	}
+	public String getStatusInterp() {
+		return statusInterp;
+	}
+	public void setStatusInterp(String statusInterp) {
+		this.statusInterp = statusInterp;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("PolicyConfigurationDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", policyOrder=");
+		builder.append(policyOrder);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

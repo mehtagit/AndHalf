@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -42,6 +43,9 @@ public class SystemConfigurationDb implements Serializable {
 	private String typeInterp;
 	
 	private String remark;
+	
+	@NotNull
+	private Integer active;
 	
 	public Long getId() {
 		return id;
@@ -99,6 +103,30 @@ public class SystemConfigurationDb implements Serializable {
 	}
 	public void setTypeInterp(String typeInterp) {
 		this.typeInterp = typeInterp;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("SystemConfigurationDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", typeInterp=");
+		builder.append(typeInterp);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
@@ -37,9 +36,6 @@ public class ConsignmentController {
 
 	@Autowired
 	StolenAndRecoveryServiceImpl stolenAndRecoveryServiceImpl;
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	StackholderPolicyMappingServiceImpl stackholderPolicyMappingServiceImpl;
@@ -135,36 +131,6 @@ public class ConsignmentController {
 
 		return mapping;
 	}
-
-	@ApiOperation(value = "Download Sample Stoke File.", response = String.class)
-	@RequestMapping(path = "/Download/SampleFile", method = RequestMethod.GET)
-	public String downloadSampleFile(String samplFileType) {
-
-		String directoryPath=fileStorageProperties.getDownloadDir();
-		if("Stoke".equalsIgnoreCase(samplFileType)) {
-			directoryPath= "http://13.233.39.58:9090/CEIR/Design/SampleFiles/StokeSampleFile.csv";
-			return directoryPath;
-		}else {
-			directoryPath="http://13.233.39.58:9090/CEIR/Design/SampleFiles/StolenAndRecovery.csv";
-			return directoryPath;
-		}
-	}
-
-	@ApiOperation(value = "Download Stoke upload File.", response = String.class)
-	@RequestMapping(path = "/Download/uploadFile", method = RequestMethod.GET)
-	public String downloadStrokeFile(String fileName,String txnId,String fileType) {
-
-		String directoryPath=fileStorageProperties.getDownloadDir();
-
-		if("ERROR".equalsIgnoreCase(fileType)) {
-			directoryPath ="http://13.233.39.58:9090/CEIR/Design/"+txnId+"/error.csv";
-			return directoryPath;
-		}else {	
-			directoryPath = "http://13.233.39.58:9090/CEIR/Design/"+txnId+"/"+fileName;
-			return directoryPath;
-		}
-	}
-
 
 	@ApiOperation(value = "Delete Consignment.", response = GenricResponse.class)
 	@RequestMapping(path = "/consigment/delete", method = RequestMethod.DELETE)

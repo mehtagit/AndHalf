@@ -112,6 +112,11 @@ public class StockServiceImpl {
 
 			if("Custom".equalsIgnoreCase(stackholderRequest.getUserType())) {
 				User user =	userRepository.getByUsername(stackholderRequest.getSupplierId());
+				
+				if(Objects.isNull(user)) {
+					logger.info("This is not a valid user to assign a stock. ");
+					return new GenricResponse(1, "This is not a valid user.", "");
+				}
 				stackholderRequest.setUserId(new Long(user.getId()));
 				stackholderRequest.setUser(user);
 

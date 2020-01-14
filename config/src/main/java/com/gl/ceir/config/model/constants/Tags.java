@@ -16,5 +16,6 @@ public interface Tags {
 	String CONFIG_TYPE = "CONFIG_TYPE";
 	String DOC_TYPE = "DOC_TYPE";
 	String CHANNEL = "CHANNEL";
+	String IS_ACTIVE = "IS_ACTIVE";
 		
 }

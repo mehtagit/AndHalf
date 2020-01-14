@@ -136,8 +136,9 @@ public class ConfigurationManagementServiceImpl {
 			if(genricResponse.getErrorCode() != 0) {
 				return genricResponse;
 			}
-			
+
 			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
+			logger.info("Persisted data " + systemConfigurationDb2);
 
 			if(Objects.isNull(systemConfigurationDb2)) {
 				return new GenricResponse(15, "This Id does not exist", "");
@@ -147,12 +148,13 @@ public class ConfigurationManagementServiceImpl {
 					new SystemConfigurationHistoryDb(systemConfigurationDb2.getTag(), systemConfigurationDb2.getValue(), systemConfigurationDb2.getDescription()
 							));
 
+			systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
 			systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 			return new GenricResponse(0, "System configuration update Sucessfully", "");
 
 		} catch (Exception e) {
-			logger.info("Exception found= " + e.getMessage());
+			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
 		}
 	}
@@ -228,9 +230,9 @@ public class ConfigurationManagementServiceImpl {
 
 			messageConfigurationHistoryDbRepository.save(mshb);
 
-			messageConfigurationDb.setCreatedOn(mcd.getCreatedOn());
-			messageConfigurationDb.setTag(mcd.getTag());
-			messageConfigurationDbRepository.save(messageConfigurationDb);
+			mcd.setValue(messageConfigurationDb.getValue());
+			logger.info("Persisted message data " + messageConfigurationDb);
+			messageConfigurationDbRepository.save(mcd);
 
 			return new  GenricResponse(0, "Message config info update sucessfully", "");
 
@@ -275,7 +277,13 @@ public class ConfigurationManagementServiceImpl {
 			if(Objects.nonNull(filterRequest.getStatus()))
 				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			return policyConfigurationDbRepository.findAll(sb.build(), pageable);
+			Page<PolicyConfigurationDb> page = policyConfigurationDbRepository.findAll(sb.build(), pageable);
+
+			for(PolicyConfigurationDb policyConfigurationDb : page.getContent()) {
+				policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
+			}
+
+			return page;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -301,7 +309,7 @@ public class ConfigurationManagementServiceImpl {
 			if(genricResponse.getErrorCode() != 0) {
 				return genricResponse;
 			}
-			
+
 			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getByTag(policyConfigurationDb.getTag());
 			if(Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This tag does not exist", "");
@@ -312,11 +320,11 @@ public class ConfigurationManagementServiceImpl {
 			mshb.setDescription(mcd.getDescription());
 			mshb.setTag(mcd.getTag());
 			mshb.setValue(mcd.getValue());
-
 			policyConfigurationHistoryDbRepository.save(mshb);
 
 			policyConfigurationDb.setTag(mshb.getTag());
 			policyConfigurationDb.setCreatedOn(mcd.getCreatedOn());
+			policyConfigurationDb.setActive(mcd.getActive());
 			policyConfigurationDbRepository.save(policyConfigurationDb);
 
 			return new  GenricResponse(0, "Policy config info update sucessfully", "");
@@ -433,7 +441,7 @@ public class ConfigurationManagementServiceImpl {
 			logger.info("Value of a tag can't be set to null or empty.");
 			return new GenricResponse(2, "Value of a tag can't be set to null or empty.","");
 		}
-		
+
 		return new GenricResponse(0, "","");
 	}
 }

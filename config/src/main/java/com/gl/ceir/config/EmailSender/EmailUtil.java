@@ -81,7 +81,7 @@ public class EmailUtil {
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
 			String featureName, String subFeature, String featureTxnId, String subject) {
 		try {
-			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTag(tag);
+			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 
 			/*// Mail send to user and Custom.
 			if(sendEmail(userProfile.getEmail(), "jangrapardeep695@gmail.com", "TEST", messageDB.getValue())) {
