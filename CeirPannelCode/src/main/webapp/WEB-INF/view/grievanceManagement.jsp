@@ -124,6 +124,7 @@ var path="${context}";
                         <span style="float:right;"></span> -->
                 </div>
                
+ 
                <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px">Remark <span class="star">*</span></label>
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>

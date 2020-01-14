@@ -25,8 +25,8 @@ function messageManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
-			"tag":$('#parametername').val()
-			
+			"tag":$('#parametername').val(),
+			"channel" : parseInt($('#channel').val())
 	}
 	
 	$.ajax({
@@ -134,98 +134,11 @@ function pageRendering(){
 };
 
 
-
-
-function myFunction(message) {
-	var x = document.getElementById("snackbar");
-	x.className = "show";
-	$('#errorMessage').html(message);
-	setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-
-function dispatchDateValidation(){
-	var currentDate;
-	var dispatcDate=  $('#expectedDispatcheDate').val();
-	var now=new Date();
-	if(now.getDate().toString().charAt(0) != '0'){
-		currentDate='0'+now.getDate();
-
-		/* alert("only date="+currentDate); */
-	}
-	else{
-		currentDate=now.getDate();
-	}
-	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-	//alert("today"+today);
-	console.log("dispatche="+dispatcDate);
-	console.log("todays parse date"+Date.parse(today));
-	console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
-	if(Date.parse(today)>Date.parse(dispatcDate))
-	{
-		myFunction("dispatche date should be greater then or equals to today");
-		$('#expectedDispatcheDate').val("");
-	}
-
-	//alert("current date="+today+" dispatche date="+dispatcDate)
-}
-
-function arrivalDateValidation(){
-	var currentDate;
-	var dispatcDate=  $('#expectedArrivalDate').val();
-	var now=new Date();
-	if(now.getDate().toString().charAt(0) != '0'){
-		currentDate='0'+now.getDate();
-
-		/* alert("only date="+currentDate); */
-	}
-	else{
-		currentDate=now.getDate();
-	}
-	var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-	//alert("today"+today);
-	console.log("dispatche="+dispatcDate);
-	console.log("todays parse date"+Date.parse(today));
-	console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
-	if(Date.parse(today)>Date.parse(dispatcDate))
-	{
-		myFunction("Arrival date should be greater then or equals to today");
-		$('#expectedArrivalDate').val("");
-	}
-	//alert("current date="+today+" dispatche date="+dispatcDate)
-}
-
 $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
 });
 
 
-
-
-
-
-
-
-
-
-function exportButton(){
-	var startdate=$('#startDate').val(); 
-	var endDate=$('#endDate').val();
-	var asType =  $('#asType').val();
-	var userRoleTypeId =  $("#role").val();
-	var status =  $('#recentStatus').val();
-	
-	var table = $('#messageLibraryTable').DataTable();
-	var info = table.page.info(); 
-    var pageNo=info.page;
-    var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("RegistrationS----------------------tartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status)
-	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
-}
 
 function viewDetails(tag){
 	$("#viewMessageModel").openModal();
@@ -255,6 +168,65 @@ function setViewPopupData(data){
 
 }
 
-function updateDetails(){
+function updateDetails(tag){
 	$("#editMessageModel").openModal();
+	
+	var RequestData = {
+			"tag" : tag
+	} 
+	$.ajax({
+		url : "./message/viewTag",
+		data :	JSON.stringify(RequestData),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(data);
+			setEditData(data);
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
 }
+
+function setEditData(data){
+	$("#Edittag").val(data.tag);
+	$("#EditId").val(data.id);
+	$("#editValue").val(data.value);
+	$("#editdescription").val(data.description);
+	$("#editChannel").val(data.channelInterp);
+}
+
+
+function updateMessage(){
+	 var updateRequest = {
+			 "id" :  parseInt($("#EditId").val()),
+		 	 "tag" : $("#Edittag").val(),
+			 "value" : $("#editValue").val(),
+			 "description" : $("#editdescription").val(),
+			 "channel" : parseInt($("#editChannel").val())
+	}
+	 
+	 $.ajax({
+			url : "./message/update",
+			data :	JSON.stringify(updateRequest),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'PUT',
+			success : function(data) {
+				console.log("updateRequest---------->" +JSON.stringify(updateRequest));
+				confirmModel()
+			},
+			error : function() {
+				alert("Failed");
+			}
+		});
+}
+
+
+function confirmModel(){
+	$("#editMessageModel").closeModal();
+	setTimeout(function(){$('#confirmedUpdatedMessage').openModal();},200);
+}
+

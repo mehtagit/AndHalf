@@ -112,9 +112,7 @@ textarea.materialize-textarea {
 	color: red;
 }
 
-select option:first-child {
-	color: red;
-}
+
 
 section {
 	margin-top: 10px;
@@ -149,15 +147,15 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierId" id="supplierId"
 												pattern="[A-Za-z0-9]{0,15}"
-												title="Please enter alphabets and numbers upto 15 characters only"
-												maxlength="15" /> <label for="Name" class="center-align"><spring:message code="input.supplier" /></label>
+												title="<spring:message code="validation.15character" />"
+												maxlength="15" /> <label for="supplierId" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierName" id="supplierName"
 												pattern="[A-Za-z  ]{0,50}"
-												title="Please enter alphabets  upto 50 characters only"
-												maxlength="50" required /> <label for="Name"
+												title="<spring:message code="validation.50character" />"
+												maxlength="50" required /> <label for="supplierName"
 												class="center-align"><spring:message code="input.suppliername"/> <span
 												class="star">*</span></label>
 										</div>
@@ -166,15 +164,15 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="consignmentNumber"
 												id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}"
-												title="Please enter alphabets and numbers upto 15 characters only"
-												maxlength="15" /> <label for="Name" class="center-align"><spring:message code="input.consignmentnumber" /></label>
+												title="<spring:message code="validation.15character" />"
+												maxlength="15" /> <label for="consignmentNumber" class="center-align"><spring:message code="input.consignmentnumber" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="expectedDispatcheDate"
 												id='expectedDispatcheDate' class='form-control datepick'
 												autocomplete='off' required="required"> <label
-												for="dispatchDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
+												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
@@ -191,7 +189,7 @@ section {
 										<div class="input-field col s12 m6">
 											<input name="expectedArrivaldate" id="expectedArrivaldate"
 												type="text" class='form-control datepick' autocomplete='off'
-												required="required"> <label for="dispatchDate"
+												required="required"> <label for="expectedArrivaldate"
 												class="center-align"><spring:message code="input.arrivaldate" /> <span
 												class="star">*</span></label> <span class="input-group-addon"
 												style="color: #ff4081"><i class="fa fa-calendar"
@@ -209,8 +207,8 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="quantity" id="quantity"
 												pattern="[0-9]{0,7}"
-												title="Please enter numbers upto 7 characters only"
-												maxlength="7" required /> <label for="Quantity"
+												title="<spring:message code="validation.7character" />"
+												maxlength="7" required /> <label for="quantity"
 												class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label>
 										</div>
 
@@ -226,7 +224,7 @@ section {
 										</div>
 
 										<div class="col s12 m6">
-											<label for="Currency"><spring:message code="input.currency" /></label>
+											<label for="currency"><spring:message code="input.currency" /></label>
 											<select id="currency" class="browser-default"
 												required="required">
 												<option value="" disabled selected><spring:message code="input.currency" /></option>
@@ -262,11 +260,11 @@ section {
 
 									<div class="row">
 										<div class="input-field col s12 center">
-									<%-- 	<spring:message code="input.submit" /> --%>
-											<button class=" btn" type="submit">Submit</button>
-									<%-- 		<spring:message code="input.cancel" /> --%>
+									
+											<button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+									
 											<a href="#cancelMessage" class="btn modal-trigger"
-												type="cancel" style="margin-left: 10px;">Cancel</a>
+												type="cancel" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 
 
 										</div>
@@ -285,18 +283,17 @@ section {
 
 
 	<div id="submitConsignment" class="modal">
-		<h6 class="modal-header">Submit Consignment</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.submitConsignment" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Your form has been successfully
-					submitted. The Transaction ID for future reference is</h6>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" /></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<form action="${context}/Consignment/viewConsignment"
 						id="closeOkPop" method="POST">
-						<a onclick="closeConfirmation()" class="btn">ok</a>
+						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.close" /></a>
 					</form>
 				</div>
 			</div>
@@ -362,16 +359,21 @@ section {
 
 	<script type="text/javascript">
 	
-	
-	
-
 	window.parent.$('#langlist').on('change', function() {
-
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
 	}); 
 	
 
+	$.i18n().locale = lang;
+	var successMsg;
+	$.i18n().load( {
+		'en': '../resources/i18n/en.json',
+		'km': '../resources/i18n/km.json'
+	} ).done( function() { 
+		successMsg=$.i18n('successMsg');
+	});
+	
 	
 	$(document).ready(function() {
 		ConsignmentCurrency();
@@ -417,8 +419,7 @@ section {
 							if (data.errorCode == "0") {
 								console.log("status code = 0");
 								$('#sucessMessage')
-										.text(
-												'Your form has been successfully submitted. The Transaction ID for future reference is ');
+										.text(successMsg);
 								$('#sucessMessage').append(data.txnId);
 								$('#errorCode').val(data.errorCode);
 							} else if (data.errorCode == "3") {

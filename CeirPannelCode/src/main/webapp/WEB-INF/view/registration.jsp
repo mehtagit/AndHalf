@@ -76,17 +76,86 @@ footer {
 	color: #444 !important;
 }
 
-select {
-	background-color: transparent;
-	border: none;
-	border-bottom: 1px solid #9e9e9e;
-	padding: 0;
-	margin-top: 7px;
-	;
-}
+
 
 [type="radio"]:not (:checked ), [type="radio"]:checked {
 	opacity: 0;
+}
+
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=time],
+input[type=date],
+input[type=datetime-local],
+input[type=tel],
+input[type=number],
+input[type=search],
+textarea.materialize-textarea {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #9e9e9e !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  height: 2.6rem !important;
+  width: 100% !important;
+  font-size: 1rem !important;
+  margin: 0 0 5px 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+  transition: all .3s !important;
+}
+
+input[type=text]:focus:not([readonly]) {
+border-bottom: 1px solid #ff4081 !important;
+box-shadow: 0 1px 0 0 #ff4081 !important;
+}
+
+input[type=text]:focus:not([readonly])+label {
+color: #ff4081 !important;
+background-color: transparent !important;
+}
+
+.input-field {
+position: relative;
+margin-top: 1rem;
+margin-bottom: 0;
+}
+
+.row {
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 0;
+}
+
+.btn {
+background-color: #ff4081 !important;
+}
+
+select {
+background-color: transparent;
+border: none;
+border-bottom: 1px solid #9e9e9e;
+padding: 0;
+margin-top: 0;
+height: 2.6rem ;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+position: inherit;
+opacity: 1;
+pointer-events: none;
+}
+[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+display: none;
+}
+input[type="checkbox"] {
+display: block;
 }
 </style>
 <script>
@@ -552,9 +621,9 @@ var contextpath = "${context}";
 							</span>
 						</div>
 						   <p>
-      <label style="color: black!important;">
-        <input name="disclamer" type="checkbox" required="required" />
-        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+   <label style="color: black!important;padding-left: 16px;">
+        <input name="disclamer" type="checkbox" required="required" style="margin-left: 12px;">
+        <span style="margin-top=-18px !important;"> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
       </label>
     </p>
     

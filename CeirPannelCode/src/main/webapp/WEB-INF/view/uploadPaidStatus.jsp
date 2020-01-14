@@ -297,6 +297,7 @@ input[type='search'] {
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6">
+													
 													<input type="text" pattern="[0-9]{6,10}"
 														title="Please enter Postel code upto 10 Numbers only"
 														name="streetNumber"

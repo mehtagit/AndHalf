@@ -799,6 +799,7 @@ public class IconsState {
 	/********************************** Icons for AdminUPS **********************************/ 	
 	public String adminUserPaidStatusIcon(Long imei1,String createdOn,String txnId) {
 		String viewAction="viewDetails('"+imei1+"')";
+
 		String approveAction ="deviceApprovalPopup("+imei1+",'"+createdOn.replace(" ", "=")+"','"+txnId+"')";
 		String rejectAction= "userRejectPopup('"+imei1+"','"+txnId+"')";
 
@@ -916,9 +917,9 @@ public class IconsState {
 	/********************************** Icons for Admin MEssage Management**********************************/ 
 
 	public String adminMessageIcons(String userStatus, String tag) { 
-
-		String editAction="updateDetails()";
+		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
+
 
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -945,8 +946,9 @@ public class IconsState {
 
 	public String adminConfigIcons(String userStatus, String tag) { 
 
-		String editAction="updateDetails()";
+		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
+
 
 		// state related Code 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
@@ -978,7 +980,7 @@ public class IconsState {
 
 	public String policyConfigIcons(String userStatus, String tag) { 
 
-		String editAction="updateDetails()";
+		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 
@@ -1039,12 +1041,13 @@ public class IconsState {
 		String approveAction = "deviceApprovalPopup('" + txnId + "','" + requestType + "')";
 		String rejectAction = "userRejectPopup('" + txnId + "','" + requestType + "')";
 		log.info("============actionResponse=======" + actionResponse);
-		if (source.equals("2")) {
-			viewAction = "viewDeviceDetails('" + txnId + "','view','" + requestType + "')";
-		} else if (source.equals("4")) {
-			viewAction = "viewblockImeiDevice('" + txnId + "','view','" + requestType + "')";
-		}
+		if(source.equals("3")) {
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
 
+		}
+		else if(source.equals("4")) {
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+		}
 		// state related Code
 		String view="<a onclick="+viewAction+"><i class="
 				+viewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";

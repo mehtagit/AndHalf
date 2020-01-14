@@ -75,10 +75,6 @@ public class StolenDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
-			
-			List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
-			log.info("tableActionPagination::::::::::::"+actionResponse);
-			
 			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();
@@ -133,6 +129,9 @@ public class StolenDatatableController {
 			
 				}else if("CEIRAdmin".equals(userType)) {
 					log.info("in CEIRAdmin Controler-----" +userType);
+					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
+					log.info("tableActionPagination::::::::::::"+actionResponse);
+					
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
@@ -204,8 +203,9 @@ public class StolenDatatableController {
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
 		
+		
 		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
-		pageElement.setPageTitle("Block/Unblock");
+		pageElement.setPageTitle("Block/Unblock Devices");
 		}else {
 			pageElement.setPageTitle("Stolen/Recovery");
 		}

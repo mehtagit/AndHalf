@@ -29,6 +29,7 @@ public class ApplicationConfig extends AcceptHeaderLocaleResolver implements Web
 	  
 	  @Override
 	  public void addInterceptors(InterceptorRegistry registry) {
+		 
 	  registry.addInterceptor(localeChangeInterceptor());
 	  }
 		
