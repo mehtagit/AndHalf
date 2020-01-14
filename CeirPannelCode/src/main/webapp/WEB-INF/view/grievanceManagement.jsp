@@ -124,12 +124,12 @@ var path="${context}";
                         <span style="float:right;"></span> -->
                 </div>
                
-                <div class="col s12 m12">
+               <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px">Remark <span class="star">*</span></label>
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
-                    <h6 style="color: #000;">Upload Supporting Document </h6>
+                    <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
                 </div>
-                <div class="file-field col s12 m12">
+               <!--   <div class="file-field col s12 m12">
                     <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
                     <div class="file-path-wrapper"><input class="file-path validate" type="text"
                             placeholder="Upload one or more files">
@@ -137,7 +137,43 @@ var path="${context}";
                             <p id="myFiles"></p>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                
+ <div id="mainDiv" class="mainDiv">
+<div id="filediv" class="fileDiv">
+<div class="row">
+<div class="file-field col s12 m6">
+<h6 style="color: #000;">Upload Supporting Document</h6>
+<div class="btn">
+<span>Select File</span>
+<input type="file" name="files[]" id="docTypeFile1"  multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" multiple
+placeholder="Upload one or more files">
+<div>
+<p id="myFiles"></p>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l6" style="margin-top: 8px;">
+<label for="Category">Document Type <span class="star">*</span></label>
+<select class="browser-default" id="docTypetag1" >
+<option value="" disabled selected>Select Document Type </option>
+
+</select>
+
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="col s12 m6 right">
+<button class="btn right add_field_button"><span
+style="font-size: 20px;">+</span> Add More files</button>
+</div>
               <div class="col s12 m12">  <p>
               <p id="closeTicketCheckbox" style="float: left; display: none;">
                         <label>
@@ -170,7 +206,7 @@ var path="${context}";
     <div class="modal-content">
         
         <div class="row">
-            <h6 id="showReplyResponse">Your reply successfully sent to admin</h6>
+            <h6 id="showReplyResponse">Your reply having grievance ID: <span id="replyGrievanceId"> </span> is successfully sent.</h6>
         </div>
         <div class="row">
             <div class="input-field col s12 center">

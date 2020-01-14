@@ -65,9 +65,17 @@ public class StolenRecovery {
 		}
 		else if(userTypelist.size()==1)
 		{
-		log.info("role type is"+roletype);
-		session.setAttribute("stolenselectedUserTypeId", roletype);
-		mv.setViewName("stolenRecovery");
+			if(roletype.equals("Lawful Agency"))
+			{
+				log.info("*******"+roletype);
+				mv.setViewName("lawfulStolenRecovery");
+			}
+			else {
+				log.info("role type is"+roletype);
+				session.setAttribute("stolenselectedUserTypeId", roletype);
+				mv.setViewName("stolenRecovery");
+			}
+				
 		}
 		}
 		else {

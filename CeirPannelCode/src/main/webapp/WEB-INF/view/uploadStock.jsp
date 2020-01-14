@@ -304,6 +304,7 @@ function uploadStock(){
 		success: function (data, textStatus, jqXHR) {
 			
 			 console.log(data);
+			 console.log(data.txnId);
 			  $('#submitStock').openModal();
 			 if(data.errorCode=="0")
 				 {
@@ -319,6 +320,11 @@ function uploadStock(){
 				$('#sucessMessage').text("Invoice number already exist");
 				 $('#errorCode').val(data.errorCode);
 				 }
+			 else if(data.errorCode=="1"){
+				    $('#stockSuccessMessage').text('');
+					$('#stockSuccessMessage').text(data.message);
+			 }
+			 
 		   // $('#updateConsignment').modal('open'); 
 			//alert("success");
 			
