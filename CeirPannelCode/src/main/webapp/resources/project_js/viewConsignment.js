@@ -17,7 +17,7 @@
 	$.i18n().load( {
 		'en': '../resources/i18n/en.json',
 		'km': '../resources/i18n/km.json'
-	} ).done( function() { 
+	}).done( function() { 
 		i18n=$.i18n('button.export');
 		rejectedMsg=$.i18n('rejectedMsg');
 		consignmentApproved=$.i18n('consignmentApproved');
@@ -647,9 +647,7 @@
 
 	function openApprovePopUp(txnId,displayName)
 	{
-		alert(lang)
-		
-		var userType=$("body").attr("data-roleType");
+	var userType=$("body").attr("data-roleType");
 		displayName=displayName.replace("+20"," " );
 		$('#ApproveConsignment').openModal();
 		if(userType=='Custom'){
