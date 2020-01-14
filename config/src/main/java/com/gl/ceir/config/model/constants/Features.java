@@ -1,9 +1,11 @@
 package com.gl.ceir.config.model.constants;
 
-public class Features {
+public interface Features {
 
-	public final static String CONSIGNMENT = "CONSIGNMENT";
-	public final static String STOCK = "STOCK";
-	public final static String STOLEN_RECOVERY = "STOLEN_RECOVERY";
-	public final static String GRIEVANCE = "GRIEVANCE";
+	String CONSIGNMENT = "CONSIGNMENT";
+	String STOCK = "STOCK";
+	String STOLEN_RECOVERY = "STOLEN_RECOVERY";
+	String GRIEVANCE = "GRIEVANCE";
+	String REGISTER_DEVICE = "REGISTER_DEVICE";
+	String BLOCK_UNBLOCK = "BLOCK_UNBLOCK";
 }

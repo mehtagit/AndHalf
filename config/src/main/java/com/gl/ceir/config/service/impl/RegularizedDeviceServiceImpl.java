@@ -25,7 +25,9 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
+import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.Count;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
@@ -38,12 +40,16 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.CustomDetailsRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
@@ -71,6 +77,9 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	CustomDetailsRepository customDetailsRepository;
+	
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 
 	@Autowired
 	EndUserDbRepository endUserDbRepository;

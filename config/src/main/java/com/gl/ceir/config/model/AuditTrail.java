@@ -16,7 +16,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class AuditTrail implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -29,14 +28,30 @@ public class AuditTrail implements Serializable {
 	
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
+	
 	private Long userId;
 	private String userName;
 	private Long userTypeId;
-	private String roleType;
+	private String userType;
 	private Long featureId;
 	private String featureName;
 	private String subFeature;
+	private String jSessionId;
 	
+	public AuditTrail() {
+
+	}
+	
+	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, String featureName, String subFeature, String jSessionId) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+	}
 	
 	public Long getId() {
 		return id;
@@ -74,12 +89,6 @@ public class AuditTrail implements Serializable {
 	public void setUserTypeId(Long userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-	public String getRoleType() {
-		return roleType;
-	}
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
-	}
 	public Long getFeatureId() {
 		return featureId;
 	}
@@ -98,13 +107,47 @@ public class AuditTrail implements Serializable {
 	public void setSubFeature(String subFeature) {
 		this.subFeature = subFeature;
 	}
-	
-	
-	
-	
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getjSessionId() {
+		return jSessionId;
+	}
+	public void setjSessionId(String jSessionId) {
+		this.jSessionId = jSessionId;
+	}
 
-	
-	
-	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AuditTrail [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append("]");
+		return builder.toString();
+	}
 	
 }

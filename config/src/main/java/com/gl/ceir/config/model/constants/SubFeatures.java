@@ -1,10 +1,12 @@
 package com.gl.ceir.config.model.constants;
 
-public class SubFeatures {
+public interface SubFeatures {
 
-	public final static String ACCEPT = "ACCEPT";
-	public final static String REJECT = "REJECT";
-	public final static String REPLY = "REPLY";
-	public final static String CLOSED = "CLOSED";
-	
+	String ACCEPT = "ACCEPT";
+	String REJECT = "REJECT";
+	String REPLY = "REPLY";
+	String CLOSED = "CLOSED";
+	String REGISTER = "REGISTER";
+	String UPDATE = "UPDATE";
+	String DELETE = "DELETE";
 }

@@ -27,6 +27,7 @@ import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
@@ -50,6 +51,7 @@ import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.ConsignmentFileModel;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
@@ -86,6 +88,9 @@ public class ConsignmentServiceImpl {
 	WebActionDbRepository webActionDbRepository;
 
 	@Autowired
+	AuditTrailRepository auditTrailRepository;
+
+	@Autowired
 	PropertiesReader propertiesReader;
 
 	@Autowired
@@ -109,10 +114,11 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	InterpSetter interpSetter;
 
-	@Transactional
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
+			Long importerId = Long.valueOf(consignmentFileRequest.getUserId());
+
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.CONSIGNMENT_REGISTER.getName());
@@ -121,18 +127,35 @@ public class ConsignmentServiceImpl {
 
 			consignmentFileRequest.setConsignmentStatus(ConsignmentStatus.INIT.getCode());
 			consignmentFileRequest.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
-			webActionDbRepository.save(webActionDb);
-
 			// Set user for mapping.
-			consignmentFileRequest.setUser(new User().setId(Long.valueOf(consignmentFileRequest.getUserId())));
-			consignmentRepository.save(consignmentFileRequest);
+			consignmentFileRequest.setUser(new User().setId(importerId));
 
-			return new GenricResponse(0, "Register Successfully", consignmentFileRequest.getTxnId());
+			if(executeRegisterConsignment(consignmentFileRequest, webActionDb)) {
+				return new GenricResponse(0, "Register Successfully", consignmentFileRequest.getTxnId());
+			}else {
+				return new GenricResponse(1, "Consignment Registeration failed.", consignmentFileRequest.getTxnId());
+			}
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+
+	@Transactional
+	private boolean executeRegisterConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
+		boolean queryStatus = Boolean.FALSE;
+		webActionDbRepository.save(webActionDb);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in web_action_db.");
+
+		consignmentRepository.save(consignmentMgmt);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
+
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.REGISTER, ""));
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
+
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
 	}
 
 	public List<ConsignmentMgmt> getAll(Long importerId) {
@@ -159,10 +182,10 @@ public class ConsignmentServiceImpl {
 		}
 
 	}
-	
+
 	private List<ConsignmentMgmt> getAll(FilterRequest filterRequest){
 		try {
-			
+
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build());
 
@@ -237,22 +260,17 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	@Transactional
 	public GenricResponse updateConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
 			ConsignmentMgmt consignmentInfo = consignmentRepository.getByTxnId(consignmentFileRequest.getTxnId());
 
-			logger.info("ConsignmentInfo="+consignmentInfo.toString());
+			logger.info("ConsignmentInfo = " + consignmentInfo.toString());
 
 			if(Objects.isNull(consignmentInfo)) {
 				return new GenricResponse(4, "Consignment Does Not exist.", consignmentFileRequest.getTxnId());
 			}
 			else {
-				/*
-				if(consignmentInfo.getConsignmentNumber() == consignmentFileRequest.getConsignmentNumber()){
-					return new GenricResponse(3, "Consignment Already Exist", consignmentFileRequest.getTxnId());	
-				}else { */
 				consignmentInfo.setConsignmentNumber(consignmentFileRequest.getConsignmentNumber());
 				consignmentInfo.setExpectedArrivaldate(consignmentFileRequest.getExpectedArrivaldate());
 				consignmentInfo.setExpectedArrivalPort(consignmentFileRequest.getExpectedArrivalPort());
@@ -261,16 +279,13 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setQuantity(consignmentFileRequest.getQuantity());
 				consignmentInfo.setSupplierId(consignmentFileRequest.getSupplierld());
 				consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
-				// consignmentInfo.setTaxPaidStatus(consignmentFileRequest.getTaxPaidStatus());
 				consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
 				consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
 
-				if(consignmentFileRequest.getFileName() != null && consignmentFileRequest.getFileName() != " "){
+				if(Objects.nonNull(consignmentFileRequest.getFileName()) && !consignmentFileRequest.getFileName().isEmpty()){
 					consignmentInfo.setConsignmentStatus(ConsignmentStatus.INIT.getCode());	
 					consignmentInfo.setFileName(consignmentFileRequest.getFileName());
 				}
-
-				consignmentRepository.save(consignmentInfo);
 
 				WebActionDb webActionDb = new WebActionDb();
 				webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
@@ -278,9 +293,11 @@ public class ConsignmentServiceImpl {
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(consignmentFileRequest.getTxnId());
 
-				webActionDbRepository.save(webActionDb);
-
-				return new GenricResponse(0,"Consignment Update in Processing.", consignmentFileRequest.getTxnId());
+				if(executeUpdateConsignment(consignmentInfo, webActionDb)) {
+					return new GenricResponse(0, "Consignment Update in Processing.", consignmentFileRequest.getTxnId());
+				}else {
+					return new GenricResponse(1, "Consignment Update have been failed.", consignmentFileRequest.getTxnId());
+				}
 			}				
 			// }
 		}catch (Exception e) {
@@ -290,34 +307,50 @@ public class ConsignmentServiceImpl {
 	} 
 
 	@Transactional
+	private boolean executeUpdateConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
+		boolean queryStatus = Boolean.FALSE;
+		webActionDbRepository.save(webActionDb);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in web_action_db.");
+
+		consignmentRepository.save(consignmentMgmt);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
+
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.UPDATE, ""));
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
+
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
+	}
+
 	public GenricResponse deleteConsigmentInfo(ConsignmentMgmt consignmentRequest, String userType) {
 		try {
 			if(Objects.isNull(consignmentRequest.getTxnId())) {
-				logger.info("TxnId is null in the request.");
+				logger.info("TxnId is null in the request." + consignmentRequest.getTxnId());
 				return new GenricResponse(1001, "TxnId is null in the request.", consignmentRequest.getTxnId());
 			}
 
 			if(Objects.isNull(userType)) {
-				logger.info("userType is null in the request.");
-				return new GenricResponse(1002, "TxnId is null in the request.", consignmentRequest.getTxnId());
+				logger.info("userType is null in the request." + consignmentRequest.getTxnId());
+				return new GenricResponse(1002, "userType is null in the request.", consignmentRequest.getTxnId());
 			}
 
-			ConsignmentMgmt consignment = consignmentRepository.getByTxnId(consignmentRequest.getTxnId());
+			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentRequest.getTxnId());
 
-			if(Objects.isNull(consignment)) {
+			if(Objects.isNull(consignmentMgmt)) {
+				logger.info("Consignment Does not Exist" + consignmentRequest.getTxnId());
 				return new GenricResponse(4, "Consignment Does not Exist",consignmentRequest.getTxnId());
 			}
 
 			if("CEIRADMIN".equalsIgnoreCase(userType))
-				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
+				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
 			else if("IMPORTER".equalsIgnoreCase(userType))
-				consignment.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
-			else
+				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
+			else {
+				logger.info("UserType is invalid." + consignmentRequest.getTxnId());
 				return new GenricResponse(1, "UserType is invalid.", consignmentRequest.getTxnId());
+			}
 
-			consignment.setRemarks(consignmentRequest.getRemarks());
-
-			consignmentRepository.save(consignment);
+			consignmentMgmt.setRemarks(consignmentRequest.getRemarks());
 
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
@@ -325,9 +358,13 @@ public class ConsignmentServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(consignmentRequest.getTxnId());
 
-			webActionDbRepository.save(webActionDb);
-
-			return new GenricResponse(200, "Delete In Progress", consignmentRequest.getTxnId());
+			if(executeDeleteConsignment(consignmentMgmt, webActionDb)) {
+				logger.info("Deletion of consignment is in Progress."+ consignmentRequest.getTxnId());
+				return new GenricResponse(200, "Deletion of consignment is in Progress.", consignmentRequest.getTxnId());
+			}else {
+				logger.info("Deletion of consignment have been failed." + consignmentRequest.getTxnId());
+				return new GenricResponse(2, "Deletion of consignment have been failed.", consignmentRequest.getTxnId());
+			}
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -336,6 +373,21 @@ public class ConsignmentServiceImpl {
 	}
 
 	@Transactional
+	private boolean executeDeleteConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
+		boolean queryStatus = Boolean.FALSE;
+		webActionDbRepository.save(webActionDb);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in web_action_db.");
+
+		consignmentRepository.save(consignmentMgmt);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
+
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.DELETE, ""));
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
+
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
+	}
+
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
@@ -344,19 +396,18 @@ public class ConsignmentServiceImpl {
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
 			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
-			logger.debug("userProfile : " + userProfile);
+			logger.debug("UserProfile : " + userProfile);
 
 			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {
 
 				if(Objects.isNull(consignmentMgmt)) {
-					return new GenricResponse(4, "TxnId Does not Exist", consignmentUpdateRequest.getTxnId());
+					return new GenricResponse(4, "TxnId Does not Exist.", consignmentUpdateRequest.getTxnId());
 				}else {
 
 					if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
-						consignmentRepository.save(consignmentMgmt);	
 
 						emailUtil.saveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
 								userProfile, 
@@ -369,7 +420,6 @@ public class ConsignmentServiceImpl {
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
-						consignmentRepository.save(consignmentMgmt);
 
 						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
@@ -386,7 +436,6 @@ public class ConsignmentServiceImpl {
 
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					consignmentRepository.save(consignmentMgmt);
 
 					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
@@ -400,7 +449,6 @@ public class ConsignmentServiceImpl {
 
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
-					consignmentRepository.save(consignmentMgmt);
 
 					emailUtil.saveNotification("Consignment_Rejected_Custom_Email_Message", 
 							userProfile, 
@@ -412,12 +460,31 @@ public class ConsignmentServiceImpl {
 				}
 			}
 
-			return new GenricResponse(0, "Consignment Update SuccessFully.", consignmentUpdateRequest.getTxnId());
-
+			if(executeUpdateStatusConsignment(consignmentMgmt)) {
+				logger.info("Consignment status have Update SuccessFully." + consignmentUpdateRequest.getTxnId());
+				return new GenricResponse(0, "Consignment status have Update SuccessFully.", consignmentUpdateRequest.getTxnId());
+			}else {
+				logger.info("Consignment status Update have failed." + consignmentUpdateRequest.getTxnId());
+				return new GenricResponse(1, "Consignment status Update have failed.", consignmentUpdateRequest.getTxnId());
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+
+	@Transactional
+	private boolean executeUpdateStatusConsignment(ConsignmentMgmt consignmentMgmt) {
+		boolean queryStatus = Boolean.FALSE;
+
+		consignmentRepository.save(consignmentMgmt);
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
+
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.UPDATE, ""));
+		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
+
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
 	}
 
 	public FileDetails getFilteredConsignmentInFile(FilterRequest filterRequest) {
@@ -513,7 +580,7 @@ public class ConsignmentServiceImpl {
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
-	
+
 	private SpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
 		SpecificationBuilder<ConsignmentMgmt> cmsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
@@ -564,17 +631,17 @@ public class ConsignmentServiceImpl {
 			cmsb.orSearch(new SearchCriteria("taxPaidStatus", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("txnId", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-		
+
 		return cmsb;
 	}
 
 	private void setInterp(ConsignmentMgmt consignmentMgmt) {
 		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
 			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
-		
+
 		if(Objects.nonNull(consignmentMgmt.getCurrency()))
 			consignmentMgmt.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, consignmentMgmt.getCurrency()));
-		
+
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			consignmentMgmt.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt.getTaxPaidStatus()));
 	}

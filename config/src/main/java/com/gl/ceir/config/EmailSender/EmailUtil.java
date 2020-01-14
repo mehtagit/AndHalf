@@ -83,17 +83,10 @@ public class EmailUtil {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 
-			/*// Mail send to user and Custom.
-			if(sendEmail(userProfile.getEmail(), "jangrapardeep695@gmail.com", "TEST", messageDB.getValue())) {
-				logger.info("Email to user have been sent successfully.");*/
-
 			// Save email in notification table.
 			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0);
 
-			/*
-			 * }else { logger.info("Email to user have been failed."); }
-			 */
 
 			return Boolean.TRUE;
 		}catch (Exception e) {

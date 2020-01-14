@@ -67,7 +67,7 @@ public class RegularizeDeviceDb implements Serializable {
 	@NotNull
 	private String txnId;
 	
-	@NotNull
+	// @NotNull
 	private Double price;
 	
 	@NotNull
