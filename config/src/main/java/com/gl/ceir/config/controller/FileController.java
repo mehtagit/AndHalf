@@ -26,6 +26,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
 import com.gl.ceir.config.model.VipList;
@@ -33,6 +34,7 @@ import com.gl.ceir.config.model.constants.DocumentType;
 import com.gl.ceir.config.model.constants.TransactionState;
 import com.gl.ceir.config.service.DocumentsService;
 import com.gl.ceir.config.service.PendingActionsService;
+import com.gl.ceir.config.service.impl.FileServiceImpl;
 import com.gl.ceir.config.service.impl.FileStorageService;
 
 import io.swagger.annotations.ApiOperation;
@@ -53,6 +55,9 @@ public class FileController {
 
 	@Autowired
 	private PendingActionsService pendingActionsService;
+	
+	@Autowired
+	private FileServiceImpl fileServiceImpl;
 
 	@ApiOperation(value = "Upload file Ticket ID and Document Type must be there ", response = UploadFileResponse.class)
 	@RequestMapping(path = "/document/updateStatus", method = RequestMethod.PATCH)
@@ -133,30 +138,24 @@ public class FileController {
 	
 	@ApiOperation(value = "Download Sample Stoke File.", response = String.class)
 	@RequestMapping(path = "/Download/SampleFile", method = RequestMethod.GET)
-	public String downloadSampleFile(String samplFileType) {
-
-		String directoryPath = fileStorageProperties.getDownloadDir();
-		if("Stoke".equalsIgnoreCase(samplFileType)) {
-			directoryPath= "http://13.233.39.58:9090/CEIR/Design/SampleFiles/StokeSampleFile.csv";
-			return directoryPath;
-		}else {
-			directoryPath="http://13.233.39.58:9090/CEIR/Design/SampleFiles/StolenAndRecovery.csv";
-			return directoryPath;
-		}
+	public FileDetails downloadSampleFile(int featureId) {		
+		
+		logger.info("Request sample file link with featureId [" + featureId + "]");
+		FileDetails fileDetails = fileServiceImpl.getSampleFile(featureId);
+		logger.info("Response for featureId [" + featureId + "] sample file " + fileDetails);
+		
+		return fileDetails;
 	}
 
 	@ApiOperation(value = "Download Stoke upload File.", response = String.class)
 	@RequestMapping(path = "/Download/uploadFile", method = RequestMethod.GET)
-	public String downloadStrokeFile(String fileName, String txnId, String fileType) {
-
-		String directoryPath = fileStorageProperties.getDownloadDir();
-
-		if("ERROR".equalsIgnoreCase(fileType)) {
-			directoryPath ="http://13.233.39.58:9090/CEIR/Design/"+txnId+"/error.csv";
-			return directoryPath;
-		}else {	
-			directoryPath = "http://13.233.39.58:9090/CEIR/Design/"+txnId+"/"+fileName;
-			return directoryPath;
-		}
+	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType,
+			@RequestParam(name = "tag", required = false) String tag) {
+		
+		logger.info("Request to download uploded file link with txnId [" + txnId + "]");
+		FileDetails fileDetails = fileServiceImpl.downloadUploadedFile(fileName, txnId, fileType, tag);
+		logger.info("Response for txnId [" + txnId + "] sample file " + fileDetails);
+		
+		return fileDetails;
 	}
 }

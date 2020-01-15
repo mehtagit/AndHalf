@@ -4,6 +4,8 @@ public interface ConfigTags {
 	// Message
 	
 	// System
+	String sample_file_link = "sample_file_link";
+	String upload_file_link = "upload_file_link";
 	
 	// User
 	

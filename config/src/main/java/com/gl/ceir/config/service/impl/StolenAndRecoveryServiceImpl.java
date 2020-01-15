@@ -249,7 +249,8 @@ public class StolenAndRecoveryServiceImpl {
 	private SpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
 		SpecificationBuilder<StolenandRecoveryMgmt> srsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
-		if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
+		if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())
+				&& !"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}

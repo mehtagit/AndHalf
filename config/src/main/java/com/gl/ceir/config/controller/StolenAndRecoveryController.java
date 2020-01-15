@@ -121,7 +121,7 @@ public class StolenAndRecoveryController {
 	}
 
 	@ApiOperation(value = "View Stolen and Recovery Details.", response = StolenandRecoveryMgmt.class)
-	@RequestMapping(path = "/stakeholder/record", method = RequestMethod.POST)
+	@RequestMapping(path = "filter/stakeholder/record", method = RequestMethod.POST)
 	public MappingJacksonValue getAllActionDetails(@RequestBody FilterRequest stolenandRecoveryDetails,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
