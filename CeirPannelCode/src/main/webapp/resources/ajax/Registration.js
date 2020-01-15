@@ -256,7 +256,6 @@ function questionData(){
 
 function saveRegistration(){ 
 	$("#btnSave").prop('disabled', true);
-    alert("inside save registration function");
 	var obj="";
 	var oj2=""; 
 	var questionData=[];

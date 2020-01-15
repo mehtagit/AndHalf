@@ -181,13 +181,6 @@ public interface FeignCleintImplementation {
 	public GenricResponse updateFileStolen(@RequestBody StolenRecoveryModel request) ;
 
 
-
-
-	
-	
-	
-	
-	
 	//Dashboard/Datatable Feign
 		@RequestMapping(value="/v2/history/Notification" ,method=RequestMethod.GET) 
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,

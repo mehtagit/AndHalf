@@ -21,7 +21,7 @@ function changePassword(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#changePasswordMessage h6").text(resp.response);
+				$("#changePasswordMessage #cPassSucessMsg").text(resp.response);
 				$("#changePasswordMessage").openModal();   
 			}
 			else{
@@ -55,7 +55,7 @@ function updateUSerStatus(){
 		success : function(data) { 
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#manageAccountSubmit h6").text(resp.response);
+				$("#manageAccountSubmit #mgAccount").text(resp.response);
 				$("#manageAccountSubmit").openModal();   
 
 			}
@@ -287,12 +287,11 @@ function updateProfile(){
 		data : JSON.stringify(obj),
 
 		success : function(data) {
-
 			var response=JSON.parse(data);
 			if(response.statusCode=='200'){
 				if(response.userstatus=='Approved'){
 					$("#passwordModal").closeModal();
-					$("#profileResponse h6").text(response.response); 
+					$("#profileResponse #updateInfoMsg").text(response.response); 
 					$('#profileResponse').openModal();    
 				} 
 				else if(response.userstatus=='OTP Verification Pending'){

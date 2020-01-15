@@ -2576,12 +2576,12 @@ margin-top: -32px;
  
  } 
 
-.modal-header {
+/* .modal-header {
 background-color: #529dba;
 padding: 15px 24px;
 color: #fff;
 margin: 0px -24px 1rem -24px;
-}
+} */
 
 
 
@@ -2649,3 +2649,29 @@ background-color: #fff;
 	text-align: right;
 	text-decoration: none;
 }
+
+.modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: 0px;
+}
+
+.fixPage-modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: -20px -21px 1rem -21px;
+}
+
+
+@media only screen and (max-width:786px){
+.fixPage-modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: -20px -10px 1rem -10px;
+}
+}
+
+.btn{background-color:#ff4081 !important;}

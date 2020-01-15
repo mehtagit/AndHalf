@@ -647,7 +647,6 @@ var contextpath = "${context}";
 
 			<div class="row">
 				<h6>Verify OTP</h6>
-				<hr>
 				<p>A text message and an E-Mail has been sent to your registered
 					Phone number and E-mail. Please Verify !</p>
 			</div>
@@ -671,14 +670,9 @@ var contextpath = "${context}";
                 <div class="container">
                     <div class="section">
                         <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
-                            <h5 class="center">Verify OTP</h5>
-                            <!-- <img src="images/otpImage.png" class=""
-                                style="width: 80px; display: block; margin:auto;"> -->
-                            <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
+                            <h6 class="modal-header">Verify OTP</h6>
                             <p class="center" id="otpMsg"><!-- The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID --></p>
-                                 
-
-                            <a href="#otpVerification" class="btn modal-trigger modal-close"
+                                                      <a href="#otpVerification" class="btn modal-trigger modal-close"
                                 style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 
                         </div>
@@ -693,6 +687,7 @@ var contextpath = "${context}";
 <div id="otpMessage" class="modal">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
+       <h6 class="modal-header">Update Information</h6>
         <div class="modal-content">
             <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
@@ -710,12 +705,13 @@ var contextpath = "${context}";
     <div id="profileResponse" class="modal" style="width: 40%">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
+                            <h6 class="modal-header">Update Information</h6>
+           
         <div class="modal-content">
             <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-                                <p>Update Information</p><hr>
                     <div class="row">
-                        <h6></h6>
+                        <h6 id="updateInfoMsg"></h6>
                     </div>
             <div class="row">
             
@@ -733,9 +729,9 @@ var contextpath = "${context}";
     <div id="otpVerification" class="modal" onsubmit="return verifyOtp()" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
+               <h6 class="modal-header">Enter OTP</h6>
         <div class="modal-content">
                 <form id="verifyOtpForm" action="">
-                        <h5 class="center">Enter OTP</h5>
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
@@ -757,12 +753,12 @@ var contextpath = "${context}";
     
     
          <div id="passwordModal"  class="modal" style="width: 40%; z-index: 1003;  opacity: 1; transform: scaleX(1); top: 10%;">
+             <h6 class="modal-header">Please Enter Your password</h6>
             <div class="modal-content" >
 <form  onsubmit="return updateProfile()">
                     <div class="row">
                         
-                            <h5 class="center">Please Enter Your password</h5>
-                            <div class="input-field col s12">
+                           <div class="input-field col s12">
 
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;">Password</label>
                                 <input required="required"  type="password" class="" id="confirmPassword" maxlength="10">

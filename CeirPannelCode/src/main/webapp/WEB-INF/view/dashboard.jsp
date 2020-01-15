@@ -238,11 +238,11 @@ class="dropdownColor"> Logout</span></a></li>
 
 	<!-- END FOOTER -->
 	<div id="manageAccount" class="modal">
+			<h6 class="modal-header">Manage Account</h6>
+		
 		<div class="modal-content">
 		<form id="userStatusForm"  onsubmit="return updateUSerStatus()">
-			<h6>Manage Account</h6>
 			 <span style="text-align: center;color: red;" id="errorMsg"></span> 
-			<hr> 
 			 
 			<p>Request CEIR ADMIN to</p>
 			<div class="row" style="height: 30px;">
@@ -287,12 +287,12 @@ class="dropdownColor"> Logout</span></a></li>
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
+			<h6 class="modal-header">Manage Account</h6>
 		<div class="modal-content">
-			<h6><!-- The request has been successfully registered with CEIR
+			<h6 id="mgAccount"><!-- The request has been successfully registered with CEIR
 				Admin. Please find confirmation over registered mail in 2 to 3
 				working days. --></h6>
 
- 
 			<div class="input-field col s12 center">
 				<a href="${context}/logout" class="btn modal-close">ok</a>
 			</div>
@@ -303,11 +303,12 @@ class="dropdownColor"> Logout</span></a></li>
 	<!-- Modal 4 start   -->
 
 <div id="changePassword" class="modal" style="width: 40%;">
+<h6 class="modal-header">Change Password</h6>
 <div class="modal-content">
 <form onsubmit="return changePassword()">
 <div class="row">
 
-<h5 style="text-align: -webkit-center;">Change Password</h5>
+
 <span style="text-align: center;color: red;" id="errorMsg"></span> 
 <div class="col s1">
 <i class="fa fa-lock" aria-hidden="true"
@@ -424,11 +425,10 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 
 <!-- modal start -->
 <div id="changePasswordMessage" class="modal" style="width: 40%;">
+<h6 class="modal-header">Change Password</h6>
 <div class="modal-content">
-<p>Change Password</p>
-<hr>
 <div class="row">
-<h6></h6>
+<h6 id="cPassSucessMsg"></h6>
 </div>
 <div class="row">
 <div class="center">

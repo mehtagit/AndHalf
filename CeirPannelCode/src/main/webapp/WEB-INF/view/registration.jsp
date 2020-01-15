@@ -569,7 +569,7 @@ var contextpath = "${context}";
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave" 
+								<button class="btn" id="btnSave"  
 									type="submit" style="margin-left: 10px;">submit</button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
 							</div>
@@ -592,24 +592,18 @@ var contextpath = "${context}";
 
 	<!-- Modal 1 start   -->
 
-	<div id="submitForm" class="modal">
-		<button type="button"
+	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
+		<!-- <button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
+			data-dismiss="modal">&times;</button> -->
+				<h6 class="modal-header">Verify OTP</h6>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-			<div class="row">
-				<h6>Verify OTP</h6>
-				<hr>
-				<p>A text message and an E-Mail has been sent to your registered
-					Phone number and E-mail. Please Verify !</p>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="otpVerification.html" class="btn waves-effect waves-light btn modal-trigger">Verify OTP</a>
-				</div>
-			</div>
+				<p style="padding:10px;" class="center" id="otpMsg"></p>
+			
+					<a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -667,16 +661,16 @@ var contextpath = "${context}";
 	
 	
 	 <!-- START MAIN -->
-    <div id="">
-        <!-- START WRAPPER -->
+    <!-- <div id="">
+        START WRAPPER
         <div class="wrapper">
-            <!-- START CONTENT -->
+            START CONTENT
             <section id="content">
-                <!--start container-->
+                start container
                 <div class="container">
                     <div class="section">
                         <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%;">
-                            <h5 class="center">Verify OTP</h5>
+                            <h6 class="modal-header">Verify OTP</h6>
                             <p style="padding:10px;" class="center" id="otpMsg"></p>
 
                             <a href="#otpVerification" class="btn modal-trigger"
@@ -685,20 +679,35 @@ var contextpath = "${context}";
                         </div>
                     </div>
                 </div>
-                <!--end container-->
+                end container
             </section>
-            <!-- END CONTENT -->
+            END CONTENT
         </div>
-    </div>
+    </div> -->
     
-    <div id="otpMessage" class="modal">
+        <!-- START WRAPPER -->
+            <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+            <!-- START CONTENT -->
+                <!--start container-->
+                        <!-- <div id="" class="card-panel modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+                            <h6 class="modal-header">Verify OTP</h6>
+                            <p class="center">The text and and an e-mail with OTP details has been sent to your
+                                registered Phone Number and E-Mail ID</p>
+                            <a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
+                </div> -->
+            <!-- END CONTENT -->
+
+        <!-- END WRAPPER -->
+    
+    
+    <div id="otpMessage" class="modal" style="display: block;">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
+        <h6 class="modal-header">Verify OTP</h6>
         <div class="modal-content">
-
-            <div class="row">  
                 <h6 id="otpResponse"></h6>
-            </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <a href="${context}/login" class="btn">ok</a>
@@ -714,9 +723,9 @@ var contextpath = "${context}";
     <div id="otpVerification" class="modal" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
+               <h6 class="modal-header">Enter OTP</h6>  
         <div class="modal-content">  
                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-                        <h5 class="center">Enter OTP</h5>  
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
@@ -726,7 +735,6 @@ var contextpath = "${context}";
 										title="Please enter number characters only"
                                   required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
                             </div> 
-                   
                             <div class="input-field col s12 m12">
                                 <input type="text" name="phoneOtp" maxlength="6" 
                                 
@@ -734,9 +742,7 @@ var contextpath = "${context}";
                                 required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
                             </div>
                         </div>
-
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
-
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
                     </form>
         </div>

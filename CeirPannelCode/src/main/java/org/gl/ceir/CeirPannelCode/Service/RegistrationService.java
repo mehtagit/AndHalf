@@ -50,10 +50,10 @@ public class RegistrationService {
 		ModelAndView mv=new ModelAndView();   
 		mv.addObject("usertypeId", usertypeId);              
 		mv.setViewName("registration");
-		//	List<Usertype> usertypeList=registrationFeignImpl.userypeList();
-		//List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();
-		//	mv.addObject("usertypes",usertypeList);
-		//mv.addObject("questions",securityQuestionList);
+			List<Usertype> usertypeList=registrationFeignImpl.userypeList();
+		List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();
+			mv.addObject("usertypes",usertypeList);
+		mv.addObject("questions",securityQuestionList);
 		log.info("view registration page ending point");
 		return mv;                
 	}
@@ -173,8 +173,6 @@ public class RegistrationService {
 						OtpResponse response=new OtpResponse();
 						response.setResponse("please upload national information");
 						return response;
-						//mv.addObject("msg","please upload national information");
-						//mv.setViewName("registration");
 					}     
 					else{ 
 						log.info("if user is individual  "); 
