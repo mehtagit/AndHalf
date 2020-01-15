@@ -129,9 +129,10 @@ public class DatatableHeaders {
 
 			//Grievance Headers
 			else if("grievanceHeaders".equals(role)) {
-				String[] headers = {headersTitle.raisedDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.grievanceId,headersTitle.grievanceStatus,headersTitle.action};	
+				
+				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.grievanceID","table.grievancestatus","table.action"};	
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}

@@ -14,5 +14,9 @@
 "stockRejected":"ភាគហ៊ុនបានបដិសេធដោយជោគជ័យ",
 "stockUploadSuccess":"ភាគហ៊ុនបានអនុម័តដោយជោគជ័យ",
 "stockhaveTxn":"តើអ្នកចង់យល់ព្រមលើភាគហ៊ុនដែលមានលេខសម្គាល់ប្រតិបត្តិការទេ៖",
-"operationnotallowed":"ប្រតិបត្តិការមិនត្រូវបានអនុញ្ញាតទេ"
+"operationnotallowed":"ប្រតិបត្តិការមិនត្រូវបានអនុញ្ញាតទេ",
+"documenttype":"ប្រភេទ​ឯកសារ",
+"selectfile":"ជ្រើសឯកសារ",
+"selectDocumentType":"ជ្រើសរើសប្រភេទឯកសារ",
+"selectCategory":"ជ្រើសរើសប្រភេទ"
 }

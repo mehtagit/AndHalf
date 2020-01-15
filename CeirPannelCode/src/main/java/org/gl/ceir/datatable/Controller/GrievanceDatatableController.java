@@ -12,6 +12,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -352,7 +353,7 @@ public class GrievanceDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 
-		pageElement.setPageTitle("Grievance Management");
+		pageElement.setPageTitle(Translator.toLocale("view.griev"));
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -361,8 +362,8 @@ public class GrievanceDatatableController {
 		log.info("USER STATUS:::::::::" + userStatus);
 		log.info("session value user Type==" + session.getAttribute("usertype"));
 
-		String[] names = { "HeaderButton", "Report Grievance", "./openGrievanceForm?reqType=formPage", "btnLink",
-				"FilterButton", "filter", "grievanceDataTable()", "submitFilter" };
+		String[] names = { "HeaderButton", Translator.toLocale("button.reportGriev"), "./openGrievanceForm?reqType=formPage", "btnLink",
+				"FilterButton", Translator.toLocale("button.filter"), "grievanceDataTable()", "submitFilter" };
 		for (int i = 0; i < names.length; i++) {
 			button = new Button();
 			button.setType(names[i]);
@@ -377,7 +378,7 @@ public class GrievanceDatatableController {
 		pageElement.setButtonList(buttonList);
 
 		// Dropdown items
-		String[] selectParam = { "select", "Grievance Status ", "recentStatus", "" };
+		String[] selectParam = { "select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
 		for (int i = 0; i < selectParam.length; i++) {
 			inputFields = new InputFields();
 			inputFields.setType(selectParam[i]);
@@ -392,8 +393,8 @@ public class GrievanceDatatableController {
 		pageElement.setDropdownList(dropdownList);
 
 		// input type date list
-		String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "", "text",
-				"Transaction ID", "transactionID", "", "text", "Grievance ID", "grievanceID", "" };
+		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
+				Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("input.grievID"), "grievanceID", "" };
 		for (int i = 0; i < dateParam.length; i++) {
 			dateRelatedFields = new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

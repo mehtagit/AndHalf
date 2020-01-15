@@ -293,7 +293,7 @@ section {
 				<div class="input-field col s12 center">
 					<form action="${context}/Consignment/viewConsignment"
 						id="closeOkPop" method="POST">
-						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.close" /></a>
+						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.ok" /></a>
 					</form>
 				</div>
 			</div>
@@ -420,7 +420,7 @@ section {
 								console.log("status code = 0");
 								$('#sucessMessage')
 										.text(successMsg);
-								$('#sucessMessage').append(data.txnId+" "+);
+								$('#sucessMessage').append(data.txnId);
 								$('#errorCode').val(data.errorCode);
 							} else if (data.errorCode == "3") {
 								console.log("status code = 3");

@@ -14,5 +14,9 @@
 "stockRejected":"Stock Rejected SuccessFully",
 "stockUploadSuccess":"Stock Approved SuccessFully",
 "stockhaveTxn":"Do you want to approve the stock having Transaction ID:",
-"operationnotallowed":"Operation is not allowed"
+"operationnotallowed":"Operation is not allowed",
+"documenttype":"Document Type",
+"selectfile":"Select File",
+"selectDocumentType":"Select Document Type",
+"selectCategory":"Select Category"
 }
