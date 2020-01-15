@@ -28,6 +28,10 @@ public class FileStorageProperties {
 	private int maxFileRecord;
 	private String fileDumpDownloadDir;
 	private String fileDumpDownloadLink;
+	
+	private String auditTrailDownloadDir;
+	private String auditTrailDownloadLink;
+	
 	public String getUploadDir() {
 		return uploadDir;
 	}
@@ -153,6 +157,18 @@ public class FileStorageProperties {
 	}
 	public void setFileDumpDownloadLink(String fileDumpDownloadLink) {
 		this.fileDumpDownloadLink = fileDumpDownloadLink;
+	}
+	public String getAuditTrailDownloadDir() {
+		return auditTrailDownloadDir;
+	}
+	public void setAuditTrailDownloadDir(String auditTrailDownloadDir) {
+		this.auditTrailDownloadDir = auditTrailDownloadDir;
+	}
+	public String getAuditTrailDownloadLink() {
+		return auditTrailDownloadLink;
+	}
+	public void setAuditTrailDownloadLink(String auditTrailDownloadLink) {
+		this.auditTrailDownloadLink = auditTrailDownloadLink;
 	}
 	
 }
