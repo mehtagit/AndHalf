@@ -157,6 +157,11 @@ display: none;
 input[type="checkbox"] {
 display: block;
 }
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+float: left;
+margin-top: 5px;
+}
 </style>
 <script>
 var contextpath = "${context}";
