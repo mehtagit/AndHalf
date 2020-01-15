@@ -20,6 +20,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,6 +43,13 @@ public class UploadPaidStatusView {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
+
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
+	
+	
 	@Autowired
 	UtilDownload utildownload;
 
@@ -104,7 +112,7 @@ public class UploadPaidStatusView {
 		log.info(" upload status  entry point.");
 		try {
 			byte[] bytes = file.getBytes();
-		String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; 
+		String rootPath =filePathforUploadFile+txnNumber+"/"; 
 		File dir = new File(rootPath + File.separator);
 
 		if (!dir.exists()) dir.mkdirs();

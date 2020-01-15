@@ -224,7 +224,7 @@
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
 						class="modal-close btn" id="add_user">
-						<spring:message code="modal.close" />
+						<spring:message code="modal.ok" />
 					</button>
 				</div>
 			</div>
@@ -294,7 +294,7 @@
 			<div class="row">
 				<div class="input-field col s12 center">
 					<a href="${context}/Consignment/viewConsignment" class="btn"><spring:message
-							code="modal.close" /></a>
+							code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>
@@ -326,7 +326,7 @@
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<a href="${context}/Consignment/viewConsignment" class="btn"><spring:message
-								code="modal.close" /></a>
+								code="modal.ok" /></a>
 					</div>
 				</div>
 			</div>

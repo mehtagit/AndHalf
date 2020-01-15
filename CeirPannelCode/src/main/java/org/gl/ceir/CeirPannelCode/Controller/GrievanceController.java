@@ -20,6 +20,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +39,13 @@ public class GrievanceController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 
+	
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
+
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
+	
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
@@ -97,7 +105,7 @@ public class GrievanceController {
 
 			try {
 				byte[] bytes =
-						file.getBytes(); String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grevnceId+"/"+tagName+"/"; 
+						file.getBytes(); String rootPath = filePathforUploadFile+grevnceId+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
 						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
 						File serverFile = new File(rootPath+file.getOriginalFilename());
@@ -191,7 +199,7 @@ public class GrievanceController {
 						}
 						else {
 						byte[] bytes = file.getBytes();
-						String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
+						String rootPath = filePathforUploadFile+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 						File dir = new File(rootPath + File.separator);
 
 						if (!dir.exists()) 
