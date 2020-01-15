@@ -849,7 +849,7 @@ public class IconsState {
 
 	/********************************** Icons for Stolen **********************************/ 
 
-	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+	public String blockUnblockState(List<ActionModel> actionResponse,String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
@@ -858,7 +858,7 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
-
+			
 
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
@@ -871,8 +871,6 @@ public class IconsState {
 
 		}
 
-
-
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
@@ -884,22 +882,22 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-
-
-		if("0".equals(status) || "2".equals(status) && "Approved".equals(userStatus) ) {
+		
+		for (ActionModel actionModel : actionResponse) {
+			if (actionModel.getState() == 0 || actionModel.getState() == 1 || actionModel.getState() == 2 || actionModel.getState() == 4 || actionModel.getState() == 5) {
+				log.info("in Action State first" +actionModel.getState());
+				error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
+				
+			}else if (actionModel.getState() == 3) {
+				 error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+						+errorIconTitle+" ></i></a>";
+			
+		}
 
 		}
-		else if( "1".equals(status) && "Approved".equals(userStatus)) {
-
-
-		}
-
-		else  if("2".equals(status) && "Approved".equals(userStatus) ) {
-
-		} 
-
-
-		else if("Disable".equals(userStatus)) {
+		if("Disable".equals(userStatus)) {
+			
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -1098,4 +1096,68 @@ public class IconsState {
 				String action = view.concat(download).concat(approve).concat(reject);
 				return action;
 	}	
+	
+	
+	
+	/********************************** Icons for StolenlawfulAgency **********************************/ 
+
+	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+		// URL link 
+		String file = fileName == null ? null : fileName.replace(" ", "%20");
+
+		String viewAction="";
+		String editAction="";
+		String emptyURL="JavaScript:void(0);"; 
+		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
+		String deleteAction = "JavaScript:void(0);"; 
+
+
+		if(source.equals("3")) {
+			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+
+		}
+		else if(source.equals("4")) {
+			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+
+		}
+
+
+
+		// state related Code 
+		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+				+errorIconTitle+" ></i></a>";
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>"; 
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>"; 
+
+
+
+
+		 if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+
+		}
+
+		String action=error.concat(download).concat(view).concat(edit).concat(delete);	
+		return action;
+
+	}
 }

@@ -105,5 +105,9 @@ public class HeadersTitle {
 	//Admin Config Management
 	public  String period="Period";
 	public  String policyOrder="Policy Order";
+	
+	//Lawful Stolen Headers
+	public  String contact="Contact Number";
+	public  String blockType="Block Type";
 
 }
