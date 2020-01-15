@@ -511,8 +511,10 @@ function saveGrievanceReply()
 	return false;
 }
 
+
 function viewGrievanceHistory(grievanceId,projectPath)
 {
+
 
 
 
@@ -527,6 +529,7 @@ function viewGrievanceHistory(grievanceId,projectPath)
 			console.log(JSON.stringify(data));
 			$('#chatMsg').empty();
 			$('#manageAccount').openModal();
+			
 			var projectpath=projectPath+path+"/Consignment/dowloadFiles/actual";
 			console.log("--projectpath--"+projectpath);
 			for(var i=0; i<data.length; i++)
