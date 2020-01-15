@@ -13,7 +13,7 @@
 		window.location.reload(true);
 	}); 
 	$.i18n().locale = lang;
-	var i18n,rejectedMsg,consignmentApproved,errorMsg,havingTxnID;
+	var i18n,rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated,consignmentDeleted,deleteInProgress;
 	$.i18n().load( {
 		'en': '../resources/i18n/en.json',
 		'km': '../resources/i18n/km.json'
@@ -23,6 +23,11 @@
 		consignmentApproved=$.i18n('consignmentApproved');
 		errorMsg=$.i18n('errorMsg');
 		havingTxnID=$.i18n('havingTxnID');
+		updateMsg=$.i18n('updateMsg');
+		hasBeenUpdated=$.i18n('hasBeenUpdated');
+		consignmentDeleted=$.i18n('consignmentDeleted');
+		deleteInProgress=$.i18n('deleteInProgress');
+		console.log("deleteInProgress"+deleteInProgress);
 	});
 	$(document).ready(function(){
 		$('div#initialloader').fadeIn('fast');
@@ -72,10 +77,10 @@
 
 				}else if(data.errorCode == 0){
 					$("#consignmentText").text('');
-					$("#consignmentText").text('Consignment Deleted Successfully');
+					$("#consignmentText").text(deleteInProgress);
 				}
 				else{
-					$("#consignmentText").text('Something happens wrong');
+					$("#consignmentText").text(errorMsg);
 				}
 			},
 			error : function() {
@@ -377,7 +382,7 @@
 				else if (data.errorCode==0){
 
 					$('#sucessMessage').text('');
-					$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+					$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
 				}
 				else 
 				{

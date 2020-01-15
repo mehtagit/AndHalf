@@ -5,19 +5,20 @@
 
 
 		$.i18n().locale = lang;
-		var i18n,stockRejected,stockApproved,stockTxn,updateTxn,sucessfullysupdated,errorOccured,operationNotAllowed,stockDeleted;
+		var i18n,stockRejected,stockApproved,stockTxn,errorOccured,operationNotAllowed,stockDeleted,updateMsg,hasBeenUpdated;
+	
 		$.i18n().load( {
 			'en': './resources/i18n/en.json',
 			'km': './resources/i18n/km.json'
 		}).done( function() { 
 			i18n=$.i18n('button.export');
-			stockRejected=$.i18n('modal.message.stockRejected');
-			stockApproved=$.i18n('modal.message.stockUpload');
-			stockTxn=$.i18n('modal.message.stock.haveTxn');
-			stockTxn=$.i18n('modal.message.update');
-			sucessfullysupdated=$.i18n('modal.message.successfullyUpdated');
-			errorOccured=$.i18n('modal.message.errorOccured');
-			operationNotAllowed=$.i18n('modal.message.operation.notallowed');
+			updateMsg=$.i18n('updateMsg');
+			hasBeenUpdated=$.i18n('hasBeenUpdated');
+			stockRejected=$.i18n('stockRejected');
+			stockApproved=$.i18n('stockUploadSuccess');
+			stockTxn=$.i18n('stockhaveTxn');	
+			errorOccured=$.i18n('errorMsg');
+			operationNotAllowed=$.i18n('operationnotallowed');
 			stockDeleted=$.i18n('stockDeleted');
 			console.log("done"+stockDeleted);
 		});
@@ -135,6 +136,7 @@
 		formData.append('quantity',quantity);
 		formData.append('txnId',txnId);
 		formData.append('filename',filename);
+
 		formData.append('invoiceNumber',InvoiceNumber);
 
 		console.log(JSON.stringify(formData));
@@ -158,7 +160,7 @@
 				}
 				else if (data.errorCode==0){
 					$('#stockSucessMessage').text('');
-					$('#stockSucessMessage').text(updateTxn+' '+('+data.txnId+')+' '+sucessfullysupdated);
+					$('#stockSucessMessage').text(updateMsg+' '+(data.txnId)+' '+hasBeenUpdated);
 				}
 				else{
 					$('#stockSucessMessage').text('');
@@ -532,7 +534,7 @@
 		else {
 			$('#ApproveStock').openModal();
 			$('#stockApproveMessage').text('');
-			$('#stockApproveMessage').text(stockTxn+txnId);
+			$('#stockApproveMessage').text(stockTxn+" "+txnId);
 			$('#stockAppapprove').text('');
 		
 		}

@@ -420,7 +420,7 @@ section {
 								console.log("status code = 0");
 								$('#sucessMessage')
 										.text(successMsg);
-								$('#sucessMessage').append(data.txnId);
+								$('#sucessMessage').append(data.txnId+" "+);
 								$('#errorCode').val(data.errorCode);
 							} else if (data.errorCode == "3") {
 								console.log("status code = 3");

@@ -172,15 +172,7 @@ textarea {
 							placeholder="" disabled=""> <label for="Status"
 							class="active">Status </label>
 					</div>
-					</div>
-			
-									
-									
-
-				</div>
-
-				<div class="row ">
-				<div class="col s12 m12">
+					
 					<div class="input-field  col s12 m6">
 						<input type="text" id="viewapproveDisapproveDate" class="datepicker picker__input"
 							name="approveRejectionDate" pattern="[]" title="" maxlength="20"
@@ -199,10 +191,17 @@ textarea {
 							disabled=""></textarea>
 						<label for="Remark" class="active">Remark </label>
 					</div>
+					</div>
+			
+									
+									
+
 				</div>
-				<div class="center" style="margin-top: 30px;">
+
+				<div class="row ">
+				<div class="center  popup-btn-div" style="margin-top: 10px;">
 					<button class="modal-close btn" type="button" id="Cancel"
-						style="margin-left: 10px;">Ok</button>
+						style="margin-left: 10px;">Close</button>
 				</div>
 
 
