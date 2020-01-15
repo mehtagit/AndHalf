@@ -169,8 +169,9 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
+
 			
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.deviceType,headersTitle.country,headersTitle.Status,headersTitle.action};		
+				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.transactionID,headersTitle.deviceType,headersTitle.country,headersTitle.Status,headersTitle.action};		
 
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
@@ -190,10 +191,10 @@ public class DatatableHeaders {
 			}
 
 			
-
 			//adminUserPaidStatus Headers 
 			else if("adminUserPaidStatus".equals(role)) {
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.deviceType,headersTitle.country,headersTitle.taxPaidStatus,headersTitle.Status,headersTitle.action};		
+
+				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.transactionID,headersTitle.deviceType,headersTitle.country,headersTitle.taxPaidStatus,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -269,7 +270,15 @@ public class DatatableHeaders {
 			}
 		
 			
+//lawfulStolenHeaders Headers 
 			
+			else if("lawfulStolenHeaders".equals(role)) {
+				String[] headers = {headersTitle.requestDate,headersTitle.transactionID,headersTitle.blockType,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};		

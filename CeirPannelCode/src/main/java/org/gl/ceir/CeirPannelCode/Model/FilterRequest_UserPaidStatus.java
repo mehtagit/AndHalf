@@ -2,11 +2,10 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest_UserPaidStatus {
 	
-	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,txnId,userId,userTypeId;
-	private String createdOn,modifiedOn,nid,remarks,userType;
+	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId;
+	private String createdOn,modifiedOn,nid,remarks,userType,txnId;
 	  private Long imei1;
-	
-		public Integer getDeviceIdType() {
+	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
 	public void setDeviceIdType(Integer deviceIdType) {
@@ -47,12 +46,6 @@ public class FilterRequest_UserPaidStatus {
 	}
 	public void setRoleTypeUserId(Integer roleTypeUserId) {
 		this.roleTypeUserId = roleTypeUserId;
-	}
-	public Integer getTxnId() {
-		return txnId;
-	}
-	public void setTxnId(Integer txnId) {
-		this.txnId = txnId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -96,36 +89,29 @@ public class FilterRequest_UserPaidStatus {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	public Long getImei1() {
 		return imei1;
 	}
 	public void setImei1(Long imei1) {
 		this.imei1 = imei1;
 	}
-	
-	
-	
-		@Override
+	@Override
 	public String toString() {
 		return "FilterRequest_UserPaidStatus [deviceIdType=" + deviceIdType + ", deviceType=" + deviceType
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", action=" + action
-				+ ", featureId=" + featureId + ", roleTypeUserId=" + roleTypeUserId + ", txnId=" + txnId + ", userId="
-				+ userId + ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-				+ ", nid=" + nid + ", remarks=" + remarks + ", userType=" + userType + ", imei1=" + imei1 + "]";
+				+ ", featureId=" + featureId + ", roleTypeUserId=" + roleTypeUserId + ", userId=" + userId
+				+ ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
+				+ nid + ", remarks=" + remarks + ", userType=" + userType + ", txnId=" + txnId + ", imei1=" + imei1
+				+ "]";
 	}
-
-		
-	/*
-	 * "nid": "ABC", "deviceStatus": 0, "": 0, "taxPaidStatusInterp": null, "": 0,
-	 * "deviceTypeInterp": null,
-	 * 
-	 * "deviceIdTypeInterp": null, "multiSimStatus": "Y", "country": "US",
-	 * "deviceSerialNumber": "73465242", "txnId": "R78450DF", "price": 1000,
-	 * "currency": 0, "currencyInterp": null, "firstImei": 193746598310452,
-	 * "secondImei": null, "thirdImei": null, "fourthImei": null, "endUserDB": null
-	 */
-		  
-		  
+	  
+	  
 	
 		  
 }

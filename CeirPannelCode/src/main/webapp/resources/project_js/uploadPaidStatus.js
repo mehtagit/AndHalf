@@ -232,7 +232,7 @@ function table(url,dataUrl){
 			"userType":$("body").attr("data-roleType"),
 			"deviceIdType":parseInt($('#deviceIDType').val()),
 			"deviceType":parseInt($('#deviceTypeFilter').val()),
-			"txnId":$('#Search').val(),
+			"txnId":$('#transactionID').val(),
 			"consignmentStatus": null,
 			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}
