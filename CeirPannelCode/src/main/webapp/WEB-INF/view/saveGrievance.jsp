@@ -111,7 +111,7 @@
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate" type="text" multiple
-                                                        placeholder="Upload one or more files">
+                                                        placeholder="">
                                                     <div>
                                                         <p id="myFiles"></p>
                                                     </div>
@@ -129,14 +129,14 @@
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate" type="text" multiple
-                                                        placeholder="Upload one or more files">
+                                                        placeholder="">
                                                     <div>
                                                         <p id="myFiles"></p>
                                                     </div>
                                                 </div>
                                             </div>
                                                <div class="col s12 m6 l6" style="margin-top: 8px;">
-                                                <label for="Category">Document Type <span class="star">*</span></label>
+                                                <label for="docTypetag1">Document Type <span class="star">*</span></label>
                                                 <select class="browser-default" id="docTypetag1">
                                                     <option value="" disabled selected>Select Document Type </option>
                                                   

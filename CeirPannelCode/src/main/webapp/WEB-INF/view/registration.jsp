@@ -196,7 +196,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight"
 										title="Please enter alphanumeric with special character upto 12 characters only"
 										id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{0,12}" />
-									<label for="passportNo">National ID/Passport Number <span
+									<label for="passportNumberDiv">National ID/Passport Number <span
 										class="star">*</span></label>
 								</div>
 
@@ -206,7 +206,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight" id="companyName"
 										pattern="[A-Za-z\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
-									<label for="company">Company Name <span class="star">*</span></label>
+									<label for="companyName">Company Name <span class="star">*</span></label>
 								</div>
 
 								<div class="row myRow" style="display: none;" id="uploadFile">
@@ -428,7 +428,7 @@ var contextpath = "${context}";
 									id="vatNumberField">
 									<input type="file" name="vatFile"
 										class="form-control boxBorder boxHeight" id="vatFile">
-									<label for="vatFile">VAT File <span class="star">*</span></label>
+									<label for="vatNumberField">VAT File <span class="star">*</span></label>
 								</div>
 								</div>
 							</div>
@@ -535,7 +535,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l12">
 									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
-										required="required"> <label for="address">Enter
+										required="required"> <label for="captcha">Enter
 										your captcha <span class="star">*</span>
 									</label>
 								</div>
@@ -715,14 +715,14 @@ var contextpath = "${context}";
                                 <input type="text" name="emailOtp" maxlength="6"
                                
 										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                                  required="required" id="emailOtp" placeholder=""/>
                             </div> 
                    
                             <div class="input-field col s12 m12">
                                 <input type="text" name="phoneOtp" maxlength="6" 
                                 
 										title="Please enter number characters only" 
-                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                                required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
 

@@ -170,7 +170,7 @@ input[type='search'] {
 													</div>
 
 													<div class="col s12 m6">
-														<label for="deviceType">Device Type <span
+														<label for="deviceType1">Device Type <span
 															class="star">*</span></label> <select class="browser-default"
 															id="deviceType1" required="required">
 															<option value="" disabled selected>Select Device
@@ -214,7 +214,7 @@ input[type='search'] {
 														<input type="text" id="serialNumber1" name="serialNumber"
 															required="required" pattern="[A-Za-z0-9]{0,15}"
 															title="Please enter alphabets and numbers upto 15 characters only"
-															maxlength="15"> <label for="serialNumber">Device
+															maxlength="15"> <label for="serialNumber1">Device
 															Serial Number <span class="star">*</span>
 														</label>
 													</div>
@@ -276,21 +276,21 @@ input[type='search'] {
 																<input type="text" id="IMEIB1" name="IMEI2"
 																	pattern="[0-9]{15,16}"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16"> <label for="IMEIB2">2</label>
+																	maxlength="16"> <label for="IMEIB1">2</label>
 															</div>
 
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIC1" name="IMEIC3"
 																	pattern="[0-9]{15,16}"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16"> <label for="IMEIC3">3</label>
+																	maxlength="16"> <label for="IMEIC1">3</label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
 																<input type="text" id="IMEID1" name="IMEID4[]"
 																	pattern="[0-9]{15,16}"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16" id="field0"> <label for="IMEID4">4</label>
+																	maxlength="16" id="field0"> <label for="IMEID1">4</label>
 															</div>
 														</div>
 													</div>
@@ -847,14 +847,14 @@ input[type='search'] {
 					<div class="col s12 m6" style="margin-top: 3px;">
 						<label for="country">Country bought From <span
 							class="star">*</span></label> <input type="text" id="country"
-							name="country" placeholder="USA" disabled>
+							name="country" placeholder="" disabled>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 25px;">
 						<input type="text" id="serialNumber" name="serialNumber"
 							pattern="[0-9]"
 							title="Please enter your device serial number first"
-							maxlength="20" placeholder="123456789" disabled> <label
+							maxlength="20" placeholder="" disabled> <label
 							for="serialNumber">Device Serial Number <span
 							class="star">*</span></label>
 					</div>
@@ -873,14 +873,14 @@ input[type='search'] {
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16" placeholder="1234567891234567" disabled> <label
+							maxlength="16" placeholder="" disabled> <label
 							for="IMEI1">1 <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16" placeholder="98765432198765432" disabled>
+							maxlength="16" placeholder="" disabled>
 						<label for="IMEI2">2</label>
 					</div>
 

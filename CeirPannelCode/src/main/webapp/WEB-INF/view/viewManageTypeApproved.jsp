@@ -233,7 +233,7 @@ textarea {
                                             </div>
 
                                             <div class="col s12 m6 l6">
-                                                <label for="country">Country <span class="star">*</span></label>
+                                                <label for="editcountry">Country <span class="star">*</span></label>
                                                 <select id="editcountry"  required="required" class="browser-default" class="mySelect"
                                                     required></select>
                                             </div>
@@ -262,11 +262,11 @@ textarea {
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" id="edittac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required" />
-                                                <label for="tac">TAC <span class="star">*</span></label>
+                                                <label for="edittac">TAC <span class="star">*</span></label>
                                             </div>
 
                                             <div class="col s12 m6 l6">
-                                                <label for="deviceType">Status <span class="star">*</span></label>
+                                                <label for="editdeviceType">Status <span class="star">*</span></label>
                                                 <select class="browser-default" required="required" id="editdeviceType">
                                                     <option value="" disabled selected>Select Status</option>
                                                     <option value="0">Approved</option>
@@ -283,14 +283,14 @@ textarea {
 											class="form-control dateClass" name="requestDate" 
 											title="" autocomplete="off" placeholder=""> 
 											
-                                                <label for="bdate2">Approve Rejection Date <span
+                                                <label for="editApproveRejectionDate">Approve Rejection Date <span
                                                         class="star">*</span></label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6" style="margin-top: 9px;">
                                                 <textarea id="editRemark" class="materialize-textarea" style="padding: 0"
                                                     placeholder="" ></textarea>
-                                                <label for="Remark" style="margin-top: 7px">Remark </label>
+                                                <label for="editRemark" style="margin-top: 7px">Remark </label>
                                             </div>
                                         </div>
 

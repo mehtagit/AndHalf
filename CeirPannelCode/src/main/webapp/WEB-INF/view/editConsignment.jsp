@@ -167,16 +167,16 @@
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             <input type="text" name="supplierId" id="supplierId" value="${consignmentdetails.supplierId}" maxlength="15" />
-                                            <label for="Name" class="center-align">Supplier/Manufacturer ID</label>
+                                            <label for="supplierId" class="center-align">Supplier/Manufacturer ID</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <input type="text" name="supplierName" id="supplierName" value="${consignmentdetails.supplierName}" maxlength="15" required />
-                                            <label for="Name" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
+                                            <label for="supplierName" class="center-align">Supplier/Manufacturer Name <span class="star">*</span></label>
                                         </div>
                                         <div class="input-field col s12 m6">
                                             <input type="text" name="consignmentNumber" value="${consignmentdetails.consignmentNumber}" id="consignmentNumber" maxlength="15" />
-                                            <label for="Name" class="center-align">Consignment Number</label>
+                                            <label for="consignmentNumber" class="center-align">Consignment Number</label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
@@ -184,7 +184,7 @@
                                                 Arrival Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
                                             <input name="expectedDispatcheDate" id="expectedDispatcheDate" type="text"  value="${consignmentdetails.expectedDispatcheDate}" onfocus="(this.type='date')" onfocusout="(this.type='text')">
-                                            <label for="dispatchDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
+                                            <label for="expectedDispatcheDate" class="center-align">Expected Dispatch Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
@@ -200,7 +200,7 @@
                                             <!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
                                             <!-- <label for="Name">Expected arrival Date</label> -->
                                             <input name="expectedArrivalDate" id="expectedArrivaldate" type="text" value="${consignmentdetails.expectedArrivaldate}" onfocus="(this.type='date')" onfocusout="(this.type='text')">
-                                            <label for="dispatchDate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
+                                            <label for="expectedArrivaldate" class="center-align">Expected Arrival  Date <span class="star">*</span></label>
                                             <span class="input-group-addon" style="color:#ff4081"><i
                                                     class="fa fa-calendar" aria-hidden="true"></i></span>
                                         </div>
@@ -217,12 +217,12 @@
 
                                         <div class="input-field col s12 m6">
                                             <input type="text" name="quantity" id="quantity" value="${consignmentdetails.quantity}" maxlength="7" required />
-                                            <label for="Quantity" class="center-align">Quantity <span class="star">*</span></label>
+                                            <label for="quantity" class="center-align">Quantity <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                                 <input type="text" name="txnId" id="txnId"  value="${consignmentdetails.txnId}" readonly maxlength="15" />
-                                                <label for="TransactionId" class="center-align">Transaction ID</label>
+                                                <label for="txnId" class="center-align">Transaction ID</label>
                                             </div>
                                     </div>
 

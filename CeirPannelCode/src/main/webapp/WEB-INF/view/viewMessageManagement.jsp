@@ -111,7 +111,7 @@
 				<div class="row" style="margin-top:10px">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
-							placeholder="tag" disabled
+							placeholder="" disabled
 							style="height: 28px;"> <label for="tag">Tag</label>
 					</div>
 
@@ -158,7 +158,7 @@
 				<div class="row">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
-							placeholder="tag"
+							placeholder=""
 							style="height: 28px;"> <label for="tag">Tag</label>
 					</div>
 

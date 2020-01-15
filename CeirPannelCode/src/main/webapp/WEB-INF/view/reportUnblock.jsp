@@ -105,7 +105,7 @@
                                                         <div class="row">
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="deviceType">Device Type <span class="star">*</span></label>
+                                                                <label for="unbockSingledeviceType">Device Type <span class="star">*</span></label>
                                                                 <select class="browser-default" id="unbockSingledeviceType" required="required">
                                                                     <option value="" disabled selected>Device Type</option> 
                                                                 </select>
@@ -121,7 +121,7 @@
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="deviceType">Multiple Sim Status <span class="star">*</span></label>
+                                                                <label for="unbockSingleMultipleSimStatus">Multiple Sim Status <span class="star">*</span></label>
                                                                 <select class="browser-default" id="unbockSingleMultipleSimStatus" required="required">
                                                                     <option value="" disabled selected>Multiple Sim Status</option>
                                                                    
@@ -131,7 +131,7 @@
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,15}"
                                                                     required="required" title="Please enter your device serial number first" maxlength="15">
-                                                                <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
+                                                                <label for="unbockSingleSerialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
                                                             
                                                               <div class="col s12 m6"><label for="singleDeviceUnblock">Category
@@ -144,7 +144,7 @@
                                                     </div>
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
-                                                                <label for="Remark">Remark <span class="star">*</span></label>
+                                                                <label for="unbockSingleRemark">Remark <span class="star">*</span></label>
                                                             </div>
                                                                            <div class="" style="margin-left: 36%; margin-top: -25px;">
 				BlockingType
@@ -194,27 +194,27 @@
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI1" required="required" name="IMEI1" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="IMEI1">1 <span class="star">*</span></label>
+                                                                <label for="unbockSingleIMEI1">1 <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="IMEI2">2</label>
+                                                                <label for="unbockSingleIMEI2">2</label>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="IMEI3">3</label>
+                                                                <label for="unbockSingleIMEI3">3</label>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="IMEI4">4</label>
+                                                                <label for="unbockSingleIMEI4">4</label>
                                                             </div>
                                                         </div>
                                                         <span> Required Field are marked with <span class="star">*</span></span>
@@ -231,7 +231,7 @@
                                             <div id="multipleImeiUnBlock" class="col s12" style="display: none">
                                              <form action="" id="multipleImeiUnBlockform" onsubmit="return submitUnBlockImei()" method="POST" enctype="multipart/form-data">
                                                     
-                                                     <div class="col s12 m6"><label for="bulkBlockdeviceCategory">Category
+                                                     <div class="col s12 m6"><label for="bulkunBlockdeviceCategory">Category
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="bulkunBlockdeviceCategory"  required="required" >
                                                             <option value="" disabled selected>Select Category
@@ -253,7 +253,7 @@
                                                             <input type="file" id="unblockBulkFile" required="required">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" placeholder="Please select the file">
+                                                            <input class="file-path validate" type="text" placeholder="">
                                                         </div>
                                                     </div>
 

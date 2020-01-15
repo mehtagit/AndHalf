@@ -2,8 +2,6 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import java.util.List;
 
-import javax.jws.soap.SOAPBinding.Use;
-
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;

@@ -273,21 +273,21 @@ var contextpath = "${context}";
                                 <div class="file-field input-field col s12 m6 l6">
                                     <div class="btn">
                                         <span>Upload National ID *</span>
-                                        <input id="NationalIdImage" type="file" placeholder="Upload National ID Image">
+                                        <input id="NationalIdImage" type="file" placeholder="">
                                     </div>
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text"
-                                            placeholder="Upload National ID Image">
+                                            placeholder="">
                                     </div>
                                 </div>
 
                                 <div class="file-field input-field col s12 m6 l6">
                                     <div class="btn">
                                         <span>Upload Photo *</span>
-                                        <input id="photo" type="file" placeholder="Upload Photo">
+                                        <input id="photo" type="file" placeholder="">
                                     </div>
                                     <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" placeholder="Upload Photo">
+                                        <input class="file-path validate" type="text" placeholder="">
                                     </div>
                                 </div>
 
@@ -299,11 +299,11 @@ var contextpath = "${context}";
                                 <div class="file-field input-field col s12 m6 l6">
                                     <div class="btn">
                                         <span>Upload ID Card *</span>
-                                        <input id="idCard" type="file" placeholder="Upload Photo">
+                                        <input id="idCard" type="file" placeholder="">
                                     </div>  
                                     <div class="file-path-wrapper">
                                         <input class="file-path validate" type="text"
-                                            placeholder="Upload ID Card Image">
+                                            placeholder="">
                                     </div>
                                 </div>
 
@@ -482,7 +482,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l12">
 									<input autocomplete="off" type="text" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
-										required="required"> <label for="address">Enter
+										required="required"> <label for="captcha">Enter
 										your captcha <span class="star">*</span>
 									</label>
 								</div>
@@ -649,14 +649,14 @@ var contextpath = "${context}";
                                 <input type="text" name="emailOtp" maxlength="6"
                                
 										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                                  required="required" id="emailOtp" placeholder=""/>
                             </div> 
                    
                             <div class="input-field col s12 m12">
                                 <input type="text" name="phoneOtp" maxlength="6" 
                                 
 										title="Please enter number characters only" 
-                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                                required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
 

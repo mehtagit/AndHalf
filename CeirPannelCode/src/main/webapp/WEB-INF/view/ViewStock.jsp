@@ -142,32 +142,32 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierId" id="editSupplierId"
 							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
-							for="SupplierId" class="center-align">Supplier ID
+							for="editSupplierId" class="center-align">Supplier ID
 							<span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierName" id="editSupplierName" required="required"
-							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="SupplierName"
+							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="editSupplierName"
 							class="center-align">Supplier Name <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
 							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
-							for="Quantity" class="center-align">Quantity <span class="star">*</span></label></label>
+							for="editQuantity" class="center-align">Quantity <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
 							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15"/> <label
-							for="InvoiceNumber" class="center-align">Invoice Number</label>
+							for="editInvoiceNumber" class="center-align">Invoice Number</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="TransactionId" id="editTransactionId"
 							placeholder="" disabled maxlength="15" /> <label
-							for="TransactionId" class="center-align">Transaction ID</label>
+							for="editTransactionId" class="center-align">Transaction ID</label>
 					</div>
 				</div>
 
@@ -224,30 +224,30 @@
 				<div class="row myRow">
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierId" id="SupplierId"
-							placeholder="ABCD12345" disabled /> <label for="SupplierId"
+							placeholder="" disabled /> <label for="SupplierId"
 							class="center-align">Supplier ID</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierName" id="SupplierName"
-							placeholder="Abcd" disabled /> <label for="SupplierName"
+							placeholder="" disabled /> <label for="SupplierName"
 							class="center-align">Supplier Name</label>
 					</div>
 
 					<div class="input-field col s12 m6">
-						<input type="text" name="Quantity" id="Quantity" placeholder="120"
+						<input type="text" name="Quantity" id="Quantity" placeholder=""
 							disabled /> <label for="Quantity" class="center-align">Quantity</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"
-							placeholder="12345678" disabled /> <label for="InvoiceNumber"
+							placeholder="" disabled /> <label for="InvoiceNumber"
 							class="center-align">Invoice Number</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="TransactionId" id="TransactionId"
-							disabled placeholder="TR12345678" maxlength="15" /> <label
+							disabled placeholder="" maxlength="15" /> <label
 							for="TransactionId" class="center-align">Transaction ID</label>
 					</div>
 				</div>
@@ -264,7 +264,7 @@
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate responsive-file-div"
-								placeholder="fileName.csv" id="csvUploadFileName" type="text"
+								placeholder="" id="csvUploadFileName" type="text"
 								disabled>
 						</div>
 					</div>
@@ -300,7 +300,7 @@
 			<div class="row">
 				<div class="input-field col s12 m12">
 					<textarea id="deleteStockremark" class="materialize-textarea"></textarea>
-					<label for="textarea1" class="">Remarks</label>
+					<label for="deleteStockremark" class="">Remarks</label>
 				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
@@ -417,7 +417,7 @@
             <div class="row">
                 <div class="input-field col s12 m12" style="margin-left: -10px;">
                     <textarea id="stockDispproveRemarks" class="materialize-textarea" style="padding-left: 0;"></textarea>
-                    <label for="textarea1">Remarks</label>
+                    <label for="stockDispproveRemarks">Remarks</label>
                 </div>
             </div>
             <div class="row">

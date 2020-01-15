@@ -292,7 +292,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="commune"
 														maxlength="50" required="required"> <label
-														for=""commune"">Commune <span
+														for="commune">Commune <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -353,7 +353,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="deviceType">Device Type <span
+															<label for="deviceType1">Device Type <span
 																class="star">*</span></label> <select class="browser-default"
 																id="deviceType1" required="required">
 																<option value="" disabled selected>Select
@@ -394,7 +394,7 @@ input[type='search'] {
 															<input type="text" id="serialNumber1" required="required" name="serialNumber"
 																pattern="[A-Za-z0-9]{0,15}"
 																title="Please enter alphabets and numbers upto 15 characters only"
-																maxlength="15"> <label for="serialNumber">Device
+																maxlength="15"> <label for="serialNumber1">Device
 																Serial Number <span class="star">*</span>
 															</label>
 														</div>
@@ -464,7 +464,7 @@ input[type='search'] {
 																	<input type="text" id="IMEIC1" name="IMEIC3"
 																		pattern="[0-9]{15,16}"
 																		title="Please enter minimum 15 and maximum 16 digit only"
-																		maxlength="16"> <label for="IMEIC3">3</label>
+																		maxlength="16"> <label for="IMEIC1">3</label>
 																</div>
 
 																<div class="input-field col s12 m6" id="field">
@@ -472,7 +472,7 @@ input[type='search'] {
 																		pattern="[0-9]{15,16}"
 																		title="Please enter minimum 15 and maximum 16 digit only"
 																		maxlength="16" id="field0"> <label
-																		for="IMEID4">4</label>
+																		for="IMEID1">4</label>
 																</div>
 															</div>
 														</div>
@@ -583,21 +583,21 @@ input[type='search'] {
 				<div class="row">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="deviceType" id="viewdeviceType"
-							placeholder="Mobile Phone/Feature phone" maxlength="30" disabled
-							style="height: 28px;"> <label for="deviceType">Device
+							placeholder="" maxlength="30" disabled
+							style="height: 28px;"> <label for="viewdeviceType">Device
 							Type</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="deviceIdType" id="viewdeviceIdType"
-							placeholder="IMEI" maxlength="30" disabled style="height: 28px;">
-						<label for="deviceIdType">Device ID Type</label>
+							placeholder="" maxlength="30" disabled style="height: 28px;">
+						<label for="viewdeviceIdType">Device ID Type</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="simStatus" id="viewsimStatus"
-							placeholder="Yes" maxlength="30" disabled style="height: 28px;">
-						<label for="simStatus">Multiple Sim Status</label>
+							placeholder="" maxlength="30" disabled style="height: 28px;">
+						<label for="viewsimStatus">Multiple Sim Status</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
@@ -609,13 +609,13 @@ input[type='search'] {
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewserialNumber" name="serialNumber"
 							placeholder="" maxlength="20" disabled style="height: 28px;">
-						<label for="serialNumber">Device Serial Number</label>
+						<label for="viewserialNumber">Device Serial Number</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="taxStatus" id="viewtaxStatus"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="taxStatus">Tax paid Status</label>
+						<label for="viewtaxStatus">Tax paid Status</label>
 					</div>
 				</div>
 
@@ -623,19 +623,19 @@ input[type='search'] {
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="deviceStatus" id="viewdeviceStatus"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="deviceStatus">Device Status</label>
+						<label for="viewdeviceStatus">Device Status</label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="Price" id="viewPrice" placeholder=""
 							maxlength="30" disabled style="height: 28px;"> <label
-							for="Price">Price </label>
+							for="viewPrice">Price </label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="currency" id="viewcurrency"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="currency">Currency</label>
+						<label for="viewcurrency">Currency</label>
 					</div>
 				</div>
 
@@ -648,7 +648,7 @@ input[type='search'] {
 							pattern="[0-9]{15,16}"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" disabled style="height: 28px;">
-						<label for="IMEI1">1 </label>
+						<label for="viewIMEI1">1 </label>
 					</div>
 
 					<div class="input-field col s12 m6">
@@ -656,7 +656,7 @@ input[type='search'] {
 							pattern="[0-9]{15,16}"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" disabled style="height: 28px;">
-						<label for="IMEI2">2</label>
+						<label for="viewIMEI2">2</label>
 					</div>
 
 					<div class="input-field col s12 m6">
@@ -664,14 +664,14 @@ input[type='search'] {
 							pattern="[0-9]{15,16}"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" style="height: 28px;" disabled>
-						<label for="IMEI3">3</label>
+						<label for="viewIMEI3">3</label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewIMEI4" name="IMEI4[]" pattern="[15-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" style="height: 28px;" disabled>
-						<label for="IMEI4">4</label>
+						<label for="viewIMEI4">4</label>
 					</div>
 
 					<div class="col s12 m12 center" style="margin-top: 10px;">
@@ -803,7 +803,7 @@ input[type='search'] {
                 
                     <div class="input-field" style="margin-top: 30px;">
                         <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
+                        <label for="Reason" style="margin-left: -10px;">Reason</label>
                     </div>
                     <h6>Do you want to reject?</h6>
                     

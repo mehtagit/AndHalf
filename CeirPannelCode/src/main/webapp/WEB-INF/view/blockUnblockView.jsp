@@ -189,7 +189,7 @@
                                                     </div>
 
                                                     <div class="input-field col s12 m6">
-                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" placeholder="kjdhdskjfhdskhfkdsjhf" disabled></textarea>
+                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" placeholder="" disabled></textarea>
                                                         <label for="editBulkBlockRemark">Remark </label>
                                                     </div>
 
@@ -241,7 +241,7 @@
                                                                     pattern="[0-9]" value="Handheld" disabled
                                                                     title="Please enter your device serial number first"
                                                                     maxlength="20">
-                                                                <label for="deviceType">Device Type </label>
+                                                                <label for="viewSingledeviceType">Device Type </label>
                                                             </div>
 
                                                           
@@ -265,7 +265,7 @@
                                                             </div>
 
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="Remark" placeholder="kjdshfkjdshfkdsjhfkdsj" disabled
+                                                                <textarea id="Remark" placeholder="" disabled
                                                                     class="materialize-textarea"></textarea>
                                                                 <label for="Remark">Remark </label>
                                                             </div>
@@ -373,11 +373,11 @@
                             <input type="file">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" value="file.csv" placeholder="Please select the file">
+                            <input class="file-path validate" type="text" value="file.csv" placeholder="">
                         </div>
                     </div>
                     <div class="input-field col s12 m6" style="margin-top: 52px;">
-                        <textarea id="Remark1" class="materialize-textarea" placeholder="kdjhfkdshfkjdshfkdsjhfkdsjhfkdsjhfkdsjhfkdsjhfkdsjhfdskjfhdskjfhdskjhfkdsjhfkdshfkdsjhfkdsjhfkdsjhfkdsjhfkdshfkdsjhfkdsjhfkdshfks"></textarea>
+                        <textarea id="Remark1" class="materialize-textarea" placeholder=""></textarea>
                         <label for="Remark1">Remark <span class="star">*</span></label>
                     </div>
                 </div>

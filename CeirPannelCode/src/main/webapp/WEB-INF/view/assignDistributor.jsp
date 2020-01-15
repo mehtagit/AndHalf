@@ -299,18 +299,18 @@ style="font-size: 20px; color: red;" title="delete"></i></a>
 
             <div class="row">
                 <div class="input-field col s10 m6">
-                    <input type="text" name="name" id="name" />
+                    <input type="text" name="name" id="Name" />
                     <label for="Name" class="center-align">Distributor ID</label>
                 </div>
 
                 <div class="input-field col s10 m6">
-                    <input type="text" name="name" id="name" />
+                    <input type="text" name="name" id="Name" />
                     <label for="Name" class="center-align">Distributor Name</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s10 m6">
-                    <input type="text" name="name" id="name" />
+                    <input type="text" name="name" id="Name" />
                     <label for="Name" class="center-align">Invoice Number</label>
                 </div>
             </div>

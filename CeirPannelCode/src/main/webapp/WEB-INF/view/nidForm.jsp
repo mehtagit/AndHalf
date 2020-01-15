@@ -170,7 +170,7 @@ input[type='search'] {
 						<div class="input-field col s12 m3 l3">
 							<input type="text" id="Search" name="Search"
 								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
-								placeholder="NID/Passport No." />
+								placeholder="" />
 						</div>
 						<div class="input-field col s12 m2 l2">
 							<input type="button" class="btn" value="Submit" onclick="hide();">

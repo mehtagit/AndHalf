@@ -118,26 +118,26 @@
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId"
-						placeholder="Supplier/Manufacturer ID" readonly="readonly" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
+						placeholder="" readonly="readonly" /> <label
+						for="supplierId" class="center-align">Supplier/Manufacturer ID</label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierName"
-						placeholder="Supplier/Manufacturer Name" readonly="readonly" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer Name</label>
+						placeholder="" readonly="readonly" /> <label
+						for="supplierName" class="center-align">Supplier/Manufacturer Name</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="consignmentNumber"
-						placeholder="Consignment Number" readonly="readonly" /> <label
-						for="Name" class="center-align">Consignment Number</label>
+						placeholder="" readonly="readonly" /> <label
+						for="consignmentNumber" class="center-align">Consignment Number</label>
 				</div>
 
 				<div class="input-field col s12 m6" style="color: #c4c4c4;">
 					<!-- <p style="margin-top: -5px; margin-bottom: -13px; font-size: 12px;">Expected
 						Arival Date</p> -->
 					<input type="text" id="expectedArrivaldate"
-						placeholder="Expected Arival Date" readonly="readonly" placeholder="">
+						placeholder="" readonly="readonly" placeholder="">
 					<label for="expectedArrivaldate" class="center-align">Expected Arival Date</label> <span
 						class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -145,8 +145,8 @@
 				<div class="input-field col s12 m6">
 					<input type="text" id="countryview" class="browser-default"
 						readonly="readonly" class="mySelect"
-						placeholder="Device Origination Counrty*"> <label
-						for="Name" class="center-align"> Origination Country</label> <label
+						placeholder=""> <label
+						for="countryview" class="center-align"> Origination Country</label> <label
 						for="countryview" class="center-align"></label>
 				</div>
 
@@ -155,7 +155,7 @@
 					<!-- <p class="input-text-date" style="color: #c4c4c4;">Expected
 						Dispatch Date</p> -->
 					<input type="text" id="expectedDispatcheDate"
-						placeholder="Expected Dispatch Date" readonly="readonly" placeholder="">
+						placeholder="" readonly="readonly" placeholder="">
 					<label for="expectedDispatcheDate">Expected Dispatch Date</label>
 					<span class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -163,19 +163,19 @@
 				<div class="input-field col s12 m6">
 					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
 					<input type="text" id="expectedArrivalPort" readonly="readonly"
-						placeholder="Arrival port"> <label for="Name"
+						placeholder=""> <label for="expectedArrivalPort"
 						class="center-align">Expected Arrival Port</label>
 				</div>
 
 				<div class="input-field col s12 m6">
-					<input type="text" name="Quantity" placeholder="Quantity"
+					<input type="text" name="Quantity" placeholder=""
 						id="Quantity" readonly="readonly" /> <label for="Quantity"
 						class="center-align">Quantity</label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="TransactionId"
-						placeholder="Transaction ID" id="TransactionId"
+						placeholder="" id="TransactionId"
 						readonly="readonly" maxlength="15" /> <label for="TransactionId"
 						class="center-align">Transaction ID</label>
 				</div>
@@ -184,11 +184,11 @@
 				<div class="input-field col s12 m6">
 					<input type="text" name="totalPrice" placeholder=""
 						disabled="disabled" id="viewtotalPrice" maxlength="7" required />
-					<label for="totalPrice" class="center-align">Total Price</label>
+					<label for="viewtotalPrice" class="center-align">Total Price</label>
 				</div>
 
 				<div class="col s12 m6">
-					<label for="Currency">Currency</label> <select id="viewcurrency"
+					<label for="viewcurrency">Currency</label> <select id="viewcurrency"
 						class="browser-default" disabled="disabled">
 						<option value="" disabled selected>Currency</option>
 
@@ -513,24 +513,24 @@
 					<input type="text" name="supplierId" id="supplierIdEdit"
 						pattern="[A-Za-z0-9]{0,15}"
 						title="Please enter alphabets and numbers upto 15 characters only"
-						placeholder="Supplier/Manufacturer ID" maxlength="15" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
+						placeholder="" maxlength="15" /> <label
+						for="supplierIdEdit" class="center-align">Supplier/Manufacturer ID</label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierName" id="supplierNameEdit"
 						pattern="[A-Za-z  ]{0,50}"
 						title="Please enter alphabets  upto 50 characters only"
-						maxlength="50" placeholder="Supplier/Manufacturer Name" required />
-					<label for="Name" class="center-align">Supplier/Manufacturer
+						maxlength="50" placeholder="" required />
+					<label for="supplierNameEdit" class="center-align">Supplier/Manufacturer
 						Name <span class="star">*</span>
 					</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" name="consignmentNumber"
 						id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}"
-						placeholder="Consignment Number" maxlength="15" /> <label
-						for="Name" class="center-align">Consignment Number</label>
+						placeholder="" maxlength="15" /> <label
+						for="consignmentNumberEdit" class="center-align">Consignment Number</label>
 				</div>
 
 				<div class="input-field col s12 m6">
@@ -538,9 +538,9 @@
                                                 Arrival Date <span class="star">*</span></p> -->
 					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
 					<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
-						required="required" placeholder="Expected Dispatch Date "
+						required="required" placeholder=""
 						type="text" class='form-control datepick' autocomplete='off'>
-					<label for="dispatchDate" class="center-align">Expected
+					<label for="expectedDispatcheDateEdit" class="center-align">Expected
 						Dispatch Date <span class="star">*</span>
 					</label> <span class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -557,9 +557,9 @@
 					<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
 					<!-- <label for="Name">Expected arrival Date</label> -->
 					<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
-						required="required" placeholder="Expected Arrival  Date"
+						required="required" placeholder=""
 						type="text" class='form-control datepick' autocomplete='off'>
-					<label for="dispatchDate" class="center-align">Expected
+					<label for="expectedArrivaldateEdit" class="center-align">Expected
 						Arrival Date <span class="star">*</span>
 					</label> <span class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -579,14 +579,14 @@
 					<input type="text" name="quantity" id="QuantityEdit"
 						pattern="[0-9]{0,7}"
 						title="Please enter numbers upto 7 characters only" maxlength="7"
-						placeholder="Quantity" required /> <label for="Quantity"
+						placeholder="" required /> <label for="QuantityEdit"
 						class="center-align">Quantity <span class="star">*</span></label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="txnId" id="TransactionIdEdit"
-						placeholder="Transaction ID" value="" readonly maxlength="15" />
-					<label for="TransactionId" class="center-align">Transaction
+						placeholder="" value="" readonly maxlength="15" />
+					<label for="TransactionIdEdit" class="center-align">Transaction
 						ID</label>
 				</div>
 
@@ -598,7 +598,7 @@
 				</div>
 
 				<div class="col s12 m6">
-					<label for="Currency">Currency</label> <select id="currency"
+					<label for="currency">Currency</label> <select id="currency"
 						class="browser-default">
 						<option value="" disabled selected>Currency</option>
 

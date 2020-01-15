@@ -156,7 +156,7 @@ opacity: 0;
 
                                             <div class="input-field col s12 m6">
                                                 <input type="text" name="supplierName" id="supplierName" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" required />
-                                                <label for="SupplierName" class="center-align">Supplier Name <span class="star">*</span></label>
+                                                <label for="supplierName" class="center-align">Supplier Name <span class="star">*</span></label>
                                             </div>
                                         </div>
                                         <div class="row myRow">
@@ -170,7 +170,7 @@ opacity: 0;
                                             <div class="input-field col s12 m6">
                                                 <input type="text" name="invoiceNumber" id="invoiceNumber"
                                                 pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15"/>
-                                                <label for="InvoiceNumber" class="center-align">Invoice Number</label>
+                                                <label for="invoiceNumber" class="center-align">Invoice Number</label>
                                             </div>
                                         </div>
 
