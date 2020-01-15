@@ -19,6 +19,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BlockUnblock {
 	
+	
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
+
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
 	
 	@Autowired
 
@@ -159,7 +166,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -222,7 +229,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 

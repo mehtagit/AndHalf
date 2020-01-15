@@ -3,11 +3,15 @@ package org.gl.ceir.Class.HeadersTitle;
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.net.URLEncoder;
 import java.util.List;
 @Component
 public class IconsState {
+	@Value ("${projectPath}")
+	String projectPath;
+	
 	String className = "emptyClass";
 	String disableIconClass = "eventNone";
 	String emptyURL="JavaScript:void(0);";
@@ -495,7 +499,7 @@ public class IconsState {
 
 	public String grievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
 		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
-		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
+		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
 
 		// state related Code 
 		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="

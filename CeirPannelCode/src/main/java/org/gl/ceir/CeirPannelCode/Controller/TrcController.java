@@ -22,6 +22,7 @@ import org.gl.ceir.interfaceImpl.RegisterationImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,13 @@ import CeirPannelCode.Model.Register_UploadPaidStatus;
 public class TrcController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
+
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
+	
+	
 	@Autowired
 	TypeApprovedFeignImpl typeApprovedFeignImpl;
 	@Autowired
@@ -87,7 +95,7 @@ public class TrcController {
 		log.info("Random transaction id number="+txnNumber);
 		request.getParameterValues("");
 		try { byte[] bytes = file.getBytes();
-		String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumber+"/"; 
+		String rootPath =filePathforUploadFile+txnNumber+"/"; 
 		File dir = new File(rootPath + File.separator);
 
 		if (!dir.exists()) dir.mkdirs();
@@ -160,16 +168,16 @@ public class TrcController {
 		else {
 
 			try { byte[] bytes = file.getBytes();
-			String rootPath ="/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"; 
+			String rootPath =filePathforUploadFile+txnId+"/"; 
 			File dir = new File(rootPath + File.separator);
 			File tmpDir = new File(rootPath+file.getOriginalFilename());
 			boolean exists = tmpDir.exists();
 			if(exists) {
 
 				Path temp = Files.move 
-						(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
-								Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
-				String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();	
+						(Paths.get(filePathforUploadFile+txnId+"/"+file.getOriginalFilename()), 
+								Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+				String movedPath=filePathforMoveFile+file.getOriginalFilename();	
 				// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 				log.info("file is already exist, moved to this "+movedPath+" path. ");
 				tmpDir.delete();

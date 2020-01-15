@@ -1382,6 +1382,70 @@ maxlength="16">
                                                 </form>
                                            
             </div></div>
+            
+             <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
+		<h6 class="modal-header">Edit Device Information</h6>
+		<div class="modal-content" style="margin-top: 5px;">
+			
+                                            <form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">
+                        
+                                            <div class="row">
+                                          <div class="col s12 m6" style="margin-top: 25px;">
+                                                      
+                                                         <label for="editBulkBlockCategory">Category<span class="star">*</span></label>
+                                                         <select class="browser-default" id="editBulkBlockCategory" required="required" >
+                                                            <option value="" disabled selected>Select Category
+                                                            </option>
+                                                            
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
+                                                            title="Please enter  numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
+                                                        <label for="editBulkBlockquantity">Quantity <span class="star">*</span></label>
+                                                    </div>
+                                                    
+
+                                                   </div> 
+                             <div class="row">
+                                                   <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
+                                                        <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
+                                                        <div class="btn">
+                                                            <span>File</span>
+                                                            <input type="file" id="editselectBulkBlockuploadFile">
+                                                        </div>
+                                                        <div class="file-path-wrapper">
+                                                            <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="input-field col s12 m6">
+                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
+                                                        <label for="editBulkBlockRemark">Remark <span class="star">*</span> </label>
+                                                   <!--      <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled> -->
+                                                            <input type="text" style="display:none" id="editBulkBlockrequestType">
+                                                            <input type="text" style="display:none" id="editBulkBlockTxnId">
+                                                    </div>
+
+                                                  <!--    <div class="input-field col s12 m6" style="margin-top: 25px;">
+                                                        <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+                                                            title="" maxlength="16" value="1500" disabled>
+                                                        <label for="editBulkBlockTxnId">Transaction Id</label>
+                                                        <input type="text" style="display:none" id="editBulkBlockrequestType">
+                                                    </div> -->
+                                                    </div>
+                <div class="row">
+                    <div class="input-field col s12 center">
+                                                        	<button class=" btn"
+ 					type="submit" >Update</button>
+                                                        <button type="button" class="modal-close btn">Cancel</button>
+                                                    </div>
+                </div>
+                                                </form>
+            </div></div>
+            
  <div id="confirmEditBlockUnblock" class="modal">
   <h6 class="modal-header">Update Device Information</h6>
         <div class="modal-content">
