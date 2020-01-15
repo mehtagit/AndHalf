@@ -511,12 +511,14 @@ function saveGrievanceReply()
 	return false;
 }
 
-function viewGrievanceHistory(grievanceId,filename)
+
+function viewGrievanceHistory(grievanceId,projectPath)
 {
 
 
 
-	console.log("http://13.233.39.58:8080"+path);
+
+	console.log(projectPath+path);
 	$.ajax({
 		url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
 		type: 'GET',
@@ -527,7 +529,8 @@ function viewGrievanceHistory(grievanceId,filename)
 			console.log(JSON.stringify(data));
 			$('#chatMsg').empty();
 			$('#manageAccount').openModal();
-			var projectpath="http://13.233.39.58:8080"+path+"/Consignment/dowloadFiles/actual";
+			
+			var projectpath=projectPath+path+"/Consignment/dowloadFiles/actual";
 			console.log("--projectpath--"+projectpath);
 			for(var i=0; i<data.length; i++)
 			{

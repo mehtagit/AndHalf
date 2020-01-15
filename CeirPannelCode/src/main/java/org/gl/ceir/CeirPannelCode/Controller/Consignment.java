@@ -27,6 +27,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,12 @@ import com.google.gson.Gson;
 
 public class Consignment {
 
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
 
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
+	
 @Autowired
 
 FeignCleintImplementation feignCleintImplementation;
@@ -70,7 +76,8 @@ ModelAndView mv = new ModelAndView();
 
 
 
-log.info(" view consignment entry point."); 
+log.info(" view consignment entry point................."); 
+ 
 mv.setViewName("viewConsignment");
 log.info(" view consignment exit point."); 
 return mv; 
@@ -177,7 +184,7 @@ log.info("Random transaction id number="+txnNumner);
 ConsignmentModel consignment = new ConsignmentModel();
 try {
 byte[] bytes = file.getBytes();
-String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumner+"/";
+String rootPath = filePathforUploadFile+txnNumner+"/";
 File dir = new File(rootPath + File.separator);
 
 if (!dir.exists()) 
@@ -261,16 +268,16 @@ consignment.setTotalPrice(totalPrice);
 else {
 log.info("file is empty or not "+file.isEmpty());
 try {
-String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+String rootPath = filePathforUploadFile+txnId+"/";
 File tmpDir = new File(rootPath+file.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
 
 Path temp = Files.move 
-(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
-Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
-String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();	
-// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
+(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
+Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+String movedPath=filePathforMoveFile+file.getOriginalFilename();	
+
 log.info("file is already exist, moved to this "+movedPath+" path. ");
 tmpDir.delete();
 }
