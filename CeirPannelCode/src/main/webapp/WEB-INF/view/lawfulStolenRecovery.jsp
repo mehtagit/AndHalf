@@ -118,8 +118,8 @@
                                 <div class="row card-panel">
                                     <div class="container-fluid pageHeader">
                                         <p class="PageHeading">Stolen/Recovery</p>
-                                        <button type="button" class="waves-effect waves-light modal-trigger boton right"
-                                            data-target="modal1">Report Stolen/Recovery</button>
+                                        <button type="button" class="waves-effect waves-light  boton right"
+                                          onclick="chooseStolenOption()" >Report Stolen/Recovery</button>
                                     </div>
 
                                     <div class="col s12 m12" id="distributorTableDIv"
@@ -240,118 +240,106 @@
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <td>20/10/2018</td>
-                                                <td>Tr12345678</td>
-                                                <td>8745639285</td>
-                                                <td>Default</td>
-                                                <td>Recovery</td>
-                                                <td>Single</td>
-                                                <td>INIT</td>
-                                                <td>
-                                                    <a href="#ErrorFile" download="download"><i
-                                                            class="fa fa-exclamation-circle error-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-icon" aria-hidden="true"
-                                                            title="download"></i></a>
-                                                    <a href="viewRecoerySingle.html"><i
-                                                            class="fa fa-eye teal-text view-icon" aria-hidden="true"
-                                                            title="view"></i></a>
-                                                    <a href="EditRecoverySingle.html"><i class="fa fa-pencil edit-icon"
-                                                            aria-hidden="true" title="edit"></i></a>
-                                                    <a href="" class="waves-effect waves-light"><i
-                                                            class="fa fa-trash delete-icon" aria-hidden="true"
-                                                            title="delete"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>20/10/2018</td>
-                                                <td>Tr12345678</td>
-                                                <td>8745639285</td>
-                                                <td>Later</td>
-                                                <td>Stolen</td>
-                                                <td>Company</td>
-                                                <td>Error</td>
-                                                <td>
-                                                    <a href="#ErrorFile" download="download"><i
-                                                            class="fa fa-exclamation-circle error-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-icon" aria-hidden="true"
-                                                            title="download"></i></a>
-                                                    <a href="viewStolenCompany.html"><i
-                                                            class="fa fa-eye teal-text view-icon" aria-hidden="true"
-                                                            title="view"></i></a>
-                                                    <a href="editStolenCompany.html"><i class="fa fa-pencil edit-icon"
-                                                            aria-hidden="true" title="edit"></i></a>
-                                                    <a href="" class="waves-effect waves-light"><i
-                                                            class="fa fa-trash delete-icon" aria-hidden="true"
-                                                            title="delete"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>20/10/2018</td>
-                                                <td>Tr12345678</td>
-                                                <td>8745639285</td>
-                                                <td>Immediate</td>
-                                                <td>Stolen</td>
-                                                <td>Individual</td>
-                                                <td>Success</td>
-                                                <td>
-                                                    <a href="#ErrorFile" download="download"><i
-                                                            class="fa fa-exclamation-circle error-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download"><i
-                                                            class="fa fa-download download-icon" aria-hidden="true"
-                                                            title="download"></i></a>
-                                                    <a href="viewStolen.html"><i class="fa fa-eye teal-text view-icon"
-                                                            aria-hidden="true" title="view"></i></a>
-                                                    <a href="editStolen.html"><i class="fa fa-pencil edit-icon"
-                                                            aria-hidden="true" title="edit"></i></a>
-                                                    <a href="" class="waves-effect waves-light"><i
-                                                            class="fa fa-trash delete-icon" aria-hidden="true"
-                                                            title="delete"></i></a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>20/10/2018</td>
-                                                <td>Tr12345678</td>
-                                                <td>8745639285</td>
-                                                <td>Default</td>
-                                                <td>Recovery</td>
-                                                <td>Company</td>
-                                                <td>Success</td>
-                                                <td>
-                                                    <a href="#ErrorFile" download="download"><i
-                                                            class="fa fa-exclamation-circle error-icon"
-                                                            title="ErrorFile"></i></a>
-                                                    <a href="#" download="download" 
-                                                        i class="fa fa-download download-icon" aria-hidden="true"
-                                                        title="download"></i></a>
-                                                    <a href="viewRecoveryBulk.html"><i
-                                                            class="fa fa-eye teal-text view-icon" aria-hidden="true"
-                                                            title="view"></i></a>
-                                                    <a href="editRecoveryBulk.html"><i class="fa fa-pencil edit-icon"
-                                                            aria-hidden="true" title="edit"></i></a>
-                                                    <a href="" class="waves-effect waves-light"><i
-                                                            class="fa fa-trash delete-icon" aria-hidden="true"
-                                                            title="delete"></i></a>
-                                                </td>
-                                            </tr>
-
+                                          
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                    
+       
                 </div>
                 <!--end container-->
             </section>
+                         <div id="chooseStolenOption" class="modal">
+                         <button type="button"
+			class=" modal-action modal-close  btn-flat right"
+			data-dismiss="modal">&times;</button>
+        <div class="row" style="padding-bottom: 20px;" id="stolenRecoveryDivPage">
+        <h6 class="modal-header">Report Stolen/Recovery</h6>
+            <div class="col s12 m12 modal-content">
+                
+                <div class="row">
+                    <form action="#">
+                        <h5 class="center">
+                            <label>
+                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('stolen')" />
+                                <span class="checkboxFont"> Stolen</span>
+                            </label>
 
+                            <label>
+                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('recovery')" />
+                                <span class="checkboxFont"> Recovery</span>
+                            </label>
+                        </h5>
+                    </form>
+                </div>
+                </div></div></div>
+
+
+
+
+<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+
+	
+
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<!--prism
+    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+
+
+<script type="text/javascript"
+		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 </body>
 </html>
