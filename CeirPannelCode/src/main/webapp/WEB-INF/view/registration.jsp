@@ -602,7 +602,7 @@ var contextpath = "${context}";
 
 				<p style="padding:10px;" class="center" id="otpMsg"></p>
 			
-					<a href="#otpVerification" class="btn modal-trigger"
+					<a href="#otpVerification" class="btn modal-trigger modal-close"
                                 style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 		</div>
 	</div>
@@ -761,8 +761,7 @@ var contextpath = "${context}";
             usertypeData2(<%=request.getParameter("usertypeId")%>);
         }); 
         populateCountries(
-                "country",
-               "state",
+                "country",    "state",
             );
         
        $("#country").val("Cambodia");

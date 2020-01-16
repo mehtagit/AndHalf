@@ -622,7 +622,7 @@ var contextpath = "${context}";
 				
 				<p style="padding:10px;" class="center" id="otpMsg"></p>
 			
-					<a href="#otpVerification" class="btn modal-trigger"
+					<a href="#otpVerification" class="btn modal-trigger modal-close"
                                 style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 		</div>
 	</div>
@@ -714,9 +714,10 @@ var contextpath = "${context}";
         <h6 class="modal-header">Verify OTP</h6>
         <div class="modal-content">
        
-                <h6 id="otpResponse"></h6>
+            
             <div class="row">
                 <div class="input-field col s12 center">
+                    <h6 id="otpResponse"></h6>
                     <a href="${context}/login" class="btn">ok</a>
                 </div>
             </div>
