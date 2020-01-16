@@ -28,7 +28,6 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
-import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -126,6 +125,8 @@ public class StockServiceImpl {
 				stockMgmt.setUserId(new Long(user.getId()));
 				stockMgmt.setUser(user);
 
+			}else {
+				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
@@ -142,8 +143,6 @@ public class StockServiceImpl {
 				return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 			}
 
-			
-
 		} catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
@@ -151,7 +150,7 @@ public class StockServiceImpl {
 		}
 	}
 	
-	@Transactional
+	@Transactional(rollbackOn = Exception.class)
 	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
 		webActionDbRepository.save(webActionDb);

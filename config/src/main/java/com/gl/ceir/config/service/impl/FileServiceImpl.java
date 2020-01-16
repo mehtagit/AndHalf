@@ -13,6 +13,7 @@ import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -46,7 +47,7 @@ public class FileServiceImpl {
 	public FileDetails getSampleFile(int featureId) {
 
 		String fileName = null;
-		PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.sample_file_link);
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.sample_file_link);
 
 		switch (featureId) {
 		case 3:
@@ -62,18 +63,18 @@ public class FileServiceImpl {
 			break;
 		}
 		
-		return new FileDetails("", "", policyConfigurationDb.getValue() + fileName);
+		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
 	}
 	
 	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {
 
 		String fileLink = null;
-		PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.upload_file_link);
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.sample_file_link);
 
 		if(Objects.isNull(tag)) {
-			fileLink = policyConfigurationDb.getValue() + txnId + "/" + fileName;
+			fileLink = systemConfigurationDb.getValue() + txnId + "/" + fileName;
 		}else {	
-			fileLink = policyConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;
+			fileLink = systemConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;
 		}
 		
 		return new FileDetails("", "", fileLink);

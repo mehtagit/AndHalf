@@ -128,6 +128,15 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+	
+	public SystemConfigurationDb findByTag(String tag){
+		try {
+			return systemConfigurationDbRepository.getByTag(tag);
+		} catch (Exception e) {
+			logger.info("Exception found="+e.getMessage());
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {

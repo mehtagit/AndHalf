@@ -8,75 +8,102 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class StolenIndividualUserDB implements Serializable {
+@PrimaryKeyJoinColumn(name = "id")
+public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	/*
+	 * @Id
+	 * 
+	 * @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
+	 */
 	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-	
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
-
-	private String  nid;
+	private String nid;
 	private String firstName;  
 	private String middleName;
 	private String lastName;
+	
+	// user address fields.
 	private String propertyLocation;
 	private String street;
 	private String locality;
-	
 	@NotNull
 	@Column(length = 50)
 	private String district;
-	
 	@NotNull
 	@Column(length = 50)
 	private String commune;
-	
 	@NotNull
 	@Column(length = 50)
 	private String village;
-	
 	@NotNull
 	private Integer postalCode;
 	
 	private String province;
 	private String country;
 	private String email;
+	@Column(length = 15)
 	private String phoneNo;
-	
 	private Integer docType;
 	@Transient
 	private Integer docTypeInterp;
+	@Column(length = 15)
+	private String alternateContactNumber;
+	@Column(length = 50)
+	private String deviceBrandName;
+	
+	private Long imei_esn_meid;
+	private Integer deviceIdType;
+	private Integer deviceType;
+	@Column(length = 50)
+	private String modelNumber;
+	@NotNull
+	@Column(length = 15)
+	private String contactNumber;
+	private Integer operator;
+	private Integer complaintType;
+	
+	// Place of device Stolen
+	private String deviceStolenPropertyLocation;
+	private String deviceStolenStreet;
+	private String deviceStolenLocality;
+	@NotNull
+	@Column(length = 50)
+	private String deviceStolenDistrict;
+	@NotNull
+	@Column(length = 50)
+	private String deviceStolenCommune;
+	@NotNull
+	@Column(length = 50)
+	private String deviceStolenVillage;
+	@NotNull
+	private Integer deviceStolenPostalCode;
+	
+	private String remark;
+	
+	/*
+	 * @OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch =
+	 * FetchType.LAZY) private List<RegularizeDeviceDb> regularizeDeviceDbs ;
+	 */
 
-	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
-
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
@@ -155,12 +182,6 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
 	}
-	public List<RegularizeDeviceDb> getRegularizeDeviceDbs() {
-		return regularizeDeviceDbs;
-	}
-	public void setRegularizeDeviceDbs(List<RegularizeDeviceDb> regularizeDeviceDbs) {
-		this.regularizeDeviceDbs = regularizeDeviceDbs;
-	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -200,13 +221,112 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setDocTypeInterp(Integer docTypeInterp) {
 		this.docTypeInterp = docTypeInterp;
 	}
-	
+	public String getAlternateContactNumber() {
+		return alternateContactNumber;
+	}
+	public void setAlternateContactNumber(String alternateContactNumber) {
+		this.alternateContactNumber = alternateContactNumber;
+	}
+	public String getDeviceBrandName() {
+		return deviceBrandName;
+	}
+	public void setDeviceBrandName(String deviceBrandName) {
+		this.deviceBrandName = deviceBrandName;
+	}
+	public Long getImei_esn_meid() {
+		return imei_esn_meid;
+	}
+	public void setImei_esn_meid(Long imei_esn_meid) {
+		this.imei_esn_meid = imei_esn_meid;
+	}
+	public Integer getDeviceIdType() {
+		return deviceIdType;
+	}
+	public void setDeviceIdType(Integer deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
+	public Integer getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(Integer deviceType) {
+		this.deviceType = deviceType;
+	}
+	public String getModelNumber() {
+		return modelNumber;
+	}
+	public void setModelNumber(String modelNumber) {
+		this.modelNumber = modelNumber;
+	}
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
+	public Integer getOperator() {
+		return operator;
+	}
+	public void setOperator(Integer operator) {
+		this.operator = operator;
+	}
+	public Integer getComplaintType() {
+		return complaintType;
+	}
+	public void setComplaintType(Integer complaintType) {
+		this.complaintType = complaintType;
+	}
+	public String getDeviceStolenPropertyLocation() {
+		return deviceStolenPropertyLocation;
+	}
+	public void setDeviceStolenPropertyLocation(String deviceStolenPropertyLocation) {
+		this.deviceStolenPropertyLocation = deviceStolenPropertyLocation;
+	}
+	public String getDeviceStolenStreet() {
+		return deviceStolenStreet;
+	}
+	public void setDeviceStolenStreet(String deviceStolenStreet) {
+		this.deviceStolenStreet = deviceStolenStreet;
+	}
+	public String getDeviceStolenLocality() {
+		return deviceStolenLocality;
+	}
+	public void setDeviceStolenLocality(String deviceStolenLocality) {
+		this.deviceStolenLocality = deviceStolenLocality;
+	}
+	public String getDeviceStolenDistrict() {
+		return deviceStolenDistrict;
+	}
+	public void setDeviceStolenDistrict(String deviceStolenDistrict) {
+		this.deviceStolenDistrict = deviceStolenDistrict;
+	}
+	public String getDeviceStolenCommune() {
+		return deviceStolenCommune;
+	}
+	public void setDeviceStolenCommune(String deviceStolenCommune) {
+		this.deviceStolenCommune = deviceStolenCommune;
+	}
+	public String getDeviceStolenVillage() {
+		return deviceStolenVillage;
+	}
+	public void setDeviceStolenVillage(String deviceStolenVillage) {
+		this.deviceStolenVillage = deviceStolenVillage;
+	}
+	public Integer getDeviceStolenPostalCode() {
+		return deviceStolenPostalCode;
+	}
+	public void setDeviceStolenPostalCode(Integer deviceStolenPostalCode) {
+		this.deviceStolenPostalCode = deviceStolenPostalCode;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("EndUserDB [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
+		builder.append("EndUserDB [createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
@@ -232,8 +352,6 @@ public class StolenIndividualUserDB implements Serializable {
 		builder.append(email);
 		builder.append(", phoneNo=");
 		builder.append(phoneNo);
-		builder.append(", regularizeDeviceDbs=");
-		builder.append(regularizeDeviceDbs);
 		builder.append("]");
 		return builder.toString();
 	}

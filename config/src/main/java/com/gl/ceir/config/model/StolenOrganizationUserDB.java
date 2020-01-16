@@ -8,10 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -21,13 +19,16 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class StolenOrganizationUserDB implements Serializable {
+@PrimaryKeyJoinColumn(name = "id")
+public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	*/
 	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
@@ -71,12 +72,6 @@ public class StolenOrganizationUserDB implements Serializable {
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
@@ -204,9 +199,7 @@ public class StolenOrganizationUserDB implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("EndUserDB [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
+		builder.append("EndUserDB [createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);

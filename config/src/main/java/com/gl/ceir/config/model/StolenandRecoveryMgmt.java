@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -26,36 +29,23 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	private Long userId;
-	
 	private String fileName;
-	
 	private Integer fileStatus;
-
 	@NotNull	
 	private String txnId;
-
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-	
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
-	
 	private Integer requestType;
-	
 	@Transient
 	private String requestTypeInterp;
-	
 	private String roleType;
-	
 	private String blockingType;
-	
 	private String blockingTimePeriod;
-	
 	private Integer sourceType;
-	
 	private Integer qty;
 	
 	private String remark;
