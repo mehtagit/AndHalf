@@ -79,6 +79,13 @@ input[type=text] {
 	height: 35px;
 	margin: 0 0 5px 0;
 }
+  .new-user {
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: solid 2px #444;
+    line-height: 15px;
+    margin-top: 3px;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -163,8 +170,8 @@ var contextpath = "${context}";
 											</div>
 										</div>
 
-							<a href="${context}/forgotPassword" class="right"> Forgot Password?</a> <br>
-							<a href="#" id="newUserLink" class="right"> New User</a>	
+							<a href="${context}/forgotPassword" class="right"> Forgot Password?</a> 
+							<a href="#" id="newUserLink" class="right new-user"> New User</a>	
 
 									</div>
 
