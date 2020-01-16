@@ -9230,8 +9230,9 @@
   }
 
   /* Remove Focus Boxes */
-  select:focus {
-    outline: 1px solid white;
+ 
+select:focus {
+    outline: 1px solid #00bcd4;
   }
 
   button:focus {

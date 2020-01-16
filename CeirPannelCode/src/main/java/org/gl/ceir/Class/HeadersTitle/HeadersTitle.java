@@ -107,7 +107,8 @@ public class HeadersTitle {
 	public  String policyOrder="Policy Order";
 	
 	//Lawful Stolen Headers
-	public  String contact="Contact Number";
-	public  String blockType="Block Type";
+		public  String contact="Contact Number";
+		public  String blockType="Block Type";
+
 
 }

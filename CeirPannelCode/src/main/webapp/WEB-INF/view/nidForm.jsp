@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -159,13 +161,13 @@ input[type='search'] {
 
 		<div class="row card-panel">
 			<div class="container-fluid pageHeader">
-				<p class="PageHeading">Register Device</p>
+				<p class="PageHeading"><spring:message code="modal.header.registerdevice" /></p>
 			</div>
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
 					<div id="submitbtn">
 						<div class="input-field col s12 m1 l1">
-							<label for="Search" class="center-align ml-10">NID/Passport No. :</label>
+							<label for="Search" class="center-align ml-10"><spring:message code="input.nid" /></label>
 						</div>
 						<div class="input-field col s12 m3 l3">
 							<input type="text" id="Search" name="Search"
@@ -173,7 +175,7 @@ input[type='search'] {
 								placeholder="NID/Passport No." />
 						</div>
 						<div class="input-field col s12 m2 l2">
-							<input type="button" class="btn" value="Submit" onclick="hide();">
+							<button type="button" class="btn"  onclick="hide();"><spring:message code="button.submit" /></button>
 						</div>
 					</div>
 				</div>
@@ -197,6 +199,13 @@ input[type='search'] {
 		src="${context}/resources/js/countries.js"></script>
 
 	<script type="text/javascript">
+	
+	window.parent.$('#langlist').on('change', function() {
+		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+		window.location.assign("./uploadPaidStatus?lang="+lang);
+	}); 
+	
+	
 $('#btnLink').css({"display":"none"});	
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");

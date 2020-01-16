@@ -101,9 +101,35 @@
 		<!--end container-->
 	</section>
 
-	
+                         <div id="chooseStolenOption" class="modal">
+                         <button type="button"
+			class=" modal-action modal-close  btn-flat right"
+			data-dismiss="modal">&times;</button>
+        <div class="row" style="padding-bottom: 20px;" id="stolenRecoveryDivPage">
+        <h6 class="modal-header">Report Stolen/Recovery</h6>
+            <div class="col s12 m12 modal-content">
+                
+                <div class="row">
+                    <form action="#">
+                        <h5 class="center">
+                            <label>
+                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('stolen')" />
+                                <span class="checkboxFont"> Stolen</span>
+                            </label>
 
-	<script type="text/javascript"
+                            <label>
+                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('recovery')" />
+                                <span class="checkboxFont"> Recovery</span>
+                            </label>
+                        </h5>
+                    </form>
+                </div>
+                </div></div></div>
+
+
+
+
+<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
 
@@ -112,7 +138,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-
+	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -122,8 +148,6 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -131,13 +155,39 @@
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+		<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
 	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+
+
+<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/reportBlock.js"></script>
-
 </body>
 </html>
