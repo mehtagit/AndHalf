@@ -48,7 +48,6 @@ public class HistoryServiceImpl {
 	private static final Logger logger = LogManager.getLogger(HistoryServiceImpl.class);
 
 
-
 	@Autowired	
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
 

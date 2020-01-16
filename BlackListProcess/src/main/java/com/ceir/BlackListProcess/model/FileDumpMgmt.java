@@ -1,4 +1,4 @@
-package com.ceir.GreyListProcess.model;
+package com.ceir.BlackListProcess.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -34,24 +34,12 @@ public class FileDumpMgmt  implements Serializable{
 	
 	private String FileName;
 	
-	private Integer fileType;
+	private String fileType;
 	
 	private int serviceDump;
 
 	private String dumpType;
-
-	public FileDumpMgmt() {}
 	
-	public FileDumpMgmt(Date createdOn, Date modifiedOn, String fileName, Integer fileType, int serviceDump,
-			String dumpType) {
-		this.createdOn = createdOn;
-		this.modifiedOn = modifiedOn;
-		FileName = fileName;
-		this.fileType = fileType;
-		this.serviceDump = serviceDump;
-		this.dumpType = dumpType;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -84,11 +72,11 @@ public class FileDumpMgmt  implements Serializable{
 		FileName = fileName;
 	}
 
-	public Integer getFileType() {
+	public String getFileType() {
 		return fileType;
 	}
 
-	public void setFileType(Integer fileType) {
+	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
 
@@ -110,6 +98,12 @@ public class FileDumpMgmt  implements Serializable{
 
 	public void setDumpType(String dumpType) {
 		this.dumpType = dumpType;
+	}
+
+	@Override
+	public String toString() {
+		return "FileDumpMgmt [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", FileName="
+				+ FileName + ", fileType=" + fileType + ", serviceDump=" + serviceDump + ", dumpType=" + dumpType + "]";
 	}
 	
 	

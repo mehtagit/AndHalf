@@ -166,7 +166,6 @@ public class ConsignmentServiceImpl {
 
 			if(Objects.nonNull(consignmentMgmt.getUserId()))
 				specificationBuilder.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-
 			if(Objects.nonNull(consignmentMgmt.getStartDate()))
 				specificationBuilder.with(new SearchCriteria("createdOn", consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 

@@ -1,11 +1,12 @@
-package com.ceir.GreyListProcess.repository;
+package com.ceir.BlackListProcess.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import com.ceir.GreyListProcess.model.WebActionDb;
-public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long> , JpaSpecificationExecutor<WebActionDb>
- {
+import com.ceir.BlackListProcess.model.WebActionDb;
+
+
+public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long>,JpaSpecificationExecutor<WebActionDb> {
 
 	@SuppressWarnings("unchecked")
 	public WebActionDb save(WebActionDb webActionDb);
@@ -15,5 +16,5 @@ public interface WebActionDbRepository extends JpaRepository<WebActionDb, Long> 
 	public WebActionDb findFirstByState(int state);
 	
 	public boolean existsByFeature(String feature);
+	
 }
- 

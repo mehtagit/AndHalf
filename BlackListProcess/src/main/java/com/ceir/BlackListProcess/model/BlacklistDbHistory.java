@@ -1,4 +1,4 @@
-package com.ceir.GreyListProcess.model;
+package com.ceir.BlackListProcess.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,20 +12,18 @@ import javax.persistence.Id;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class GreylistDbHistory implements Serializable {
+public class BlacklistDbHistory implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@JsonIgnore
 	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 	@JsonIgnore
 	@UpdateTimestamp
@@ -34,20 +32,17 @@ public class GreylistDbHistory implements Serializable {
 	@Column(length = 15)
 	private String roleType;
 	private Long userId;
-	@Column(length = 20)
-	private String txnId;
 	private String deviceNumber;
 	private String deviceType;
 	private String deviceAction;
-	private String	 deviceStatus;
+	private String deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
-
-	
 	private int operation;
-	
+
+
 	public Long getId() {
 		return id;
 	}
@@ -72,6 +67,12 @@ public class GreylistDbHistory implements Serializable {
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
+	public int getOperation() {
+		return operation;
+	}
+	public void setOperation(int operation) {
+		this.operation = operation;
+	}
 	public String getRoleType() {
 		return roleType;
 	}
@@ -83,18 +84,6 @@ public class GreylistDbHistory implements Serializable {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-	public int getOperation() {
-		return operation;
-	}
-	public void setOperation(int operation) {
-		this.operation = operation;
-	}
-	public String getTxnId() {
-		return txnId;
-	}
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
 	}
 	public String getDeviceNumber() {
 		return deviceNumber;
@@ -144,14 +133,31 @@ public class GreylistDbHistory implements Serializable {
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	@Override
-	public String toString() {
-		return "GreylistDbHistory [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei="
-				+ imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
-				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
-				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
-				+ ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", operation=" + operation + "]";
+	
+	public BlacklistDbHistory() {
 	}
+	public BlacklistDbHistory(Date createdOn, Date modifiedOn, Long imei, String roleType, Long userId,
+			String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
+			String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation) {
+		super();
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+		this.imei = imei;
+		this.roleType = roleType;
+		this.userId = userId;
+		this.deviceNumber = deviceNumber;
+		this.deviceType = deviceType;
+		this.deviceAction = deviceAction;
+		this.deviceStatus = deviceStatus;
+		DeviceLaunchDate = deviceLaunchDate;
+		this.multipleSimStatus = multipleSimStatus;
+		this.deviceId = deviceId;
+		this.imeiEsnMeid = imeiEsnMeid;
+		this.operation = operation;
+	}
+
+
+
 
 
 

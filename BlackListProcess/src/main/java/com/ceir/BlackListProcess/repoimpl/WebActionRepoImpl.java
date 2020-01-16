@@ -1,10 +1,9 @@
-package com.ceir.GreyListProcess.repositoryImpl;
+package com.ceir.BlackListProcess.repoimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ceir.GreyListProcess.repository.WebActionDbRepository;
-
+import com.ceir.BlackListProcess.repository.WebActionDbRepository;
 
 @Service
 public class WebActionRepoImpl {

@@ -11,6 +11,7 @@ import com.ceir.GreyListProcess.model.FileDumpFilter;
 import com.ceir.GreyListProcess.model.FileDumpMgmt;
 import com.ceir.GreyListProcess.model.GreylistDbHistory;
 import com.ceir.GreyListProcess.model.SystemConfigurationDb;
+import com.ceir.GreyListProcess.model.constants.DumpType;
 import com.ceir.GreyListProcess.repositoryImpl.ConfigurationManagementServiceImpl;
 import com.ceir.GreyListProcess.repositoryImpl.ListFileDetailsImpl;
 import com.ceir.GreyListProcess.repositoryImpl.NationalislmServiceImpl;
@@ -51,7 +52,7 @@ public class IncrementalDumpProcess {
 				yesterdayId=utility.getYesterdayId();
 				currentTime=utility.getTxnId();
 				FileDumpFilter filter=new FileDumpFilter();
-				String fileName=filePath+"GreyList_"+yesterdayId+".csv";
+				String fileName="GreyList_incremental_"+yesterdayId+".csv";
 				saveDataIntoFile(filter,fileName,filePath);	
 			}
 			//			startWeekOfDay=configurationManagementServiceImpl.findByTag(systemConfigurationDb);
@@ -60,12 +61,13 @@ public class IncrementalDumpProcess {
 
 	public void incrementalDumpFileProcess(String filePath) {
 		log.info("createdOn column value: "+topDataForIncdump.getCreatedOn());
-		String configDate=utility.convertToDateformat(topDataForIncdump.getCreatedOn());
+		Date dateSubtract=utility.subtractDays(topDataForIncdump.getCreatedOn(), 1);
+		String configDate=utility.convertToDateformat(dateSubtract);
 		log.info("date from file dump table if dumpType is Incremental: "+configDate);
 		yesterdayDate=utility.getYesterdayDateString();
 		currentDate=utility.currentDate();
-		if(!configDate.equals(currentDate)) {
-			log.info("if files not created today");
+		if(!configDate.equals(yesterdayDate)) {
+			log.info("if last day file not created");
 			currentDate=utility.currentDate();
 			log.info("currentDate:  "+currentDate);
 			long differenceOfDates=utility.getDifferenceDays(configDate,currentDate);
@@ -85,11 +87,11 @@ public class IncrementalDumpProcess {
 				Date stringToDate=utility.stringToDate(DayAdded);
 				log.info("day added date:  "+stringToDate);
 				FileDumpFilter filter=new FileDumpFilter();
-				filter.setStartDate(topDataForIncdump.getCreatedOn());
-				filter.setEndDate(stringToDate);
+				filter.setStartDate(utility.convertToDateformat(dateForConfig));
+				filter.setEndDate(utility.convertToDateformat(stringToDate));
 				yesterdayId=utility.getYesterdayId();
 				log.info("fetch data from greylist db between dates : "+topDataForIncdump.getCreatedOn() +"to "+ stringToDate);
-				String fileName=filePath+"GreyList_"+utility.convertToDateIdformat(stringToDate)+".csv";
+				String fileName="GreyList_incremental_"+utility.convertToDateIdformat(stringToDate)+".csv";
 				log.info("file path and name is:  "+fileName);
 				saveDataIntoFile(filter,fileName,filePath);
 				DayAdded=utility.addDaysInDate(days, dateForConfig);
@@ -103,23 +105,21 @@ public class IncrementalDumpProcess {
 	}
 	public void saveDataIntoFile(FileDumpFilter fileDataFilter,String fileName,String filePath) {
 		String header=new String();
+		log.info("going to fetch data from grey list history db for date"+fileDataFilter);
 		List<GreylistDbHistory> greyListData=nationalislmServiceImpl.greyListHistoryDataByCreatedOn(fileDataFilter);
+		log.info("greyListData:" +greyListData);
 		if(!greyListData.isEmpty()) {
 			log.info("if grey list history table is not empty");
 			header="IMEI,Operation";
-			utility.writeGreyListHistoryInFile(fileName, header, greyListData);        
+			utility.writeGreyListHistoryInFile(filePath+fileName, header, greyListData);        
 		}
 		else {
 			log.info("if grey list history table is empty");
 			header="Message";
 			String record="No data available in GreyList.";
-			utility.writeInFile(fileName, header, record);	
+			utility.writeInFile(filePath+fileName, header, record);	
 		}
-		FileDumpMgmt fileDumpMgmt=new FileDumpMgmt();
-		fileDumpMgmt.setDumpType("Incremental");
-		fileDumpMgmt.setFileName(fileName);
-		fileDumpMgmt.setCreatedOn(new Date());
-		fileDumpMgmt.setServiceDump("0");
+		FileDumpMgmt fileDumpMgmt=new FileDumpMgmt(new Date(),new Date(), fileName, DumpType.INCREMENTAL.getCode(), 0, "Incremental");
 		listFileDetailsImpl.saveFileDumpMgmt(fileDumpMgmt);
 	}
 }

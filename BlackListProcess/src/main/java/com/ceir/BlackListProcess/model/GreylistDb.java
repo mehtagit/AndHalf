@@ -1,4 +1,4 @@
-package com.ceir.GreyListProcess.model;
+package com.ceir.BlackListProcess.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,19 +10,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class GreylistDbHistory implements Serializable {
+public class GreylistDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
@@ -44,10 +47,11 @@ public class GreylistDbHistory implements Serializable {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
+	@Type(type="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date expiryDate;
 
-	
-	private int operation;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -60,17 +64,18 @@ public class GreylistDbHistory implements Serializable {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
+
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	public Date getModifiedOn() {
 		return modifiedOn;
 	}
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-	public Long getImei() {
-		return imei;
-	}
-	public void setImei(Long imei) {
-		this.imei = imei;
 	}
 	public String getRoleType() {
 		return roleType;
@@ -83,18 +88,6 @@ public class GreylistDbHistory implements Serializable {
 	}
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-	public int getOperation() {
-		return operation;
-	}
-	public void setOperation(int operation) {
-		this.operation = operation;
-	}
-	public String getTxnId() {
-		return txnId;
-	}
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
 	}
 	public String getDeviceNumber() {
 		return deviceNumber;
@@ -144,15 +137,19 @@ public class GreylistDbHistory implements Serializable {
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	@Override
-	public String toString() {
-		return "GreylistDbHistory [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei="
-				+ imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
-				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
-				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
-				+ ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", operation=" + operation + "]";
+	public Long getImei() {
+		return imei;
 	}
-
+	public void setImei(Long imei) {
+		this.imei = imei;
+	}
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+    
 
 
 

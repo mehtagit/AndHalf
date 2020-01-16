@@ -1,4 +1,4 @@
-package com.ceir.GreyListProcess.model;
+package com.ceir.BlackListProcess.model;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -44,9 +44,8 @@ public class GreylistDbHistory implements Serializable {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
-
-	
 	private int operation;
+	private String reason;
 	
 	public Long getId() {
 		return id;
@@ -144,13 +143,34 @@ public class GreylistDbHistory implements Serializable {
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-	@Override
-	public String toString() {
-		return "GreylistDbHistory [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei="
-				+ imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
-				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
-				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
-				+ ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", operation=" + operation + "]";
+	
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	public GreylistDbHistory( Date createdOn, Date modifiedOn, Long imei, String roleType, Long userId,
+			String txnId, String deviceNumber, String deviceType, String deviceAction, String deviceStatus,
+			String deviceLaunchDate, String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation,String reason) {
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+		this.imei = imei;
+		this.roleType = roleType;
+		this.userId = userId;
+		this.txnId = txnId;
+		this.deviceNumber = deviceNumber;
+		this.deviceType = deviceType;
+		this.deviceAction = deviceAction;
+		this.deviceStatus = deviceStatus;
+		DeviceLaunchDate = deviceLaunchDate;
+		this.multipleSimStatus = multipleSimStatus;
+		this.deviceId = deviceId;
+		this.imeiEsnMeid = imeiEsnMeid;
+		this.operation = operation;
+		this.reason=reason;
+	}
+	public GreylistDbHistory() {
 	}
 
 

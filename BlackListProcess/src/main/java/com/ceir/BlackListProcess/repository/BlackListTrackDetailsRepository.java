@@ -1,8 +1,9 @@
-package com.gl.ceir.config.repository;
+package com.ceir.BlackListProcess.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.gl.ceir.config.model.BlacklistDbHistory;
+import com.ceir.BlackListProcess.model.BlacklistDbHistory;
+
 
 public interface BlackListTrackDetailsRepository extends JpaRepository<BlacklistDbHistory, Long> {
 
