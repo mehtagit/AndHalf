@@ -61,7 +61,7 @@ public class ConfigurationController {
 
 		logger.info("Paginated view of System Config " + filterRequest);
 
-		Page<SystemConfigurationDb>  page = configurationManagementServiceImpl.filterSystemConfiguration(filterRequest, pageNo, pageSize);
+		Page<SystemConfigurationDb> page = configurationManagementServiceImpl.filterSystemConfiguration(filterRequest, pageNo, pageSize);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(page);
 
@@ -289,6 +289,51 @@ public class ConfigurationController {
 		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDbs);
 
 		logger.info("Response to send on by-tag-and-featureid = " + systemConfigListDbs);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "Save || System Config", response = SystemConfigurationDb.class)
+	@RequestMapping(path = "/system/", method = RequestMethod.POST)
+	public MappingJacksonValue saveSystemConfiguration(@RequestBody SystemConfigurationDb systemConfigurationDb) {
+
+		logger.info("Save system config Tag = " + systemConfigurationDb);
+
+		SystemConfigurationDb  pocessDetails = configurationManagementServiceImpl.saveSystemConfiguration(systemConfigurationDb);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
+
+		logger.info("Response to send = " + pocessDetails);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "Save || Message Config", response = MessageConfigurationDb.class)
+	@RequestMapping(path = "/message/", method = RequestMethod.POST)
+	public MappingJacksonValue saveMessageConfiguration(@RequestBody MessageConfigurationDb messageConfigurationDb) {
+
+		logger.info("Save message config Tag = " + messageConfigurationDb);
+
+		MessageConfigurationDb  pocessDetails = configurationManagementServiceImpl.saveMessageConfiguration(messageConfigurationDb);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
+
+		logger.info("Response to send = " + pocessDetails);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "Save || Policy Config", response = MessageConfigurationDb.class)
+	@RequestMapping(path = "/policy/", method = RequestMethod.POST)
+	public MappingJacksonValue savePolicyConfiguration(@RequestBody PolicyConfigurationDb policyConfigurationDb) {
+
+		logger.info("Save policy config Tag = " + policyConfigurationDb);
+
+		PolicyConfigurationDb  pocessDetails = configurationManagementServiceImpl.savePolicyConfiguration(policyConfigurationDb);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
+
+		logger.info("Response to send = " + pocessDetails);
 
 		return mapping;
 	}

@@ -453,4 +453,31 @@ public class ConfigurationManagementServiceImpl {
 
 		return new GenricResponse(0, "","");
 	}
+	
+	public SystemConfigurationDb saveSystemConfiguration(SystemConfigurationDb systemConfigurationDb){
+		try {
+			return systemConfigurationDbRepository.save(systemConfigurationDb);
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public MessageConfigurationDb saveMessageConfiguration(MessageConfigurationDb messageConfigurationDb){
+		try {
+			return messageConfigurationDbRepository.save(messageConfigurationDb);
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public PolicyConfigurationDb savePolicyConfiguration(PolicyConfigurationDb policyConfigurationDb){
+		try {
+			return policyConfigurationDbRepository.save(policyConfigurationDb);
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 }

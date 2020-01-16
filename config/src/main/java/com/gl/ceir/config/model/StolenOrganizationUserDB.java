@@ -37,10 +37,9 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	private String  nid;
-	private String firstName;  
-	private String middleName;
-	private String lastName;
+	
+	private String username;
+	private String companyName;  
 	private String propertyLocation;
 	private String street;
 	private String locality;
@@ -62,6 +61,11 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	
 	private String province;
 	private String country;
+	
+	// Authorize person Info.
+	private String personnelFirstName;  
+	private String personnelMiddleName;
+	private String personnelLastName;
 	private String email;
 	private String phoneNo;
 	
@@ -84,29 +88,36 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public String getNid() {
-		return nid;
+	
+	public String getUsername() {
+		return username;
 	}
-	public void setNid(String nid) {
-		this.nid = nid;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
-	public String getMiddleName() {
-		return middleName;
+	public String getPersonnelFirstName() {
+		return personnelFirstName;
 	}
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setPersonnelFirstName(String personnelFirstName) {
+		this.personnelFirstName = personnelFirstName;
 	}
-	public String getLastName() {
-		return lastName;
+	public String getPersonnelMiddleName() {
+		return personnelMiddleName;
 	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setPersonnelMiddleName(String personnelMiddleName) {
+		this.personnelMiddleName = personnelMiddleName;
+	}
+	public String getPersonnelLastName() {
+		return personnelLastName;
+	}
+	public void setPersonnelLastName(String personnelLastName) {
+		this.personnelLastName = personnelLastName;
 	}
 	public String getPropertyLocation() {
 		return propertyLocation;
@@ -194,41 +205,6 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	}
 	public void setDocTypeInterp(Integer docTypeInterp) {
 		this.docTypeInterp = docTypeInterp;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("EndUserDB [createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", middleName=");
-		builder.append(middleName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", propertyLocation=");
-		builder.append(propertyLocation);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", province=");
-		builder.append(province);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", phoneNo=");
-		builder.append(phoneNo);
-		builder.append(", regularizeDeviceDbs=");
-		builder.append(regularizeDeviceDbs);
-		builder.append("]");
-		return builder.toString();
 	}
 
 }

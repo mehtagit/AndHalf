@@ -7,4 +7,5 @@ import com.gl.ceir.config.model.AuditTrail;
 
 public interface AuditTrailRepository extends JpaRepository<AuditTrail, Long>, JpaSpecificationExecutor<AuditTrail> {
 
+	public AuditTrail getById(long id);
 }

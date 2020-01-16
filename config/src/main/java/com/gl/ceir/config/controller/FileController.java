@@ -149,7 +149,8 @@ public class FileController {
 
 	@ApiOperation(value = "Download Stoke upload File.", response = String.class)
 	@RequestMapping(path = "/Download/uploadFile", method = RequestMethod.GET)
-	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType,
+	public FileDetails downloadUploadedFile(String fileName, String txnId, 
+			String fileType,
 			@RequestParam(name = "tag", required = false) String tag) {
 		
 		logger.info("Request to download uploded file link with txnId [" + txnId + "]");

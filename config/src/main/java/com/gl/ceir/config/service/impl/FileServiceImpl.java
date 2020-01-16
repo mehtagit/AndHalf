@@ -59,6 +59,9 @@ public class FileServiceImpl {
 		case 5:
 			fileName = "StolenAndRecovery.csv";
 			break;
+		case 7:
+			fileName = "Blockunblock.csv";
+			break;
 		default:
 			break;
 		}
@@ -69,9 +72,9 @@ public class FileServiceImpl {
 	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {
 
 		String fileLink = null;
-		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.sample_file_link);
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.upload_file_link);
 
-		if(Objects.isNull(tag)) {
+		if("DEFAULT".equalsIgnoreCase(tag)) {
 			fileLink = systemConfigurationDb.getValue() + txnId + "/" + fileName;
 		}else {	
 			fileLink = systemConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;

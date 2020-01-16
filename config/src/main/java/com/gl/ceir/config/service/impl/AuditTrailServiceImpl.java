@@ -61,6 +61,15 @@ public class AuditTrailServiceImpl {
 	@Autowired
 	InterpSetter interpSetter;
 
+	public AuditTrail findById(long id){
+		try {
+			return auditTrailRepository.getById(id);
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
 	public List<AuditTrail> getAll(FilterRequest filterRequest) {
 
 		try {
@@ -78,7 +87,7 @@ public class AuditTrailServiceImpl {
 		}
 
 	}
-	
+
 	public Page<AuditTrail> filterAuditTrail(FilterRequest filterRequest, Integer pageNo, 
 			Integer pageSize) {
 
@@ -160,9 +169,10 @@ public class AuditTrailServiceImpl {
 	private SpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
 		SpecificationBuilder<AuditTrail> cmsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
-		if(Objects.nonNull(filterRequest.getUserId()))
-			cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-
+		if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.nonNull(filterRequest.getUserId()))
+				cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
 		return cmsb;
 	}
 

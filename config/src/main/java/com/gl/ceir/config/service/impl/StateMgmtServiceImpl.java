@@ -47,6 +47,15 @@ public class StateMgmtServiceImpl {
 
 	@Autowired	
 	EmailUtil emailUtil;
+	
+	public StateMgmtDb saveStateMgmt(StateMgmtDb stateMgmtDb){
+		try {
+			return stateMgmtRepository.save(stateMgmtDb);
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 	/*
 	 * 

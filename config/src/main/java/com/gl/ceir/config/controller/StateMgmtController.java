@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.MessageConfigurationDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.TableActions;
 import com.gl.ceir.config.service.impl.StateMgmtServiceImpl;
@@ -28,6 +32,21 @@ public class StateMgmtController {
 	@Autowired
 	Utility utility;
 
+	@ApiOperation(value = "Save || State Mgmt", response = MessageConfigurationDb.class)
+	@RequestMapping(path = "/state-mgmt/", method = RequestMethod.POST)
+	public MappingJacksonValue saveStateMgmt(@RequestBody StateMgmtDb stateMgmtDb) {
+
+		logger.info("Save state mgmt = " + stateMgmtDb);
+
+		StateMgmtDb pocessDetails = stateMgmtServiceImpl.saveStateMgmt(stateMgmtDb);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(pocessDetails);
+
+		logger.info("Response to send = " + pocessDetails);
+
+		return mapping;
+	}
+	
 	@ApiOperation(value = "View list of state by feature_id and user_type_id", response = StateMgmtDb.class)
 	@GetMapping("/state-mgmt/{featureId}/{userTypeId}")
 	public MappingJacksonValue getByFeatureIdAndUserTypeId(@PathVariable("featureId") Integer featureId, 
