@@ -1,4 +1,4 @@
-	package com.ceir.CEIRPostman.model;
+package com.ceir.CEIRPostman.model;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -41,55 +41,55 @@ public class UserProfile {
 	private String passportNo;
 	private String email;
 	private String phoneNo;
-	
+
 	@Transient
 	private String asTypeName;
-	
-	
+
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime  modifiedOn;
 	private String phoneOtp;  
 	private String emailOtp;
-    private String displayName;
-    
-    private String employeeId;
-    private String natureOfEmployment;
-    private String designation;
-    private String authorityName;
-    private String authorityEmail;
-    private String authorityPhoneNo;
+	private String displayName;
+
+	private String employeeId;
+	private String natureOfEmployment;
+	private String designation;
+	private String authorityName;
+	private String authorityEmail;
+	private String authorityPhoneNo;
 	private String operatorTypeName;
-    private Integer operatorTypeId;
-    
-    private String nidFilename;
-    private String photoFilename;
-    private String idCardFilename;
-    
-      
+	private Integer operatorTypeId;
+
+	private String nidFilename;
+	private String photoFilename;
+	private String idCardFilename;
+
+
 	@Transient
 	private String username;
-	
+
 	@Transient 
 	private long[] roles;
 	@Transient
 	private long usertypeId;
 	@Transient
 	private String password;    
- 
-	
+
+
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user;  
-         
-	
-	
+
+
+
 	public long[] getRoles() {
 		return roles;
 	}
@@ -114,11 +114,11 @@ public class UserProfile {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -233,16 +233,16 @@ public class UserProfile {
 	public void setEmailOtp(String emailOtp) {
 		this.emailOtp = emailOtp;
 	}
-	
-	
+
+
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
+
+
 	public String getDisplayName() {
 		return displayName;
 	}
@@ -288,9 +288,9 @@ public class UserProfile {
 	public void setAuthorityPhoneNo(String authorityPhoneNo) {
 		this.authorityPhoneNo = authorityPhoneNo;
 	}
-	
-	
-	
+
+
+
 	public String getOperatorTypeName() {
 		return operatorTypeName;
 	}
@@ -321,14 +321,14 @@ public class UserProfile {
 	public void setIdCardFilename(String idCardFilename) {
 		this.idCardFilename = idCardFilename;
 	}
-	
+
 	public String getAsTypeName() {
 		return asTypeName;
 	}
 	public void setAsTypeName(String asTypeName) {
 		this.asTypeName = asTypeName;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -344,5 +344,5 @@ public class UserProfile {
 				+ photoFilename + ", idCardFilename=" + idCardFilename + ", username=" + username + ", questionList="
 				+  ", roles=" + roles + ", usertypeId=" + usertypeId + ", password=" + password + "]";
 	}
-	
+
 }

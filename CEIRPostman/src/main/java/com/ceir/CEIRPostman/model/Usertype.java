@@ -36,7 +36,7 @@ public class Usertype {
 	@JsonIgnore 
 	@OneToMany(mappedBy = "usertype", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<User> user;
- 
+
 
 	public long getId() {
 		return id; 
@@ -69,9 +69,9 @@ public class Usertype {
 	public void setUser(List<User> user) { 
 		this.user = user;
 	}
-	
-	
-	
+
+
+
 
 
 }

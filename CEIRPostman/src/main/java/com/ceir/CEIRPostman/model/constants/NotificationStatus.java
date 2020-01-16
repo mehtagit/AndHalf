@@ -2,7 +2,7 @@ package com.ceir.CEIRPostman.model.constants;
 
 public enum NotificationStatus {
 	INIT(1), PROCESSING(1), SUCCESS(2);
-	
+
 	private int code;
 
 	NotificationStatus(int code) {

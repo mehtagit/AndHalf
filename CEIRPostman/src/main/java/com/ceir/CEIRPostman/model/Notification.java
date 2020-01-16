@@ -2,7 +2,6 @@ package com.ceir.CEIRPostman.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,77 +9,51 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
-
-import com.ceir.CEIRPostman.model.constants.NotificationStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 public class Notification  implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-
+	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
+	private long id;
+
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
-	
+
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
 	private String channelType;
 	@Column(length = 1000)
 	private String message;
-	
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    User userForNofication;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User userForNofication;
+
 	private Long featureId;
-	
+
 	private String featureTxnId;
-	
+
 	private String featureName;
-	
+
 	private String subFeature;
-	
+
 	private Integer status;
-	
+
 	private String subject;
-	
+
 	private Integer retryCount;
-	
-	
+
+
 	public Notification() {
 
 	}
-	
-	
-	public Notification(Long id, LocalDateTime createdOn, LocalDateTime modifiedOn, String channelType, String message,
-			Long userId, Long featureId, String featureTxnId, String featureName, String subFeature, Integer status,
-			String subject, Integer retryCount) {
-		super();
-		this.id = id;
-		this.createdOn = createdOn;
-		this.modifiedOn = modifiedOn;
-		this.channelType = channelType;
-		this.message = message;
-		this.featureId = featureId;
-		this.featureTxnId = featureTxnId;
-		this.featureName = featureName;
-		this.subFeature = subFeature;
-		status = NotificationStatus.INIT.getCode();
-		this.subject = subject;
-		this.retryCount = retryCount;
-	}
-
-
 
 
 	public Long getId() {
@@ -113,7 +86,7 @@ public class Notification  implements Serializable{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 	public Long getFeatureId() {
 		return featureId;
 	}
@@ -144,10 +117,7 @@ public class Notification  implements Serializable{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	public String getSubject() {
+		public String getSubject() {
 		return subject;
 	}
 
@@ -173,6 +143,11 @@ public class Notification  implements Serializable{
 		this.userForNofication = userForNofication;
 	}
 
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
 	@Override
 	public String toString() {
 		return "Notification [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", channelType="
@@ -180,4 +155,7 @@ public class Notification  implements Serializable{
 				+ ", featureName=" + featureName + ", subFeature=" + subFeature + ", status=" + status + ", subject="
 				+ subject + ", retryCount=" + retryCount + "]";
 	}
+
+
+	
 }

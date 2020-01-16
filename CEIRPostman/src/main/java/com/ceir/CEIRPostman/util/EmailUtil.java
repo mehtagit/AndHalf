@@ -23,10 +23,10 @@ import org.slf4j.Logger;
 public class EmailUtil {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());	
-	
+
 	@Autowired
-    private JavaMailSender javaMailSender;
-    
+	private JavaMailSender javaMailSender;
+
 	@Autowired
 	MailSender mailSender; 
 
@@ -37,7 +37,7 @@ public class EmailUtil {
 		simpleMailMessage.setTo(toAddress);
 		simpleMailMessage.setSubject(subject);
 		simpleMailMessage.setText(msgBody);
-    
+
 		try {
 			logger.info("going to send email");
 			mailSender.send(simpleMailMessage);
