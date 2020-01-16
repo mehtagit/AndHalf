@@ -1435,6 +1435,7 @@ title="" maxlength="16" value="1500" disabled>
 <input type="text" style="display:none" id="editBulkBlockrequestType">
 </div> -->
 </div>
+<p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
 <div class="row">
 <div class="input-field col s12 center">
 <button class=" btn"

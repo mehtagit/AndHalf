@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -67,7 +68,7 @@ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${s
 <div class="col s12 m12 l12">
 <div class="row card-panel">
 <div class="container-fluid pageHeader">
-<p class="PageHeading">Report Grievance</p>
+<p class="PageHeading"><spring:message code="modal.header.reportGrievance" /></p>
 </div>
 
 <form onsubmit="return saveGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
@@ -77,18 +78,12 @@ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${s
 <div class="input-field col s12 m6 l6">
 <input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
 class="form-control boxBorder boxHeight"/>
-<label for="TransactionId">Transaction ID</label>
+<label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
 
 <div class="input-field col s12 m6 l6">
 <!-- <label for="Category">Category</label> -->
 <select class="browser-default" id="category" required="required">
-<!--<option value="" disabled selected>Category *</option>
-<option value="1">Report Related</option>
-<option value="2">Device Stolen Related</option>
-<option value="3">Device Recovery Related</option>
-<option value="4">Stock Related</option>
-<option value="5">Other</option> -->
 </select>
 </div>
 </div>
@@ -96,35 +91,18 @@ class="form-control boxBorder boxHeight"/>
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
 <textarea id="Remark" class="materialize-textarea" required="required"></textarea>
-<label for="Remark">Remark <span class="star">*</span></label>
+<label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
 
 
-<!-- <div class="row">
-<h6 style="color: #000; margin-left: 10px;">Upload Supporting Document</h6>
-<div class="file-field col s12 m6">
-<div class="btn">
-<span>Select File</span>
-
-<input id="myInput" type="file" accept=".csv" multiple>
-</div>
-<div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
-placeholder="Upload one or more files">
-<div>
-<p id="myFiles"></p>
-</div>
-</div>
-</div>
-</div> -->
 <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
 <div class="file-field col s12 m6">
-<h6 style="color: #000;">Upload Supporting Document</h6>
+<h6 style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
-<span>Select File</span>
+<span><spring:message code="input.selectfile" /></span>
 <input type="file" name="files[]" id="docTypeFile1" required >
 </div>
 <div class="file-path-wrapper">
@@ -136,13 +114,13 @@ placeholder="Upload one or more files">
 </div>
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category">Document Type <span class="star">*</span></label>
+<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
 <select class="browser-default" id="docTypetag1" required>
-<option value="" disabled selected>Select Document Type </option>
+<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
 <select class="browser-default" id="docTypetagValue1" style="display: none;">
-<option value="" disabled selected>Select Document Type </option>
+<option value="" disabled selected><spring:message code="select.documenttype" /></option>
 
 </select>
 </div>
@@ -150,21 +128,22 @@ placeholder="Upload one or more files">
 
 
 </div>
-
 </div>
+
 <div class="col s12 m6 right">
 <button class="btn right add_field_button"><span
-style="font-size: 20px;">+</span> Add More files</button>
-</div>
+style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 
-<span> Required Field are marked with <span class="star">*</span></span>
+</div>
+
+<span><spring:message code="input.requiredfields" /><span class="star">*</span></span>
 
 <div class="center" style="margin-top: 50px;">
 <button class="btn"
-type="submit" >Submit</button>
+type="submit" ><spring:message code="button.submit" /></button>
 <a href="./grievanceManagement" class="btn" id="Cancel"
-style="margin-left: 10px;">Cancel</a>
+style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 </div>
 </form>
 </div>
@@ -182,20 +161,20 @@ style="margin-left: 10px;">Cancel</a>
 
 
 <div id="submitGrievance" class="modal">
-<h6 class="modal-header">Submit Grievance Report</h6>
+<h6 class="modal-header"><spring:message code="modal.header.submitGReport" /></h6>
 <div class="modal-content">
 
 
 <div class="row">
-<h6 id="grievanceSuccessId">Your grievance report has been successfully submitted. Your Grievance Id is ( <span id="greivanceId"></span> )</h6>
+<h6 id="grievanceSuccessId"><spring:message code="modal.message.grievance" />( <span id="greivanceId"></span> )</h6>
 
-<p>(Note: Please remember your grievance Id. This is used for future reference)</p>
+<p><spring:message code="modal.note" /></p>
 </div>
 <div class="row">
 <div class="input-field col s12 center">
 <a href="./grievanceManagement"
 class="btn"
->ok</a>
+><spring:message code="modal.ok" /></a>
 </div>
 </div>
 </div>
@@ -235,10 +214,167 @@ src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"
 <%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 <script type="text/javascript"
 src="${context}/resources/js/countries.js"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 <script type="text/javascript"
 src="${context}/resources/project_js/viewStock.js"></script>
 <script type="text/javascript"
 src="${context}/resources/project_js/grievanceManagement.js"></script>
+
+<script type="text/javascript">
+window.parent.$('#langlist').on('change', function() {
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
+}); 
+
+
+function saveGrievance(){
+	var category=$('#category').val();
+	var txnId=$('#TransactionId').val();
+	var remark=$('#Remark').val();
+	var file=$('#myInput').val();
+	var fieldId=1;
+	var fileInfo =[];
+	var formData= new FormData();
+	var fileData = [];
+	
+	var x;
+	var filename='';
+	var filediv;
+	var i=0;
+	var formData= new FormData();
+	var docTypeTagIdValue='';
+	var filename='';
+	$('.fileDiv').each(function() {	
+
+		
+		var x={
+		"docType":$('#docTypetag'+fieldId).val(),
+		"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		}
+		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+		fileInfo.push(x);
+		fieldId++;
+		i++;
+	});
+	
+	var multirequest={
+			"attachedFiles":fileInfo,
+			"txnId":txnId,
+			"categoryId":category,
+			"remarks":remark
+		}
+	
+	formData.append('fileInfo[]',JSON.stringify(fileInfo));
+	formData.append('multirequest',JSON.stringify(multirequest));
+	/*formData.append('categoryId',category);
+	formData.append('remarks',remark);
+*/
+	$.ajax({
+		url: './saveGrievance',
+		type: 'POST',
+		data: formData,
+		mimeType: 'multipart/form-data',
+		processData: false,
+		contentType: false,
+		async:false,
+	/*	method: 'POST',*/
+		success: function (data, textStatus, jqXHR) {
+			var x=data;
+			var y= JSON.parse(x);
+			
+			$('#submitGrievance').openModal();
+			$('#greivanceId').text(y.txnId);
+			/*alert(data.errorCode);
+			if(data.errorCode=="0")
+			{
+				
+				
+
+			}
+			else if(data.errorCode=="3")
+			{
+				console.log("status code = 3"); 
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text("Grievnace number already exist");
+				$('#errorCode').val(data.errorCode);
+			}*/
+			// $('#updateConsignment').modal('open'); 
+			//alert("success");
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
+return false;
+
+}
+
+
+var grievanceCategory="GRIEVANCE_CATEGORY";
+$.ajax({
+	url: './Consignment/consignmentCurency?currency='+grievanceCategory,
+	type: 'GET',
+	processData: false,
+	contentType: false,
+	success: function (data, textStatus, jqXHR) {
+		console.log(data);
+
+		$('#category').empty();
+		$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
+
+		for (i = 0; i < data.length; i++){
+
+			var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+			//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
+			$('#category').append(html);	
+		}
+		/* $('#currency').val($("#langid").val()); */
+
+	},
+	error: function (jqXHR, textStatus, errorThrown) {
+		console.log("error in ajax")
+	}
+});
+$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+	console.log("@@@@@"+JSON.stringify(data));
+	for (i = 0; i < data.length; i++) {
+		console.log(data[i].interp);
+		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+		$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue1');
+		$('#docTypetagValue1').val(data[i].value);
+	}
+});
+</script>
 </body>
 </html>
 

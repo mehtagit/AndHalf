@@ -211,7 +211,7 @@
 				</div>
 				<div class="input-field col s12 m6">
 					<textarea id="remark" class="materialize-textarea"
-						style="height: 0px;" readonly="readonly"></textarea>
+						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
 					<label for="remark" class=""><spring:message
 							code="input.remarks" /></label>
 
@@ -224,7 +224,7 @@
 				<div class="input-field col s12 center">
 					<button class="btn" onclick="closeViewModal()"
 						class="modal-close btn" id="add_user">
-						<spring:message code="modal.ok" />
+						<spring:message code="modal.close" />
 					</button>
 				</div>
 			</div>
@@ -657,7 +657,7 @@
 
 				<div class="row" style="padding-bottom: 15px">
 					<div class="col s12 m12">
-						<a href="./sampleFileDownload/filetype=sample"><spring:message code="input.downlaod.sample" /></a></br> <span> <spring:message code="input.requiredfields" /> <span
+						<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a></br> <span> <spring:message code="input.requiredfields" /> <span
 							class="star">*</span>
 						</span>
 					</div>

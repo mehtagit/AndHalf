@@ -110,17 +110,17 @@
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading">Report Recovery</p>
+                                            <p id="headingType" class="PageHeading"> Update Report Recovery</p>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col s12">
+                                          <!--   <div class="col s12">
                                                 <ul class="tabs">
                                                     <li class="tab col s3"><a class="active" onclick="singleRecoverydiv()">Single</a>
                                                     </li>
                                                     <li class="tab col s3"><a onclick="showBulkRecovery()">Company/Organisation/Government</a></li>
                                                 </ul>
-                                            </div>
+                                            </div> -->
                                             <div id="singleRecoveryDiv" class="col s12" style="margin-top: 30px; display: block">
                                                 <form action="#" id="singleRecoveryForm">
                                                     <div class="row">
@@ -129,7 +129,7 @@
                                                                 <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" maxlength="30">
                                                                 <label for="sigleRecoverydeviceBrandName">Device Brand Name</label>
                                                             </div>
-
+<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" maxlength="30">
                                                                 <label for="sigleRecoveryimeiNumber">IMEI/MEID/ESN Number <span class="star">*</span></label>
@@ -232,7 +232,7 @@
                                                             </div>
                                                             </div>
                                                         </div>
-                                                    <p> Required Field are marked with <span class="star">*</span></p>
+                                                    <p> Required Field are marked with <span class="star">*</p>
 
 
                                                     <div class="input-field col s12 center">
@@ -331,7 +331,7 @@
                                                     </div>
 
                                                     <div class="col s12 m12">
-                                                        <p> Required Field are marked with <span class="star">*</p>
+                                                        <p> Required Field are marked with <span class="star">*</span></p>
                                                     </div>
 
                                                     <div class="input-field col s12 center">
@@ -405,6 +405,21 @@
             "bulkRecoverycountry",
             "bulkRecoverystate"
         );
+        
+        window.onload = function () {
+            if($('#pageViewType').val()=='view')
+            	{
+            	$('#headingType').text('');
+            	$('#headingType').text('View Report Recovery');
+            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+            	}
+            else{
+            	$('#headingType').text('');
+            	$('#headingType').text(' Update Report Recovery');
+            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+            }
+          
+      }
 </script>
 		
 

@@ -110,18 +110,18 @@
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading">Report Recovery</p>
+                                            <p class="PageHeading"> Update Report Recovery</p>
                                         </div>
 
-                                        <div class="row">
+                                      <!--   <div class="row">
                                             <div class="col s12">
                                                 <ul class="tabs">
                                                     <li class="tab col s3"><a class="active" onclick="singleRecoverydiv()">Single</a>
                                                     </li>
                                                     <li class="tab col s3"><a onclick="showBulkRecovery()">Company/Organisation/Government</a></li>
                                                 </ul>
-                                            </div>
-                                            <div id="singleRecoveryDiv" class="col s12" style="margin-top: 30px; display: block">
+                                            </div> -->
+                                            <div id="singleRecoveryDiv" class="col s12" style="margin-top: 30px; display: none">
                                                 <form action="#" id="singleRecoveryForm">
                                                     <div class="row">
                                                         <div class="col-s12 m12">
@@ -243,14 +243,14 @@
                                                 </form>
                                             </div>
                                     </div>
-                                            <div id="bulkRecoveryDiv" class="col s12 m12" style="display: none">
+                                            <div id="bulkRecoveryDiv" class="col s12 m12" style="display: block">
                                                 <form action="#" style="margin-top: 30px;" id="bulkRecoveryForm">
                                                     <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
                                                         <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoveryquantity" maxlength="10" pattern=[0-9] title="Please enter your locality">
                                                         <label for="bulkRecoveryquantity">Quantity <span class="star">*</span></label>
                                                     </div>
-
+<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
                                                     <div class="input-field col s12 m6">
                                                         <textarea id="bulkRecoveryRemark" class="materialize-textarea"></textarea>
                                                         <label for="bulkRecoveryRemark">Remark</label>
@@ -331,7 +331,7 @@
                                                     </div>
 
                                                     <div class="col s12 m12">
-                                                        <p> Required Field are marked with <span class="star">*</p>
+                                                        <p> Required Field are marked with <span class="star">*</span></p>
                                                     </div>
 
                                                     <div class="input-field col s12 center">
@@ -405,6 +405,22 @@
             "bulkRecoverycountry",
             "bulkRecoverystate"
         );
+        
+        
+        window.onload = function () {
+            if($('#pageViewType').val()=='view')
+            	{
+            	$('#headingType').text('');
+            	$('#headingType').text('View Report Recovery');
+            	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+            	}
+            else{
+            	$('#headingType').text('');
+            	$('#headingType').text(' Update Report Recovery');
+            	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+            }
+          
+      }
 </script>
 		
 

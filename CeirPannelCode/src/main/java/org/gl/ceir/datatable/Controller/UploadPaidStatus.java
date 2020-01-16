@@ -103,6 +103,7 @@ public class UploadPaidStatus {
 				
 				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
+					String txnId = contentModelList.getTxnId();
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
@@ -117,7 +118,7 @@ public class UploadPaidStatus {
 					String action = iconState.userPaidStatusIcon(imei1);
 
 					
-					Object[] data = {sno,createdOn,nid,deviceTypeInterp,country,status,action};
+					Object[] data = {sno,createdOn,nid,txnId,deviceTypeInterp,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -128,6 +129,7 @@ public class UploadPaidStatus {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String nid = contentModelList.getNid();
+					String txnId = contentModelList.getTxnId(); 
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
 					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
@@ -140,7 +142,7 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
-					Object[] data = {sno,createdOn,nid,deviceTypeInterp,country,taxStatus,status,action};
+					Object[] data = {sno,createdOn,nid,txnId,deviceTypeInterp,country,taxStatus,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -214,7 +216,7 @@ public class UploadPaidStatus {
 
 		if("Custom".equals(userType)) {
 			//input type date list
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","",};
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

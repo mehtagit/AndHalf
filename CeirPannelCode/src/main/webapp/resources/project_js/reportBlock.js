@@ -622,7 +622,7 @@ function updateSingleBlockDevicesRequest()
 	var requestType=$('#editsingleblocRequestType').val();
 	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
-	
+	var category=$('#editbulkBlockdeviceCategory').val();
 	
 	
 	console.log("****");
@@ -643,7 +643,8 @@ var singleImeiBlockDetail={
 		'txnId':txnId,
 		'sourceType': 4,
 		'blockingTimePeriod':blockingTimePeriod,
-		'blockingType':blockingType
+		'blockingType':blockingType,
+		'category':category
 }
 		
 		console.log(JSON.stringify(singleImeiBlockDetail));

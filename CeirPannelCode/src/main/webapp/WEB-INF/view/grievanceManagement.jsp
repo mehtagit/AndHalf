@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -89,8 +91,6 @@ var path="${context}";
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>
-										<div class="right" style="margin-top: 25px;"><a onclick="exportData()" type="button" class="boton right">Export to excel <i class="fa fa-file-excel-o" aria-hidden="true"></i></a></div>
-							
 								</div>
 							</form>
 							<table id="grivanceLibraryTable"
@@ -108,12 +108,12 @@ var path="${context}";
 	
 	<div id="replyModal" class="modal">
         <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
-             <h6 class="modal-header">Reply</h6>
+             <h6 class="modal-header"><spring:message code="input.reply" /></h6>
              <div class="modal-content">
              <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col s12 m12">
-                    <h6 style="font-weight: bold;">Grievance ID: <span id="grievanceIdToSave"></span></h6>
+                    <h6 style="font-weight: bold;"><spring:message code="input.grievID" /><span id="grievanceIdToSave"></span></h6>
                     <span id="grievanceTxnId" style="display: none;"></span>
                     <hr>
                 </div>
@@ -126,7 +126,7 @@ var path="${context}";
                
  
                <div class="col s12 m12">
-                  <label for="replyRemark" style="margin-top: 7px">Remark <span class="star">*</span></label>
+                  <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
                 </div>
@@ -144,9 +144,9 @@ var path="${context}";
 <div id="filediv" class="fileDiv">
 <div class="row">
 <div class="file-field col s12 m6">
-<h6 style="color: #000;">Upload Supporting Document</h6>
+<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
-<span>Select File</span>
+<span><spring:message code="input.selectfile" /></span>
 <input type="file" name="files[]" id="docTypeFile1"  multiple>
 </div>
 <div class="file-path-wrapper">
@@ -158,9 +158,9 @@ placeholder="Upload one or more files">
 </div>
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category">Document Type <span class="star">*</span></label>
+<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
 <select class="browser-default" id="docTypetag1" >
-<option value="" disabled selected>Select Document Type </option>
+<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
 
@@ -173,29 +173,29 @@ placeholder="Upload one or more files">
 </div>
 <div class="col s12 m6 right">
 <button class="btn right add_field_button"><span
-style="font-size: 20px;">+</span> Add More files</button>
+style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
               <p id="closeTicketCheckbox" style="float: left; display: none;">
                         <label>
-                            <span>Do you want to close this ticket?</span>
+                            <span><spring:message code="modal.message.griev.closeticket" /></span>
                             <input type="checkbox" id="closeTicketCheck" />
                         </label>
                     </p> <br>
 				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
 			
 
-			<span> Required Field are marked with <span class="star">*</span></span>
+			<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
 			
                 </div>
                 <div class="col s12 m12 center">
                  <p id="closeTicketCheckbox" style="float: left; display: none;">
                         <label>
-                            <span>Do you want to close this ticket?</span>
+                            <span><spring:message code="modal.message.griev.closeticket" /></span>
                             <input type="checkbox" id="closeTicketCheck" />
                         </label>
                     </p>
-                    <button class="right btn" type="submit">Reply</button>
+                    <button class="right btn" type="submit"><spring:message code="input.reply" /></button>
                 </div>
             </div>
             </form>
@@ -203,16 +203,16 @@ style="font-size: 20px;">+</span> Add More files</button>
     </div>
     
     <div id="replyMsg" class="modal">
-    <h6 class="modal-header">Grievance Reply</h6>
+    <h6 class="modal-header"><spring:message code="modal.header.grievancereply" /></h6>
     <div class="modal-content">
         
         <div class="row">
-            <h6 id="showReplyResponse">Your reply having grievance ID: <span id="replyGrievanceId"> </span> is successfully sent.</h6>
+            <h6 id="showReplyResponse"><spring:message code="modal.message.grievance.reply" /><span id="replyGrievanceId"> </span> <spring:message code="modal.issuccessful" /></h6>
         </div>
         <div class="row">
             <div class="input-field col s12 center">
                 <div class="input-field col s12 center">
-                    <a href="./grievanceManagement" class="modal-close btn">ok</a>
+                    <a href="./grievanceManagement" class="modal-close btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -221,7 +221,7 @@ style="font-size: 20px;">+</span> Add More files</button>
 
 <div id="manageAccount" class="modal">
 <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-<h6 class="modal-header">Grievance history</h6>
+<h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
 <div class="modal-content">
 <div id="live-chat">
 <div class="chat">
@@ -269,6 +269,36 @@ style="font-size: 20px;">+</span> Add More files</button>
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+			<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
 		

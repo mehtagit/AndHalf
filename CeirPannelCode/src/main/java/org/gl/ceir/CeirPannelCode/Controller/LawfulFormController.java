@@ -28,18 +28,40 @@ public class LawfulFormController
 	
 	
 	@RequestMapping(value="/openlawfulStolenRecoveryPage",method = {RequestMethod.GET,RequestMethod.POST} )
-	public ModelAndView openStolenRecoveryPage(@RequestParam(name="pageType",required = false) String pageType)
+	public ModelAndView openStolenRecoveryPage(@RequestParam(name="pageType") String pageType,@RequestParam(name="pageView") String pageView)
 	{
 		log.info("entry point in  open stolen and recovery  page."+pageType);
 		if(pageType.equals("stolen"))
 		{
 			log.info("block page");
 			mv.setViewName("lawfulStolen");
-		}else {
+		}else if(pageType.equals("recovery")) {
 			log.info("recovery");
 			mv.setViewName("lawfulRecovery");
 		}
-		log.info("exit point in  open stolen and recovery   page.");
+		else if(pageType.equals("editIndivisualsStolen"))
+		{
+			log.info("editIndivisualsStolen");
+			mv.setViewName("editIndivisualStolen");
+		}
+		else if(pageType.equals("editCompanyStolen"))
+		{
+			log.info("editCompanyStolen");
+			mv.setViewName("editCompanyStolen");
+		}
+		else if(pageType.equals("editIndivisualRecovery"))
+		{
+			log.info("editIndivisualRecovery");
+			mv.setViewName("editIndivisualRecovery");
+		}
+		else if(pageType.equals("editCompanyRecovery"))
+		{
+			log.info("editCompanyRecovery");
+			mv.setViewName("editCompanyRecovery");
+		}
+		
+		log.info("exit point in  open stolen and recovery   page."+pageView);
+		mv.addObject("viewType",pageView);
 		return mv;
 	}
 	
