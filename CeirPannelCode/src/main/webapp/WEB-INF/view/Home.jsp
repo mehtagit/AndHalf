@@ -75,7 +75,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                     <div class="section">
                         <div class="row card-panel">
                             <div class="container-fluid pageHeader" style="margin: -13px -20px 0px;">
-                                <p class="PageHeading">Dashboard</p>
+                                <p class="PageHeading"><spring:message code="view.dashboard" /></p>
                             </div>
                             <div class="col s12 m12 l12">
                                 <div class="row">

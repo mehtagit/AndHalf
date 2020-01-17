@@ -113,6 +113,7 @@ public class StolenDatatableController {
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
+						String operator = dataInsideList.getOperatorTypeIdInterp();
 						String fileName = dataInsideList.getRequestType();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();

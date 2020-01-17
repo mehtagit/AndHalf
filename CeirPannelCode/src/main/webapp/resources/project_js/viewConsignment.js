@@ -13,16 +13,20 @@
 		window.location.reload(true);
 	}); 
 	$.i18n().locale = lang;
-	var i18n,rejectedMsg,consignmentApproved,errorMsg,havingTxnID;
+	var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated,consignmentDeleted,deleteInProgress;
 	$.i18n().load( {
 		'en': '../resources/i18n/en.json',
 		'km': '../resources/i18n/km.json'
 	} ).done( function() { 
-		i18n=$.i18n('button.export');
 		rejectedMsg=$.i18n('rejectedMsg');
 		consignmentApproved=$.i18n('consignmentApproved');
 		errorMsg=$.i18n('errorMsg');
 		havingTxnID=$.i18n('havingTxnID');
+		updateMsg=$.i18n('updateMsg');
+		hasBeenUpdated=$.i18n('hasBeenUpdated');
+		consignmentDeleted=$.i18n('consignmentDeleted');
+		deleteInProgress=$.i18n('deleteInProgress');
+		console.log("deleteInProgress"+deleteInProgress);
 	});
 	$(document).ready(function(){
 		$('div#initialloader').fadeIn('fast');
@@ -72,10 +76,10 @@
 
 				}else if(data.errorCode == 0){
 					$("#consignmentText").text('');
-					$("#consignmentText").text('Consignment Deleted Successfully');
+					$("#consignmentText").text(deleteInProgress);
 				}
 				else{
-					$("#consignmentText").text('Something happens wrong');
+					$("#consignmentText").text(errorMsg);
 				}
 			},
 			error : function() {
@@ -377,7 +381,7 @@
 				else if (data.errorCode==0){
 
 					$('#sucessMessage').text('');
-					$('#sucessMessage').text('Your update on the form for transaction ID ('+data.txnId+') has been successfully updated.');
+					$('#sucessMessage').text(updateMsg+" "+ (data.txnId) +" "+hasBeenUpdated);
 				}
 				else 
 				{
@@ -546,7 +550,7 @@
 					$("#btnLink").css({display: "none"});
 
 					$("#consignmentTableDIv").append("<div class='col s12 m1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-					$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+i18n+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
@@ -572,7 +576,7 @@
 
 				}else{
 					$("#consignmentTableDIv").append("<div class='col s12 m1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-					$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+i18n+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 
 					for(i=0; i<button.length; i++){

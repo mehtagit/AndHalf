@@ -15,6 +15,11 @@
 <meta content="" name="description" />
 <meta content="" name="author" />
 
+<script type="text/javascript"
+	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
+ -->
+
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -48,83 +53,120 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
+	
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	
 
 
- <style>
-        .welcomeMsg {
-          padding-bottom: 50px !important;
-          line-height: 1.5 !important;
-          text-align: center;
-        }
-    </style>
+
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}">
+<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
-<section id="content">
- 
-                <!--start container-->
-              	<div id="" class="modal">
-        <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-        <div class="modal-content">
-        <div class="row">
-                                    <div>
-                                        <h5 style="margin-left: 10%;">Grievance history</h5>
 
-                                    </div>
-                                    <hr>
-                                    <div id="live-chat">
-                                        <div class="chat">
-                                            <div class="chat-history">
-                                                <div class="chat-message clearfix">
-                                                    <div class="chat-message-content clearfix">
-                                                        <span class="chat-time">15/07/2018 13:35</span>
-                                                        <h5>Admin</h5>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Error, explicabo quasi ratione odio
-                                                            dolorum harum.</p>
-                                                    </div> <!-- end chat-message-content -->
-                                                </div> <!-- end chat-message -->
-                                                <hr>
-                                                <div class="chat-message-user clearfix">
-                                                    <div class="chat-message-content clearfix">
-                                                        <span class="chat-time">16/07/2018 13:37</span>
-                                                        <h5>You</h5>
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Blanditiis, nulla accusamus magni
-                                                            vel debitis numquam qui tempora rem voluptatem delectus!</p>
-                                                    </div> <!-- end chat-message-content -->
-                                                </div> <!-- end chat-message -->
-                                                <hr>
+	<!-- START CONTENT -->
+	<!-- START CONTENT -->
+	<section id="content">
+		<!--start container-->
+		<div class="container">
+			<div class="section">
+				<div class="row">
+					<div class="col s12 m12 l12">
+						<div class="row card-panel">
+							<div class="container-fluid pageHeader" id="pageHeader">
 
-                                            </div> <!-- end chat-history -->
-                                        </div> <!-- end live-chat -->
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                            
-           <!-- Modal 4 start -->
+								<a href="" class="boton right" id="btnLink" hidden></a>
+							</div>
+							<form action="${context}/auditTrail"
+								method="post">
+								<div class="col s12 m12 l12" id="auditTableDiv"
+									style="padding-bottom: 5px; background-color: #e2edef52;">
+									<div id="filterBtnDiv">
+										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
+		 -->
+									</div>
+								</div>
+							</form>
+							<table id="auditLibraryTable"
+								class="responsive-table striped display"></table>
 
-               
-    
-</section>
+						</div>
 
+					</div>
+				</div>
+				<div id="footerBtn"></div>
+			</div>
+		</div>
+		<!--end container-->
+	</section>
+
+   <!-- Modal 2 start   -->
+
+	<div id="viewAuditModel" class="modal">
+		<h6 class="modal-header">View Audit Management</h6>
+		<div class="modal-content">
+
+			<div class="row">
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="tag" id="viewUserId"
+							placeholder="" disabled
+							style="height: 28px;"> <label for="viewUserId">User ID</label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="policyOrder" id="viewUserName"
+							placeholder="" disabled style="height: 28px;">
+						<label for="viewUserName">User Name</label>
+					</div>	
+						
+					<div class="row" style="margin-top: 20px;">	
+					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
+						<input type="text" name="period" id="viewRoleType"
+							placeholder="" disabled style="height: 28px;">
+						<label for="viewRoleType">Role Type</label>
+					</div>
+
+					<div class="input-field col s12 m6" style="margin-top: 20px;">
+						<input type="text" id="viewFeature" name="status"
+							placeholder="" maxlength="20" disabled style="height: 28px;">
+						<label for="viewFeature">Feature</label>
+					</div>
+					</div>	
+					
+					<div class="input-field col s12 m6" style="margin-top: 20px;">
+						<input type="text" id="viewSubFeature" name="status"
+							placeholder="" maxlength="20" disabled style="height: 28px;">
+						<label for="viewSubFeature">Sub Feature</label>
+					</div>
+					
+				</div>
+
+				
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+				</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+
+	
+	
+	
 	<!--materialize js-->
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-
-
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/jquery-datepicker2.js"></script>
 
+	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -146,6 +188,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js"></script>
-		</body>
+		src="${context}/resources/project_js/auditManagement.js"></script>
+		
+</body>
 </html>

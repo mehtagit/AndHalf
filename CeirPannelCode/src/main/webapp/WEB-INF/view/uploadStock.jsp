@@ -264,7 +264,7 @@ to {
 									<br>
 									<br>
 									<p style="margin-left: 10px;">
-										<a href="./Consignment/sampleFileDownload/filetype=sample"><spring:message
+										<a href="./Consignment/sampleFileDownload/4"><spring:message
 												code="input.downlaod.sample" /></a>
 									</p>
 								</div>
@@ -410,19 +410,20 @@ to {
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
 	<script>
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 window.parent.$('#langlist').on('change', function() {
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	window.location.assign("./openUploadStock?reqType=formPage&lang="+lang);
+	var language=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.location.assign("./openUploadStock?reqType=formPage&lang="+language);
 }); 
 $.i18n().locale = lang;
 var successMsg,invoiceNumberExist;
 $.i18n().load( {
-	'en': '../resources/i18n/en.json',
-	'km': '../resources/i18n/km.json'
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
 } ).done( function() { 
 	successMsg=$.i18n('successMsg');
 	invoiceNumberExist=$.i18n('invoiceNumberExist');
-	
+	console.log(successMsg+"**********"+invoiceNumberExist);
 });
 
 

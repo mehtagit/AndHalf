@@ -1188,4 +1188,20 @@ public class IconsState {
 		return action;
 
 	}
+	
+	/********************************** Icons for Audit Management**********************************/ 
+
+	public String auditManagementIcons(String userStatus,String userId,String id) { 
+
+		String viewAction="viewDetails('"+id+"')";
+
+		// state related Code 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+
+		String action=view;
+		return action;
+
+	}
 }
