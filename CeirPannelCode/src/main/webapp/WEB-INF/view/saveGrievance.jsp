@@ -128,12 +128,13 @@ placeholder="Upload one or more files">
 
 
 </div>
-
 </div>
+
 <div class="col s12 m6 right">
 <button class="btn right add_field_button"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
+
 </div>
 
 <span><spring:message code="input.requiredfields" /><span class="star">*</span></span>
@@ -245,6 +246,8 @@ src="${context}/resources/js/countries.js"></script>
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 <script type="text/javascript"
 src="${context}/resources/project_js/viewStock.js"></script>
+<script type="text/javascript"
+src="${context}/resources/project_js/grievanceManagement.js"></script>
 
 <script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {

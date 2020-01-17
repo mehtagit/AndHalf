@@ -264,7 +264,7 @@ to {
 									<br>
 									<br>
 									<p style="margin-left: 10px;">
-										<a href="./Consignment/sampleFileDownload/filetype=sample"><spring:message
+										<a href="./Consignment/sampleFileDownload/4"><spring:message
 												code="input.downlaod.sample" /></a>
 									</p>
 								</div>

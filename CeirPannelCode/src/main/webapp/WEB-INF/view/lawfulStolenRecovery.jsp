@@ -113,12 +113,12 @@
                     <form action="#">
                         <h5 class="center">
                             <label>
-                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('stolen')" />
+                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('stolen','default')" />
                                 <span class="checkboxFont"> Stolen</span>
                             </label>
 
                             <label>
-                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('recovery')" />
+                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('recovery','default')" />
                                 <span class="checkboxFont"> Recovery</span>
                             </label>
                         </h5>

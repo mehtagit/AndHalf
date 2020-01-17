@@ -248,10 +248,10 @@ function openStolenRecoveryModal()
 	$('#chooseStolenOption').openModal();
 }
 
-function openStolenRecoveryPage(pageType)
+function openStolenRecoveryPage(pageType,pageView)
 {
 	console.log("###");
-	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType;
+	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView;
 }
 
 function showSingleFormDiv()
@@ -347,4 +347,24 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 	
 	}
 });
+
+
+
+
+//__________________--------------------------_______________________Edit  Pages functions___________________---------------------------------------_____________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

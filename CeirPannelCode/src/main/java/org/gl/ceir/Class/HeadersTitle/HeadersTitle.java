@@ -109,10 +109,8 @@ public class HeadersTitle {
 	//Lawful Stolen Headers
 		public  String contact="Contact Number";
 		public  String blockType="Block Type";
-		
-	//Audit Management
-		public  String userName="User Name";
-		public  String subFeature="Sub Feature";
 
-
+		//Audit Management
+				public  String userName="User Name";
+				public  String subFeature="Sub Feature";	
 }

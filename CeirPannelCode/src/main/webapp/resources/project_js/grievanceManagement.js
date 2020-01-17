@@ -391,16 +391,33 @@
 			var fileData = [];
 			
 			var x;
-			var filename='';
+			
 			var filediv;
 			var i=0;
 			var formData= new FormData();
 			var docTypeTagIdValue='';
-			var filename='';
+		
+			
 			$('.fileDiv').each(function() {	
+				var fileName=$('#docTypeFile'+fieldId).val();
+				var fileName1='';
+				
+				if(fileName=='')
+					{
+					fileName1='';
+					}
+				else if(fileName==undefined )
+					{
+			fileName1='';
+					}
+				else {
+				/*	console.log("vanotnotlue");*/
+				fileName1=fileName.replace('C:\\fakepath\\','');	
+				}
+				
 				var x={
 				"docType":$('#docTypetag'+fieldId).val(),
-				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\',''),
+				"fileName":fileName1,
 				"grievanceId":$('#grievanceIdToSave').text()
 				}
 				formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
@@ -426,7 +443,7 @@
 			formData.append('grievanceId',grievanceIdToSave);
 			formData.append('txnId',grievanceTxnId);
 			formData.append('grievanceStatus',grievanceTicketStatus);*/
-
+		
 			$.ajax({
 				url: './saveGrievanceMessage',
 				type: 'POST',
@@ -476,8 +493,10 @@
 					console.log(JSON.stringify(data));
 					$('#chatMsg').empty();
 					$('#manageAccount').openModal();
+					console.log("****projectPath"+projectPath);
+					console.log("+++++path"+path);
 					
-					var projectpath=projectPath+path+"/Consignment/dowloadFiles/actual";
+					var projectpath=path+"/Consignment/dowloadFiles/actual";
 					console.log("--projectpath--"+projectpath);
 					for(var i=0; i<data.length; i++)
 					{
@@ -487,7 +506,7 @@
 							{
 								
 								console.log("jjjjjj"+j);
-								$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+								$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 							}
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
 
@@ -576,13 +595,17 @@
 				}
 			});
 			id++;
-
+			/*alert("$$$$"+id)*/
 		});
 		$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 			e.preventDefault();
+			var Iid=id-1;
+			/*alert("@@@"+Iid)*/
+			$('#filediv'+Iid).remove();
 			$(this).parent('div').remove();
 			x--;
 			id--;
+		
 		})
 
 		function saveDocTypeValue(){
