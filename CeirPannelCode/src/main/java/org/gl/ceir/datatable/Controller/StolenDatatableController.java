@@ -122,7 +122,7 @@ public class StolenDatatableController {
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.blockUnblockState(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
-								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+						statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
 						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);

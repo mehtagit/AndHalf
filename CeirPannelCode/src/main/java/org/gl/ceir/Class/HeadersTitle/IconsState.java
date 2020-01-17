@@ -859,7 +859,7 @@ public class IconsState {
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
 			
-
+			
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
@@ -881,23 +881,27 @@ public class IconsState {
 				+editIconTitle+"></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-
+		
+		log.info("before check String-------->" +error);
 		
 		for (ActionModel actionModel : actionResponse) {
-			if (actionModel.getState() == 0 || actionModel.getState() == 1 || actionModel.getState() == 2 || actionModel.getState() == 4 || actionModel.getState() == 5) {
-				log.info("in Action State first" +actionModel.getState());
-				error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+"  ></i></a>"; 
-				
-			}else if (actionModel.getState() == 3) {
-				 error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+			if (actionModel.getState() == 0 || actionModel.getState() == 1 ||actionModel.getState() == 2 || actionModel.getState() == 4 ||actionModel.getState() == 5) {
+				 log.info("inside state else------->" +actionModel.getState());
+				  error="<a href="+errorURL+" class="+disableIconClass+"><i class="
+				  +disableErrorIcon+" aria-hidden=\"true\" title="
+				  +errorIconTitle+" ></i></a>"; 
+			}
+			else if (actionModel.getState() == 3) {
+			log.info("inside state if-------->" +actionModel.getState());
+			error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 						+errorIconTitle+" ></i></a>";
-			
+		
 		}
-
-		}
+		 
+	}
+	
+		
 		if("Disable".equals(userStatus)) {
-			
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -909,8 +913,10 @@ public class IconsState {
 					+editIconTitle+"></i></a>"; 
 
 		}
-
+		log.info("final String-------->" +error);
+		
 		String action=error.concat(download).concat(view).concat(edit);	
+		
 		return action;
 
 	}
@@ -1157,6 +1163,22 @@ public class IconsState {
 		}
 
 		String action=error.concat(download).concat(view).concat(edit).concat(delete);	
+		return action;
+
+	}
+	
+	/********************************** Icons for Audit Management**********************************/ 
+
+	public String auditManagementIcons(String userStatus,String userId,String id) { 
+
+		String viewAction="viewDetails('"+id+"')";
+
+		// state related Code 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+
+		String action=view;
 		return action;
 
 	}

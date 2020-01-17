@@ -10,6 +10,7 @@ import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
+import org.gl.ceir.pagination.model.AuditContentModel;
 import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.MessageContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
@@ -302,6 +303,21 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PutMapping(value="/system/update")
 				public @ResponseBody ConfigContentModel updateSystem(ConfigContentModel configContentModel);
+
+		
+			//***************************************************Audit Management Feign********************************
+
+				@RequestMapping(value="/filter/audit-trail" ,method=RequestMethod.POST) 
+				public Object auditManagementFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+
+			//************************************************ view Audit Management Feign *************************************
+
+				@RequestMapping(value="/audit-trail/{id}" ,method=RequestMethod.GET) 
+				public AuditContentModel viewAuditManagementFeign(@PathVariable("id") Integer id);
+
 		}
 
 
