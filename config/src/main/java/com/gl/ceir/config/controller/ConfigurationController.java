@@ -250,13 +250,13 @@ public class ConfigurationController {
 	@GetMapping("/system-config-list/{tag}")
 	public MappingJacksonValue findSystemConfigListByTag(@PathVariable("tag") String tag) {
 
-		logger.info("Request to get system all details");
+		logger.info("Request to get system all details for tag [" + tag + "]");
 
 		List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDbs);
 
-		logger.info("Response to send = " + systemConfigListDbs);
+		logger.info("Response to send for tag [ " + tag + "] " + systemConfigListDbs);
 
 		return mapping;
 	}
