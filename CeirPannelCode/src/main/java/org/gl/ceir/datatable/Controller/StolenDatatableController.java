@@ -113,6 +113,7 @@ public class StolenDatatableController {
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
+						String operator = dataInsideList.getOperatorTypeIdInterp();
 						String fileName = dataInsideList.getRequestType();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
@@ -160,13 +161,14 @@ public class StolenDatatableController {
 						String txnId = dataInsideList.getTxnId();
 						String BlockType = dataInsideList.getBlockingType();
 						String requestType = dataInsideList.getRequestTypeInterp();
+						String requestTypeValue = dataInsideList.getRequestType();
 						String mode= dataInsideList.getSourceTypeInterp();
 						String stolenStatusName = dataInsideList.getStateInterp();
 						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.StolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
-								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
 						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);

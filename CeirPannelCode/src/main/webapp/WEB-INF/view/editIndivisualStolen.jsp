@@ -108,17 +108,17 @@
 						<div class="row card-panel">
 							<div id="reportBlockUnblock">
 								<div class="container-fluid pageHeader">
-									<p class="PageHeading">Report Stolen</p>
+									<p id="headingType" class="PageHeading">Update Report Stolen</p>
 								</div>
 
 								<div class="row">
-									<div class="col s12">
+								<!-- 	<div class="col s12">
 										<ul class="tabs">
 											<li class="tab col s3"><a class="active"
 												onclick="showSingleFormDiv()">Individual</a></li>
 											<li class="tab col s3"><a onclick="showBulkFormDiv()">Company/Organisation/Government</a></li>
 										</ul>
-									</div>
+									</div> -->
 									<div id="SingleForm" class="col s12"
 										style="margin-top: 30px; display: block">
 										<form action="#" id="singleFormSubmit">
@@ -135,8 +135,9 @@
 															id="singleStolenfirstName"> <label
 															for="singleStolenfirstName">First Name <span
 															class="star">*</span></label>
+															
 													</div>
-
+<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 													<div class="input-field col s12 m4">
 														<input type="text" name="middleName"
 															id="singleStolenmiddleName"> <label
@@ -450,6 +451,7 @@
 													<a href="./stolenRecovery" class="btn modal-trigger"
 														style="margin-left: 10px;">Cancel</a>
 												</div>
+												
 										</form>
 									</div>
 
@@ -793,6 +795,22 @@
         window.intlTelInput(input, {
             utilsScript: "${context}/resources/js/utils.js",
         });
+        
+        window.onload = function () {
+            if($('#pageViewType').val()=='view')
+            	{
+            	$('#headingType').text('');
+            	$('#headingType').text('View Report Stolen');
+            	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",true);
+            	}
+            else{
+            	$('#headingType').text('');
+            	$('#headingType').text('Update Report Stolen');
+            	  $("#SingleForm").find("input,select,textarea,button").prop("disabled",false);
+            }
+          
+      }
+        
         
     </script>
 

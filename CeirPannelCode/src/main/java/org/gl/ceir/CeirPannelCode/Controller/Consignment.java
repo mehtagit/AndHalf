@@ -423,28 +423,29 @@ return consignmentdetails;
 
 
 //************************************************* download file *************************************************************** 
-@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
-public String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
-
+public String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
 
 log.info("inside file download method");
-log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")");
-String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "));
+log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
+FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
-return "redirect:"+response;
+return "redirect:"+response.getUrl();
 }
 
 
 //*********************************************** Download Sampmle file *************************************************
-@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
-log.info("request send to the sample file download api="+filetype);
-String response=feignCleintImplementation.downloadSampleFile(filetype);
+@RequestMapping(value="/sampleFileDownload/{featureId}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+public String downloadSampleFile(@PathVariable("featureId") String  featureId) throws IOException {
+log.info("request send to the sample file download api="+featureId);
+int featureIdForFile=Integer.parseInt(featureId);
+
+FileExportResponse response=feignCleintImplementation.downloadSampleFile(featureIdForFile);
 log.info("response from sample file download file "+response);
 
-return "redirect:"+response;
+return "redirect:"+response.getUrl();
 
 }
 

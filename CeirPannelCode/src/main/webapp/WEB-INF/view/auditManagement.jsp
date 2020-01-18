@@ -50,25 +50,24 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
-	href="${context}/resources/project_css/stolenRecovery.css">
+	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	
+
+
 
 </head>
-
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
-	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
-	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
+<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
-		<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -77,10 +76,11 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a class="boton right" id="btnLink"></a>
+								<a href="" class="boton right" id="btnLink" hidden></a>
 							</div>
-							<form action="${context}/stakeholder/record" method="post">
-								<div class="col s12 m12 l12" id="consignmentTableDIv"
+							<form action="${context}/auditTrail"
+								method="post">
+								<div class="col s12 m12 l12" id="auditTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -88,7 +88,7 @@
 									</div>
 								</div>
 							</form>
-							<table id="stolenLibraryTable"
+							<table id="auditLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -101,38 +101,66 @@
 		<!--end container-->
 	</section>
 
-                         <div id="chooseStolenOption" class="modal">
-                         <button type="button"
-			class=" modal-action modal-close  btn-flat right"
-			data-dismiss="modal">&times;</button>
-        <div class="row" style="padding-bottom: 20px;" id="stolenRecoveryDivPage">
-        <h6 class="modal-header">Report Stolen/Recovery</h6>
-            <div class="col s12 m12 modal-content">
-                
-                <div class="row">
-                    <form action="#">
-                        <h5 class="center">
-                            <label>
-                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('stolen','default')" />
-                                <span class="checkboxFont"> Stolen</span>
-                            </label>
+   <!-- Modal 2 start   -->
 
-                            <label>
-                                <input name="group1" type="radio" onclick="openStolenRecoveryPage('recovery','default')" />
-                                <span class="checkboxFont"> Recovery</span>
-                            </label>
-                        </h5>
-                    </form>
-                </div>
-                </div></div></div>
+	<div id="viewAuditModel" class="modal">
+		<h6 class="modal-header">View Audit Management</h6>
+		<div class="modal-content">
 
+			<div class="row">
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="tag" id="viewUserId"
+							placeholder="" disabled
+							style="height: 28px;"> <label for="viewUserId">User ID</label>
+					</div>
 
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="policyOrder" id="viewUserName"
+							placeholder="" disabled style="height: 28px;">
+						<label for="viewUserName">User Name</label>
+					</div>	
+						
+					<div class="row" style="margin-top: 20px;">	
+					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
+						<input type="text" name="period" id="viewRoleType"
+							placeholder="" disabled style="height: 28px;">
+						<label for="viewRoleType">Role Type</label>
+					</div>
 
+					<div class="input-field col s12 m6" style="margin-top: 20px;">
+						<input type="text" id="viewFeature" name="status"
+							placeholder="" maxlength="20" disabled style="height: 28px;">
+						<label for="viewFeature">Feature</label>
+					</div>
+					</div>	
+					
+					<div class="input-field col s12 m6" style="margin-top: 20px;">
+						<input type="text" id="viewSubFeature" name="status"
+							placeholder="" maxlength="20" disabled style="height: 28px;">
+						<label for="viewSubFeature">Sub Feature</label>
+					</div>
+					
+				</div>
 
-<script type="text/javascript"
+				
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+				</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+
+	
+	
+	
+	<!--materialize js-->
+	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-
-
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
@@ -148,6 +176,8 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/Validator.js"></script>
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -155,39 +185,10 @@
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
-		<!-- i18n library -->
 	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-
-
-<script type="text/javascript"
-		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
+		src="${context}/resources/project_js/auditManagement.js"></script>
+		
 </body>
 </html>

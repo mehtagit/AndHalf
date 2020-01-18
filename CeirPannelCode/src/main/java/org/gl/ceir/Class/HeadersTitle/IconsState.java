@@ -47,12 +47,13 @@ public class IconsState {
 	String disableApproveIcon = "\"fa fa-check-circle-o approve-icon disable\"";
 	String disableRejectIcon = "\"fa fa-user-times reject-icon disable\"";
 	String disablePayTaxICon =  "\"fa fa-money pay-tax-icon disable\"";
-
+	String defaultTagName="DEFAULT";
 
 	public String state(String fileName,String txnId ,String status,String userStatus) {
-		// URL link 
-		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
-		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		// URL link
+		
+		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		log.info("downloadURL::::::::::::::"+downloadURL);
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
@@ -133,8 +134,8 @@ public class IconsState {
 	public String stockState(String fileName,String txnId,String status,String userStatus) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
-		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";	
 		String viewAction="viewUploadedStockDetails('"+txnId+"')"; 
 		String editAction="EditUploadedStockDetails('"+txnId+"')";
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
@@ -208,8 +209,8 @@ public class IconsState {
 	public String customStockState(String fileName,String txnId,String status,String userStatus) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
-		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";	
 		String viewAction="viewUploadedStockDetails('"+txnId+"')"; 
 		String editAction="EditUploadedStockDetails('"+txnId+"')";
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
@@ -295,8 +296,8 @@ public class IconsState {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 		String emptyURL="JavaScript:void(0);"; 
-		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String editAction="openFileStolenUpdate('"+txnId+"','"+requestType+"','"+id+"','"+qty+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
@@ -367,7 +368,7 @@ public class IconsState {
 		// URL link 
 
 		String emptyURL="JavaScript:void(0);"; 
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String approveAction = "openApprovePopUp('" + txnId + "','"+displayName.replaceAll( " ", "+20")+ "')";
 
@@ -614,8 +615,8 @@ public class IconsState {
 	public String adminStockState(String fileName,String txnId ,String status,String userStatus) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"";
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String viewAction="viewUploadedStockDetails('"+txnId+"')";  
 		String approveAction = "ApproveStock('"+txnId+"')";
 		String rejectAction = "disApproveStock('"+txnId+"')";
@@ -757,7 +758,7 @@ public class IconsState {
 	public String trcManageIcons(String status,Integer id,String fileName,String txnId) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String viewAction="viewByID("+id+",'view')";
 		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
@@ -870,7 +871,6 @@ public class IconsState {
 			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
 
 		}
-
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
@@ -1011,7 +1011,7 @@ public class IconsState {
 
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
 		String viewAction="viewByID("+id+",'view')";
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
@@ -1039,7 +1039,7 @@ public class IconsState {
 			String userStatus, String requestType, int id, Integer qty, String source) {
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 		String viewAction = "";
-		String downloadURL = "./Consignment/dowloadFiles/actual/" + file + "/" + txnId + "";
+		String downloadURL = "./Consignment/dowloadFiles/actual/" + file + "/" + txnId +"/"+defaultTagName+ "";
 		String approveAction = "deviceApprovalPopup('" + txnId + "','" + requestType + "')";
 		String rejectAction = "userRejectPopup('" + txnId + "','" + requestType + "')";
 		log.info("============actionResponse=======" + actionResponse);
@@ -1101,30 +1101,57 @@ public class IconsState {
 	
 	/********************************** Icons for StolenlawfulAgency **********************************/ 
 
-	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue) {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
-
+		
+		log.info("@@@@  "+source+"&&"+requestTypeValue);
+		
 		String viewAction="";
 		String editAction="";
 		String emptyURL="JavaScript:void(0);"; 
-		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"";	
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"";
+		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
 		String deleteAction = "JavaScript:void(0);"; 
 
 
-		if(source.equals("3")) {
-			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
-			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+		if(source.equals("5") && requestTypeValue.equals("0")) {
+			//check for Stolen/Indvisual
+			log.info("edit and view   Indivisual Stolen");
+			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit')";
+			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view')";
 
 		}
-		else if(source.equals("4")) {
-			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
-			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+		else if(source.equals("6") && requestTypeValue.equals("0")) {
+			//check for Stolen/Company
+			log.info("edit and view   Company Stolen");
+			editAction="openStolenRecoveryPage('editCompanyStolen','edit')";
+			viewAction="openStolenRecoveryPage('editCompanyStolen','view')";
 
 		}
+		else if(source.equals("4") && requestTypeValue.equals("1")) {
+			//check for Recovery/single
+			log.info("edit and view   single Recovery");
+			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit')";
+			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view')";
 
+		}
+		else if(source.equals("6") && requestTypeValue.equals("1")) {
+			//check for Recovery/company
+			log.info("edit and view   Company Recovery");
+			editAction="openStolenRecoveryPage('editCompanyRecovery','edit')";
+			viewAction="openStolenRecoveryPage('editCompanyRecovery','view')";
 
+		}
+		/*
+		 * else {
+		 * 
+		 * log.info("else condition..");
+		 * editAction="openStolenRecoveryPage('editCompanyRecovery','edit')";
+		 * viewAction="openStolenRecoveryPage('editCompanyRecovery','view')";
+		 * 
+		 * }
+		 */
 
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
@@ -1157,6 +1184,22 @@ public class IconsState {
 		}
 
 		String action=error.concat(download).concat(view).concat(edit).concat(delete);	
+		return action;
+
+	}
+	
+	/********************************** Icons for Audit Management**********************************/ 
+
+	public String auditManagementIcons(String userStatus,String userId,String id) { 
+
+		String viewAction="viewDetails('"+id+"')";
+
+		// state related Code 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+
+		String action=view;
 		return action;
 
 	}

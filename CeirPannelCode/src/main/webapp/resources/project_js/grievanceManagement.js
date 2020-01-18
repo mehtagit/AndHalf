@@ -309,7 +309,8 @@
 
 
 			if(Date.parse(today)>Date.parse(dispatcDate))
-			{
+			
+						{
 				myFunction("Arrival date should be greater then or equals to today");
 				$('#expectedArrivalDate').val("");
 			}
@@ -476,8 +477,10 @@
 					console.log(JSON.stringify(data));
 					$('#chatMsg').empty();
 					$('#manageAccount').openModal();
+					console.log("****projectPath"+projectPath);
+					console.log("+++++path"+path);
 					
-					var projectpath=projectPath+path+"/Consignment/dowloadFiles/actual";
+					var projectpath=path+"/Consignment/dowloadFiles/actual";
 					console.log("--projectpath--"+projectpath);
 					for(var i=0; i<data.length; i++)
 					{
@@ -487,10 +490,10 @@
 							{
 								
 								console.log("jjjjjj"+j);
-								$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+								$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 							}
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
-
+					
 					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -563,7 +566,7 @@
 						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 				); //add input box
 			}
-			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 
 
 				for (i = 0; i < data.length; i++) {
@@ -576,13 +579,17 @@
 				}
 			});
 			id++;
-
+			/*alert("$$$$"+id)*/
 		});
 		$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 			e.preventDefault();
+			var Iid=id-1;
+			/*alert("@@@"+Iid)*/
+			$('#filediv'+Iid).remove();
 			$(this).parent('div').remove();
 			x--;
 			id--;
+		
 		})
 
 		function saveDocTypeValue(){

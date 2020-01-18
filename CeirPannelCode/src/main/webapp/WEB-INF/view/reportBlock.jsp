@@ -270,7 +270,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkRemark">Remark <span class="star">*</span></label>
                                                     </div>
 
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a></p>
+                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">

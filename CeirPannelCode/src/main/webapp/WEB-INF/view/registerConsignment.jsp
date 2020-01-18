@@ -251,7 +251,7 @@ section {
 										</div>
 										<br> <br>
 										<p style="margin-left: 15px;">
-											<a href="./sampleFileDownload/filetype=sample"><spring:message code="input.downlaod.sample" /></a>
+											<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a>
 										</p>
 										<span><spring:message code="input.requiredfields" /> <span
 											class="star">*</span></span>

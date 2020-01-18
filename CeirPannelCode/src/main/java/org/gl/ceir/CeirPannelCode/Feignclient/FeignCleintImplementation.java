@@ -5,11 +5,13 @@ import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
+import org.gl.ceir.pagination.model.AuditContentModel;
 import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.MessageContentModel;
 import org.gl.ceir.pagination.model.PolicyConfigContent;
@@ -83,14 +85,14 @@ public interface FeignCleintImplementation {
 
 	//download file(Error or Uploaded file) feign  controller
 	@RequestMapping(value="/Download/uploadFile" ,method=RequestMethod.GET) 
-	public @ResponseBody String downloadFile(@RequestParam("txnId") String txnId,@RequestParam("fileType") String fileType,@RequestParam("fileName") String fileName);
+	public @ResponseBody FileExportResponse downloadFile(@RequestParam("txnId") String txnId,@RequestParam("fileType") String fileType,@RequestParam("fileName") String fileName,@RequestParam(name="tag",required = false) String tag);
 
 
 
 
 	//download file(Error or Uploaded file) feign  controller
 	@RequestMapping(value="/Download/SampleFile" ,method=RequestMethod.GET) 
-	public @ResponseBody String downloadSampleFile(@RequestParam("samplFileType") String fileType);
+	public @ResponseBody FileExportResponse downloadSampleFile(@RequestParam("featureId") Integer featureId);
 
 
 	/// **************************************** Stock Api integration ******************************************************************************************
@@ -302,6 +304,19 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PutMapping(value="/system/update")
 				public @ResponseBody ConfigContentModel updateSystem(ConfigContentModel configContentModel);
+				//***************************************************Audit Management Feign********************************
+
+				@RequestMapping(value="/filter/audit-trail" ,method=RequestMethod.POST) 
+				public Object auditManagementFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(value = "file", defaultValue = "0") Integer file) ;
+
+			//************************************************ view Audit Management Feign *************************************
+
+				@RequestMapping(value="/audit-trail/{id}" ,method=RequestMethod.GET) 
+				public AuditContentModel viewAuditManagementFeign(@PathVariable("id") Integer id);
+
 		}
 
 

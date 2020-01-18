@@ -655,9 +655,10 @@
 
 
 
+				
 				<div class="row" style="padding-bottom: 15px">
 					<div class="col s12 m12">
-						<a href="./sampleFileDownload/filetype=sample"><spring:message code="input.downlaod.sample" /></a></br> <span> <spring:message code="input.requiredfields" /> <span
+						<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a></br> <span> <spring:message code="input.requiredfields" /> <span
 							class="star">*</span>
 						</span>
 					</div>

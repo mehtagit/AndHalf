@@ -239,61 +239,53 @@
 
 
 	var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
-	function table(url,dataUrl){
-		var request={
-				"modifiedOn":$('#endDate').val(),
-				"createdOn":$('#startDate').val(),
-				"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
-				"userId":parseInt(userId),
-				"featureId":parseInt(featureId),
-				"userTypeId": parseInt($("body").attr("data-userTypeID")),
-				"userType":$("body").attr("data-roleType"),
-				"deviceIdType":parseInt($('#deviceIDType').val()),
-				"deviceType":parseInt($('#deviceTypeFilter').val()),
-				"txnId":$('#transactionID').val(),
-				"consignmentStatus": null,
-				"nid": nationalId == null ? $('#nId').val() : nationalId
-		}
-
-		if(lang=='km'){
-				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
-			}
-
-		$.ajax({
-			url: url,
-			type: 'POST',
-			dataType: "json",
-			success: function(result){
-				var table=	$("#data-table-simple").DataTable({
-					destroy:true,
-					"serverSide": true,
-					orderCellsTop : true,
-					"ordering" : false,
-					"bPaginate" : true,
-					"bFilter" : true,
-					"bInfo" : true,
-					"bSearchable" : true,
-					"oLanguage": {  
-							"sUrl": langFile  
-						},
-					ajax: {
-						url : dataUrl,
-						type: 'POST',
-						dataType: "json",
-						data : function(d) {
-							d.filter = JSON.stringify(request); 
-							console.log(JSON.stringify(request));
-						}
-
-					},
-					"columns": result
-				});
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax");
-			}
-		});
+function table(url,dataUrl){
+	var request={
+			"modifiedOn":$('#endDate').val(),
+			"createdOn":$('#startDate').val(),
+			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"deviceIdType":parseInt($('#deviceIDType').val()),
+			"deviceType":parseInt($('#deviceTypeFilter').val()),
+			"txnId":$('#transactionID').val(),
+			"consignmentStatus": null,
+			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}
+	$.ajax({
+		url: url,
+		type: 'POST',
+		dataType: "json",
+		success: function(result){
+			var table=	$("#data-table-simple").DataTable({
+				destroy:true,
+				"serverSide": true,
+				orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"bSearchable" : true,
+				ajax: {
+					url : dataUrl,
+					type: 'POST',
+					dataType: "json",
+					data : function(d) {
+						d.filter = JSON.stringify(request); 
+						console.log(JSON.stringify(request));
+					}
+
+				},
+				"columns": result
+			});
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax");
+		}
+	});
+}
 
 
 	function pageRendering(lang){
@@ -464,19 +456,19 @@
 
 	function setViewPopupData(data){
 		console.log("**************data*******"+JSON.stringify(data));
-		$("#viewdeviceType").val(data.deviceTypeInterp);
-		$("#viewdeviceIdType").val(data.deviceIdTypeInterp);
-		$("#viewsimStatus").val(data.multiSimStatusInterp);
-		$("#viewcountryBought").val(data.country);
-		$("#viewserialNumber").val(data.deviceSerialNumber);
-		$("#viewtaxStatus").val(data.taxPaidStatusInterp);
-		$("#viewdeviceStatus").val(data.deviceStatusInterp);
-		$("#viewPrice").val(data.price);
-		$("#viewcurrency").val(data.currencyInterp);
-		$("#viewIMEI1").val(data.firstImei);
-		$("#viewIMEI2").val(data.secondImei); 
-		$("#IMEI3").val(data.thirdImei);
-		$("#viewIMEI4").val(data.fourthImei);
+	$("#viewdeviceType").val(data.deviceTypeInterp);
+	$("#viewdeviceIdType").val(data.deviceIdTypeInterp);
+	$("#viewsimStatus").val(data.multiSimStatusInterp);
+	$("#viewcountryBought").val(data.country);
+	$("#viewserialNumber").val(data.deviceSerialNumber);
+	$("#viewtaxStatus").val(data.taxPaidStatusInterp);
+	$("#viewdeviceStatus").val(data.deviceStatusInterp);
+	$("#viewPrice").val(data.price);
+	$("#viewcurrency").val(data.currencyInterp);
+	$("#viewIMEI1").val(data.firstImei);
+	$("#viewIMEI2").val(data.secondImei); 
+	$("#IMEI3").val(data.thirdImei);
+	$("#viewIMEI4").val(data.fourthImei);
 
 
 
@@ -535,154 +527,155 @@
 
 
 	function exportpaidStatus(){
-		var startDate = $('#startDate').val();
-		var endDate = $('#endDate').val();
-		var taxPaidStatus = $('#taxPaidStatus').val();
-		var deviceIdType = $('#deviceIDType').val();
-		var deviceType = $('#deviceTypeFilter').val();
-		
-		
-		var nid = nationalId == null ? $('#nId').val() : nationalId
-		var table = $('#data-table-simple').DataTable();
-		var info = table.page.info(); 
-		var pageNo=info.page;
-		var pageSize =info.length;
-		console.log("--------"+pageSize+"---------"+pageNo);
-		console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType+"nid = "+nid)
-		window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	
+	var startDate = $('#startDate').val();
+	var endDate = $('#endDate').val();
+	var taxPaidStatus = $('#taxPaidStatus').val();
+	var deviceIdType = $('#deviceIDType').val();
+	var deviceType = $('#deviceTypeFilter').val();
+	
+	
+	var nid = nationalId == null ? $('#nId').val() : nationalId
+	var table = $('#data-table-simple').DataTable();
+	var info = table.page.info(); 
+	var pageNo=info.page;
+	var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType+"nid = "+nid)
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
 	}
 
 
 
-	function submitDeviceInfo(){
-		var formData= new FormData();
+function submitDeviceInfo(){
+	var formData= new FormData();
 
 
-		//var nationalID=$('#nationalID').val();
-		var csvUploadFile=$('#csvUploadFile').val();
-		var firstName=$('#firstName').val();
-		var middleName=$('#middleName').val();
-		var lastName=$('#lastName').val();
-		var address=$('#address').val();
-		var streetNumber=$('#streetNumber').val();
-		var locality=$('#locality').val();
-		var country=$('#country').val();
-		var state=$('#state').val();
-		var email=$('#email').val();
-		var phone=$('#phone').val();
-		var state=$('#state').val();
-		
-		var village=$('#village').val();
-		var district=$('#district').val();
-		var commune=$('#commune').val();
-		var postalcode=$('#postalcode').val();
+	//var nationalID=$('#nationalID').val();
+	var csvUploadFile=$('#csvUploadFile').val();
+	var firstName=$('#firstName').val();
+	var middleName=$('#middleName').val();
+	var lastName=$('#lastName').val();
+	var address=$('#address').val();
+	var streetNumber=$('#streetNumber').val();
+	var locality=$('#locality').val();
+	var country=$('#country').val();
+	var state=$('#state').val();
+	var email=$('#email').val();
+	var phone=$('#phone').val();
+	var state=$('#state').val();
+	
+	var village=$('#village').val();
+	var district=$('#district').val();
+	var commune=$('#commune').val();
+	var postalcode=$('#postalcode').val();
 
-		var fieldId=1;
-		var regularizeDeviceDbs =[];
-		$('.deviceInformation').each(function() {
-			var deviceType1=$('#deviceType'+fieldId).val();
-			var serialNumber1=$('#serialNumber'+fieldId).val();
-			var deviceIdType1=$('#deviceIdType'+fieldId).val();
-			var taxStatus1=$('#taxStatus'+fieldId).val();
-			var deviceStatus1=$('#deviceStatus'+fieldId).val();
-			var Price1=$('#Price'+fieldId).val();
-			var Currency1=$('#Currency'+fieldId).val();
-			var IMEI1=$('#IMEIA'+fieldId).val();
-			var IMEI2=$('#IMEIB'+fieldId).val();
-			var IMEI3=$('#IMEIC'+fieldId).val();
-			var IMEI4=$('#IMEID'+fieldId).val();
-			var deviceCountry=$('#country'+fieldId).val();
-			var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
+	var fieldId=1;
+	var regularizeDeviceDbs =[];
+	$('.deviceInformation').each(function() {
+		var deviceType1=$('#deviceType'+fieldId).val();
+		var serialNumber1=$('#serialNumber'+fieldId).val();
+		var deviceIdType1=$('#deviceIdType'+fieldId).val();
+		var taxStatus1=$('#taxStatus'+fieldId).val();
+		var deviceStatus1=$('#deviceStatus'+fieldId).val();
+		var Price1=$('#Price'+fieldId).val();
+		var Currency1=$('#Currency'+fieldId).val();
+		var IMEI1=$('#IMEIA'+fieldId).val();
+		var IMEI2=$('#IMEIB'+fieldId).val();
+		var IMEI3=$('#IMEIC'+fieldId).val();
+		var IMEI4=$('#IMEID'+fieldId).val();
+		var deviceCountry=$('#country'+fieldId).val();
+		var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
 
-			console.log("serialNumber1="+serialNumber1+" deviceIdType1="+deviceIdType1+" taxStatus1="+taxStatus1+" deviceStatus1="+deviceStatus1+" Price1="+Price1+" Currency1="+Currency1)
-			var deviceInfo=
-			{
-				"country": deviceCountry,
-				"currency": parseInt(Currency1),
-				"deviceIdType": parseInt(deviceIdType1),
-				"deviceSerialNumber": serialNumber1,
-				"deviceStatus": parseInt(deviceStatus1),
-				"deviceType": parseInt(deviceType1),
-				"firstImei": parseInt(IMEI1),
-				"secondImei": parseInt(IMEI2),
-				"thirdImei": parseInt(IMEI3),
-				"fourthImei": parseInt(IMEI4),
-				"multiSimStatus": deviceStatus1,
-				"price": parseFloat(Price1),
-				"taxPaidStatus": parseInt(taxStatus1),
-				"nid":nationalId,
-				"txnId":""
-
-			}
-			regularizeDeviceDbs.push(deviceInfo);
-
-	//		console.log(formData.values());
-	//		console.log(JSON.stringify(formData));
-
-	//		alert(deviceType1,serialNumber1,deviceIdType1,taxStatus1,deviceStatus1,Price1,Currency1,IMEI1,IMEI2,IMEI3,IMEI4,multipleSimStatus1)
-			fieldId++;
-
-
-		});
-
-
-
-		var request={
-				"country": country,
-				"email": email,
-				"firstName": firstName,
-				"lastName": lastName,
-				"locality": locality,
-				"middleName": middleName,
-				"nid": nationalId,
-				"phoneNo": phone,
-				"propertyLocation": address,
-				"province": state,
-				"street": streetNumber,
-				"regularizeDeviceDbs":regularizeDeviceDbs,
-				"district":district,
-				"commune":commune,
-				"village":village,
-				"postalCode":postalcode
+		console.log("serialNumber1="+serialNumber1+" deviceIdType1="+deviceIdType1+" taxStatus1="+taxStatus1+" deviceStatus1="+deviceStatus1+" Price1="+Price1+" Currency1="+Currency1)
+		var deviceInfo=
+		{
+			"country": deviceCountry,
+			"currency": parseInt(Currency1),
+			"deviceIdType": parseInt(deviceIdType1),
+			"deviceSerialNumber": serialNumber1,
+			"deviceStatus": parseInt(deviceStatus1),
+			"deviceType": parseInt(deviceType1),
+			"firstImei": parseInt(IMEI1),
+			"secondImei": parseInt(IMEI2),
+			"thirdImei": parseInt(IMEI3),
+			"fourthImei": parseInt(IMEI4),
+			"multiSimStatus": deviceStatus1,
+			"price": parseFloat(Price1),
+			"taxPaidStatus": parseInt(taxStatus1),
+			"nid":nationalId,
+			"txnId":""
 
 		}
-		formData.append('file', $('#csvUploadFile')[0].files[0]);
-		formData.append("request",JSON.stringify(request));
+		regularizeDeviceDbs.push(deviceInfo);
 
-		for (var value of formData.values()) {
-			console.log(value);
-		}
-		$.ajax({
-			url: './uploadPaidStatusForm',
-			type: 'POST',
-			data: formData,
-			processData: false,
-			contentType: false,
-			success: function (data, textStatus, jqXHR) {
-				console.log("in suucess method");
+//		console.log(formData.values());
+//		console.log(JSON.stringify(formData));
 
-				console.log(data);
+//		alert(deviceType1,serialNumber1,deviceIdType1,taxStatus1,deviceStatus1,Price1,Currency1,IMEI1,IMEI2,IMEI3,IMEI4,multipleSimStatus1)
+		fieldId++;
 
-	//			$('#updateConsignment').modal();
-				if(data.errorCode==200){
 
-	//				$('#sucessMessage').text('');
-					$('#regularisedDevice').openModal();
-					$('#dynamicTxnId').text(data.txnId);
-				}
-				else{
-	//				$('#sucessMessage').text('');
-					$('#regularisedDevice').openModal();
-					$('#dynamicTxnId').text(data.txnId);
-				}
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
+	});
 
-			}
-		});
-		return false;
+
+
+	var request={
+			"country": country,
+			"email": email,
+			"firstName": firstName,
+			"lastName": lastName,
+			"locality": locality,
+			"middleName": middleName,
+			"nid": nationalId,
+			"phoneNo": phone,
+			"propertyLocation": address,
+			"province": state,
+			"street": streetNumber,
+			"regularizeDeviceDbs":regularizeDeviceDbs,
+			"district":district,
+			"commune":commune,
+			"village":village,
+			"postalCode":postalcode
+
 	}
+	formData.append('file', $('#csvUploadFile')[0].files[0]);
+	formData.append("request",JSON.stringify(request));
+
+	for (var value of formData.values()) {
+		console.log(value);
+	}
+	$.ajax({
+		url: './uploadPaidStatusForm',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (data, textStatus, jqXHR) {
+			console.log("in suucess method");
+
+			console.log(data);
+
+//			$('#updateConsignment').modal();
+			if(data.errorCode==200){
+
+//				$('#sucessMessage').text('');
+				$('#regularisedDevice').openModal();
+				$('#dynamicTxnId').text(data.txnId);
+			}
+			else{
+//				$('#sucessMessage').text('');
+				$('#regularisedDevice').openModal();
+				$('#dynamicTxnId').text(data.txnId);
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+
+		}
+	});
+	return false;
+}
 
 
 
@@ -846,9 +839,9 @@
 
 
 	function refreshContent(){
-		$('#payNowTaxPayment,#confirmDeleteMsg,#regularisedDevice').closeModal();
-		window.location.reload(true);
-	}
+	$('#payNowTaxPayment,#confirmDeleteMsg,#regularisedDevice').closeModal();
+	window.location.reload(true);
+}
 
 
 	function deviceApprovalPopup(imei,date,txnId){
@@ -860,36 +853,37 @@
 
 
 	function aprroveDevice(){
-		var approveRequest={
-				"action" : 0,
-				"imei1": window.imei,
-				"featureId":parseInt(featureId),
-				"remarks": "",
-				"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
-				"txnId": "",
-				"userId":parseInt(userId),
-				"userType": $("body").attr("data-roleType")	  	
-		}
+	
+	var approveRequest={
+			"action" : 0,
+			"imei1": window.imei,
+			"featureId":parseInt(featureId),
+			"remarks": "",
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": "",
+			"userId":parseInt(userId),
+			"userType": $("body").attr("data-roleType")	  	
+	}
 
-		$.ajax({
-			url : './approveRejectDevice',
-			data : JSON.stringify(approveRequest),
-			dataType : 'json',
-			'async' : false,
-			contentType : 'application/json; charset=utf-8',
-			type : 'PUT',
-			success : function(data) {
-				console.log("approveRequest----->"+JSON.stringify(approveRequest));
-				if(data.errorCode==0){
-					confirmApproveInformation(window.imei,window.date);
-					console.log("inside Approve Success")
-				}
-
-			},
-			error : function() {
-				alert("Failed");
+	$.ajax({
+		url : './approveRejectDevice',
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			if(data.errorCode==0){
+				confirmApproveInformation(window.imei,window.date);
+				console.log("inside Approve Success")
 			}
-		});
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
 	}
 
 

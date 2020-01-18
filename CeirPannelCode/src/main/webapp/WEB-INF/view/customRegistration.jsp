@@ -713,11 +713,11 @@ var contextpath = "${context}";
             data-dismiss="modal">&times;</button>
         <h6 class="modal-header">Verify OTP</h6>
         <div class="modal-content">
-       
-                
+          
+                <h6 id="otpResponse"></h6>
             <div class="row">
                 <div class="input-field col s12 center">
-                   <h6 id="otpResponse"></h6>
+                   
                     <a href="${context}/login" class="btn">ok</a>
                 </div>
             </div>
