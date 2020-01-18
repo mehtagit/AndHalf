@@ -169,12 +169,9 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-
-			
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.transactionID,headersTitle.deviceType,headersTitle.country,headersTitle.Status,headersTitle.action};		
-
+				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.status","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -194,9 +191,9 @@ public class DatatableHeaders {
 			//adminUserPaidStatus Headers 
 			else if("adminUserPaidStatus".equals(role)) {
 
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.transactionID,headersTitle.deviceType,headersTitle.country,headersTitle.taxPaidStatus,headersTitle.Status,headersTitle.action};		
+				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.taxPaidStatus","table.status","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}

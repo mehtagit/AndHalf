@@ -114,19 +114,19 @@
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId"
-						placeholder="Supplier/Manufacturer ID" readonly="readonly" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
+						placeholder="" readonly="readonly" /> <label
+						for="supplierId" class="center-align">Supplier/Manufacturer ID</label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierName"
-						placeholder="Supplier/Manufacturer Name" readonly="readonly" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer Name</label>
+						placeholder="" readonly="readonly" /> <label
+						for="supplierName" class="center-align">Supplier/Manufacturer Name</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="consignmentNumber"
-						placeholder="Consignment Number" readonly="readonly" /> <label
-						for="Name" class="center-align">Consignment Number</label>
+						placeholder="" readonly="readonly" /> <label
+						for="consignmentNumber" class="center-align">Consignment Number</label>
 				</div>
 
 				<div class="input-field col s12 m6" style="color: #c4c4c4;">
@@ -134,15 +134,15 @@
 						Arival Date</p>
 					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
 					<input type="date" id="expectedArrivaldate"
-						placeholder="Expected Arival Date" readonly="readonly"> <span
+						placeholder="" readonly="readonly"> <span
 						class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" id="countryview" class="browser-default"
 						readonly="readonly" class="mySelect"
-						placeholder="Device Origination Counrty*"> <label
-						for="Name" class="center-align"> Origination Country</label> <label
+						placeholder=""> <label
+						for="countryview" class="center-align"> Origination Country</label> <label
 						for="countryview" class="center-align"></label>
 				</div>
 
@@ -150,28 +150,28 @@
 				<div class="input-field col s12 m6">
 					<p class="input-text-date" style="color: #c4c4c4;">Expected
 						Dispatch Date</p>
-					<!-- <label for="Name">Expected arrival Date</label> -->
+					<!-- <label for="expectedDispatcheDate">Expected arrival Date</label> -->
 					<input type="date" id="expectedDispatcheDate"
-						placeholder="Expected Dispatch Date" readonly="readonly">
+						placeholder="" readonly="readonly">
 					<span class="input-group-addon" style="color: #ff4081"><i
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
 				<div class="input-field col s12 m6">
-					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+					<!-- <label for="expectedArrivalPort" class="center-align">Expected arrival port</label> -->
 					<input type="text" id="expectedArrivalPort" readonly="readonly"
-						placeholder="Arrival port"> <label for="Name"
+						placeholder=""> <label for="expectedArrivalPort"
 						class="center-align">Expected Arrival Port</label>
 				</div>
 
 				<div class="input-field col s12 m6">
-					<input type="text" name="Quantity" placeholder="Quantity"
+					<input type="text" name="Quantity" placeholder=""
 						id="Quantity" readonly="readonly" /> <label for="Quantity"
 						class="center-align">Quantity</label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="TransactionId"
-						placeholder="Transaction ID" id="TransactionId"
+						placeholder="" id="TransactionId"
 						readonly="readonly" maxlength="15" /> <label for="TransactionId"
 						class="center-align">Transaction ID</label>
 				</div>
@@ -292,24 +292,24 @@
 					<input type="text" name="supplierId" id="supplierIdEdit"
 						pattern="[A-Za-z0-9]{0,15}"
 						title="Please enter alphabets and numbers upto 15 characters only"
-						placeholder="Supplier/Manufacturer ID" maxlength="15" /> <label
-						for="Name" class="center-align">Supplier/Manufacturer ID</label>
+						placeholder="" maxlength="15" /> <label
+						for="supplierIdEdit" class="center-align">Supplier/Manufacturer ID</label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierName" id="supplierNameEdit"
 						pattern="[A-Za-z]{0,50}"
 						title="Please enter alphabets  upto 50 characters only"
-						maxlength="50" placeholder="Supplier/Manufacturer Name" required />
-					<label for="Name" class="center-align">Supplier/Manufacturer
+						maxlength="50" placeholder="" required />
+					<label for="supplierNameEdit" class="center-align">Supplier/Manufacturer
 						Name <span class="star">*</span>
 					</label>
 				</div>
 				<div class="input-field col s12 m6">
 					<input type="text" name="consignmentNumber"
 						id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}"
-						placeholder="Consignment Number" maxlength="15" /> <label
-						for="Name" class="center-align">Consignment Number</label>
+						placeholder="" maxlength="15" /> <label
+						for="consignmentNumberEdit" class="center-align">Consignment Number</label>
 				</div>
 
 				<div class="input-field col s12 m6">
@@ -317,9 +317,9 @@
                                                 Arrival Date <span class="star">*</span></p> -->
 					<!-- <label for="Name" class="center-align">Expected Dispatch Date</label> -->
 					<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
-						required="required" placeholder="Expected Dispatch Date "
+						required="required" placeholder=" "
 						type="text" onfocus="(this.type='date')"
-						onfocusout="(this.type='text')"> <label for="dispatchDate"
+						onfocusout="(this.type='text')"> <label for="expectedDispatcheDateEdit"
 						class="center-align">Expected Dispatch Date <span
 						class="star">*</span></label> <span class="input-group-addon"
 						style="color: #ff4081"><i class="fa fa-calendar"
@@ -337,16 +337,16 @@
 					<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
 					<!-- <label for="Name">Expected arrival Date</label> -->
 					<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
-						required="required" placeholder="Expected Arrival  Date"
+						required="required" placeholder=""
 						type="text" onfocus="(this.type='date')"
-						onfocusout="(this.type='text')"> <label for="dispatchDate"
+						onfocusout="(this.type='text')"> <label for="expectedArrivaldateEdit"
 						class="center-align">Expected Arrival Date <span
 						class="star">*</span></label> <span class="input-group-addon"
 						style="color: #ff4081"><i class="fa fa-calendar"
 						aria-hidden="true"></i></span>
 				</div>
 				<div class="input-field col s12 m6">
-					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
+					<!-- <label for="expectedArrivalPortEdit" class="center-align">Expected arrival port</label> -->
 					<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Expected arrival port <span class="star">*</span></p> -->
 					<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
 						class="browser-default" required>
@@ -362,14 +362,14 @@
 					<input type="text" name="quantity" id="QuantityEdit"
 						pattern="[0-9]{0,7}"
 						title="Please enter numbers upto 7 characters only" maxlength="7"
-						placeholder="Quantity" required /> <label for="Quantity"
+						placeholder="" required /> <label for="QuantityEdit"
 						class="center-align">Quantity <span class="star">*</span></label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="txnId" id="TransactionIdEdit"
-						placeholder="Transaction ID" value="" readonly maxlength="15" />
-					<label for="TransactionId" class="center-align">Transaction
+						placeholder="" value="" readonly maxlength="15" />
+					<label for="TransactionIdEdit" class="center-align">Transaction
 						ID</label>
 				</div>
 			</div>
@@ -570,7 +570,7 @@
 
 				<div class="col s12 m6 l6" id="SavedFileNameDiv"
 					style="display: none">
-					<label for="TotalPrice" class="center-align">Uploaded File</label>
+					<label for="SavedFileName" class="center-align">Uploaded File</label>
 					<input type="text" name="" class="form-control boxBorder boxHeight"
 						readonly id="SavedFileName" />
 				</div>
@@ -673,7 +673,7 @@
 						</div>
 						<div class="input-field col s12 m6">
 					<input type="text" name="quantity" id="editStolenQuantity" /> <label
-						for="quantity" class="center-align">Quantity</label>
+						for="editStolenQuantity" class="center-align">Quantity</label>
 				</div>
 					</div>
 					
@@ -683,7 +683,7 @@
 
 				<div class="col s12 m6 l6" id="SavedFileNameDiv"
 					style="display: none">
-					<label for="TotalPrice" class="center-align">Uploaded File</label>
+					<label for="SavedFileName" class="center-align">Uploaded File</label>
 					<input type="text" name="" class="form-control boxBorder boxHeight"
 						readonly id="SavedFileName" />
 				</div>
@@ -730,7 +730,7 @@
 				<div class="col s12 m2 l2" style="width: 40%; display: none"
 					id="stolenDate">
 
-					<label for="TotalPrice" class="center-align">Till date</label>
+					<label for="startDateFilter" class="center-align">Till date</label>
 					<div id="startdatepicker" class="input-group date"
 						data-date-format="yyyy-mm-dd" style="margin-top: 10px;">
 
@@ -783,13 +783,13 @@
 
 						<div class="input-field col s12 m6">
 							<input type="text" name="quantity" id="recoverQuantity">
-							<label for="quantity" class="center-align">Quantity</label>
+							<label for="recoverQuantity" class="center-align">Quantity</label>
 						</div>
 
 
 						<div class="col s12 m6 l6" id="SavedFileNameDiv"
 							style="display: none">
-							<label for="TotalPrice" class="center-align">Uploaded
+							<label for="SavedFileName" class="center-align">Uploaded
 								File</label> <input type="text" name=""
 								class="form-control boxBorder boxHeight" readonly
 								id="SavedFileName" />
@@ -850,12 +850,12 @@
 
 	<div class="input-field col s12 m6">
 					<input type="text" name="quantity" id="editRecoveryQuantity" /> <label
-						for="quantity" class="center-align">Quantity</label>
+						for="editRecoveryQuantity" class="center-align">Quantity</label>
 				</div>
 				
 						<div class="col s12 m6 l6" id="SavedFileNameDiv"
 							style="display: none">
-							<label for="TotalPrice" class="center-align">Uploaded
+							<label for="SavedFileNameDiv" class="center-align">Uploaded
 								File</label> <input type="text" name=""
 								class="form-control boxBorder boxHeight" readonly
 								id="SavedFileName" />

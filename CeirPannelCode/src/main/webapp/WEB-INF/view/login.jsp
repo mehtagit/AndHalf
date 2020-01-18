@@ -79,6 +79,14 @@ input[type=text] {
 	height: 35px;
 	margin: 0 0 5px 0;
 }
+
+.new-user {
+	padding-right: 10px;
+	margin-right: 10px;
+	border-right: solid 2px #444;
+	line-height: 15px;
+	margin-top: 3px;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -107,28 +115,27 @@ var contextpath = "${context}";
 				<!--start container-->
 				<div class="container">
 					<div class="section">
-						<div class="row card-panel login-card-panel" style="width: 40%; margin: auto; margin-top: 10vh;">
+						<div class="row card-panel login-card-panel"
+							style="width: 40%; margin: auto; margin-top: 10vh;">
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
-									<div class="row"> 
+									<div class="row">
 										<h5 style="text-align: -webkit-center;">Login</h5>
 										<span id="errorMsg" style="color: red;">${msg}</span>
 										<hr style="margin-bottom: 30px;">
 
 										<div class="input-field col s12">
 
-											<label for="username"
-												style="color: #000; font-size: 12px;">Username</label> <input
-												type="text" required="required" name="username"
+											<label for="username" style="color: #000; font-size: 12px;">Username</label>
+											<input type="text" required="required" name="username"
 												id="username" class="" maxlength="10" />
 										</div>
 
 										<div class="input-field col s12">
 
-											<label for="password"
-												style="color: #000; font-size: 12px;">Password</label> <input
-												type="password" required="required" class="" name="password"
-												id="password" maxlength="10" />
+											<label for="password" style="color: #000; font-size: 12px;">Password</label>
+											<input type="password" required="required" class=""
+												name="password" id="password" maxlength="10" />
 										</div>
 
 										<div class="form-group form-actions">
@@ -152,20 +159,21 @@ var contextpath = "${context}";
 											</span>
 										</div>
 
-										
+
 
 
 										<div class="row" style="margin-top: 30px;">
 											<div class="input-field col s12 m12 l12 center">
 												<%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>
 												<button type="submit" class="btn" id="save"
-													style="width: 100%;"  value="Login">Login</button>
+													style="width: 100%;" value="Login">Login</button>
+												<div style="margin-top:8px;">
+													<a href="${context}/forgotPassword" class="right">
+														Forgot Password?</a> <a href="#" id="newUserLink"
+														class="right new-user"> New User</a>
+												</div>
 											</div>
 										</div>
-
-							<a href="${context}/forgotPassword" class="right"> Forgot Password?</a> <br>
-							<a href="#" id="newUserLink" class="right"> New User</a>	
-
 									</div>
 
 
@@ -205,7 +213,7 @@ var contextpath = "${context}";
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
-  <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>		
+	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -230,7 +238,7 @@ var contextpath = "${context}";
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 $(document).ready(function () {
 	dataByTag("link_dmc_portal","newUserLink",1);
         });   

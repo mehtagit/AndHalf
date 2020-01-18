@@ -115,7 +115,7 @@
                                                         <input type="file" id="csvUploadFile" accept=".csv" disabled="">
                                                     </div>
                                                     <div class="file-path-wrapper">
-                                                        <input class="file-path validate responsive-file-div" disabled="" type="text" placeholder="File.csv">
+                                                        <input class="file-path validate responsive-file-div" disabled="" type="text" placeholder="">
                                                     </div>
                                                 </div><br><br>
                                             </div>

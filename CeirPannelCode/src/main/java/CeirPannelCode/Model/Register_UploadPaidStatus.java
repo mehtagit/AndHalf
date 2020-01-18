@@ -6,7 +6,7 @@ import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
 
 public class Register_UploadPaidStatus {
 
-	private String  firstName;
+	private String firstName;
 	private String middleName;
 	private String lastName;  
 	private String passportNo; 
@@ -18,7 +18,7 @@ public class Register_UploadPaidStatus {
 	private String locality;
 	private String province;
 	private String country,district,commune,village;
-
+	
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private Long firstImei;
 	private Integer taxPaidStatus,postalCode;
@@ -145,7 +145,7 @@ public class Register_UploadPaidStatus {
 	public void setPostalCode(Integer postalCode) {
 		this.postalCode = postalCode;
 	}
-
-
+	
+	
 
 }

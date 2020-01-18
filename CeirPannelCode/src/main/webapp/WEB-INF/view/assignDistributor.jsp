@@ -51,31 +51,25 @@
             font-size: 14px;
             background-color: #fff;
         }
-
         .row {
             margin-bottom: 0;
             margin-top: 10px;
         }
-
         /* @media only screen and (min-width: 601px) .row .col.m6 {
             margin-top: 0;
             margin-bottom: 0;
             height: 40px;
         } */
-
         input[type=text] {
             height: 35px;
             margin: 0 0 5px 0;
         }
-
         .active {
             background-color: #e9e9e9;
         }
-
         [type="date"]::-webkit-inner-spin-button {
             display: none;
         }
-
         [type="date"]::-webkit-calendar-picker-indicator {
             opacity: 0;
         }
@@ -110,7 +104,6 @@
                                                     <input type="radio" name="modeuleType" value="Distributor" />
                                                     <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
                                                 </label>
-
                                                 <label>
                                                     <input type="radio" name="modeuleType" value="Retailer"/>
                                                     <span class="checkboxFont"> ${userTypeId.usertypeName}</span>
@@ -126,10 +119,8 @@
                                         <button type="button" class="waves-effect waves-light modal-trigger boton right"
                                             data-target="modal1">Assign Distributor</button>
                                     </div>
-
                                     <div class="col s12 m12 l12" id="distributorTableDIv"
                                         style="padding-bottom: 5px;background-color: #e2edef52;">
-
                                         <div class="col s6 m2 l2" style="padding-right: 10px;">
                                             <br />
                                             <label for="TotalPrice">Start date</label>
@@ -141,14 +132,12 @@
                                                         class="fa fa-calendar" aria-hidden="true"
                                                         style="float: right; margin-top: -35px;"></i></span>
                                             </div>
-
                                         </div>
                                         <div class="col s6 m2 l2" style="padding-right: 10px">
                                             <br />
                                             <label for="TotalPrice">End date</label>
                                             <div id="enddatepicker" class="input-group date"
                                                 data-date-format="yyyy-mm-dd" style="    margin-top: 10px;">
-
                                                 <input class="form-control" id="endDateFilter" type="date"
                                                     style="margin-top: -9px" />
                                                 <span class="input-group-addon" style="color:#ff4081"><i
@@ -156,9 +145,6 @@
                                                         style="float: right; margin-top: -35px;"></i></span>
                                             </div>
                                         </div>
-
-
-
                                         <div class="col s6 m2 l2" style="margin-top: -11px;padding-right: 10px">
                                             <br />
                                             <label for="TotalPrice" class="center-align">File Status</label>
@@ -168,9 +154,7 @@
                                                 <option value="Success">Success</option>
                                                 <option value="Error">Error</option>
                                                 <option value="Processing">Processing</option>
-
                                             </select>
-
                                         </div>
                                         <div class="col s6 m2 l2">
                                             <button type="button"
@@ -207,7 +191,6 @@ style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i><
 style="font-size: 20px; color: red;" title="delete"></i></a>
 </td>
                                             </tr>
-
                                             <tr>
                                                 <td>20/10/2018</td>
                                                 <td>GFrt4581</td>
@@ -224,7 +207,6 @@ style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i><
 style="font-size: 20px; color: red;" title="delete"></i></a>
 </td>
                                             </tr>
-
                                             <tr>
                                                 <td>20/10/2018</td>
                                                 <td>GFrt4581</td>
@@ -241,7 +223,6 @@ style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i><
 style="font-size: 20px; color: red;" title="delete"></i></a>
 </td>
                                             </tr>
-
                                             <tr>
                                                 <td>20/10/2018</td>
                                                 <td>GFrt4581</td>
@@ -258,7 +239,6 @@ style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i><
 style="font-size: 20px; color: red;" title="delete"></i></a>
 </td>
                                             </tr>
-
                                             <tr>
                                                 <td>20/10/2018</td>
                                                 <td>GFrt4581</td>
@@ -275,7 +255,6 @@ style="font-size: 20px; margin:0 15px 0 15px; color: #006994" title="edit"></i><
 style="font-size: 20px; color: red;" title="delete"></i></a>
 </td>
                                             </tr>
-
                                         </tbody>
                                     </table>
  -->

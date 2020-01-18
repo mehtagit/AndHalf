@@ -322,22 +322,22 @@ var contextpath = "${context}";
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload National ID *</span> <input id="NationalIdImage"
-											type="file" placeholder="Upload National ID Image">
+											type="file" placeholder="">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
-											placeholder="Upload National ID Image">
+											placeholder="">
 									</div>
 								</div>
 
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload Photo *</span> <input id="photo" type="file"
-											placeholder="Upload Photo">
+											placeholder="">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
-											placeholder="Upload Photo">
+											placeholder="">
 									</div>
 								</div>
 
@@ -350,11 +350,11 @@ var contextpath = "${context}";
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload ID Card *</span> <input id="idCard" type="file"
-											placeholder="Upload Photo">
+											placeholder="">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
-											placeholder="Upload ID Card Image">
+											placeholder="">
 									</div>
 								</div>
 
@@ -714,9 +714,10 @@ var contextpath = "${context}";
         <h6 class="modal-header">Verify OTP</h6>
         <div class="modal-content">
        
-                <h6 id="otpResponse"></h6>
+                
             <div class="row">
                 <div class="input-field col s12 center">
+                   <h6 id="otpResponse"></h6>
                     <a href="${context}/login" class="btn">ok</a>
                 </div>
             </div>

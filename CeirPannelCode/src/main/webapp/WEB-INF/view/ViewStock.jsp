@@ -145,12 +145,12 @@
 						<input type="text" name="SupplierId" id="editSupplierId"
 
 							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
-							for="SupplierId" class="center-align"><spring:message code="input.supplierID" /></label>
+							for="editSupplierId" class="center-align"><spring:message code="input.supplierID" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="SupplierName" id="editSupplierName" required="required"
-							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="SupplierName"
+							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="editSupplierName"
 							class="center-align"><spring:message code="input.supllierName" /><span class="star">*</span></label></label>
 					</div>
 
@@ -266,7 +266,7 @@
 						</div> -->
 						<div class="file-path-wrapper">
 							<input class="file-path validate responsive-file-div"
-								placeholder="fileName.csv" id="csvUploadFileName" type="text"
+								placeholder="" id="csvUploadFileName" type="text"
 								disabled>
 						</div>
 					</div>

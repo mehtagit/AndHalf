@@ -251,7 +251,12 @@ window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
 }); 
-
+$.i18n().locale = lang;
+var documenttype,selectfile,selectDocumentType;
+$.i18n().load( {
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() { console.log("done")});
 
 function saveGrievance(){
 	var category=$('#category').val();
@@ -371,6 +376,76 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 		$('#docTypetagValue1').val(data[i].value);
 	}
 });
+
+
+	//************************************************ category dropdown function ******************************************************************
+		
+		$(document).ready(function(){
+			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+				console.log("@@@@@"+JSON.stringify(data));
+				for (i = 0; i < data.length; i++) {
+					console.log(data[i].interp);
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+					$('#docTypetagValue1').val(data[i].value);
+				}
+			});
+		});
+
+
+
+
+		function cleanReplyPopUp()
+		{
+			console.log("reset form function");
+			$('#replymessageForm').trigger("reset");
+		}
+
+
+
+
+
+
+		var max_fields = 15; //maximum input boxes allowed
+		var wrapper = $(".mainDiv"); //Fields wrapper
+		var add_button = $(".add_field_button"); //Add button ID
+		var x = 1; //initlal text box count
+		var id=2;
+		$(".add_field_button").click(function (e) { //on add input button click
+			e.preventDefault();
+			if (x < max_fields) { //max input box allowed
+				x++; //text box increment
+				$(wrapper).append(
+						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+				); //add input box
+			}
+			
+			
+			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+
+
+				for (i = 0; i < data.length; i++) {
+					console.log(data[i].interp);
+					var optionId=id-1;
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
+					$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
+					console.log('#docTypetag'+optionId);
+
+				}
+			});
+			id++;
+
+		});
+		$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+			e.preventDefault();
+			$(this).parent('div').remove();
+			x--;
+			id--;
+		})
+
+		function saveDocTypeValue(){
+			$('#docTypetagValue').val(data[i].value).change();
+			$('#docTypetagValue').val(data[i].value).change();
+		}
 </script>
 </body>
 </html>

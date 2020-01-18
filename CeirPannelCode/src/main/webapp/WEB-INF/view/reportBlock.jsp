@@ -135,12 +135,12 @@
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" required="required"
                                                                     title="Please enter your device serial number first" maxlength="15">
-                                                                <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
+                                                                <label for="singleblockserialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="singleblockremark" class="materialize-textarea" required="required"></textarea>
-                                                                <label for="blockRemark">Remark <span class="star">*</span></label>
+                                                                <label for="singleblockRemark">Remark <span class="star">*</span></label>
                                                             </div>
                                                               <div class="col s12 m6"><label for="singleDeviceCategory">Category
                                                             <span class="star">*</span></label>
@@ -261,7 +261,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             <input type="file" id="blockBulkFile" accept=".csv" required="required">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" placeholder="Please select the file">
+                                                            <input class="file-path validate" type="text" placeholder="">
                                                         </div>
                                                     </div>
 

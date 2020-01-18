@@ -171,20 +171,20 @@
 				<div class="input-field col s12 m6">
 					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
 					<input type="text" id="expectedArrivalPort" readonly="readonly"
-						placeholder="Arrival port"> <label for="Name"
+						placeholder=""> <label for="expectedArrivalPort"
 						class="center-align"><spring:message
 							code="input.arrivalport" /></label>
 				</div>
 
 				<div class="input-field col s12 m6">
-					<input type="text" name="Quantity" placeholder="Quantity"
+					<input type="text" name="Quantity" placeholder=""
 						id="Quantity" readonly="readonly" /> <label for="Quantity"
 						class="center-align"><spring:message code="input.quantity" /></label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="TransactionId"
-						placeholder="Transaction ID" id="TransactionId"
+						placeholder="" id="TransactionId"
 						readonly="readonly" maxlength="15" /> <label for="TransactionId"
 						class="center-align"><spring:message
 							code="input.transactionID" /></label>
