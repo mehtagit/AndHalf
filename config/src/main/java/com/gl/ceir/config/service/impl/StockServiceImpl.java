@@ -153,9 +153,12 @@ public class StockServiceImpl {
 	@Transactional(rollbackOn = Exception.class)
 	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
+		
+		logger.info("Going to save webActionDb [" + webActionDb + "]");
 		webActionDbRepository.save(webActionDb);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
 
+		logger.info("Going to save Stock [" + stockMgmt + "]");
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 

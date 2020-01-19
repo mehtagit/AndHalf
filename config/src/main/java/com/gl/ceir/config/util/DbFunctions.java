@@ -13,7 +13,7 @@ public class DbFunctions {
 	private static String dateFormat;
 
 	public static String getDate(String dialect) {
-		logger.debug("Get date functions for DB : " + dialect);
+		logger.info("Get date functions for DB : " + dialect);
 
 		if(Objects.isNull(dialect)) {
 			logger.warn("Dialect can't be null.");
@@ -30,13 +30,13 @@ public class DbFunctions {
 			}
 		}
 
-		logger.debug("Date functions for DB : " + dialect + " is " + dateFunction);
+		logger.info("Date functions for DB [" + dialect + "] is " + dateFunction);
 		
 		return dateFunction;
 	}
 	
 	public static String getDateFormat(String dialect) {
-		logger.debug("Get dateFormat functions for DB : " + dialect);
+		logger.info("Get dateFormat functions for DB : " + dialect);
 
 		if(Objects.isNull(dialect)) {
 			logger.warn("Dialect can't be null.");
@@ -53,7 +53,7 @@ public class DbFunctions {
 			}
 		}
 
-		logger.debug("DateFormat functions for DB : " + dialect + " is " + dateFormat);
+		logger.info("DateFormat functions for DB : " + dialect + " is " + dateFormat);
 		
 		return dateFormat;
 	}

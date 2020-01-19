@@ -7,6 +7,8 @@ import com.gl.ceir.config.model.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 
 
-	public	User getByUsername(String userName);
+	public User getByUsername(String userName);
+	
+	
 
 }
