@@ -101,7 +101,7 @@ public class GrievanceController {
 		
 			String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
 			log.info("doctype Name==="+tagName+"value of index="+i);
-			
+			 
 
 			try {
 				byte[] bytes =

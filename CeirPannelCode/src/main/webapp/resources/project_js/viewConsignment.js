@@ -123,9 +123,9 @@
 
 	function ConsignmentCurrency()
 	{
-		var currency="currency";
+		var currency="CURRENCY";
 		$.ajax({
-			url: './consignmentCurency?currency='+currency,
+			url: './consignmentCurency?CURRENCY='+currency,
 			type: 'GET',
 			processData: false,
 			contentType: false,
@@ -149,9 +149,9 @@
 
 	function viewConsignmentCurrency()
 	{
-		var currency="currency";
+		var currency="CURRENCY";
 		$.ajax({
-			url: './consignmentCurency?currency='+currency,
+			url: './consignmentCurency?CURRENCY='+currency,
 			type: 'GET',
 			processData: false,
 			contentType: false,
