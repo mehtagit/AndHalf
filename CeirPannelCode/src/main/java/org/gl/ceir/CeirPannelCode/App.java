@@ -9,6 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.PropertySource;
 
 
 
@@ -29,6 +30,8 @@ import org.springframework.context.annotation.FilterType;
 @EnableAutoConfiguration
 @SpringBootConfiguration 
 @ComponentScan(basePackages ="org.gl.ceir")
+/* @PropertySource(value = "classpath:application_Production.properties") */
+ @PropertySource(value = "classpath:application.properties") 
 public class App extends SpringBootServletInitializer
 {
 	@Override

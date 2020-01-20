@@ -59,7 +59,9 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
-
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <style>
 .row {
@@ -182,13 +184,25 @@ input[type='search'] {
 												</div>
 											</div>
 											<div class="col s12 m12" style="margin-top: 20px;">
-												<div class="input-field col s12 m6">
+												<div class="input-field col s12 m4">
 													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" title="Please enter alphabets and numbers upto 15 characters only"
 													  required="required" maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
 														class="center-align ml-10">NID </label>
 												</div>
 
-												<div class="file-field input-field col s12 m6"
+													<div class="col s12 m4">
+															<label for="deviceType">Document type <span
+																class="star">*</span></label> <select class="browser-default"
+																id="doc_type" required="required">
+																<option value="" disabled selected>Select Document type</option>
+				
+
+															</select>
+															
+															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
+														</div>	
+
+												<div class="file-field input-field col s12 m4"
 													style="margin-top: -15px;">
 													<h6 style="color: #000;">
 														Upload National ID Proof <span class="star">*</span>
@@ -855,6 +869,9 @@ input[type='search'] {
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			
 
 
 

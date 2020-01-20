@@ -452,7 +452,7 @@ return "redirect:"+response.getUrl();
 
 //***********************************************cuurency controller *************************************************
 @RequestMapping(value="/consignmentCurency",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("currency") String currency)  {
+public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("CURRENCY") String currency)  {
 log.info("request send to the currency  api="+currency);
 List<Dropdown> response= new ArrayList<Dropdown>();
 response=feignCleintImplementation.taxPaidStatusList(currency);

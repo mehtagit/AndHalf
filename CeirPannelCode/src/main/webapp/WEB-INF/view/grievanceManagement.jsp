@@ -64,6 +64,10 @@ var path="${context}";
 
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  
  
 
 </head>
@@ -301,6 +305,8 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
 		
 	
 </body>

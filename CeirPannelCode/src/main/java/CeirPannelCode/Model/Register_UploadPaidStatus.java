@@ -17,19 +17,20 @@ public class Register_UploadPaidStatus {
 	private String street;
 	private String locality;
 	private String province;
-	private String country,district,commune,village;
+	private String country,district,commune,village,docTypeInterp,doc_type_numeric;
 	
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private Long firstImei;
-	private Integer taxPaidStatus,postalCode;
+	private Integer taxPaidStatus,postalCode,docType;
 	@Override
 	public String toString() {
 		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", nid=" + nid
 				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
 				+ ", province=" + province + ", country=" + country + ", district=" + district + ", commune=" + commune
-				+ ", village=" + village + ", regularizeDeviceDbs=" + regularizeDeviceDbs + ", firstImei=" + firstImei
-				+ ", taxPaidStatus=" + taxPaidStatus + ", postalCode=" + postalCode + "]";
+				+ ", village=" + village + ", docTypeInterp=" + docTypeInterp + ", doc_type_numeric=" + doc_type_numeric
+				+ ", regularizeDeviceDbs=" + regularizeDeviceDbs + ", firstImei=" + firstImei + ", taxPaidStatus="
+				+ taxPaidStatus + ", postalCode=" + postalCode + ", docType=" + docType + "]";
 	}
 	public String getFirstName() {
 		return firstName;
@@ -121,6 +122,18 @@ public class Register_UploadPaidStatus {
 	public void setVillage(String village) {
 		this.village = village;
 	}
+	public String getDocTypeInterp() {
+		return docTypeInterp;
+	}
+	public void setDocTypeInterp(String docTypeInterp) {
+		this.docTypeInterp = docTypeInterp;
+	}
+	public String getDoc_type_numeric() {
+		return doc_type_numeric;
+	}
+	public void setDoc_type_numeric(String doc_type_numeric) {
+		this.doc_type_numeric = doc_type_numeric;
+	}
 	public List<UplodPaidStatusModel> getRegularizeDeviceDbs() {
 		return regularizeDeviceDbs;
 	}
@@ -144,6 +157,12 @@ public class Register_UploadPaidStatus {
 	}
 	public void setPostalCode(Integer postalCode) {
 		this.postalCode = postalCode;
+	}
+	public Integer getDocType() {
+		return docType;
+	}
+	public void setDocType(Integer docType) {
+		this.docType = docType;
 	}
 	
 	

@@ -167,7 +167,7 @@ $(document).ready(function () {
 				}
 			});
 
-			$.getJSON('./getDropdownList/currency', function(data) {
+			$.getJSON('./getDropdownList/CURRENCY', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
@@ -545,6 +545,8 @@ function submitDeviceInfo(){
 	var email=$('#email').val();
 	var phone=$('#phone').val();
 	var state=$('#state').val();
+	var docType=$('#doc_type').val();
+	var doc_type_numeric=$("#doc_type option:selected").attr("docValue");
 	
 	var village=$('#village').val();
 	var district=$('#district').val();
@@ -617,7 +619,9 @@ function submitDeviceInfo(){
 			"district":district,
 			"commune":commune,
 			"village":village,
-			"postalCode":postalcode
+			"postalCode":postalcode,
+			"doc_type_numeric":docType,
+			"docType":doc_type_numeric
 
 	}
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
@@ -760,7 +764,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$.getJSON('./getDropdownList/currency', function(data) {
+	$.getJSON('./getDropdownList/CURRENCY', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#Currency1');
@@ -783,6 +787,19 @@ $(document).ready(function () {
 			console.log("...........");
 		}
 	});
+	
+	
+	$(document).ready(function(){
+		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+			console.log("@@@@@"+JSON.stringify(data));
+			for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#doc_type');
+			//$('#docTypeNymericValue').val(data[i].value);
+			}
+		});
+	});
+
+
 
 
 });
