@@ -7054,10 +7054,10 @@
     }
   }
 
-  .container .row {
+  /* .container .row {
     margin-left: -0.75rem;
     margin-right: -0.75rem;
-  }
+  } */
 
   .section {
     /*padding-top: 1rem;*/
@@ -7102,6 +7102,8 @@
     box-sizing: border-box;
     padding: 0 0.75rem;
   }
+
+
 
   .row .col[class*="push-"],
   .row .col[class*="pull-"] {
@@ -7867,6 +7869,12 @@
     padding: 0;
     white-space: nowrap;
   }
+  
+  @media only screen and (max-width:991px) and (min-width: 601px){
+  	 a.brand-logo.darken-1 {
+    font-size: 20px !important;
+}
+  }
 
   .dropdown-content li>a, .dropdown-content li>span {
               color: #444;
@@ -8090,12 +8098,47 @@
   @media only screen and (max-width: 768px) {
     .card-panel {
       transition: box-shadow .25s;
-      padding: 20px 10px;
+      /* padding: 20px 10px; */
       margin: 0 0 1rem 0;
       border-radius: 2px;
       background-color: #fff;
     }
   }
+  
+    @media only screen and (max-width: 600px){
+  	.row.login-card-panel {
+    max-width: 95% !important;
+    transition: box-shadow .25s;
+    margin: 0 0 1rem 0;
+    border-radius: 2px;
+    background-color: #fff;
+    padding: 25px 0;
+}
+  }
+  
+   @media only screen and (min-width: 601px) and (max-width: 991px){
+  	.row.login-card-panel {
+    max-width: 60% !important;
+    transition: box-shadow .25s;
+    margin: 0 0 1rem 0;
+    border-radius: 2px;
+    background-color: #fff;
+}
+  }
+  
+  @media only screen and (min-width:992px){
+  	.row.login-card-panel {
+    max-width: 40% !important;
+    transition: box-shadow .25s;
+    margin: 0 0 1rem 0;
+    border-radius: 2px;
+    background-color: #fff;
+}
+  }
+  
+ 
+  
+
 
   .pageHeader {
     height: 50px;
@@ -8554,6 +8597,12 @@
     font-size: 1.6rem;
     line-height: 37px;
   }
+
+@media only screen and (max-width: 991px) and (min-width: 526px){
+	.btn-floating i {
+    margin-top: -14px;
+  }
+}
 
   .btn-floating:before {
     border-radius: 0;
@@ -10208,6 +10257,12 @@ select:focus {
       margin: 0 0 15px 0;
       padding: 0;
       display: block;
+    }
+  }
+  
+  @media only screen and (max-width: 991px) {
+    .select-wrapper input.select-dropdown {
+      display: none;
     }
   }
 
