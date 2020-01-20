@@ -342,7 +342,7 @@ return false;
 
 var grievanceCategory="GRIEVANCE_CATEGORY";
 $.ajax({
-	url: './Consignment/consignmentCurency?currency='+grievanceCategory,
+	url: './Consignment/consignmentCurency?CURRENCY='+grievanceCategory,
 	type: 'GET',
 	processData: false,
 	contentType: false,

@@ -529,9 +529,9 @@ section {
 		}
 
 		function ConsignmentCurrency() {
-			var currency = "currency";
+			var currency = "CURRENCY";
 			$.ajax({
-				url : '${context}/Consignment/consignmentCurency?currency='
+				url : '${context}/Consignment/consignmentCurency?CURRENCY='
 						+ currency,
 				type : 'GET',
 				processData : false,

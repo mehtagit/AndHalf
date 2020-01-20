@@ -208,7 +208,7 @@ to {
 										<input type="text" name="supplierId"
 											pattern="[A-Za-z0-9]{0,15}"
 											title="<spring:message code="validation.15character" />"
-											maxlength="15" required="required" id="supplierId"
+											maxlength="15" id="supplierId"
 											maxlength="15" /> <label for="SupplierId"
 											class="center-align"><spring:message
 												code="input.supplierID" /> </label>

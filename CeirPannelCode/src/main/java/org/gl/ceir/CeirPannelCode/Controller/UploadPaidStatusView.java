@@ -112,7 +112,7 @@ public class UploadPaidStatusView {
 		log.info(" upload status  entry point.");
 		try {
 			byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
+		String rootPath =filePathforUploadFile+txnNumber+"/"+regularizeDeviceDbs.getDoc_type_numeric()+"/"; 
 		File dir = new File(rootPath + File.separator);
 
 		if (!dir.exists()) dir.mkdirs();
