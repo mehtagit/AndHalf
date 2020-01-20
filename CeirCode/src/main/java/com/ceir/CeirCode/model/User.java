@@ -62,15 +62,6 @@ public class User {
 	@JoinColumn(name = "usertype_id", nullable = false) private Usertype
 	usertype;
 
-
-
-
-//	@JsonIgnore
-//	@OneToMany(mappedBy = "userForTypeApprove",fetch = FetchType.LAZY) private
-//	List<TypeApprovedDb> typeApprovedDb;
-
-
-
 	@JsonIgnore
 	@OneToMany(mappedBy = "userTrack",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	List<LoginTracking> loginTracking;
@@ -83,8 +74,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserSecurityquestion> userSecurityquestion;
 
-
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "userPassword",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<UserPasswordHistory> userPasswordHistory;
+    
 
 	public long getId() {      
 		return id;
@@ -175,8 +168,6 @@ public class User {
 		this.remark = remark;
 	}
 
-
-
 //	public List<TypeApprovedDb> getTypeApprovedDb() { return typeApprovedDb; }
 //	public void setTypeApprovedDb(List<TypeApprovedDb> typeApprovedDb) {
 //		this.typeApprovedDb = typeApprovedDb; }
@@ -195,8 +186,12 @@ public class User {
 	public void setNotificationData(List<Notification> notificationData) {
 		this.notificationData = notificationData;
 	}
-
-
+	public List<UserPasswordHistory> getUserPasswordHistory() {
+		return userPasswordHistory;
+	}
+	public void setUserPasswordHistory(List<UserPasswordHistory> userPasswordHistory) {
+		this.userPasswordHistory = userPasswordHistory;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createdOn=" + createdOn

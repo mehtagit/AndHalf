@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 @PropertySource(ignoreResourceNotFound = true, value =
 		"classpath:application.properties")
 
-@RestController 
+@RestController
 @RequestMapping("/Login")
 public class LoginController{
 	@Autowired
