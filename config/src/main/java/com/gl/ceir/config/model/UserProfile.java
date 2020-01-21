@@ -15,9 +15,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity 
 public class UserProfile {
-	
+
 	private static long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;     
@@ -40,26 +40,31 @@ public class UserProfile {
 	private Date modifiedOn;
 	private String phoneOtp;  
 	private String emailOtp;
-    private String displayName;
-    
-    private String employeeId;
-    private String natureOfEmployment;
-    private String designation;
-    private String authorityName;
-    private String authorityEmail;
-    private String authorityPhoneNo;
+	private String displayName;
+
+	private String employeeId;
+	private String natureOfEmployment;
+	private String designation;
+	private String authorityName;
+	private String authorityEmail;
+	private String authorityPhoneNo;
 	private String operatorTypeName;
-    private Integer operatorTypeId;
-    
-    private String nidFilename;
-    private String photoFilename;
-    private String idCardFilename;
-    
+	private Integer operatorTypeId;
+
+	private String nidFilename;
+	private String photoFilename;
+	private String idCardFilename;
+
 	@JsonIgnore
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user; 
-	
+
+	public static UserProfile getDefaultUserProfile() {
+		UserProfile userProfile = new UserProfile();
+		return userProfile;
+	}
+
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
@@ -237,7 +242,7 @@ public class UserProfile {
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+
 	public String getOperatorTypeName() {
 		return operatorTypeName;
 	}
@@ -328,5 +333,5 @@ public class UserProfile {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }

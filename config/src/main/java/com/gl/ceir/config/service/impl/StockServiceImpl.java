@@ -85,7 +85,7 @@ public class StockServiceImpl {
 
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
-	
+
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
 
@@ -117,14 +117,24 @@ public class StockServiceImpl {
 
 			if("Custom".equalsIgnoreCase(stockMgmt.getUserType())) {
 				User user =	userRepository.getByUsername(stockMgmt.getSupplierId());
-				
+
 				if(Objects.isNull(user)) {
 					logger.info("This is not a valid user to assign a stock. ");
-					return new GenricResponse(1, "This is not a valid user.", "");
+					return new GenricResponse(2, "This is not a valid user.", "");
 				}
 				stockMgmt.setUserId(new Long(user.getId()));
 				stockMgmt.setUser(user);
 
+			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
+				if(validateUserProfileOfStock(stockMgmt)) {
+					User user = userRepository.save(User.getDefaultUser());
+					logger.info("A new end_user have been saved successfully." + user);
+					stockMgmt.setUserId(new Long(user.getId()));
+					stockMgmt.setUser(user);
+				}else {
+					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
+					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
+				}
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
 			}
@@ -144,16 +154,15 @@ public class StockServiceImpl {
 			}
 
 		} catch (Exception e) {
-
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	@Transactional(rollbackOn = Exception.class)
 	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
-		
+
 		logger.info("Going to save webActionDb [" + webActionDb + "]");
 		webActionDbRepository.save(webActionDb);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
@@ -189,7 +198,7 @@ public class StockServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(statusList);
-			
+
 			Page<StockMgmt> page = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
 
 			for(StockMgmt stockMgmt : page.getContent()) {
@@ -208,7 +217,7 @@ public class StockServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	private List<StockMgmt> getAll(FilterRequest filterRequest){
 		List<StateMgmtDb> statusList = null;
 
@@ -236,7 +245,7 @@ public class StockServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	private SpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
 		SpecificationBuilder<StockMgmt> specificationBuilder = new SpecificationBuilder<>(propertiesReader.dialect);
 
@@ -292,7 +301,7 @@ public class StockServiceImpl {
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-		
+
 		return specificationBuilder;
 	}
 
@@ -345,7 +354,7 @@ public class StockServiceImpl {
 				webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(stockMgmt.getTxnId());
-				
+
 				if(executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Deletion of Stock is in Progress.",stockMgmt.getTxnId());
@@ -359,7 +368,7 @@ public class StockServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	@Transactional
 	private boolean executeDeleteStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
@@ -401,7 +410,7 @@ public class StockServiceImpl {
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPDATE.getName());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(distributerManagement.getTxnId());
-			
+
 			if(executeUpdateStock(stockMgmt, webActionDb)) {
 				logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock Update have been Successful.", distributerManagement.getTxnId());
@@ -411,7 +420,7 @@ public class StockServiceImpl {
 			}
 		}
 	}
-	
+
 	@Transactional
 	private boolean executeUpdateStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
@@ -580,17 +589,26 @@ public class StockServiceImpl {
 
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
-		
+
 		stockMgmtHistoryRepository.save(
 				new StockMgmtHistoryDb(stockMgmt.getTxnId(), stockMgmt.getStockStatus())
 				);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt_history_db.");
-		
+
 		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, SubFeatures.UPDATE, ""));
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-		
+
 		status = Boolean.TRUE;
-		
+
 		return status;
+	}
+
+	private boolean validateUserProfileOfStock(StockMgmt stockMgmt) {
+		if(Objects.nonNull(stockMgmt.getUser())) {
+			if(Objects.nonNull(stockMgmt.getUser().getUserProfile())) {
+				return Boolean.TRUE;
+			}
+		}
+		return Boolean.FALSE;
 	}
 }

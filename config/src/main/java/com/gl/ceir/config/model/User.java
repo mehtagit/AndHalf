@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity   
@@ -27,8 +30,10 @@ public class User {
 	@JsonIgnore
 	private String password; 
 	
+	@CreationTimestamp
 	private Date createdOn;
 	
+	@UpdateTimestamp
 	private Date modifiedOn; 
 	
 	private Integer currentStatus; 
@@ -37,6 +42,14 @@ public class User {
 	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	UserProfile userProfile;
+	
+	public static User getDefaultUser() {
+		User user = new User();
+		user.setUsername("NA");
+		user.setPassword("NA");
+		user.setUserProfile(UserProfile.getDefaultUserProfile());
+		return user;
+	}
 	
 	public Long getId() {      
 		return id;
@@ -93,6 +106,7 @@ public class User {
 	public void setPreviousStatus(Integer previousStatus) {
 		this.previousStatus = previousStatus;
 	}
+	
 
 	@Override
 	public String toString() {

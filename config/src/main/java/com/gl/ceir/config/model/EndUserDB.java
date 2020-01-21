@@ -36,7 +36,7 @@ public class EndUserDB implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	private String  nid;
+	private String nid;
 	private String firstName;  
 	private String middleName;
 	private String lastName;
