@@ -14,6 +14,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gl.ceir.config.util.Utility;
 
 @Entity   
 @Table(name = "users")
@@ -45,9 +46,8 @@ public class User {
 	
 	public static User getDefaultUser() {
 		User user = new User();
-		user.setUsername("NA");
+		user.setUsername(Utility.getTxnId());
 		user.setPassword("NA");
-		user.setUserProfile(UserProfile.getDefaultUserProfile());
 		return user;
 	}
 	

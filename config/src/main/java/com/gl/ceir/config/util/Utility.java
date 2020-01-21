@@ -25,8 +25,7 @@ public class Utility {
 
 	}
 
-
-	public String getTxnId() {
+	public static String getTxnId() {
 
 		DateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
 		Date date = new Date();

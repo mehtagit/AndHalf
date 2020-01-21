@@ -273,6 +273,7 @@ public class UserProfile {
 	public void setIdCardFilename(String idCardFilename) {
 		this.idCardFilename = idCardFilename;
 	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -330,6 +331,18 @@ public class UserProfile {
 		builder.append(authorityEmail);
 		builder.append(", authorityPhoneNo=");
 		builder.append(authorityPhoneNo);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", nidFilename=");
+		builder.append(nidFilename);
+		builder.append(", photoFilename=");
+		builder.append(photoFilename);
+		builder.append(", idCardFilename=");
+		builder.append(idCardFilename);
+		builder.append(", user=");
+		builder.append(user);
 		builder.append("]");
 		return builder.toString();
 	}

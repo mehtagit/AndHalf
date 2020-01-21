@@ -54,6 +54,7 @@ import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
@@ -108,6 +109,8 @@ public class StockServiceImpl {
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl; 
 
 	@Autowired
+	UserProfileRepo userProfileRepo;
+	@Autowired
 	InterpSetter interpSetter;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
@@ -128,6 +131,19 @@ public class StockServiceImpl {
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				if(validateUserProfileOfStock(stockMgmt)) {
 					User user = userRepository.save(User.getDefaultUser());
+					logger.info("User [" + user + "] saved.");
+					if(Objects.nonNull(user)) {
+						UserProfile userProfile = UserProfile.getDefaultUserProfile();
+						userProfile.setUser(user);
+						userProfile.setUser(user);
+						userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
+						logger.info("Going to save userprofile : " + userProfile);
+						userProfileRepo.save(userProfile);
+						logger.info("Userprofile [" + userProfile + "] saved.");
+					}else {
+						logger.info("A new end_user registeration have been failed." + user);
+						return new GenricResponse(4, "A new end_user have been failed.", user.toString());
+					}
 					logger.info("A new end_user have been saved successfully." + user);
 					stockMgmt.setUserId(new Long(user.getId()));
 					stockMgmt.setUser(user);

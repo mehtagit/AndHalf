@@ -224,6 +224,10 @@ public class StockMgmt implements Serializable {
 		this.user = user;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -245,6 +249,8 @@ public class StockMgmt implements Serializable {
 		builder.append(fileName);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", user=");
+		builder.append(user);
 		builder.append(", roleType=");
 		builder.append(roleType);
 		builder.append(", quantity=");
@@ -259,7 +265,12 @@ public class StockMgmt implements Serializable {
 		builder.append(userType);
 		builder.append(", totalPrice=");
 		builder.append(totalPrice);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
 		builder.append("]");
 		return builder.toString();
 	}
+
 }
