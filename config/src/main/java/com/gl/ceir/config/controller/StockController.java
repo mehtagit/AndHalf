@@ -48,7 +48,7 @@ public class StockController {
 	@RequestMapping(path = "/Stock/update", method = RequestMethod.POST)
 	public GenricResponse updateStockInfo( @RequestBody StockMgmt stockMgmt){
 
-		logger.info("Stock Update Request ="+stockMgmt.toString());
+		logger.info("Stock Update Request = " + stockMgmt.toString());
 
 		GenricResponse genricResponse =	stackholderServiceImpl.updateStockInfo(stockMgmt);
 

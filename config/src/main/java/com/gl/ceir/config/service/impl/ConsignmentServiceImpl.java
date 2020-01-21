@@ -491,9 +491,10 @@ public class ConsignmentServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		ConsignmentFileModel cfm = null;
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		String filePath  = fileStorageProperties.getConsignmentDownloadDir();
+		String filePath = fileStorageProperties.getConsignmentDownloadDir();
 		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
 		StatefulBeanToCsv<ConsignmentFileModel> csvWriter = null;
 		List< ConsignmentFileModel > fileRecords = null;
