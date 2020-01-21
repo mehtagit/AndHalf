@@ -28,6 +28,7 @@ import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.Securityquestion;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.UserPasswordHistory;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserSecurityquestion;
 import com.ceir.CeirCode.model.UserStatusRequest;
@@ -40,12 +41,14 @@ import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.repo.NotificationRepository;
 import com.ceir.CeirCode.repo.SecurityQuestionRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repo.UserPasswordHistoryRepo;
 import com.ceir.CeirCode.repo.UserProfileRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserSecurityQuestionRepo;
 import com.ceir.CeirCode.repo.UserTemporarydetailsRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.repoImpl.UserPassHistoryRepoImpl;
 import com.ceir.CeirCode.response.UpdateProfileResponse;
 import com.ceir.CeirCode.util.EmailUtil;
 import com.ceir.CeirCode.util.EmailUtil2;
@@ -84,12 +87,18 @@ public class UserService {
 	@Autowired
 	EmailUtil emailUtils;
 
-
 	@Autowired
 	UserTemporarydetailsRepo userTemporarydetailsRepo;
 
 	@Autowired
 	NotificationRepository notificationRepo;
+	
+	@Autowired
+	UserPassHistoryRepoImpl userPassHistoryRepoImpl;
+	
+	@Autowired
+	UserPasswordHistoryRepo userPasswordHistoryRepo;
+	
 
 	public ResponseEntity<?> getUsertypeData(){
 
@@ -342,13 +351,6 @@ public class UserService {
 
 	public ResponseEntity<?> userRegistration(UserProfile userDetails)  {
 		log.info("user details----::::   "+userDetails); 
-		//Usertype usertypesData=usertypeRepo.findById(userDetails.getUsertypeId());
-		/*
-		 * if(usertypesData!=null) {
-		 * if(!"Importer".equalsIgnoreCase(usertypesData.getUsertypeName())) { long
-		 * data[]= {userDetails.getUsertypeId()}; userDetails.setRoles(data); } else {}
-		 * }
-		 */
 		if(userDetails.getRoles()==null) {
 			long data[]= {userDetails.getUsertypeId()}; userDetails.setRoles(data);
 		}
@@ -396,6 +398,16 @@ public class UserService {
 				}
 				UserProfile output=userProfileRepo.save(userDetails);			 
 				if(output!=null) {
+					UserPasswordHistory userPassHistory=new UserPasswordHistory();
+					userPassHistory.setPassword(userDetails.getPassword());
+					userPassHistory.setUserPassword(userOutput);
+					userPassHistory.setCreatedOn(LocalDateTime.now());
+					userPassHistory.setModifiedOn(LocalDateTime.now());
+					log.info("going to save user passowrd in user_password_history table");
+					UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
+					if(userPasswordOtput!=null) {
+						log.info("user passowrd sucessfully save");
+					}
 					User dataForProfile=new User();
 					dataForProfile.setId(userOutput.getId());
 					String phoneOtp=otpService.phoneOtp(output.getPhoneNo());
@@ -589,24 +601,41 @@ public class UserService {
 			log.info("ChangePassword data from form: "+password);
 			User user=userRepo.findById(password.getUserid());
 			if(password.getOldPassword().equals(user.getPassword())) {
-				user.setPassword(password.getPassword());
-				User output=userRepo.save(user);
-				if(output!=null) {
-					boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 0, "Profile","change Password", output.getPassword(), "Transaction Alert from CEIR Portal", "");	
-					log.info("notification save: "+notificationStatus);
+				boolean passwordExist=userPassHistoryRepoImpl.passwordExist(password.getPassword(), password.getUserid());
+				if(passwordExist==true) {
+					log.info("if this password exist");
 					HttpResponse response=new HttpResponse();
-					response.setStatusCode(200);
-					response.setResponse("User password is changed");
+					response.setStatusCode(204);
+					response.setResponse("Password should not be as the last 3 passwords");
 					log.info("exit from change password");
 					return new ResponseEntity<>(response,HttpStatus.OK);	
 				}
 				else {
-					HttpResponse response=new HttpResponse();
-					response.setStatusCode(500);
-					response.setResponse("Failed to change password");
-					log.info("exit from change password");   
-					return new ResponseEntity<>(response,HttpStatus.OK);
+					log.info("if this password does not exist");
+					long count=userPassHistoryRepoImpl.countByUserId(password.getUserid());
+                    log.info("password count: "+count);
+					if(count!=0) {
+						if(count>=3) {
+							log.info("going to delete password history greater than 3");
+							UserPasswordHistory passHistory=userPassHistoryRepoImpl.getPasswordHistory(password.getUserid());
+							userPasswordHistoryRepo.deleteById(passHistory.getId());
+							user.setPassword(password.getPassword());
+							return setPassword(user);
+						}
+						else {
+							log.info("if password history less than 3");
+							user.setPassword(password.getPassword());
+							return setPassword(user);	
+						}
+					}
+					else {
+						user.setPassword(password.getPassword());
+						return setPassword(user);	
+					}
+					
 				}
+				
+				
 			} 
 			else {
 				HttpResponse response=new HttpResponse();
@@ -625,6 +654,36 @@ public class UserService {
 			response.setStatusCode(409); 
 			response.setResponse("Oops something wrong happened");
 			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+	}
+	
+	public ResponseEntity<?> setPassword(User user){
+		User output=userRepo.save(user);
+		if(output!=null) {
+			UserPasswordHistory userPassHistory=new UserPasswordHistory();
+			userPassHistory.setPassword(user.getPassword());
+			userPassHistory.setUserPassword(output);
+			userPassHistory.setCreatedOn(LocalDateTime.now());
+			userPassHistory.setModifiedOn(LocalDateTime.now());
+			log.info("going to save user passowrd in user_password_history table");
+			UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
+			if(userPasswordOtput!=null) {
+				log.info("user passowrd sucessfully save");
+			}
+			boolean notificationStatus=emailUtils.saveNotification("PRO_CHANGE_PASSWORD_BY_USER", output.getUserProfile(), 0, "Profile","change Password", output.getPassword(), "Transaction Alert from CEIR Portal", "");	
+			log.info("notification save: "+notificationStatus);
+			HttpResponse response=new HttpResponse();
+			response.setStatusCode(200);
+			response.setResponse("User password is changed");
+			log.info("exit from change password");
+			return new ResponseEntity<>(response,HttpStatus.OK);	
+		}
+		else {
+			HttpResponse response=new HttpResponse();
+			response.setStatusCode(500);
+			response.setResponse("Failed to change password");
+			log.info("exit from change password");   
+			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
 

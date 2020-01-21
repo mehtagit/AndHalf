@@ -1,23 +1,37 @@
 package com.ceir.CeirCode.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 public class UserPasswordHistory {
 	private static long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;    
-
 	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	User userPassword;
 	private String password;
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime createdOn;
 
+	@UpdateTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime modifiedOn;
+	
 	public long getId() {
 		return id;
 	}
@@ -36,8 +50,22 @@ public class UserPasswordHistory {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
 	@Override
 	public String toString() {
-		return "UserPasswordHistory [id=" + id + ", password=" + password + "]";
+		return "UserPasswordHistory [id=" + id + ", password=" + password + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + "]";
 	}
 }
