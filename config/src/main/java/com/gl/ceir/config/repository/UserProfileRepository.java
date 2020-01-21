@@ -6,7 +6,6 @@ import com.gl.ceir.config.model.UserProfile;
 
 public interface UserProfileRepository extends JpaRepository<UserProfile, Integer> {
 
-
 	public UserProfile getByUserId(long userid);
 
 }

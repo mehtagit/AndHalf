@@ -57,6 +57,7 @@ import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
+import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
@@ -491,7 +492,7 @@ public class ConsignmentServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		ConsignmentFileModel cfm = null;
-		
+
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 		String filePath = fileStorageProperties.getConsignmentDownloadDir();
@@ -518,26 +519,30 @@ public class ConsignmentServiceImpl {
 
 			if( !consignmentMgmts.isEmpty() ) {
 
-				List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 				fileRecords = new ArrayList<>(); 
 
+				List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
 				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
+					UserProfile userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
+					setInterp(consignmentMgmt);
 					cfm = new ConsignmentFileModel();
-
-					cfm.setConsignmentId( consignmentMgmt.getId() );
-					cfm.setConsignmentStatus( consignmentMgmt.getStateInterp());
-
-					for( SystemConfigListDb config : customTagStatusList ) {
-
-						if( config.getValue() == consignmentMgmt.getTaxPaidStatus() ) {
-							cfm.setTaxPaidStatus(config.getInterp());
-						}
+					
+					for(StateMgmtDb stateMgmtDb : statusList) {
+						if(consignmentMgmt.getConsignmentStatus() == stateMgmtDb.getState()) {
+							consignmentMgmt.setStateInterp(stateMgmtDb.getInterp()); 
+							break; 
+						} 
 					}
 
+					cfm.setConsignmentId( consignmentMgmt.getId() );
+					cfm.setConsignmentStatus(consignmentMgmt.getStateInterp());
+					cfm.setTaxPaidStatus(consignmentMgmt.getTaxInterp());
 					cfm.setTxnId( consignmentMgmt.getTxnId());
 					cfm.setCreatedOn(consignmentMgmt.getCreatedOn().format(dtf));
 					cfm.setModifiedOn( consignmentMgmt.getModifiedOn().format(dtf));
 					cfm.setFileName( consignmentMgmt.getFileName());
+					cfm.setSupplierName(userProfile.getDisplayName());
 
 					logger.debug(cfm);
 
