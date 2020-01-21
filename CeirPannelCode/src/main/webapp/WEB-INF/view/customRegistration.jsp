@@ -169,7 +169,9 @@ var contextpath = "${context}";
 		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
+    <%String name=request.getParameter("name");
+    Integer usertypeId=Integer.parseInt(request.getParameter("usertypeId"));
+    %>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
@@ -180,7 +182,7 @@ var contextpath = "${context}";
 
 					<div class="card-panel registration-form">
 						<div class="row">
-							<h5><%=request.getParameter("name") %> Registration</h5>
+							<h5><%=name%> Registration</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr>
 
@@ -297,7 +299,7 @@ var contextpath = "${context}";
 									<select id="state" class="browser-default" class="mySelect"
 										style="padding-left: 0;" required></select>
 								</div>
-								
+								<%if(usertypeId==7){ %>
 								<div class="col s12 m6 l6">
 									<label>Expected Arrival Port<span class="star">*</span></label>
 									<select id="arrivalPort" class="browser-default"
@@ -305,7 +307,7 @@ var contextpath = "${context}";
 										<option value="" disabled selected>Expected Arrival Port</option>
 									</select>
 								</div>
-								
+								<%} %>
 								
 							</div>
 
@@ -820,10 +822,6 @@ var contextpath = "${context}";
             }
         }
     </script>
-
-
-
-
 </body>
 
 </html>
