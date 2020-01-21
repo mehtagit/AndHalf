@@ -24,5 +24,7 @@ public class NullMsisdnRegularized implements Serializable {
 	public void setMsisdn(Long msisdn) {
 		this.msisdn = msisdn;
 	}
+	
+	
 
 }

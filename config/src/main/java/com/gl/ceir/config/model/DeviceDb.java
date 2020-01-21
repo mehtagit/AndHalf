@@ -74,7 +74,7 @@ public class DeviceDb  implements Serializable{
 	private Integer previousEndUserDeviceStatus;
 
 	private String endUserCountry;
-	private String period;
+	private Integer period;
 
 	public Long getId() {
 		return id;
@@ -309,10 +309,10 @@ public class DeviceDb  implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public String getPeriod() {
+	public Integer getPeriod() {
 		return period;
 	}
-	public void setPeriod(String period) {
+	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 	
