@@ -39,6 +39,8 @@ import com.gl.ceir.config.model.SingleImeiHistoryDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
+import com.gl.ceir.config.model.StolenIndividualUserDB;
+import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.UserProfile;
@@ -115,7 +117,6 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired
 	InterpSetter interpSetter;
 
-	@Transactional
 	public GenricResponse uploadDetails( StolenandRecoveryMgmt stolenandRecoveryDetails) {
 
 		try {
@@ -125,16 +126,44 @@ public class StolenAndRecoveryServiceImpl {
 			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
 			webActionDb.setState(0);
 
-			stolenAndRecoveryRepository.save(stolenandRecoveryDetails);
-
-			webActionDbRepository.save(webActionDb);
-
-			return new GenricResponse(0,"Upload Successfully.", stolenandRecoveryDetails.getTxnId());
+			if(executeUploadDetails(stolenandRecoveryDetails, webActionDb)) {
+				logger.info("Upload Successfully." +  stolenandRecoveryDetails.getTxnId());
+				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryDetails.getTxnId());
+			}else {
+				logger.info("Upload have been failed." + stolenandRecoveryDetails.getTxnId());
+				return new GenricResponse(1, "Upload have been failed.", stolenandRecoveryDetails.getTxnId());
+			}
 
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+	}
+
+	@Transactional
+	private boolean executeUploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt, WebActionDb webActionDb) {
+		boolean status = Boolean.FALSE;
+		try {
+			StolenIndividualUserDB stolenIndividualUserDB = (StolenIndividualUserDB) stolenandRecoveryMgmt;
+			stolenAndRecoveryRepository.save(stolenIndividualUserDB);
+			logger.info("Saved in stolen_individual_user_db" + stolenIndividualUserDB);
+		}catch (ClassCastException e) {
+			try {
+				StolenOrganizationUserDB stolenOrganizationUserDB = (StolenOrganizationUserDB) stolenandRecoveryMgmt;
+				stolenAndRecoveryRepository.save(stolenOrganizationUserDB);
+				logger.info("Saved in stolen_organization_user_db" + stolenOrganizationUserDB);
+			}catch (ClassCastException e2) {
+				stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
+				logger.info("Saved in stolenand_recovery_mgmt" + stolenandRecoveryMgmt);
+			}
+		}
+
+		webActionDbRepository.save(webActionDb);
+		logger.info("Saved in web_action_db " + stolenandRecoveryMgmt);
+
+		status = Boolean.TRUE;
+
+		return status;
 	}
 
 	@Transactional
@@ -214,7 +243,7 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
-	
+
 	public List<StolenandRecoveryMgmt> getAll(FilterRequest filterRequest){
 
 		List<StateMgmtDb> stateInterpList = null;
@@ -245,7 +274,7 @@ public class StolenAndRecoveryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}	
 	}
-	
+
 	private SpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
 		SpecificationBuilder<StolenandRecoveryMgmt> srsb = new SpecificationBuilder<>(propertiesReader.dialect);
 
@@ -320,11 +349,11 @@ public class StolenAndRecoveryServiceImpl {
 				}
 			}
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			srsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-		
+
 		return srsb;
 	}
 
@@ -686,12 +715,12 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(stolenandRecoveryMgmt.getRequestType()))
 			stolenandRecoveryMgmt.setRequestTypeInterp(interpSetter.setConfigInterp(Tags.REQ_TYPE, stolenandRecoveryMgmt.getRequestType()));
-		
+
 		if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId()))
 			stolenandRecoveryMgmt.setOperatorTypeIdInterp(interpSetter.setConfigInterp(Tags.OPERATORS, stolenandRecoveryMgmt.getOperatorTypeId()));
-		
+
 		if(Objects.nonNull(stolenandRecoveryMgmt.getBlockCategory()))
 			stolenandRecoveryMgmt.setBlockCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getBlockCategory()));
 	}
-	
+
 }

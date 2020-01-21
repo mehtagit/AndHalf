@@ -2,15 +2,10 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -69,13 +64,28 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	private String email;
 	private String phoneNo;
 	
-	private Integer docType;
-	@Transient
-	private Integer docTypeInterp;
-
-	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
-
+	// Place of device stolen.
+	private String incidentStreet;
+	private String incidentLocality;
+	
+	@NotNull
+	@Column(length = 50)
+	private String incidentDistrict;
+	
+	@NotNull
+	@Column(length = 50)
+	private String incidentCommune;
+	
+	@NotNull
+	@Column(length = 50)
+	private String incidentVillage;
+	
+	@NotNull
+	private Integer incidentPostalCode;
+	
+	private String incidentProvince;
+	private String incidentCountry;
+	
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
@@ -88,7 +98,6 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	
 	public String getUsername() {
 		return username;
 	}
@@ -100,24 +109,6 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-	public String getPersonnelFirstName() {
-		return personnelFirstName;
-	}
-	public void setPersonnelFirstName(String personnelFirstName) {
-		this.personnelFirstName = personnelFirstName;
-	}
-	public String getPersonnelMiddleName() {
-		return personnelMiddleName;
-	}
-	public void setPersonnelMiddleName(String personnelMiddleName) {
-		this.personnelMiddleName = personnelMiddleName;
-	}
-	public String getPersonnelLastName() {
-		return personnelLastName;
-	}
-	public void setPersonnelLastName(String personnelLastName) {
-		this.personnelLastName = personnelLastName;
 	}
 	public String getPropertyLocation() {
 		return propertyLocation;
@@ -136,39 +127,6 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	}
 	public void setLocality(String locality) {
 		this.locality = locality;
-	}
-	public String getProvince() {
-		return province;
-	}
-	public void setProvince(String province) {
-		this.province = province;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-	public List<RegularizeDeviceDb> getRegularizeDeviceDbs() {
-		return regularizeDeviceDbs;
-	}
-	public void setRegularizeDeviceDbs(List<RegularizeDeviceDb> regularizeDeviceDbs) {
-		this.regularizeDeviceDbs = regularizeDeviceDbs;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 	public String getDistrict() {
 		return district;
@@ -194,17 +152,156 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	public void setPostalCode(Integer postalCode) {
 		this.postalCode = postalCode;
 	}
-	public Integer getDocType() {
-		return docType;
+	public String getProvince() {
+		return province;
 	}
-	public void setDocType(Integer docType) {
-		this.docType = docType;
+	public void setProvince(String province) {
+		this.province = province;
 	}
-	public Integer getDocTypeInterp() {
-		return docTypeInterp;
+	public String getCountry() {
+		return country;
 	}
-	public void setDocTypeInterp(Integer docTypeInterp) {
-		this.docTypeInterp = docTypeInterp;
+	public void setCountry(String country) {
+		this.country = country;
 	}
-
+	public String getPersonnelFirstName() {
+		return personnelFirstName;
+	}
+	public void setPersonnelFirstName(String personnelFirstName) {
+		this.personnelFirstName = personnelFirstName;
+	}
+	public String getPersonnelMiddleName() {
+		return personnelMiddleName;
+	}
+	public void setPersonnelMiddleName(String personnelMiddleName) {
+		this.personnelMiddleName = personnelMiddleName;
+	}
+	public String getPersonnelLastName() {
+		return personnelLastName;
+	}
+	public void setPersonnelLastName(String personnelLastName) {
+		this.personnelLastName = personnelLastName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
+	public String getIncidentStreet() {
+		return incidentStreet;
+	}
+	public void setIncidentStreet(String incidentStreet) {
+		this.incidentStreet = incidentStreet;
+	}
+	public String getIncidentLocality() {
+		return incidentLocality;
+	}
+	public void setIncidentLocality(String incidentLocality) {
+		this.incidentLocality = incidentLocality;
+	}
+	public String getIncidentDistrict() {
+		return incidentDistrict;
+	}
+	public void setIncidentDistrict(String incidentDistrict) {
+		this.incidentDistrict = incidentDistrict;
+	}
+	public String getIncidentCommune() {
+		return incidentCommune;
+	}
+	public void setIncidentCommune(String incidentCommune) {
+		this.incidentCommune = incidentCommune;
+	}
+	public String getIncidentVillage() {
+		return incidentVillage;
+	}
+	public void setIncidentVillage(String incidentVillage) {
+		this.incidentVillage = incidentVillage;
+	}
+	public Integer getIncidentPostalCode() {
+		return incidentPostalCode;
+	}
+	public void setIncidentPostalCode(Integer incidentPostalCode) {
+		this.incidentPostalCode = incidentPostalCode;
+	}
+	public String getIncidentProvince() {
+		return incidentProvince;
+	}
+	public void setIncidentProvince(String incidentProvince) {
+		this.incidentProvince = incidentProvince;
+	}
+	public String getIncidentCountry() {
+		return incidentCountry;
+	}
+	public void setIncidentCountry(String incidentCountry) {
+		this.incidentCountry = incidentCountry;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("StolenOrganizationUserDB [createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", personnelFirstName=");
+		builder.append(personnelFirstName);
+		builder.append(", personnelMiddleName=");
+		builder.append(personnelMiddleName);
+		builder.append(", personnelLastName=");
+		builder.append(personnelLastName);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", incidentStreet=");
+		builder.append(incidentStreet);
+		builder.append(", incidentLocality=");
+		builder.append(incidentLocality);
+		builder.append(", incidentDistrict=");
+		builder.append(incidentDistrict);
+		builder.append(", incidentCommune=");
+		builder.append(incidentCommune);
+		builder.append(", incidentVillage=");
+		builder.append(incidentVillage);
+		builder.append(", incidentPostalCode=");
+		builder.append(incidentPostalCode);
+		builder.append(", incidentProvince=");
+		builder.append(incidentProvince);
+		builder.append(", incidentCountry=");
+		builder.append(incidentCountry);
+		builder.append("]");
+		return builder.toString();
+	}
+	
 }
