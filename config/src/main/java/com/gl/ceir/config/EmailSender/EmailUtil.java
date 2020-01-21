@@ -82,9 +82,12 @@ public class EmailUtil {
 			String featureName, String subFeature, String featureTxnId, String subject) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
-
+			String emailBody=null;
+			logger.info("messageDB data by tag: "+messageDB);
+			emailBody=emailContent(messageDB,userProfile);
+			logger.info("email body=  "+emailBody);
 			// Save email in notification table.
-			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), 
+			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL,emailBody, 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0);
 
 
@@ -94,5 +97,46 @@ public class EmailUtil {
 			return Boolean.FALSE;
 		}
 	}
+	
+	public String emailContent(MessageConfigurationDb msgConfigDb,UserProfile profile) {
+		logger.info("tag:  "+msgConfigDb.getTag());
+		String emailBody=null;
+		
+		emailBody=msgConfigDb.getValue();
+		//Consignment_Success_CEIRAuthority_Email_Message
+		if("Consignment_Approved_CustomImporter_Email_Message".equals(msgConfigDb.getTag()) || "Consignment_Success_CEIRAuthority_Email_Message".equals(msgConfigDb.getTag())
+	|| "Consignment_Reject_CEIRAuthority_Email_Message".equals(msgConfigDb.getTag())
+	||"Consignment_Rejected_Custom_Email_Message".equals(msgConfigDb.getTag()) ){
+			emailBody=emailBody.replaceAll("<Importer first name>", profile.getFirstName());
+			emailBody=emailBody.replaceAll("<txn_name>","");
+			return emailBody;
+		}
+		
+		else if("STOCK_APPROVED_BY_CEIR_ADMIN".equals(msgConfigDb.getTag())  || 
+				"STOCK_APPROVED_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) || 
+				"STOCK_REJECT_BY_CEIR_ADMIN".equals(msgConfigDb.getTag())
+				){
+			emailBody=emailBody.replaceAll("<Custom first name>", profile.getFirstName());
+			emailBody=emailBody.replaceAll("<txn_name>","");
+			return emailBody;
+		}
+
+		else if("STOLEN_APPROVED_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"RECOVERY_APPROVED_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"BLOCK_APPROVED_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"UNBLOCK_APPROVED_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"STOLEN_REJECT_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"RECOVERY_REJECT_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"BLOCK_REJECT_BY_CEIR_ADMIN".equals(msgConfigDb.getTag()) ||
+				"UNBLOCK_REJECT_BY_CEIR_ADMIN".equals(msgConfigDb.getTag())
+				){
+			emailBody=emailBody.replaceAll("<first name>", profile.getFirstName());
+			emailBody=emailBody.replaceAll("<txn_name>","");
+			return emailBody;
+		}
+		else {return emailBody;}
+	}
+	
 }
+
 
