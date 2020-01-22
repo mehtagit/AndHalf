@@ -169,7 +169,7 @@ var contextpath = "${context}";
 </head>
 
 <body>
-
+<%String userType=request.getParameter("type");%>
 <!-- Modal End --> 
 	<!-- ================================================
     Scripts
@@ -216,11 +216,12 @@ var contextpath = "${context}";
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("name") %> Registration</h5>
+							<h5><%=request.getParameter("type") %> Registration</h5>
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
-               <input type="hidden" id="usertypeId" value="${usertypeId}">
-							<div class="row">
+                     <input type="hidden" id="usertypeId" value="">
+               <input type="hidden" id="usertypeName" value="<%=userType%>">
+               			<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
 										required="required" pattern="[A-Za-z]{0,20}" maxlength="20"
@@ -835,8 +836,7 @@ var contextpath = "${context}";
             usertypeData2(<%=request.getParameter("usertypeId")%>);
         }); 
         populateCountries(
-                "country",
-               "state",
+                "country",    "state",
             );
         
        $("#country").val("Cambodia");

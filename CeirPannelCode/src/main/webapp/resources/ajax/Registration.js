@@ -1,31 +1,5 @@
-function openRegistrationPage(){
-	var usertypeDropdown=$("#usertypes option:selected"); 
-	var usertypeDropdownText=usertypeDropdown.text();
-	var usertypeDropdownVal=usertypeDropdown.val(); 
-	if(usertypeDropdownVal=="4"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Importer";
-	}
-	else if(usertypeDropdownVal=="5"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Distributor";
-	}
-	else if(usertypeDropdownVal=="6"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Retailer";
-	}
-	else if(usertypeDropdownVal=="7"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=Custom";
-	}
-	else if(usertypeDropdownVal=="10"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=TRC";
-	}
-	else if(usertypeDropdownVal=="12"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=Manufacturer";
-	}
-
-	else if(usertypeDropdownVal=="9"){
-		window.location.href=contextpath+"/operatorRegistration?usertypeId="+usertypeDropdownVal;
-	} 
-	else{
-	}
+function openRegistrationPage(usertype){
+	window.location.href=contextpath+"/registration?type="+usertype;
 }
 function portDropDownData(){ 
 	$.ajax({
@@ -301,6 +275,7 @@ function saveRegistration(){
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					usertypeName:val.find('#usertypeName').val(),
 					questionList:questionData   
 			}    
 		} 
@@ -369,6 +344,7 @@ function saveCustomRegistration(){
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					usertypeName:val.find('#usertypeName').val(),
 					arrivalPort:val.find('#arrivalPort').val(),
 					questionList:questionData,
 					type:val.find('#type').val()
@@ -378,13 +354,12 @@ function saveCustomRegistration(){
 	});
 	console.log("question data:  "+JSON.stringify(obj));
 	var formData;
-
 	formData = new FormData();
 	formData.append( 'NationalIdImage', $( '#NationalIdImage' )[0].files[0] );
 	formData.append( 'photo', $( '#photo' )[0].files[0] );
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));  
-	console.log("data=  "+formData);
+	console.log("data=  "+JSON.stringify(formData));
 	registrationAjax(formData);
 	return false;
 }   
@@ -440,6 +415,7 @@ function saveOperatorRegistration(){
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					usertypeName:val.find('#usertypeName').val(),
 					operatorTypeId:val.find('#operatorType').val(),  
 					operatorTypeName:val.find('#operatorType option:selected').text(),
 					type:val.find('#type').val(),
