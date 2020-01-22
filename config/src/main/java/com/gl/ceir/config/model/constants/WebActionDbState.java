@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model.constants;
 
 public enum WebActionDbState {
-	SUCCESS(0), INIT(1), PROCESSING(2), ERROR(3);
+	SUCCESS(3), INIT(0), PROCESSING(1), ERROR(2);
 	
 	private int code;
 
