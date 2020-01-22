@@ -169,7 +169,7 @@ var contextpath = "${context}";
 		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
+    <%String name=request.getParameter("type");%>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
@@ -180,15 +180,17 @@ var contextpath = "${context}";
 
 					<div class="card-panel registration-form">
 						<div class="row">
-							<h5><%=request.getParameter("name") %> Registration</h5>
+							<h5><%=name%> Registration</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr>
 
-							<input type="hidden" id="usertypeId" value="${usertypeId}">
+							<input type="hidden" id="usertypeId" value="1">
+							<input type="hidden" id="usertypeName" value="<%=name%>">
 							<input type="hidden" id="type" value="2">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
-									<input type="text" name="firstName" id="firstName"
+									
+<input type="text" name="firstName" id="firstName"
 										required="required" pattern="[A-Za-z]{0,20}" maxlength="20"
 										title="Please enter alphabets upto 20 characters only">
 									<label for="firstName" class="center-align">First Name
@@ -298,6 +300,7 @@ var contextpath = "${context}";
 										style="padding-left: 0;" required></select>
 								</div>
 								
+								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
 									<label>Expected Arrival Port<span class="star">*</span></label>
 									<select id="arrivalPort" class="browser-default"
@@ -305,6 +308,7 @@ var contextpath = "${context}";
 										<option value="" disabled selected>Expected Arrival Port</option>
 									</select>
 								</div>
+								<%} %>
 								
 								
 							</div>
@@ -322,22 +326,22 @@ var contextpath = "${context}";
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload National ID *</span> <input id="NationalIdImage"
-											type="file" placeholder="Upload National ID Image">
+											type="file" placeholder="">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
-											placeholder="Upload National ID Image">
+											placeholder="">
 									</div>
 								</div>
 
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload Photo *</span> <input id="photo" type="file"
-											placeholder="Upload Photo">
+											placeholder="">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
-											placeholder="Upload Photo">
+											placeholder="">
 									</div>
 								</div>
 
@@ -350,11 +354,11 @@ var contextpath = "${context}";
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload ID Card *</span> <input id="idCard" type="file"
-											placeholder="Upload Photo">
+											placeholder="">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
-											placeholder="Upload ID Card Image">
+											placeholder="">
 									</div>
 								</div>
 
@@ -713,10 +717,11 @@ var contextpath = "${context}";
             data-dismiss="modal">&times;</button>
         <h6 class="modal-header">Verify OTP</h6>
         <div class="modal-content">
-       
+          
                 <h6 id="otpResponse"></h6>
             <div class="row">
                 <div class="input-field col s12 center">
+                   
                     <a href="${context}/login" class="btn">ok</a>
                 </div>
             </div>
@@ -788,12 +793,12 @@ var contextpath = "${context}";
 	<script>
         populateCountries(
             "country",
-            "state",
+            "state"
         );
        
         populateStates(
             "country",
-            "state",
+            "state"
         );
     </script>
 

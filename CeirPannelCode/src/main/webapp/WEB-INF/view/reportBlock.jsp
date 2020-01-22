@@ -77,6 +77,12 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}">
@@ -135,12 +141,12 @@
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" required="required"
                                                                     title="Please enter your device serial number first" maxlength="15">
-                                                                <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
+                                                                <label for="singleblockserialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="singleblockremark" class="materialize-textarea" required="required"></textarea>
-                                                                <label for="blockRemark">Remark <span class="star">*</span></label>
+                                                                <label for="singleblockRemark">Remark <span class="star">*</span></label>
                                                             </div>
                                                               <div class="col s12 m6"><label for="singleDeviceCategory">Category
                                                             <span class="star">*</span></label>
@@ -231,7 +237,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit">Submit</button>
+                                                        <button class="btn" id="singleblockSubmit" type="submit">Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
@@ -261,7 +267,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             <input type="file" id="blockBulkFile" accept=".csv" required="required">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" placeholder="Please select the file">
+                                                            <input class="file-path validate" type="text" placeholder="">
                                                         </div>
                                                     </div>
 
@@ -274,7 +280,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit" >Submit</button>
+                                                        <button class="btn" type="submit" id="blockBulkSubmitButton" >Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>

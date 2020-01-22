@@ -88,14 +88,36 @@ var contextpath = "${context}";
 
                         <ul class="haed-btn">
                             <li class="haed-btn-style"><a href="${context}/login" style="color: #000;">Login</a></li>
-                            <li class="haed-btn-style" style="padding: 0;">
- 
-                                                               
-<select id="usertypes" class="browser-default" onchange="openRegistrationPage();" style="height: 35px; width: 150px;">
+                            <li class="haed-btn-style" style="padding: 0;">                                                               
+<select id="usertypes" class="browser-default" onchange="openRegistrationPage(this.value)" style="height: 35px; width: 150px;">
 <option value="" disabled selected>Registration</option>
+<option value="Importer">Importer</option>
+<option value="Distributor">Distributor</option>
+<option value="Retailer">Retailer</option>
+<option value="Custom">Custom</option>
+<option value="Operator">Operator</option>
+<option value="TRC">TRC</option>
+<option value="Manufacturer">Manufacturer</option>
+<option value="Lawful Agency">Lawful Agency</option>
+<option value="Immigration">Immigration</option>
+
 </select>
 </li>
 
+	<li class="haed-btn-style" style="padding: 0;">
+								<select id="usertypes" class="browser-default" onchange="openEndUserGrievancePage(this)" style="height: 35px; width: 150px;">
+									<option value="" disabled selected>Register Grievance</option>
+                                    <option value="0">Report Grievance</option>
+                                    <option value="1">Track Grievance</option>
+								</select>
+							</li>
+								<li class="haed-btn-style" style="padding: 0;">
+								<select id="usertypes" class="browser-default" onchange="openEndUserStockPage(this)" style="height: 35px; width: 150px;">
+									<option value="" disabled selected>Stock</option>
+                                    <option value="0">Upload Stock</option>
+                                    <option value="1">Check Upload Status</option>
+								</select>
+							</li>
                             <li class="haed-btn-style"><a href="./checkDeviceslogin" style="color: #000;" >Check Device</a></li>
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Upload
                                     Document</a></li>
@@ -222,7 +244,7 @@ var contextpath = "${context}";
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
     <script>
         $(document).ready(function () {
-        	  usertypeDropDownData();
+        	//  usertypeDropDownData();
             $('.modal').modal();
         });
       

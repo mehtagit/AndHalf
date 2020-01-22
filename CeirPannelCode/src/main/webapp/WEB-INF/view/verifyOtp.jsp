@@ -162,11 +162,11 @@ var userIdValue='<%=userId%>';
                         <input type="hidden" id="userid"  value="<%=userId%>"  name="userid" >
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" name="emailOtp" id="emailOtp" placeholder="Enter OTP of Email"/>
+                                <input type="text" name="emailOtp" id="emailOtp" placeholder=""/>
                             </div> 
                    
                             <div class="input-field col s12 m12">
-                                <input type="text" name="phoneOtp" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                                <input type="text" name="phoneOtp" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
 
@@ -189,7 +189,7 @@ var userIdValue='<%=userId%>';
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <div class="row">
                             <div class="input-field col s12 m12">
-                                <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Phone"/>
+                                <input type="text" name="SupplierID" id="SupplierID" placeholder=""/>
                             </div>
                         </div>
 
@@ -212,7 +212,7 @@ var userIdValue='<%=userId%>';
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <div class="row">
                             <div class="input-field col s12 m12">
-                                <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Email"/>
+                                <input type="text" name="SupplierID" id="SupplierID" placeholder=""/>
                             </div> 
                         </div>
 

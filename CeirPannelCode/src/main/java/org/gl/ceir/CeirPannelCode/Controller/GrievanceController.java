@@ -246,6 +246,7 @@ public class GrievanceController {
 							int userId= (int) session.getAttribute("userid"); 
 							int file=1;
 							String userType=(String) session.getAttribute("usertype");
+						    Integer usertypeId=(int) session.getAttribute("usertypeId");
 							FileExportResponse fileExportResponse;
 							FilterRequest filterRequest= new FilterRequest();
 							filterRequest.setStartDate(grievanceStartDate);
@@ -255,6 +256,7 @@ public class GrievanceController {
 							filterRequest.setGrievanceId(grievanceId);
 							filterRequest.setUserId(userId);
 							filterRequest.setUserType(userType);
+							filterRequest.setUserTypeId(usertypeId);
 							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
 						
@@ -265,6 +267,17 @@ public class GrievanceController {
 							
 							return "redirect:"+fileExportResponse.getUrl();
 					}
+
+						@RequestMapping(value={"/openEndUserGrievancePage"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+						    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
+						{
+							ModelAndView mv = new ModelAndView();
+							 
+							log.info(" view End user Grievance entry point."+reportType); 
+						    mv.setViewName("openEndUserGrievancePage");
+							log.info(" view End user Grievance exit point."); 
+							return mv; 
+						}
 
 }
 

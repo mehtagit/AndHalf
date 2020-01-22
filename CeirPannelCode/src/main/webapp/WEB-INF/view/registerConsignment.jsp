@@ -260,9 +260,9 @@ section {
 
 									<div class="row">
 										<div class="input-field col s12 center">
-									
-											<button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-									
+						
+											<button class=" btn" id="consignmentSubbmitButton" type="submit"><spring:message code="button.submit" /></button>
+												
 											<a href="#cancelMessage" class="btn modal-trigger"
 												type="cancel" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 
@@ -415,6 +415,7 @@ section {
 						success : function(data, textStatus, jqXHR) {
 
 							console.log(data);
+							$("#consignmentSubbmitButton").prop('disabled', true);
 							$('#submitConsignment').openModal();
 							if (data.errorCode == "0") {
 								console.log("status code = 0");

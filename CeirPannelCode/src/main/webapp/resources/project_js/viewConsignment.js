@@ -121,11 +121,11 @@
 		$("#updateModal").openModal();
 	}
 
-	function ConsignmentCurrency()
+function ConsignmentCurrency()
 	{
-		var currency="currency";
+		var currency="CURRENCY";
 		$.ajax({
-			url: './consignmentCurency?currency='+currency,
+			url: './consignmentCurency?CURRENCY='+currency,
 			type: 'GET',
 			processData: false,
 			contentType: false,
@@ -149,14 +149,15 @@
 
 	function viewConsignmentCurrency()
 	{
-		var currency="currency";
+		var currency="CURRENCY";
 		$.ajax({
-			url: './consignmentCurency?currency='+currency,
+			url: './consignmentCurency?CURRENCY='+currency,
 			type: 'GET',
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 				console.log(data);
+		
 
 				/*	$('#viewcurrency').empty();*/
 				for (i = 0; i < data.length; i++){
@@ -651,8 +652,6 @@
 
 	function openApprovePopUp(txnId,displayName)
 	{
-
-		
 		var userType=$("body").attr("data-roleType");
 		displayName=displayName.replace("+20"," " );
 		$('#ApproveConsignment').openModal();

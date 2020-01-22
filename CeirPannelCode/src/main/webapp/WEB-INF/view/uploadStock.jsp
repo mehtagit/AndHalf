@@ -274,7 +274,7 @@ to {
 
 								<div class="row" style="padding-bottom: 100px;">
 									<div class="input-field col s12 center">
-										<button class=" btn" type="submit">
+										<button class=" btn" id="stockSubmitButton" type="submit">
 											<spring:message code="button.submit" />
 										</button>
 										<a href="#cancelMessage" class="modal-trigger btn"
@@ -451,6 +451,7 @@ function uploadStock(){
 		success: function (data, textStatus, jqXHR) {
 			
 			 console.log(data);
+			 $("#stockSubmitButton").prop('disabled', true);
 			  $('#submitStock').openModal();
 			 if(data.errorCode=="0")
 				 {

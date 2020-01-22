@@ -1,6 +1,6 @@
 {
 "button.export":"Export",
-"successMsg":"Your form has been successfully submitted. The Transaction ID for future reference is",
+"successMsg":"Your form has been successfully submitted. The Transaction ID for future reference is ",
 "rejectedMsg":"The consignment has been marked as rejected.",
 "consignmentApproved":"The consignment has been successfully approved.",
 "errorMsg":"something happend wrong.",

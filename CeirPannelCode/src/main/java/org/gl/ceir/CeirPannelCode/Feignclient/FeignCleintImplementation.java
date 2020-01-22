@@ -312,13 +312,12 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 						@RequestParam(value = "file", defaultValue = "0") Integer file) ;
 
-				//************************************************ view Audit Management Feign *************************************
+			//************************************************ view Audit Management Feign *************************************
 
 				@RequestMapping(value="/audit-trail/{id}" ,method=RequestMethod.GET) 
 				public AuditContentModel viewAuditManagementFeign(@PathVariable("id") Integer id);
 
-				
-				//************************************ Message update Feign  *************************************************
+//************************************ Message update Feign  *************************************************
 				
 				@PostMapping(value="/checkDevice")
 				public @ResponseBody GenricResponse viewDetails(FilterRequest filterRequest);
