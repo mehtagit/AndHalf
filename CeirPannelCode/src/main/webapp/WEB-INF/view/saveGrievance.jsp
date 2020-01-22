@@ -141,7 +141,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 
 <div class="center" style="margin-top: 50px;">
 <button class="btn"
-type="submit" ><spring:message code="button.submit" /></button>
+type="submit" id="saveGrievancesubmitButton" ><spring:message code="button.submit" /></button>
 <a href="./grievanceManagement" class="btn" id="Cancel"
 style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 </div>
@@ -308,6 +308,7 @@ function saveGrievance(){
 		async:false,
 	/*	method: 'POST',*/
 		success: function (data, textStatus, jqXHR) {
+			$("#saveGrievancesubmitButton").prop('disabled', true);
 			var x=data;
 			var y= JSON.parse(x);
 			

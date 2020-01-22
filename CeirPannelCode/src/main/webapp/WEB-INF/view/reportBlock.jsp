@@ -231,7 +231,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit">Submit</button>
+                                                        <button class="btn" id="singleblockSubmit" type="submit">Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
@@ -274,7 +274,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit" >Submit</button>
+                                                        <button class="btn" type="submit" id="blockBulkSubmitButton" >Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>

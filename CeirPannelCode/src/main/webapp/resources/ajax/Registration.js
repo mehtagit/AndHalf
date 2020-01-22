@@ -486,3 +486,48 @@ function registrationAjax(obj){
 		}
 	});
 }
+
+
+
+function openEndUserGrievancePage(reportType){
+	//alert(reportType.value);
+	console.log("reportType=="+reportType.value);
+	window.location.href="./openEndUserGrievancePage?reportType="+reportType.value;
+	console.log("details."+window.location.href);
+	//alert(window.location.href);
+
+}
+
+function  openEndUserStockPage(reportType)
+{
+	//alert(reportType.value);
+	console.log("reportType=="+reportType.value);
+	window.location.href="./openEndUserStockPage?reportType="+reportType.value;
+	console.log("details."+window.location.href);
+	/*alert(window.location.href);*/
+/*	$.ajax({   
+		type : 'POST',
+		url : contextpath + '/openEndUserStockPage?reportType='+reportType.value,
+		processData : false,
+		contentType : false,
+		success : function(response) {
+			console.log("sucess function...%%%%")
+			var respData=JSON.parse(JSON.stringify(response));
+			console.log("response from server:  "+JSON.stringify(respData));
+			if(respData.statusCode==200){
+				//window.location.href='./verifyOtpPage/?userid='+respData.userId;
+				$("#userid").val(response.userId);
+				//window.location.href='#otpMsgModal';
+				$("#otpMsgModal").openModal();
+				$("#otpMsg").text(response.response);
+			}
+			else{
+				$("#registrationForm #msg").text(respData.response);
+			}
+			$("#btnSave").prop('disabled', false);
+		}, 
+		error: function (xhr, ajaxOptions, thrownError) {
+			$("#btnSave").prop('disabled', false);
+		}
+	});*/
+}

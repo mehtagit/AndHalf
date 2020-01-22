@@ -640,7 +640,7 @@ function submitDeviceInfo(){
 			console.log("in suucess method");
 
 			console.log(data);
-
+			$("#uploadPaidStatusbutton").prop('disabled', true);
 //			$('#updateConsignment').modal();
 			if(data.errorCode==200){
 

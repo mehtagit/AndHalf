@@ -1,4 +1,4 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+\<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -59,7 +59,9 @@
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
-
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <style>
 .row {
@@ -504,7 +506,7 @@ input[type='search'] {
 										</div>
 
 										<div class="col s12 m12 center" style="margin-top: 30px;">
-											<button class="btn " type="submit">Submit</button>
+											<button class="btn " id="uploadPaidStatusbutton" type="submit">Submit</button>
 											<a  href='./uploadPaidStatus?via=other' class="btn"
 												style="margin-left: 10px;">Cancel</a>
 										</div>
@@ -867,6 +869,9 @@ input[type='search'] {
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			
 
 
 

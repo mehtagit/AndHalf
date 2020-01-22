@@ -202,7 +202,7 @@
 									marked with <span class="star">*</span>
 								</span>
 								<div class="center" style="margin-top: 50px;">
-									<button  class=" btn"
+									<button  class=" btn" id="trcSubmitButton"
                                                  type="submit">Submit</button>
 									<a href="./manageTypeDevices" class="btn" id="Cancel"
 										style="margin-left: 10px;">Cancel</a>
@@ -297,6 +297,7 @@ var featureId = 11;
 				contentType : false, 
 				success : function(data, textStatus, jqXHR) {
 						console.log("-----success"+data);
+						$("#trcSubmitButton").prop('disabled', true);
 					  $('#RegisterManageTypeDevice').openModal();
 					  /*if(data.errorCode=="0")
 					 {

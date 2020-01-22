@@ -26,7 +26,6 @@ public class ProjectDropdownController {
 		List<Dropdown> dropdown = feignCleintImplementation.consignmentStatusList(featureId, userTypeId);
 		return dropdown;
 	}
-
 	
 	@ResponseBody
 	@GetMapping("getDropdownList/{tag}")
@@ -62,6 +61,7 @@ public class ProjectDropdownController {
 		List<Dropdown> dropdown = feignCleintImplementation.modeType(tagId, featureId);
 		return dropdown;
 	}
+	
 	
 	
 }

@@ -651,7 +651,7 @@
 
 	function openApprovePopUp(txnId,displayName)
 	{
-		
+
 		
 		var userType=$("body").attr("data-roleType");
 		displayName=displayName.replace("+20"," " );

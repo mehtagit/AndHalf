@@ -117,7 +117,7 @@ function submitBlockImei()
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
-
+				$("#blockBulkSubmitButton").prop('disabled', true);
 				console.log(data);
 				//$('#fileStolenModal').closeModal();
 				$('#markBulkAsBlock').openModal();
@@ -164,6 +164,7 @@ $.ajax({
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 			console.log(data);
+			$("#bulkUnblockSubmitButton").prop('disabled', true);
 //		 console.log(data);
 			$('#markBulkAsUnblock').openModal();
 			 $('#txnIdUnblocksingleDevice').text(data.txnId);
@@ -230,7 +231,7 @@ var singleImeiBlockDetail={
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
-			
+			$("#singleblockSubmit").prop('disabled', true);
 			 console.log(data);
 			 $('#markAsBlock').openModal();
 			 $('#txnIdblockBulkDevice').text(data.txnId);
@@ -297,7 +298,7 @@ var singleImeiBlockDetail={
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
-			
+			$("#singleUnblockSubmitButton").prop('disabled', true);
 			 console.log(data);
 			 $('#markAsUnblock').openModal();
 			 $('#txnIdblocksingleDevice').text(data.txnId);
