@@ -115,6 +115,8 @@ public class StateMgmtDb implements Serializable {
 		builder.append(userTypeId);
 		builder.append(", state=");
 		builder.append(state);
+		builder.append(", interp=");
+		builder.append(interp);
 		builder.append("]");
 		return builder.toString();
 	}

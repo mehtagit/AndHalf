@@ -24,7 +24,7 @@ public class User {
 	
 	@Id       
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private long id;
 	
 	private String username;
 	
@@ -41,7 +41,7 @@ public class User {
 	
     private Integer previousStatus;
 	
-	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	UserProfile userProfile;
 	
 	public static User getDefaultUser() {
@@ -125,9 +125,9 @@ public class User {
 		builder.append(currentStatus);
 		builder.append(", previousStatus=");
 		builder.append(previousStatus);
-		builder.append(", userProfile=");
-		builder.append(userProfile);
-		builder.append("]");
+		/*
+		 * builder.append(", userProfile="); builder.append(userProfile);
+		 */		builder.append("]");
 		return builder.toString();
 	}
 	

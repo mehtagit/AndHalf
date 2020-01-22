@@ -150,14 +150,13 @@ public class FilterRequest {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	
 	public Integer getOperatorTypeId() {
 		return operatorTypeId;
 	}
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -193,6 +192,16 @@ public class FilterRequest {
 		builder.append(deviceIdType);
 		builder.append(", deviceType=");
 		builder.append(deviceType);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", channel=");
+		builder.append(channel);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
 		builder.append("]");
 		return builder.toString();
 	}

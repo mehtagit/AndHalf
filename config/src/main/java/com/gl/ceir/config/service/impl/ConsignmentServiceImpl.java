@@ -36,7 +36,6 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
@@ -57,7 +56,6 @@ import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
-import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
@@ -188,8 +186,11 @@ public class ConsignmentServiceImpl {
 		try {
 
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			logger.info("statusList " + statusList);
+			
 			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build());
-
+			logger.info("consignmentMgmts " + consignmentMgmts);
+			
 			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
 
 				for(StateMgmtDb stateMgmtDb : statusList) {
@@ -201,7 +202,8 @@ public class ConsignmentServiceImpl {
 
 				setInterp(consignmentMgmt2);
 			}
-
+			
+			logger.info("ConsignmentMgmt : " + consignmentMgmts);
 			return consignmentMgmts;
 
 		} catch (Exception e) {
@@ -521,28 +523,18 @@ public class ConsignmentServiceImpl {
 
 				fileRecords = new ArrayList<>(); 
 
-				List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-
 				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
 					UserProfile userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
-					setInterp(consignmentMgmt);
-					cfm = new ConsignmentFileModel();
-					
-					for(StateMgmtDb stateMgmtDb : statusList) {
-						if(consignmentMgmt.getConsignmentStatus() == stateMgmtDb.getState()) {
-							consignmentMgmt.setStateInterp(stateMgmtDb.getInterp()); 
-							break; 
-						} 
-					}
 
+					cfm = new ConsignmentFileModel();
 					cfm.setConsignmentId( consignmentMgmt.getId() );
-					cfm.setConsignmentStatus(consignmentMgmt.getStateInterp());
 					cfm.setTaxPaidStatus(consignmentMgmt.getTaxInterp());
 					cfm.setTxnId( consignmentMgmt.getTxnId());
 					cfm.setCreatedOn(consignmentMgmt.getCreatedOn().format(dtf));
 					cfm.setModifiedOn( consignmentMgmt.getModifiedOn().format(dtf));
 					cfm.setFileName( consignmentMgmt.getFileName());
 					cfm.setSupplierName(userProfile.getDisplayName());
+					cfm.setConsignmentStatus(consignmentMgmt.getStateInterp());
 
 					logger.debug(cfm);
 

@@ -130,21 +130,13 @@ public class StockServiceImpl {
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				if(validateUserProfileOfStock(stockMgmt)) {
-					User user = userRepository.save(User.getDefaultUser());
-					logger.info("User [" + user + "] saved.");
-					if(Objects.nonNull(user)) {
-						UserProfile userProfile = UserProfile.getDefaultUserProfile();
-						userProfile.setUser(user);
-						userProfile.setUser(user);
-						userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
-						logger.info("Going to save userprofile : " + userProfile);
-						userProfileRepo.save(userProfile);
-						logger.info("Userprofile [" + userProfile + "] saved.");
-					}else {
-						logger.info("A new end_user registeration have been failed." + user);
-						return new GenricResponse(4, "A new end_user have been failed.", user.toString());
-					}
-					logger.info("A new end_user have been saved successfully." + user);
+					User user = User.getDefaultUser();
+					UserProfile userProfile = UserProfile.getDefaultUserProfile();
+					userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
+					userProfile.setUser(user);
+					user.setUserProfile(userProfile);
+					user = userRepository.save(user);
+					logger.info("User [" + user + "] have been saved successfully.");
 					stockMgmt.setUserId(new Long(user.getId()));
 					stockMgmt.setUser(user);
 				}else {
@@ -239,7 +231,7 @@ public class StockServiceImpl {
 
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-
+			logger.info("statusList " + statusList);
 			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build());
 
 			logger.info(statusList);
@@ -489,6 +481,7 @@ public class StockServiceImpl {
 				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 
 				for( StockMgmt stockMgmt : stockMgmts ) {
+					UserProfile userProfile = userProfileRepository.getByUserId(stockMgmt.getUserId());
 					sfm = new StockFileModel();
 
 					sfm.setStockId(stockMgmt.getId());
@@ -497,6 +490,7 @@ public class StockServiceImpl {
 					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
 					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
 					sfm.setFileName( stockMgmt.getFileName());
+					sfm.setSupplierName(userProfile.getDisplayName());
 
 					logger.debug(sfm);
 

@@ -353,6 +353,8 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(totalPrice);
 		builder.append(", user=");
 		builder.append(user);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
 		builder.append("]");
 		return builder.toString();
 	}

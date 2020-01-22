@@ -341,8 +341,9 @@ public class UserProfile {
 		builder.append(photoFilename);
 		builder.append(", idCardFilename=");
 		builder.append(idCardFilename);
-		builder.append(", user=");
-		builder.append(user);
+		/*
+		 * builder.append(", user="); builder.append(user);
+		 */
 		builder.append("]");
 		return builder.toString();
 	}
