@@ -7,103 +7,95 @@
 <title>Dashboard</title>
 <meta charset="utf-8" />
 <meta name="viewport"
-content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
-rel="stylesheet" media="screen,projection">
+	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
-rel="stylesheet" media="screen,projection">
+	rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
-rel="stylesheet" media="screen,projection">
+	rel="stylesheet" media="screen,projection">
 <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
 <link href="${context}/resources/js/plugins/prism/prism.css"
-type="text/css" rel="stylesheet" media="screen,projection">
+	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
-type="text/css" rel="stylesheet" media="screen,projection">
+	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
-type="text/css" rel="stylesheet" media="screen,projection">
+	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/font/font-awesome/css/font-awesome.css"
-type="text/css" rel="stylesheet" media="screen,projection">
+	type="text/css" rel="stylesheet" media="screen,projection">
 <link
-href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
-type="text/css" rel="stylesheet" media="screen,projection">
-<script>
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+	<script>
 var contextpath = "${context}";
 <%String usertype=(String)session.getAttribute("usertype");%>
 </script>
 </head>
 
 <body>
-<!-- Start Page Loading -->
-<div id="loader-wrapper">
-<div id="loader"></div>
-<div class="loader-section section-left"></div>
-<div class="loader-section section-right"></div>
-</div>
-<!-- End Page Loading -->
+	<!-- Start Page Loading -->
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div>
+	</div>
+	<!-- End Page Loading -->
 
-<!-- //////////////////////////////////////////////////////////////////////////// -->
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
-<!-- START HEADER -->
-<header id="header" class="page-topbar">
-<!-- start header nav-->
-<div class="navbar-fixed">
-<nav class="navbar-color">
-<div class="nav-wrapper">
-
-<a href="#" data-activates="slide-out"
-class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
-class="mdi-navigation-menu"></i></a>
-<div class="left-bar">
-<ul class="left">
-<li>
-<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto ">
-<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
-<img src="./resources/images/dmc_gl.png" class="darken-1 my-2 small-logo">
-</a>
-</div>
-</li>
-<li>
-<h1 class="logo-wrapper">
-
-<a href="#" class="brand-logo darken-1">CEIR -
-<span id="cierRoletype"><%=usertype%></span> Portal
-
-<%if("Operator".equalsIgnoreCase(usertype)){%>
-- <%=session.getAttribute("operatorTypeName") %>
-<%}else{}%>
-
-</a> <span class="logo-text">Materialize</span>
-</h1>
-</li>
-</ul>
-</div>
-
-<div class="right-bar">
-<ul id="chat-out" class="right hide-on-med-and-down"
+	<!-- START HEADER -->
+	<header id="header" class="page-topbar">
+		<!-- start header nav-->
+		<div class="navbar-fixed">
+			<nav class="navbar-color">
+				<div class="nav-wrapper">
+					<ul class="left">
+						<li>
+						<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
+            <a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
+                <img src="./resources/images/dmc_gl.png" class="darken-1 my-2">
+            </a>
+        </div>
+        </li>
+						<li>
+							<h1 class="logo-wrapper">
+							
+								<a href="#" class="brand-logo darken-1">CEIR -
+									<span id="cierRoletype"><%=usertype%></span> Portal 
+									 
+									<%if("Operator".equalsIgnoreCase(usertype)){%>
+									-	<%=session.getAttribute("operatorTypeName") %>
+									<%}else{}%>   
+										
+									</a> <span class="logo-text">Materialize</span>
+							</h1> 
+						</li>
+					</ul>
+					
+					
+				
+					<ul id="chat-out" class="right hide-on-med-and-down"
 style="overflow: inherit !important;">
 
 <li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
-<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>
-<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
-<option value="en">English</option>
-<option value="km">Khmer</option>
-</select></div>
-</div>
-</li>
-
-
-<li class="profileInfo">
-<a href="./homePage" id="newUserLink" style="color:white;float:left">Home</a>
-
-<a
+			<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
+			<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
+					<option value="en">English</option>
+					<option value="km">Khmer</option>
+					</select></div>
+			</div>
+			</li>
+		<li><a href="./homePage" id="newUserLink" style="color:white;">Home</a>	</li>			
+					
+<li class="profileInfo"><a
 class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 href="#" data-activates="profile-dropdown" style="height: 65px;"><i
 class="mdi-action-account-circle"
@@ -120,7 +112,7 @@ Password</span></a></li>
 
 <li class="divider"></li>
 <li><a href="#manageAccount" class="modal-trigger"><i class="mdi-action-settings dropdownColor"></i><span
-class="dropdownColor"> Activate/Deactivate Account</span></a></li>
+class="dropdownColor"> Activate/Deactivate Account</span></a></li>	
 <li class="divider"></li>
 
 <li><a href="${context}/logout" id=""><i style="float: left;"
@@ -129,212 +121,206 @@ class="dropdownColor"> Logout</span></a></li>
 
 </ul></li>
 </ul>
-
+				</div>
+			</nav>
 </div>
 
+		<!-- end header nav-->
+	</header>
+	<!-- END HEADER -->
+
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START MAIN -->
+	<div id="main">
+		<!-- START WRAPPER -->
+		<div class="wrapper">
+
+			<!-- START LEFT SIDEBAR NAV-->
+			<aside id="left-sidebar-nav">
+				<ul id="slide-out" class="side-nav fixed leftside-navigation">
+					<li class="user-details cyan darken-2">
+						<div class="row">
+							<div class="col col s4 m4 l4">
+								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
+								<p
+									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
+									Welcome <%=(String)session.getAttribute("name") %>
+									(<%=(String)session.getAttribute("username")%>) 
+									</p>
+							</div>
+
+						</div>
+					</li>
+					<%-- <li>
+						<ul>
+							<li class="bold"><a href="${context}/Home" target="mainArea"
+								class="waves-effect waves-cyan"><i class="fa fa-tachometer"></i>
+									Dashboard</a></li>
+							<li><a href="./Consignment/viewConsignment"
+								target="mainArea"><i class="fa fa-list-alt"></i>Consignment
+							</a></li> 
+							<li><a href="./assignDistributor" target="mainArea"><i
+									class="fa fa-th-list"></i>Upload Stock</a></li>
+							<li><a href="./stolenRecovery" target="mainArea"><i
+									class="fa fa-hand-o-right"></i>Stolen/Stock </a></li>
+						</ul>
+					</li> --%>
+					
+					
+					<li>
+					<ul class="navData">
+					<c:forEach items="${features}"  var="feature">
+							<li class="bold"><a href="${feature.link}" target="mainArea"
+								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
+									 ${feature.name}</a></li>
+					</c:forEach>
+					</ul>
+					</li>
 
 
 
+					<!--         <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="fa fa-file-text-o"></i> View</a>
+                        <div class="collapsible-body">
+                            <ul>
+                                <li><a  href="./importerConsignment/1" target="mainArea"><i class="fa fa-file-text-o"></i>Consignment </a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-file-text-o"></i>Stolen/Recovery</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </li> -->
 
 
 
-</div>
-</nav>
-</div>
+				</ul>
+				<a href="#" data-activates="slide-out"
+					class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
+					class="mdi-navigation-menu"></i></a>
+			</aside>
+			<!-- END LEFT SIDEBAR NAV-->
 
-<!-- end header nav-->
-</header>
-<!-- END HEADER -->
+			<!-- //////////////////////////////////////////////////////////////////////////// -->
 
-<!-- //////////////////////////////////////////////////////////////////////////// -->
+			<!-- START CONTENT -->
+			<section id="content">
 
-<!-- START MAIN -->
-<div id="main">
-<!-- START WRAPPER -->
-<div class="wrapper">
+				<!--breadcrumbs start-->
 
-<!-- START LEFT SIDEBAR NAV-->
-<aside id="left-sidebar-nav">
-<ul id="slide-out" class="side-nav fixed leftside-navigation">
-<li class="user-details cyan darken-2">
-<div class="row">
-<div class="col col s4 m4 l4">
-<!-- <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
-<p
-style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
-Welcome <%=(String)session.getAttribute("name") %>
-(<%=(String)session.getAttribute("username")%>)
-</p>
-</div>
-
-</div>
-</li>
-<%-- <li>
-<ul>
-<li class="bold"><a href="${context}/Home" target="mainArea"
-class="waves-effect waves-cyan"><i class="fa fa-tachometer"></i>
-Dashboard</a></li>
-<li><a href="./Consignment/viewConsignment"
-target="mainArea"><i class="fa fa-list-alt"></i>Consignment
-</a></li>
-<li><a href="./assignDistributor" target="mainArea"><i
-class="fa fa-th-list"></i>Upload Stock</a></li>
-<li><a href="./stolenRecovery" target="mainArea"><i
-class="fa fa-hand-o-right"></i>Stolen/Stock </a></li>
-</ul>
-</li> --%>
+				<!--breadcrumbs end-->
 
 
-<li>
-<ul class="navData">
-<c:forEach items="${features}" var="feature">
-<li class="bold"><a href="${feature.link}" target="mainArea"
-class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
-${feature.name}</a></li>
-</c:forEach>
-</ul>
-</li>
+				<!--start container-->
+				<div class="container">
+					<div class="section">
+
+						<iframe name="mainArea" class="embed-responsive-item" id="mainArea"
+							scrolling="yes" frameBorder="0" src="./Home" width="100%"
+							height="700px"></iframe>
+					</div>
+					<!-- Floating Action Button -->
+
+					<!-- Floating Action Button -->
+				</div>
+				<!--end container-->
+			</section>
+			<!-- END CONTENT -->
+
+			<!-- //////////////////////////////////////////////////////////////////////////// -->
+			<!-- START RIGHT SIDEBAR NAV-->
+			<aside id="right-sidebar-nav"></aside>
+			<!-- LEFT RIGHT SIDEBAR NAV-->
+
+		</div>
+		<!-- END WRAPPER -->
+
+	</div>
+	<!-- END MAIN -->
 
 
 
-<!-- <li class="no-padding">
-<ul class="collapsible collapsible-accordion">
-<li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="fa fa-file-text-o"></i> View</a>
-<div class="collapsible-body">
-<ul>
-<li><a href="./importerConsignment/1" target="mainArea"><i class="fa fa-file-text-o"></i>Consignment </a>
-</li>
-<li><a href="#"><i class="fa fa-file-text-o"></i>Stolen/Recovery</a>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</li> -->
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
+	<!-- START FOOTER -->
+	<footer class="page-footer">
+		<div class="footer-copyright">
+			<div class="container">
+				<span id="copyrightText">Copyright © 2018 Sterlite Technologies Ltd, All rights
+					reserved.</span>
 
+			</div>
+		</div>
+	</footer> 	
 
-</ul>
-</aside>
-<!-- END LEFT SIDEBAR NAV-->
-
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-<!-- START CONTENT -->
-<section id="content">
-
-<!--breadcrumbs start-->
-
-<!--breadcrumbs end-->
-
-
-<!--start container-->
-<div class="container">
-<div class="section">
-
-<iframe name="mainArea" class="embed-responsive-item" id="mainArea"
-scrolling="yes" frameBorder="0" src="./Home" width="100%"
-height="700px"></iframe>
-</div>
-<!-- Floating Action Button -->
-
-<!-- Floating Action Button -->
-</div>
-<!--end container-->
-</section>
-<!-- END CONTENT -->
-
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-<!-- START RIGHT SIDEBAR NAV-->
-<aside id="right-sidebar-nav"></aside>
-<!-- LEFT RIGHT SIDEBAR NAV-->
-
-</div>
-<!-- END WRAPPER -->
-
-</div>
-<!-- END MAIN -->
-
-
-
-<!-- //////////////////////////////////////////////////////////////////////////// -->
-
-<!-- START FOOTER -->
-<footer class="page-footer">
-<div class="footer-copyright">
-<div class="container">
-<span id="copyrightText">Copyright © 2018 Sterlite Technologies Ltd, All rights
-reserved.</span>
-
-</div>
-</div>
-</footer>
-
-<!-- END FOOTER -->
-<div id="manageAccount" class="modal">
-<h6 class="modal-header">Manage Account</h6>
-
-<div class="modal-content">
-<form id="userStatusForm" onsubmit="return updateUSerStatus()">
-<span style="text-align: center;color: red;" id="errorMsg"></span>
-
-<p>Request CEIR ADMIN to</p>
-<div class="row" style="height: 30px;">
-
-<p>
-<label style="margin-right: 50px"> <input type="radio"
-name="status" value="Deactivate" required="required" ><span> Deactivate</span></label>Permanently delete
-the account, you will not login into the portal.
-</p>
-</div>
-<%String status=(String)session.getAttribute("userStatus");%>
-<%if(status.equalsIgnoreCase("Approved")){ %>
-<div class="row" style="height: 30px;">
-<p>
-<label style="margin-right: 67px"> <input type="radio" value="Disable"
-name="status" required="required"><span> Disable</span></label>All the action will be
-disabled, only view option will be available
-</p>
-</div>
-<%} else if(status.equalsIgnoreCase("Disable")){ %>
-<div class="row" style="height: 30px;">
-<p>
-<label style="margin-right: 67px"> <input type="radio" value="Approved"
-name="status" required="required"><span> Enable</span></label>All the action will be
-Enable
-</p>
-</div>
+	<!-- END FOOTER -->
+	<div id="manageAccount" class="modal">
+			<h6 class="modal-header">Manage Account</h6>
+		
+		<div class="modal-content">
+		<form id="userStatusForm"  onsubmit="return updateUSerStatus()">
+			 <span style="text-align: center;color: red;" id="errorMsg"></span> 
+			 
+			<p>Request CEIR ADMIN to</p>
+			<div class="row" style="height: 30px;">
+			
+				<p>
+					<label style="margin-right: 50px"> <input  type="radio"
+						name="status" value="Deactivate" required="required" ><span> Deactivate</span></label>Permanently delete
+					the account, you will not login into the portal.
+				</p>                        
+			</div>
+			<%String status=(String)session.getAttribute("userStatus");%>
+			<%if(status.equalsIgnoreCase("Approved")){ %>
+			<div class="row" style="height: 30px;">
+				<p>                
+					<label style="margin-right: 67px"> <input type="radio" value="Disable"
+						name="status" required="required"><span> Disable</span></label>All the action will be
+					disabled, only view option will be available
+				</p> 
+			</div>
+			<%} else if(status.equalsIgnoreCase("Disable")){ %>
+                    <div class="row" style="height: 30px;">
+				<p>            
+					<label style="margin-right: 67px"> <input type="radio" value="Approved"
+						name="status" required="required"><span> Enable</span></label>All the action will be
+					Enable 
+				</p>
+			</div>
 
 <%} else {} %>
-<div class="input-field col s12 center">
-<button class="btn" id="updateStatusBtn">Submit</button>
-<button type="button" class="btn modal-close" style="margin-left: 10px;">Cancel</button>
-</div>
-</form>
-</div>
-</div>
-<!-- Modal End -->
+			<div class="input-field col s12 center">
+				<button class="btn" id="updateStatusBtn">Submit</button>
+				<button type="button" class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+			</div>
+			</form>
+		</div>
+	</div>
+	<!-- Modal End -->
 
-<!-- Modal 4 start -->
+	<!-- Modal 4 start   -->
 
-<div id="manageAccountSubmit" class="modal">
-<button type="button"
-class=" modal-action modal-close waves-effect waves-green btn-flat right"
-data-dismiss="modal">&times;</button>
-<h6 class="modal-header">Manage Account</h6>
-<div class="modal-content">
-<h6 id="mgAccount"><!-- The request has been successfully registered with CEIR
-Admin. Please find confirmation over registered mail in 2 to 3
-working days. --></h6>
+	<div id="manageAccountSubmit" class="modal">
+		<button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+			<h6 class="modal-header">Manage Account</h6>
+		<div class="modal-content">
+			<h6 id="mgAccount"><!-- The request has been successfully registered with CEIR
+				Admin. Please find confirmation over registered mail in 2 to 3
+				working days. --></h6>
 
-<div class="input-field col s12 center">
-<a href="${context}/logout" class="btn modal-close">ok</a>
-</div>
-</div>
-</div>
-<!-- Modal End -->
+			<div class="input-field col s12 center">
+				<a href="${context}/logout" class="btn modal-close">ok</a>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 
-<!-- Modal 4 start -->
+	<!-- Modal 4 start   -->
 
 <div id="changePassword" class="modal" style="width: 40%;">
 <h6 class="modal-header">Change Password</h6>
@@ -343,13 +329,13 @@ working days. --></h6>
 <div class="row">
 
 
-<span style="text-align: center;color: red;" id="errorMsg"></span>
+<span style="text-align: center;color: red;" id="errorMsg"></span> 
 <div class="col s1">
 <i class="fa fa-lock" aria-hidden="true"
 style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
 </div>
 <div class="input-field col s11">
-<input type="password" id="oldPassword" class="validate"
+<input type="password" id="oldPassword" class="validate" 
 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 required="required"
@@ -394,19 +380,19 @@ required="required"
 <div class="row" style="margin-top: 30px;">
 <div class="input-field col s12 center">
 <button class="btn" id="updateStatusBtn">Submit</button>
-<button type="button" class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+<button type="button"  class="btn modal-close" style="margin-left: 10px;">Cancel</button>
 </div>
 
 </div>
 </form>
 </div>
 </div>
-<!-- Modal End -->
+	<!-- Modal End -->
 
 
-<!-- Modal 2 start -->
+	<!-- Modal 2 start   -->
 
-
+	
 <!-- Modal 2 start -->
 
 <div id="submitActivateDeactivate" class="modal">
@@ -472,41 +458,41 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 </div>
 </div>
 <!-- Modal End -->
-<!-- Modal End -->
+	<!-- Modal End -->
 
 
-<!-- ================================================
-Scripts
-================================================ -->
+	<!-- ================================================
+    Scripts
+    ================================================ -->
 
 
-<!-- jQuery Library -->
-<%-- <script type="text/javascript"
-src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-<!-- ajax js -->
-<script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
-<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
-<!--materialize js-->
-<script type="text/javascript"
-src="${context}/resources/js/materialize.js"></script>
-<!--prism
-<script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
-<!--scrollbar-->
-<script type="text/javascript"
-src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-<!-- chartist -->
-<!-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
--->
-<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-<!--custom-script.js - Add your own theme custom JS-->
-<script type="text/javascript"
-src="${context}/resources/js/custom-script.js"></script>
+	<!-- jQuery Library -->
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+       <!-- ajax js -->
+    <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+     <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+	<!--materialize js-->
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<!--prism
+    <script type="text/javascript" src="${context}/resources/js/prism/prism.js"></script>-->
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<!--   <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>   
+     -->
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript"
+		src="${context}/resources/js/custom-script.js"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-dataByTag("copyright_footer","copyrightText",2);
-});
+	dataByTag("copyright_footer","copyrightText",2);
+        });   
 </script>
 
 <script type="text/javascript">
@@ -515,11 +501,11 @@ var password = document.getElementById("password")
 
 function validatePassword(){
 if(password.value != confirm_password.value) {
-confirm_password.setCustomValidity("Passwords Don't Match");
+  confirm_password.setCustomValidity("Passwords Don't Match");
 } else {
-confirm_password.setCustomValidity('');
+  confirm_password.setCustomValidity('');
 }
-}
+}   
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
 console.log($("#cierRoletype").text());
@@ -529,11 +515,11 @@ $('.navData li').on('click', function() {
 $('.navData li:not(.inactive)').addClass("inactive");
 $('.navData li').removeClass("active");
 $(this).removeClass("inactive");
-$(this).addClass("active");
+$(this).addClass("active"); 
 });
 
 </script>
 
 </body>
 
-</html>
+</html> 	

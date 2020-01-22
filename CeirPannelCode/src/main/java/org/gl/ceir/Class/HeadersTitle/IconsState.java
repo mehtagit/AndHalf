@@ -84,6 +84,9 @@ public class IconsState {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
 		}
 
 		else if(("1".equals(status)) && "Approved".equals(userStatus)) {
@@ -650,16 +653,17 @@ public class IconsState {
 
 
 
-		if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
-
-		}
-
-		else if(("1".equals(status)) && "Approved".equals(userStatus)) {
-
+		if(("1".equals(status) || "3".equals(status) || "6".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
+
 		}
+
+		
 		else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
@@ -688,10 +692,11 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String userId ,String status,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id) {
+	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"')";
+		
 		String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
 
@@ -712,7 +717,7 @@ public class IconsState {
 
 
 
-		if("Approved".equals(AdminCurrentStatus) || "Rejected".equals(AdminCurrentStatus)  && "Approved".equals(status)) {
+		if("Approved".equals(AdminCurrentStatus) || "Rejected".equals(AdminCurrentStatus)) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
@@ -871,7 +876,6 @@ public class IconsState {
 			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
 
 		}
-
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
@@ -886,11 +890,12 @@ public class IconsState {
 		
 		for (ActionModel actionModel : actionResponse) {
 			if (actionModel.getState() == 0 || actionModel.getState() == 1 || actionModel.getState() == 2 || actionModel.getState() == 4 || actionModel.getState() == 5) {
-				log.info("in Action State first" +actionModel.getState());
+				log.info("in Action State if--->" +actionModel.getState());
 				error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
 				
 			}else if (actionModel.getState() == 3) {
+				log.info("in Action State else--->" +actionModel.getState());
 				 error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 						+errorIconTitle+" ></i></a>";
 			

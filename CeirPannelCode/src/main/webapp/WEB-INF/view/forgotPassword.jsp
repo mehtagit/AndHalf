@@ -118,8 +118,8 @@ var contextpath='${context}';
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                             
-                   <span style="text-align: center;color: red;" id="errorMsg"></span>                          
+                       
+                        <span style="text-align: center;color: red;" id="errorMsg"></span>                          
                                  <!--     <hr style="margin-bottom: 30px;"> -->
 
                                     <div class="row myRow">

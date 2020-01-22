@@ -1,8 +1,11 @@
 package org.gl.ceir.pagination.model;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.gl.ceir.CeirPannelCode.Model.QuestionPair;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +34,8 @@ public class RegistrationContentModel {
 	private String emailOtp;
 	private Integer status;
 	private Object username;
-	private Object questionList;
-	private Object roles;
+	private List<QuestionPair> questionList ; 
+	private long[] roles;
 	private Object usertypeId;
 	private Object password;
 	private String asTypeName;
@@ -171,16 +174,16 @@ public class RegistrationContentModel {
 	public void setUsername(Object username) {
 		this.username = username;
 	}
-	public Object getQuestionList() {
+	public List<QuestionPair> getQuestionList() {
 		return questionList;
 	}
-	public void setQuestionList(Object questionList) {
+	public void setQuestionList(List<QuestionPair> questionList) {
 		this.questionList = questionList;
 	}
-	public Object getRoles() {
+	public long[] getRoles() {
 		return roles;
 	}
-	public void setRoles(Object roles) {
+	public void setRoles(long[] roles) {
 		this.roles = roles;
 	}
 	public Object getUsertypeId() {
@@ -194,6 +197,12 @@ public class RegistrationContentModel {
 	}
 	public void setPassword(Object password) {
 		this.password = password;
+	}
+	public String getAsTypeName() {
+		return asTypeName;
+	}
+	public void setAsTypeName(String asTypeName) {
+		this.asTypeName = asTypeName;
 	}
 	public RegistrationUser getUser() {
 		return user;
@@ -215,21 +224,70 @@ public class RegistrationContentModel {
 	}
 	@Override
 	public String toString() {
-		return "RegistrationContentModel [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName
-				+ ", lastName=" + lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus="
-				+ vatStatus + ", vatNo=" + vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street
-				+ ", locality=" + locality + ", province=" + province + ", country=" + country + ", passportNo="
-				+ passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", status="
-				+ status + ", username=" + username + ", questionList=" + questionList + ", roles=" + roles
-				+ ", usertypeId=" + usertypeId + ", password=" + password + ", asTypeName=" + asTypeName + ", user="
-				+ user + ", additionalProperties=" + additionalProperties + ", stateInterp=" + stateInterp + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("RegistrationContentModel [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", vatStatus=");
+		builder.append(vatStatus);
+		builder.append(", vatNo=");
+		builder.append(vatNo);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", passportNo=");
+		builder.append(passportNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", phoneOtp=");
+		builder.append(phoneOtp);
+		builder.append(", emailOtp=");
+		builder.append(emailOtp);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", questionList=");
+		builder.append(questionList);
+		builder.append(", roles=");
+		builder.append(Arrays.toString(roles));
+		builder.append(", usertypeId=");
+		builder.append(usertypeId);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", asTypeName=");
+		builder.append(asTypeName);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append("]");
+		return builder.toString();
 	}
-	public String getAsTypeName() {
-		return asTypeName;
-	}
-	public void setAsTypeName(String asTypeName) {
-		this.asTypeName = asTypeName;
-	}
-
+	
+	
 }

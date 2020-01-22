@@ -82,9 +82,10 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel">
-                            <div class="pageHeader">
+                           <div class="pageHeader">
                                 <p class="PageHeading"><spring:message code="view.dashboard" /></p>
-                            </div>
+                           
+                              </div>
                             <div class="col s12 m12 l12">
                                 <div class="row">
 

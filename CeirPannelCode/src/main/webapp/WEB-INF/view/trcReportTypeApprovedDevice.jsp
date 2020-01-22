@@ -135,7 +135,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="bdate2">Request Date <span class="star">*</span></label>
+											for="requestDate">Request Date <span class="star">*</span></label>
 									</div>
 
 
@@ -168,7 +168,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="bdate2">Approve/Rejection Date <span
+											for="approveDisapproveDate">Approve/Rejection Date <span
 											class="star">*</span></label>
 									</div>
 
@@ -177,7 +177,7 @@
                                             
 									<div class="input-field col s12 m6 l6" style="margin-top: 9px;">
 										<textarea id="remark" class="materialize-textarea"></textarea>
-										<label for="Remark">Remark </label>
+										<label for="remark">Remark </label>
 									</div>
 								</div>
 
@@ -202,7 +202,7 @@
 									marked with <span class="star">*</span>
 								</span>
 								<div class="center" style="margin-top: 50px;">
-									<button  class=" btn"
+									<button  class=" btn" id="trcSubmitButton"
                                                  type="submit">Submit</button>
 									<a href="./manageTypeDevices" class="btn" id="Cancel"
 										style="margin-left: 10px;">Cancel</a>
@@ -297,6 +297,7 @@ var featureId = 11;
 				contentType : false, 
 				success : function(data, textStatus, jqXHR) {
 						console.log("-----success"+data);
+						$("#trcSubmitButton").prop('disabled', true);
 					  $('#RegisterManageTypeDevice').openModal();
 					  /*if(data.errorCode=="0")
 					 {

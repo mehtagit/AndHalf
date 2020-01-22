@@ -96,7 +96,21 @@ var contextpath = "${context}";
 </select>
 </li>
 
-                            <li class="haed-btn-style"><a href="#" style="color: #000;">Check IMEI</a></li>
+	<li class="haed-btn-style" style="padding: 0;">
+								<select id="usertypes" class="browser-default" onchange="openEndUserGrievancePage(this)" style="height: 35px; width: 150px;">
+									<option value="" disabled selected>Register Grievance</option>
+                                    <option value="0">Report Grievance</option>
+                                    <option value="1">Track Grievance</option>
+								</select>
+							</li>
+								<li class="haed-btn-style" style="padding: 0;">
+								<select id="usertypes" class="browser-default" onchange="openEndUserStockPage(this)" style="height: 35px; width: 150px;">
+									<option value="" disabled selected>Stock</option>
+                                    <option value="0">Upload Stock</option>
+                                    <option value="1">Check Upload Status</option>
+								</select>
+							</li>
+                            <li class="haed-btn-style"><a href="./checkDeviceslogin" style="color: #000;" >Check Device</a></li>
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Upload
                                     Document</a></li>
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Register

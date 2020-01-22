@@ -169,7 +169,7 @@ name="stolenBlockPeriod"> Later
 <div class="col s6 m2 responsiveDiv"
 style="display: none; width: 30%; float: right; margin-right: 30%; margin-top: -15px;" id="calender">
 <div id="startdatepicker" class="input-group date">
-<input type="text" id="stolenDatePeriodUnblock" required="required"
+<input type="text" id="stolenDatePeriodUnblock" 
 style="margin-top: -9px" /> <span class="input-group-addon"
 style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
@@ -216,7 +216,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit">Submit</button>
+                                                        <button class="btn" id="singleUnblockSubmitButton" type="submit">Submit</button>
                                                         <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
@@ -259,7 +259,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                    <div class="input-field col s12 center">
-                                                        <button class="btn "  type="submit">Submit</button>
+                                                        <button class="btn " id="bulkUnblockSubmitButton" type="submit">Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>

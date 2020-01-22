@@ -30,7 +30,7 @@ public class RegisterationImpl implements Registeration{
 		model.setRequestDate(request.getParameter("requestDate"));
 		model.setUserId(Integer.parseInt(request.getParameter("userId")));
 		model.setTxnId(txnId);
-		model.setFile(fileName);
+		model.setFileName(fileName);
 		log.info("---------model inside implementation class---------"+model);
 		return model;
 	}
@@ -46,7 +46,7 @@ public class RegisterationImpl implements Registeration{
 		model.setApproveStatus(Integer.parseInt(request.getParameter("status")));
 		model.setApproveDisapproveDate(request.getParameter("approveDisapproveDate"));
 		model.setRemark(request.getParameter("remark"));
-		model.setFile(request.getParameter("file"));
+		model.setFileName(request.getParameter("file"));
 		model.setId(Integer.parseInt(request.getParameter("id")));
 		 model.setUserId(385); 
 		 model.setRequestDate(request.getParameter("requestDate"));

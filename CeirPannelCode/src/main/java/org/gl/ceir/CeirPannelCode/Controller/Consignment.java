@@ -423,6 +423,7 @@ return consignmentdetails;
 
 
 //************************************************* download file *************************************************************** 
+
 @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
@@ -452,7 +453,7 @@ return "redirect:"+response.getUrl();
 
 //***********************************************cuurency controller *************************************************
 @RequestMapping(value="/consignmentCurency",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("currency") String currency)  {
+public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("CURRENCY") String currency)  {
 log.info("request send to the currency  api="+currency);
 List<Dropdown> response= new ArrayList<Dropdown>();
 response=feignCleintImplementation.taxPaidStatusList(currency);
@@ -470,6 +471,8 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	log.info("consignmentStartDate=="+consignmentStartDate+ " consignmentEndDate ="+consignmentEndDate+" consignmentTxnId="+consignmentTxnId+"consignmentTaxPaidStatus="+consignmentTaxPaidStatus+" filterConsignmentStatus="+filterConsignmentStatus);
 	int userId= (int) session.getAttribute("userid"); 
 	int file=1;
+	String userType=(String) session.getAttribute("usertype");
+	Integer usertypeId=(int) session.getAttribute("usertypeId");
 	FileExportResponse fileExportResponse;
 	FilterRequest filterRequest= new FilterRequest();
 	filterRequest.setStartDate(consignmentStartDate);
@@ -478,6 +481,8 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setTaxPaidStatus(consignmentTaxPaidStatus);
 	filterRequest.setConsignmentStatus(filterConsignmentStatus);
 	filterRequest.setUserId(userId);
+	filterRequest.setUserType(userType);
+	filterRequest.setUserTypeId(usertypeId);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
 

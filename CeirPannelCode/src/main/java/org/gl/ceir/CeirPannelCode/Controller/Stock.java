@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
+import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -25,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +36,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+
+import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 
 
@@ -382,6 +387,149 @@ else {
 		return "redirect:"+fileExportResponse.getUrl();
 	}
 
-
 	
+	
+	@RequestMapping(value={"/openEndUserStockPage"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
+{
+	ModelAndView mv = new ModelAndView();
+	 
+	log.info(" view End user Stock entry point."+reportType); 
+	mv.addObject("showPagetype", reportType);
+    mv.setViewName("endUserStock");
+	log.info(" view End user stock exit point."); 
+	return mv; 
+}
+	
+	
+	@ResponseBody
+	@PostMapping("ednUserStockUpload")
+	public GenricResponse ednUserStockUpload(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+		log.info("-inside  end user stock upload--");
+	
+		/*
+		 * String userName=session.getAttribute("username").toString(); String userId=
+		 * session.getAttribute("userid").toString(); String
+		 * name=session.getAttribute("name").toString();
+		 */
+		String filter = request.getParameter("request");
+
+		log.info(" end user stock entry point.");
+		String txnNumber="S" + utildownload.getTxnId();
+		log.info("Random transaction id number="+txnNumber);
+
+		
+		Gson gson= new Gson(); 
+
+		log.info("*********"+filter);
+
+		StockUploadModel endUserStockModal  = gson.fromJson(filter, StockUploadModel.class);
+		endUserStockModal.setFileName(file.getOriginalFilename());
+		endUserStockModal.setTxnId(txnNumber);
+		try { byte[] bytes = file.getBytes();
+		String rootPath =filePathforUploadFile+txnNumber+"/"; 
+		File dir = new File(rootPath + File.separator);
+
+		if (!dir.exists()) dir.mkdirs();
+		// Create the file on server 
+		File serverFile = new File(rootPath+file.getOriginalFilename());
+		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		stream.write(bytes); 
+		stream.close();
+		} 
+
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		log.info("request passed to  the end user upload stock api"+endUserStockModal);
+		GenricResponse  response = new GenricResponse();
+	 response = feignCleintImplementation.uploadStock(endUserStockModal);
+		/*
+		 * response.setTxnId(txnNumber); response.setMessage("saved sucess full");
+		 * response.setErrorCode("0");
+		 */
+		log.info("---------response--------"+response);
+		return response;
+	}
+	
+
+	// *********************************************** open register page or edit popup ******************************
+		@RequestMapping(value="/openEndUserStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId)
+		{
+			log.info("entry point of  fetch end user stock in the bases of transaction id .");
+			StockUploadModel stockUploadModel= new StockUploadModel();
+			StockUploadModel stockUploadModelResponse;
+			stockUploadModel.setTxnId(txnId);
+			log.info("response from fetch stock api="+stockUploadModel);
+				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+				log.info("response from fetch stock api="+stockUploadModelResponse);
+				log.info("exit point of  fetch stock api.");
+				return stockUploadModelResponse;
+			
+			
+		}
+
+		@RequestMapping(value= {"/updateEndUserUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+		public @ResponseBody GenricResponse updateEndUserUploadedStock(@RequestParam(name="file") MultipartFile file,@RequestParam(name="txnId",required = false) String txnId) {
+		log.info("entry point in end user update Stock * *.");
+		StockUploadModel stockUpload= new StockUploadModel();
+
+
+		GenricResponse response= new GenricResponse();
+	
+		
+		try {
+			log.info("file is not blank");
+		String rootPath = filePathforUploadFile+txnId+"/";
+		File tmpDir = new File(rootPath+file.getOriginalFilename());
+		boolean exists = tmpDir.exists();
+		if(exists) {
+		Path temp = Files.move 
+		(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
+		Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+
+		String movedPath=filePathforMoveFile+file.getOriginalFilename();
+		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
+		log.info("file is already exist moved to the this "+movedPath+" path");
+		tmpDir.delete();
+		}
+		log.info("file Reader!!!");
+
+		byte[] bytes = file.getBytes();
+
+		File dir = new File(rootPath + File.separator);
+
+		if (!dir.exists()) 
+		dir.mkdirs();
+
+		File serverFile = new File(rootPath+file.getOriginalFilename());
+		log.info("uploaded file path on server" + serverFile);
+		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		stream.write(bytes);
+		stream.close();
+
+		}
+		catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		log.error(e.getMessage(), e);
+		}
+
+
+		stockUpload.setTxnId(txnId);
+	    stockUpload.setFileName(file.getOriginalFilename());
+	
+	
+		log.info("Request passed to the end user  update stock ="+stockUpload);
+		response = feignCleintImplementation.updateStock(stockUpload);
+		log.info(" response from end user update stock api="+response);
+		log.info(" update end user Stock exit point.");
+		return response;
+
+		}
+		
+
 }

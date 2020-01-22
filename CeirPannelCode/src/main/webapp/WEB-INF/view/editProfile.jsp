@@ -417,7 +417,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight" id="vatNumber"
 										pattern="[A-Za-z0-9]{0,15}"
 								title="Please enter alphanumeric upto 15 characters only">
-                                    <label for="roleType">VAT Number <span class="star">*</span></label>
+                                    <label for="vatNumber">VAT Number <span class="star">*</span></label>
                                 </div>
                             </div>    
 								
@@ -736,11 +736,11 @@ var contextpath = "${context}";
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" name="emailOtp" id="emailOtp" placeholder="Enter OTP of Email"/>
+                                <input type="text" name="emailOtp" id="emailOtp" placeholder=""/>
                             </div> 
                    
                             <div class="input-field col s12 m12">
-                                <input type="text" name="phoneOtp" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                                <input type="text" name="phoneOtp" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
 
@@ -833,15 +833,16 @@ var contextpath = "${context}";
         $(document).ready(function () {
         	questionDataByCategory();
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
-        	usertypeData();  
-        		editProfile();
-            $('.modal').modal();
+       populateCountries("country", "state");
+    
+       usertypeData();  
+       editProfile();
+   	
+   $('.modal').modal();
             /* $('.dropdown-trigger').dropdown();
             $('select').formSelect(); */
         }); 
-        populateCountries("country", "state");
-        populateStates( "country",
-        "state" );
+       
         function myFunction() { 
             var x = document.getElementById("type").value;
             if (x == 'Individual') {
@@ -861,7 +862,7 @@ var contextpath = "${context}";
                  document.getElementById("companyNames").style.display = "none";
             }
         }
-        
+       	
     </script>
 
 
