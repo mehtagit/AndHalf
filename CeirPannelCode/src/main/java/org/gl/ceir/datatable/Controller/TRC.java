@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
-import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
@@ -82,9 +81,10 @@ public class TRC implements CRUD{
 		log.info("--pageSize-"+pageSize+"----pageNo"+pageNo+"----file"+file+"-filterrequest-------"+filterrequest);
 		try {
 			response =grievanceFeignClient.viewTRC(filterrequest, pageNo, pageSize, file);
+			log.info("response after Feign----->" +response);
 			String apiResponse = gson.toJson(response);
 			trcPaginationModel = gson.fromJson(apiResponse, TrcPaginationModel.class);
-
+			log.info("apiResponse after Feign----->" +apiResponse);
 			if(trcPaginationModel.getContent().isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
@@ -99,10 +99,11 @@ public class TRC implements CRUD{
 						String status = trcContentModelList.getStateInterp();
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-						String adminState = trcContentModelList.getAdminStateInterp();
+						String adminState = (String) trcContentModelList.getAdminStateInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName=trcContentModelList.getFile();
-						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName,txnId);
+						String fileName1=(String) trcContentModelList.getFileName();
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
+						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
@@ -119,8 +120,9 @@ public class TRC implements CRUD{
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName=trcContentModelList.getFile();
-						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName,txnId);
+						String fileName1=(String) trcContentModelList.getFileName();
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
+						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Component;
 @Component
 public class TrcContentModel {
-
+	
 	private Integer id;
 	private String manufacturerId;
 	private String manufacturerName;
@@ -16,13 +16,13 @@ public class TrcContentModel {
 	private Integer approveStatus;
 	private Integer adminApproveStatus;
 	private Integer userId;
-	private Object userType;
-	private Object adminUserId;
-	private Object adminUserType;
+	private String userType;
+	private Integer adminUserId;
+	private String adminUserType;
 	private String approveDisapproveDate;
 	private String remark;
-	private Object adminRemark;
-	private String file;
+	private String adminRemark;
+	private String fileName;
 	private String createdOn;
 	private String modifiedOn;
 	private String txnId;
@@ -83,22 +83,22 @@ public class TrcContentModel {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Object getUserType() {
+	public String getUserType() {
 		return userType;
 	}
-	public void setUserType(Object userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	public Object getAdminUserId() {
+	public Integer getAdminUserId() {
 		return adminUserId;
 	}
-	public void setAdminUserId(Object adminUserId) {
+	public void setAdminUserId(Integer adminUserId) {
 		this.adminUserId = adminUserId;
 	}
-	public Object getAdminUserType() {
+	public String getAdminUserType() {
 		return adminUserType;
 	}
-	public void setAdminUserType(Object adminUserType) {
+	public void setAdminUserType(String adminUserType) {
 		this.adminUserType = adminUserType;
 	}
 	public String getApproveDisapproveDate() {
@@ -113,17 +113,17 @@ public class TrcContentModel {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Object getAdminRemark() {
+	public String getAdminRemark() {
 		return adminRemark;
 	}
-	public void setAdminRemark(Object adminRemark) {
+	public void setAdminRemark(String adminRemark) {
 		this.adminRemark = adminRemark;
 	}
-	public String getFile() {
-		return file;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFile(String file) {
-		this.file = file;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getCreatedOn() {
 		return createdOn;
@@ -168,9 +168,11 @@ public class TrcContentModel {
 				+ ", approveStatus=" + approveStatus + ", adminApproveStatus=" + adminApproveStatus + ", userId="
 				+ userId + ", userType=" + userType + ", adminUserId=" + adminUserId + ", adminUserType="
 				+ adminUserType + ", approveDisapproveDate=" + approveDisapproveDate + ", remark=" + remark
-				+ ", adminRemark=" + adminRemark + ", file=" + file + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp + ", adminStateInterp="
-				+ adminStateInterp + ", additionalProperties=" + additionalProperties + "]";
+				+ ", adminRemark=" + adminRemark + ", fileName=" + fileName + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
+				+ ", adminStateInterp=" + adminStateInterp + ", additionalProperties=" + additionalProperties + "]";
 	}
+	
+	
 	
 }

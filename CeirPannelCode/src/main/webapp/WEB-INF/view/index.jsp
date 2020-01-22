@@ -96,7 +96,7 @@ var contextpath = "${context}";
 </select>
 </li>
 
-                            <li class="haed-btn-style"><a href="#" style="color: #000;">Check IMEI</a></li>
+                            <li class="haed-btn-style"><a href="./checkDeviceslogin" style="color: #000;" >Check Device</a></li>
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Upload
                                     Document</a></li>
                             <li class="haed-btn-style"><a href="#" style="color: #000;">Register
