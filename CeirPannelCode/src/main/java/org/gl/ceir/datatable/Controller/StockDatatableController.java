@@ -115,6 +115,11 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String assignedTo = dataInsideList.getUser().getUserProfile().getDisplayName();
+						if(assignedTo == null || assignedTo.equals("")) {
+							assignedTo = "";
+						}else {
+							assignedTo = dataInsideList.getUser().getUserProfile().getDisplayName();
+						}
 						String txnId= dataInsideList.getTxnId(); 
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
@@ -133,8 +138,7 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String txnId= dataInsideList.getTxnId();
-						String suplierName = dataInsideList.getSuplierName();
-						//String userId = String.valueOf(dataInsideList.getUserId());
+						String displayName = "";
 						String roll = dataInsideList.getRoleType();
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
@@ -142,7 +146,7 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,suplierName,roll,file,stockStatusName,action}; 
+						Object[] finalData={date,txnId,displayName,roll,file,stockStatusName,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);

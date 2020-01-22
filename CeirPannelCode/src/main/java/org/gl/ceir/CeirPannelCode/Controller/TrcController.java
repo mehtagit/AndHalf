@@ -160,7 +160,7 @@ public class TrcController {
 			model.setApproveStatus(approveStatus);
 			model.setStatus(approveStatus);
 			model.setRemark(remark);
-			model.setFile(fileName);
+			model.setFileName(fileName);
 			model.setTxnId(txnId);
 			model.setId(id);
 			model.setUserId(userId);
@@ -197,7 +197,7 @@ public class TrcController {
 			model.setApproveDisapproveDate(approveDisapproveDate);
 			model.setApproveStatus(approveStatus);
 			model.setRemark(remark);
-			model.setFile(fileName);
+			model.setFileName(fileName);
 			model.setTxnId(txnId);
 			model.setUserId(userId);
 			model.setId(id);

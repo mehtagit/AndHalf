@@ -19,8 +19,6 @@
 		}).done( function() { 
 		});
 
-
-
 	$( document ).ready(function() {
 		var In = $("body").attr("session-value");
 		if(In.length > 0 && In !='null' ){
@@ -185,14 +183,14 @@
 					}
 				});
 
-				$.getJSON('./getDropdownList/currency', function(data) {
-					var dropdownid=id-1;
-					for (i = 0; i < data.length; i++) {
-						$('<option>').val(data[i].value).text(data[i].interp)
-						.appendTo('#Currency'+dropdownid);
-						console.log('#Currency'+dropdownid);
-					}
-				});
+				$.getJSON('./getDropdownList/CURRENCY', function(data) {
+				var dropdownid=id-1;
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#Currency'+dropdownid);
+					console.log('#Currency'+dropdownid);
+				}
+			});
 
 				$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 					var dropdownid=id-1;
@@ -541,9 +539,9 @@ function table(url,dataUrl){
 	var pageNo=info.page;
 	var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo);
-	console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType+"nid = "+nid)
+		console.log("startDate  ="+startDate+"  endDate=="+endDate+"  taxPaidStatus="+taxPaidStatus+" deviceIdType ="+deviceIdType+"deviceType  "+deviceType+"nid = "+nid)
 	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
-	}
+}
 
 
 
@@ -564,6 +562,8 @@ function submitDeviceInfo(){
 	var email=$('#email').val();
 	var phone=$('#phone').val();
 	var state=$('#state').val();
+	var docType=$('#doc_type').val();
+	var doc_type_numeric=$("#doc_type option:selected").attr("docValue");
 	
 	var village=$('#village').val();
 	var district=$('#district').val();
@@ -636,7 +636,9 @@ function submitDeviceInfo(){
 			"district":district,
 			"commune":commune,
 			"village":village,
-			"postalCode":postalcode
+			"postalCode":postalcode,
+			"doc_type_numeric":docType,
+			"docType":doc_type_numeric
 
 	}
 	formData.append('file', $('#csvUploadFile')[0].files[0]);
@@ -655,7 +657,7 @@ function submitDeviceInfo(){
 			console.log("in suucess method");
 
 			console.log(data);
-
+			$("#uploadPaidStatusbutton").prop('disabled', true);
 //			$('#updateConsignment').modal();
 			if(data.errorCode==200){
 
@@ -779,13 +781,13 @@ function submitDeviceInfo(){
 			}
 		});
 
-		$.getJSON('./getDropdownList/currency', function(data) {
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#Currency1');
-				console.log("...........");
-			}
-		});
+$.getJSON('./getDropdownList/CURRENCY', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#Currency1');
+			console.log("...........");
+		}
+	});
 
 		$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 			for (i = 0; i < data.length; i++) {
@@ -795,16 +797,30 @@ function submitDeviceInfo(){
 			}
 		});
 
-		$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+	$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#deviceStatus1');
+			console.log("...........");
+		}
+	});
+
+
+	
+	
+	
+	
+	$(document).ready(function(){
+		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+			console.log("@@@@@"+JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#deviceStatus1');
-				console.log("...........");
+			$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#doc_type');
+			//$('#docTypeNymericValue').val(data[i].value);
 			}
 		});
-
-
 	});
+
+});
 
 
 
@@ -844,12 +860,12 @@ function submitDeviceInfo(){
 }
 
 
-	function deviceApprovalPopup(imei,date,txnId){
-		$('#approveInformation').openModal();
-		window.imei=imei;
-		window.date=date.replace("="," ");
-		$('#approveTxnId').text(txnId);
-	}  
+function deviceApprovalPopup(imei,date,txnId){
+	$('#approveInformation').openModal();
+	window.imei=imei;
+	window.date=date.replace("="," ");
+	$('#approveTxnId').text(txnId);
+}   
 
 
 	function aprroveDevice(){
@@ -894,10 +910,10 @@ function submitDeviceInfo(){
 
 
 	function userRejectPopup(imei,txnId){
-		$('#rejectInformation').openModal();
-		$('#disapproveTxnId').text(txnId)
-		window.imei=imei;
-	}
+	$('#rejectInformation').openModal();
+	$('#disapproveTxnId').text(txnId)
+	window.imei=imei;
+}
 
 
 
@@ -937,6 +953,6 @@ function submitDeviceInfo(){
 
 
 	function confirmRejectInformation(){
-		$('#rejectInformation').closeModal();
-		setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
-	}
+	$('#rejectInformation').closeModal();
+	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
+}

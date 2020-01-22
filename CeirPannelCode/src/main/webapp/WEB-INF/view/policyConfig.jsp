@@ -56,6 +56,9 @@
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	
 
 
@@ -111,7 +114,7 @@
 				<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
-							placeholder="" disabled
+							placeholder="tag" disabled
 							style="height: 28px;"> <label for="tag">Tag</label>
 					</div>
 
@@ -119,27 +122,27 @@
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="viewpolicyOrder"
-							placeholder="" disabled style="height: 28px;">
-						<label for="viewpolicyOrder">Policy Order</label>
+							placeholder="Policy Order" disabled style="height: 28px;">
+						<label for="policyOrder">Policy Order</label>
 					</div>	
 						
 					<div class="row" style="margin-top: 20px;">	
 					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
 						<input type="text" name="period" id="viewPeriod"
-							placeholder="" disabled style="height: 28px;">
-						<label for="viewPeriod">Period</label>
+							placeholder="Period" disabled style="height: 28px;">
+						<label for="period">Period</label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 20px;">
 						<input type="text" id="viewstatus" name="status"
-							placeholder="" maxlength="20" placeholder="" disabled style="height: 28px;">
-						<label for="viewstatus">Status</label>
+							placeholder="" maxlength="20" placeholder="Status" disabled style="height: 28px;">
+						<label for="status">Status</label>
 					</div>
 					</div>	
 					
 					
 					<div class="input-field col s12 m6" style="margin-top: 20px;">
-					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" placeholder="" readonly="readonly"></textarea>
+					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" placeholder="value" readonly="readonly"></textarea>
 					<label for="viewValue" class="">Value</label>
 
 					</div>
@@ -147,7 +150,7 @@
 					
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;" placeholder="" readonly="readonly"></textarea>
+					<textarea id="description" class="materialize-textarea" style="height: 22px;" placeholder="Description" readonly="readonly"></textarea>
 					<label for="description" class="">Description</label>
 
 					</div>
@@ -180,7 +183,7 @@
 			<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="editTag"
-							placeholder="" 
+							placeholder="tag" 
 							style="height: 28px;" hidden> 
 					</div>
 					
@@ -201,7 +204,7 @@
 					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
 						<input type="text" name="period" id="editPeriod"
 							placeholder="Period"  style="height: 28px;" disabled>
-						<label for="editPeriod">Period</label>
+						<label for="period">Period</label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 20px;">
@@ -230,7 +233,7 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="editpolicyOrder"
 							placeholder=""  style="height: 28px;" disabled>
-						<label for="editpolicyOrder">Policy Order</label>
+						<label for="policyOrder">Policy Order</label>
 					</div>
 					
 					
@@ -303,6 +306,8 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/policyConfig.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>
 		
 </body>
 </html>

@@ -191,15 +191,17 @@ function editProfile(){
 			$("#registrationForm #village").val(resp.village);
 			$("#registrationForm #district").val(resp.district);
 			$("#registrationForm #commune").val(resp.commune);
+			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
-			$("#registrationForm #state").val(resp.province);
+			
+			//$("#registrationForm #state").text(resp.province);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
-			$("#registrationForm #country").val(resp.country);  
 			$("#questionId1 #country").val(resp.country);
 			$("#registrationForm #usertypes").val(resp.roles); 
-
+			populateStates( "country","state" );
+			$("#registrationForm #state").val(resp.province);
 			var arr=[];    
 			arr=resp.roles;
 			for (var i = 0; i < arr.length; i++) {

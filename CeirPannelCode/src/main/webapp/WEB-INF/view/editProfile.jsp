@@ -833,15 +833,16 @@ var contextpath = "${context}";
         $(document).ready(function () {
         	questionDataByCategory();
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
-        	usertypeData();  
-        		editProfile();
-            $('.modal').modal();
+       populateCountries("country", "state");
+    
+       usertypeData();  
+       editProfile();
+   	
+   $('.modal').modal();
             /* $('.dropdown-trigger').dropdown();
             $('select').formSelect(); */
         }); 
-        populateCountries("country", "state");
-        populateStates( "country",
-        "state" );
+       
         function myFunction() { 
             var x = document.getElementById("type").value;
             if (x == 'Individual') {
@@ -861,7 +862,7 @@ var contextpath = "${context}";
                  document.getElementById("companyNames").style.display = "none";
             }
         }
-        
+       	
     </script>
 
 

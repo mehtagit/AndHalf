@@ -139,7 +139,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 <span><spring:message code="input.requiredfields" /><span class="star">*</span></span>
 
 <div class="center" style="margin-top: 50px;">
-<button class="btn"
+<button class="btn" id="saveGrievancesubmitButton"
 type="submit" ><spring:message code="button.submit" /></button>
 <a href="./grievanceManagement" class="btn" id="Cancel"
 style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
@@ -310,6 +310,7 @@ function saveGrievance(){
 		async:false,
 	/*	method: 'POST',*/
 		success: function (data, textStatus, jqXHR) {
+			$("#saveGrievancesubmitButton").prop('disabled', true);
 			var x=data;
 			var y= JSON.parse(x);
 			
@@ -341,10 +342,9 @@ return false;
 
 }
 
-
 var grievanceCategory="GRIEVANCE_CATEGORY";
 $.ajax({
-	url: './Consignment/consignmentCurency?currency='+grievanceCategory,
+	url: './Consignment/consignmentCurency?CURRENCY='+grievanceCategory,
 	type: 'GET',
 	processData: false,
 	contentType: false,
@@ -376,22 +376,6 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 		$('#docTypetagValue1').val(data[i].value);
 	}
 });
-
-
-	//************************************************ category dropdown function ******************************************************************
-		
-		$(document).ready(function(){
-			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-				console.log("@@@@@"+JSON.stringify(data));
-				for (i = 0; i < data.length; i++) {
-					console.log(data[i].interp);
-					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
-					$('#docTypetagValue1').val(data[i].value);
-				}
-			});
-		});
-
-
 
 
 		function cleanReplyPopUp()
@@ -435,14 +419,24 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			id++;
 
 		});
-		$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+		/* $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
 			e.preventDefault();
 			$(this).parent('div').remove();
 			x--;
 			id--;
 		})
+ */
+ $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+	 e.preventDefault();
+	 var Iid=id-1;
+	 /*alert("@@@"+Iid)*/
+	 $('#filediv'+Iid).remove();
+	 $(this).parent('div').remove();
+	 x--;
+	 id--;
 
-		function saveDocTypeValue(){
+	 })		
+ function saveDocTypeValue(){
 			$('#docTypetagValue').val(data[i].value).change();
 			$('#docTypetagValue').val(data[i].value).change();
 		}

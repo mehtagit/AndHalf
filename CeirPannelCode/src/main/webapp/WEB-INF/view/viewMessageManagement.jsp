@@ -56,7 +56,9 @@
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-	
+	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
 
@@ -111,7 +113,7 @@
 				<div class="row" style="margin-top:10px">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
-							placeholder="" disabled
+							placeholder="tag" disabled
 							style="height: 28px;"> <label for="tag">Tag</label>
 					</div>
 
@@ -260,6 +262,8 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewMessageManagement.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
 		
 </body>
 </html>

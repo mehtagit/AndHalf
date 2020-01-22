@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.util.List;
+
 public class StockUploadModel {
 	
 	
@@ -14,13 +16,13 @@ public class StockUploadModel {
 	private String supplierId;
 	private int userId;
 	private String userType,remarks;
-	
-	
-	public String getRemarks() {
-		return remarks;
-	}
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
+	private StockUserModel user;
+	@Override
+	public String toString() {
+		return "StockUploadModel [fileName=" + fileName + ", id=" + id + ", invoiceNumber=" + invoiceNumber
+				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
+				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId
+				+ ", userType=" + userType + ", remarks=" + remarks + ", user=" + user + "]";
 	}
 	public String getFileName() {
 		return fileName;
@@ -70,18 +72,17 @@ public class StockUploadModel {
 	public void setStockStatus(int stockStatus) {
 		this.stockStatus = stockStatus;
 	}
-	
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
 	public String getSupplierId() {
 		return supplierId;
 	}
 	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getUserType() {
 		return userType;
@@ -89,16 +90,22 @@ public class StockUploadModel {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	@Override
-	public String toString() {
-		return "StockUploadModel [fileName=" + fileName + ", id=" + id + ", invoiceNumber=" + invoiceNumber
-				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
-				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId
-				+ ", userType=" + userType + ", remarks=" + remarks + "]";
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public StockUserModel getUser() {
+		return user;
+	}
+	public void setUser(StockUserModel user) {
+		this.user = user;
 	}
 	
 	
-
 	
-
+	
+	
+	
 }

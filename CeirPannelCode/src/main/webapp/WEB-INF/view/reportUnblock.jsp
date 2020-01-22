@@ -108,7 +108,7 @@ padding: 0 !important;
                                                         <div class="row">
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="unbockSingledeviceType">Device Type <span class="star">*</span></label>
+                                                                <label for="deviceType">Device Type <span class="star">*</span></label>
                                                                 <select class="browser-default" id="unbockSingledeviceType" required="required">
                                                                     <option value="" disabled selected>Device Type</option> 
                                                                 </select>
@@ -124,7 +124,7 @@ padding: 0 !important;
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="unbockSingleMultipleSimStatus">Multiple Sim Status <span class="star">*</span></label>
+                                                                <label for="deviceType">Multiple Sim Status <span class="star">*</span></label>
                                                                 <select class="browser-default" id="unbockSingleMultipleSimStatus" required="required">
                                                                     <option value="" disabled selected>Multiple Sim Status</option>
                                                                    
@@ -134,7 +134,7 @@ padding: 0 !important;
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,15}"
                                                                     required="required" title="Please enter your device serial number first" maxlength="15">
-                                                                <label for="unbockSingleSerialNumber">Device Serial Number <span class="star">*</span></label>
+                                                                <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
                                                             </div>
                                                             
                                                               <div class="col s12 m6"><label for="singleDeviceUnblock">Category
@@ -147,7 +147,7 @@ padding: 0 !important;
                                                     </div>
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
-                                                                <label for="unbockSingleRemark">Remark <span class="star">*</span></label>
+                                                                <label for="Remark">Remark <span class="star">*</span></label>
                                                             </div>
                                                             
                                                         <div class="row input_fields_wrap">
@@ -169,7 +169,7 @@ name="stolenBlockPeriod"> Later
 <div class="col s6 m2 responsiveDiv"
 style="display: none; width: 30%; float: right; margin-right: 30%; margin-top: -15px;" id="calender">
 <div id="startdatepicker" class="input-group date">
-<input type="text" id="stolenDatePeriodUnblock" required="required"
+<input type="text" id="stolenDatePeriodUnblock" 
 style="margin-top: -9px" /> <span class="input-group-addon"
 style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
@@ -183,27 +183,27 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI1" required="required" name="IMEI1" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="unbockSingleIMEI1">1 <span class="star">*</span></label>
+                                                                <label for="IMEI1">1 <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="unbockSingleIMEI2">2</label>
+                                                                <label for="IMEI2">2</label>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="unbockSingleIMEI3">3</label>
+                                                                <label for="IMEI3">3</label>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="unbockSingleIMEI4">4</label>
+                                                                <label for="IMEI4">4</label>
                                                             </div>
                                                         	
                                                         	<div class="col s12 m12"><span> Required Field are marked with <span class="star">*</span></span></div>
@@ -216,7 +216,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit">Submit</button>
+                                                        <button class="btn" id="singleUnblockSubmitButton" type="submit">Submit</button>
                                                         <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
@@ -224,7 +224,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                             <div id="multipleImeiUnBlock" class="col s12" style="display: none">
                                              <form action="" id="multipleImeiUnBlockform" onsubmit="return submitUnBlockImei()" method="POST" enctype="multipart/form-data">
                                                     
-                                                     <div class="col s12 m6"><label for="bulkunBlockdeviceCategory">Category
+                                                     <div class="col s12 m6"><label for="bulkBlockdeviceCategory">Category
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="bulkunBlockdeviceCategory"  required="required" >
                                                             <option value="" disabled selected>Select Category
@@ -246,7 +246,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             <input type="file" id="unblockBulkFile" required="required">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" placeholder="">
+                                                            <input class="file-path validate" type="text" placeholder="Please select the file">
                                                         </div>
                                                     </div>
 
@@ -259,7 +259,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                    <div class="input-field col s12 center">
-                                                        <button class="btn "  type="submit">Submit</button>
+                                                        <button class="btn " id="bulkUnblockSubmitButton" type="submit">Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>

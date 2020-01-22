@@ -30,7 +30,7 @@
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
-    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css" >
 
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -113,13 +113,13 @@ var contextpath='${context}';
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel" style="width: 40%; margin: auto; margin-top: 10vh;">
+                        <div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
+                        <h6 class="fixPage-modal-header">Forgot Password</h6>
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                                               
-                                    <h6 class="fixPage-modal-header">Forgot Password</h6>
-                   <span style="text-align: center;color: red;" id="errorMsg"></span>                          
+                       
+                        <span style="text-align: center;color: red;" id="errorMsg"></span>                          
                                  <!--     <hr style="margin-bottom: 30px;"> -->
 
                                     <div class="row myRow">

@@ -77,6 +77,12 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}">
@@ -231,7 +237,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit">Submit</button>
+                                                        <button class="btn" id="singleblockSubmit" type="submit">Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>
@@ -274,7 +280,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit" >Submit</button>
+                                                        <button class="btn" type="submit" id="blockBulkSubmitButton" >Submit</button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
                                                     </div>
                                                 </form>

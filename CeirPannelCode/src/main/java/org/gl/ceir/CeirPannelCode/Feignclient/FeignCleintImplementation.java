@@ -317,6 +317,11 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				@RequestMapping(value="/audit-trail/{id}" ,method=RequestMethod.GET) 
 				public AuditContentModel viewAuditManagementFeign(@PathVariable("id") Integer id);
 
+//************************************ Message update Feign  *************************************************
+				
+				@PostMapping(value="/checkDevice")
+				public @ResponseBody GenricResponse viewDetails(FilterRequest filterRequest);
+					
 		}
 
 

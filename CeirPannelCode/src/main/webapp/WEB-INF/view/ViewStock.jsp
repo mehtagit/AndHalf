@@ -60,6 +60,9 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
 <style type="text/css">
@@ -512,6 +515,8 @@
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
 </body>
 </html>
 
