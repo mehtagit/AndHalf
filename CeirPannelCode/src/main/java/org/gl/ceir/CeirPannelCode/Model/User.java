@@ -9,7 +9,6 @@ public class User {
 	private String  password;
 	private int   fwstatus;
 	private String  modifiedBy;
-	
 	private String modifiedOn;
 	private int subuser_status;
 	private int  parent_id;
@@ -20,9 +19,6 @@ public class User {
 	private String organization_id;
 	private String captcha;
     private String status;
-    
-	
-    
     
     public int getId() {
 		return id;

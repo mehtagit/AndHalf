@@ -48,9 +48,7 @@ var contextpath = "${context}";
 		<div class="loader-section section-right"></div>
 	</div>
 	<!-- End Page Loading -->
-
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
 	<!-- START HEADER -->
 	<header id="header" class="page-topbar">
 		<!-- start header nav-->
@@ -72,7 +70,7 @@ var contextpath = "${context}";
 							</h1> 
 						</li>
 					</ul>
-		<a href="./homePage" id="newUserLink" style="color:white;text-align: center;margin-left: 50%">Home</a>			
+		<a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;text-align: center;margin-left: 50%;">Home</a>			
 					<ul id="chat-out" class="right hide-on-med-and-down"
 style="overflow: inherit !important;">
 <li><a
@@ -129,25 +127,8 @@ class="dropdownColor"> Logout</span></a></li>
 									(<%=(String)session.getAttribute("username")%>) 
 									</p>
 							</div>
-
 						</div>
 					</li>
-					<%-- <li>
-						<ul>
-							<li class="bold"><a href="${context}/Home" target="mainArea"
-								class="waves-effect waves-cyan"><i class="fa fa-tachometer"></i>
-									Dashboard</a></li>
-							<li><a href="./Consignment/viewConsignment"
-								target="mainArea"><i class="fa fa-list-alt"></i>Consignment
-							</a></li> 
-							<li><a href="./assignDistributor" target="mainArea"><i
-									class="fa fa-th-list"></i>Upload Stock</a></li>
-							<li><a href="./stolenRecovery" target="mainArea"><i
-									class="fa fa-hand-o-right"></i>Stolen/Stock </a></li>
-						</ul>
-					</li> --%>
-					
-					
 					<li>
 					<ul class="navData">
 					<c:forEach items="${features}"  var="feature">
@@ -157,26 +138,6 @@ class="dropdownColor"> Logout</span></a></li>
 					</c:forEach>
 					</ul>
 					</li>
-
-
-
-					<!--         <li class="no-padding">
-                <ul class="collapsible collapsible-accordion">
-                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="fa fa-file-text-o"></i> View</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a  href="./importerConsignment/1" target="mainArea"><i class="fa fa-file-text-o"></i>Consignment </a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-file-text-o"></i>Stolen/Recovery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </li> -->
-
-
-
 				</ul>
 				<a href="#" data-activates="slide-out"
 					class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
@@ -437,6 +398,27 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 </div>
 </div>
 </div>
+<!-- Modal start -->
+
+<div id="goToHome" class="modal modal-small" style="width: 40%;">
+<button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button>
+<h6 class="modal-header">Home Page</h6>
+<div class="modal-content">
+<div class="row">
+<h6>This page will redirect to home page. Do you want to logout the panel?</h6>
+</div>
+<div class="input-field col s12 center">
+<div class="input-field col s12 center">
+<a href="./homePage" class="btn" type="submit" name="add_user" id="add_user">yes</a>
+<a href="#" class="modal-close btn"
+style="margin-left: 10px;">no</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal End -->
 <!-- Modal End -->
 	<!-- Modal End -->
 

@@ -88,6 +88,7 @@ var contextpath = "${context}";
 </head>
 
 <body>
+<%String name=request.getParameter("type");%>
     
     <!--  Scripts
     ================================================ --> 
@@ -135,6 +136,7 @@ var contextpath = "${context}";
                             <hr>  
                             
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
+                              <input type="hidden" id="usertypeName" value="<%=name%>">
                                <input type="hidden" id="type" value="2">
                             <div class="row">
                               	<div class="input-field col s12 m4 l4">

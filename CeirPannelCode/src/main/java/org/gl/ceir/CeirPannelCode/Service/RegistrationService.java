@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream; 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
@@ -44,16 +45,40 @@ public class RegistrationService {
 	@Autowired
 	GenerateRandomDigits randomDigits;
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	public ModelAndView registrationView(Integer usertypeId) {
+
+	public String registrationView(String usertype) {
+		log.info("inside registration view controller");
+		log.info("usertype given: "+usertype);
+		HashMap<String, String> map=new HashMap<String,String>();
+		map.put("Importer", "registration");
+		map.put("Distributor", "registration");
+		map.put("Retailer", "registration");
+		map.put("TRC", "registration");
+		map.put("Manufacturer", "customRegistration");
+		map.put("Lawful Agency", "customRegistration");
+		map.put("Custom", "customRegistration");
+		map.put("Operator", "operatorRegistration");
+		map.put("Immigration", "customRegistration");
+		if(usertype!=null) {
+			String output= map.get(usertype);
+			log.info("value for key: "+output);
+			if(output==null || ("").equals(output)) {
+				
+				output="index";
+			}
+			return output;
+			
+		}
+		else {
+			log.info("if usertype is null");
+			return "index";
+		}
+	}
+	public ModelAndView ImporterRegistrationView(Integer usertypeId) {
 		log.info("view registration page starting point");
 		log.info("usertypeId from registration page:  "+usertypeId);
 		ModelAndView mv=new ModelAndView();   
-		mv.addObject("usertypeId", usertypeId);              
 		mv.setViewName("registration");
-			List<Usertype> usertypeList=registrationFeignImpl.userypeList();
-		List<SecurityQuestion> securityQuestionList=registrationFeignImpl.securityQuestionList();
-			mv.addObject("usertypes",usertypeList);
-		mv.addObject("questions",securityQuestionList);
 		log.info("view registration page ending point");
 		return mv;                
 	}
@@ -62,7 +87,6 @@ public class RegistrationService {
 		log.info("view registration page starting point");
 		log.info("usertypeId from registration page:  "+usertypeId);
 		ModelAndView mv=new ModelAndView();       
-		mv.addObject("usertypeId", usertypeId);             
 		mv.setViewName("customRegistration");
 		log.info("view registration page ending point");
 		return mv;                
@@ -72,7 +96,6 @@ public class RegistrationService {
 		log.info("view registration page starting point");
 		log.info("usertypeId from registration page:  "+usertypeId);
 		ModelAndView mv=new ModelAndView();    
-		mv.addObject("usertypeId", usertypeId);             
 		mv.setViewName("operatorRegistration");
 		log.info("view registration page ending point");
 		return mv;                
@@ -112,7 +135,7 @@ public class RegistrationService {
 						bout.close(); 
 						registration.setNidFilename(nationalIdImage.getOriginalFilename());
 					} 
-					
+
 					if(photo.isEmpty()==false) {
 						log.info("if user is individual  "); 
 						log.info("file name: " +photo.getOriginalFilename());
@@ -131,8 +154,8 @@ public class RegistrationService {
 						log.info("if user is individual  "); 
 						log.info("file name: " +idCard.getOriginalFilename());
 						log.info("finalPath:   "+idCardPath);  
-                        log.info("going to save id card file in server");
-                        File dir = new File(idCardPath);   
+						log.info("going to save id card file in server");
+						File dir = new File(idCardPath);   
 						if (!dir.exists()) dir.mkdirs();
 						byte barr[]=idCard.getBytes();
 						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(idCardPath + "/" + idCard.getOriginalFilename()));
@@ -142,65 +165,65 @@ public class RegistrationService {
 						registration.setIdCardFilename(idCard.getOriginalFilename());
 						log.info("id card file save in server");
 					} 
-					
+
 					log.info("now going to call registration api");
 					OtpResponse response=userRegistrationFeignImpl.registration(registration);
 					log.info("registration response:  "+response);
 					return response;
-					
+
 				}
 				else {
-				if(registration.getVatStatus()==1) {
-					if(vatFile.isEmpty()==false) {
-						log.info("file name: " +vatFile.getOriginalFilename());
-						log.info("finalPath:   "+vatFilePath);
-						log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
-						File dir = new File(vatFilePath);
-						if (!dir.exists()) dir.mkdirs();
-						byte barr[]=vatFile.getBytes();
-						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
-						bout.write(barr);
-						bout.flush();
-						bout.close();
-						registration.setVatFilename(vatFile.getOriginalFilename());
+					if(registration.getVatStatus()==1) {
+						if(vatFile.isEmpty()==false) {
+							log.info("file name: " +vatFile.getOriginalFilename());
+							log.info("finalPath:   "+vatFilePath);
+							log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
+							File dir = new File(vatFilePath);
+							if (!dir.exists()) dir.mkdirs();
+							byte barr[]=vatFile.getBytes();
+							BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+							bout.write(barr);
+							bout.flush();
+							bout.close();
+							registration.setVatFilename(vatFile.getOriginalFilename());
+						}
+					}
+					else {}
+					if(registration.getType()==0){
+						log.info("if user is individual");       
+						if(file.isEmpty()==true) { 
+							log.info("if file is empty");
+							OtpResponse response=new OtpResponse();
+							response.setResponse("please upload national information");
+							return response;
+						}     
+						else{ 
+							log.info("if user is individual  "); 
+							log.info("file name: " +file.getOriginalFilename());
+							log.info("finalPath:   "+nationalIdPath);  
+							File dir = new File(nationalIdPath);
+							if (!dir.exists()) dir.mkdirs();
+							byte barr[]=file.getBytes();
+							BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + file.getOriginalFilename()));
+							bout.write(barr);
+							bout.flush();
+							bout.close();   
+							registration.setNidFilename(file.getOriginalFilename());
+							OtpResponse response=userRegistrationFeignImpl.registration(registration);
+							log.info("registration response:  "+response);
+							return response;
+
+						}  
+					}  
+					else { 
+						log.info("if user either company , organization or government");  
+						OtpResponse response=userRegistrationFeignImpl.registration(registration);
+						log.info("response from server:  "+response);
+						return response;
+
 					}
 				}
-				else {}
-				if(registration.getType()==0){
-					log.info("if user is individual");       
-					if(file.isEmpty()==true) { 
-						log.info("if file is empty");
-						OtpResponse response=new OtpResponse();
-						response.setResponse("please upload national information");
-						return response;
-					}     
-					else{ 
-						log.info("if user is individual  "); 
-						log.info("file name: " +file.getOriginalFilename());
-						log.info("finalPath:   "+nationalIdPath);  
-						File dir = new File(nationalIdPath);
-						if (!dir.exists()) dir.mkdirs();
-						byte barr[]=file.getBytes();
-						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + file.getOriginalFilename()));
-						bout.write(barr);
-						bout.flush();
-						bout.close();   
-						registration.setNidFilename(file.getOriginalFilename());
-						OtpResponse response=userRegistrationFeignImpl.registration(registration);
-						log.info("registration response:  "+response);
-						return response;
 
-					}  
-				}  
-				else { 
-					log.info("if user either company , organization or government");  
-					OtpResponse response=userRegistrationFeignImpl.registration(registration);
-					log.info("response from server:  "+response);
-					return response;
-
-				}
-				}
-				
 			}  
 			else {
 

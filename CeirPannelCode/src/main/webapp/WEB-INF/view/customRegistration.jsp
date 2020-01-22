@@ -169,9 +169,7 @@ var contextpath = "${context}";
 		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-    <%String name=request.getParameter("name");
-    Integer usertypeId=Integer.parseInt(request.getParameter("usertypeId"));
-    %>
+    <%String name=request.getParameter("type");%>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
@@ -186,7 +184,8 @@ var contextpath = "${context}";
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr>
 
-							<input type="hidden" id="usertypeId" value="${usertypeId}">
+							<input type="hidden" id="usertypeId" value="1">
+							<input type="hidden" id="usertypeName" value="<%=name%>">
 							<input type="hidden" id="type" value="2">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
@@ -299,7 +298,7 @@ var contextpath = "${context}";
 									<select id="state" class="browser-default" class="mySelect"
 										style="padding-left: 0;" required></select>
 								</div>
-								<%if(usertypeId==7){ %>
+								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
 									<label>Expected Arrival Port<span class="star">*</span></label>
 									<select id="arrivalPort" class="browser-default"
@@ -308,7 +307,6 @@ var contextpath = "${context}";
 									</select>
 								</div>
 								<%} %>
-								
 							</div>
 
 							<div class="row">
