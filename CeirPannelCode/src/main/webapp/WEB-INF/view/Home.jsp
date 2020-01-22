@@ -8,6 +8,7 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap" rel="stylesheet">
 <meta charset="utf-8" />
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -56,6 +57,13 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
     .dataTables_filter{
         display: none;
     }
+    
+   .section {
+    padding-bottom: 1rem;
+    width: 99%;
+    margin: auto;
+    margin-top: 10px;
+}
 </style>
 </head>
 
@@ -74,7 +82,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel">
-                            <div class="container-fluid pageHeader" style="margin: -13px -20px 0px;">
+                            <div class="pageHeader">
                                 <p class="PageHeading"><spring:message code="view.dashboard" /></p>
                             </div>
                             <div class="col s12 m12 l12">
@@ -88,14 +96,15 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
                                           
                                       </div>
                                     <div class="col s12 m12" style="padding-bottom: 40px;">
+                                    <div class="wrap-table"> 
                                         <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
                                             <spring:message code="table.header"/></h4>
                                         
-                                        <table class="responsive-table striped display" id="notificationLibraryTable"
+                                       <table class="responsive-table striped display" id="notificationLibraryTable"
                                             cellspacing="0">
-                                           
-
+                                            
                                         </table>
+                                        </div>                                        
                                     </div>
 
                                 </div>
@@ -116,8 +125,10 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 	
 		<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
+	
 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>  
+			
 			<script type="text/javascript"
 		src="${context}/resources/project_js/home.js"></script>
 

@@ -30,7 +30,7 @@
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
-    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css" >
 
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
