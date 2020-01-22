@@ -257,6 +257,7 @@ public class GrievanceController {
 							filterRequest.setUserId(userId);
 							filterRequest.setUserType(userType);
 							filterRequest.setUserTypeId(usertypeId);
+							filterRequest.setFeatureId(6);
 							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
 						

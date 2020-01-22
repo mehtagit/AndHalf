@@ -199,7 +199,7 @@ section {
 
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
-										<input type="text" name="totalPrice" id="totalPrice"
+										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
 												maxlength="7" /> <label for="totalPrice"
 												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
