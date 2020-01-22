@@ -1,6 +1,7 @@
-\<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -179,7 +180,7 @@ input[type='search'] {
 										<div class="row">
 											<div class="col s12 m12">
 												<div class="col s12 m12">
-													<h5>Personal Information</h5>
+													<h5><spring:message code="input.personalInformation" /></h5>
 													<hr>
 												</div>
 											</div>
@@ -187,7 +188,7 @@ input[type='search'] {
 												<div class="input-field col s12 m4">
 													<input type="text" id="nationalID" pattern="[A-Za-z0-9]{1,12}" title="Please enter alphabets and numbers upto 15 characters only"
 													  required="required" maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID"
-														class="center-align ml-10">NID </label>
+														class="center-align ml-10"><spring:message code="input.nidText" /></label>
 												</div>
 
 													<div class="col s12 m4">
@@ -204,11 +205,10 @@ input[type='search'] {
 
 												<div class="file-field input-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;">
-														Upload National ID Proof <span class="star">*</span>
+													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /><span class="star">*</span>
 													</h6>
 													<div class="btn">
-														<span>Select File</span> <input type="file"
+														<span><spring:message code="input.selectfile" /></span> <input type="file"
 															required="required" id="csvUploadFile" accept=".csv">
 													</div>
 													<div class="file-path-wrapper">
@@ -223,8 +223,7 @@ input[type='search'] {
 														maxlength="20" required="required"
 														pattern="[A-Za-z]{0,20}"
 														title="Please enter alphabets  upto 20 characters only">
-													<label for="firstName" class="center-align">First
-														Name <span class="star">*</span>
+													<label for="firstName" class="center-align"><spring:message code="input.firstName" /><span class="star">*</span>
 													</label>
 												</div>
 
@@ -232,15 +231,14 @@ input[type='search'] {
 													<input type="text" name="middleName" id="middleName"
 														maxlength="20" pattern="[A-Za-z]{0,20}"
 														title="Please enter alphabets upto 20 characters only">
-													<label for="middleName">Middle Name</label>
+													<label for="middleName"><spring:message code="input.middleName" /></label>
 												</div>
 
 												<div class="input-field col s12 m4 l4">
 													<input type="text" name="lastName" id="lastName"
 														required="required" pattern="[A-Za-z]{0,20}"
 														title="Please enter alphabets  upto 20 characters only"
-														maxlength="20"> <label for="lastName">Last
-														Name <span class="star">*</span>
+														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /><span class="star">*</span>
 													</label>
 												</div>
 											</div>
@@ -254,7 +252,7 @@ input[type='search'] {
 														title="Please enter alphabets and numbers upto 200 characters only"
 														maxlength="200" required="required"
 														class="form-control boxBorder boxHeight" id="address">
-													<label for="address">Address(Property Location) <span
+													<label for="address"><spring:message code="input.address" /><span
 														class="star">*</span></label>
 												</div>
 
@@ -264,7 +262,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="streetNumber"
 														maxlength="20" required="required"> <label
-														for="streetNumber">Street Number <span
+														for="streetNumber"> <spring:message code="input.streetNumber" /><span
 														class="star">*</span>
 													</label>
 												</div>
@@ -274,7 +272,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="village"
 														maxlength="50" required="required"> <label
-														for="village">Vllage <span
+														for="village"> <spring:message code="input.village" /><span
 														class="star">*</span>
 													</label>
 												</div>
@@ -286,7 +284,7 @@ input[type='search'] {
 														title="Please enter alphabets and numbers upto 50 characters only"
 														class="form-control boxBorder boxHeight" id="locality"
 														maxlength="50" required="required"> <label
-														for="locality">Locality <span class="star">*</span>
+														for="locality"> <spring:message code="input.locality" /><span class="star">*</span>
 													</label>
 												</div>
 
@@ -296,7 +294,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="district"
 														maxlength="50" required="required"> <label
-														for="district">District <span
+														for="district"> <spring:message code="input.district" /><span
 														class="star">*</span>
 													</label>
 												</div>
@@ -306,7 +304,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="commune"
 														maxlength="50" required="required"> <label
-														for=""commune"">Commune <span
+														for="commune"> <spring:message code="input.commune" /><span
 														class="star">*</span>
 													</label>
 												</div>
@@ -317,14 +315,14 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="postalcode"
 														maxlength="10" required="required"> <label
-														for="postalcode">PostalCode <span
+														for="postalcode"> <spring:message code="input.postalCode" /><span
 														class="star">*</span>
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-														Country <span class="star">*</span>
+														<spring:message code="table.country" /><span class="star">*</span>
 													</p>
 													<select id="country" class="browser-default"
 														class="mySelect" style="padding-left: 0;" required></select>
@@ -333,7 +331,7 @@ input[type='search'] {
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-														Province <span class="star">*</span>
+													<spring:message code="input.province" /><span class="star">*</span>
 													</p>
 													<select id="state" class="browser-default" class="mySelect"
 														style="padding-left: 0;" required></select>
@@ -343,7 +341,7 @@ input[type='search'] {
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
 													<input type="email" name="email" id="email" required
-														maxlength="30"> <label for="email">Email <span
+														maxlength="30"> <label for="email"><spring:message code="input.email" /><span
 														class="star">*</span></label>
 												</div>
 
@@ -352,8 +350,7 @@ input[type='search'] {
 														pattern="[0-9]{10,10}"
 														title="Please enter 10 digits contact number"
 														class="form-control boxBorder boxHeight" id="phone"
-														maxlength="10"> <label for="phone">Contact
-														Number <span class="star">*</span>
+														maxlength="10"> <label for="phone"><spring:message code="input.contactNum" /><span class="star">*</span>
 													</label>
 												</div>
 											</div>
@@ -363,42 +360,39 @@ input[type='search'] {
 												<div class="row">
 													<div class="col s12 m12">
 														<div class="col s12 m12" style="margin-top: 30px;">
-															<h5>Device Information</h5>
+															<h5><spring:message code="modal.deviceInfo" /></h5>
 															<hr>
 														</div>
 
 														<div class="col s12 m6">
-															<label for="deviceType">Device Type <span
+															<label for="deviceType1"><spring:message code="select.deviceType" /><span
 																class="star">*</span></label> <select class="browser-default"
 																id="deviceType1" required="required">
-																<option value="" disabled selected>Select
-																	Device Type</option>
+																<option value="" disabled selected><spring:message code="select.selectDeviceType" /></option>
 
 
 															</select>
 														</div>
 
 														<div class="col s12 m6">
-															<label for="deviceIdType1">Device ID Type <span
+															<label for="deviceIdType1"><spring:message code="select.deviceIDType" /> <span
 																class="star">*</span></label> <select required="required"
 																class="browser-default" id="deviceIdType1">
-																<option value="" disabled selected>Select
-																	Device ID Type</option>
+																<option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
 
 															</select>
 														</div>
 
 														<div class="col s12 m6">
-															<label for="multipleSimStatus1">Multiple Sim
-																Status <span class="star">*</span>
+															<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star">*</span>
 															</label> <select class="browser-default" required="required"
 																id="multipleSimStatus1">
-																<option value="" disabled selected>Select
+																<option value="" disabled selected><spring:message code="select.select" />
 															</select>
 														</div>
 
 														<div class="col s12 m6">
-															<label for="country1">Country bought From <span
+															<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
 																class="star">*</span></label> <select id="country1"
 																class="browser-default" class="mySelect"
 																style="padding-left: 0;" required></select>
@@ -409,17 +403,15 @@ input[type='search'] {
 															<input type="text" id="serialNumber1" required="required" name="serialNumber"
 																pattern="[A-Za-z0-9]{0,15}"
 																title="Please enter alphabets and numbers upto 15 characters only"
-																maxlength="15"> <label for="serialNumber">Device
-																Serial Number <span class="star">*</span>
+																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
 															</label>
 														</div>
 
 														<div class="col s12 m6">
-															<label for="taxStatus1">Tax paid Status <span
+															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
 																class="star">*</span></label> <select class="browser-default"
 																required="required" id="taxStatus1">
-																<option value="" disabled selected>Select Tax
-																	paid Status</option>
+																<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
 
 															</select>
 														</div>
@@ -428,11 +420,10 @@ input[type='search'] {
 												<div class="row">
 													<div class="col s12 m12">
 														<div class="col s12 m6" style="margin-top: -10px;">
-															<label for="deviceStatus1">Device Status <span
+															<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 																class="star">*</span></label> <select class="browser-default"
 																required="required" id="deviceStatus1">
-																<option value="" disabled selected>Select
-																	Device Status</option>
+																<option value="" disabled selected><spring:message code="select.selectDeviceStatus" /></option>
 
 															</select>
 														</div>
@@ -440,15 +431,14 @@ input[type='search'] {
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="Price" id="Price1"
 																pattern="[0-9]{0,7}"  maxlength="7">
-															<label for="Price1">Price</label>
+															<label for="Price1"><spring:message code="select.price" /></label>
 														</div>
 
 														<div class="col s12 m6">
-															<label for="Currency1">Currency <span
+															<label for="Currency1"><spring:message code="input.currency" /><span
 																class="star">*</span></label> <select class="browser-default"
 																id="Currency1" required="required">
-																<option value="" disabled selected>Select
-																	Currency</option>
+																<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
 
 															</select>
 														</div>
@@ -457,13 +447,13 @@ input[type='search'] {
 												<div class="row">
 													<div class="col s12 m12">
 														<div class='col s12 m12 input_fields_wrap'>
-															<p>IMEI/MEID/ESN</p>
+															<p><spring:message code="title.imeiMeidEsn" /></p>
 															<div class='row'>
 																<div class="input-field col s12 m6">
 																	<input type="text" id="IMEIA1" name="IMEI1"
 																		pattern="[0-9]{15,16}" required="required"
 																		title="Please enter minimum 15 and maximum 16 digit only"
-																		maxlength="16"> <label for="IMEIA1">1
+																		maxlength="16"> <label for="IMEIA1"><spring:message code="title.one" />
 																		<span class="star">*</span>
 																	</label>
 																</div>
@@ -472,14 +462,14 @@ input[type='search'] {
 																	<input type="text" id="IMEIB1" name="IMEI2"
 																		pattern="[0-9]{15,16}"
 																		title="Please enter minimum 15 and maximum 16 digit only"
-																		maxlength="16"> <label for="IMEIB2">2</label>
+																		maxlength="16"> <label for="IMEIB2"><spring:message code="title.two" /></label>
 																</div>
 
 																<div class="input-field col s12 m6">
 																	<input type="text" id="IMEIC1" name="IMEIC3"
 																		pattern="[0-9]{15,16}"
 																		title="Please enter minimum 15 and maximum 16 digit only"
-																		maxlength="16"> <label for="IMEIC3">3</label>
+																		maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
 																</div>
 
 																<div class="input-field col s12 m6" id="field">
@@ -487,7 +477,7 @@ input[type='search'] {
 																		pattern="[0-9]{15,16}"
 																		title="Please enter minimum 15 and maximum 16 digit only"
 																		maxlength="16" id="field0"> <label
-																		for="IMEID4">4</label>
+																		for="IMEID1"><spring:message code="title.four" /></label>
 																</div>
 															</div>
 														</div>
@@ -498,17 +488,17 @@ input[type='search'] {
 										<div class="col s12 m12">
 											<button class="btn right add_field_button"
 												style="margin-top: 5px;">
-												<span style="font-size: 20px;">+</span> Add More Device
+												<span style="font-size: 20px;">+</span>  <spring:message code="button.addMoreDevice" />
 											</button>
 											<p>
-												Required Field are marked with <span class="star">*</span>
+												 <spring:message code="input.requiredfields" /><span class="star">*</span>
 											</p>
 										</div>
 
 										<div class="col s12 m12 center" style="margin-top: 30px;">
-											<button class="btn " id="uploadPaidStatusbutton" type="submit">Submit</button>
+											<button class="btn " id="uploadPaidStatusbutton" type="submit"><spring:message code="button.submit" /></button>
 											<a  href='./uploadPaidStatus?via=other' class="btn"
-												style="margin-left: 10px;">Cancel</a>
+												style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 										</div>
 
 
@@ -527,8 +517,7 @@ input[type='search'] {
 
 												</table>
 
-												<a href="Javascript:void(0);" onclick="viewDeviceHistory()">View
-													block devices</a>
+												<a href="Javascript:void(0);" onclick="viewDeviceHistory()"><spring:message code="modal.header.viewBlockDevices" /></a>
 											</div>
 										</div>
 									</div>
@@ -552,7 +541,7 @@ input[type='search'] {
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
-		<h6 class="modal-header">View Block Devices</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
 		
 		<div class="modal-content">
 
@@ -570,16 +559,16 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="deleteMsg" class="modal">
-		<h6 class="modal-header">Delete</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Are you sure you want to Delete this device information?</h6>
+				<h6><spring:message code="modal.deleteDeviceInfo" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<button class="btn" onclick="accept()">yes</button>
-					<button class="modal-close btn" style="margin-left: 10px;">no</button>
+					<button class="btn" onclick="accept()"><spring:message code="modal.yes" /></button>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
 		</div>
@@ -591,46 +580,45 @@ input[type='search'] {
 	<!-- Modal 2 start   -->
 
 	<div id="viewDeviceInformation" class="modal">
-		<h6 class="modal-header">View Device Information</h6>
+		<h6 class="modal-header"><spring:message code="modal.viewDeviceInfo" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
 				<div class="row">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="deviceType" id="viewdeviceType"
-							placeholder="Mobile Phone/Feature phone" maxlength="30" disabled
-							style="height: 28px;"> <label for="deviceType">Device
-							Type</label>
+							placeholder="" maxlength="30" disabled
+							style="height: 28px;"> <label for="viewdeviceType"><spring:message code="select.deviceType" /></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="deviceIdType" id="viewdeviceIdType"
-							placeholder="IMEI" maxlength="30" disabled style="height: 28px;">
-						<label for="deviceIdType">Device ID Type</label>
+							placeholder="" maxlength="30" disabled style="height: 28px;">
+						<label for="viewdeviceIdType"><spring:message code="select.deviceIDType" /></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="simStatus" id="viewsimStatus"
-							placeholder="Yes" maxlength="30" disabled style="height: 28px;">
-						<label for="simStatus">Multiple Sim Status</label>
+							placeholder="" maxlength="30" disabled style="height: 28px;">
+						<label for="viewsimStatus"><spring:message code="select.multiSimStatus" /></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="countryBought" id="viewcountryBought"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="countryBought">Country bought From</label>
+						<label for="countryBought"><spring:message code="select.countryBoughtFrom" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewserialNumber" name="serialNumber"
 							placeholder="" maxlength="20" disabled style="height: 28px;">
-						<label for="serialNumber">Device Serial Number</label>
+						<label for="viewserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="taxStatus" id="viewtaxStatus"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="taxStatus">Tax paid Status</label>
+						<label for="viewtaxStatus"><spring:message code="select.taxPaidStatus" /></label>
 					</div>
 				</div>
 
@@ -638,32 +626,32 @@ input[type='search'] {
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="deviceStatus" id="viewdeviceStatus"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="deviceStatus">Device Status</label>
+						<label for="viewdeviceStatus"><spring:message code="select.deviceStatus" /></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="Price" id="viewPrice" placeholder=""
 							maxlength="30" disabled style="height: 28px;"> <label
-							for="Price">Price </label>
+							for="viewPrice"><spring:message code="select.price" /></label>
 					</div>
 
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="currency" id="viewcurrency"
 							placeholder="" maxlength="30" disabled style="height: 28px;">
-						<label for="currency">Currency</label>
+						<label for="viewcurrency"><spring:message code="input.currency" /></label>
 					</div>
 				</div>
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12">
-						<p style="margin-bottom: 0; margin-top: -10px;">IMEI/MEID/ESN</p>
+						<p style="margin-bottom: 0; margin-top: -10px;"><spring:message code="title.imeiMeidEsn" /></p>
 					</div>
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewIMEI1" name="IMEI1"
 							pattern="[0-9]{15,16}"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" disabled style="height: 28px;">
-						<label for="IMEI1">1 </label>
+						<label for="viewIMEI1"><spring:message code="title.one" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
@@ -671,7 +659,7 @@ input[type='search'] {
 							pattern="[0-9]{15,16}"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" disabled style="height: 28px;">
-						<label for="IMEI2">2</label>
+						<label for="viewIMEI2"><spring:message code="title.two" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
@@ -679,18 +667,18 @@ input[type='search'] {
 							pattern="[0-9]{15,16}"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" style="height: 28px;" disabled>
-						<label for="IMEI3">3</label>
+						<label for="viewIMEI3"><spring:message code="title.three" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewIMEI4" name="IMEI4[]" pattern="[15-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" style="height: 28px;" disabled>
-						<label for="IMEI4">4</label>
+						<label for="viewIMEI4"><spring:message code="title.four" /></label>
 					</div>
 
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-						<button class="btn modal-close" style="margin-left: 10px;">Ok</button>
+						<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 					</div>
 
 				</div>
@@ -702,18 +690,17 @@ input[type='search'] {
 	
 
 	<div id="regularisedDevice" class="modal">
-		<h6 class="modal-header">Upload Paid Device</h6>
+		<h6 class="modal-header"> <spring:message code="modal.uploadPaidDevice" /> </h6>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage">
-					Your form has been successfully submitted. The Transaction ID for
-					future reference is <span id="dynamicTxnId"></span>
+					<spring:message code="modal.message.futureRef" /> <span id="dynamicTxnId"></span>
 				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="btn" onclick="refreshContent();">ok</button>
+						<button class="btn" onclick="refreshContent();"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
@@ -722,17 +709,17 @@ input[type='search'] {
 
 
 	<div id="payTaxModal" class="modal">
-		<h6 class="modal-header">Pay Tax Information</h6>
+		<h6 class="modal-header"><spring:message code="modal.payTaxInfo" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Do you confirm that tax has been paid?</h6>
+				<h6><spring:message code="modal.taxHasBeenPaid" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="btn" onclick="taxPaidStatus()">Yes</button>
-						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+						<button class="btn" onclick="taxPaidStatus()"><spring:message code="modal.yes" /></button>
+						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
@@ -740,49 +727,49 @@ input[type='search'] {
 	</div>
 
 	<div id="confirmDeleteMsg" class="modal">
-		<h6 class="modal-header">Delete</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6 id="responseMsg"> This device information has been successfully deleted.</h6>
+				<h6 id="responseMsg"><spring:message code="modal.deviceInfoDeleted" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<button class="btn" onclick="refreshContent();">ok</button>
+					<button class="btn" onclick="refreshContent();"><spring:message code="modal.ok" /></button>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div id="payNowTaxPayment" class="modal">
-		<h6 class="modal-header">Add Device Information</h6>
+		<h6 class="modal-header"><spring:message code="modal.addDeviceInfo" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6 id="taxPaidMsg"> The device status has been successfully updated</h6>
+				<h6 id="taxPaidMsg"><spring:message code="modal.deviceStatus" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="btn" onclick="refreshContent()">ok</button>
+						<button class="btn" onclick="refreshContent()"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 <div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Approve</h6>
+        <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
         <div class="modal-content">
             <div class="row">
                 <form action="">
                    
-                    <h6>Do you want to Approve the request having Transaction ID: <span id="approveTxnId"></span> ?</h6>
+                    <h6> <spring:message code="modal.approveRequest" /><span id="approveTxnId"></span> ?</h6>
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="aprroveDevice()" class="btn modal-trigger">Yes</a>
-                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                    <a onclick="aprroveDevice()" class="btn modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                       <span id="userId" hidden></span>
                        <span id="adminCurrentStatus" hidden></span>
                 </div>
@@ -791,18 +778,18 @@ input[type='search'] {
     </div>
     
     <div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Approve</h6>
+        <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
         <div class="modal-content">
             <div class="row">
                 <form action="">
                     
-                    <h6>Device has been Approved Successfully.</h6>
+                    <h6><spring:message code="modal.deviceApproved" /></h6>
                    
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./uploadPaidStatus">ok</a>
+                     <a class="btn modal-close" href="./uploadPaidStatus"><spring:message code="modal.ok" /></a>
                    
                 </div>
             </div>
@@ -811,15 +798,15 @@ input[type='search'] {
     
     
     <div id="rejectInformation" class="modal">
-           <h6 class="modal-header">Reject</h6>
+           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
             <div class="row">
-             <h6>Do you want to reject the request having transaction ID:<span id="disapproveTxnId"></span> ?</h6>
+             <h6><spring:message code="modal.rejectRequest" /><span id="disapproveTxnId"></span> ?</h6>
                 <form action="">
                 
                     <div class="input-field" style="margin-top: 30px;">
                         <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
+                        <label for="Reason" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
                     </div>
                    
                     
@@ -827,25 +814,25 @@ input[type='search'] {
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger">Yes</a>
-                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
         </div>
     </div>
   
     	<div id="confirmRejectInformation" class="modal">
-         <h6 class="modal-header">Reject</h6>
+         <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
           <div class="modal-content">
             <div class="row">
                 <form action="">
                   
-                    <h6>Device has been Rejected Successfully.</h6>
+                    <h6><spring:message code="modal.deviceRejected" /></h6>
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./uploadPaidStatus">ok</a>
+                    <a class="btn modal-close" href="./uploadPaidStatus"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -867,6 +854,37 @@ input[type='search'] {
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+			<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
 	<script type="text/javascript"

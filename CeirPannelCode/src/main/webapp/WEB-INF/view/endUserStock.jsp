@@ -223,7 +223,7 @@ style="overflow: inherit !important;">
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;">Quantity <span class="star">*</span></label>
                                                 <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0.7}
-                                                    title="Please enter maximum 10 characters only" maxlength="10" />
+                                                    title="Please enter maximum 10 characters only" maxlength="10" required/>
                                             </div>
 
                                             <div class="file-field col s12 m6">
@@ -271,8 +271,8 @@ style="overflow: inherit !important;">
                                        <div class="container" style="margin-top:10vh;display: none" id="checkUploadStatusDiv" >
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page" >
-                            <a href="index.html" class="modal-close btn-flat modal-btn right"
-                                data-dismiss="modal">&times;</a>
+                            <!-- <a href="index.html" class="modal-close btn-flat modal-btn right"
+                                data-dismiss="modal">&times;</a> -->
                                 <h6 class="fixPage-modal-header ">Check Upload Status</h6>
                                  	
                                 <div class="col s12 m12 l12">

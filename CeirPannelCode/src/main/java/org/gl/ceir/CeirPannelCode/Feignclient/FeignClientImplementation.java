@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import feign.Headers;
 
 @Service
-@FeignClient(url = "${feignClientPath}",value = "dsj" )
+@FeignClient(url = "http://13.233.39.58:9090/CEIR",value = "dsj" )
 public interface FeignClientImplementation {
 	 
 	

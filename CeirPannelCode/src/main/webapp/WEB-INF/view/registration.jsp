@@ -277,7 +277,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight" id="companyName"
 										pattern="[A-Za-z\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
-									<label for="company">Company Name <span class="star">*</span></label>
+									<label for="companyName">Company Name <span class="star">*</span></label>
 								</div>
 
 								<div class="row myRow" style="display: none;" id="uploadFile">

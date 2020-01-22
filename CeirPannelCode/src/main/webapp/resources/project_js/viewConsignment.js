@@ -121,7 +121,7 @@
 		$("#updateModal").openModal();
 	}
 
-	function ConsignmentCurrency()
+function ConsignmentCurrency()
 	{
 		var currency="CURRENCY";
 		$.ajax({
@@ -157,6 +157,7 @@
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 				console.log(data);
+		
 
 				/*	$('#viewcurrency').empty();*/
 				for (i = 0; i < data.length; i++){
@@ -651,8 +652,6 @@
 
 	function openApprovePopUp(txnId,displayName)
 	{
-
-		
 		var userType=$("body").attr("data-roleType");
 		displayName=displayName.replace("+20"," " );
 		$('#ApproveConsignment').openModal();

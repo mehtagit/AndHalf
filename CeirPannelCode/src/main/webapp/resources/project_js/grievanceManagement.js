@@ -309,7 +309,8 @@
 
 
 			if(Date.parse(today)>Date.parse(dispatcDate))
-			{
+			
+						{
 				myFunction("Arrival date should be greater then or equals to today");
 				$('#expectedArrivalDate').val("");
 			}
@@ -391,33 +392,16 @@
 			var fileData = [];
 			
 			var x;
-			
+			var filename='';
 			var filediv;
 			var i=0;
 			var formData= new FormData();
 			var docTypeTagIdValue='';
-		
-			
+			var filename='';
 			$('.fileDiv').each(function() {	
-				var fileName=$('#docTypeFile'+fieldId).val();
-				var fileName1='';
-				
-				if(fileName=='')
-					{
-					fileName1='';
-					}
-				else if(fileName==undefined )
-					{
-			fileName1='';
-					}
-				else {
-				/*	console.log("vanotnotlue");*/
-				fileName1=fileName.replace('C:\\fakepath\\','');	
-				}
-				
 				var x={
 				"docType":$('#docTypetag'+fieldId).val(),
-				"fileName":fileName1,
+				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\',''),
 				"grievanceId":$('#grievanceIdToSave').text()
 				}
 				formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
@@ -443,7 +427,7 @@
 			formData.append('grievanceId',grievanceIdToSave);
 			formData.append('txnId',grievanceTxnId);
 			formData.append('grievanceStatus',grievanceTicketStatus);*/
-		
+
 			$.ajax({
 				url: './saveGrievanceMessage',
 				type: 'POST',
@@ -509,7 +493,7 @@
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 							}
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
-
+					
 					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -582,7 +566,7 @@
 						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 				); //add input box
 			}
-			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 
 
 				for (i = 0; i < data.length; i++) {

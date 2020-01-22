@@ -1,6 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
-import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;

@@ -66,6 +66,7 @@
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 </head>
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
@@ -175,20 +176,20 @@
 				<div class="input-field col s12 m6">
 					<!-- <label for="Name" class="center-align">Expected arrival port</label> -->
 					<input type="text" id="expectedArrivalPort" readonly="readonly"
-						placeholder="Arrival port"> <label for="Name"
+						placeholder=""> <label for="expectedArrivalPort"
 						class="center-align"><spring:message
 							code="input.arrivalport" /></label>
 				</div>
 
 				<div class="input-field col s12 m6">
-					<input type="text" name="Quantity" placeholder="Quantity"
+					<input type="text" name="Quantity" placeholder=""
 						id="Quantity" readonly="readonly" /> <label for="Quantity"
 						class="center-align"><spring:message code="input.quantity" /></label>
 				</div>
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="TransactionId"
-						placeholder="Transaction ID" id="TransactionId"
+						placeholder="" id="TransactionId"
 						readonly="readonly" maxlength="15" /> <label for="TransactionId"
 						class="center-align"><spring:message
 							code="input.transactionID" /></label>
@@ -659,6 +660,7 @@
 
 
 
+				
 				<div class="row" style="padding-bottom: 15px">
 					<div class="col s12 m12">
 						<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a></br> <span> <spring:message code="input.requiredfields" /> <span
@@ -770,7 +772,7 @@
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-	<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	

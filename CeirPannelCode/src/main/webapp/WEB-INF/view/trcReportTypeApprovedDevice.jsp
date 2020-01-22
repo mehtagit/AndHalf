@@ -135,7 +135,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="bdate2">Request Date <span class="star">*</span></label>
+											for="requestDate">Request Date <span class="star">*</span></label>
 									</div>
 
 
@@ -168,7 +168,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="bdate2">Approve/Rejection Date <span
+											for="approveDisapproveDate">Approve/Rejection Date <span
 											class="star">*</span></label>
 									</div>
 
@@ -177,7 +177,7 @@
                                             
 									<div class="input-field col s12 m6 l6" style="margin-top: 9px;">
 										<textarea id="remark" class="materialize-textarea"></textarea>
-										<label for="Remark">Remark </label>
+										<label for="remark">Remark </label>
 									</div>
 								</div>
 

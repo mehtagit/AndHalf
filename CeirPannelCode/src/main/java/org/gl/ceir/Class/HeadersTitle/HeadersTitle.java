@@ -111,6 +111,7 @@ public class HeadersTitle {
 		public  String blockType="Block Type";
 
 		//Audit Management
-				public  String userName="User Name";
-				public  String subFeature="Sub Feature";	
+		public  String userName="User Name";
+		public  String subFeature="Sub Feature";	
+
 }

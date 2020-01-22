@@ -78,7 +78,7 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+replyIconTitle+"></i></a>";
 
-	
+
 
 		if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
@@ -876,7 +876,6 @@ public class IconsState {
 			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
 
 		}
-
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
