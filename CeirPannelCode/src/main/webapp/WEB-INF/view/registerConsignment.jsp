@@ -354,237 +354,39 @@ section {
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
 
 
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
 
-	<script type="text/javascript">
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/registerConsignment.js"></script>
+
 	
-	window.parent.$('#langlist').on('change', function() {
-		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
-	}); 
-	
-
-	$.i18n().locale = lang;
-	var successMsg;
-	$.i18n().load( {
-		'en': '../resources/i18n/en.json',
-		'km': '../resources/i18n/km.json'
-	} ).done( function() { 
-		successMsg=$.i18n('successMsg');
-	});
-	
-	
-	$(document).ready(function() {
-		ConsignmentCurrency();
-	});
-	
-	
-	
-		function registerConsignment() {
-			var supplierId = $('#supplierId').val();
-			var supplierName = $('#supplierName').val();
-			var consignmentNumber = $('#consignmentNumber').val();
-			var expectedArrivalDate = $('#expectedArrivaldate').val();
-			var expectedDispatcheDate = $('#expectedDispatcheDate').val();
-			var expectedArrivalPort = $('#expectedArrivalPort').val();
-			var organisationcountry = $('#country').val();
-			var currency = $('#currency').val();
-			var totalPrice = $('#totalPrice').val();
-			var quantity = $('#quantity').val();
-			var formData = new FormData();
-			formData.append('file', $('#file')[0].files[0]);
-			formData.append('supplierId', supplierId);
-			formData.append('supplierName', supplierName);
-			formData.append('consignmentNumber', consignmentNumber);
-			formData.append('expectedArrivaldate', expectedArrivalDate);
-			formData.append('expectedDispatcheDate', expectedDispatcheDate);
-			formData.append('expectedArrivalPort', expectedArrivalPort);
-			formData.append('organisationcountry', organisationcountry);
-			formData.append('quantity', quantity);
-			formData.append('currency', currency);
-			formData.append('totalPrice', totalPrice);
-
-			$
-					.ajax({
-						url : '${context}/Consignment/registerConsignment',
-						type : 'POST',
-						data : formData,
-						processData : false,
-						contentType : false,
-						success : function(data, textStatus, jqXHR) {
-
-							console.log(data);
-							$("#consignmentSubbmitButton").prop('disabled', true);
-							$('#submitConsignment').openModal();
-							if (data.errorCode == "0") {
-								console.log("status code = 0");
-								$('#sucessMessage')
-										.text(successMsg);
-								$('#sucessMessage').append(data.txnId);
-								$('#errorCode').val(data.errorCode);
-							} else if (data.errorCode == "3") {
-								console.log("status code = 3");
-								$('#sucessMessage').text('');
-								$('#sucessMessage').text(
-										"consignment number already exist");
-								$('#errorCode').val(data.errorCode);
-							}
-							// $('#updateConsignment').modal('open'); 
-							//alert("success");
-
-						},
-						error : function(jqXHR, textStatus, errorThrown) {
-							console.log("error in ajax")
-						}
-					});
-
-			return false;
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		function openDeleteModal(transactionId) {
-			/*   $('#deletemodal').modal('open');
-			  backdrop: 'static' */
-			$('#deletemodal').openModal();
-			console.log("transactionId value=" + transactionId);
-			$('#deleteTransactionId').val(transactionId);
-		}
-	</script>
-	<script type="text/javascript">
-		function myFunction(message) {
-			var x = document.getElementById("snackbar");
-			x.className = "show";
-			$('#errorMessage').html(message);
-			setTimeout(function() {
-				x.className = x.className.replace("show", "");
-			}, 3000);
-		}
-
-		function dispatchDateValidation() {
-			var currentDate;
-			var dispatcDate = $('#expectedDispatcheDate').val();
-			var now = new Date();
-			if (now.getDate().toString().charAt(0) != '0') {
-				currentDate = '0' + now.getDate();
-
-				/* alert("only date="+currentDate); */
-			} else {
-				currentDate = now.getDate();
-			}
-			var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
-					+ currentDate;
-			//alert("today"+today);
-			console.log("dispatche=" + dispatcDate);
-			console.log("todays parse date" + Date.parse(today));
-			console.log("dispatche parse date" + Date.parse(dispatcDate));
-
-			if (Date.parse(today) > Date.parse(dispatcDate)) {
-				myFunction("dispatche date should be greater then or equals to today");
-				$('#expectedDispatcheDate').val("");
-			}
-
-			//alert("current date="+today+" dispatche date="+dispatcDate)
-		}
-
-		function arrivalDateValidation() {
-			var currentDate;
-			var dispatcDate = $('#expectedArrivalDate').val();
-			var now = new Date();
-			if (now.getDate().toString().charAt(0) != '0') {
-				currentDate = '0' + now.getDate();
-
-				/* alert("only date="+currentDate); */
-			} else {
-				currentDate = now.getDate();
-			}
-			var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
-					+ currentDate;
-			//alert("today"+today);
-			console.log("dispatche=" + dispatcDate);
-			console.log("todays parse date" + Date.parse(today));
-			console.log("dispatche parse date" + Date.parse(dispatcDate));
-
-			if (Date.parse(today) > Date.parse(dispatcDate)) {
-				myFunction("Arrival date should be greater then or equals to today");
-				$('#expectedArrivalDate').val("");
-			}
-
-			//alert("current date="+today+" dispatche date="+dispatcDate)
-		}
-
-		function closeConfirmation() {
-
-			var errorCode = $('#errorCode').val();
-			if (errorCode == 0) {
-				console.log("status code = 0");
-				$("#closeOkPop").submit();
-			} else if (errorCode == 3) {
-				console.log("status code = 3");
-				$('#sucessMessage').text('');
-				$('#submitConsignment').closeModal();
-				/// $('#submitConsignment').modal('hide');
-			}
-		}
-
-		function ConsignmentCurrency() {
-			var currency = "CURRENCY";
-			$.ajax({
-				url : '${context}/Consignment/consignmentCurency?CURRENCY='
-						+ currency,
-				type : 'GET',
-				processData : false,
-				contentType : false,
-				success : function(data, textStatus, jqXHR) {
-					console.log(data);
-
-					$('#currency').empty();
-					$('#currency').append(
-							'<option value="">Select Currency</option>');
-					for (i = 0; i < data.length; i++) {
-
-						var html = '<option value="'+data[i].value+'">'
-								+ data[i].interp + '</option>';
-						//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
-						$('#currency').append(html);
-					}
-					/* $('#currency').val($("#langid").val()); */
-
-				},
-				error : function(jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
-				}
-			});
-		}
-		
-		
-	
-	</script>
-
-
-	<script>
-		populateCountries("country");
-
-		$(document).ready(function() {
-
-			ConsignmentCurrency();
-			
-			$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
-				/* $("#expectedArrivalPort").empty(); */
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#expectedArrivalPort');
-					
-				}
-			});
-		});
-
-		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
-		});
-	</script>
-
 </body>
 </html>
