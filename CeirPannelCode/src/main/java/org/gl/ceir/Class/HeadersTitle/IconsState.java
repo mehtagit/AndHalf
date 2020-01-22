@@ -11,7 +11,7 @@ import java.util.List;
 public class IconsState {
 	@Value ("${projectPath}")
 	String projectPath;
-	
+
 	String className = "emptyClass";
 	String disableIconClass = "eventNone";
 	String emptyURL="JavaScript:void(0);";
@@ -51,7 +51,7 @@ public class IconsState {
 
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link
-		
+
 		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		log.info("downloadURL::::::::::::::"+downloadURL);
@@ -663,7 +663,7 @@ public class IconsState {
 
 		}
 
-		
+
 		else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
@@ -696,7 +696,7 @@ public class IconsState {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"')";
-		
+
 		String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
 
@@ -747,8 +747,16 @@ public class IconsState {
 
 	public String dashboardIcon(String userStatus,Integer featureID) {
 		// URL link 
-		String viewAction = featureID == 3 ? "./Consignment/viewConsignment" : featureID ==4 ? "./assignDistributor": featureID ==5 ? "./stolenRecovery" : featureID == 6 ? "./grievanceManagement" : "JavaScript:void(0);";
-
+		String viewAction = featureID == 3 ?"./Consignment/viewConsignment" :
+			featureID == 4 ? "./assignDistributor": 
+				featureID == 5 ? "./stolenRecovery" :
+					featureID == 6 ? "./grievanceManagement" :
+						featureID == 7 ? "./stolenRecovery" :
+							featureID == 8 ? "./registrationRequest" :
+								featureID == 11 ? "./manageTypeDevices":
+									featureID == 12 ? "./uploadPaidStatus" :
+										"JavaScript:void(0);";
+		System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
 		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
@@ -864,7 +872,7 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
-			
+
 
 		if(source.equals("3")) {
 			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
@@ -887,23 +895,23 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		
+
 		for (ActionModel actionModel : actionResponse) {
 			if (actionModel.getState() == 0 || actionModel.getState() == 1 || actionModel.getState() == 2 || actionModel.getState() == 4 || actionModel.getState() == 5) {
 				log.info("in Action State if--->" +actionModel.getState());
 				error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+"  ></i></a>"; 
-				
+						+errorIconTitle+"  ></i></a>"; 
+
 			}else if (actionModel.getState() == 3) {
 				log.info("in Action State else--->" +actionModel.getState());
-				 error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+				error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 						+errorIconTitle+" ></i></a>";
-			
-		}
+
+			}
 
 		}
 		if("Disable".equals(userStatus)) {
-			
+
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -1102,17 +1110,17 @@ public class IconsState {
 				String action = view.concat(download).concat(approve).concat(reject);
 				return action;
 	}	
-	
-	
-	
+
+
+
 	/********************************** Icons for StolenlawfulAgency **********************************/ 
 
 	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue) {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
-		
+
 		log.info("@@@@  "+source+"&&"+requestTypeValue);
-		
+
 		String viewAction="";
 		String editAction="";
 		String emptyURL="JavaScript:void(0);"; 
@@ -1176,7 +1184,7 @@ public class IconsState {
 
 
 
-		 if("Disable".equals(userStatus)) {
+		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
@@ -1193,7 +1201,7 @@ public class IconsState {
 		return action;
 
 	}
-	
+
 	/********************************** Icons for Audit Management**********************************/ 
 
 	public String auditManagementIcons(String userStatus,String userId,String id) { 

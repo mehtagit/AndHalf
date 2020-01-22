@@ -351,14 +351,19 @@
 
 			<div class="row">
 				<h6 id="approveConsignmnetHeading">
-					 <spring:message code="modal.message.clearConsignment" /> <span id="displayname"></span><spring:message code="modal.message.havingTxn" />( <span id="ApproveConsignmentTxnid"></span> ) <spring:message code="modal.message.hasBeenpaid" />
-
-				</h6>
+					 <spring:message code="modal.message.clearConsignment" />
+					  <span id="displayname"></span>
+					  <spring:message code="modal.message.havingTxn" />( <span id="ApproveConsignmentTxnid"></span> ) <spring:message code="modal.message.hasBeenpaid" />
+	</h6>
+	<div class="row"> 
+	<h6><spring:message code="modal.message.doApprove" /></h6>
+	</div>
+	
 			</div>
 			<div class="row">
-				<h6 id="confirmationMessage">
+				<%-- <h6 id="confirmationMessage">
 					<spring:message code="modal.message.clearConsignment" />
-				</h6>
+				</h6> --%>
 				<input type="text" id="setApproveConsignmentTxnId"
 					style="display: none">
 			</div>
