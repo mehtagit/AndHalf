@@ -45,30 +45,23 @@
 										processData : false,
 										contentType : false,
 										success : function(data, textStatus, jqXHR) {
-
-											console.log(data);
 											$("#consignmentSubbmitButton").prop('disabled', true);
 											$('#submitConsignment').openModal();
 											if (data.errorCode == "0") {
-												console.log("status code = 0");
 												$('#sucessMessage')
 														.text(successMsg);
 												$('#sucessMessage').append(data.txnId);
 												$('#errorCode').val(data.errorCode);
 											} else if (data.errorCode == "3") {
-												console.log("status code = 3");
 												$('#sucessMessage').text('');
 												$('#sucessMessage').text(
 														"consignment number already exist");
 												$('#errorCode').val(data.errorCode);
 											}
-											// $('#updateConsignment').modal('open'); 
-											//alert("success");
-
+											
 										},
 										error : function(jqXHR, textStatus, errorThrown) {
-											console.log("error in ajax")
-										}
+											}
 									});
 
 							return false;
@@ -79,7 +72,6 @@
 							/*   $('#deletemodal').modal('open');
 							backdrop: 'static' */
 							$('#deletemodal').openModal();
-							console.log("transactionId value=" + transactionId);
 							$('#deleteTransactionId').val(transactionId);
 						}
 
@@ -149,10 +141,8 @@
 
 							var errorCode = $('#errorCode').val();
 							if (errorCode == 0) {
-								console.log("status code = 0");
 								$("#closeOkPop").submit();
 							} else if (errorCode == 3) {
-								console.log("status code = 3");
 								$('#sucessMessage').text('');
 								$('#submitConsignment').closeModal();
 								/// $('#submitConsignment').modal('hide');
@@ -187,7 +177,7 @@
 
 
 
-						$(document).on("keyup", "#totalPrice", function(e) {
+		$(document).on("keyup", "#totalPrice", function(e) {
 			var totalPrice=$('#totalPrice').val();
 			if(totalPrice.length<'1' )
 			{

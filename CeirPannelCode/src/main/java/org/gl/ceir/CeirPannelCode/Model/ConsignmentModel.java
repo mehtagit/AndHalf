@@ -29,7 +29,7 @@ private String quantity;
 private Long userId ;
 private String remarks;
 private String roleType;
-private int currency;
+private Integer currency;
 
 public int getId() {
 return id;
@@ -194,11 +194,16 @@ return roleType;
 public void setRoleType(String roleType) {
 this.roleType = roleType;
 }
-public int getCurrency() {
-return currency;
+
+
+
+
+
+public Integer getCurrency() {
+	return currency;
 }
-public void setCurrency(int currency) {
-this.currency = currency;
+public void setCurrency(Integer currency) {
+	this.currency = currency;
 }
 @Override
 public String toString() {
@@ -213,6 +218,8 @@ public String toString() {
 			+ ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity + ", userId=" + userId
 			+ ", remarks=" + remarks + ", roleType=" + roleType + ", currency=" + currency + "]";
 }
+
+
 
 
 
