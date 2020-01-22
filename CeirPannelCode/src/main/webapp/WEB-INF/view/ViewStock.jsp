@@ -72,7 +72,7 @@
 </style>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
+<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 

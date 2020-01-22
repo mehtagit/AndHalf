@@ -483,6 +483,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setUserId(userId);
 	filterRequest.setUserType(userType);
 	filterRequest.setUserTypeId(usertypeId);
+	filterRequest.setFeatureId(3);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
 

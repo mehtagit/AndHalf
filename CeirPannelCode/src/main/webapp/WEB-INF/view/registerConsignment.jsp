@@ -199,7 +199,7 @@ section {
 
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
-										<input type="text" name="totalPrice" id="totalPrice"
+										<input type="text" name="totalPrice" id="totalPrice"  pattern="[0-9]{0,7}" title="Please enter price in numbers"
 												maxlength="7" /> <label for="totalPrice"
 												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
@@ -225,8 +225,7 @@ section {
 
 										<div class="col s12 m6">
 											<label for="currency"><spring:message code="input.currency" /></label>
-											<select id="currency" class="browser-default"
-												required="required">
+											<select id="currency" class="browser-default">
 												<option value="" disabled selected><spring:message code="input.currency" /></option>
 
 											</select>
@@ -559,7 +558,30 @@ section {
 			});
 		}
 		
+		$(document).on("keydown", "#totalPrice", function(e) {
+			
 		
+			  var totalPrice=$('#totalPrice').val();
+			  if(totalPrice.length<'1' )
+				  {
+				  $("#currency").attr("required", true);
+				  console.log("required true"+totalPrice.length);
+				
+				  }
+			  else
+			    {
+				  $("#currency").attr("required", false);
+				 
+				  console.log("required false"+totalPrice.length);
+			    }
+			  
+			 
+		    });
+		  
+		  $('#totalPrice').keypress(function(event){
+			  console.log(" key press required false"+totalPrice.length);
+		        $('#currency').attr("required", true);
+		    });
 	
 	</script>
 

@@ -60,12 +60,12 @@ public class Stock {
 	
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId ) {
+	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId,@RequestParam(name="selectedRoleTypeId",required=false) Integer selectedRoleTypeId ) {
 ModelAndView mv = new ModelAndView();
 
 
 
-log.info("stock page entry point."); 
+log.info("stock page entry point."+selectedRoleTypeId); 
 if(selectedUserTypeId==null)
 {
 List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
@@ -81,12 +81,14 @@ else if(userTypelist.size()==1)
 {
 
 session.setAttribute("selectedUserTypeId", session.getAttribute("usertype"));
+session.setAttribute("selectedRoleTypeId", session.getAttribute("usertypeId"));
 mv.setViewName("ViewStock");
 }
 }
 else {
 	
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
 	mv.setViewName("ViewStock");
 
 }
@@ -374,6 +376,7 @@ else {
 		filterRequest.setRoleType(roleType);
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(userTypeId);
+		filterRequest.setFeatureId(4);
 		
 		
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
