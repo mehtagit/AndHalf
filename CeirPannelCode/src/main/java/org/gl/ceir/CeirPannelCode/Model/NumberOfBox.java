@@ -13,9 +13,16 @@ public class NumberOfBox {
 	private String txt;
 	private String url;
 	private String outParam;
-	private String view;
+	private String viewName;
 	private String featureId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	@Override
+	public String toString() {
+		return "NumberOfBox [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userTypeId="
+				+ userTypeId + ", name=" + name + ", icon=" + icon + ", txt=" + txt + ", url=" + url + ", outParam="
+				+ outParam + ", viewName=" + viewName + ", featureId=" + featureId + ", additionalProperties="
+				+ additionalProperties + "]";
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -70,30 +77,23 @@ public class NumberOfBox {
 	public void setOutParam(String outParam) {
 		this.outParam = outParam;
 	}
-	public String getView() {
-		return view;
+	public String getViewName() {
+		return viewName;
 	}
-	public void setView(String view) {
-		this.view = view;
-	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
-	@Override
-	public String toString() {
-		return "NumberOfBox [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userTypeId="
-				+ userTypeId + ", name=" + name + ", icon=" + icon + ", txt=" + txt + ", url=" + url + ", outParam="
-				+ outParam + ", view=" + view + ", featureId=" + featureId + ", additionalProperties="
-				+ additionalProperties + "]";
+	public void setViewName(String viewName) {
+		this.viewName = viewName;
 	}
 	public String getFeatureId() {
 		return featureId;
 	}
 	public void setFeatureId(String featureId) {
 		this.featureId = featureId;
+	}
+	public Map<String, Object> getAdditionalProperties() {
+		return additionalProperties;
+	}
+	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+		this.additionalProperties = additionalProperties;
 	}
 	
 }

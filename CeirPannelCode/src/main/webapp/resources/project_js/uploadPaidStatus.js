@@ -2,11 +2,12 @@
 	var userId = $("body").attr("data-userID");
 	var currentRoleType = $("body").attr("data-selected-roleType"); 
 	var featureId =12;
-
+	var nationalID = $("body").attr("session-value");
 	// iframe
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.parent.$('#langlist').on('change', function() {
-			window.location.reload(true);
+			var lang_param=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+		window.location.assign("./uploadPaidStatus?via=other&NID="+nationalID+"&lang="+lang_param);
 		});
 
 	// Internationalization
@@ -22,7 +23,6 @@
 
 	$( document ).ready(function() {
 		var In = $("body").attr("session-value");
-
 		if(In.length > 0 && In !='null' ){
 			$.ajax({
 				url : "./paid-status/"+In,
