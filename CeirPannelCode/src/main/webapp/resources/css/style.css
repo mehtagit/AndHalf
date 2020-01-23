@@ -2675,3 +2675,16 @@ margin: -20px -10px 1rem -10px;
 }
 
 .btn{background-color:#ff4081 !important;}
+
+
+.select-lang-drpdwn {
+width: 75px;
+margin-top: -21px;
+border-bottom: none;
+}
+
+.select-lang-lable {
+margin-top: -12px;
+text-align: right;
+padding: 0;
+}

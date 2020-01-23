@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html> 
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
@@ -95,39 +95,48 @@ var contextpath = "${context}";
 </head>
 
 <body>
-<%String userType=request.getParameter("type");%>
-<!-- Modal End --> 
+	<%String userType=request.getParameter("type");%>
+	<!-- Modal End -->
 	<!-- ================================================
     Scripts
     ================================================ -->
-	 <!-- jQuery Library -->
-    <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
-  <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-       <!-- ajax js -->
-    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
-      <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
-    <!--materialize js-->
-    <!--<script type="text/javascript" src="js/materialize.js"></script>-->
-    <!-- Compiled and minified JavaScript -->
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/country.js"></script>
-    <!--prism
+	<!-- jQuery Library -->
+	<!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+	<!-- ajax js -->
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js"></script>
+	<!--materialize js-->
+	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
+	<!-- Compiled and minified JavaScript -->
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<script type="text/javascript" src="${context}/resources/js/country.js"></script>
+	<!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
+	<!-- data-tables -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <!--<script type="text/javascript" src="js/plugins.js"></script>-->
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript"
+		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -137,16 +146,34 @@ var contextpath = "${context}";
 		<div class="container">
 			<div class="section">
 				<form id="registrationForm" onsubmit="return saveRegistration()">
-					<div class="card-panel registration-form" >
+					<div class="card-panel registration-form">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("type") %> Registration</h5>
-							<hr>
-							<span id="msg" style="color: red;">${msg}</span>
-               <input type="hidden" id="usertypeId" value="">
-               <input type="hidden" id="usertypeName" value="<%=userType%>">
+							<div class="col s10 m10 select-lang-lable">
+								<label for="">Language :</label>
+							</div>
+							<div class="col s2 m2 right" style="padding: 0;">
+								<select class="browser-default select-lang-drpdwn">
+									<option value="1">English</option>
+									<option value="2">Khmer</option>
+								</select>
+							</div>
+							<div class="col s12 m12">
+
+								<h5><%=request.getParameter("type") %>
+									Registration
+								</h5>
+								<hr>
+
+							</div>
+
+
+
+							<span id="msg" style="color: red;">${msg}</span> <input
+								type="hidden" id="usertypeId" value=""> <input
+								type="hidden" id="usertypeName" value="<%=userType%>">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -217,14 +244,13 @@ var contextpath = "${context}";
 											<div class="btn">
 												<span>Select File</span> <input name="file" type="file"
 													id="file" accept=".pdf">
-											</div>  
+											</div>
 											<div class="file-path-wrapper">
 												<input class="file-path validate responsive-file-div"
 													type="text">
 											</div>
 										</div>
-										<br>
-										<br>
+										<br> <br>
 									</div>
 									<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
 								</div>
@@ -269,7 +295,7 @@ var contextpath = "${context}";
 								</div> -->
 							</div>
 
-								<div class="row">
+							<div class="row">
 								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200"
 										pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
@@ -288,7 +314,7 @@ var contextpath = "${context}";
 									<label for="street">Street Number <span class="star">*</span>
 									</label>
 								</div>
-									<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6">
 									<input type="text" name="village" maxlength="30"
 										class="form-control boxBorder boxHeight" id="village"
 										pattern="[A-Za-z0-9\s]{0,30}" required="required"
@@ -328,9 +354,9 @@ var contextpath = "${context}";
 										title="Please enter alphanumeric with special character upto 30 characters only">
 									<label for="postalCode">Postal Code</label>
 								</div>
-								
-								
-								
+
+
+
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
@@ -349,8 +375,8 @@ var contextpath = "${context}";
 										style="padding-left: 0;" required></select>
 								</div>
 							</div>
-							
-							
+
+
 							<!-- <div class="row">
 								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
 									<label for="vatNumber">VAT Registration <span
@@ -405,173 +431,187 @@ var contextpath = "${context}";
 										Role Type <span class="star">*</span>
 									</p> -->
 
-									<select  name="roles" class="validate" id="usertypes" multiple required>
+									<select name="roles" class="validate" id="usertypes" multiple
+										required>
 										<option value="" disabled>Role Type <span
 												class="star"></span></option>
 
-									</select>
-									<label  data-error="Please select at least one option"  for="usertypes">Role Type <span class="star">*</span></label>
+									</select> <label data-error="Please select at least one option"
+										for="usertypes">Role Type <span class="star">*</span></label>
 								</div>
 								<div class="row">
-								<div class="input-field col s12 m6 l6" style="display: none;"
-									id="vatNumberField">
-									<input type="text" name="vatNo" maxlength="15"
-										class="form-control boxBorder boxHeight" id="vatNo"
-										pattern="[A-Za-z0-9]{0,15}"
-										title="Please enter alphanumeric upto 15 characters only">
-									<label for="vatNo">VAT Number <span class="star">*</span></label>
-								</div>
-								
-								<div  id="vatFileDiv" class="col s12 m12" style="display: none;">
+									<div class="input-field col s12 m6 l6" style="display: none;"
+										id="vatNumberField">
+										<input type="text" name="vatNo" maxlength="15"
+											class="form-control boxBorder boxHeight" id="vatNo"
+											pattern="[A-Za-z0-9]{0,15}"
+											title="Please enter alphanumeric upto 15 characters only">
+										<label for="vatNo">VAT Number <span class="star">*</span></label>
+									</div>
+
+									<div id="vatFileDiv" class="col s12 m12" style="display: none;">
 										<h6 class="file-upload-heading">
-										VAT File<span class="star">*</span>
+											VAT File<span class="star">*</span>
 										</h6>
 										<div class="file-field input-field col s12 m6"
 											style="margin-top: 5px; padding-left: 0;">
 											<div class="btn">
 												<span>Select File</span> <input name="file" type="file"
 													id="vatFile" accept=".pdf">
-											</div>  
+											</div>
 											<div class="file-path-wrapper">
-												<input  name="vatFile" class="file-path validate responsive-file-div"
-													type="text">
+												<input name="vatFile"
+													class="file-path validate responsive-file-div" type="text">
 											</div>
 										</div>
-										<br>
-										<br>
+										<br> <br>
 									</div>
 								</div>
 							</div>
-						<div class="row">
-							<div class="input-field col s12 m6 l6">
-								<input type="password" name="password"
-									class="form-control boxBorder boxHeight" id="password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
-									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
-									required="required"> <label for="password">Password
-									<span class="star">*</span>
-								</label>  
-							</div>
-
-							<div class="input-field col s12 m6 l6">
-								<input type="password" name="rePassword" 
-	title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length" class="form-control boxBorder boxHeight" id="confirm_password"
-									pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  min="8"
-									required="required"> <label for="confirm_password">Retype
-									Password <span class="star">*</span>
-								</label>
-							</div>
-						</div>
-						<div class="row securityQuestionDiv">
-							<div class="input-field col s12 m6 l6">
-								<p
-									style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-									Security Question 1 <span class="star">*</span>
-								</p>
-								<input type="hidden" class="id" id="id0"> <select
-									class="browser-default questionId" id="questionId0"
-									name="questionId" required>
-									<option value="" disabled selected>Security Question 1</option>
-								</select>
-							</div>
-
-							<div class="input-field col s12 m6 l6">
-								<input type="text" placeholder="" name="answer"
-									class="form-control boxBorder boxHeight answer" id="answer0"
-									pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
-									title="Please enter alphanumeric upto 50 characters only">
-								<label>Answer <span class="star">*</span>
-								</label>
-							</div>
-						</div>
-						<div class="row securityQuestionDiv">
-							<div class="input-field col s12 m6 l6">
-								<p
-									style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-									Security Question 2 <span class="star">*</span>
-								</p>
-								<input type="hidden" class="id" id="id1" /> <select
-									name="questionId" id="questionId1"
-									class="browser-default questionId" required>
-									<option value="" disabled selected>Security Question 2</option>
-								</select>
-							</div>
-
-							<div class="input-field col s12 m6 l6">
-								<input type="text" placeholder="" name="answer"
-									class="form-control boxBorder boxHeight answer" id="answer1"
-									pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
-									title="Please enter alphanumeric upto 50 characters only"
-									required="required"> <label>Answer <span
-									class="star">*</span>
-								</label>
-							</div>
-						</div>
-
-						<div class="row securityQuestionDiv">
-							<div class="input-field col s12 m6 l6">
-
-								<p
-									style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-									Security Question 3<span class="star">*</span>
-								</p>
-								<input type="hidden" class="id" id="id2" /> <select
-									name="questionId" id="questionId2"
-									class="browser-default questionId" required>
-									<option value="" disabled selected>Security Question 3</option>
-								
-								</select>
-							</div>
-
-							<div class="input-field col s12 m6 l6">
-								<input type="text" name="answer" placeholder=""
-									class="form-control boxBorder boxHeight answer" id="answer2"
-									title="Please enter alphanumeric upto 50 characters only"
-									maxlength="50" pattern="[A-Za-z0-9\s]{0,50}" required="required">
-								<label>Answer <span class="star">*</span>
-								</label>
-							</div>
-						</div>
-
-						<div class="form-group form-actions">
-							<span class="input-icon"> <img id="captchaImage"
-								src="${context}/captcha">
-							<button style="background: none; border: none; outline: none;"
-									type="button" onclick="refreshCaptcha('captchaImage')">
-									<i class="fa fa-refresh"></i>
-								</button> <%-- <img src="${context}/captcha"" id="captchaImage">
-						 <br>
-                           <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
-								<div class="input-field col s12 m6 l12">
-									<input type="text"  autocomplete="off" name="captcha"
-										class="form-control boxBorder boxHeight" id="captcha"
-										required="required"> <label for="address">Enter
-										your captcha <span class="star">*</span>
+							<div class="row">
+								<div class="input-field col s12 m6 l6">
+									<input type="password" name="password"
+										class="form-control boxBorder boxHeight" id="password"
+										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
+										min="8"
+										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
+										required="required"> <label for="password">Password
+										<span class="star">*</span>
 									</label>
 								</div>
 
-							</span>
-						</div>
-						   <p>
-      <label style="color: black!important;">
-        <input name="disclamer" type="checkbox" required="required" />
-        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
-      </label>
-    </p>
-    
-    <!-- <div class="input-field no-margin col s12 m9">
+								<div class="input-field col s12 m6 l6">
+									<input type="password" name="rePassword"
+										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
+										class="form-control boxBorder boxHeight" id="confirm_password"
+										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
+										min="8" required="required"> <label
+										for="confirm_password">Retype Password <span
+										class="star">*</span>
+									</label>
+								</div>
+							</div>
+							<div class="row securityQuestionDiv">
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 1 <span class="star">*</span>
+									</p>
+									<input type="hidden" class="id" id="id0"> <select
+										class="browser-default questionId" id="questionId0"
+										name="questionId" required>
+										<option value="" disabled selected>Security Question
+											1</option>
+									</select>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="text" placeholder="" name="answer"
+										class="form-control boxBorder boxHeight answer" id="answer0"
+										pattern="[A-Za-z0-9\s]{0,50}" required="required"
+										maxlength="50"
+										title="Please enter alphanumeric upto 50 characters only">
+									<label>Answer <span class="star">*</span>
+									</label>
+								</div>
+							</div>
+							<div class="row securityQuestionDiv">
+								<div class="input-field col s12 m6 l6">
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 2 <span class="star">*</span>
+									</p>
+									<input type="hidden" class="id" id="id1" /> <select
+										name="questionId" id="questionId1"
+										class="browser-default questionId" required>
+										<option value="" disabled selected>Security Question
+											2</option>
+									</select>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="text" placeholder="" name="answer"
+										class="form-control boxBorder boxHeight answer" id="answer1"
+										pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
+										title="Please enter alphanumeric upto 50 characters only"
+										required="required"> <label>Answer <span
+										class="star">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="row securityQuestionDiv">
+								<div class="input-field col s12 m6 l6">
+
+									<p
+										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+										Security Question 3<span class="star">*</span>
+									</p>
+									<input type="hidden" class="id" id="id2" /> <select
+										name="questionId" id="questionId2"
+										class="browser-default questionId" required>
+										<option value="" disabled selected>Security Question
+											3</option>
+
+									</select>
+								</div>
+
+								<div class="input-field col s12 m6 l6">
+									<input type="text" name="answer" placeholder=""
+										class="form-control boxBorder boxHeight answer" id="answer2"
+										title="Please enter alphanumeric upto 50 characters only"
+										maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
+										required="required"> <label>Answer <span
+										class="star">*</span>
+									</label>
+								</div>
+							</div>
+
+							<div class="form-group form-actions">
+								<span class="input-icon"> <img id="captchaImage"
+									src="${context}/captcha">
+									<button style="background: none; border: none; outline: none;"
+										type="button" onclick="refreshCaptcha('captchaImage')">
+										<i class="fa fa-refresh"></i>
+									</button> <%-- <img src="${context}/captcha"" id="captchaImage">
+						 <br>
+                           <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
+									<div class="input-field col s12 m6 l12">
+										<input type="text" autocomplete="off" name="captcha"
+											class="form-control boxBorder boxHeight" id="captcha"
+											required="required"> <label for="address">Enter
+											your captcha <span class="star">*</span>
+										</label>
+									</div>
+
+								</span>
+							</div>
+							<p>
+								<label style="color: black !important;"> <input
+									name="disclamer" type="checkbox" required="required" /> <span>
+										<span class="star">*</span> I certify that all the above
+										information provided by me is true to the best of my
+										knowledge. I am aware that if any of the above information is
+										found to be incorrect/incomplete , CEIR Admin may take
+										disciplinary action as applicable. There would be a checkbox.
+										User must click checkbox during registration
+								</span>
+								</label>
+							</p>
+
+							<!-- <div class="input-field no-margin col s12 m9">
     <input type="checkbox" name="accept" id="regTOS" required class="validate">
     <label for="regTOS" data-error="You must accept the Terms of Service">I accept the Terms of Service</label>
 </div> -->
 
-							                         </div>
-                         
+						</div>
+
 						<div class="row">
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave"  
-									type="submit" style="margin-left: 10px;">submit</button>
+								<button class="btn" id="btnSave" type="submit"
+									style="margin-left: 10px;">submit</button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
 							</div>
 						</div>
@@ -593,18 +633,20 @@ var contextpath = "${context}";
 
 	<!-- Modal 1 start   -->
 
-	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
+	<div id="otpMsgModal" class="modal"
+		style="width: 40%; margin-left: 30%; margin-top: 10vh;">
 		<!-- <button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button> -->
-				<h6 class="modal-header">Verify OTP</h6>
+		<h6 class="modal-header">Verify OTP</h6>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-				<p style="padding:10px;" class="center" id="otpMsg"></p>
-			
-					<a href="#otpVerification" class="btn modal-trigger modal-close"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
+			<p style="padding: 10px;" class="center" id="otpMsg"></p>
+
+			<a href="#otpVerification" class="btn modal-trigger modal-close"
+				style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify
+				otp</a>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -658,11 +700,11 @@ var contextpath = "${context}";
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	 <!-- START MAIN -->
-    <!-- <div id="">
+
+
+
+	<!-- START MAIN -->
+	<!-- <div id="">
         START WRAPPER
         <div class="wrapper">
             START CONTENT
@@ -685,71 +727,73 @@ var contextpath = "${context}";
             END CONTENT
         </div>
     </div> -->
-    
-        <!-- START WRAPPER -->
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-            <!-- START CONTENT -->
-                <!--start container-->
-                        <!-- <div id="" class="card-panel modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+	<!-- START WRAPPER -->
+	<!-- //////////////////////////////////////////////////////////////////////////// -->
+
+	<!-- START CONTENT -->
+	<!--start container-->
+	<!-- <div id="" class="card-panel modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
                             <h6 class="modal-header">Verify OTP</h6>
                             <p class="center">The text and and an e-mail with OTP details has been sent to your
                                 registered Phone Number and E-Mail ID</p>
                             <a href="#otpVerification" class="btn modal-trigger"
                                 style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
                 </div> -->
-            <!-- END CONTENT -->
+	<!-- END CONTENT -->
 
-        <!-- END WRAPPER -->
-    
-    
-    <div id="otpMessage" class="modal" style="display: block;">
-        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
-            data-dismiss="modal">&times;</button>
-        <h6 class="modal-header">Verify OTP</h6>
-        <div class="modal-content">
-                <h6 id="otpResponse"></h6>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="${context}/login" class="btn">ok</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
-    
-    <!-- modal start -->
+	<!-- END WRAPPER -->
 
-    <div id="otpVerification" class="modal" style="width: 40%;">
-        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+
+	<div id="otpMessage" class="modal" style="display: block;">
+		<button type="button"
+			class="modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button>
+		<h6 class="modal-header">Verify OTP</h6>
+		<div class="modal-content">
+			<h6 id="otpResponse"></h6>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/login" class="btn">ok</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- modal start -->
+
+	<div id="otpVerification" class="modal" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-               <h6 class="modal-header">Enter OTP</h6>  
-        <div class="modal-content">  
-                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-                        <p class="center" id="resendOtp" style="display: none;"></p>
-                        <input type="hidden" id="userid"  name="userid" value="${userId}">
-                        <div class="row">          
-                            <div class="input-field col s12 m12">
-                                <input type="text" name="emailOtp" maxlength="6"
-                               
-										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
-                            </div> 
-                            <div class="input-field col s12 m12">
-                                <input type="text" name="phoneOtp" maxlength="6" 
-                                
-										title="Please enter number characters only" 
-                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
-                            </div>
-                        </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
-                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
-                    </form>
-        </div>
-    </div>
-    
-	
+		<h6 class="modal-header">Enter OTP</h6>
+		<div class="modal-content">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
+				<p class="center" id="resendOtp" style="display: none;"></p>
+				<input type="hidden" id="userid" name="userid" value="${userId}">
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<input type="text" name="emailOtp" maxlength="6"
+							title="Please enter number characters only" required="required"
+							id="emailOtp" placeholder="Enter OTP of Email" />
+					</div>
+					<div class="input-field col s12 m12">
+						<input type="text" name="phoneOtp" maxlength="6"
+							title="Please enter number characters only" required="required"
+							id="phoneOtp" placeholder="Enter OTP of Phone" />
+					</div>
+				</div>
+				<a href="#"
+					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
+					class="right">Resend OTP</a>
+				<button type="submit" id="otpVerifyBtn" class="btn"
+					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+			</form>
+		</div>
+	</div>
+
+
 	<script> 
         $(document).ready(function () {
         	$('.modal-trigger').leanModal({

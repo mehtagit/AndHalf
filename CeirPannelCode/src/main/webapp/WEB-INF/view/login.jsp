@@ -55,6 +55,17 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 
 <style>
+.select-lang-drpdwn {
+width: 75px;
+margin-top: -21px;
+border-bottom: none;
+}
+
+.select-lang-lable {
+margin-top: -12px;
+text-align: right;
+padding: 0;
+}
 .boton {
 	color: #2979a5;
 	float: right;
@@ -117,10 +128,23 @@ var contextpath = "${context}";
 						<div class="row card-panel login-card-panel" style="width: 40%; margin: auto; margin-top: 10vh;">
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
-									<div class="row"> 
+									<div class="row">
+									<div class="col s10 m10 select-lang-lable">
+<label for="">Language :</label>
+</div>
+<div class="col s2 m2 right" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn">
+<option value="1">English</option>
+<option value="2">Khmer</option>
+</select>
+</div>
+<div class="col s12 m12">
+
 										<h5 style="text-align: -webkit-center;">Login</h5>
 										<span id="errorMsg" style="color: red;">${msg}</span>
 										<hr style="margin-bottom: 30px;">
+</div> 
+
 
 										<div class="input-field col s12">
 
