@@ -897,40 +897,54 @@ public class IconsState {
 
 
 		for (ActionModel actionModel : actionResponse) {
-			if (actionModel.getState() == 0 || actionModel.getState() == 1 || actionModel.getState() == 2 || actionModel.getState() == 4 || actionModel.getState() == 5) {
-				log.info("in Action State if--->" +actionModel.getState());
-				error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-						+errorIconTitle+"  ></i></a>"; 
 
-			}else if (actionModel.getState() == 3) {
-				log.info("in Action State else--->" +actionModel.getState());
-				error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
-						+errorIconTitle+" ></i></a>";
-
-			}
-
-		}
-		if("Disable".equals(userStatus)) {
-
-			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
-					+disableDownloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
-			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
-					+disableEditIcon+" aria-hidden=\"true\"  title="
-					+editIconTitle+"></i></a>"; 
-
-		}
+			
+			switch(actionModel.getState()) {
+			case 0:
+				error=disableHandling(actionModel, errorURL);
+				log.info("------------------ case 0");
+				break;
+			case 1:
+				error=disableHandling(actionModel, errorURL);
+				log.info("------------------ case 1");
+				break;
+			case 2:
+				error=disableHandling(actionModel, errorURL);
+				log.info("------------------ case 2");
+				break;
+			case 3:
+				error=enableHandling(actionModel,errorURL);
+				log.info("------------------ case 3");
+				break;
+			case 4:
+				error=disableHandling(actionModel, errorURL);
+				log.info("------------------ case 4");
+				break;
+			case 5:
+				error=disableHandling(actionModel, errorURL);
+				log.info("------------------ case 5");
+				break;
+				}
+	}
 
 		String action=error.concat(download).concat(view).concat(edit);	
 		return action;
 
 	}
 
+private String enableHandling(ActionModel actionModel,String errorURL) {
+		//log.info("in Action enableHandling--->" +actionModel.getState());
+		return "<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="+errorIconTitle+" ></i></a>";
+}
 
-	/********************************** Icons for Admin MEssage Management**********************************/ 
+
+private String disableHandling(ActionModel actionModel,String errorURL) {
+	//log.info("in Action disableHandling--->" +actionModel.getState());
+	return "<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="+errorIconTitle+"  ></i></a>";
+}
+
+
+/********************************** Icons for Admin MEssage Management**********************************/ 
 
 	public String adminMessageIcons(String userStatus, String tag) { 
 		String editAction="updateDetails('"+tag+"')";
