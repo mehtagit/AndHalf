@@ -173,6 +173,12 @@ public class AuditTrailServiceImpl {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
+		
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("subFeature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
 		return cmsb;
 	}
 
