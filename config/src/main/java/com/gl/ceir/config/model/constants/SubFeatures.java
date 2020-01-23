@@ -9,4 +9,5 @@ public interface SubFeatures {
 	String REGISTER = "REGISTER";
 	String UPDATE = "UPDATE";
 	String DELETE = "DELETE";
+	String FILTER = "FILTER";
 }

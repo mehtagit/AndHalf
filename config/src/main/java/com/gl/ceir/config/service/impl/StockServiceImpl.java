@@ -41,6 +41,8 @@ import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.Userrole;
+import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
@@ -136,11 +138,19 @@ public class StockServiceImpl {
 					UserProfile userProfile = UserProfile.getDefaultUserProfile();
 					userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
 					userProfile.setUser(user);
+					Usertype usertype = new Usertype();
+					usertype.setId(17);
+					Userrole roles = new Userrole(user,usertype);
+					List<Userrole> userRolesList = new ArrayList<Userrole>();
+					userRolesList.add(roles);
+					user.setUserRole(userRolesList);
 					user.setUserProfile(userProfile);
+					user.setUsertype(usertype);
 					user = userRepository.save(user);
 					logger.info("User [" + user + "] have been saved successfully.");
 					stockMgmt.setUserId(new Long(user.getId()));
 					stockMgmt.setUser(user);
+					stockMgmt.setRoleType("End User");
 				}else {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());

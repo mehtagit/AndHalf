@@ -1,5 +1,6 @@
 package com.gl.ceir.config.model;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -7,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -44,6 +48,28 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	UserProfile userProfile;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "usertype_id", nullable = false) private Usertype
+	usertype;
+	
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "userData", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private List<Userrole> userRole;
+	
+	public List<Userrole> getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(List<Userrole> userRole) {
+		this.userRole = userRole;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public static User getDefaultUser() {
 		User user = new User();
 		user.setUsername(Utility.getTxnId());
@@ -106,7 +132,14 @@ public class User {
 	public void setPreviousStatus(Integer previousStatus) {
 		this.previousStatus = previousStatus;
 	}
-	
+
+	public Usertype getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(Usertype usertype) {
+		this.usertype = usertype;
+	}
 
 	@Override
 	public String toString() {

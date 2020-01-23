@@ -31,7 +31,6 @@ public class WebActionDb implements Serializable {
 	@UpdateTimestamp
 	private Date modifiedOn;
 
-
 	private String feature ;
 
 	private String subFeature;
@@ -40,6 +39,16 @@ public class WebActionDb implements Serializable {
 	private int state;
 
 	private String data;
+	
+	public WebActionDb() {
+	}
+	
+	public WebActionDb(String feature, String subFeature, int state, String txnId) {
+		this.feature = feature;
+		this.subFeature = subFeature;
+		this.state = state;
+		this.txnId = txnId;
+	}
 
 	public Long getId() {
 		return id;
@@ -89,13 +98,31 @@ public class WebActionDb implements Serializable {
 	public void setData(String data) {
 		this.data = data;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
 	@Override
 	public String toString() {
-		return "WebActionDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", feature="
-				+ feature + ", subFeature=" + subFeature + ", txnId=" + txnId + ", state=" + state + ", data=" + data
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("WebActionDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", feature=");
+		builder.append(feature);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", data=");
+		builder.append(data);
+		builder.append("]");
+		return builder.toString();
 	}
-
-
 
 }
