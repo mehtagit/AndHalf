@@ -85,16 +85,13 @@ public class UploadPaidStatus {
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
-
+		log.info("filterrequest--->"+filterrequest);
+		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
+		log.info("request passed to the filter api  ="+filterrequest);
+		String apiResponse = gson.toJson(response);
 		//	filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			log.info("-----------filterrequest-------------"+filterrequest);
-			response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
-			log.info("--response----------"+response);
-			String apiResponse = gson.toJson(response);
-			log.info("--contentList----------"+apiResponse);
 			UserPaidStatusPaginationModel upsPaginationModel = gson.fromJson(apiResponse, UserPaidStatusPaginationModel.class);
-			log.info("::::::::::::::::"+upsPaginationModel);	
 			List<UserPaidStatusContent> contentList = upsPaginationModel.getContent();
 			if(contentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());

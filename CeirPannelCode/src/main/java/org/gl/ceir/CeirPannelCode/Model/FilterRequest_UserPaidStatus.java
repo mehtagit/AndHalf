@@ -3,7 +3,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class FilterRequest_UserPaidStatus {
 	
 	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId;
-	private String createdOn,modifiedOn,nid,remarks,userType,txnId;
+	private String startDate,endDate,nid,remarks,userType,txnId;
 	  private Long imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
@@ -59,17 +59,17 @@ public class FilterRequest_UserPaidStatus {
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
-	public String getCreatedOn() {
-		return createdOn;
+	public String getStartDate() {
+		return startDate;
 	}
-	public void setCreatedOn(String createdOn) {
-		this.createdOn = createdOn;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
-	public String getModifiedOn() {
-		return modifiedOn;
+	public String getEndDate() {
+		return endDate;
 	}
-	public void setModifiedOn(String modifiedOn) {
-		this.modifiedOn = modifiedOn;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 	public String getNid() {
 		return nid;
@@ -106,12 +106,10 @@ public class FilterRequest_UserPaidStatus {
 		return "FilterRequest_UserPaidStatus [deviceIdType=" + deviceIdType + ", deviceType=" + deviceType
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", action=" + action
 				+ ", featureId=" + featureId + ", roleTypeUserId=" + roleTypeUserId + ", userId=" + userId
-				+ ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
-				+ nid + ", remarks=" + remarks + ", userType=" + userType + ", txnId=" + txnId + ", imei1=" + imei1
-				+ "]";
+				+ ", userTypeId=" + userTypeId + ", startDate=" + startDate + ", endDate=" + endDate + ", nid=" + nid
+				+ ", remarks=" + remarks + ", userType=" + userType + ", txnId=" + txnId + ", imei1=" + imei1 + "]";
 	}
-	  
-	  
 	
+	  
 		  
 }
