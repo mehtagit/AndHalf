@@ -39,7 +39,7 @@
 							formData.append('totalPrice', totalPrice);
 
 							$.ajax({
-										url : '${context}/Consignment/registerConsignment',
+										url : '../Consignment/registerConsignment',
 										type : 'POST',
 										data : formData,
 										processData : false,
