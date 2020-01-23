@@ -223,11 +223,11 @@ section {
 											</select>
 										</div>
 
-										<div class="col s12 m6">
+										<div class="col s12 m6" id="currencyDiv">
 											<label for="currency"><spring:message code="input.currency" /></label>
 											<select id="currency" class="browser-default"
-												required="required">
-												<option value="" disabled selected><spring:message code="input.currency" /></option>
+												>
+												<option value=""  selected><spring:message code="input.currency" /></option>
 
 											</select>
 										</div>

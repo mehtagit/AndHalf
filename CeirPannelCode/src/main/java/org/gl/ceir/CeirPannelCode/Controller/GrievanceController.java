@@ -280,5 +280,79 @@ public class GrievanceController {
 							return mv; 
 						}
 
+
+						@RequestMapping(value= {"/saveEndUserGrievance"},method= RequestMethod.POST,consumes = "multipart/form-data") 
+						public @ResponseBody GenricResponse saveEndUserGrievance(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
+
+
+							int userId= (int) session.getAttribute("userid");
+							String roletype=(String) session.getAttribute("usertype");
+
+							String grevnceId=utildownload.getTxnId();
+							grevnceId = "G"+grevnceId;
+							Gson gson= new Gson(); 
+							String grievanceDetails=request.getParameter("multirequest");
+							log.info("grievanceDetails------"+grievanceDetails);
+
+							GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+							grievanceRequest.setUserId(userId);
+							grievanceRequest.setUserType(roletype);
+							grievanceRequest.setGrievanceId(grevnceId);
+
+							for (int i=0;i<grievanceRequest.getAttachedFiles().size();i++) {
+								grievanceRequest.getAttachedFiles().get(i).setGrievanceId(grevnceId);
+								//grievanceRequest.getMultifile().get(i).getDocType();
+							}
+
+							log.info("Random  genrated transaction number ="+grevnceId);
+							int i=0;
+							for( MultipartFile file : fileUpload) {
+
+								log.info("-----"+ file.getOriginalFilename());
+								log.info("++++"+ file);
+							
+								String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
+								log.info("doctype Name==="+tagName+"value of index="+i);
+								
+
+								try {
+									byte[] bytes =
+											file.getBytes(); String rootPath = filePathforUploadFile+grevnceId+"/"+tagName+"/"; 
+											File dir =   new File(rootPath + File.separator);
+											if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+											File serverFile = new File(rootPath+file.getOriginalFilename());
+											log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+											stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+											stream.write(bytes); stream.close(); 
+											//  grievanceRequest.setFileName(file.getOriginalFilename());
+
+								}
+								catch (Exception e) { //
+									// TODO: handle exception e.printStackTrace(); }
+
+									// set reaquest parameters into model class
+
+								}
+								i++;
+
+
+							}
+							/*
+							 * grievance.setCategoryId(categoryId); grievance.setRemarks(remarks);
+							 * grievance.setTxnId(txnId);
+							 */
+							/*
+							 * grievance.setUserId(userId); grievance.setUserType(roletype);
+							 * grievance.setGrievanceId(grevnceId);
+							 * 
+							 */
+							log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
+							 response = grievanceFeignClient.saveGrievance(grievanceRequest);
+							 response.setTxnId(grevnceId);
+
+							 log.info("response from save grievance api"+response);
+							 log.info("save grievance  exit point.");
+							 return response;
+						}
 }
 

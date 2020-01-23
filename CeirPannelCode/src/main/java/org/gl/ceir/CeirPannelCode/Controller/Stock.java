@@ -392,7 +392,7 @@ else {
 
 	
 	
-	@RequestMapping(value={"/openEndUserStockPage"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+	@RequestMapping(value={"/uploadAstock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
     public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
 {
 	ModelAndView mv = new ModelAndView();
@@ -459,7 +459,7 @@ else {
 	
 
 	// *********************************************** open register page or edit popup ******************************
-		@RequestMapping(value="/openEndUserStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		@RequestMapping(value="/fetchUploadAstock",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 		public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId)
 		{
 			log.info("entry point of  fetch end user stock in the bases of transaction id .");
@@ -467,6 +467,7 @@ else {
 			StockUploadModel stockUploadModelResponse;
 			stockUploadModel.setTxnId(txnId);
 			log.info("response from fetch stock api="+stockUploadModel);
+			stockUploadModel.setUserType("End User");
 				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
 				log.info("response from fetch stock api="+stockUploadModelResponse);
 				log.info("exit point of  fetch stock api.");
@@ -475,7 +476,7 @@ else {
 			
 		}
 
-		@RequestMapping(value= {"/updateEndUserUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+		@RequestMapping(value= {"/updateUploadedAstock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 		public @ResponseBody GenricResponse updateEndUserUploadedStock(@RequestParam(name="file") MultipartFile file,@RequestParam(name="txnId",required = false) String txnId) {
 		log.info("entry point in end user update Stock * *.");
 		StockUploadModel stockUpload= new StockUploadModel();

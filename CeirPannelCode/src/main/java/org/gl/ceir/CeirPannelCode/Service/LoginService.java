@@ -121,6 +121,18 @@ public class LoginService {
 		}
 		//return "redirect:.../"+dropdown.getValue();
 	}
+	
+	public void redirectToHome(HttpServletResponse http){
+		log.info("inside index controller");
+		log.info("exit index controller");
+		Tag tagData=new Tag("link_dmc_portal");
+		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+		try {
+		http.sendRedirect(dropdown.getValue());
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();

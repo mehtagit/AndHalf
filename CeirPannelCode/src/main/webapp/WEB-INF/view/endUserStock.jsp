@@ -249,7 +249,7 @@ style="overflow: inherit !important;">
                                             </div> -->
                                         </div>
                                         
-                                        <p style="margin-left: 10px;"><a href="#">Download Sample
+                                        <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/4">Download Sample
                                             Format</a></p>
                                         <p style="margin-left: 10px;"> Required Field are marked with <span class="star">*</span></p>
                                     </div>
@@ -329,14 +329,16 @@ style="overflow: inherit !important;">
                                                 <input type="text" id="viewUploadFile" name="viewUploadFile"
                                                      placeholder="" readonly="readonly">
                                             </div>
-											<div id="errorFileStatusDiv" style="display: none;">
-                                            <div class="input-field col s6 m5">
-                                                <label for="errorFileStatus">File Status :</label>
+                                             <div class="input-field col s6 m5">
+                                                <label for="errorFileStatus">Stock Status :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="errorFileStatus" name="errorFileStatus"
-                                                    placeholder="Error" readonly="readonly">
+                                                    placeholder="" readonly="readonly">
                                             </div>
+											<div id="errorFileStatusDiv" style="display: none;">
+                                           
+                                            
 
                                             <div class="input-field col s6 m5">
                                                 <label for="errorFileName">View Error Report :</label>
@@ -369,7 +371,7 @@ style="overflow: inherit !important;">
                                                     style="margin-top: 5px;">
                                                     <div class="btn">
                                                         <span>Select File</span>
-                                                        <input type="file" id="csvUploadFile" accept=".csv">
+                                                        <input type="file" id="csvUploadFile" required="required" accept=".csv">
                                                     </div>
                                                     <div class="file-path-wrapper">
                                                         <input class="file-path validate responsive-file-div"
@@ -382,7 +384,7 @@ style="overflow: inherit !important;">
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
-                                                 <button class=" btn" id="updateEndUserStockOK" type="submit">OK</button>
+                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type="">OK</a>
                                                 <button class=" btn" id="updateEndUserStock" type="submit">Submit</button>
                                             </div>
                                         </div>
@@ -436,7 +438,7 @@ style="overflow: inherit !important;">
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="homePage" class="btn">ok</a>
+                        <a href="./redirectToHomePage" class="btn">ok</a>
                     </div>
                 </div>
             </div>
@@ -453,7 +455,7 @@ style="overflow: inherit !important;">
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="homePage" class="btn">Yes</a>
+                        <a href="./redirectToHomePage" class="btn">Yes</a>
                         <button class="modal-close btn" style="margin-left: 10px;">No</button>
                     </div>
                 </div>
@@ -466,7 +468,7 @@ style="overflow: inherit !important;">
         <div class="modal-content">
            
             <div class="row">
-                <h6 >stock not found please enter valid Transaction Id.
+                <h6 id="">stock not found please enter valid Transaction Id.
                 </h6>
             </div>
             <div class="row">
@@ -474,6 +476,24 @@ style="overflow: inherit !important;">
                     <div class="input-field col s12 center">
                         <!-- <a href="homePage" class="btn">Yes</a> -->
                         <button class="modal-close btn" style="margin-left: 10px;">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+         <div id="fileUpdateSucessModal" class="modal">
+         <h6 class="modal-header">Stock file uplaod</h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6 id="endUserStockSuceesMessage">
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./redirectToHomePage" class="btn">Ok</a>
+                        <!-- <button class="modal-close btn" style="margin-left: 10px;">OK</button> -->
                     </div>
                 </div>
             </div>

@@ -251,7 +251,8 @@ style="overflow: inherit !important;">
 
                                         
                                     </div>
-
+									<div id="mainDiv" class="mainDiv">
+									<div id="filediv" class="fileDiv">	
                                     <div class="row">
                                         <div class="col s12 m6">
                                             <label for="Category">Document Type </label>
@@ -280,15 +281,16 @@ style="overflow: inherit !important;">
 
                                         <div class="input_fields_wrap"></div>
 
-                                        <div class="col s12 m6 right">
+                                      
+                                        <p>Required Field are marked with <span class="star">*</span></p>
+                                    </div>
+									</div>
+									</div>	
+
+                                      <div class="col s12 m6 right">
                                             <button class="btn right add_field_button"><span
                                                     style="font-size: 20px;">+</span> Add More files</button>
                                         </div>
-                                        <p>Required Field are marked with <span class="star">*</span></p>
-                                    </div>
-
-
-                                    
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <a href="#submitGrievance" class="btn modal-trigger">Submit</a>
@@ -397,26 +399,47 @@ style="overflow: inherit !important;">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-            var max_fields = 15; //maximum input boxes allowed
-            var wrapper = $(".input_fields_wrap"); //Fields wrapper
-            var add_button = $(".add_field_button"); //Add button ID
-            var x = 1; //initlal text box count
-            $(add_button).click(function (e) { //on add input button click
-                e.preventDefault();
-                if (x < max_fields) { //max input box allowed
-                    x++; //text box increment
-                    $(wrapper).append(
-                        '<div class="row"><div class="col s12 m6"><label for="Category">Document Type</label><select class="browser-default"><option value="" disabled selected>Select Document Type </option><option value="1">Passport Number</option><option value="2">Visa Number</option><option value="3">Pan Number</option></select></div><div class="file-field col s12 m6" style="margin-top: 25px;"><div class="btn"><span>Select File</span><input id="files" type="file" name="files[]" id="filer_input" multiple="multiple" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text" placeholder="Upload File"></div></div><div style="cursor:pointer;background-color:red; margin-right: 2%;" class="remove_field btn right btn-info">- remove</div></div>'
-                    ); //add input box
-                }
-            });
-            $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-            })
-        });
+	var max_fields = 15; //maximum input boxes allowed
+	var wrapper = $(".mainDiv"); //Fields wrapper
+	var add_button = $(".add_field_button"); //Add button ID
+	var x = 1; //initlal text box count
+	var id=2;
+	$(".add_field_button").click(function (e) { //on add input button click
+		e.preventDefault();
+		if (x < max_fields) { //max input box allowed
+			x++; //text box increment
+			$(wrapper).append(
+					'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+			); //add input box
+		}
+		
+		
+		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+
+
+			for (i = 0; i < data.length; i++) {
+				console.log(data[i].interp);
+				var optionId=id-1;
+				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
+				$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
+				console.log('#docTypetag'+optionId);
+
+			}
+		});
+		id++;
+
+	});
+
+$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+ e.preventDefault();
+ var Iid=id-1;
+ /*alert("@@@"+Iid)*/
+ $('#filediv'+Iid).remove();
+ $(this).parent('div').remove();
+ x--;
+ id--;
+
+ })
     </script>
 
 
