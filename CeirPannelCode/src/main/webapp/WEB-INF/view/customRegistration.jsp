@@ -619,7 +619,7 @@ var contextpath = "${context}";
 		<!-- <button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button> -->
-			<h6 class="modal-header">Verify OTP</h6>
+			<h6 class="modal-header"><spring:message code="registration.verifyotp" /></h6>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
