@@ -117,7 +117,7 @@ public class LoginService {
 		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
-	}
+}
 	
 	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http){
 		log.info("inside index controller");
@@ -131,7 +131,20 @@ public class LoginService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//return "redirect:.../"+dropdown.getValue();
 	}
+	
+	public void redirectToHome(HttpServletResponse http){
+		log.info("inside index controller");
+		log.info("exit index controller");
+		Tag tagData=new Tag("link_dmc_portal");
+		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+		try {
+		http.sendRedirect(dropdown.getValue());
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();

@@ -168,6 +168,7 @@
 									
 								}
 							});
+							$('#currencyDiv').hide();
 						});
 
 						$('.datepick').datepicker({
@@ -182,7 +183,8 @@
 			if(totalPrice.length<'1' )
 			{
 			$("#currency").attr("required", false);
-			$('#currency').attr("disabled",true);
+			/*$('#currency').attr("disabled",true);*/
+			$('#currencyDiv').hide();
 
 			$("#currency")[0].selectedIndex = 0;
 
@@ -190,7 +192,8 @@
 			else
 			{
 			$("#currency").attr("required", true);
-			$('#currency').attr("disabled",false);
+			/*$('#currency').attr("disabled",false);*/
+			$('#currencyDiv').show();
 
 			}
 			});

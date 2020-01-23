@@ -239,8 +239,8 @@
 	var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
 function table(url,dataUrl){
 	var request={
-			"modifiedOn":$('#endDate').val(),
-			"createdOn":$('#startDate').val(),
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),

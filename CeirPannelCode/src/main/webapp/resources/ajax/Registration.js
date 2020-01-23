@@ -478,7 +478,7 @@ function  openEndUserStockPage(reportType)
 {
 	//alert(reportType.value);
 	console.log("reportType=="+reportType.value);
-	window.location.href="./openEndUserStockPage?reportType="+reportType.value;
+	window.location.href="./uploadAstock?reportType="+reportType.value;
 	console.log("details."+window.location.href);
 	/*alert(window.location.href);*/
 /*	$.ajax({   

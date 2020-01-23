@@ -58,7 +58,10 @@ public class LoginController {
 	}
     
 
-	
+	@RequestMapping(value = "/redirectToHomePage", method = RequestMethod.GET)
+	public void redirectHomePage(HttpSession session,HttpServletResponse response) {
+	loginService.redirectToHome(response);
+	}
 
 
 	@RequestMapping(value = "/forgotPassword",method = RequestMethod.GET)
