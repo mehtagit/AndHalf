@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.jws.soap.SOAPBinding.Use;
 
+import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
@@ -21,6 +22,9 @@ public interface UserLoginFeignImpl {
 	
 	@PostMapping("/Login/checkUser") 
 	public LoginResponse checkUser(User user);
+	
+	@PostMapping("/Login/changeLanguage") 
+	public HttpResponse changeUserLanguage(ChangeLanguage language);
 	  
 	@PostMapping("/Login/sessionTracking/{userid}")
 	public HttpResponse sessionTracking(@PathVariable("userid") Integer userid);

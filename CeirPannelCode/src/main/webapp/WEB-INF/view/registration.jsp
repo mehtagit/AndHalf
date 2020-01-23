@@ -169,7 +169,9 @@ var contextpath = "${context}";
 </head>
 
 <body>
-<%String userType=request.getParameter("type");%>
+<%String userType=request.getParameter("type");
+String usertypeId="${usertypeId}";
+%>
 <!-- Modal End --> 
 	<!-- ================================================
     Scripts
@@ -216,9 +218,19 @@ var contextpath = "${context}";
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("type") %> Registration</h5>
+						<div class="col s10 m11 select-lang-lable">
+<label for="" style="font-size:1rem;">Language :</label>
+</div>
+<div class="col s2 m1 right" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn">
+<option value="1">English</option>
+<option value="2">Khmer</option>
+</select>
+</div>
+<div class="col s12 m11"><h5><%=request.getParameter("type") %> Registration</h5>
 							<hr>
-							<span id="msg" style="color: red;">${msg}</span>
+							<span id="msg" style="color: red;">${msg}</span></div>
+							
                      <input type="hidden" id="usertypeId" value="">
                <input type="hidden" id="usertypeName" value="<%=userType%>">
                			<div class="row">
@@ -832,8 +844,7 @@ var contextpath = "${context}";
         	
         	asTypeData();       	
             questionDataByCategory();
-            
-            usertypeData2(<%=request.getParameter("usertypeId")%>);
+            usertypeData2("${usertypeId}");
         }); 
         populateCountries(
                 "country",    "state",
@@ -881,7 +892,6 @@ var contextpath = "${context}";
         
         function vatChecked(){
         	var radioValue = $("input[name='vatStatus']:checked").val();
-        	alert(radioValue);
         	if(radioValue==1){
         		$("#vatNo").prop('required',true);
         		$("#vatFile").prop('required',true);

@@ -103,10 +103,10 @@ footer {
 }
 
 h6 {
-	font-size: 1rem;
-	line-height: 110%;
-	margin: 0rem 0 0.4rem 0;
-	 margin-top: 1px !important; 
+font-size: 0.9rem;
+line-height: 110%;
+margin: 0rem 0 0.2rem 0;
+margin-top: 1px !important;
 }
 
 .file-upload-heading {
@@ -119,6 +119,11 @@ select {
 
 label {
 /* 	font-size: 0.8rem; */
+}
+.select-lang-drpdwn {
+    width: 75px;
+    margin-top: -17px;
+    border-bottom: none;
 }
 </style>
 <script>
@@ -180,9 +185,19 @@ var contextpath = "${context}";
 
 					<div class="card-panel registration-form">
 						<div class="row">
-							<h5><%=name%> Registration</h5>
+						<div class="col s10 m10 select-lang-lable">
+<label for="">Language :</label>
+</div>
+<div class="col s2 m2 right" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn">
+<option value="1">English</option>
+<option value="2">Khmer</option>
+</select>
+</div>
+<div class="col s12 m12"><h5><%=name%> Registration</h5>
 							<span id="msg" style="color: red;">${msg}</span>
-							<hr>
+							<hr></div>
+							
 
 							<input type="hidden" id="usertypeId" value="1">
 							<input type="hidden" id="usertypeName" value="<%=name%>">
@@ -323,7 +338,7 @@ var contextpath = "${context}";
 									<label for="passportNo">National ID <span class="star">*</span></label>
 								</div>
 
-								<div class="file-field input-field col s12 m6 l6">
+								<!-- <div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span>Upload National ID *</span> <input id="NationalIdImage"
 											type="file" placeholder="">
@@ -332,7 +347,20 @@ var contextpath = "${context}";
 										<input class="file-path validate" type="text"
 											placeholder="">
 									</div>
-								</div>
+								</div> -->
+								
+								<div class="file-field col s12 m6 l6">
+<h6 class="file-label">Upload National ID <span class="star">*</span></h6>
+<div class="btn">
+<span>select file</span>
+<input type="file" placeholder="Upload National ID Image">
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload National ID Image">
+</div>
+</div>
+
+
 
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
