@@ -73,7 +73,7 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	CustomDetailsRepository customDetailsRepository;
-	
+
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
 
@@ -109,7 +109,7 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	UserProfileRepository userProfileRepository;
-	
+
 	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
 
 		List<StateMgmtDb> stateList = null;
@@ -139,7 +139,7 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Regularized Device Service", e.getMessage());
 		}
 	}
-	
+
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
 		List<StateMgmtDb> stateList = null;
@@ -172,7 +172,7 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Regularized Device Service", e.getMessage());
 		}
 	}
-	
+
 	public FileDetails getFilteredDeviceInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
@@ -183,7 +183,7 @@ public class RegularizedDeviceServiceImpl {
 		logger.info("CONFIG : file_custom_regularized_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_custom_regularized_download_link);
 		logger.info("CONFIG : file_custom_regularized_download_link [" + link + "]");
-		
+
 		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<RegularizeDeviceFileModel> builder = null;
 		StatefulBeanToCsv<RegularizeDeviceFileModel> csvWriter = null;
@@ -192,15 +192,15 @@ public class RegularizedDeviceServiceImpl {
 		try {
 			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest);
 
-			if( !regularizeDevices.isEmpty() ) {
+			/*if( !regularizeDevices.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
 					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + "_RegularizeDevices.csv";
-				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevices.csv";
-				}
-			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevices.csv";
-			}
+				}else {*/
+			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevice.csv";
+			/*
+			 * } }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
+			 * "_RegularizeDevices.csv"; }
+			 */
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<RegularizeDeviceFileModel>(writer);
@@ -407,7 +407,7 @@ public class RegularizedDeviceServiceImpl {
 	public GenricResponse getCountOfRegularizedDevicesByNid(String nid) {
 		try {
 			PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(ConfigTags.max_end_user_device_count);
-			
+
 			return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNid(nid)));	
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -450,7 +450,7 @@ public class RegularizedDeviceServiceImpl {
 			return -1L;
 		}
 	}
-	
+
 	private SpecificationBuilder<RegularizeDeviceDb> buildSpecification(FilterRequest filterRequest){
 		SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
@@ -475,32 +475,32 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			specificationBuilder.with(new SearchCriteria("status", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			specificationBuilder.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
-		
+
 		return specificationBuilder;
 	}
 
 	private void setInterp(RegularizeDeviceDb regularizeDeviceDb) {
 		if(Objects.nonNull(regularizeDeviceDb.getTaxPaidStatus()))
 			regularizeDeviceDb.setTaxPaidStatusInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, regularizeDeviceDb.getTaxPaidStatus()));
-		
+
 		if(Objects.nonNull(regularizeDeviceDb.getDeviceIdType()))
 			regularizeDeviceDb.setDeviceIdTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_ID_TYPE, regularizeDeviceDb.getDeviceIdType()));
-		
+
 		if(Objects.nonNull(regularizeDeviceDb.getDeviceType()))
 			regularizeDeviceDb.setDeviceTypeInterp(interpSetter.setConfigInterp(Tags.DEVICE_TYPE, regularizeDeviceDb.getDeviceType()));
-		
+
 		if(Objects.nonNull(regularizeDeviceDb.getDeviceStatus()))
 			regularizeDeviceDb.setDeviceStatusInterp(interpSetter.setConfigInterp(Tags.DEVICE_STATUS, regularizeDeviceDb.getDeviceStatus()));
-		
+
 		if(Objects.nonNull(regularizeDeviceDb.getCurrency()))
 			regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
 	}

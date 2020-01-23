@@ -512,16 +512,15 @@ public class ConsignmentServiceImpl {
 		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);
-			if( !consignmentMgmts.isEmpty() ) {
+			/*if( !consignmentMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + consignmentMgmts.get(0).getUser().getUsername()+"_Consignments.csv";
-				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignments.csv";
-				}
-			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignments.csv";
-			}
-
+					*/
+			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignment.csv";
+			/*
+			 * }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
+			 * "_Consignments.csv"; } }else { fileName =
+			 * LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignments.csv"; }
+			 */
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<ConsignmentFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
@@ -531,7 +530,6 @@ public class ConsignmentServiceImpl {
 				fileRecords = new ArrayList<>(); 
 
 				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
-					UserProfile userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 
 					cfm = new ConsignmentFileModel();
 					cfm.setConsignmentId( consignmentMgmt.getId() );
@@ -540,7 +538,7 @@ public class ConsignmentServiceImpl {
 					cfm.setCreatedOn(consignmentMgmt.getCreatedOn().format(dtf));
 					cfm.setModifiedOn( consignmentMgmt.getModifiedOn().format(dtf));
 					cfm.setFileName( consignmentMgmt.getFileName());
-					cfm.setSupplierName(userProfile.getDisplayName());
+					cfm.setSupplierName(consignmentMgmt.getSupplierName());
 					cfm.setConsignmentStatus(consignmentMgmt.getStateInterp());
 
 					logger.debug(cfm);

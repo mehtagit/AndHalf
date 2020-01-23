@@ -116,13 +116,13 @@ public class StockServiceImpl {
 
 	@Autowired
 	UserProfileRepo userProfileRepo;
-	
+
 	@Autowired
 	InterpSetter interpSetter;
 
 	@Autowired
 	StatesInterpretaionRepository statesInterpretaionRepository;
-	
+
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 
 		try {
@@ -340,7 +340,7 @@ public class StockServiceImpl {
 			}
 
 			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(stockMgmt.getTxnId()); 
-			
+
 			if("End User".equalsIgnoreCase(stockMgmt.getUserType())) {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
@@ -478,9 +478,9 @@ public class StockServiceImpl {
 		logger.info("CONFIG : file_stock_download_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
 		logger.info("CONFIG : file_stock_download_link [" + link + "]");
-		
+
 		String filePath = filepath.getValue();
-		
+
 		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
 		StatefulBeanToCsv<StockFileModel> csvWriter = null;
 		List< StockFileModel > fileRecords = null;
@@ -488,16 +488,16 @@ public class StockServiceImpl {
 		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<StockMgmt> stockMgmts = getAll(filterRequest);
-
+			/*
 			if( !stockMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
-				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
-				}
-			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv";
-			}
+			 */
+			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stock.csv";
+			/*
+			 * }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
+			 * "_Stocks.csv"; } }else { fileName =
+			 * LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv"; }
+			 */
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
@@ -509,7 +509,6 @@ public class StockServiceImpl {
 				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 
 				for( StockMgmt stockMgmt : stockMgmts ) {
-					UserProfile userProfile = userProfileRepository.getByUserId(stockMgmt.getUserId());
 					sfm = new StockFileModel();
 
 					sfm.setStockId(stockMgmt.getId());
@@ -518,7 +517,7 @@ public class StockServiceImpl {
 					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
 					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
 					sfm.setFileName( stockMgmt.getFileName());
-					sfm.setSupplierName(userProfile.getDisplayName());
+					sfm.setSupplierName(stockMgmt.getSuplierName());
 
 					logger.debug(sfm);
 

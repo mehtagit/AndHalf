@@ -365,12 +365,12 @@ public class StolenAndRecoveryServiceImpl {
 		StolenAndRecoveryFileModel srfm = null;
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		
+
 		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_stolen_and_recovery_dir);
 		logger.info("CONFIG : file_stolen_and_recovery_dir [" + filepath + "]");
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
 		logger.info("CONFIG : file_stock_download_link [" + link + "]");
-		
+
 		String filePath = filepath.getValue();
 
 		StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel> builder = null;
@@ -381,15 +381,16 @@ public class StolenAndRecoveryServiceImpl {
 		try {
 			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
 
-			if( !stolenandRecoveryMgmts.isEmpty() ) {
+			/*if( !stolenandRecoveryMgmts.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
-				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
-				}
-			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
-			}
+			 */
+			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
+			/*
+			 * }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
+			 * "_StolenAndRecovery.csv"; } }else { fileName =
+			 * LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
+			 * }
+			 */
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel>(writer);
