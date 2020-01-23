@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Feature;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
@@ -79,6 +80,17 @@ public class LoginService {
 			return response; 
 		}
 	}
+	
+	public HttpResponse changeLanguage(ChangeLanguage language) {
+		log.info("inside check change language controller ");
+		log.info("language data:  "+language);
+		HttpResponse response=userLoginFeignImpl.changeUserLanguage(language);
+		if(response!=null) {
+			log.info("response from controller: "+response);
+		}
+		log.info("exit from language controller ");
+		return response;
+	}
 
 	public void sessionRemoveCode(Integer userid,HttpSession session) {
 		
@@ -119,7 +131,6 @@ public class LoginService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//return "redirect:.../"+dropdown.getValue();
 	}
 
 	public ModelAndView dashBoard(HttpSession session) {
