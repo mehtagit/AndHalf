@@ -12,5 +12,7 @@ import com.gl.ceir.config.model.StatesInterpretationDb;
 public interface StatesInterpretaionRepository extends JpaRepository<StatesInterpretationDb, Long>, JpaSpecificationExecutor<StatesInterpretationDb> {
 
 	public List<StatesInterpretationDb> findByFeatureId(Integer featureId);
+	
+	public StatesInterpretationDb findByFeatureIdAndState(Integer featureId, int state);
 
 }

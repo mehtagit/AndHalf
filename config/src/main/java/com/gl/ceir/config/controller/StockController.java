@@ -99,13 +99,13 @@ public class StockController {
 	@RequestMapping(path = "/stock/view", method = RequestMethod.POST)
 	public MappingJacksonValue view(@RequestBody StockMgmt stockMgmt) {
 
-		logger.info("Txn View Request ="+stockMgmt.toString());
+		logger.info("Stock View Request = " + stockMgmt.toString());
 
 		StockMgmt response	= stackholderServiceImpl.view(stockMgmt);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
 
-		logger.info("Resposne view  ");
+		logger.info("Resposne view for txnId [ " +stockMgmt.getTxnId() + " ]" + response);
 
 		return mapping;
 

@@ -36,6 +36,7 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.StatesInterpretationDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -54,6 +55,7 @@ import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
+import com.gl.ceir.config.repository.StatesInterpretaionRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
@@ -114,9 +116,13 @@ public class StockServiceImpl {
 
 	@Autowired
 	UserProfileRepo userProfileRepo;
+	
 	@Autowired
 	InterpSetter interpSetter;
 
+	@Autowired
+	StatesInterpretaionRepository statesInterpretaionRepository;
+	
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 
 		try {
@@ -334,6 +340,11 @@ public class StockServiceImpl {
 			}
 
 			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(stockMgmt.getTxnId()); 
+			
+			if("End User".equalsIgnoreCase(stockMgmt.getUserType())) {
+				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
+				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
+			}
 
 			return stockMgmt2;
 
