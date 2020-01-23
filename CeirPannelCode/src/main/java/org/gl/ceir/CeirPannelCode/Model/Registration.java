@@ -29,7 +29,7 @@ public class Registration {
 	private String username;
 	private Long[] roles;
 	private String captcha;
-	private long usertypeId;
+	private String usertypeName;
 	private String employeeId;
 	private String natureOfEmployment;
 	private String designation;
@@ -255,12 +255,14 @@ public class Registration {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
-	public long getUsertypeId() {
-		return usertypeId;
+	
+	public String getUsertypeName() {
+		return usertypeName;
 	}
-	public void setUsertypeId(long usertypeId) {
-		this.usertypeId = usertypeId;
+	public void setUsertypeName(String usertypeName) {
+		this.usertypeName = usertypeName;
 	}
+	
 
 	public String getNidFilename() {
 		return nidFilename;
@@ -332,7 +334,7 @@ public class Registration {
 				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
 				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
-				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeId=" + usertypeId + ", employeeId="
+				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeName" + usertypeName + ", employeeId="
 				+ employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation
 				+ ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo="
 				+ authorityPhoneNo + ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId

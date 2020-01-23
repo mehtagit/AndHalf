@@ -88,6 +88,7 @@ var contextpath = "${context}";
 </head>
 
 <body>
+<%String name=request.getParameter("type");%>
     
     <!--  Scripts
     ================================================ --> 
@@ -132,9 +133,9 @@ var contextpath = "${context}";
                         <div class="row">
                             <h5>Operator Registration</h5>
                             <span id="msg" style="color: red;">${msg}</span>
-                            <hr>  
-                            
+                            <hr>                                                  
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
+                              <input type="hidden" id="usertypeName" value="<%=name%>">
                                <input type="hidden" id="type" value="2">
                             <div class="row">
                               	<div class="input-field col s12 m4 l4">
@@ -590,12 +591,12 @@ var contextpath = "${context}";
     </div>
     
     
-    	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
+   	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
 			<h6 class="modal-header">Verify OTP</h6>
 		<div class="modal-content">
 						<p style="padding:10px;" class="center" id="otpMsg"></p>
 			
-					<a href="#otpVerification" class="btn modal-trigger"
+					<a href="#otpVerification" class="btn modal-trigger modal-close"
                                 style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 		</div>
 	</div>

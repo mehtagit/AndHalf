@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -48,9 +50,7 @@ var contextpath = "${context}";
 		<div class="loader-section section-right"></div>
 	</div>
 	<!-- End Page Loading -->
-
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
 	<!-- START HEADER -->
 	<header id="header" class="page-topbar">
 		<!-- start header nav-->
@@ -93,7 +93,7 @@ style="overflow: inherit !important;">
 					</select></div>
 			</div>
 			</li>
-		<li><a href="./homePage" id="newUserLink" style="color:white;">Home</a>	</li>			
+		<li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;">Home</a>	</li>			
 					
 <li class="profileInfo"><a
 class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
@@ -149,54 +149,16 @@ class="dropdownColor"> Logout</span></a></li>
 									(<%=(String)session.getAttribute("username")%>) 
 									</p>
 							</div>
-
 						</div>
 					</li>
-					<%-- <li>
-						<ul>
-							<li class="bold"><a href="${context}/Home" target="mainArea"
-								class="waves-effect waves-cyan"><i class="fa fa-tachometer"></i>
-									Dashboard</a></li>
-							<li><a href="./Consignment/viewConsignment"
-								target="mainArea"><i class="fa fa-list-alt"></i>Consignment
-							</a></li> 
-							<li><a href="./assignDistributor" target="mainArea"><i
-									class="fa fa-th-list"></i>Upload Stock</a></li>
-							<li><a href="./stolenRecovery" target="mainArea"><i
-									class="fa fa-hand-o-right"></i>Stolen/Stock </a></li>
-						</ul>
-					</li> --%>
-					
-					
 					<li>
 					<ul class="navData">
 					<c:forEach items="${features}"  var="feature">
 							<li class="bold"><a href="${feature.link}" target="mainArea"
-								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
-									 ${feature.name}</a></li>
+								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>${feature.name}</a></li>
 					</c:forEach>
 					</ul>
 					</li>
-
-
-
-					<!--         <li class="no-padding">
-                <ul class="collapsible collapsible-accordion">
-                    <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="fa fa-file-text-o"></i> View</a>
-                        <div class="collapsible-body">
-                            <ul>
-                                <li><a  href="./importerConsignment/1" target="mainArea"><i class="fa fa-file-text-o"></i>Consignment </a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-file-text-o"></i>Stolen/Recovery</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </li> -->
-
-
-
 				</ul>
 				<a href="#" data-activates="slide-out"
 					class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only cyan"><i
@@ -249,7 +211,7 @@ class="dropdownColor"> Logout</span></a></li>
 	<footer class="page-footer">
 		<div class="footer-copyright">
 			<div class="container">
-				<span id="copyrightText">Copyright © 2018 Sterlite Technologies Ltd, All rights
+				<span id="copyrightText">Copyright Â© 2018 Sterlite Technologies Ltd, All rights
 					reserved.</span>
 
 			</div>
@@ -457,6 +419,27 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 </div>
 </div>
 </div>
+<!-- Modal start -->
+
+<div id="goToHome" class="modal modal-small" style="width: 40%;">
+<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button> -->
+<h6 class="modal-header">Home Page</h6>
+<div class="modal-content">
+<div class="row">
+<h6>This page will redirect to home page. Do you want to logout the panel?</h6>
+</div>
+<div class="input-field col s12 center">
+<div class="input-field col s12 center">
+<a href="./homePage" class="btn" type="submit" name="add_user" id="add_user">yes</a>
+<a href="#" class="modal-close btn"
+style="margin-left: 10px;">no</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Modal End -->
 <!-- Modal End -->
 	<!-- Modal End -->
 
@@ -467,8 +450,6 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 
 
 	<!-- jQuery Library -->
-<%-- 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
 		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
     <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
@@ -489,36 +470,13 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-	dataByTag("copyright_footer","copyrightText",2);
-        });   
-</script>
-
-<script type="text/javascript">
-var password = document.getElementById("password")
-, confirm_password = document.getElementById("confirm_password");
-
-function validatePassword(){
-if(password.value != confirm_password.value) {
-  confirm_password.setCustomValidity("Passwords Don't Match");
-} else {
-  confirm_password.setCustomValidity('');
-}
-}   
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
-console.log($("#cierRoletype").text());
-var cierRoletype = $("#cierRoletype").text()
-sessionStorage.setItem("cierRoletype", cierRoletype);
-$('.navData li').on('click', function() {
-$('.navData li:not(.inactive)').addClass("inactive");
-$('.navData li').removeClass("active");
-$(this).removeClass("inactive");
-$(this).addClass("active"); 
-});
-
-</script>
+		  
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		
+<script type="text/javascript" src="${context}/resources/project_js/dragableModal.js"></script>
+<script type="text/javascript" src="${context}/resources/project_js/dashboard.js"></script>
 
 </body>
 

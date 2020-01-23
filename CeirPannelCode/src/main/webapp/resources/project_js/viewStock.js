@@ -626,8 +626,7 @@
 
 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-
-	//**********************************************************Export Excel file************************************************************************
+//**********************************************************Export Excel file************************************************************************
 	function exportStockData()
 	{
 		var stockStartDate=$('#startDate').val();
