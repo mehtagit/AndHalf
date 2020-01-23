@@ -944,7 +944,12 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 }
 
 
-/********************************** Icons for Admin MEssage Management**********************************/ 
+
+
+	
+
+
+	/********************************** Icons for Admin MEssage Management**********************************/ 
 
 	public String adminMessageIcons(String userStatus, String tag) { 
 		String editAction="updateDetails('"+tag+"')";

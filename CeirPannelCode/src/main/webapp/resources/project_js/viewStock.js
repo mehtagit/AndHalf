@@ -626,8 +626,7 @@
 
 
 	var role = currentRoleType == null ? roleType : currentRoleType;
-
-	//**********************************************************Export Excel file************************************************************************
+//**********************************************************Export Excel file************************************************************************
 	function exportStockData()
 	{
 		var stockStartDate=$('#startDate').val();
@@ -637,11 +636,15 @@
 		var roleType = $("body").attr("data-roleType");
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
 		var userType = role;
-		var userTypeId = $("body").attr("data-userTypeID");
+		
+		//var userTypeId = $("body").attr("data-userTypeID");
+		var selectedRoleTypeId=$("body").attr("data-selectedRoleTypeId");
+		//alert("selectedRoleTypeId="+selectedRoleTypeId);
+		//var currentSelectedRoleType=selectedRoleTypeId == null ? selectedRoleTypeId : userTypeId;
 		
 		//console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
 		//console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
-		
+	
 		if(isNaN(StockStatus))
 		{
 			StockStatus='';
@@ -654,5 +657,5 @@
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
 		console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+"=role="+role);
-		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+userTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
+		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 	}

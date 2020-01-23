@@ -422,8 +422,8 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 <!-- Modal start -->
 
 <div id="goToHome" class="modal modal-small" style="width: 40%;">
-<button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
-data-dismiss="modal">&times;</button>
+<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button> -->
 <h6 class="modal-header">Home Page</h6>
 <div class="modal-content">
 <div class="row">
@@ -450,8 +450,6 @@ style="margin-left: 10px;">no</a>
 
 
 	<!-- jQuery Library -->
-<%-- 	<script type="text/javascript"
-		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
 		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
     <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
@@ -472,45 +470,13 @@ style="margin-left: 10px;">no</a>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
-<script type="text/javascript">
-$(document).ready(function () {
-	dataByTag("copyright_footer","copyrightText",2);
-        });   
-</script>
-
-<script type="text/javascript">
-//var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-/* $('#langlist').on('change', function() {
-	window.location.assign("CeirPanelCode/importerDashboard?lang="+$('#langlist').val());
-	
-}); 
- */
-
-var password = document.getElementById("password")
-, confirm_password = document.getElementById("confirm_password");
-
-function validatePassword(){
-if(password.value != confirm_password.value) {
-  confirm_password.setCustomValidity("Passwords Don't Match");
-} else {
-  confirm_password.setCustomValidity('');
-}
-}   
-password.onchange = validatePassword;
-confirm_password.onkeyup = validatePassword;
-console.log($("#cierRoletype").text());
-var cierRoletype = $("#cierRoletype").text()
-sessionStorage.setItem("cierRoletype", cierRoletype);
-$('.navData li').on('click', function() {
-$('.navData li:not(.inactive)').addClass("inactive");
-$('.navData li').removeClass("active");
-$(this).removeClass("inactive");
-$(this).addClass("active"); 
-});
-
-
-
-</script>
+		  
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		
+<script type="text/javascript" src="${context}/resources/project_js/dragableModal.js"></script>
+<script type="text/javascript" src="${context}/resources/project_js/dashboard.js"></script>
 
 </body>
 

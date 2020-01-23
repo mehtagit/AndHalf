@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Dashboard</title>
+<title>Consignment</title>
 <meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -34,8 +34,6 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<link href="${context}/resources/css/jquery-datepicker2.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 <!-- Custome CSS-->
 <link href="${context}/resources/css/custom/custom.css" type="text/css"
@@ -733,8 +731,7 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
+
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -775,12 +772,12 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/viewConsignment.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/viewConsignment.js"></script>
 
 </body>
 </html>
