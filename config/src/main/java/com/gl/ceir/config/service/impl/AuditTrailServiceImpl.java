@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
@@ -27,6 +28,7 @@ import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
@@ -60,6 +62,9 @@ public class AuditTrailServiceImpl {
 
 	@Autowired
 	InterpSetter interpSetter;
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
 	public AuditTrail findById(long id){
 		try {
@@ -113,9 +118,14 @@ public class AuditTrailServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		AuditTrailFileModel atfm = null;
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		String filePath = fileStorageProperties.getAuditTrailDownloadDir();
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_dir);
+		logger.info("CONFIG : file_audit_trail_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_link);
+		logger.info("CONFIG : file_audit_trail_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
 		StatefulBeanToCsv<AuditTrailFileModel> csvWriter = null;
 		List< AuditTrailFileModel > fileRecords = null;
@@ -153,7 +163,7 @@ public class AuditTrailServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails( fileName, filePath, fileStorageProperties.getAuditTrailDownloadLink() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

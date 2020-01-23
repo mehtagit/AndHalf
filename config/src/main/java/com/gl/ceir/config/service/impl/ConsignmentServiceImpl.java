@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
@@ -33,9 +34,11 @@ import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
@@ -497,7 +500,12 @@ public class ConsignmentServiceImpl {
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		String filePath = fileStorageProperties.getConsignmentDownloadDir();
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_consignment_download_dir);
+		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_consignment_download_link);
+		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
 		StatefulBeanToCsv<ConsignmentFileModel> csvWriter = null;
 		List< ConsignmentFileModel > fileRecords = null;
@@ -543,7 +551,7 @@ public class ConsignmentServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails( fileName, filePath, fileStorageProperties.getConsignmentDownloadLink() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

@@ -37,6 +37,7 @@ import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
@@ -178,7 +179,12 @@ public class RegularizedDeviceServiceImpl {
 		RegularizeDeviceFileModel rdfm = null;
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		String filePath  = fileStorageProperties.getRegularizeDeviceDownloadDir();
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_custom_regularized_dir);
+		logger.info("CONFIG : file_custom_regularized_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_custom_regularized_download_link);
+		logger.info("CONFIG : file_custom_regularized_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
 		StatefulBeanToCsvBuilder<RegularizeDeviceFileModel> builder = null;
 		StatefulBeanToCsv<RegularizeDeviceFileModel> csvWriter = null;
 		List< RegularizeDeviceFileModel > fileRecords = null;
@@ -230,7 +236,7 @@ public class RegularizedDeviceServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails(fileName, filePath, fileStorageProperties.getRegularizeDeviceDownloadLink() + fileName ); 
+			return new FileDetails(fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
@@ -37,6 +38,7 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
@@ -451,8 +453,13 @@ public class StockServiceImpl {
 		StockFileModel sfm = null;
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String filePath  = fileStorageProperties.getStockDownloadDir();
-
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_dir);
+		logger.info("CONFIG : file_stock_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
+		logger.info("CONFIG : file_stock_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
+		
 		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
 		StatefulBeanToCsv<StockFileModel> csvWriter = null;
 		List< StockFileModel > fileRecords = null;
@@ -499,7 +506,7 @@ public class StockServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails( fileName, filePath, fileStorageProperties.getStockDownloadLink() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
@@ -43,6 +44,7 @@ import com.gl.ceir.config.model.StolenIndividualUserDB;
 import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
@@ -363,7 +365,13 @@ public class StolenAndRecoveryServiceImpl {
 		StolenAndRecoveryFileModel srfm = null;
 
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		String filePath  = fileStorageProperties.getStolenAndRecoveryDownloadDir();
+		
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_stolen_and_recovery_dir);
+		logger.info("CONFIG : file_stolen_and_recovery_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
+		logger.info("CONFIG : file_stock_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
 
 		StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel> builder = null;
 		StatefulBeanToCsv<StolenAndRecoveryFileModel> csvWriter = null;
@@ -409,7 +417,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
-			return new FileDetails( fileName, filePath, fileStorageProperties.getStolenAndRecoveryDownloadLink() + fileName ); 
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
