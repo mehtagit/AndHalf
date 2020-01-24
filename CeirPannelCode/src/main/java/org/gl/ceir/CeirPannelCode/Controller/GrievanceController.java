@@ -347,7 +347,7 @@ public class GrievanceController {
 							 * 
 							 */
 							log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
-							 response = grievanceFeignClient.saveGrievance(grievanceRequest);
+							 response = grievanceFeignClient.saveEndUserGrievance(grievanceRequest);
 							 response.setTxnId(grevnceId);
 
 							 log.info("response from save grievance api"+response);

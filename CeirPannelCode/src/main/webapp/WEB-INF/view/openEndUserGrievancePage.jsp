@@ -315,22 +315,6 @@ style="overflow: inherit !important;">
 
     <!-- Grievance Modal start   -->
 
-    <div id="GrievanceMsg" class="modal" style="width: 40%;">
-        <div class="modal-content">
-            <h6 class="modal-header">Submit Grievance Report</h6>
-            <div class="row">
-                <h6>Your grievance report has been successfully submitted. Your Grievance Id is GB12345</h6>
-
-                <p>(Note: Please remember your grievance Id. This is used for future reference)</p>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="index.html" class="btn">ok</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Grievance Modal End -->
 
     <!-- Otp Modal start   -->
@@ -354,7 +338,7 @@ style="overflow: inherit !important;">
                 <a href="#" onclick="document.getElementById('resendOtp').style.display ='block';" class="right">Resend
                     OTP</a>
 
-                <a href="#GrievanceMsg" class="btn modal-trigger modal-close"
+                <a href="" class="btn modal-trigger modal-close"
                     style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
             </form>
         </div>
@@ -398,25 +382,11 @@ style="overflow: inherit !important;">
         </div>
     </div>
     
-   <!--  <div id="GrievanceMsg" class="modal" style="width: 40%; z-index: 1005; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
-        <div class="modal-content">
-            <h6 class="modal-header">Submit Grievance Report</h6>
-            <div class="row">
-                <h6>Your grievance report has been successfully submitted. Your Grievance Id is GB12345</h6>
 
-                <p>(Note: Please remember your grievance Id. This is used for future reference)</p>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="./redirectToHomePage" class="btn">ok</a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    
-    <div id="GrievanceMsg" class="modal" style="width: 40%; z-index: 1005;; opacity: 1; transform: scaleX(1); top: 10%;">
+    <div id="GrievanceMsg" class="modal">
+    <h6 class="modal-header">Submit Grievance Report</h6>
         <div class="modal-content">
-            <h6 class="modal-header">Submit Grievance Report</h6>
+            
             <div class="row">
                 <h6 >Your grievance report has been successfully submitted. Your Grievance Id is <span id="sucessMessageGrievance"></span></h6>
 
@@ -514,13 +484,7 @@ style="overflow: inherit !important;">
         	$('#checkUploadStatusDiv').css("display", "block");
         }
         });
-        
-          
-    </script>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
+  
     function saveaAonymousGrievance(){
     
     	var firstName=$('#firstName').val();
