@@ -149,13 +149,13 @@
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="uploadNationalId" id="uploadNationalId" value="${registration.nidFilename}" maxlength="30" disabled="">
                                             <label for="uploadNationalId" class="active">Uploaded National ID</label>
-                                            <a href="#" id="previewNationalId"> Preview </a>    
+                                            <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')"> Preview </a>    
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="uploadPhoto" id="uploadPhoto" value="${registration.photoFilename}" maxlength="30" disabled="">
                                             <label for="uploadPhoto" class="active">Uploaded Photo </label>
-                                             <a href="#" id="previewphotofile"> Preview </a>  
+                                             <a href="#" onclick="previewFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a>  
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -166,7 +166,7 @@
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="uploadIdCard" id="uploadIdCard" value="${registration.idCardFilename}" maxlength="30" disabled="">
                                             <label for="uploadIdCard" class="active">Uploaded ID Card </label>
-                                            <a href="#" id="previewIDcard"> Preview </a>  
+                                            <a href="#"  onclick="previewFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> Preview </a>  
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -226,7 +226,17 @@
             </div></section>	
 	
 		
-		
+	<!-- Preview Modal start   -->
+
+	<div id="viewuplodedModel" class="modal">
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+    
 		
 
 	<!--materialize js-->

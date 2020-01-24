@@ -466,11 +466,7 @@ function registrationAjax(obj){
 
 
 function openEndUserGrievancePage(reportType){
-	//alert(reportType.value);
-	console.log("reportType=="+reportType.value);
-	window.location.href="./openEndUserGrievancePage?reportType="+reportType.value;
-	console.log("details."+window.location.href);
-	//alert(window.location.href);
+	window.location.href="./raiseAgrievance?reportType="+reportType.value;
 
 }
 

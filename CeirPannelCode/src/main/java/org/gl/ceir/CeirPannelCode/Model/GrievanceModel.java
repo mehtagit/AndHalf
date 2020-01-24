@@ -6,7 +6,7 @@ public class GrievanceModel {
 private int id;
 private int categoryId;
 private int grievanceStatus ;
-private int userId;
+private int userId,featureId;
 private String fileName;
 private String grievanceId;
 private String modifiedOn;
@@ -17,15 +17,33 @@ private String userType;
 private String reply;
 private String userDisplayName,email,firstName,lastName,middleName,phoneNo;
 private List<MultipleFileModel> attachedFiles;
+
+
+
 @Override
 public String toString() {
 	return "GrievanceModel [id=" + id + ", categoryId=" + categoryId + ", grievanceStatus=" + grievanceStatus
-			+ ", userId=" + userId + ", fileName=" + fileName + ", grievanceId=" + grievanceId + ", modifiedOn="
-			+ modifiedOn + ", createdOn=" + createdOn + ", remarks=" + remarks + ", txnId=" + txnId + ", userType="
-			+ userType + ", reply=" + reply + ", userDisplayName=" + userDisplayName + ", email=" + email
-			+ ", firstName=" + firstName + ", lastName=" + lastName + ", middleName=" + middleName + ", phoneNo="
-			+ phoneNo + ", attachedFiles=" + attachedFiles + "]";
+			+ ", userId=" + userId + ", featureId=" + featureId + ", fileName=" + fileName + ", grievanceId="
+			+ grievanceId + ", modifiedOn=" + modifiedOn + ", createdOn=" + createdOn + ", remarks=" + remarks
+			+ ", txnId=" + txnId + ", userType=" + userType + ", reply=" + reply + ", userDisplayName="
+			+ userDisplayName + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
+			+ ", middleName=" + middleName + ", phoneNo=" + phoneNo + ", attachedFiles=" + attachedFiles + "]";
 }
+
+
+
+public int getFeatureId() {
+	return featureId;
+}
+
+
+
+public void setFeatureId(int featureId) {
+	this.featureId = featureId;
+}
+
+
+
 public int getId() {
 	return id;
 }

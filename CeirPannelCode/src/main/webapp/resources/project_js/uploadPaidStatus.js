@@ -103,8 +103,9 @@
 			}); 
 			pageRendering(lang);
 			filter(lang);
-			
+	
 			$("#btnLink").css({display: "none"});
+
 
 		}
 
@@ -311,15 +312,16 @@ function table(url,dataUrl){
 				var date=data.inputTypeDateList;
 				for(i=0; i<date.length; i++){
 					if(date[i].type === "date"){
-						$("#tableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+						$("#tableDiv").append("<div class='input-field col s6 m2'>"+
 								"<div id='enddatepicker' class='input-group'>"+
-								"<label for='TotalPrice'>"+date[i].title
-								+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<label for="+date[i].id+">"+date[i].title
+								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
 								"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
 					}else if(date[i].type === "text"){
-						$("#tableDiv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+						$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 					}
 				} 
 
@@ -327,13 +329,13 @@ function table(url,dataUrl){
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
 					var dropdownDiv=
-						$("#tableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-								"<br>"+
-								"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+						$("#tableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
 								"<span class='caret'>"+"</span>"+
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-								"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
 								"<option value=''>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
@@ -343,8 +345,8 @@ function table(url,dataUrl){
 
 
 
-				$("#tableDiv").append("<div class='col s12 m1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
-				$("#tableDiv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
+				$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);

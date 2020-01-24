@@ -153,15 +153,16 @@
 						var date=data.inputTypeDateList;
 						for(i=0; i<date.length; i++){
 							if(date[i].type === "date"){
-								$("#greivanceTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+								$("#greivanceTableDiv").append("<div class='input-field col s6 m2'>"+
 										"<div id='enddatepicker' class='input-group date'>"+
-										"<label for='TotalPrice'>"+date[i].title
-										+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+										"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+										"<label for="+date[i].id+">"+date[i].title
+										+"</label>"+
 										"<span	class='input-group-addon' style='color: #ff4081'>"+
 										"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 							}
 							else if(date[i].type === "text"){
-								$("#greivanceTableDiv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+								$("#greivanceTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 							}
 
@@ -174,12 +175,12 @@
 						for(i=0; i<dropdown.length; i++){
 							var dropdownDiv=
 								$("#greivanceTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-										"<br>"+
+										
 										"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 										"<span class='caret'>"+"</span>"+
 										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-										"<select id="+dropdown[i].id+"  class='select2 form-control boxBorder boxHeight initialized'>"+
+										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
 										"<option value='-1'>"+dropdown[i].title+
 										"</option>"+
 										"</select>"+
@@ -187,8 +188,8 @@
 								"</div>");
 						}
 
-						$("#greivanceTableDiv").append("<div class='col s12 m2 l2'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#greivanceTableDiv").append("<div class='col s12 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -417,7 +418,8 @@
 						"txnId":grievanceTxnId,
 						"reply":remark,
 						"grievanceId":grievanceIdToSave,
-						"grievanceStatus":grievanceTicketStatus
+						"grievanceStatus":grievanceTicketStatus,
+						"featureId":6
 					}
 
 				formData.append('fileInfo[]',JSON.stringify(fileInfo));
