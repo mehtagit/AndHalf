@@ -130,6 +130,7 @@ public class TRC implements CRUD{
 						datatableResponseModel.setData(finalList);
 					}
 				}
+
 				
 		}
 			datatableResponseModel.setRecordsTotal(trcPaginationModel.getNumberOfElements());

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Feature;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
@@ -79,6 +80,17 @@ public class LoginService {
 			return response; 
 		}
 	}
+	
+	public HttpResponse changeLanguage(ChangeLanguage language) {
+		log.info("inside check change language controller ");
+		log.info("language data:  "+language);
+		HttpResponse response=userLoginFeignImpl.changeUserLanguage(language);
+		if(response!=null) {
+			log.info("response from controller: "+response);
+		}
+		log.info("exit from language controller ");
+		return response;
+	}
 
 	public void sessionRemoveCode(Integer userid,HttpSession session) {
 		
@@ -105,7 +117,7 @@ public class LoginService {
 		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
-	}
+}
 	
 	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http){
 		log.info("inside index controller");
@@ -121,6 +133,18 @@ public class LoginService {
 		}
 		//return "redirect:.../"+dropdown.getValue();
 	}
+	
+	public void redirectToHome(HttpServletResponse http){
+		log.info("inside index controller");
+		log.info("exit index controller");
+		Tag tagData=new Tag("link_dmc_portal");
+		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+		try {
+		http.sendRedirect(dropdown.getValue());
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();

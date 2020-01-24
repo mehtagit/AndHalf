@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -46,14 +47,14 @@ public class RegistrationService {
 	GenerateRandomDigits randomDigits;
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	public String registrationView(String usertype) {
+	public String registrationView(String usertype,Model model) {
 		log.info("inside registration view controller");
 		log.info("usertype given: "+usertype);
 		HashMap<String, String> map=new HashMap<String,String>();
 		map.put("Importer", "registration");
 		map.put("Distributor", "registration");
 		map.put("Retailer", "registration");
-		map.put("TRC", "registration");
+		map.put("TRC", "customRegistration");
 		map.put("Manufacturer", "customRegistration");
 		map.put("Lawful Agency", "customRegistration");
 		map.put("Custom", "customRegistration");
@@ -63,8 +64,13 @@ public class RegistrationService {
 			String output= map.get(usertype);
 			log.info("value for key: "+output);
 			if(output==null || ("").equals(output)) {
-				
 				output="index";
+			}
+			else {
+				Usertype usertypeData=userRegistrationFeignImpl.userypeDataByName(usertype);
+				log.info("usertypeData by usertypeName"+usertypeData);
+				model.addAttribute("usertypeId", usertypeData.getId());
+				
 			}
 			return output;
 			
