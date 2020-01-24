@@ -2703,4 +2703,7 @@ margin-top: 10vh;
 padding-top: 0;
 }
 
-
+div#viewuplodedModel {
+    width: fit-content;
+    padding-top: 1.5rem;
+}
