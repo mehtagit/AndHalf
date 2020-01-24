@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -87,8 +87,8 @@ var contextpath='${context}';
                 <div class="nav-wrapper">
                     <ul class="left">
                         <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR </a> <span
-                                    class="logo-text">Materialize</span></h1>
+                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><spring:message code="registration.ceir" /></a> <span
+                                    class="logo-text"><spring:message code="registration.materialize" /></span></h1>
                         </li>
                     </ul>
                 </div>
@@ -114,7 +114,7 @@ var contextpath='${context}';
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
-                        <h6 class="fixPage-modal-header">Forgot Password</h6>
+                        <h6 class="fixPage-modal-header"><spring:message code="registration.forgotpassword" /></h6>
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
@@ -125,7 +125,7 @@ var contextpath='${context}';
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="username" class="right">Please enter your User ID <span class="star">*</span></label>
+                                            <label for="username" class="right"><spring:message code="registration.pleaseenteryouruserid" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -136,12 +136,12 @@ var contextpath='${context}';
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="questionId">Please select your security question, provide at the time of registration <span class="star">*</span></label>
+                                            <label for="questionId"><spring:message code="registration.pleasesecurity" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
                                             <select class="browser-default" id="questionId" required>
-                                                <option value="" disabled selected>Security Question</option>
+                                                <option value="" disabled selected><spring:message code="registration.securityquestion" /></option>
                                              </select>
                                         </div>
                                     </div>
@@ -149,7 +149,7 @@ var contextpath='${context}';
                                     <div class="row myRow" style="margin-top: 20px;">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="answer" class="center-align">Provide answer to the question <span class="star">*</span></label>
+                                            <label for="answer" class="center-align">n <spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -160,8 +160,8 @@ var contextpath='${context}';
                                 </div>
                                 <div class="row" style="margin-top: 30px;">
                                     <div class="input-field col s12 m12 l12 center">
-                                        <button id="forgotPasswordBtn"   type="submit" class="btn">submit</button>
-                                        <a href="${context}/login" class="btn" style="margin-left: 10px;">cancel</a>
+                                        <button id="forgotPasswordBtn"   type="submit" class="btn"><spring:message code="button.submit" /></button>
+                                        <a href="${context}/login" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                     </div>
                                 </div>
                             </form>
@@ -186,11 +186,11 @@ var contextpath='${context}';
     
 
 <div id="changePassword" class="modal" style="width: 40%;">
-		<h6 class="modal-header" >Set New Password</h6>  
+		<h6 class="modal-header" ><spring:message code="registration.setnewpassword" /></h6>  
 		<div class="modal-content">
 		<form onsubmit="return udapteNewPassword()">
 			<div class="row">   
-				<h5 style="text-align: -webkit-center;">New Password</h5>
+				<h5 style="text-align: -webkit-center;"><spring:message code="registration.newpassword" /></h5>
   <span style="text-align: center;color: red;" id="errorMsg"></span>
 				<div class="col s1">
 					<i class="fa fa-lock" aria-hidden="true"
@@ -205,8 +205,8 @@ var contextpath='${context}';
 				</div>
 				<div class="input-field col s11">
                     <input type="hidden" id="usernamedata">
-					<label for="password" style="color: #000; font-size: 12px;">New
-						Password</label> <input type="password" id="password" class=""
+					<label for="password" style="color: #000; font-size: 12px;">
+						<spring:message code="registration.newpassword" /></label> <input type="password" id="password" class=""
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
@@ -217,8 +217,8 @@ var contextpath='${context}';
 						style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
 				</div>   
 				<div class="input-field col s11">
-					<label for="confirm_password" style="color: #000; font-size: 12px;">Confirm
-						Password</label> <input type="password" class="" id="confirm_password"
+					<label for="confirm_password" style="color: #000; font-size: 12px;">
+						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="" id="confirm_password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
@@ -228,7 +228,7 @@ var contextpath='${context}';
 				<div class="input-field col s12 m12 l12 center">
 					<button  
 						class="btn" type="submit" id="save"
-						style="width: 100%;">Save</button>
+						style="width: 100%;"><spring:message code="registration.save" /></button>
 				</div>
 			</div>
 			</form>
@@ -239,12 +239,12 @@ var contextpath='${context}';
 	<div id="submitBtnAction" class="modal">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
-        <h6 class="modal-header">Forgot Password</h6>
+        <h6 class="modal-header"><spring:message code="registration.forgotpassword" /></h6>
         <div class="modal-content">
                 <h6 id="responseMsg"></h6>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="${context}/login" class="btn">ok</a>
+                    <a href="${context}/login" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
