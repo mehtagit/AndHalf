@@ -1,6 +1,11 @@
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.parent.$('#langlist').on('change', function() {
-			window.location.reload(true);
+		 var roleType = $("body").attr("data-roleType");
+	 var userId = $("body").attr("data-userID");
+	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+	 var role = currentRoleType == null ? roleType : currentRoleType;
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+			window.location.assign("./assignDistributor?userTypeId="+role+"&lang="+lang);
 		});
 
 

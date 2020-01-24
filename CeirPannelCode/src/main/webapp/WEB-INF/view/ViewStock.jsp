@@ -84,7 +84,7 @@
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
-						<div class="row card-panel">
+						<div class="row card-panel" id="verifyType">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
 								<a href="" class="boton right" id="btnLink"></a>
