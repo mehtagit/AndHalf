@@ -371,7 +371,7 @@ public class IconsState {
 		// URL link 
 
 		String emptyURL="JavaScript:void(0);"; 
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String approveAction = "openApprovePopUp('" + txnId + "','"+displayName.replaceAll( " ", "+20")+ "')";
 

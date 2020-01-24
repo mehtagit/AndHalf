@@ -471,6 +471,10 @@ function uploadStock(){
 				    $('#stockSuccessMessage').text('');
 					$('#stockSuccessMessage').text(data.message);
 			 }
+			 else{
+				 $('#stockSuccessMessage').text('');
+					$('#stockSuccessMessage').text(data.message);
+			 }
 			 
 		   // $('#updateConsignment').modal('open'); 
 			//alert("success");

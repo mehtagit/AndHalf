@@ -269,12 +269,12 @@ public class GrievanceController {
 							return "redirect:"+fileExportResponse.getUrl();
 					}
 
-						@RequestMapping(value={"/openEndUserGrievancePage"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+						@RequestMapping(value={"/raiseAgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 						    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
 						{
 							ModelAndView mv = new ModelAndView();
-							 
-							log.info(" view End user Grievance entry point."+reportType); 
+							log.info(" view End user Grievance entry point."+reportType);
+							mv.addObject("reportType", reportType);
 						    mv.setViewName("openEndUserGrievancePage");
 							log.info(" view End user Grievance exit point."); 
 							return mv; 
@@ -285,8 +285,8 @@ public class GrievanceController {
 						public @ResponseBody GenricResponse saveEndUserGrievance(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
 
 
-							int userId= (int) session.getAttribute("userid");
-							String roletype=(String) session.getAttribute("usertype");
+							//int userId= (int) session.getAttribute("userid");
+						//	String roletype=(String) session.getAttribute("usertype");
 
 							String grevnceId=utildownload.getTxnId();
 							grevnceId = "G"+grevnceId;
@@ -295,8 +295,8 @@ public class GrievanceController {
 							log.info("grievanceDetails------"+grievanceDetails);
 
 							GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
-							grievanceRequest.setUserId(userId);
-							grievanceRequest.setUserType(roletype);
+							//grievanceRequest.setUserId(userId);
+							grievanceRequest.setUserType("End User");
 							grievanceRequest.setGrievanceId(grevnceId);
 
 							for (int i=0;i<grievanceRequest.getAttachedFiles().size();i++) {

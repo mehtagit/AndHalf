@@ -415,7 +415,8 @@
 					"txnId":grievanceTxnId,
 					"reply":remark,
 					"grievanceId":grievanceIdToSave,
-					"grievanceStatus":grievanceTicketStatus
+					"grievanceStatus":grievanceTicketStatus,
+					"featureId":6
 				}
 
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
