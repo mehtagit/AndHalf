@@ -44,6 +44,8 @@ public class Registration {
 	private Integer arrivalPort;
 	private String arrivalPortName;
     private String vatFilename;
+    private String userLanguage;
+    
 	public Registration() {};
 	public ArrayList<QuestionPair> getQuestionList() {
 		return questionList;
@@ -325,24 +327,105 @@ public class Registration {
 	public void setVatFilename(String vatFilename) {
 		this.vatFilename = vatFilename;
 	}
+	
+	public String getUserLanguage() {
+		return userLanguage;
+	}
+	public void setUserLanguage(String userLanguage) {
+		this.userLanguage = userLanguage;
+	}
 	@Override
 	public String toString() {
-		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo
-				+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
-				+ ", village=" + village + ", locality=" + locality + ", district=" + district + ", commune=" + commune
-				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
-				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
-				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
-				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeName" + usertypeName + ", employeeId="
-				+ employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation
-				+ ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo="
-				+ authorityPhoneNo + ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId
-				+ ", nidFilename=" + nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename="
-				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
-				+ ", vatFilename=" + vatFilename + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Registration [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", passportNo=");
+		builder.append(passportNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", asTypeName=");
+		builder.append(asTypeName);
+		builder.append(", vatStatus=");
+		builder.append(vatStatus);
+		builder.append(", vatNo=");
+		builder.append(vatNo);
+		builder.append(", questionList=");
+		builder.append(questionList);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", rePassword=");
+		builder.append(rePassword);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", roles=");
+		builder.append(roles);
+		builder.append(", captcha=");
+		builder.append(captcha);
+		builder.append(", usertypeName=");
+		builder.append(usertypeName);
+		builder.append(", employeeId=");
+		builder.append(employeeId);
+		builder.append(", natureOfEmployment=");
+		builder.append(natureOfEmployment);
+		builder.append(", designation=");
+		builder.append(designation);
+		builder.append(", authorityName=");
+		builder.append(authorityName);
+		builder.append(", authorityEmail=");
+		builder.append(authorityEmail);
+		builder.append(", authorityPhoneNo=");
+		builder.append(authorityPhoneNo);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", nidFilename=");
+		builder.append(nidFilename);
+		builder.append(", photoFilename=");
+		builder.append(photoFilename);
+		builder.append(", idCardFilename=");
+		builder.append(idCardFilename);
+		builder.append(", arrivalPort=");
+		builder.append(arrivalPort);
+		builder.append(", arrivalPortName=");
+		builder.append(arrivalPortName);
+		builder.append(", vatFilename=");
+		builder.append(vatFilename);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
+		builder.append("]");
+		return builder.toString();
 	}
 	
-
 
 }

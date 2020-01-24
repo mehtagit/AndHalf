@@ -76,7 +76,7 @@
             height: 40px;
         } */
 input[type=text] {
-	height: 35px;
+
 	margin: 0 0 5px 0;
 }
 
@@ -125,26 +125,41 @@ var contextpath = "${context}";
 				<!--start container-->
 				<div class="container">
 					<div class="section">
-						<div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
+						<div class="row card-panel login-card-panel">
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
-									<div class="row"> 
-										<h5 style="text-align: -webkit-center;">Login</h5>
-										<span id="errorMsg" style="color: red;">${msg}</span>
-										<hr style="margin-bottom: 30px;">
+									<div class="row">
+									
+									 <div class="col s10 m10 select-lang-lable">
+<label for="">Language :</label>
+</div>
+<div class="col s2 m2 right" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn">
+<option value="1">English</option>
+<option value="2">Khmer</option>
+</select>
+</div>
+<div class="col s12 m12">
+<h5 style="text-align: -webkit-center;">Login</h5>
+<span id="errorMsg" style="color: red;">${msg}</span>
+										<hr>
 
+</div>
+
+
+										
 										<div class="input-field col s12">
  										<input type="text" required="required" name="username"
 												id="username" class="" maxlength="10" />
 										<label for="username">Username</label>
 										</div>
 
-										<div class="input-field col s12">
+										<div class="input-field col s12" id="show_hide_password">
 										<input type="password" required="required" class="" name="password"
 												id="password" maxlength="10" />
 										<label for="password">Password</label> 
 										<div class="input-field-addon">
-										<a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
+										<a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
 										</div>
 										</div>
 
@@ -251,7 +266,23 @@ var contextpath = "${context}";
 <script type="text/javascript">
 $(document).ready(function () {
 	dataByTag("link_dmc_portal","newUserLink",1);
-        });   
+        }); 
+
+$(document).ready(function() {
+    $("#show_hide_password a").on('click', function(event) {
+        event.preventDefault();
+        if($('#show_hide_password input').attr("type") == "text"){
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass( "fa-eye-slash" );
+            $('#show_hide_password i').removeClass( "fa-eye" );
+        }else if($('#show_hide_password input').attr("type") == "password"){
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass( "fa-eye-slash" );
+            $('#show_hide_password i').addClass( "fa-eye" );
+        }
+    });
+});
+
 </script>
 </body>
 

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
@@ -30,7 +31,6 @@ public class LoginController {
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView login(HttpSession session){
 			return loginService.loginPage();	
-			//return loginService.checkLogin(user,session);
 	} 
 	
 	@ResponseBody
@@ -38,6 +38,13 @@ public class LoginController {
 	public LoginResponse saveLogin(@RequestBody User user,HttpSession session,HttpServletResponse http){
 			return loginService.checkLogin(user,session);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/changeLanguage",method = {RequestMethod.POST})
+	public HttpResponse changeLanguage(@RequestBody ChangeLanguage language){
+			return loginService.changeLanguage(language);
+	}
+	
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
@@ -48,9 +55,9 @@ public class LoginController {
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public void indexSessionOut(HttpSession session,HttpServletResponse response) {
 		 loginService.indexPageSessionOut(session,response);
-
 	}
     
+
 	@RequestMapping(value = "/redirectToHomePage", method = RequestMethod.GET)
 	public void redirectHomePage(HttpSession session,HttpServletResponse response) {
 	loginService.redirectToHome(response);

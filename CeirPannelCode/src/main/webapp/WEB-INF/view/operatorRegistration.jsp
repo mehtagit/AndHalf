@@ -81,6 +81,11 @@
         label {
   /*           font-size: 0.8rem; */
         }
+        .select-lang-drpdwn {
+    width: 75px;
+    margin-top: -17px;
+    border-bottom: none;
+}
     </style>
 <script>
 var contextpath = "${context}";
@@ -131,9 +136,19 @@ var contextpath = "${context}";
                 <form id="registrationForm" onsubmit="return saveOperatorRegistration()">
                     <div class="card-panel registration-form" >
                         <div class="row">
-                            <h5>Operator Registration</h5>
+                          <div class="col s10 m10 select-lang-lable">
+<label for="">Language :</label>
+</div>
+<div class="col s2 m2 right" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn">
+<option value="1">English</option>
+<option value="2">Khmer</option>
+</select>
+</div>
+<div class="col s12 m12"> <h5>Operator Registration</h5>
                             <span id="msg" style="color: red;">${msg}</span>
-                            <hr>                                                  
+                            <hr></div> 
+                                                                             
                               <input type="hidden" id="usertypeId" value="${usertypeId}">
                               <input type="hidden" id="usertypeName" value="<%=name%>">
                                <input type="hidden" id="type" value="2">

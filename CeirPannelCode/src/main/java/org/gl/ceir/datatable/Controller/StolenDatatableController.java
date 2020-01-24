@@ -109,7 +109,9 @@ public class StolenDatatableController {
 				}else if("Operator".equals(userType)) {
 					log.info("in Opertator Controler-----" +userType);
 					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
-					log.info("actionResponse CEIRAdmin::::::::::::"+actionResponse);
+					Gson JsonObj = new Gson();
+					log.info("actionResponse CEIRAdmin::::::::::::"+JsonObj.toJson(actionResponse));
+				
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();

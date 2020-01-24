@@ -237,7 +237,7 @@ function setEditPopupData(data){
 	$('#editRequestDate').val(data.requestDate)
 	$("#editApproveRejectionDate").val(data.approveDisapproveDate);
 	$("#editRemark").val(data.remark);
-	$("#editFileName").val(data.file);
+	$("#editFileName").val(data.fileName);
 	$("#transactionid").val(data.txnId);
 	$("#columnid").val(data.id);
 	

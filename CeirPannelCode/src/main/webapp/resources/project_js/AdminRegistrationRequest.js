@@ -333,3 +333,9 @@ function exportButton(){
 	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
+
+$('#previewphotofile').click(function(e) {  
+    alert(1);
+ 
+
+});

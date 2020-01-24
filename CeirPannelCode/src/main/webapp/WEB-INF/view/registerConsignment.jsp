@@ -228,7 +228,7 @@ section {
 											<select id="currency" class="browser-default"
 												>
 												<option value=""  selected><spring:message code="input.currency" /></option>
-
+									
 											</select>
 										</div>
 									</div>
