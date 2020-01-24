@@ -77,15 +77,19 @@ public class RegistrationReqDatatableController {
 			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
+			log.info("convert to JSON-------");
 			String apiResponse = gson.toJson(response);
+			log.info("convert to apiResponse-----" +apiResponse);
 			registrationpaginationmodel = gson.fromJson(apiResponse, RegistrationPaginationModel.class);
+			log.info("after to registrationpaginationmodel-----");
 			List<RegistrationContentModel> paginationContentList = registrationpaginationmodel.getContent();
+			log.info("after to paginationContentList--------");
 			if(paginationContentList.isEmpty()) {
+				log.info("inside if------------------------");
 				datatableResponseModel.setData(Collections.emptyList());
-				
 			}
 			else {
-			
+				log.info("inside else------------------------");
 				for(RegistrationContentModel dataInsideList : paginationContentList) 
 				{
 				   String createdOn = (String) dataInsideList.getUser().getCreatedOn();
@@ -94,12 +98,11 @@ public class RegistrationReqDatatableController {
 				   String id =  String.valueOf(dataInsideList.getId());
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
-				   String StatusofGrievance = String.valueOf(dataInsideList.getStatus());
-				   String grievanceStatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
+				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
 				   String userStatus = (String) session.getAttribute("userStatus");
-				   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
-				   String action=iconState.adminRegistrationRequest(Id,StatusofGrievance,userStatus,grievanceStatusName,createdOn,roles,type,id);			   
-				   Object[] finalData={createdOn,username,type,roles,grievanceStatusName,action}; 
+				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
+				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id);			   
+				   Object[] finalData={createdOn,username,type,roles,StatusName,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

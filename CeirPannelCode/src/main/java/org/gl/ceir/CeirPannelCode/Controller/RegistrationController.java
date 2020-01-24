@@ -74,25 +74,31 @@ public class RegistrationController {
 		List<Operator> response =feignImplementation.operatorList(tag);
 		return response;            
 	} 
-
-	@RequestMapping(value = "/registration",method = {RequestMethod.GET})
-	public ModelAndView registration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
-		ModelAndView mv=registrationService.registrationView(usertypeId);
+	
+	
+    @RequestMapping(value = "/registration")
+	public String registration(@RequestParam(name = "type",required =false) String usertype) {
+    	return registrationService.registrationView(usertype);
+    }
+    
+	@RequestMapping(value = "/importorRegistration",method = {RequestMethod.GET})
+	public ModelAndView importorRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue="0") Integer usertypeId	) throws IOException{
+		ModelAndView mv=registrationService.ImporterRegistrationView(usertypeId);
 		
 		return mv; 
 	} 
 	@RequestMapping(value = "/customRegistration",method = {RequestMethod.GET})
-	public ModelAndView customRegistration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
+	public ModelAndView customRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue ="0") Integer usertypeId	) throws IOException{
 		ModelAndView mv=registrationService.customRegistrationView(usertypeId);
 		return mv; 
 	} 
 
 	@RequestMapping(value = "/operatorRegistration",method = {RequestMethod.GET})
-	public ModelAndView operatorRegistration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
+	public ModelAndView operatorRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue ="0") Integer usertypeId) throws IOException{
 		ModelAndView mv=registrationService.operatorRegistrationView(usertypeId);
 		return mv; 
 	} 
-
+	
 	@RequestMapping(value = "/saveRegistration",method = {RequestMethod.POST})
 	@ResponseBody     
 	public OtpResponse saveRegistration(@RequestParam(name = "data",required = true) String data,
@@ -100,8 +106,9 @@ public class RegistrationController {
 			@RequestParam(name = "photo",required = false)MultipartFile photo,
 			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
 			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
+			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
 			HttpSession session) throws IOException{
-		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,session);  
+		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session);  
 		return response;             
 	}
 

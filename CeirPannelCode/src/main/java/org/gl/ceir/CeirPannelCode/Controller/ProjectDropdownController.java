@@ -26,7 +26,6 @@ public class ProjectDropdownController {
 		List<Dropdown> dropdown = feignCleintImplementation.consignmentStatusList(featureId, userTypeId);
 		return dropdown;
 	}
-
 	
 	@ResponseBody
 	@GetMapping("getDropdownList/{tag}")
@@ -47,8 +46,12 @@ public class ProjectDropdownController {
 	@ResponseBody
 	@GetMapping("dataByTag/{tag}/")
 	public Dropdown dataByTag(@PathVariable("tag") String tag) {
+		log.info("inside data by tag controller");
 		Tag tagData=new Tag(tag);
+		log.info("tag from form: "+tag);
 		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+		log.info("data by tag from api =  "+dropdown);
+		log.info("exit from data by tag controller");
 		return dropdown;
 	}
 	

@@ -8,15 +8,15 @@ import org.springframework.stereotype.Controller;
 
 @Component
 public class ConfigContentModel {
-	
 	private Integer id;
 	private String createdOn;
 	private String modifiedOn;
 	private String tag;
 	private String value;
 	private String description;
-	private Object type;
-	private Object remark;
+	private Integer type;
+	private String typeInterp;
+	private String remark;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -54,16 +54,22 @@ public class ConfigContentModel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Object getType() {
+	public Integer getType() {
 		return type;
 	}
-	public void setType(Object type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
-	public Object getRemark() {
+	public String getTypeInterp() {
+		return typeInterp;
+	}
+	public void setTypeInterp(String typeInterp) {
+		this.typeInterp = typeInterp;
+	}
+	public String getRemark() {
 		return remark;
 	}
-	public void setRemark(Object remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 	public Map<String, Object> getAdditionalProperties() {
@@ -74,11 +80,9 @@ public class ConfigContentModel {
 	}
 	@Override
 	public String toString() {
-		return "ConfigContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag=" + tag
-				+ ", value=" + value + ", description=" + description + ", type=" + type + ", remark=" + remark
-				+ ", additionalProperties=" + additionalProperties + "]";
+		return "ConfigContentModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
+				+ tag + ", value=" + value + ", description=" + description + ", type=" + type + ", typeInterp="
+				+ typeInterp + ", remark=" + remark + ", additionalProperties=" + additionalProperties + "]";
 	}
-	
-	
 	
 }

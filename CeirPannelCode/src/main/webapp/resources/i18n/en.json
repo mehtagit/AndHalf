@@ -1,0 +1,22 @@
+{
+"button.export":"Export",
+"successMsg":"Your form has been successfully submitted. The Transaction ID for future reference is ",
+"rejectedMsg":"The consignment has been marked as rejected.",
+"consignmentApproved":"The consignment has been successfully approved.",
+"errorMsg":"something happend wrong.",
+"havingTxnID":"Do you want to approve the consignment having Transaction ID:",
+"stockDeleted":"Stock Deleted Successfully",
+"invoiceNumberExist":"Invoice number already exist",
+"updateMsg":"Your update on the form for transaction ID",
+"hasBeenUpdated":"has been successfully updated",
+"consignmentDeleted":"Consignment Deleted Successfully",
+"deleteInProgress":"Delete In Progress",
+"stockRejected":"Stock Rejected SuccessFully",
+"stockUploadSuccess":"Stock Approved SuccessFully",
+"stockhaveTxn":"Do you want to approve the stock having Transaction ID:",
+"operationnotallowed":"Operation is not allowed",
+"documenttype":"Document Type",
+"selectfile":"Select File",
+"selectDocumentType":"Select Document Type",
+"selectCategory":"Select Category"
+}

@@ -36,9 +36,10 @@ public class Dashboard {
 	ModelAndView mv = new ModelAndView();
 	
 	
-	  @GetMapping("/importerDashboard") public ModelAndView
-	  openUserRegisterPage(HttpSession session) { return
-	  loginService.dashBoard(session); }
+	  @GetMapping("/importerDashboard") 
+	  public ModelAndView openUserRegisterPage(HttpSession session) { 
+		  return loginService.dashBoard(session); 
+		  }
 	 
 	@RequestMapping(value={"/Home"},method={org.springframework.web.bind.annotation.RequestMethod.GET})
 	public ModelAndView Home(HttpSession session) { 

@@ -1,8 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -56,6 +56,12 @@ public class FilterRequest {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getDeviceId() {
+		return deviceId;
+	}
+	public void setDeviceId(String deviceId) {
+		this.deviceId = deviceId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -153,65 +159,36 @@ public class FilterRequest {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
+	public Integer getChannel() {
+		return channel;
+	}
+	public void setChannel(Integer channel) {
+		this.channel = channel;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public Integer getDeviceIdType() {
+		return deviceIdType;
+	}
+	public void setDeviceIdType(Integer deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("FilterRequest [startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", searchString=");
-		builder.append(searchString);
-		builder.append(", grievanceId=");
-		builder.append(grievanceId);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", remarks=");
-		builder.append(remarks);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
-		builder.append(", consignmentStatus=");
-		builder.append(consignmentStatus);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", fileStatus=");
-		builder.append(fileStatus);
-		builder.append(", requestType=");
-		builder.append(requestType);
-		builder.append(", sourceType=");
-		builder.append(sourceType);
-		builder.append(", grievanceStatus=");
-		builder.append(grievanceStatus);
-		builder.append(", userRoleTypeId=");
-		builder.append(userRoleTypeId);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", asType=");
-		builder.append(asType);
-		builder.append(", serviceDump=");
-		builder.append(serviceDump);
-		builder.append(", fileType=");
-		builder.append(fileType);
-		builder.append(", action=");
-		builder.append(action);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append("]");
-		return builder.toString();
+		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
+				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
+				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", userId="
+				+ userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus
+				+ ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus
+				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus
+				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
+				+ serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId
+				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + "]";
 	}
-	
-	
-	
 	
 	
 }

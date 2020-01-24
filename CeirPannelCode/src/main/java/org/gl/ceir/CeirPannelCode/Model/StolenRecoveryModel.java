@@ -14,19 +14,33 @@ public class StolenRecoveryModel {
 	private String  txnId,remark;
 	private int userId,operatorTypeId;
 	private int sourceType,category;
-	private Integer qty,deviceCaegory;
-	private String categoryInterp;
+	private Integer qty,deviceCaegory,blockCategory;
+	private String categoryInterp,blockCategoryInterp;
 	
 	
 	
+	
+	public Integer getBlockCategory() {
+		return blockCategory;
+	}
+	public void setBlockCategory(Integer blockCategory) {
+		this.blockCategory = blockCategory;
+	}
+	public String getBlockCategoryInterp() {
+		return blockCategoryInterp;
+	}
+	public void setBlockCategoryInterp(String blockCategoryInterp) {
+		this.blockCategoryInterp = blockCategoryInterp;
+	}
 	@Override
 	public String toString() {
 		return "StolenRecoveryModel [blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType
 				+ ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", requestType="
 				+ requestType + ", roleType=" + roleType + ", txnId=" + txnId + ", remark=" + remark + ", userId="
+	
 				+ userId + ", operatorTypeId=" + operatorTypeId + ", sourceType=" + sourceType + ", category="
-				+ category + ", qty=" + qty + ", deviceCaegory=" + deviceCaegory + ", categoryInterp=" + categoryInterp
-				+ "]";
+				+ category + ", qty=" + qty + ", deviceCaegory=" + deviceCaegory + ", blockCategory=" + blockCategory
+				+ ", categoryInterp=" + categoryInterp + ", blockCategoryInterp=" + blockCategoryInterp + "]";
 	}
 	public int getOperatorTypeId() {
 		return operatorTypeId;

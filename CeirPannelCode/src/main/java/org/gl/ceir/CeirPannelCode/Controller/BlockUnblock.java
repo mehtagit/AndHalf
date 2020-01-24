@@ -19,6 +19,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class BlockUnblock {
 	
+	
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
+
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
 	
 	@Autowired
 
@@ -146,8 +153,9 @@ public class BlockUnblock {
 			  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
-	  {	
+	
+			  @RequestParam(name="blockCategory",required = false) Integer deviceCategory,@RequestParam(name="remark",required = false) String remark, HttpSession session)
+ {	
 		  log.info(" file stolen entry point .");
 		 
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
@@ -158,7 +166,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -187,8 +195,9 @@ public class BlockUnblock {
 			stolenRecoveryModel.setTxnId(stlnTxnNumber);
 			stolenRecoveryModel.setQty(qty);
 			stolenRecoveryModel.setRemark(remark);
-			stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+			//stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
+			stolenRecoveryModel.setBlockCategory(deviceCategory);
 			
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
@@ -206,7 +215,8 @@ public class BlockUnblock {
 	  public @ResponseBody GenricResponse fileTypeRecovery( @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 			  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 			  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="qty",required = false) Integer qty,
-			  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark,HttpSession session
+			 
+			  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,HttpSession session
 			  )
 	  {	
 		  
@@ -219,7 +229,7 @@ public class BlockUnblock {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -247,7 +257,9 @@ public class BlockUnblock {
 			stolenRecoveryModel.setTxnId(stlnTxnNumber);
 			stolenRecoveryModel.setQty(qty);
 			stolenRecoveryModel.setRemark(remark);
-			stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+
+			//stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
+			stolenRecoveryModel.setBlockCategory(blockCategory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);

@@ -106,7 +106,7 @@ h6 {
 	font-size: 1rem;
 	line-height: 110%;
 	margin: 0rem 0 0.4rem 0;
-	margin-top: -20px !important;
+	 margin-top: 1px !important; 
 }
 
 .file-upload-heading {
@@ -169,7 +169,7 @@ var contextpath = "${context}";
 		src="${context}/resources/js/custom-script.js"></script>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
+    <%String name=request.getParameter("type");%>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
 		<!--start container-->
@@ -180,15 +180,17 @@ var contextpath = "${context}";
 
 					<div class="card-panel registration-form">
 						<div class="row">
-							<h5><%=request.getParameter("name") %> Registration</h5>
+							<h5><%=name%> Registration</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr>
 
-							<input type="hidden" id="usertypeId" value="${usertypeId}">
+							<input type="hidden" id="usertypeId" value="1">
+							<input type="hidden" id="usertypeName" value="<%=name%>">
 							<input type="hidden" id="type" value="2">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
-									<input type="text" name="firstName" id="firstName"
+									
+<input type="text" name="firstName" id="firstName"
 										required="required" pattern="[A-Za-z]{0,20}" maxlength="20"
 										title="Please enter alphabets upto 20 characters only">
 									<label for="firstName" class="center-align">First Name
@@ -298,6 +300,7 @@ var contextpath = "${context}";
 										style="padding-left: 0;" required></select>
 								</div>
 								
+								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
 									<label>Expected Arrival Port<span class="star">*</span></label>
 									<select id="arrivalPort" class="browser-default"
@@ -305,6 +308,7 @@ var contextpath = "${context}";
 										<option value="" disabled selected>Expected Arrival Port</option>
 									</select>
 								</div>
+								<%} %>
 								
 								
 							</div>
@@ -590,12 +594,12 @@ var contextpath = "${context}";
 
 	<!-- Modal 1 start   -->
 
-	<div id="submitForm" class="modal">
+	<!-- <div id="submitForm" class="modal">
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
 		<div class="modal-content">
-			<!-- <h4 class="header2 pb-2">User Info</h4> -->
+			<h4 class="header2 pb-2">User Info</h4>
 
 			<div class="row">
 				<h6>Verify OTP</h6>
@@ -609,7 +613,25 @@ var contextpath = "${context}";
 				</div>
 			</div>
 		</div>
+	</div> -->
+	
+	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
+		<!-- <button type="button"
+			class=" modal-action modal-close waves-effect waves-green btn-flat right"
+			data-dismiss="modal">&times;</button> -->
+			<h6 class="modal-header">Verify OTP</h6>
+		<div class="modal-content">
+			<!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+				
+				<p style="padding:10px;" class="center" id="otpMsg"></p>
+			
+					<a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
+		</div>
 	</div>
+	
+	
 
 	<!-- Modal End -->
 
@@ -664,12 +686,12 @@ var contextpath = "${context}";
 	</div>
 
 	<!-- START MAIN -->
-	<div id="">
-		<!-- START WRAPPER -->
+<!-- 	<div id="">
+		START WRAPPER
 		<div class="wrapper">
-			<!-- START CONTENT -->
+			START CONTENT
 			<section id="content">
-				<!--start container-->
+				start container
 				<div class="container">
 					<div class="section">
 						<div id="otpMsgModal" class="modal"
@@ -684,65 +706,60 @@ var contextpath = "${context}";
 						</div>
 					</div>
 				</div>
-				<!--end container-->
+				end container
 			</section>
-			<!-- END CONTENT -->
+			END CONTENT
 		</div>
-	</div>
+	</div> -->
 
-	<div id="otpMessage" class="modal">
-		<button type="button"
-			class="modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<div class="modal-content">
-			<!-- <h4 class="header2 pb-2">User Info</h4> -->
-
-			<div class="row">
-				<h6 id="otpResponse"></h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="${context}/login" class="btn">ok</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	 <div id="otpMessage" class="modal" >
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <h6 class="modal-header">Verify OTP</h6>
+        <div class="modal-content">
+          
+                <h6 id="otpResponse"></h6>
+            <div class="row">
+                <div class="input-field col s12 center">
+                   
+                    <a href="${context}/login" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
 	<!-- modal start -->
 
-	<div id="otpVerification" class="modal" style="width: 40%;">
-		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+	 <div id="otpVerification" class="modal" style="width: 40%;">
+        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-		<div class="modal-content">
-			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
-				<h5 class="center">Enter OTP</h5>
-				<p class="center" id="resendOtp" style="display: none;"></p>
-				<input type="hidden" id="userid" name="userid" value="${userId}">
-				<div class="row">
-					<div class="input-field col s12 m12">
-						<input type="text" name="emailOtp" maxlength="6"
-							title="Please enter number characters only" required="required"
-							id="emailOtp" placeholder="" />
-					</div>
-
-					<div class="input-field col s12 m12">
-						<input type="text" name="phoneOtp" maxlength="6"
-							title="Please enter number characters only" required="required"
-							id="phoneOtp" placeholder="" />
-					</div>
-				</div>
-
-				<a href="#"
-					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
-					class="right">Resend OTP</a>
-
-				<button id="otpVerifyBtn" type="submit" class="btn"
-					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
-			</form>
-		</div>
-	</div>
+               <h6 class="modal-header">Enter OTP</h6>
+        <div class="modal-content">  
+                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+                       
+                        <p class="center" id="resendOtp" style="display: none;"></p>
+                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <div class="row">          
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="emailOtp" maxlength="6"
+                               
+										title="Please enter number characters only"
+                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                            </div> 
+                            <div class="input-field col s12 m12">
+                                <input type="text" name="phoneOtp" maxlength="6" 
+                                
+										title="Please enter number characters only" 
+                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                            </div>
+                        </div>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
+                    </form>
+        </div>
+    </div>
 
 	<!-- Modal End -->
 	<!-- ================================================
@@ -776,12 +793,12 @@ var contextpath = "${context}";
 	<script>
         populateCountries(
             "country",
-            "state",
+            "state"
         );
        
         populateStates(
             "country",
-            "state",
+            "state"
         );
     </script>
 

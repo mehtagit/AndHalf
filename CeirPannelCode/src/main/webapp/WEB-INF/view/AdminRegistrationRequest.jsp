@@ -56,6 +56,9 @@
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+   <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
 	
 
 
@@ -107,8 +110,8 @@
            <div class="modal-content">
             <div class="row">
                 <form action="">
-                 
-                    <h6>Do you want to Approve the request</h6>
+                 	<h6>The Registration with Transaction ID: <span id="registrationTxnId"> </span> is pending for approval.</h6>
+                    <p>Do you want to Approve the request</p>
                 </form>
             </div>
             <div class="row">
@@ -210,6 +213,8 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>		
 		
 </body>
 </html>

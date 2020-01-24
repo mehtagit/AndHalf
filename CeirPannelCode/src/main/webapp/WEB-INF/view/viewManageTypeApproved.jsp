@@ -58,6 +58,9 @@
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
  
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
 
 <style type="text/css">
 textarea {
@@ -172,15 +175,8 @@ textarea {
 							placeholder="" disabled=""> <label for="Status"
 							class="active">Status </label>
 					</div>
-					</div>
-			
-									
-									
-
-				</div>
-
-				<div class="row">
-					<div class="input-field col s12 m6">
+					
+					<div class="input-field  col s12 m6">
 						<input type="text" id="viewapproveDisapproveDate" class="datepicker picker__input"
 							name="approveRejectionDate" pattern="[]" title="" maxlength="20"
 							placeholder="" disabled="" readonly="" tabindex="-1"
@@ -198,10 +194,17 @@ textarea {
 							disabled=""></textarea>
 						<label for="Remark" class="active">Remark </label>
 					</div>
+					</div>
+			
+									
+									
+
 				</div>
-				<div class="center" style="margin-top: 30px;">
+
+				<div class="row ">
+				<div class="center  popup-btn-div" style="margin-top: 10px;">
 					<button class="modal-close btn" type="button" id="Cancel"
-						style="margin-left: 10px;">Ok</button>
+						style="margin-left: 10px;">Close</button>
 				</div>
 
 
@@ -233,7 +236,7 @@ textarea {
                                             </div>
 
                                             <div class="col s12 m6 l6">
-                                                <label for="editcountry">Country <span class="star">*</span></label>
+                                                <label for="country">Country <span class="star">*</span></label>
                                                 <select id="editcountry"  required="required" class="browser-default" class="mySelect"
                                                     required></select>
                                             </div>
@@ -262,11 +265,11 @@ textarea {
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" id="edittac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required" />
-                                                <label for="edittac">TAC <span class="star">*</span></label>
+                                                <label for="tac">TAC <span class="star">*</span></label>
                                             </div>
 
                                             <div class="col s12 m6 l6">
-                                                <label for="editdeviceType">Status <span class="star">*</span></label>
+                                                <label for="deviceType">Status <span class="star">*</span></label>
                                                 <select class="browser-default" required="required" id="editdeviceType">
                                                     <option value="" disabled selected>Select Status</option>
                                                     <option value="0">Approved</option>
@@ -283,14 +286,14 @@ textarea {
 											class="form-control dateClass" name="requestDate" 
 											title="" autocomplete="off" placeholder=""> 
 											
-                                                <label for="editApproveRejectionDate">Approve Rejection Date <span
+                                                <label for="bdate2">Approve Rejection Date <span
                                                         class="star">*</span></label>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6" style="margin-top: 9px;">
                                                 <textarea id="editRemark" class="materialize-textarea" style="padding: 0"
                                                     placeholder="" ></textarea>
-                                                <label for="editRemark" style="margin-top: 7px">Remark </label>
+                                                <label for="Remark" style="margin-top: 7px">Remark </label>
                                             </div>
                                         </div>
 
@@ -358,7 +361,7 @@ textarea {
 				</h6> -->
 			</div>
 			<div class="row">
-				<h6>Do you want to approve the TAC status ?</h6>
+				<h6>Do you want to approve the TAC status having transaction Id:<span id="ApproveTacTxnId"></span> ?</h6>
 				<input type="text" id="setApproveTacTxnId"
 					style="display: none">
 			</div>
@@ -404,7 +407,7 @@ textarea {
 				</h6> -->
 			</div>
 			<div class="row">
-				<h6>Do you want to Reject the TAC status ?</h6>
+				<h6>Do you want to Reject the TAC status having  transaction ID: <span id="RejectTacTxnId"></span> ?</h6>
 				<input type="text" id="setRejectTacTxnId"
 					style="display: none">
 			</div>
@@ -437,6 +440,7 @@ textarea {
         </div>
     </div>
 
+
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -468,6 +472,8 @@ textarea {
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>		
 
 </body>
 </html>

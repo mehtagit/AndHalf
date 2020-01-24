@@ -30,7 +30,7 @@
     <meta name="msapplication-TileColor" content="#00bcd4">
     <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
     <!-- For Windows Phone -->
-    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${context}/resources/font/font-awesome/css/font-awesome.min.css" >
 
     <!-- CORE CSS-->
     <link href="${context}/resources/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
@@ -55,10 +55,10 @@
             background-color: #fff;
         }
 
-        .row {
+        /* .row {
             margin-bottom: 0;
             margin-top: 0;
-        }
+        } */
 
         /* @media only screen and (min-width: 601px) .row .col.m6 {
             margin-top: 0;
@@ -80,7 +80,22 @@ var contextpath='${context}';
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-   
+     <header id="header" class="page-topbar">
+        <!-- start header nav-->
+        <div class="navbar-fixed">
+            <nav class="navbar-color">
+                <div class="nav-wrapper">
+                    <ul class="left">
+                        <li>
+                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR </a> <span
+                                    class="logo-text">Materialize</span></h1>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- end header nav-->
+    </header>
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -94,18 +109,18 @@ var contextpath='${context}';
             <!-- //////////////////////////////////////////////////////////////////////////// -->
 
             <!-- START CONTENT -->
-            <section id="content">
+             <section id="content">
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel login-card-panel" >
+                        <div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
+                        <h6 class="fixPage-modal-header">Forgot Password</h6>
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                                               
-                                    <h5 style="text-align: -webkit-center;">Forgot Password</h5>
-                   <span style="text-align: center;color: red;" id="errorMsg"></span>                          
-                                     <hr style="margin-bottom: 30px;">
+                       
+                        <span style="text-align: center;color: red;" id="errorMsg"></span>                          
+                                 <!--     <hr style="margin-bottom: 30px;"> -->
 
                                     <div class="row myRow">
                                         <div class="input-field col s12 m6">
@@ -127,12 +142,7 @@ var contextpath='${context}';
                                         <div class="input-field col s12 m6 l6">
                                             <select class="browser-default" id="questionId" required>
                                                 <option value="" disabled selected>Security Question</option>
-                                                <option value="NotPaid">What is your childhood name?</option>
-                                                <option value="NotPaid">Where is your birth place?</option>
-                                                <option value="NotPaid">What is your favourite movie?</option>
-                                                <option value="NotPaid">What is your favourite sports team?</option>
-                                                <option value="NotPaid">What is your favourite pet’s name?</option>
-                                            </select>
+                                             </select>
                                         </div>
                                     </div>
 
@@ -176,7 +186,8 @@ var contextpath='${context}';
     
 
 <div id="changePassword" class="modal" style="width: 40%;">
-		<div class="modal-content">  
+		<h6 class="modal-header" >Set New Password</h6>  
+		<div class="modal-content">
 		<form onsubmit="return udapteNewPassword()">
 			<div class="row">   
 				<h5 style="text-align: -webkit-center;">New Password</h5>
@@ -225,13 +236,25 @@ var contextpath='${context}';
 	</div>
 	
 	
+	<div id="submitBtnAction" class="modal">
+        <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
+            data-dismiss="modal">&times;</button>
+        <h6 class="modal-header">Forgot Password</h6>
+        <div class="modal-content">
+                <h6 id="responseMsg"></h6>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="${context}/login" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-    <div id="submitBtnAction" class="modal">
+    <%-- <div id="submitBtnAction" class="modal">
         <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
           data-dismiss="modal">&times;</button>
         <div class="modal-content">
-    
+        <h6 class="modal-header">Forgot Password</h6>
           <div class="row">
             <h6 id="responseMsg"></h6>
           </div>
@@ -243,7 +266,7 @@ var contextpath='${context}';
             </div>
           </div>
         </div>
-      </div>
+      </div> --%>
      <!--  Modal End -->
     
 

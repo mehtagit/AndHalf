@@ -56,7 +56,10 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-
+ 
+ <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
 </head>
 
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -139,10 +142,10 @@
 						class="fa fa-calendar" aria-hidden="true"></i></span>
 				</div>
 				<div class="input-field col s12 m6">
-					<input type="text" id=" " class="browser-default"
+					<input type="text" id="countryview" class="browser-default"
 						readonly="readonly" class="mySelect"
 						placeholder=""> <label
-						for=" " class="center-align"> Origination Country</label> <label
+						for="countryview" class="center-align"> Origination Country</label> <label
 						for="countryview" class="center-align"></label>
 				</div>
 
@@ -570,7 +573,7 @@
 
 				<div class="col s12 m6 l6" id="SavedFileNameDiv"
 					style="display: none">
-					<label for="SavedFileNameDiv" class="center-align">Uploaded File</label>
+					<label for="SavedFileName" class="center-align">Uploaded File</label>
 					<input type="text" name="" class="form-control boxBorder boxHeight"
 						readonly id="SavedFileName" />
 				</div>
@@ -683,7 +686,7 @@
 
 				<div class="col s12 m6 l6" id="SavedFileNameDiv"
 					style="display: none">
-					<label for="SavedFileNameDiv" class="center-align">Uploaded File</label>
+					<label for="SavedFileName" class="center-align">Uploaded File</label>
 					<input type="text" name="" class="form-control boxBorder boxHeight"
 						readonly id="SavedFileName" />
 				</div>
@@ -730,7 +733,7 @@
 				<div class="col s12 m2 l2" style="width: 40%; display: none"
 					id="stolenDate">
 
-					<label for="stolenDate" class="center-align">Till date</label>
+					<label for="startDateFilter" class="center-align">Till date</label>
 					<div id="startdatepicker" class="input-group date"
 						data-date-format="yyyy-mm-dd" style="margin-top: 10px;">
 
@@ -940,68 +943,149 @@
 			</div>
 		</div>
 	</div>
-	            <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
-		<h6 class="modal-header">Edit Device Information</h6>
-		<div class="modal-content" style="margin-top: 5px;">
-			
-                                            <form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">
-                        
-                                            <div class="row">
-                                          <div class="col s12 m6" style="margin-top: 25px;">
-                                                      
-                                                         <label for="editBulkBlockCategory">Category<span class="star">*</span></label>
-                                                         <select class="browser-default" id="editBulkBlockCategory" required="required" >
-                                                            <option value="" disabled selected>Select Category
-                                                            </option>
-                                                            
-                                                        </select>
-                                                    </div>
+	            <div id="editblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
+<h6 class="modal-header">Update Block Devices</h6>
+<div class="modal-content" style="margin-top: 5px;">
+<form action="" method="POST" onsubmit="return updateSingleBlockDevicesRequest()" id="editSingleImeiform" enctype="multipart/form-data">
+<div class="row">
+<div class="row">
+<div class="row">
+<div class="col s12 m6">
+<label for="editblockdeviceType">Device Type <span class="star">*</span></label>
+<select class="browser-default" id="editblockdeviceType" required="required" >
+<option value="" disabled selected>Device Type</option>
 
-                                                    <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
-                                                            title="Please enter  numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
-                                                        <label for="editBulkBlockquantity">Quantity <span class="star">*</span></label>
-                                                    </div>
-                                                    
+</select>
+</div>
+<div class="col s12 m6"><label for="editblockdeviceIdType">Device ID
+Type <span class="star">*</span></label>
+<select class="browser-default" id="editblockdeviceIdType" required="required">
+<option value="" disabled selected>Select Device ID
+Type
+</option>
 
-                                                   </div> 
-                             <div class="row">
-                                                   <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
-                                                        <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
-                                                        <div class="btn">
-                                                            <span>File</span>
-                                                            <input type="file" id="editselectBulkBlockuploadFile">
-                                                        </div>
-                                                        <div class="file-path-wrapper">
-                                                            <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="input-field col s12 m6">
-                                                        <textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
-                                                        <label for="editBulkBlockRemark">Remark <span class="star">*</span> </label>
-                                                   <!--      <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
-                                                            title="" maxlength="16" value="1500" disabled> -->
-                                                            <input type="text" style="display:none" id="editBulkBlockrequestType">
-                                                            <input type="text" style="display:none" id="editBulkBlockTxnId">
-                                                    </div>
+</select>
+</div>
+</div>
+<div class="row">
+<div class="col s12 m6">
+<label for="editblockmultipleSimStatus">Multiple Sim Status <span class="star">*</span></label>
+<select class="browser-default" id="editblockmultipleSimStatus" required="required">
+<option value="" disabled selected>Multiple Sim Status</option>
 
-                                                  <!--    <div class="input-field col s12 m6" style="margin-top: 25px;">
-                                                        <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
-                                                            title="" maxlength="16" value="1500" disabled>
-                                                        <label for="editBulkBlockTxnId">Transaction Id</label>
-                                                        <input type="text" style="display:none" id="editBulkBlockrequestType">
-                                                    </div> -->
-                                                    </div>
-                <div class="row">
-                    <div class="input-field col s12 center">
-                                                        	<button class=" btn"
- 					type="submit" >Update</button>
-                                                        <button type="button" class="modal-close btn">Cancel</button>
-                                                    </div>
-                </div>
-                                                </form>
-            </div></div>
+</select>
+</div>
+
+<div class="input-field col s12 m6" style="margin-top: 21px;">
+<input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[A-Za-z0-9]{1,15}" required="required"
+title="Please enter your device serial number first" maxlength="15">
+<label for="editsingleblockserialNumber">Device Serial Number <span class="star">*</span></label>
+</div>
+</div>
+<div class="row"> <div class="col s12 m6"><label for="editbulkBlockdeviceCategory">Category
+<span class="star">*</span></label>
+<select class="browser-default" id="editbulkBlockdeviceCategory" required="required" >
+<option value="" disabled selected>Select Category
+</option>
+
+</select>
+</div>
+<div class="input-field col s12 m6">
+<textarea id="editsingleblockremark" placeholder="" class="materialize-textarea" required="required" style="padding: 0;"></textarea>
+<label for="editsingleblockremark">Remark <span class="star">*</span></label>
+</div>
+
+
+<div class="col s12 m6">
+<p style="margin:3px 0 5px 0">BlockingType</p>
+<label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
+value="Immediate"
+onchange="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod" checked> Immediate
+</label> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"
+value="Default"
+onchange="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod"> Default
+</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required" value="tilldate" class="blocktypeRadio"
+onchange="document.getElementById('calender').style.display = 'block';"
+name="stolenBlockPeriod"> Later
+</label>
+<div class="col s6 m2 responsiveDiv"
+style="display: none; width: 30%;float:right;margin-right:10%; margin-top:-10px;padding:0;" id="calender">
+<div id="startdatepicker" class="input-group date">
+<input type="text" id="stolenDatePeriodedit"
+style="margin-top: -9px" /> <span class="input-group-addon"
+style="color: #ff4081"><i class="fa fa-calendar"
+aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+
+</div>
+
+
+<div class="col s12 m2 l2" style="width: 40%; display: none"
+id="stolenDate">
+
+<label for="TotalPrice" class="center-align">Till date</label>
+<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+
+<input class="form-control" name="inputsaves" type="text"
+id="startDateFilter" readonly /> <span class="input-group-addon"
+style="color: #ff4081"><i
+class="glyphicon glyphicon-calendar"
+onclick="_Services._selectstartDate()"></i></span>
+</div>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="row input_fields_wrap">
+<div class="col s12 m12">
+<p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+</div>
+<div class="input-field col s12 m6">
+<input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder="" pattern="[0-9]{15,16}" required="required"
+title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+<label for="editsingleblockIMEI1">1 <span class="star">*</span></label>
+</div>
+
+<div class="input-field col s12 m6">
+<input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder="" pattern="[0-9]{15,16}"
+title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
+<label for="editsingleblockIMEI2">2</label>
+</div>
+
+<div class="input-field col s12 m6">
+<input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder="" pattern="[0-9]{15,16}"
+title="Please enter minimum 15 and maximum 16 digit only"
+maxlength="16">
+<label for="editsingleblockIMEI3">3</label>
+</div>
+
+<div class="input-field col s12 m6">
+<input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder="" pattern="[0-9]{15,16}"
+title="Please enter minimum 15 and maximum 16 digit only"
+maxlength="16">
+<label for="editsingleblockIMEI4">4</label>
+<input type="text" id="editsingleblockTxnid" style="display: none">
+<input type="text" id="editsingleblocRequestType" style="display: none">
+
+</div>
+</div>
+</div>
+<span> Required Field are marked with <span class="star">*</span></span>
+</div>
+
+</div>
+
+
+<div class="input-field col s12 center popup-btn-div">
+<button class="btn" type="submit" >Update</button>
+
+<button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
+</div>
+</form>
+
+</div></div>
 
 
 
@@ -1150,7 +1234,7 @@
 
                                                     </div>
 
-                                                    <div class="input-field col s12 center">
+                                                    <div class="input-field col s12 center popup-btn-div">
                                                        <!--  <button class="btn" type="submit">Submit</button> -->
                                                          <button type="button" class="modal-close btn">OK</button>
                                                     </div>
@@ -1292,14 +1376,78 @@
 
                                                     </div>
 
-                                                    <div class="input-field col s12 center">
+                                                   
+                                                    <div class="input-field col s12 center popup-btn-div">
                                                        <button class="btn" type="submit" >Update</button>
                                                 
-                                                        <button type="button" class="modal-close btn" onclick="singleImeiFormClear()">Cancel</button>
+                                                        <button type="button" class="modal-close btn popup-btn-div" onclick="singleImeiFormClear()">Cancel</button>
                                                     </div>
                                                 </form>
                                            
             </div></div>
+            <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
+<h6 class="modal-header">Edit Device Information</h6>
+<div class="modal-content" style="margin-top: 5px;">
+
+<form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">
+
+<div class="row">
+<div class="col s12 m6" style="margin-top: -7px;">
+
+<label for="editBulkBlockCategory">Category<span class="star">*</span></label>
+<select class="browser-default" id="editBulkBlockCategory" required="required" >
+<option value="" disabled selected>Select Category
+</option>
+
+</select>
+</div>
+
+<div class="input-field col s12 m6">
+<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,9}"
+title="Please enter numbers upto 9 characters only" maxlength="9" value="" placeholder="" >
+<label for="editBulkBlockquantity">Quantity <span class="star">*</span></label>
+</div>
+
+
+</div>
+<div class="row">
+<div class="file-field input-field col s12 m6" style="margin-top: -10px;">
+<p style="color: #000; margin: 5px 0;">Upload Bulk Devices <span class="star">*</span></p>
+<div class="btn">
+<span>File</span>
+<input type="file" id="editselectBulkBlockuploadFile">
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
+</div>
+</div>
+
+<div class="input-field col s12 m6">
+<textarea id="editBulkBlockRemark" class="materialize-textarea" required="required" placeholder="" ></textarea>
+<label for="editBulkBlockRemark">Remark <span class="star">*</span> </label>
+<!-- <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+title="" maxlength="16" value="1500" disabled> -->
+<input type="text" style="display:none" id="editBulkBlockrequestType">
+<input type="text" style="display:none" id="editBulkBlockTxnId">
+</div>
+
+<!-- <div class="input-field col s12 m6" style="margin-top: 25px;">
+<input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
+title="" maxlength="16" value="1500" disabled>
+<label for="editBulkBlockTxnId">Transaction Id</label>
+<input type="text" style="display:none" id="editBulkBlockrequestType">
+</div> -->
+</div>
+<p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
+<div class="row">
+<div class="input-field col s12 center">
+<button class=" btn"
+type="submit" >Update</button>
+<button type="button" class="modal-close btn">Cancel</button>
+</div>
+</div>
+</form>
+</div></div>
  <div id="confirmEditBlockUnblock" class="modal">
   <h6 class="modal-header">Update Device Information</h6>
         <div class="modal-content">
@@ -1326,7 +1474,7 @@
             <div class="row">
                 <form action="">
                    
-                    <h6>Do you want to Approve the request</h6>
+                    <h6>Do you want to Approve the request having transaction ID:<span id="blockApproveTxnId"></span>?</h6>
                 </form>
             </div>
             <div class="row">
@@ -1366,13 +1514,14 @@
            <h6 class="modal-header">Reject</h6>
             <div class="modal-content">
             <div class="row">
+             <h6>Do you want to reject the request having transaction ID:<span id="rejectTxnId"></span> ?</h6>
                 <form action="">
                 
                     <div class="input-field" style="margin-top: 30px;">
                         <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="Reason" style="margin-left: -10px;">Reason</label>
+                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
                     </div>
-                    <h6>Do you want to reject?</h6>
+                   
                     
                 </form>
             </div>
@@ -1438,6 +1587,8 @@
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>			
 
 </body>
 </html>

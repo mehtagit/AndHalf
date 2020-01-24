@@ -12,6 +12,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -49,7 +50,7 @@ public class StockDatatableController {
 	public ResponseEntity<?> viewStockList(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType, HttpServletRequest request,HttpSession session) {	 		
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
-		
+
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
 		//FilterRequest filterrequest = request.getParameter("FilterRequest");
@@ -114,6 +115,11 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String assignedTo = dataInsideList.getUser().getUserProfile().getDisplayName();
+						if(assignedTo == null || assignedTo.equals("")) {
+							assignedTo = "";
+						}else {
+							assignedTo = dataInsideList.getUser().getUserProfile().getDisplayName();
+						}
 						String txnId= dataInsideList.getTxnId(); 
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
@@ -132,8 +138,7 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String txnId= dataInsideList.getTxnId();
-						String suplierName = dataInsideList.getSuplierName();
-						//String userId = String.valueOf(dataInsideList.getUserId());
+						String displayName = "";
 						String roll = dataInsideList.getRoleType();
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName
@@ -141,7 +146,7 @@ public class StockDatatableController {
 						String stockStatusName=dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminStockState(file,txnId,statusOfStock,userStatus);
-						Object[] finalData={date,txnId,suplierName,roll,file,stockStatusName,action}; 
+						Object[] finalData={date,txnId,displayName,roll,file,stockStatusName,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -149,18 +154,18 @@ public class StockDatatableController {
 				}else if("Distributor".equals(userType)) {
 					for(StockContent dataInsideList : paginationContentList) 
 					{
-					String date= dataInsideList.getCreatedOn(); 
-					String txnId= dataInsideList.getTxnId(); 
-					String file= dataInsideList.getFileName();
-					// if API provide me consignmentStatusName
-					String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
-					String stockStatusName=dataInsideList.getStateInterp();
-					String userStatus = (String) session.getAttribute("userStatus");
-					String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
-					Object[] finalData={date,txnId,file,stockStatusName,action}; 
-					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
-					finalList.add(finalDataList);
-					datatableResponseModel.setData(finalList);
+						String date= dataInsideList.getCreatedOn(); 
+						String txnId= dataInsideList.getTxnId(); 
+						String file= dataInsideList.getFileName();
+						// if API provide me consignmentStatusName
+						String statusOfStock = String.valueOf(dataInsideList.getStockStatus());
+						String stockStatusName=dataInsideList.getStateInterp();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.stockState(file,txnId,statusOfStock,userStatus);
+						Object[] finalData={date,txnId,file,stockStatusName,action}; 
+						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
 					}
 				}else if("Retailer".equals(userType)) {
 					log.info("<><><><>userType in retailer<><><>" +userType);
@@ -228,10 +233,12 @@ public class StockDatatableController {
 
 		if("viaStock".equals(sourceType)){
 			log.info("sourceType render---1------" +sourceType);	
-			String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter()","submitFilter"};
 
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
+				button.setType(names[i]);
+				i++;
 				button.setButtonTitle(names[i]);
 				i++;
 				button.setButtonURL(names[i]);
@@ -240,7 +247,7 @@ public class StockDatatableController {
 				buttonList.add(button);
 			}
 
-			String[] footerBtn= {"FooterButton", "Mark As Stolen","markedstolen()","markedstolen","FooterButton", "Cancel","redirectToViewPage()","cancel"};
+			String[] footerBtn= {"FooterButton", Translator.toLocale("button.markAsStolen"),"markedstolen()","markedstolen","FooterButton", Translator.toLocale("button.cancel"),"redirectToViewPage()","cancel"};
 			for(int i=0; i< footerBtn.length ; i++) {
 				button = new Button();
 				button.setType(footerBtn[i]);
@@ -253,7 +260,7 @@ public class StockDatatableController {
 				buttonList.add(button);
 			}	
 			//Dropdown items	
-			String[] selectParam= {"select","Stock Status","StockStatus",""};
+			String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -268,7 +275,7 @@ public class StockDatatableController {
 
 
 			//input type date list	
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -283,10 +290,12 @@ public class StockDatatableController {
 		}else {
 			log.info("sourceType render---2------" +sourceType);	
 			if("Custom".equals(userType)) {
-				String[] names= {"Assign Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("button.assignStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter()","submitFilter"};
 
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
+					button.setType(names[i]);
+					i++;
 					button.setButtonTitle(names[i]);
 					i++;
 					button.setButtonURL(names[i]);
@@ -295,9 +304,11 @@ public class StockDatatableController {
 					buttonList.add(button);
 				}
 			}else{
-				String[] names= {"Upload Stock","./openUploadStock?reqType=formPage","btnLink", "filter","filter()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
+					button.setType(names[i]);
+					i++;
 					button.setButtonTitle(names[i]);
 					i++;
 					button.setButtonURL(names[i]);
@@ -308,7 +319,7 @@ public class StockDatatableController {
 			}
 
 			//Dropdown items	
-			String[] selectParam= {"select","Stock Status","StockStatus",""};
+			String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -323,7 +334,7 @@ public class StockDatatableController {
 
 
 			//input type date list	
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -336,7 +347,7 @@ public class StockDatatableController {
 				inputTypeDateList.add(dateRelatedFields); 
 			}
 		}
-		pageElement.setPageTitle("View Stock");
+		pageElement.setPageTitle(Translator.toLocale("view.stockMgt"));
 		pageElement.setButtonList(buttonList);
 		pageElement.setDropdownList(dropdownList);
 		pageElement.setInputTypeDateList(inputTypeDateList);

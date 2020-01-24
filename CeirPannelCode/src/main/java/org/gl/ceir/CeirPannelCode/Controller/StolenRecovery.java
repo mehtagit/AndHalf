@@ -25,6 +25,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,6 +41,11 @@ import com.google.gson.Gson;
 public class StolenRecovery {
 
 	
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
+
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
@@ -65,9 +71,17 @@ public class StolenRecovery {
 		}
 		else if(userTypelist.size()==1)
 		{
-		log.info("role type is"+roletype);
-		session.setAttribute("stolenselectedUserTypeId", roletype);
-		mv.setViewName("stolenRecovery");
+			if(roletype.equals("Lawful Agency"))
+			{
+				log.info("*******"+roletype);
+				mv.setViewName("lawfulStolenRecovery");
+			}
+			else {
+				log.info("role type is"+roletype);
+				session.setAttribute("stolenselectedUserTypeId", roletype);
+				mv.setViewName("stolenRecovery");
+			}
+				
 		}
 		}
 		else {
@@ -118,7 +132,7 @@ public class StolenRecovery {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -172,7 +186,7 @@ public class StolenRecovery {
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
-				String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+stlnTxnNumber+"/";
+				String rootPath = filePathforUploadFile+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) 
@@ -234,7 +248,7 @@ public class StolenRecovery {
 					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) Integer id,
-					  @RequestParam(name="deviceCaegory",required = false) Integer deviceCaegory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName)
+					  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName)
 			  {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
@@ -243,17 +257,20 @@ public class StolenRecovery {
 				  	try {
 				  		if(file==null) {
 				  			stolenRecoveryModel.setFileName(fileName);
-				  		}{				  		
-				  		String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+				  		}{			
+				  			
+				  			log.info("file is not null");
+				  		String rootPath = filePathforUploadFile+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
 				  		boolean exists = tmpDir.exists();
 
 				  		if(exists) {
+				  			log.info("file already exist");
 				  		Path temp = Files.move 
-				  		(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
-				  		Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
+				  		(Paths.get(filePathforUploadFile+txnId+"/"+file.getOriginalFilename()), 
+				  		Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
 
-				  		String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();
+				  		String movedPath=filePathforMoveFile+file.getOriginalFilename();
 				  		// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
 				  		log.info("file is already exist moved to the this "+movedPath+" path");
 				  		tmpDir.delete();
@@ -286,7 +303,8 @@ public class StolenRecovery {
 					stolenRecoveryModel.setRoleType(roleType);
 					stolenRecoveryModel.setTxnId(txnId);
 					
-					stolenRecoveryModel.setCategory(deviceCaegory);
+					//stolenRecoveryModel.setCategory(deviceCaegory);
+					stolenRecoveryModel.setBlockCategory(blockCategory);
 					stolenRecoveryModel.setRemark(remark);
 					
 					log.info("request passed to the update file stolen api ="+stolenRecoveryModel);

@@ -7,7 +7,7 @@ public class TRCRegisteration {
 
 	private Integer id,userId,status,approveStatus;
 	private String manufacturerId, manufacturerName,country,requestDate,tac;
-	private String approveDisapproveDate, remark,file,createdOn,modifiedOn,txnId,stateInterp;
+	private String approveDisapproveDate, remark,fileName,createdOn,modifiedOn,txnId,stateInterp;
 	public Integer getId() {
 		return id;
 	}
@@ -74,11 +74,11 @@ public class TRCRegisteration {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getFile() {
-		return file;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFile(String file) {
-		this.file = file;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 	public String getCreatedOn() {
 		return createdOn;
@@ -109,8 +109,9 @@ public class TRCRegisteration {
 		return "TRCRegisteration [id=" + id + ", userId=" + userId + ", status=" + status + ", approveStatus="
 				+ approveStatus + ", manufacturerId=" + manufacturerId + ", manufacturerName=" + manufacturerName
 				+ ", country=" + country + ", requestDate=" + requestDate + ", tac=" + tac + ", approveDisapproveDate="
-				+ approveDisapproveDate + ", remark=" + remark + ", file=" + file + ", createdOn=" + createdOn
+				+ approveDisapproveDate + ", remark=" + remark + ", fileName=" + fileName + ", createdOn=" + createdOn
 				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp + "]";
 	}
+	
 	
 }

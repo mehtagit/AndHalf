@@ -1,15 +1,20 @@
 package org.gl.ceir.CeirPannelCode.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Feature;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
+import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.User;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -21,6 +26,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class LoginService {
+	@Autowired
+	FeignCleintImplementation feignCleintImplementation;
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@Autowired
 	UserLoginFeignImpl userLoginFeignImpl;
@@ -45,7 +53,6 @@ public class LoginService {
 			ModelAndView mv=new ModelAndView();
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
-		  
 			log.info("login response:  "+response); 
 			if(response.getStatusCode()==200) { 
 				session.setAttribute("username", response.getUsername());
@@ -73,14 +80,13 @@ public class LoginService {
 		}
 	}
 
-	public ModelAndView logout(HttpSession session){
-		log.info("inside logout controller");
-		HttpResponse response=new HttpResponse();
-		Integer userid=(Integer)session.getAttribute("userid");
+	public void sessionRemoveCode(Integer userid,HttpSession session) {
+		
 		log.info("userid from session: "+userid);
 		if(userid!=null) {
-		response=userLoginFeignImpl.sessionTracking(userid);
-		log.info("response got: "+response);
+			HttpResponse response=new HttpResponse();
+			response=userLoginFeignImpl.sessionTracking(userid);
+			log.info("response got: "+response);
 		} 
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 
@@ -89,19 +95,39 @@ public class LoginService {
 		session.removeAttribute("name");
 		session.removeAttribute("userStatus");
 		session.invalidate(); 
+	}
+	public ModelAndView logout(HttpSession session){
+		log.info("inside logout controller");
+		Integer userid=(Integer)session.getAttribute("userid");
+		sessionRemoveCode( userid, session);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg","you have been logged out successfully");
 		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
+	}
+	
+	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http){
+		log.info("inside index controller");
+		Integer userid=(Integer)session.getAttribute("userid");
+		sessionRemoveCode( userid, session);
+		log.info("exit index controller");
+		Tag tagData=new Tag("link_dmc_portal");
+		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+	    try {
+			http.sendRedirect(dropdown.getValue());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		//return "redirect:.../"+dropdown.getValue();
+	}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
 		String status=(String)session.getAttribute("userStatus");
-		if(username!=null) {
+		if(username.trim()!=null) {
 			log.info("username from session:  "+username);
 			log.info("user status from session :   "+status); 
 			Integer userId=(Integer)session.getAttribute("userid");
@@ -143,6 +169,6 @@ public class LoginService {
 			response.setResponse("Both Passwords do the match");      
 			return response;
 		}
-		
+
 	}
 }

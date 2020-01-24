@@ -112,9 +112,7 @@ textarea.materialize-textarea {
 	color: red;
 }
 
-select option:first-child {
-	color: red;
-}
+
 
 section {
 	margin-top: 10px;
@@ -149,16 +147,16 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierId" id="supplierId"
 												pattern="[A-Za-z0-9]{0,15}"
-												title="Please enter alphabets and numbers upto 15 characters only"
+												title="<spring:message code="validation.15character" />"
 												maxlength="15" /> <label for="supplierId" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierName" id="supplierName"
 												pattern="[A-Za-z  ]{0,50}"
-												title="Please enter alphabets  upto 50 characters only"
+												title="<spring:message code="validation.50character" />"
 												maxlength="50" required /> <label for="supplierName"
-												class="center-align"><spring:message code="input.suppliername" /> <span
+												class="center-align"><spring:message code="input.suppliername"/> <span
 												class="star">*</span></label>
 										</div>
 									</div>
@@ -166,7 +164,7 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="consignmentNumber"
 												id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}"
-												title="Please enter alphabets and numbers upto 15 characters only"
+												title="<spring:message code="validation.15character" />"
 												maxlength="15" /> <label for="consignmentNumber" class="center-align"><spring:message code="input.consignmentnumber" /></label>
 										</div>
 
@@ -201,31 +199,32 @@ section {
 
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
-											<select class="browser-default" id="expectedArrivalPort"
-												required="required" name="expectedArrivalPort">
-												<option value="" disabled selected><spring:message code="input.arrivalport" /> <span id="starColor">*</span></option>
-												
-											</select>
-
+										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
+												maxlength="7" /> <label for="totalPrice"
+												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="quantity" id="quantity"
 												pattern="[0-9]{0,7}"
-												title="Please enter numbers upto 7 characters only"
+												title="<spring:message code="validation.7character" />"
 												maxlength="7" required /> <label for="quantity"
 												class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label>
 										</div>
 
 
-										<div class="input-field col s12 m6">
-											<input type="text" name="totalPrice" id="totalPrice"
-												maxlength="7" /> <label for="totalPrice"
-												class="center-align"><spring:message code="input.totalprice" /></label>
+										<div class=" col s12 m6">
+											
+												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /><span class="star">*</span></label>
+											<select class="browser-default" id="expectedArrivalPort"
+												required="required" name="expectedArrivalPort">
+												<%-- <spring:message code="input.arrivalport" /> --%>
+												<option value="" disabled selected> <spring:message code="input.arrivalport" /></option>
+											</select>
 										</div>
 
 										<div class="col s12 m6">
-											<label for="currency"><spring:message code="input.currency" /><span class="star">*</span></label>
+											<label for="currency"><spring:message code="input.currency" /></label>
 											<select id="currency" class="browser-default"
 												required="required">
 												<option value="" disabled selected><spring:message code="input.currency" /></option>
@@ -252,7 +251,7 @@ section {
 										</div>
 										<br> <br>
 										<p style="margin-left: 15px;">
-											<a href="./sampleFileDownload/filetype=sample"><spring:message code="input.downlaod.sample" /></a>
+											<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a>
 										</p>
 										<span><spring:message code="input.requiredfields" /> <span
 											class="star">*</span></span>
@@ -261,11 +260,11 @@ section {
 
 									<div class="row">
 										<div class="input-field col s12 center">
-									<%-- 	<spring:message code="input.submit" /> --%>
-											<button class=" btn" type="submit">Submit</button>
-									<%-- 		<spring:message code="input.cancel" /> --%>
+						
+											<button class=" btn" id="consignmentSubbmitButton" type="submit"><spring:message code="button.submit" /></button>
+												
 											<a href="#cancelMessage" class="btn modal-trigger"
-												type="cancel" style="margin-left: 10px;">Cancel</a>
+												type="cancel" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 
 
 										</div>
@@ -284,18 +283,17 @@ section {
 
 
 	<div id="submitConsignment" class="modal">
-		<h6 class="modal-header">Submit Consignment</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.submitConsignment" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Your form has been successfully
-					submitted. The Transaction ID for future reference is</h6>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" /></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<form action="${context}/Consignment/viewConsignment"
 						id="closeOkPop" method="POST">
-						<a onclick="closeConfirmation()" class="btn">ok</a>
+						<a onclick="closeConfirmation()" class="btn"><spring:message code="modal.ok" /></a>
 					</form>
 				</div>
 			</div>
@@ -356,232 +354,39 @@ section {
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
 
 
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
 
-	<script type="text/javascript">
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/registerConsignment.js"></script>
+
 	
-	
-	
-
-	window.parent.$('#langlist').on('change', function() {
-
-		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
-	}); 
-	
-
-	
-	$(document).ready(function() {
-		ConsignmentCurrency();
-	});
-	
-	
-	
-		function registerConsignment() {
-			var supplierId = $('#supplierId').val();
-			var supplierName = $('#supplierName').val();
-			var consignmentNumber = $('#consignmentNumber').val();
-			var expectedArrivalDate = $('#expectedArrivaldate').val();
-			var expectedDispatcheDate = $('#expectedDispatcheDate').val();
-			var expectedArrivalPort = $('#expectedArrivalPort').val();
-			var organisationcountry = $('#country').val();
-			var currency = $('#currency').val();
-			var totalPrice = $('#totalPrice').val();
-			var quantity = $('#quantity').val();
-			var formData = new FormData();
-			formData.append('file', $('#file')[0].files[0]);
-			formData.append('supplierId', supplierId);
-			formData.append('supplierName', supplierName);
-			formData.append('consignmentNumber', consignmentNumber);
-			formData.append('expectedArrivaldate', expectedArrivalDate);
-			formData.append('expectedDispatcheDate', expectedDispatcheDate);
-			formData.append('expectedArrivalPort', expectedArrivalPort);
-			formData.append('organisationcountry', organisationcountry);
-			formData.append('quantity', quantity);
-			formData.append('currency', currency);
-			formData.append('totalPrice', totalPrice);
-
-			$
-					.ajax({
-						url : '${context}/Consignment/registerConsignment',
-						type : 'POST',
-						data : formData,
-						processData : false,
-						contentType : false,
-						success : function(data, textStatus, jqXHR) {
-
-							console.log(data);
-							$('#submitConsignment').openModal();
-							if (data.errorCode == "0") {
-								console.log("status code = 0");
-								$('#sucessMessage')
-										.text(
-												'Your form has been successfully submitted. The Transaction ID for future reference is ');
-								$('#sucessMessage').append(data.txnId);
-								$('#errorCode').val(data.errorCode);
-							} else if (data.errorCode == "3") {
-								console.log("status code = 3");
-								$('#sucessMessage').text('');
-								$('#sucessMessage').text(
-										"consignment number already exist");
-								$('#errorCode').val(data.errorCode);
-							}
-							// $('#updateConsignment').modal('open'); 
-							//alert("success");
-
-						},
-						error : function(jqXHR, textStatus, errorThrown) {
-							console.log("error in ajax")
-						}
-					});
-
-			return false;
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		function openDeleteModal(transactionId) {
-			/*   $('#deletemodal').modal('open');
-			  backdrop: 'static' */
-			$('#deletemodal').openModal();
-			console.log("transactionId value=" + transactionId);
-			$('#deleteTransactionId').val(transactionId);
-		}
-	</script>
-	<script type="text/javascript">
-		function myFunction(message) {
-			var x = document.getElementById("snackbar");
-			x.className = "show";
-			$('#errorMessage').html(message);
-			setTimeout(function() {
-				x.className = x.className.replace("show", "");
-			}, 3000);
-		}
-
-		function dispatchDateValidation() {
-			var currentDate;
-			var dispatcDate = $('#expectedDispatcheDate').val();
-			var now = new Date();
-			if (now.getDate().toString().charAt(0) != '0') {
-				currentDate = '0' + now.getDate();
-
-				/* alert("only date="+currentDate); */
-			} else {
-				currentDate = now.getDate();
-			}
-			var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
-					+ currentDate;
-			//alert("today"+today);
-			console.log("dispatche=" + dispatcDate);
-			console.log("todays parse date" + Date.parse(today));
-			console.log("dispatche parse date" + Date.parse(dispatcDate));
-
-			if (Date.parse(today) > Date.parse(dispatcDate)) {
-				myFunction("dispatche date should be greater then or equals to today");
-				$('#expectedDispatcheDate').val("");
-			}
-
-			//alert("current date="+today+" dispatche date="+dispatcDate)
-		}
-
-		function arrivalDateValidation() {
-			var currentDate;
-			var dispatcDate = $('#expectedArrivalDate').val();
-			var now = new Date();
-			if (now.getDate().toString().charAt(0) != '0') {
-				currentDate = '0' + now.getDate();
-
-				/* alert("only date="+currentDate); */
-			} else {
-				currentDate = now.getDate();
-			}
-			var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
-					+ currentDate;
-			//alert("today"+today);
-			console.log("dispatche=" + dispatcDate);
-			console.log("todays parse date" + Date.parse(today));
-			console.log("dispatche parse date" + Date.parse(dispatcDate));
-
-			if (Date.parse(today) > Date.parse(dispatcDate)) {
-				myFunction("Arrival date should be greater then or equals to today");
-				$('#expectedArrivalDate').val("");
-			}
-
-			//alert("current date="+today+" dispatche date="+dispatcDate)
-		}
-
-		function closeConfirmation() {
-
-			var errorCode = $('#errorCode').val();
-			if (errorCode == 0) {
-				console.log("status code = 0");
-				$("#closeOkPop").submit();
-			} else if (errorCode == 3) {
-				console.log("status code = 3");
-				$('#sucessMessage').text('');
-				$('#submitConsignment').closeModal();
-				/// $('#submitConsignment').modal('hide');
-			}
-		}
-
-		function ConsignmentCurrency() {
-			var currency = "currency";
-			$.ajax({
-				url : '${context}/Consignment/consignmentCurency?currency='
-						+ currency,
-				type : 'GET',
-				processData : false,
-				contentType : false,
-				success : function(data, textStatus, jqXHR) {
-					console.log(data);
-
-					$('#currency').empty();
-					$('#currency').append(
-							'<option value="">Select Currency</option>');
-					for (i = 0; i < data.length; i++) {
-
-						var html = '<option value="'+data[i].value+'">'
-								+ data[i].interp + '</option>';
-						//$('<option>').val(data[i]).channnelName.text(data[i]).channnelName.appendTo('#channelId');
-						$('#currency').append(html);
-					}
-					/* $('#currency').val($("#langid").val()); */
-
-				},
-				error : function(jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
-				}
-			});
-		}
-		
-		
-	
-	</script>
-
-
-	<script>
-		populateCountries("country");
-
-		$(document).ready(function() {
-
-			ConsignmentCurrency();
-			
-			$.getJSON('${context}/getDropdownList/CUSTOMS_PORT', function(data) {
-				$("#expectedArrivalPort").empty();
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#expectedArrivalPort');
-					
-				}
-			});
-		});
-
-		$('.datepick').datepicker({
-			dateFormat : "yy-mm-dd"
-		});
-	</script>
-
 </body>
 </html>

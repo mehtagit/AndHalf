@@ -19,9 +19,6 @@ pageEncoding="ISO-8859-1"%>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<!-- Favicons-->
-<!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
-<!-- Favicons-->
 <link rel="apple-touch-icon-precomposed"
 	href="${context}/resources/images/favicon/apple-touch-icon-152x152.png">
 <!-- For iPhone -->
@@ -79,17 +76,91 @@ footer {
 	color: #444 !important;
 }
 
-select {
-	background-color: transparent;
-	border: none;
-	border-bottom: 1px solid #9e9e9e;
-	padding: 0;
-	margin-top: 7px;
-	;
-}
+
 
 [type="radio"]:not (:checked ), [type="radio"]:checked {
 	opacity: 0;
+}
+
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=url],
+input[type=time],
+input[type=date],
+input[type=datetime-local],
+input[type=tel],
+input[type=number],
+input[type=search],
+textarea.materialize-textarea {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid #9e9e9e !important;
+  border-radius: 0 !important;
+  outline: none !important;
+  height: 2.6rem !important;
+  width: 100% !important;
+  font-size: 1rem !important;
+  margin: 0 0 5px 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+  transition: all .3s !important;
+}
+
+input[type=text]:focus:not([readonly]) {
+border-bottom: 1px solid #ff4081 !important;
+box-shadow: 0 1px 0 0 #ff4081 !important;
+}
+
+input[type=text]:focus:not([readonly])+label {
+color: #ff4081 !important;
+background-color: transparent !important;
+}
+
+.input-field {
+position: relative;
+margin-top: 1rem;
+margin-bottom: 0;
+}
+
+.row {
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 0;
+}
+
+.btn {
+background-color: #ff4081 !important;
+}
+
+select {
+background-color: transparent;
+border: none;
+border-bottom: 1px solid #9e9e9e;
+padding: 0;
+margin-top: 0;
+height: 2.6rem ;
+}
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+position: inherit;
+opacity: 1;
+pointer-events: none;
+}
+[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
+display: none;
+}
+input[type="checkbox"] {
+display: block;
+}
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+float: left;
+margin-top: 5px;
 }
 </style>
 <script>
@@ -98,7 +169,7 @@ var contextpath = "${context}";
 </head>
 
 <body>
-
+<%String userType=request.getParameter("type");%>
 <!-- Modal End --> 
 	<!-- ================================================
     Scripts
@@ -145,11 +216,12 @@ var contextpath = "${context}";
 							style="float: right; margin: -10px; margin-right: -20px;"><i
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
-							<h5><%=request.getParameter("name") %> Registration</h5>
+							<h5><%=request.getParameter("type") %> Registration</h5>
 							<hr>
 							<span id="msg" style="color: red;">${msg}</span>
-               <input type="hidden" id="usertypeId" value="${usertypeId}">
-							<div class="row">
+                     <input type="hidden" id="usertypeId" value="">
+               <input type="hidden" id="usertypeName" value="<%=userType%>">
+               			<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
 										required="required" pattern="[A-Za-z]{0,20}" maxlength="20"
@@ -196,7 +268,7 @@ var contextpath = "${context}";
 										class="form-control boxBorder boxHeight"
 										title="Please enter alphanumeric with special character upto 12 characters only"
 										id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{0,12}" />
-									<label for="passportNumberDiv">National ID/Passport Number <span
+									<label for="passportNo">National ID/Passport Number <span
 										class="star">*</span></label>
 								</div>
 
@@ -392,11 +464,11 @@ var contextpath = "${context}";
 									<div class=" boxHeight">
 										<label><input class="with-gap vatStatus" value="1"
 											name="vatStatus" type="radio"
-											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFile').style.display = 'block'">
+											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFileDiv').style.display = 'block';vatChecked()">
 											<span>Yes</span> </label> <label> <input
 											class="with-gap vatStatus" name="vatStatus" type="radio"
 											style="margin-left: 20px;" value="0"
-											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFile').style.display = 'none'"
+											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFileDiv').style.display = 'none';vatChecked()"
 											checked /> <span>No</span>
 										</label>
 									</div>
@@ -424,12 +496,24 @@ var contextpath = "${context}";
 									<label for="vatNo">VAT Number <span class="star">*</span></label>
 								</div>
 								
-								<div class="input-field col s12 m6 l6" style="display: none;"
-									id="vatNumberField">
-									<input type="file" name="vatFile"
-										class="form-control boxBorder boxHeight" id="vatFile">
-									<label for="vatNumberField">VAT File <span class="star">*</span></label>
-								</div>
+								<div  id="vatFileDiv" class="col s12 m12" style="display: none;">
+										<h6 class="file-upload-heading">
+										VAT File<span class="star">*</span>
+										</h6>
+										<div class="file-field input-field col s12 m6"
+											style="margin-top: 5px; padding-left: 0;">
+											<div class="btn">
+												<span>Select File</span> <input name="file" type="file"
+													id="vatFile" accept=".pdf">
+											</div>  
+											<div class="file-path-wrapper">
+												<input  name="vatFile" class="file-path validate responsive-file-div"
+													type="text">
+											</div>
+										</div>
+										<br>
+										<br>
+									</div>
 								</div>
 							</div>
 						<div class="row">
@@ -535,7 +619,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l12">
 									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
-										required="required"> <label for="captcha">Enter
+										required="required"> <label for="address">Enter
 										your captcha <span class="star">*</span>
 									</label>
 								</div>
@@ -543,9 +627,9 @@ var contextpath = "${context}";
 							</span>
 						</div>
 						   <p>
-      <label style="color: black!important;">
-        <input name="disclamer" type="checkbox" required="required" />
-        <span> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
+   <label style="color: black!important;padding-left: 16px;">
+        <input name="disclamer" type="checkbox" required="required" style="margin-left: 12px;">
+        <span style="margin-top:-18px !important;"> <span class="star">*</span> I certify that all the above information provided by me is true to the best of my knowledge. I am aware that if any of the above information is found to be incorrect/incomplete , CEIR Admin may take disciplinary action as applicable.  There would be a checkbox. User must click checkbox during registration</span>
       </label>
     </p>
     
@@ -560,7 +644,7 @@ var contextpath = "${context}";
 							<span> Required Field are marked with <span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave" 
+								<button class="btn" id="btnSave"  
 									type="submit" style="margin-left: 10px;">submit</button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;">cancel</a>
 							</div>
@@ -583,24 +667,18 @@ var contextpath = "${context}";
 
 	<!-- Modal 1 start   -->
 
-	<div id="submitForm" class="modal">
-		<button type="button"
+	<div id="otpMsgModal" class="modal" style="width:40%;margin-left: 30%;margin-top: 10vh;">
+		<!-- <button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
+			data-dismiss="modal">&times;</button> -->
+				<h6 class="modal-header">Verify OTP</h6>
 		<div class="modal-content">
 			<!-- <h4 class="header2 pb-2">User Info</h4> -->
 
-			<div class="row">
-				<h6>Verify OTP</h6>
-				<hr>
-				<p>A text message and an E-Mail has been sent to your registered
-					Phone number and E-mail. Please Verify !</p>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="otpVerification.html" class="btn waves-effect waves-light btn modal-trigger">Verify OTP</a>
-				</div>
-			</div>
+				<p style="padding:10px;" class="center" id="otpMsg"></p>
+			
+					<a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -658,16 +736,16 @@ var contextpath = "${context}";
 	
 	
 	 <!-- START MAIN -->
-    <div id="">
-        <!-- START WRAPPER -->
+    <!-- <div id="">
+        START WRAPPER
         <div class="wrapper">
-            <!-- START CONTENT -->
+            START CONTENT
             <section id="content">
-                <!--start container-->
+                start container
                 <div class="container">
                     <div class="section">
                         <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%;">
-                            <h5 class="center">Verify OTP</h5>
+                            <h6 class="modal-header">Verify OTP</h6>
                             <p style="padding:10px;" class="center" id="otpMsg"></p>
 
                             <a href="#otpVerification" class="btn modal-trigger"
@@ -676,20 +754,35 @@ var contextpath = "${context}";
                         </div>
                     </div>
                 </div>
-                <!--end container-->
+                end container
             </section>
-            <!-- END CONTENT -->
+            END CONTENT
         </div>
-    </div>
+    </div> -->
     
-    <div id="otpMessage" class="modal">
+        <!-- START WRAPPER -->
+            <!-- //////////////////////////////////////////////////////////////////////////// -->
+
+            <!-- START CONTENT -->
+                <!--start container-->
+                        <!-- <div id="" class="card-panel modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
+                            <h6 class="modal-header">Verify OTP</h6>
+                            <p class="center">The text and and an e-mail with OTP details has been sent to your
+                                registered Phone Number and E-Mail ID</p>
+                            <a href="#otpVerification" class="btn modal-trigger"
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
+                </div> -->
+            <!-- END CONTENT -->
+
+        <!-- END WRAPPER -->
+    
+    
+    <div id="otpMessage" class="modal" style="display: block;">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
+        <h6 class="modal-header">Verify OTP</h6>
         <div class="modal-content">
-
-            <div class="row">  
                 <h6 id="otpResponse"></h6>
-            </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <a href="${context}/login" class="btn">ok</a>
@@ -705,9 +798,9 @@ var contextpath = "${context}";
     <div id="otpVerification" class="modal" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
+               <h6 class="modal-header">Enter OTP</h6>  
         <div class="modal-content">  
                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-                        <h5 class="center">Enter OTP</h5>  
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
@@ -715,19 +808,16 @@ var contextpath = "${context}";
                                 <input type="text" name="emailOtp" maxlength="6"
                                
 										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder=""/>
+                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
                             </div> 
-                   
                             <div class="input-field col s12 m12">
                                 <input type="text" name="phoneOtp" maxlength="6" 
                                 
 										title="Please enter number characters only" 
-                                required="required" id="phoneOtp" placeholder=""/>
+                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
                             </div>
                         </div>
-
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
-
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</button>
                     </form>
         </div>
@@ -744,13 +834,9 @@ var contextpath = "${context}";
             questionDataByCategory();
             
             usertypeData2(<%=request.getParameter("usertypeId")%>);
-            //$('.dropdown-trigger').dropdown();
-           
-          //  $('select').formSelect();
         }); 
         populateCountries(
-                "country",
-               "state",
+                "country",    "state",
             );
         
        $("#country").val("Cambodia");
@@ -790,6 +876,22 @@ var contextpath = "${context}";
                 $("#passportNo").val("");
                 $("#file").prop('required',false);
             }
+        }
+       
+        
+        function vatChecked(){
+        	var radioValue = $("input[name='vatStatus']:checked").val();
+        	alert(radioValue);
+        	if(radioValue==1){
+        		$("#vatNo").prop('required',true);
+        		$("#vatFile").prop('required',true);
+        	}
+        	else{
+        		$("#vatNo").prop('required',false);
+        		$("#vatFile").prop('required',false);
+        		$("#vatNo").val("");
+        		$("#vatFile").val("");
+        	}
         }
     </script>
 </body>

@@ -13,6 +13,7 @@
 /*----------------------------------------
   General Layout Style
 ------------------------------------------*/
+
 body {
   background-color: #f9f9f9;
 }
@@ -2666,3 +2667,23 @@ div#iconLable {
 .input-field.col.s12.m1.l1 {
     width: 12%;
 }
+.fixPage-modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: -20px -21px 1rem -21px;
+}
+
+
+@media only screen and (max-width:786px){
+.fixPage-modal-header {
+background-color: #529dba;
+padding: 15px 24px;
+color: #fff;
+margin: -20px -10px 1rem -10px;
+}
+}
+
+.btn{background-color:#ff4081 !important;}
+
+

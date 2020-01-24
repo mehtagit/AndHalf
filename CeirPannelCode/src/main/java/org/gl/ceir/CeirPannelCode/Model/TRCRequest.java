@@ -4,8 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TRCRequest {
-	private String endDate,searchString,startDate,tac;
-	private Integer status,userId;
+	private String endDate,searchString,startDate,tac,txnId;
+	private Integer status,adminStatus;
+	private long userId;
 	public String getEndDate() {
 		return endDate;
 	}
@@ -30,22 +31,38 @@ public class TRCRequest {
 	public void setTac(String tac) {
 		this.tac = tac;
 	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	public Integer getStatus() {
 		return status;
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	public Integer getUserId() {
+	public Integer getAdminStatus() {
+		return adminStatus;
+	}
+	public void setAdminStatus(Integer adminStatus) {
+		this.adminStatus = adminStatus;
+	}
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(Integer userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
 	@Override
 	public String toString() {
 		return "TRCRequest [endDate=" + endDate + ", searchString=" + searchString + ", startDate=" + startDate
-				+ ", tac=" + tac + ", status=" + status + ", userId=" + userId + "]";
+				+ ", tac=" + tac + ", txnId=" + txnId + ", status=" + status + ", adminStatus=" + adminStatus
+				+ ", userId=" + userId + "]";
 	}
-		}
+	
+	
+	
+}
 

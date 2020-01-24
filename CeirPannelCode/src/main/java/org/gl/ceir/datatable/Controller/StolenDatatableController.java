@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -46,7 +47,6 @@ public class StolenDatatableController {
 	@Autowired
 	IconsState iconState;
 
-
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@PostMapping("stolenData")
@@ -75,16 +75,13 @@ public class StolenDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
-			/*
-			 * Object actionResponse = feignCleintImplementation.tableActionFeign(featureId,
-			 * userTypeId); log.info("actionResponse::::::::::::"+actionResponse);
-			 */
 			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			stolenPaginationModel = gson.fromJson(apiResponse, StolenPaginationModel.class);
 			List<StolenContent> paginationContentList = stolenPaginationModel.getContent();
+			
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
@@ -111,26 +108,8 @@ public class StolenDatatableController {
 					}
 				}else if("Operator".equals(userType)) {
 					log.info("in Opertator Controler-----" +userType);
-					for (StolenContent dataInsideList : paginationContentList) {
-						String createdOn = dataInsideList.getCreatedOn();
-						String txnId = dataInsideList.getTxnId();
-						String fileName = dataInsideList.getRequestType();
-						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
-						String stolenStatusName = dataInsideList.getStateInterp();
-						String source =dataInsideList.getSourceTypeInterp();
-						String requestType = dataInsideList.getRequestType(); 
-						String requestTypeName = dataInsideList.getRequestTypeInterp();
-						int id = dataInsideList.getId();
-						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
-								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
-						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,action};
-						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
-						finalList.add(finalDataList);
-						datatableResponseModel.setData(finalList);
-					}
-				}else if("CEIRAdmin".equals(userType)) {
-					log.info("in CEIRAdmin Controler-----" +userType);
+					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
+					log.info("actionResponse CEIRAdmin::::::::::::"+actionResponse);
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
@@ -143,9 +122,54 @@ public class StolenDatatableController {
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+						String action = iconState.blockUnblockState(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,action};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+			
+				}else if("CEIRAdmin".equals(userType)) {
+					log.info("in CEIRAdmin Controler-----" +userType);
+					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
+					log.info("actionResponse CEIRAdmin::::::::::::"+actionResponse);
+					
+					for (StolenContent dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String txnId = dataInsideList.getTxnId();
+						String operator = dataInsideList.getOperatorTypeIdInterp();
+						String fileName = dataInsideList.getRequestType();
+						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						String stolenStatusName = dataInsideList.getStateInterp();
+						String source =dataInsideList.getSourceTypeInterp();
+						String requestType = dataInsideList.getRequestType(); 
+						String requestTypeName = dataInsideList.getRequestTypeInterp();
+						int id = dataInsideList.getId();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.adminBlockUnblock(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
 						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,action};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+				}else if(userType.equals("Lawful Agency")) {
+					log.info("in Lawful Agency-----" +userType);
+					for (StolenContent dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String txnId = dataInsideList.getTxnId();
+						String BlockType = dataInsideList.getBlockingType();
+						String requestType = dataInsideList.getRequestTypeInterp();
+						String requestTypeValue = dataInsideList.getRequestType();
+						String mode= dataInsideList.getSourceTypeInterp();
+						String stolenStatusName = dataInsideList.getStateInterp();
+						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						int id = dataInsideList.getId();
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.StolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
+						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -202,14 +226,17 @@ public class StolenDatatableController {
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
 		
+		
 		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
-		pageElement.setPageTitle("Block/Unblock");
+		pageElement.setPageTitle("Block/Unblock Devices");
 		}else {
 			pageElement.setPageTitle("Stolen/Recovery");
 		}
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
+		
+		//This Block is for Operator & Admin Upper Filter/Button Forms------------------------------------------------
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType)) {
 			String[] names = { "HeaderButton", "Report Block/Unblock", "./selectblockUnblockPage",
@@ -243,7 +270,7 @@ public class StolenDatatableController {
 			}
 			
 		//This is for Operator Dropdown for CEIRadmin
-			if("CEIRAdmin".equals(userType)|| "CEIRAdmin".equals(userType)) {
+			if("CEIRAdmin".equals(userType)){
 				String[] selectParam = { "select", "Operator", "operator", "","select", "Request Type", "requestType", "", "select",
 						"Mode", "sourceStatus", "","select", "Status", "status","" };	
 				for (int i = 0; i < selectParam.length; i++) {
@@ -279,6 +306,9 @@ public class StolenDatatableController {
 	
 		
 		}else {
+			
+			//This Block is for all other Stolen Upper Filter/Button Forms------------------------------------------------
+			
 			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
 					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
@@ -312,7 +342,7 @@ public class StolenDatatableController {
 		
 
 			String[] selectParam = { "select", "Status", "status", "", "select",
-					"Source", "sourceStatus", "","select", "Request Type", "requestType","" };	
+					"Mode", "sourceStatus", "","select", "Request Type", "requestType","" };	
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);

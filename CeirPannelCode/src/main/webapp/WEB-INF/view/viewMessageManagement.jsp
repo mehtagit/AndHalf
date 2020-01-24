@@ -56,7 +56,9 @@
 	
  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-	
+	    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 
 
@@ -111,7 +113,7 @@
 				<div class="row" style="margin-top:10px">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
-							placeholder="" disabled
+							placeholder="tag" disabled
 							style="height: 28px;"> <label for="tag">Tag</label>
 					</div>
 
@@ -156,27 +158,39 @@
 
 			<div class="row">
 				<div class="row">
+					
 					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="viewTag"
-							placeholder=""
-							style="height: 28px;"> <label for="tag">Tag</label>
+						<input type="text" name="Tag" id="Edittag"
+							placeholder="tag" disabled
+							style="height: 28px;" hidden>
 					</div>
-
 					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" name="id" id="EditId"
+							placeholder="tag" disabled
+							style="height: 28px;" hidden>
+					</div>
+					
+				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;"></textarea>
-					<label for="viewValue" class="">Value</label>
+					<textarea id="editValue" class="materialize-textarea" style="height: 22px;" placeholder="" ></textarea>
+					<label for="editValue" class="">Value</label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;"></textarea>
-					<label for="description" class="">Description</label>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="" style="height: 22px;" disabled></textarea>
+					<label for="editdescription" class="">Description</label>
 
 					</div>
+					
+					<div class="input-field col s12 m6">
+					<textarea id="editChannel" class="materialize-textarea" style="height: 22px;" placeholder="Channel" disabled></textarea>
+					<label for="editChannel" class="">Channel</label>
 
+					</div>
 					
 
 				</div>
@@ -185,7 +199,8 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;">Update</button>
+					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updateMessage()">Update</button>
+					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
 				</div>
 
 				</div>
@@ -194,7 +209,25 @@
 	</div>
 	<!-- Modal End -->
 	
-   
+   		<!-- Modal 3 start   -->
+
+	<div id="confirmedUpdatedMessage" class="modal">
+		<h6 class="modal-header">Update Message Management</h6>
+		<div class="modal-content">
+
+
+
+			<div class="row">
+				<h6 id="sucessMessage">Message updated Successfully</h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="${context}/messageManagement" class="btn">ok</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
    
 
 	
@@ -229,6 +262,8 @@
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewMessageManagement.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
 		
 </body>
 </html>

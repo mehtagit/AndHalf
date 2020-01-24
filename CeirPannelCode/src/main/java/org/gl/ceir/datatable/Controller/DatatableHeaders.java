@@ -87,7 +87,36 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
 
+			//stockHeaders
+			else if("stockHeaders".equals(role)) {
+				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 
+			//customStock Headers
+			else if("customStockHeaders".equals(role)) {
+				String[] headers = {"table.date","table.assignto","table.transactionID","table.fileName","table.stockStatus","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+
+
+			//AdminStock Headers
+			else if("adminStockHeaders".equals(role)) {
+				String[] headers = {"table.date","table.transactionID","table.displayName","table.roleType","table.fileName","table.stockStatus","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
+			
+			
 			//stolen headers
 			else if("stolenCheckHeaders".equals(role)) {
 				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.fileName","table.status","table.source","table.requestType"};		
@@ -100,32 +129,16 @@ public class DatatableHeaders {
 
 			//Grievance Headers
 			else if("grievanceHeaders".equals(role)) {
-				String[] headers = {headersTitle.raisedDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.grievanceId,headersTitle.grievanceStatus,headersTitle.action};	
+				
+				String[] headers = {"table.raiseddate","table.lastupdatedate","table.transactionID","table.grievanceID","table.grievancestatus","table.action"};	
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
 
 
-			//customStock Headers
-			else if("customStockHeaders".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.assignto,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};	
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
-			}
-
-
-			//AdminStock Headers
-			else if("adminStockHeaders".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.disaplyName,headersTitle.roll,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};	
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
-			}
+			
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
@@ -156,9 +169,9 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.deviceIDType,headersTitle.deviceType,headersTitle.price,headersTitle.country,headersTitle.Status,headersTitle.action};		
+				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.status","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -174,21 +187,13 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 
-			//stockHeaders
-			else if("stockHeaders".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
-			}
-
-
+			
 			//adminUserPaidStatus Headers 
 			else if("adminUserPaidStatus".equals(role)) {
-				String[] headers = {headersTitle.sNo,headersTitle.date,headersTitle.nid,headersTitle.deviceIDType,headersTitle.deviceType,headersTitle.price,headersTitle.country,headersTitle.taxPaidStatus,headersTitle.Status,headersTitle.action};		
+
+				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.taxPaidStatus","table.status","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -262,7 +267,25 @@ public class DatatableHeaders {
 			}
 		
 			
+//lawfulStolenHeaders Headers 
 			
+			else if("lawfulStolenHeaders".equals(role)) {
+				String[] headers = {headersTitle.requestDate,headersTitle.transactionID,headersTitle.blockType,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+//auditManagement Headers 
+			
+			else if("auditManagement".equals(role)) {
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.userId,headersTitle.userName,headersTitle.roll,headersTitle.feature,headersTitle.subFeature,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};		

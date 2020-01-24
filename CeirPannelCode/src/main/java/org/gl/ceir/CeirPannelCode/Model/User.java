@@ -46,10 +46,10 @@ public class User {
 		return username;
 	}
 	public void setUsername(String username) {
-		this.username = username;
+		this.username = username.trim();
 	}
 	public String getPassword() {
-		return password;
+		return password.trim();
 	}
 	public void setPassword(String password) {
 		this.password = password;

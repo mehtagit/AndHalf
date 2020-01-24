@@ -79,6 +79,24 @@ input[type=text] {
 	height: 35px;
 	margin: 0 0 5px 0;
 }
+
+.fa-eye-slash,
+.fa-eye {
+	position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+a#newUserLink {
+    padding-right: 10px;
+    line-height: 13px;
+    }
+    
+.forgotPassword {
+	padding-left: 10px;
+    border-left: solid 2px #9e9e9e;
+    line-height: 13px;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -107,7 +125,7 @@ var contextpath = "${context}";
 				<!--start container-->
 				<div class="container">
 					<div class="section">
-						<div class="row card-panel login-card-panel" style="width: 40%; margin: auto; margin-top: 10vh;">
+						<div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
 									<div class="row"> 
@@ -116,22 +134,21 @@ var contextpath = "${context}";
 										<hr style="margin-bottom: 30px;">
 
 										<div class="input-field col s12">
-
-											<label for="newPassword"
-												style="color: #000; font-size: 12px;">Username</label> <input
-												type="text" required="required" name="username"
+ 										<input type="text" required="required" name="username"
 												id="username" class="" maxlength="10" />
+										<label for="username">Username</label>
 										</div>
 
 										<div class="input-field col s12">
-
-											<label for="confirmPassword"
-												style="color: #000; font-size: 12px;">Password</label> <input
-												type="password" required="required" class="" name="password"
+										<input type="password" required="required" class="" name="password"
 												id="password" maxlength="10" />
+										<label for="password">Password</label> 
+										<div class="input-field-addon">
+										<a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
+										</div>
 										</div>
 
-										<div class="form-group form-actions">
+										<div class="form-group form-actions col s12 m12">
 											<span class="input-icon"> <img id="captchaImage"
 												src="${context}/captcha">
 												<button
@@ -141,10 +158,10 @@ var contextpath = "${context}";
 												</button> <%-- <img src="${context}/captcha"" id="captchaImage">
 						 <br>
                            <input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
-												<div class="input-field col s12 m6 l12">
+												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="captcha">Enter
+														required="required"> <label for="captcha" style="left:0.01rem;">Enter
 														your captcha <span class="star">*</span>
 													</label>
 												</div>
@@ -155,7 +172,7 @@ var contextpath = "${context}";
 										
 
 
-										<div class="row" style="margin-top: 30px;">
+										<div class="row" style="margin: 30px 0 20px 0;">
 											<div class="input-field col s12 m12 l12 center">
 												<%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>
 												<button type="submit" class="btn" id="save"
@@ -163,8 +180,9 @@ var contextpath = "${context}";
 											</div>
 										</div>
 
-							<a href="${context}/forgotPassword" class="right"> Forgot Password?</a> <br>
-							<a href="#" id="newUserLink" class="right"> New User</a>	
+							<a href="${context}/forgotPassword" class="right forgotPassword"> Forgot Password</a>
+							<span><a href="#" id="newUserLink" class="right"> New User?</a></span>	
+							
 
 									</div>
 
@@ -229,13 +247,11 @@ var contextpath = "${context}";
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
+
 <script type="text/javascript">
-
-
 $(document).ready(function () {
-	dataByTag("link_dmc_portal","newUserLink");
+	dataByTag("link_dmc_portal","newUserLink",1);
         });   
-        
 </script>
 </body>
 

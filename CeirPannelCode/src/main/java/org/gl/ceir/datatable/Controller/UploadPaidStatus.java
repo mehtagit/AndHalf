@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -103,6 +104,7 @@ public class UploadPaidStatus {
 				
 				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
+					String txnId = contentModelList.getTxnId();
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
@@ -116,7 +118,8 @@ public class UploadPaidStatus {
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
-					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,status,action};
+					
+					Object[] data = {sno,createdOn,nid,txnId,deviceTypeInterp,country,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -127,6 +130,7 @@ public class UploadPaidStatus {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String nid = contentModelList.getNid();
+					String txnId = contentModelList.getTxnId(); 
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
 					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
@@ -137,9 +141,9 @@ public class UploadPaidStatus {
 					
 					//params for action 
 					Long imei1 = contentModelList.getFirstImei();
-					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn);
+					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
-					Object[] data = {sno,createdOn,nid,deviceIDInterp,deviceTypeInterp,price,country,taxStatus,status,action};
+					Object[] data = {sno,createdOn,nid,txnId,deviceTypeInterp,country,taxStatus,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -173,16 +177,14 @@ public class UploadPaidStatus {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 
-		pageElement.setPageTitle("Upload Paid Status");
+		pageElement.setPageTitle(Translator.toLocale("view.uplaodpaidstatus"));
 
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
 
-		log.info("USER STATUS:::::::::"+userStatus);
-		log.info("session value user Type=="+session.getAttribute("usertype"));
-
-		String[] names= {"HeaderButton","Add Device","./add-device-information","btnLink","FilterButton", "filter","filter()","submitFilter"};
+		
+		String[] names= {"HeaderButton",Translator.toLocale("button.adddevice"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
 		for(int i=0; i< names.length ; i++) {
 			button = new Button();
 			button.setType(names[i]);
@@ -197,7 +199,7 @@ public class UploadPaidStatus {
 		pageElement.setButtonList(buttonList);
 
 		//Dropdown items			
-		String[] selectParam= {"select","Device ID Type ","deviceIDType","","select","Device Type ","deviceTypeFilter","","select","Tax Paid Status","taxPaidStatus",""};
+		String[] selectParam= {"select",Translator.toLocale("select.deviceIDType"),"deviceIDType","","select",Translator.toLocale("select.deviceType"),"deviceTypeFilter","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
 		for(int i=0; i< selectParam.length; i++) {
 			inputFields= new InputFields();
 			inputFields.setType(selectParam[i]);
@@ -213,7 +215,7 @@ public class UploadPaidStatus {
 
 		if("Custom".equals(userType)) {
 			//input type date list
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","",};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);
@@ -227,7 +229,7 @@ public class UploadPaidStatus {
 			}
 			}else {
 			//input type date list
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","NID/Passport No.","nId",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

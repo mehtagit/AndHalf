@@ -71,9 +71,9 @@
                             <div class="card-panel">
                                 <div class="row">
                                     <div class="col s12 m12">
-                                    <h5>View Information</h5>
+                                    <h5>View Company Information</h5>
                                     <hr>
-                                    <div class="row">
+                                    <div class="row" style="margin-top: 10px;">
                                         <div class="input-field col s12 m4 l4">
                                             <input type="text" name="firstName" id="firstName" value="${registration.firstName}" maxlength="20" placeholder="" disabled="">
                                             <label for="firstName" class="center-align active">First Name</label>
@@ -90,13 +90,13 @@
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="asType" disabled="" id="asType" value="${registration.type}" maxlength="20" placeholder="">
+                                            <input type="text" name="asType" disabled="" id="asType" value="${registration.asTypeName}" maxlength="20" placeholder="">
                                             <label for="asType" class="active">AsType</label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
                                             <input type="text" name="passportNumber" id="passportNumber" value="${registration.passportNo}" disabled="" maxlength="20">
-                                            <label for="passportNumber">National ID/Passport Number </label>
+                                            <label for="passportNumber">National IDs</label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6" id="companyName">
@@ -104,9 +104,9 @@
                                             <label for="company" class="active">Company Name </label>
                                         </div>
 
-                                        <div class="row myRow" style="display: none;" id="uploadFile">
+                                       <!--  <div class="row myRow" style="display: none;" id="uploadFile">
                                             <div class="col s12 m12">
-                                                <h6 class="file-upload-heading" style="margin-left: 15px;">Upload
+                                                <h6 class="file-upload-heading" style="margin-left: 15px;">Uploaded
                                                     Nationality
                                                     Information</h6>
                                                 <div class="file-field input-field col s12 m6" style="margin-top: 5px;">
@@ -119,7 +119,7 @@
                                                     </div>
                                                 </div><br><br>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="email" placeholder="" disabled="" id="email"  value="${registration.email}" maxlength="30">
@@ -144,21 +144,43 @@
                                             <input type="text" name="streetNumber" id="streetNumber" value="${registration.street}" disabled="" maxlength="30" placeholder="">
                                             <label for="streetNumber" class="active">Street Number </label>
                                         </div>
-
+										
+										<div class="input-field col s12 m6 l6">
+												<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
+												<label for="village">Village</label>
+										</div>
+											
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="locality" placeholder="" disabled="" id="locality" value="${registration.locality}" maxlength="20">
                                             <label for="locality" class="active">Locality </label>
                                         </div>
-
+                                        
+                                         <div class="input-field col s12 m6 l6">
+												<input type="text" name="district" id="district" maxlength="20" value="${registration.district	}" disabled="" placeholder="">
+												 <label for="district">District</label>
+										</div>
+                                        
+                                        
+                                         <div class="input-field col s12 m6 l6">
+                                                <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
+                                                <label for="commune" class="active">Commune </label>
+                                            </div>
+                                        
+										<div class="input-field col s12 m6 l6">
+												<input type="text" name="pin" id="pin" maxlength="20" value="${registration.postalCode}" disabled="" placeholder="">
+												<label for="pin">Postal code </label>
+										</div> 	
+										
+                                      	<div class="input-field col s12 m6 l6">
+                                            <input type="text" name="Country" placeholder="" disabled="" id="Country"  value="${registration.country}" maxlength="20">
+                                            <label for="Country" class="active">Country</label>
+                                        </div>
+                                      
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="province" placeholder="" disabled="" id="province" value="${registration.province}" maxlength="20">
                                             <label for="province" class="active">Province</label>
                                         </div>
 
-                                        <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="Country" placeholder="" disabled="" id="Country"  value="${registration.country}" maxlength="20">
-                                            <label for="Country" class="active">Country</label>
-                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -167,18 +189,18 @@
                                             <div class=" boxHeight">
                                                 <input class="with-gap" name="group3" type="radio" onclick="document.getElementById('vatNumberField').style.display = 'block';" disabled="">
                                                 Yes
-                                                <input class="with-gap" name="group3" type="radio" style="margin-left: 20px;" onclick="document.getElementById('vatNumberField').style.display = 'none';" disabled="" checked="">
+                                                <input class="with-gap" name="group3" type="radio" style="margin-left: 20px;" onclick="document.getElementById('vatNumberField').style.display = 'none';" disabled="">
                                                 No
                                             </div>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
-                                            <input type="text" name="roleType" disabled="" id="roleType"  value="${registration.roles}" maxlength="16" placeholder="">
+                                            <input type="text" name="roleType" disabled="" id="roleType"  value="${registration.type}" maxlength="16" placeholder="">
                                             <label for="roleType" class="active">Role Type</label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
-                                            <input type="text" name="vatNumber" disabled="" id="vatNumber"  value="${registration.vatNo}"  maxlength="16">
+                                            <input type="text" name="vatNumber" disabled="" id="vatNumber"  value="${registration.vatStatus}"  maxlength="16">
                                             <label for="vatNumber">VAT Number </label>
                                         </div>
                                     </div>

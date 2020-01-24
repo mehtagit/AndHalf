@@ -5,12 +5,12 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.pagination.model.MessageContentModel;
-import org.gl.ceir.pagination.model.PolicyConfigContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +35,8 @@ public class SystemAdminController {
 	}
 	
 	
+
+	
 	
 	@PostMapping("/message/viewTag") 
 	public @ResponseBody MessageContentModel policyViewTag (@RequestBody FilterRequest filterRequest)  {
@@ -45,5 +47,16 @@ public class SystemAdminController {
 		return response;
 
 		}
+	
+	
+	
+	@PutMapping("/message/update")
+	public @ResponseBody MessageContentModel updateMessage (@RequestBody MessageContentModel messageContentModel) {
+		log.info("request send update Messsage api="+messageContentModel);
+		messageContentModel = feignCleintImplementation.updateMessages(messageContentModel);
+		log.info("response from update Message api "+messageContentModel);
+		return messageContentModel;
+		
+	}
 	
 }

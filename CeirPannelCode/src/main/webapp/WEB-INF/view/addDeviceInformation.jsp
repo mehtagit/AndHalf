@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -154,7 +155,7 @@ input[type='search'] {
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
-								<p class="PageHeading">Add Device Information</p>
+								<p class="PageHeading"><spring:message code="registerconsignment.header.addDeviceInformation" /></p>
 								<!-- <a href="#addDevice" class="boton right modal-trigger">Add Device</a> -->
 							</div>
 							<div id="user123" class="section">
@@ -165,47 +166,44 @@ input[type='search'] {
 											<div class="row">
 												<div class="col s12 m12">
 													<div class="col s12 m12" style="margin-top: 30px;">
-														<h5>Device Information</h5>
+														<h5><spring:message code="modal.deviceInfo" /></h5>
 														<hr>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="deviceType1">Device Type <span
+														<label for="deviceType1"><spring:message code="select.deviceType" /><span
 															class="star">*</span></label> <select class="browser-default"
 															id="deviceType1" required="required">
-															<option value="" disabled selected>Select Device
-																Type</option>
+															<option value="" disabled selected><spring:message code="select.selectDeviceType" />
+																</option>
 
 
 														</select>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="deviceIdType1">Device ID Type <span
+														<label for="deviceIdType1"><spring:message code="select.deviceIDType" /><span
 															class="star">*</span></label> <select required="required"
 															class="browser-default" id="deviceIdType1">
-															<option value="" disabled selected>Select Device
-																ID Type</option>
+															<option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
 
 														</select>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="multipleSimStatus1">Multiple Sim
-															Status <span class="star">*</span>
+														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star">*</span>
 														</label> <select class="browser-default" required="required"
 															id="multipleSimStatus1">
-															<option value="" disabled selected>Select
+															<option value="" disabled selected><spring:message code="select.select" />
 														</select>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="country1">Country bought From <span
+														<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
 															class="star">*</span></label> <select id="country1"
 															class="browser-default" class="mySelect"
 															style="padding-left: 0;" required="required">
-															<option value="" disabled selected>Country
-																bought From
+															<option value="" disabled selected><spring:message code="select.countryBoughtFrom" />
 														</select>
 													</div>
 
@@ -214,17 +212,15 @@ input[type='search'] {
 														<input type="text" id="serialNumber1" name="serialNumber"
 															required="required" pattern="[A-Za-z0-9]{0,15}"
 															title="Please enter alphabets and numbers upto 15 characters only"
-															maxlength="15"> <label for="serialNumber1">Device
-															Serial Number <span class="star">*</span>
+															maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
 														</label>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="taxStatus1">Tax paid Status <span
+														<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
 															class="star">*</span></label> <select class="browser-default"
 															required="required" id="taxStatus1">
-															<option value="" disabled selected>Select Tax
-																paid Status</option>
+															<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
 
 														</select>
 													</div>
@@ -233,27 +229,25 @@ input[type='search'] {
 											<div class="row">
 												<div class="col s12 m12">
 													<div class="col s12 m6" style="margin-top: -10px;">
-														<label for="deviceStatus1">Device Status <span
+														<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
 															class="star">*</span></label> <select class="browser-default"
 															required="required" id="deviceStatus1">
-															<option value="" disabled selected>Select Device
-																Status</option>
+															<option value="" disabled selected><spring:message code="select.selectDeviceStatus" /></option>
 
 														</select>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="Price" id="Price1"
-															pattern="[0-9]{0,7}" required="required" maxlength="7">
-														<label for="Price1">Price <span class="star">*</span></label>
+															pattern="[0-9]{0,7}"  maxlength="7">
+														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
 
 													<div class="col s12 m6">
-														<label for="Currency1">Currency <span class="star">*</span></label>
+														<label for="Currency1"><spring:message code="input.currency" /><span class="star">*</span></label>
 														<select class="browser-default" id="Currency1"
 															required="required">
-															<option value="" disabled selected>Select
-																Currency</option>
+															<option value="" disabled selected><spring:message code="select.selectCurrency" /></option>
 
 														</select>
 													</div>
@@ -262,35 +256,34 @@ input[type='search'] {
 											<div class="row">
 												<div class="col s12 m12">
 													<div class='col s12 m12 input_fields_wrap'>
-														<p>IMEI/MEID/ESN</p>
+														<p><spring:message code="title.imeiMeidEsn" /></p>
 														<div class='row'>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
 																	pattern="[0-9]{15,16}" required
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16"> <label for="IMEIA1">1 <span
+																	maxlength="16"> <label for="IMEIA1"><spring:message code="title.one" /><span
 																	class="star">*</span></label>
 															</div>
-
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIB1" name="IMEI2"
 																	pattern="[0-9]{15,16}"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16"> <label for="IMEIB1">2</label>
+																	maxlength="16"> <label for="IMEIB1"><spring:message code="title.two" /></label>
 															</div>
 
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIC1" name="IMEIC3"
 																	pattern="[0-9]{15,16}"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16"> <label for="IMEIC1">3</label>
+																	maxlength="16"> <label for="IMEIC1"><spring:message code="title.three" /></label>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
 																<input type="text" id="IMEID1" name="IMEID4[]"
 																	pattern="[0-9]{15,16}"
 																	title="Please enter minimum 15 and maximum 16 digit only"
-																	maxlength="16" id="field0"> <label for="IMEID1">4</label>
+																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message code="title.four" /></label>
 															</div>
 														</div>
 													</div>
@@ -301,17 +294,17 @@ input[type='search'] {
 									<div class="col s12 m12">
 										<button class="btn right add_field_button"
 											style="margin-top: 5px;">
-											<span style="font-size: 20px;">+</span> Add More Device
+											<span style="font-size: 20px;">+</span><spring:message code="button.addMoreDevice" />
 										</button>
 										<p>
-											Required Field are marked with <span class="star">*</span>
+											<spring:message code="input.requiredfields" /> <span class="star">*</span>
 										</p>
 									</div>
 
 									<div class="col s12 m12 center" style="margin-top: 30px;">
-										<button class="btn " type="submit">Submit</button>
-										<input type='button' class="btn" id="redirectToPage" 
-												style="margin-left: 10px;" value="Cancel">
+										<button class="btn " type="submit"> <spring:message code="button.submit" /></button>
+										<button type='button' class="btn" id="redirectToPage" 
+												style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 									</div>
 
 								</form>
@@ -350,14 +343,14 @@ input[type='search'] {
 
 	<div id="payNowTaxPayment" class="modal">
 		<div class="modal-content">
-			<h6 class="modal-header">Add Device Information</h6>
+			<h6 class="modal-header"><spring:message code="registerconsignment.header.addDeviceInformation" /></h6>
 			<div class="row">
-				<h6>Your device has been successfully regularized</h6>
+				<h6><spring:message code="modal.regularizedDevice" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close btn">ok</button>
+						<button class="modal-close btn"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
@@ -369,16 +362,15 @@ input[type='search'] {
 
 	<div id="needToPayTax" class="modal">
 		<div class="modal-content">
-			<h6 class="modal-header">Pay Tax Information</h6>
+			<h6 class="modal-header"><spring:message code="modal.payTaxInfo" /></h6>
 			<div class="row">
-				<h6>You need to pay tax</h6>
+				<h6><spring:message code="modal.needTaxPay" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close btn">Pay now</button>
-						<button class="modal-close btn" style="margin-left: 10px;">Pay
-							Later</button>
+						<button class="modal-close btn"> <spring:message code="button.payNow" /></button>
+						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="button.payLater" /></button>
 					</div>
 				</div>
 			</div>
@@ -390,16 +382,16 @@ input[type='search'] {
 
 	<div id="payTaxModal" class="modal">
 		<div class="modal-content">
-			<h6 class="modal-header">Pay Tax Information</h6>
+			<h6 class="modal-header"><spring:message code="modal.payTaxInfo" /></h6>
 			<div class="row">
-				<h6>Do you confirm that tax has been paid?</h6>
+				<h6> <spring:message code="modal.taxHasBeenPaid" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<button class="modal-close modal-trigger btn"
-							data-target="payNowTaxPayment">Yes</button>
-						<button class="modal-close btn" style="margin-left: 10px;">No</button>
+							data-target="payNowTaxPayment"><spring:message code="modal.yes" /></button>
+						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
@@ -407,321 +399,20 @@ input[type='search'] {
 	</div>
 	<!-- Pay Tax Modal End -->
 
-	<!-- Modal 1 start   -->
-
-	<div id="ApproveConsignment" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Approve Consignment</h6>
-			<div class="row">
-				<h6>The tax against the consignment with (Importer/Company
-					name) having Transaction ID:___________ has been successfully paid.</h6>
-			</div>
-			<div class="row">
-				<h6>Do you approve the consignment?</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
-							data-target="confirmApproveConsignment">Yes</button>
-						<button class="modal-close btn" style="margin-left: 10px;">No</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 2 start   -->
-
-	<div id="confirmApproveConsignment" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Approve Consignment</h6>
-			<div class="row">
-				<h6>The consignment has been successfully approved.</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close btn">ok</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 3 start   -->
-
-	<div id="RejectConsignment" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Reject Consignment</h6>
-			<div class="row">
-				<h6>Do you really want to mark the consignment
-					(Importer/Company name) having Transaction ID:___________ as
-					rejected.</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 m12" style="margin-left: -10px;">
-					<textarea id="textarea1" class="materialize-textarea"
-						style="padding-left: 0;"></textarea>
-					<label for="textarea1">Remarks</label>
-				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
-							data-target="confirmRejectConsignment">Yes</button>
-						<button class="modal-close btn" style="margin-left: 10px;">No</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 4 start   -->
-
-	<div id="confirmRejectConsignment" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Reject Consignment</h6>
-			<div class="row">
-				<h6>The consignment has been marked as rejected.</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close btn">ok</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-
-	<!-- Modal 4 start   -->
-
-	<div id="manageAccount" class="modal">
-		<div class="modal-content">
-			<!-- <h4 class="header2 pb-2">User Info</h4> -->
-			<h6 class="modal-header">Manage Account</h6>
-			<p>Request CEIR ADMIN to</p>
-			<div class="row" style="height: 30px;">
-				<p>
-					<label style="margin-right: 50px"> <input type="radio"
-						onclick="document.getElementById('calender').style.display = 'none';"
-						name="stolen"><span> Deactivate</span></label>Permanently delete
-					the account, you will not be able to login into the portal.
-				</p>
-			</div>
-			<div class="row" style="height: 30px;">
-				<p>
-					<label style="margin-right: 67px"> <input type="radio"
-						onclick="document.getElementById('calender').style.display = 'block';"
-						name="stolen"><span> Disable</span></label>All the action will be
-					disabled, only view option will be available
-				</p>
-			</div>
-
-			<div class="input-field col s12 center">
-				<button class="btn modal-trigger modal-close"
-					data-target="manageAccountSubmit">Submit</button>
-				<a href="consignment.html" class="btn" style="margin-left: 10px;">Cancel</a>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 4 start   -->
-
-	<div id="manageAccountSubmit" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Manage Account</h6>
-			<h6>The request has been successfully registered with CEIR
-				Admin. Please find confirmation over registered mail in 2 to 3
-				working days.</h6>
-			<div class="input-field col s12 center">
-				<button class="btn modal-close">ok</button>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 2 start   -->
-
-	<div id="submitActivateDeactivate" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Manage Account</h6>
-			<div class="row">
-				<h6>The request has been successfully registered with CEIR
-					Admin. Please find the confirmation over registered mail <
-					mail@mail.com> in 2 to 3 working days.</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn"
-							style="margin-left: 10px;" type="submit" name="add_user"
-							id="add_user">Cancel</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Modal 2 start   -->
-
-	<div id="cancelActivateDeactivate" class="modal">
-		<div class="modal-content">
-			<div class="row">
-				<h6>Do you want to cancel the request?</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a href="consignment.html" class="btn" type="submit"
-							name="add_user" id="add_user">yes</a> <a
-							href="#activateDeactivate" class="modal-close modal-trigger btn"
-							style="margin-left: 10px;">no</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-
-
-	<!-- Change Passowrd Modal start   -->
-
-	<div id="changePassword" class="modal" style="width: 40%;">
-		<button type="button"
-			class=" modal-action modal-close waves-effect waves-green btn-flat right"
-			data-dismiss="modal">&times;</button>
-		<div class="modal-content">
-			<h6 class="modal-header">Change Password</h6>
-			<div class="row">
-				<div class="col s1">
-					<i class="fa fa-lock" aria-hidden="true"
-						style="font-size: 30px; margin-top: 20px; color: #ff4081;"></i>
-				</div>
-				<div class="input-field col s11">
-					<input type="text" id="oldPassword" class="validate" maxlength="10" />
-					<label for="oldPassword" class="center-align" style="color: #000;">
-						Old Password </label>
-					<div class="password"></div>
-				</div>
-
-				<div class="col s1">
-					<span class="fa-passwd-reset fa-stack"
-						style="margin-top: 20px; color: #ff4081;"> <i
-						class="fa fa-undo fa-stack-2x"></i> <i
-						class="fa fa-lock fa-stack-1x"></i>
-					</span>
-				</div>
-				<div class="input-field col s11">
-
-					<label for="newPassword" style="color: #000;">New Password</label>
-					<input type="text" id="newPassword" class="" maxlength="10" />
-				</div>
-
-				<div class="col s1">
-					<i class="fa fa-check-square-o" aria-hidden="true"
-						style="font-size: 28px; margin-top: 20px; color: #ff4081;"></i>
-				</div>
-				<div class="input-field col s11">
-
-					<label for="confirmPassword" style="color: #000;">Confirm
-						Password</label> <input type="text" class="" id="confirmPassword"
-						maxlength="10" />
-				</div>
-			</div>
-			<div class="row" style="margin-top: 30px;">
-				<div class="input-field col s12 m12 l12 center">
-					<a href="login.html" class="btn" type="button" id="save"
-						style="width: 100%;">Save</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal End -->
-
-	<!-- modal start -->
-	<div id="changePasswordMessage" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Change Password</h6>
-			<div class="row">
-				<h6>Your Password has been changed</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a href="#" class="btn modal-close">ok</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
-	<!-- Pay Tax Modal start   -->
-
-	<div id="payTaxModal" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Pay Tax Information</h6>
-			<div class="row">
-				<h6>Do you confirm that tax has been paid?</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
-							data-target="payNowTaxPayment">Yes</button>
-						<button class="modal-close modal-trigger btn"
-							style="margin-left: 10px;" data-target="needToPayTax">No</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Pay Tax Modal End -->
-
-	<!-- Modal start   -->
-
-	<div id="logoutMsg" class="modal">
-		<div class="modal-content">
-			<h6 class="modal-header">Logout</h6>
-			<div class="row">
-				<h6>Do you want to exit the CEIR portal?</h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<a href="login.html" class=" btn">yes</a>
-						<button class="modal-close btn" style="margin-left: 10px;">no</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
-
+	
+	
 	<!-- Modal 2 start   -->
 
 	<div id="addDevice" class="modal">
 		<div class="modal-content">
-			<h6 class="modal-header">Add Device</h6>
+			<h6 class="modal-header"><spring:message code="button.adddevice" /></h6>
 			<div class="row">
 				<div class="row">
 
 					<div class="col s12 m6">
-						<label for="deviceType">Device Type <span class="star">*</span></label>
+						<label for="deviceType"><spring:message code="select.deviceType" /><span class="star">*</span></label>
 						<select class="browser-default" id="deviceType">
-							<option value="" disabled selected>Device Type</option>
+							<option value="" disabled selected><spring:message code="select.deviceType" /></option>
 							<option value="Handheld">Handheld</option>
 							<option value="MobilePhone">Mobile Phone/Feature phone</option>
 							<option value="Vehicle">Vehicle</option>
@@ -738,17 +429,17 @@ input[type='search'] {
 					</div>
 
 					<div class="col s12 m6">
-						<label for="deviceType">Multiple Sim Status <span
+						<label for="deviceType"><spring:message code="select.multiSimStatus" /> <span
 							class="star">*</span></label> <select class="browser-default"
 							id="deviceType">
-							<option value="" disabled selected>Multiple Sim Status</option>
+							<option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
 							<option value="Yes">Yes</option>
 							<option value="No">No</option>
 						</select>
 					</div>
 
 					<div class="col s12 m6">
-						<label for="country">Country bought From <span
+						<label for="country"><spring:message code="select.countryBoughtFrom" /> <span
 							class="star">*</span></label> <select id="country"
 							class="browser-default" class="mySelect" style="padding-left: 0;"
 							required></select>
@@ -758,61 +449,59 @@ input[type='search'] {
 						<input type="text" id="serialNumber" name="serialNumber"
 							pattern="[0-9]"
 							title="Please enter your device serial number first"
-							maxlength="20"> <label for="serialNumber">Device
-							Serial Number <span class="star">*</span>
+							maxlength="20"> <label for="serialNumber"><spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
 						</label>
 					</div>
 
 					<div class="col s12 m6">
-						<label for="deviceType">Tax paid Status <span class="star">*</span></label>
+						<label for="deviceType"><spring:message code="select.taxPaidStatus" /><span class="star">*</span></label>
 						<select class="browser-default" id="deviceType">
-							<option value="" disabled selected>Tax paid Status</option>
+							<option value="" disabled selected><spring:message code="select.taxPaidStatus" /></option>
 							<option value="Regularized">Regularized</option>
 							<option value="Paid">Paid</option>
-							<option value="NotPaid">Not Paid</option>
+							<option value="NotPaid">Not Paid </option>
 						</select>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col s12 m12">
-						<p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+						<p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
 					</div>
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI1">1 <span
+							maxlength="16"> <label for="IMEI1"><spring:message code="title.one" /><span
 							class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI2">2</label>
+							maxlength="16"> <label for="IMEI2"><spring:message code="title.two" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI3">3</label>
+							maxlength="16"> <label for="IMEI3"><spring:message code="title.three" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI4">4</label>
+							maxlength="16"> <label for="IMEI4"><spring:message code="title.four" /></label>
 					</div>
 
 					<div class="col s12 m12">
-						<p>
-							Required Field are marked with <span class="star">*</span>
+						<p><spring:message code="input.requiredfields" /><span class="star">*</span>
 						</p>
 					</div>
 
 					<div class="col s12 m12 center" style="margin-top: 10px;">
 						<button class="btn modal-trigger modal-close"
-							data-target="submitMsg">Submit</button>
+							data-target="submitMsg"><spring:message code="button.submit" /></button>
 						<button class="btn modal-trigger modal-close"
-							data-target="cancelMsg" style="margin-left: 10px;">Cancel</button>
+							data-target="cancelMsg" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 					</div>
 
 				</div>
@@ -825,19 +514,19 @@ input[type='search'] {
 
 	<div id="viewDeviceInformation" class="modal">
 		<div class="modal-content">
-			<h6 class="modal-header">View Device Information</h6>
+			<h6 class="modal-header"><spring:message code="modal.viewDeviceInfo" /></h6>
 			<div class="row">
 				<div class="row">
 
 					<div class="col s12 m6">
-						<label for="deviceType">Device Type <span class="star">*</span></label>
+						<label for="deviceType"><spring:message code="select.deviceType" /><span class="star">*</span></label>
 						<select class="browser-default" id="deviceType" disabled>
-							<option value="MobilePhone">Mobile Phone/Feature phone</option>
+							<option value="MobilePhone"><spring:message code="select.mobileFeature" /></option>
 						</select>
 					</div>
 
 					<div class="col s12 m6">
-						<label for="deviceType">Multiple Sim Status <span
+						<label for="deviceType"><spring:message code="select.multiSimStatus" /><span
 							class="star">*</span></label> <select class="browser-default"
 							id="deviceType" disabled>
 							<option value="Yes">Yes</option>
@@ -845,7 +534,7 @@ input[type='search'] {
 					</div>
 
 					<div class="col s12 m6" style="margin-top: 3px;">
-						<label for="country">Country bought From <span
+						<label for="country"><spring:message code="select.countryBoughtFrom" /><span
 							class="star">*</span></label> <input type="text" id="country"
 							name="country" placeholder="" disabled>
 					</div>
@@ -855,49 +544,49 @@ input[type='search'] {
 							pattern="[0-9]"
 							title="Please enter your device serial number first"
 							maxlength="20" placeholder="" disabled> <label
-							for="serialNumber">Device Serial Number <span
+							for="serialNumber"><spring:message code="input.deviceSerialNumber" /><span
 							class="star">*</span></label>
 					</div>
 
 					<div class="col s12 m6">
-						<label for="deviceType">Tax paid Status <span class="star">*</span></label>
+						<label for="deviceType"> <spring:message code="select.taxPaidStatus" /><span class="star">*</span></label>
 						<select class="browser-default" id="deviceType" disabled>
-							<option value="Regularized">Regularized</option>
+							<option value="Regularized"> <spring:message code="select.regularized" /></option>
 						</select>
 					</div>
 				</div>
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12">
-						<p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+						<p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
 					</div>
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI1" name="IMEI1" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" disabled> <label
-							for="IMEI1">1 <span class="star">*</span></label>
+							for="IMEI1"><spring:message code="title.one" /><span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI2" name="IMEI2" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
 							maxlength="16" placeholder="" disabled>
-						<label for="IMEI2">2</label>
+						<label for="IMEI2"><spring:message code="title.two" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI3" name="IMEI3" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI3">3</label>
+							maxlength="16"> <label for="IMEI3"><spring:message code="title.three" /></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="IMEI4" name="IMEI4[]" pattern="[0-9]"
 							title="Please enter minimum 15 and maximum 16 digit only"
-							maxlength="16"> <label for="IMEI4">4</label>
+							maxlength="16"> <label for="IMEI4"><spring:message code="title.four" /></label>
 					</div>
 
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-						<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+						<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 					</div>
 
 				</div>
@@ -909,19 +598,18 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="cancelMsg" class="modal">
-		<h6 class="modal-header">Cancel Request</h6>
+		<h6 class="modal-header"><spring:message code="modal.cancelrequest" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Are you sure you want to close this window. The form data
-					will be lost?</h6>
+				<h6><spring:message code="modal.dataWillBeLost" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<!-- <button class="modal-close btn">yes</button> -->
-						<a href="./uploadPaidStatus" class="btn">Yes</a>
-						<button class="modal-close btn" style="margin-left: 10px;">no</button>
+						<a href="./uploadPaidStatus" class="btn"><spring:message code="modal.yes" /></a>
+						<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
 			</div>
@@ -932,18 +620,16 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="regularisedDevice" class="modal">
-		<h6 class="modal-header">Upload Paid Device</h6>
+		<h6 class="modal-header"><spring:message code="modal.uploadPaidDevice" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">
-					Your form has been successfully submitted. The Transaction ID for
-					future reference is <span id="dynamicTxnId"></span>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef" />  <span id="dynamicTxnId"></span>
 				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<input type="button" value="ok" id="ok" class="btn">
+						<input type="button" value="ok" id="ok" class="btn"><spring:message code="modal.ok" />
 					</div>
 				</div>
 			</div>
@@ -951,17 +637,17 @@ input[type='search'] {
 	</div>
 
 	<div id="deleteMsg" class="modal">
-		<h6 class="modal-header">Delete</h6>
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Are you sure you want to Delete this device information?</h6>
+				<h6><spring:message code="modal.deleteDeviceInfo" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<button class="modal-close modal-trigger btn"
-						data-target="confirmDeleteMsg">yes</button>
-					<button class="modal-close btn" style="margin-left: 10px;">no</button>
+						data-target="confirmDeleteMsg"><spring:message code="modal.yes" /></button>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
 		</div>
@@ -971,15 +657,15 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="confirmDeleteMsg" class="modal">
-		<h6 class="modal-header">Delete</h6>
+		<h6 class="modal-header"> <spring:message code="modal.header.delete" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>This device information has been successfully deleted.</h6>
+				<h6><spring:message code="modal.deviceInfoDeleted" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<button class="modal-close btn">ok</button>
+					<button class="modal-close btn"><spring:message code="modal.ok" /></button>
 				</div>
 			</div>
 		</div>
@@ -989,17 +675,16 @@ input[type='search'] {
 	<!-- Modal start   -->
 
 	<div id="submitMsg" class="modal">
-		<h6 class="modal-header">Submit Request</h6>
+		<h6 class="modal-header"> <spring:message code="modal.submitRequest" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
-				<h6>Your request has been successfully submitted.</h6>
+				<h6><spring:message code="modal.requestSubmit" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close btn">ok</button>
-						<!-- <a href="uploadPaidStatus1.htm" class="btn">ok</a> -->
+						<button class="modal-close btn"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>
@@ -1026,6 +711,37 @@ input[type='search'] {
 
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+		
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	 <script type="text/javascript"
 		src="${context}/resources/project_js/addDeviceInfo.js"></script>
 	<!-- ================================================

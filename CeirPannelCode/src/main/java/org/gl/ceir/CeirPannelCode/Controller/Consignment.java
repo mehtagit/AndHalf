@@ -27,6 +27,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,12 @@ import com.google.gson.Gson;
 
 public class Consignment {
 
+	@Value ("${filePathforUploadFile}")
+	String filePathforUploadFile;
 
+	@Value ("${filePathforMoveFile}")
+	String filePathforMoveFile;
+	
 @Autowired
 
 FeignCleintImplementation feignCleintImplementation;
@@ -70,7 +76,8 @@ ModelAndView mv = new ModelAndView();
 
 
 
-log.info(" view consignment entry point."); 
+log.info(" view consignment entry point................."); 
+ 
 mv.setViewName("viewConsignment");
 log.info(" view consignment exit point."); 
 return mv; 
@@ -165,7 +172,7 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) int currency) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency) {
 
 String userName=session.getAttribute("username").toString();
 String userId= session.getAttribute("userid").toString();
@@ -177,7 +184,7 @@ log.info("Random transaction id number="+txnNumner);
 ConsignmentModel consignment = new ConsignmentModel();
 try {
 byte[] bytes = file.getBytes();
-String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnNumner+"/";
+String rootPath = filePathforUploadFile+txnNumner+"/";
 File dir = new File(rootPath + File.separator);
 
 if (!dir.exists()) 
@@ -261,16 +268,16 @@ consignment.setTotalPrice(totalPrice);
 else {
 log.info("file is empty or not "+file.isEmpty());
 try {
-String rootPath = "/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/";
+String rootPath = filePathforUploadFile+txnId+"/";
 File tmpDir = new File(rootPath+file.getOriginalFilename());
 boolean exists = tmpDir.exists();
 if(exists) {
 
 Path temp = Files.move 
-(Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/Design/"+txnId+"/"+file.getOriginalFilename()), 
-Paths.get("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename())); 
-String movedPath="/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFiles/"+file.getOriginalFilename();	
-// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
+(Paths.get(filePathforUploadFile+"/"+txnId+"/"+file.getOriginalFilename()), 
+Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
+String movedPath=filePathforMoveFile+file.getOriginalFilename();	
+
 log.info("file is already exist, moved to this "+movedPath+" path. ");
 tmpDir.delete();
 }
@@ -416,31 +423,37 @@ return consignmentdetails;
 
 
 //************************************************* download file *************************************************************** 
-@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype) throws IOException {
+
+@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+//@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
+
+public String downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+
 
 log.info("inside file download method");
-log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")");
-String response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "));
+log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
+FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
-return "redirect:"+response;
+return "redirect:"+response.getUrl();
 }
 
 
 //*********************************************** Download Sampmle file *************************************************
-@RequestMapping(value="/sampleFileDownload/{filetype}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String downloadSampleFile(@PathVariable("filetype") String filetype) throws IOException {
-log.info("request send to the sample file download api="+filetype);
-String response=feignCleintImplementation.downloadSampleFile(filetype);
+@RequestMapping(value="/sampleFileDownload/{featureId}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+public String downloadSampleFile(@PathVariable("featureId") String  featureId) throws IOException {
+log.info("request send to the sample file download api="+featureId);
+int featureIdForFile=Integer.parseInt(featureId);
+
+FileExportResponse response=feignCleintImplementation.downloadSampleFile(featureIdForFile);
 log.info("response from sample file download file "+response);
 
-return "redirect:"+response;
+return "redirect:"+response.getUrl();
 
 }
 
 //***********************************************cuurency controller *************************************************
 @RequestMapping(value="/consignmentCurency",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("currency") String currency)  {
+public @ResponseBody List<Dropdown> cuurencyforRegisterConsignment(@RequestParam("CURRENCY") String currency)  {
 log.info("request send to the currency  api="+currency);
 List<Dropdown> response= new ArrayList<Dropdown>();
 response=feignCleintImplementation.taxPaidStatusList(currency);
@@ -458,6 +471,8 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	log.info("consignmentStartDate=="+consignmentStartDate+ " consignmentEndDate ="+consignmentEndDate+" consignmentTxnId="+consignmentTxnId+"consignmentTaxPaidStatus="+consignmentTaxPaidStatus+" filterConsignmentStatus="+filterConsignmentStatus);
 	int userId= (int) session.getAttribute("userid"); 
 	int file=1;
+	String userType=(String) session.getAttribute("usertype");
+	Integer usertypeId=(int) session.getAttribute("usertypeId");
 	FileExportResponse fileExportResponse;
 	FilterRequest filterRequest= new FilterRequest();
 	filterRequest.setStartDate(consignmentStartDate);
@@ -466,6 +481,9 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setTaxPaidStatus(consignmentTaxPaidStatus);
 	filterRequest.setConsignmentStatus(filterConsignmentStatus);
 	filterRequest.setUserId(userId);
+	filterRequest.setUserType(userType);
+	filterRequest.setUserTypeId(usertypeId);
+	filterRequest.setFeatureId(3);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
 

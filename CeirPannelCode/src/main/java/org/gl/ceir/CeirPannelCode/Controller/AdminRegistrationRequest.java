@@ -47,6 +47,7 @@ public class AdminRegistrationRequest {
 		log.info("ID------------>"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
 		
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
+		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
 		
 		log.info(" view trcInformation entry point."+registration+"---ID-----"+id); 
@@ -64,11 +65,11 @@ public class AdminRegistrationRequest {
 			log.info("-------------------->3");
 			mv.setViewName("viewCustom");
 			
-		}else if("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles) && "Company".equals(asType)){
+		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType)){
 			log.info("-------------------->4");
 			mv.setViewName("viewCompany");
 			
-		}else if("Individual".equals(asType) && "Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)){
+		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Individual".equals(asType)){
 			log.info("-------------------->5");
 			mv.setViewName("viewIndividual");
 		}

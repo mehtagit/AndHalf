@@ -80,7 +80,7 @@ public class MessageDatatableController {
 					   String tag = dataInsideList.getTag();
 					   String description = dataInsideList.getDescription();
 					   String value = dataInsideList.getValue();
-					   String channel = "";
+					   String channel = dataInsideList.getChannelInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 					   String action=iconState.adminMessageIcons(userStatus,tag);			   
@@ -119,7 +119,7 @@ public class MessageDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("System Message Management");
+		pageElement.setPageTitle("Message Management");
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
