@@ -1,28 +1,37 @@
 package com.gl.ceir.config.model.file;
 
+import com.opencsv.bean.CsvBindByPosition;
+
 public class ConsignmentFileModel {
-	private Long consignmentId;
-	
-	private String consignmentStatus;
-	
+
+	@CsvBindByPosition(position = 0)
 	private String txnId;
-
+	@CsvBindByPosition(position = 1)
+	private String consignmentStatus;
+	@CsvBindByPosition(position = 2)
 	private String supplierName;
-	
-	private String TaxPaidStatus;
-	
+	@CsvBindByPosition(position = 3)
+	private String taxPaidStatus;
+	@CsvBindByPosition(position = 4)
 	private String fileName;
-	
+	@CsvBindByPosition(position = 5)
 	private String createdOn;
-
+	@CsvBindByPosition(position = 6)
 	private String modifiedOn;
 
-	public Long getConsignmentId() {
-		return consignmentId;
+	public ConsignmentFileModel() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setConsignmentId(Long consignmentId) {
-		this.consignmentId = consignmentId;
+	public ConsignmentFileModel(String consignmentStatus, String txnId, String supplierName, 
+			String taxPaidStatus, String fileName, String createdOn, String modifiedOn) {
+		this.consignmentStatus = consignmentStatus;
+		this.txnId = txnId;
+		this.supplierName = supplierName;
+		this.taxPaidStatus = taxPaidStatus;
+		this.fileName = fileName;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
 	}
 
 	public String getConsignmentStatus() {
@@ -50,11 +59,11 @@ public class ConsignmentFileModel {
 	}
 
 	public String getTaxPaidStatus() {
-		return TaxPaidStatus;
+		return taxPaidStatus;
 	}
 
 	public void setTaxPaidStatus(String taxPaidStatus) {
-		TaxPaidStatus = taxPaidStatus;
+		this.taxPaidStatus = taxPaidStatus;
 	}
 
 	public String getFileName() {
@@ -84,24 +93,23 @@ public class ConsignmentFileModel {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-		.append("ConsignmentFileModel [consignmentId=")
-		.append(consignmentId)
-		.append(", consignmentStatus=")
-		.append(consignmentStatus)
-		.append(", txnId=")
-		.append(txnId)
-		.append(", supplierName=")
-		.append(supplierName)
-		.append(", TaxPaidStatus=")
-		.append(TaxPaidStatus)
-		.append(", fileName=")
-		.append(fileName)
-		.append(", createdOn=")
-		.append(createdOn)
-		.append(", modifiedOn=")
-		.append(modifiedOn)
-		.append("]");
-		
+				.append("ConsignmentFileModel [")
+				.append("consignmentStatus=")
+				.append(consignmentStatus)
+				.append(", txnId=")
+				.append(txnId)
+				.append(", supplierName=")
+				.append(supplierName)
+				.append(", taxPaidStatus=")
+				.append(taxPaidStatus)
+				.append(", fileName=")
+				.append(fileName)
+				.append(", createdOn=")
+				.append(createdOn)
+				.append(", modifiedOn=")
+				.append(modifiedOn)
+				.append("]");
+
 		return builder.toString();
 	}
 

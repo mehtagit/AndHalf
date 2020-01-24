@@ -74,7 +74,7 @@ public class ConsignmentController {
 
 		logger.info("Request TO view TO all record of user="+userId);
 
-		List<ConsignmentMgmt>  consignment =  consignmentServiceImpl.getAll(userId);
+		List<ConsignmentMgmt> consignment =  consignmentServiceImpl.getAll(userId);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 		logger.info("Response of view Request = " + mapping);
 
