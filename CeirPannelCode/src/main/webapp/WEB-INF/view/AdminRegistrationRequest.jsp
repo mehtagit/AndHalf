@@ -184,13 +184,7 @@
     
     
     
-    
-    <div id="ApproveConsignment" class="modal ui-draggable" style="z-index: 1003; display: block; opacity: 1; transform: scaleX(1); top: 10%;">
-		<h6 class="modal-header ui-draggable-handle">
-			Approve Consignment
-		</h6>
-	
-	</div>
+
     
 	
 	<!--materialize js-->

@@ -334,8 +334,18 @@ function exportButton(){
 }
 
 
-$('#previewphotofile').click(function(e) {  
-    alert(1);
- 
-
-});
+function previewFile(srcFilePath,srcFileName){
+	window.filePath = srcFilePath;
+	window.fileName = srcFileName;
+	window.fileExtension = fileName.replace(/^.*\./, '');
+	window.FinalLink = filePath.concat(fileName);
+	
+	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
+		console.log("File is not Avialable")
+	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
+		$("#viewuplodedModel").openModal();
+		$("#fileSource").attr("src",FinalLink);
+	}else{
+		 window.open(FinalLink);
+	}
+}

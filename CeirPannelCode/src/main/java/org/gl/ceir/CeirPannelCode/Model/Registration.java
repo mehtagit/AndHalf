@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Registration {
 	private long id;
@@ -45,32 +46,16 @@ public class Registration {
 	private String arrivalPortName;
     private String vatFilename;
     private String userLanguage;
-    
-	public Registration() {};
-	public ArrayList<QuestionPair> getQuestionList() {
-		return questionList;
+    private String nidFilePath;
+    private String photoFilePath;
+    private String idCardFilePath;
+    private String vatFilePath;
+	public long getId() {
+		return id;
 	}
-	public void setQuestionList(ArrayList<QuestionPair> questionList) {
-		this.questionList = questionList;
+	public void setId(long id) {
+		this.id = id;
 	}
-
-	/*
-	 * public class QuestionPair{ private Integer question; private String answer;
-	 * public QuestionPair(){};
-	 * 
-	 * public Integer getQuestion() { return question; }
-	 * 
-	 * public void setQuestion(Integer question) { this.question = question; }
-	 * 
-	 * public String getAnswer() { return answer; }
-	 * 
-	 * public void setAnswer(String answer) { this.answer = answer; }
-	 * 
-	 * @Override public String toString() { return "QuestionPair [question=" +
-	 * question + ", answer=" + answer + "]"; }
-	 * 
-	 * }
-	 */
 	public String getFirstName() {
 		return firstName;
 	}
@@ -89,11 +74,83 @@ public class Registration {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	public String getPassportNo() {
+		return passportNo;
+	}
+	public void setPassportNo(String passportNo) {
+		this.passportNo = passportNo;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
 	public String getCompanyName() {
 		return companyName;
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public String getPropertyLocation() {
+		return propertyLocation;
+	}
+	public void setPropertyLocation(String propertyLocation) {
+		this.propertyLocation = propertyLocation;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
+	public String getLocality() {
+		return locality;
+	}
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+	public Integer getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(Integer postalCode) {
+		this.postalCode = postalCode;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public Integer getType() {
 		return type;
@@ -119,62 +176,17 @@ public class Registration {
 	public void setVatNo(String vatNo) {
 		this.vatNo = vatNo;
 	}
-	public String getPropertyLocation() {
-		return propertyLocation;
+	public ArrayList<QuestionPair> getQuestionList() {
+		return questionList;
 	}
-	public void setPropertyLocation(String propertyLocation) {
-		this.propertyLocation = propertyLocation;
+	public void setQuestionList(ArrayList<QuestionPair> questionList) {
+		this.questionList = questionList;
 	}
-	public String getStreet() {
-		return street;
-	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	public String getLocality() {
-		return locality;
-	}
-	public void setLocality(String locality) {
-		this.locality = locality;
-	}
-	public String getProvince() {
-		return province;
-	}
-	public void setProvince(String province) {
-		this.province = province;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getPassportNo() {
-		return passportNo;
-	}
-	public void setPassportNo(String passportNo) {
-		this.passportNo = passportNo;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-
-	public Long[] getRoles() {
-		return roles;
-	}
-	public void setRoles(Long[] roles) {
-		this.roles = roles;
 	}
 	public String getRePassword() {
 		return rePassword;
@@ -182,18 +194,17 @@ public class Registration {
 	public void setRePassword(String rePassword) {
 		this.rePassword = rePassword;
 	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public Long[] getRoles() {
+		return roles;
+	}
+	public void setRoles(Long[] roles) {
+		this.roles = roles;
 	}
 	public String getCaptcha() {
 		return captcha;
@@ -201,11 +212,11 @@ public class Registration {
 	public void setCaptcha(String captcha) {
 		this.captcha = captcha;
 	}
-	public long getId() {
-		return id;
+	public String getUsertypeName() {
+		return usertypeName;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setUsertypeName(String usertypeName) {
+		this.usertypeName = usertypeName;
 	}
 	public String getEmployeeId() {
 		return employeeId;
@@ -243,8 +254,6 @@ public class Registration {
 	public void setAuthorityPhoneNo(String authorityPhoneNo) {
 		this.authorityPhoneNo = authorityPhoneNo;
 	}
-	
-
 	public String getOperatorTypeName() {
 		return operatorTypeName;
 	}
@@ -257,15 +266,6 @@ public class Registration {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
-	
-	public String getUsertypeName() {
-		return usertypeName;
-	}
-	public void setUsertypeName(String usertypeName) {
-		this.usertypeName = usertypeName;
-	}
-	
-
 	public String getNidFilename() {
 		return nidFilename;
 	}
@@ -283,31 +283,6 @@ public class Registration {
 	}
 	public void setIdCardFilename(String idCardFilename) {
 		this.idCardFilename = idCardFilename;
-	}
-	
-	public String getVillage() {
-		return village;
-	}
-	public void setVillage(String village) {
-		this.village = village;
-	}
-	public String getDistrict() {
-		return district;
-	}
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-	public String getCommune() {
-		return commune;
-	}
-	public void setCommune(String commune) {
-		this.commune = commune;
-	}
-	public Integer getPostalCode() {
-		return postalCode;
-	}
-	public void setPostalCode(Integer postalCode) {
-		this.postalCode = postalCode;
 	}
 	public Integer getArrivalPort() {
 		return arrivalPort;
@@ -327,105 +302,58 @@ public class Registration {
 	public void setVatFilename(String vatFilename) {
 		this.vatFilename = vatFilename;
 	}
-	
 	public String getUserLanguage() {
 		return userLanguage;
 	}
 	public void setUserLanguage(String userLanguage) {
 		this.userLanguage = userLanguage;
 	}
+	public String getNidFilePath() {
+		return nidFilePath;
+	}
+	public void setNidFilePath(String nidFilePath) {
+		this.nidFilePath = nidFilePath;
+	}
+	public String getPhotoFilePath() {
+		return photoFilePath;
+	}
+	public void setPhotoFilePath(String photoFilePath) {
+		this.photoFilePath = photoFilePath;
+	}
+	public String getIdCardFilePath() {
+		return idCardFilePath;
+	}
+	public void setIdCardFilePath(String idCardFilePath) {
+		this.idCardFilePath = idCardFilePath;
+	}
+	public String getVatFilePath() {
+		return vatFilePath;
+	}
+	public void setVatFilePath(String vatFilePath) {
+		this.vatFilePath = vatFilePath;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Registration [id=");
-		builder.append(id);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", middleName=");
-		builder.append(middleName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", passportNo=");
-		builder.append(passportNo);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", phoneNo=");
-		builder.append(phoneNo);
-		builder.append(", companyName=");
-		builder.append(companyName);
-		builder.append(", propertyLocation=");
-		builder.append(propertyLocation);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", village=");
-		builder.append(village);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", district=");
-		builder.append(district);
-		builder.append(", commune=");
-		builder.append(commune);
-		builder.append(", postalCode=");
-		builder.append(postalCode);
-		builder.append(", province=");
-		builder.append(province);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", asTypeName=");
-		builder.append(asTypeName);
-		builder.append(", vatStatus=");
-		builder.append(vatStatus);
-		builder.append(", vatNo=");
-		builder.append(vatNo);
-		builder.append(", questionList=");
-		builder.append(questionList);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", rePassword=");
-		builder.append(rePassword);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", roles=");
-		builder.append(roles);
-		builder.append(", captcha=");
-		builder.append(captcha);
-		builder.append(", usertypeName=");
-		builder.append(usertypeName);
-		builder.append(", employeeId=");
-		builder.append(employeeId);
-		builder.append(", natureOfEmployment=");
-		builder.append(natureOfEmployment);
-		builder.append(", designation=");
-		builder.append(designation);
-		builder.append(", authorityName=");
-		builder.append(authorityName);
-		builder.append(", authorityEmail=");
-		builder.append(authorityEmail);
-		builder.append(", authorityPhoneNo=");
-		builder.append(authorityPhoneNo);
-		builder.append(", operatorTypeName=");
-		builder.append(operatorTypeName);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append(", nidFilename=");
-		builder.append(nidFilename);
-		builder.append(", photoFilename=");
-		builder.append(photoFilename);
-		builder.append(", idCardFilename=");
-		builder.append(idCardFilename);
-		builder.append(", arrivalPort=");
-		builder.append(arrivalPort);
-		builder.append(", arrivalPortName=");
-		builder.append(arrivalPortName);
-		builder.append(", vatFilename=");
-		builder.append(vatFilename);
-		builder.append(", userLanguage=");
-		builder.append(userLanguage);
-		builder.append("]");
-		return builder.toString();
+		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo
+				+ ", companyName=" + companyName + ", propertyLocation=" + propertyLocation + ", street=" + street
+				+ ", village=" + village + ", locality=" + locality + ", district=" + district + ", commune=" + commune
+				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
+				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
+				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
+				+ ", roles=" + Arrays.toString(roles) + ", captcha=" + captcha + ", usertypeName=" + usertypeName
+				+ ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation="
+				+ designation + ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail
+				+ ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
+				+ ", operatorTypeId=" + operatorTypeId + ", nidFilename=" + nidFilename + ", photoFilename="
+				+ photoFilename + ", idCardFilename=" + idCardFilename + ", arrivalPort=" + arrivalPort
+				+ ", arrivalPortName=" + arrivalPortName + ", vatFilename=" + vatFilename + ", userLanguage="
+				+ userLanguage + ", nidFilePath=" + nidFilePath + ", photoFilePath=" + photoFilePath
+				+ ", idCardFilePath=" + idCardFilePath + ", vatFilePath=" + vatFilePath + "]";
 	}
-	
-
+    
+    
+    
+    
+   
 }

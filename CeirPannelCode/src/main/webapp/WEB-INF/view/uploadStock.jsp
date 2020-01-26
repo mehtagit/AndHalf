@@ -181,6 +181,10 @@ to {
 [type="date"]::-webkit-calendar-picker-indicator {
 	opacity: 0;
 }
+
+.selectDropdwn {
+    margin-top: 10px;
+}
 </style>
 
 </head>
@@ -467,6 +471,7 @@ function uploadStock(){
 				$('#sucessMessage').text(invoiceNumberExist);
 				 $('#errorCode').val(data.errorCode);
 				 }
+			
 			 else if(data.errorCode=="1"){
 				    $('#stockSuccessMessage').text('');
 					$('#stockSuccessMessage').text(data.message);
