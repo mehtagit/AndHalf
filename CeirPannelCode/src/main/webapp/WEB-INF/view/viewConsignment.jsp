@@ -775,6 +775,8 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+			<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 
 </body>

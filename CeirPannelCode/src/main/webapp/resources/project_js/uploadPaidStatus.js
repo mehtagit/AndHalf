@@ -253,6 +253,10 @@ function table(url,dataUrl){
 			"consignmentStatus": null,
 			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}
+	
+			if(lang=='km'){
+				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			}
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -267,6 +271,9 @@ function table(url,dataUrl){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+							"sUrl": langFile  
+						},
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
@@ -481,6 +488,10 @@ function table(url,dataUrl){
 
 
 	function historytable(url,dataUrl){
+		
+			if(lang=='km'){
+				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			}
 		$.ajax({
 			url: url,
 			type: 'POST',
@@ -495,6 +506,9 @@ function table(url,dataUrl){
 					"bFilter" : true,
 					"bInfo" : true,
 					"bSearchable" : true,
+					"oLanguage": {  
+							"sUrl": langFile  
+						},
 					ajax: {
 						url : dataUrl,
 						type: 'POST',

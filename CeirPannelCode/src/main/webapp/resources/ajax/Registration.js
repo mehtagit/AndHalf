@@ -1,3 +1,95 @@
+$('#langlist').on('change', function() {
+	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+	window.location.assign("registration?type="+type+"&lang="+window.lang);			
+	}); 
+	
+	var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
+	$.i18n().locale = langParam;
+	var successMsg;
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+		successMsg=$.i18n('successMsg');
+	});
+
+	
+	
+        $(document).ready(function () {
+        	var url = new URL( window.location.href);
+    		var langParameter = url.searchParams.get("lang");
+            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
+        	$('.modal-trigger').leanModal({
+        		dismissible: false
+        	});
+        	
+        	asTypeData();       	
+            questionDataByCategory();
+            usertypeData2("${usertypeId}");
+        }); 
+        populateCountries(
+                "country",    "state",
+            );
+        
+       $("#country").val("Cambodia");
+       
+       populateStates( "country",
+               "state" );
+       
+       
+       function validatePassword(){
+           if(password.value != confirm_password.value) {
+             confirm_password.setCustomValidity("Passwords Don't Match");
+           } else {
+             confirm_password.setCustomValidity('');
+           }
+         }
+
+     password.onchange = validatePassword;
+     confirm_password.onkeyup = validatePassword;
+
+      
+        function myFunction() {
+            var x = document.getElementById("type").value;
+            if (x == '0') {
+                document.getElementById("uploadFile").style.display = "block";
+                document.getElementById("passportNumberDiv").style.display = "block";
+                document.getElementById("companyNames").style.display = "none";
+                $("#passportNo").prop('required',true);
+                $("#companyName").prop('required',false);
+                $("#companyName").val("");
+                $("#file").prop('required',true);
+            } else {
+                document.getElementById("uploadFile").style.display = "none";
+                document.getElementById("passportNumberDiv").style.display = "none";
+                document.getElementById("companyNames").style.display = "block";
+                $("#companyName").prop('required',true);
+                $("#passportNo").prop('required',false);
+                $("#passportNo").val("");
+                $("#file").prop('required',false);
+            }
+        }
+       
+        
+        function vatChecked(){
+        	var radioValue = $("input[name='vatStatus']:checked").val();
+        	if(radioValue==1){
+        		$("#vatNo").prop('required',true);
+        		$("#vatFile").prop('required',true);
+        	}
+        	else{
+        		$("#vatNo").prop('required',false);
+        		$("#vatFile").prop('required',false);
+        		$("#vatNo").val("");
+        		$("#vatFile").val("");
+        	}
+		}
+		
+
+
 function openRegistrationPage(usertype){
 	window.location.href=contextpath+"/registration?type="+usertype;
 }
