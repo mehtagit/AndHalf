@@ -159,6 +159,7 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
+			<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
