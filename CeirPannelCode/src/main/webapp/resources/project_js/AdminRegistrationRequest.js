@@ -328,6 +328,8 @@ function exportButton(){
 	var info = table.page.info(); 
     var pageNo=info.page;
     var pageSize =info.length;
+	console.log("--------"+pageSize+"---------"+pageNo);
+	console.log("RegistrationS----------------------tartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status)
 	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
@@ -347,5 +349,3 @@ function previewFile(srcFilePath,srcFileName){
 		 window.open(FinalLink);
 	}
 }
-
-

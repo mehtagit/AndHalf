@@ -629,7 +629,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<input type="button" value="ok" id="ok" class="btn"><spring:message code="modal.ok" />
+						<button class="btn"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
 			</div>

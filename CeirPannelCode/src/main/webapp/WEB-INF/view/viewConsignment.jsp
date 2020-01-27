@@ -80,8 +80,6 @@
 	<section id="content">
 		<div id="initialloader"></div>
 
-
-
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -122,8 +120,8 @@
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId"
-						placeholder="Supplier/Manufacturer ID" readonly="readonly" /> <label
-						for="Name" class="center-align"><spring:message
+						placeholder="Supplier/Manufacturer ID" readonly="readonly" />
+					 <label	for="Name" class="center-align"><spring:message
 							code="input.supplier" /></label>
 				</div>
 
@@ -776,6 +774,8 @@
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 

@@ -84,7 +84,7 @@
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
-						<div class="row card-panel">
+						<div class="row card-panel" id="verifyType">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
 								<a href="" class="boton right" id="btnLink"></a>
@@ -515,6 +515,8 @@
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 </body>

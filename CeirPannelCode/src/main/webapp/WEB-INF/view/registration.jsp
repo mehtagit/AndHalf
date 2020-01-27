@@ -351,7 +351,7 @@ String usertypeId="${usertypeId}";
 										pattern="[0-9]{8,20}"
 										title="Please enter phone number between 8 to 20 characters only"
 										required="required"> <label for="phoneNo"><spring:message
-											code="registration.phone" /> Number <span class="star">*</span>
+											code="registration.phone" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -432,7 +432,6 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										Country
 										<spring:message code="table.country" />
 										<span class="star">*</span>
 									</p>
@@ -951,9 +950,7 @@ $('#langlist').on('change', function() {
             questionDataByCategory();
             usertypeData2("${usertypeId}");
         }); 
-        populateCountries(
-                "country",    "state",
-            );
+        populateCountries( "country",    "state");
         
        $("#country").val("Cambodia");
        
