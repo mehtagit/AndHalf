@@ -1,21 +1,29 @@
 package com.gl.ceir.config.model.file;
 
+import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
 public class ConsignmentFileModel {
 
+	@CsvBindByName(column = "Txn Id")
 	@CsvBindByPosition(position = 0)
 	private String txnId;
+	@CsvBindByName(column = "Status")
 	@CsvBindByPosition(position = 1)
 	private String consignmentStatus;
+	@CsvBindByName(column = "Supplier Name")
 	@CsvBindByPosition(position = 2)
 	private String supplierName;
+	@CsvBindByName(column = "Tax Status")
 	@CsvBindByPosition(position = 3)
 	private String taxPaidStatus;
+	@CsvBindByName(column = "File Name")
 	@CsvBindByPosition(position = 4)
 	private String fileName;
+	@CsvBindByName(column = "Create On")
 	@CsvBindByPosition(position = 5)
 	private String createdOn;
+	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 6)
 	private String modifiedOn;
 
