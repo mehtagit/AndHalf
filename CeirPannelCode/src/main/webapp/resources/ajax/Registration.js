@@ -46,13 +46,13 @@ function verifyOtp(){
 			if(resp.statusCode=="200"){
 				//window.location.href='#otpMessage';
 				$("#otpVerification").closeModal();
-				$('#otpVerification').closeModal();   
 				$('#otpMessage').openModal();   
 				$("#otpResponse").text(resp.response);
 				// $('#otpMessage').modal('open');
 			}
 			else{
-
+				$("#otpVerification #verifyOtpResp").text(resp.response);
+				
 			}
 			$("#otpVerifyBtn").prop('disabled', false);
 		},
@@ -72,7 +72,7 @@ function resendOtp(){
 		dataType : 'html',
 		success : function(data) {
 			var response=JSON.parse(data);
-			$("#resendOtp").text(response.response); 
+			$("#verifyOtpResp").text(response.response); 
 		},    
 		error: function (xhr, ajaxOptions, thrownError) {
 		}

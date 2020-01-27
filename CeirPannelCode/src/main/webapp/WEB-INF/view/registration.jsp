@@ -410,8 +410,8 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="postalCode" maxlength="30"
 										class="form-control boxBorder boxHeight" id="postalCode"
-										pattern="[A-Za-z0-9\s]{0,30}"
-										title="Please enter alphanumeric with special character upto 30 characters only">
+										pattern="[0-9]{0,30}"
+										title="Please enter number upto 30 characters only">
 									<label for="postalCode">Postal Code</label>
 								</div>
 								
@@ -744,51 +744,6 @@ String usertypeId="${usertypeId}";
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	 <!-- START MAIN -->
-    <!-- <div id="">
-        START WRAPPER
-        <div class="wrapper">
-            START CONTENT
-            <section id="content">
-                start container
-                <div class="container">
-                    <div class="section">
-                        <div id="otpMsgModal" class="modal" style="width: 40%; margin-left: 30%;">
-                            <h6 class="modal-header">Verify OTP</h6>
-                            <p style="padding:10px;" class="center" id="otpMsg"></p>
-
-                            <a href="#otpVerification" class="btn modal-trigger"
-                               style="margin-left: 3%;width: 94%;background-color: #ff4081;margin-bottom:30px;" >verify otp</a>
- 
-                        </div>
-                    </div>
-                </div>
-                end container
-            </section>
-            END CONTENT
-        </div>
-    </div> -->
-    
-        <!-- START WRAPPER -->
-            <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-            <!-- START CONTENT -->
-                <!--start container-->
-                        <!-- <div id="" class="card-panel modal" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
-                            <h6 class="modal-header">Verify OTP</h6>
-                            <p class="center">The text and and an e-mail with OTP details has been sent to your
-                                registered Phone Number and E-Mail ID</p>
-                            <a href="#otpVerification" class="btn modal-trigger"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
-                </div> -->
-            <!-- END CONTENT -->
-
-        <!-- END WRAPPER -->
-    
-    
     <div id="otpMessage" class="modal" style="display: block;">
         <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
@@ -806,27 +761,25 @@ String usertypeId="${usertypeId}";
     
     
     <!-- modal start -->
-
-    <div id="otpVerification" class="modal" style="width: 40%;">
+  <div id="otpVerification" class="modal" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-               <h6 class="modal-header">Enter OTP</h6>  
+               <h6 class="modal-header">Enter OTP</h6>
         <div class="modal-content">  
                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-                        <p class="center" id="resendOtp" style="display: none;"></p>
+             <p class="center" id="verifyOtpResp"></p>
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
                                 <input type="text" name="emailOtp" maxlength="6"
-                               
-										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" placeholder=""/>
                             </div> 
                             <div class="input-field col s12 m12">
                                 <input type="text" name="phoneOtp" maxlength="6" 
-                                
-										title="Please enter number characters only" 
-                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+										pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" 
+                                required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>

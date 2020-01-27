@@ -86,6 +86,10 @@
     margin-top: -17px;
     border-bottom: none;
 }
+
+.upload-file-label {
+margin-top: -7px;
+}
     </style>
 <script>
 var contextpath = "${context}";
@@ -248,8 +252,8 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="postalCode" maxlength="30"
 										class="form-control boxBorder boxHeight" id="postalCode"
-										pattern="[A-Za-z0-9\s]{0,30}"
-										title="Please enter alphanumeric with special character upto 30 characters only">
+										pattern="[0-9]{0,30}"
+										title="Please enter number upto 30 characters only">
 									<label for="postalCode">Postal Code</label>
 								</div>
 								
@@ -286,42 +290,42 @@ var contextpath = "${context}";
                                     <label for="passportNo">National ID <span class="star">*</span></label>
                                 </div>
 
-                                <div class="file-field input-field col s12 m6 l6">
-                                    <div class="btn">
-                                        <span>Upload National ID *</span>
-                                        <input id="NationalIdImage" type="file" placeholder="">
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text"
-                                            placeholder="">
-                                    </div>
-                                </div>
-
-                                <div class="file-field input-field col s12 m6 l6">
-                                    <div class="btn">
-                                        <span>Upload Photo *</span>
-                                        <input id="photo" type="file" placeholder="">
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text" placeholder="">
-                                    </div>
-                                </div>
+                                <div class="file-field col s12 m6 l6">
+<h6 class="file-label">Upload National ID <span class="star">*</span></h6>
+<div class="btn">
+<span>select file</span>
+<input type="file" id="NationalIdImage" placeholder="Upload National ID Image">
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload National ID Image">
+</div>
+</div>
+                                <div class="file-field col s12 m6 l6">
+<h6 class="upload-file-label">Upload Photo <span class="star">*</span></h6>
+<div class="btn">
+<span>select file</span>
+<input type="file" id="photo" placeholder="Upload Photo">
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload Photo">
+</div>
+</div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="employeeID" required="required" id="employeeId" maxlength="30">
                                     <label for="employeeId">Employee ID <span class="star">*</span></label>
                                 </div>
 
-                                <div class="file-field input-field col s12 m6 l6">
-                                    <div class="btn">
-                                        <span>Upload ID Card *</span>
-                                        <input id="idCard" type="file" placeholder="">
-                                    </div>  
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text"
-                                            placeholder="">
-                                    </div>
-                                </div>
+                                <div class="file-field col s12 m6 l6">
+<h6 class="upload-file-label">Upload Id Card <span class="star">*</span></h6>
+<div class="btn">
+<span>select file</span>
+<input type="file" id="idCard" placeholder="Upload Id Card">
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" placeholder="Upload Id Card">
+</div>
+</div>
 
                                 <div class="col s12 m6 l6">
                                     <label>Nature Of Employment <span class="star">*</span></label>
@@ -536,13 +540,6 @@ var contextpath = "${context}";
 
 
 
-    <!-- Modal 1 start   -->
-
-    
-    <!-- Modal End -->
-
-    <!-- Modal 2 start   -->
-
     <div id="submitActivateDeactivate" class="modal">
         <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
@@ -627,20 +624,18 @@ var contextpath = "${context}";
                <h6 class="modal-header">Enter OTP</h6>
         <div class="modal-content">  
                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-                       
-                        <p class="center" id="resendOtp" style="display: none;"></p>
+             <p class="center" id="verifyOtpResp"></p>
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
                                 <input type="text" name="emailOtp" maxlength="6"
-                               
-										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder=""/>
+                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" placeholder=""/>
                             </div> 
                             <div class="input-field col s12 m12">
                                 <input type="text" name="phoneOtp" maxlength="6" 
-                                
-										title="Please enter number characters only" 
+										pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" 
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
