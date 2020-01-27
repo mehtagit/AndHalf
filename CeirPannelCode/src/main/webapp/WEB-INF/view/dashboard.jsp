@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="km" class="no-js">
+<html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
 <meta charset="utf-8" />
@@ -39,7 +39,9 @@
 	<script>
 var contextpath = "${context}";
 <%String usertype=(String)session.getAttribute("usertype");%>
+
 </script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 </head>
 
 <body data-list="${features}">
@@ -154,7 +156,8 @@ class="dropdownColor"> Logout</span></a></li>
 					<li>
 					<ul class="navData">
 					<c:forEach items="${features}"  var="feature">
-							<li class="bold"><a href="${feature.link}" target="mainArea" id="mainArea" class="waves-effect waves-cyan" data-featureID="${feature.id}" value="${feature.name}"><i class="${feature.logo}"></i>${feature.name}</a></li>
+							<li class="bold"><a href="${feature.link}" target="mainArea"
+								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>${feature.name}</a></li>
 					</c:forEach>
 					</ul>
 					</li>
@@ -449,7 +452,7 @@ style="margin-left: 10px;">no</a>
 
 
 	<!-- jQuery Library -->
-		 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+		
        <!-- ajax js -->
     <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
      <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
@@ -506,36 +509,18 @@ style="margin-left: 10px;">no</a>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 		
 <script type="text/javascript" src="${context}/resources/project_js/dragableModal.js"></script>
-<script type="text/javascript" src="${context}/resources/project_js/dashboard.js"></script>
 <script type="text/javascript">
+var language="";
+$(document).ready(function () {
+<%String lang=(String)session.getAttribute("language");%>
+<%if(lang!=null){%>
+$("#langlist").val("<%=lang%>");
+language="<%=lang%>";
+<%}%>
+});
+</script>
+<script type="text/javascript" src="${context}/resources/project_js/dashboard.js"></script>
 
-/*$.i18n().load( {
-	'en': '../resources/i18n/en.json',
-	'km': '../resources/i18n/km.json'
-} ).done( function() { 
-	rejectedMsg=$.i18n('rejectedMsg');
-	consignmentApproved=$.i18n('consignmentApproved');
-	errorMsg=$.i18n('errorMsg');
-	havingTxnID=$.i18n('havingTxnID');
-	updateMsg=$.i18n('updateMsg');
-	hasBeenUpdated=$.i18n('hasBeenUpdated');
-	consignmentDeleted=$.i18n('consignmentDeleted');
-	deleteInProgress=$.i18n('deleteInProgress');
-});*/
-
- $(window).load(function(){
-	
-	$.i18n().load( {
-		'en': '/resources/i18n/en.json',
-		'km': './resources/i18n/km.json'
-	} ).done( function() { 
-		
-		/* $("#mainArea").each(function(){
-			alert($(this).value)					
-		}); */
-	});
- });
- </script>
 </body>
 
 </html> 	

@@ -639,7 +639,7 @@
 		var stockEndDate=$('#endDate').val();
 		var stockTxnId=$('#transactionID').val();
 		var StockStatus=parseInt($('#StockStatus').val());
-		var roleType = $("body").attr("data-roleType");
+		var roleType = role;
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
 		var userType = role;
 		
@@ -662,6 +662,6 @@
 		var pageNo=info.page;
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
-		console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+"=role="+role);
+		console.log("stockStartDate  ="+stockStartDate+"  stockEndDate=="+stockEndDate+"  stockTxnId="+stockTxnId+" StockStatus ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"  userType="+role);
 		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType;
 	}

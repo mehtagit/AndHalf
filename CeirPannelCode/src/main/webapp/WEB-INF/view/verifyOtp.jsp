@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
@@ -126,7 +126,7 @@ var userIdValue='<%=userId%>';
                 <div class="container">
                     <div class="section">
                         <div class="card-panel" style="width: 40%; margin-left: 30%; margin-top: 10vh;">
-                            <h5 class="center">Verify OTP</h5>
+                            <h5 class="center"><spring:message code="registration.verifyotp" /></h5>
                             <!-- <img src="images/otpImage.png" class=""
                                 style="width: 80px; display: block; margin:auto;"> -->
                             <!-- <p class="center" style="margin-top: 20px;">Enter One Time Password (OTP)</p> -->
@@ -134,7 +134,7 @@ var userIdValue='<%=userId%>';
                             
 
                             <a href="#otpVerification" class="btn modal-trigger"
-                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;">verify otp</a>
+                                style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.verifyotp" /></a>
 
                         </div>
                     </div>
@@ -157,7 +157,7 @@ var userIdValue='<%=userId%>';
             data-dismiss="modal">&times;</button> -->
         <div class="modal-content">
                 <form id="verifyOtpForm" action="">
-                        <h5 class="center">Enter OTP</h5>
+                        <h5 class="center"><spring:message code="registration.otp" /></h5>
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <input type="hidden" id="userid"  value="<%=userId%>"  name="userid" >
                         <div class="row">          
@@ -170,9 +170,9 @@ var userIdValue='<%=userId%>';
                             </div>
                         </div>
 
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
 
-                        <a onclick="verifyOtp();"   class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
+                        <a onclick="verifyOtp();"   class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></a>
                     </form>
         </div>
     </div>
@@ -185,7 +185,7 @@ var userIdValue='<%=userId%>';
             data-dismiss="modal">&times;</button> -->
         <div class="modal-content">
                 <form action="">
-                        <h5 class="center">Enter OTP</h5>
+                        <h5 class="center"><spring:message code="registration.otp" /></h5>
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <div class="row">
                             <div class="input-field col s12 m12">
@@ -193,9 +193,9 @@ var userIdValue='<%=userId%>';
                             </div>
                         </div>
 
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
 
-                        <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
+                        <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></a>
                     </form>
         </div>
     </div>
@@ -208,7 +208,7 @@ var userIdValue='<%=userId%>';
             data-dismiss="modal">&times;</button> -->
         <div class="modal-content">
                 <form action="">
-                        <h5 class="center">Enter OTP</h5>
+                        <h5 class="center"><spring:message code="registration.otp" /></h5>
                         <p class="center" id="resendOtp" style="display: none;"></p>
                         <div class="row">
                             <div class="input-field col s12 m12">
@@ -216,9 +216,9 @@ var userIdValue='<%=userId%>';
                             </div> 
                         </div>
 
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right">Resend OTP</a>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
 
-                        <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
+                        <a href="#otpMessage" class="btn modal-trigger modal-close" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></a>
                     </form>
         </div>
     </div>
@@ -242,7 +242,7 @@ var userIdValue='<%=userId%>';
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="${context}/login" class="btn">ok</a>
+                    <a href="${context}/login" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -272,9 +272,9 @@ var userIdValue='<%=userId%>';
     <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
         data-activates="profile-dropdown" style="margin-top:-5px; height:55px;"></a>
     <ul id="profile-dropdown" class="dropdown-content" style="margin-top: 51px;">
-        <li><a href="javascript:void(0)" id=""><i class="mdi-action-settings"></i>Change Password</a></li>
+        <li><a href="javascript:void(0)" id=""><i class="mdi-action-settings"></i><spring:message code="registration.changepassword" /></a></li>
         <li class="divider"></li>
         <li><a href="javascript:void(0)" id=""><i class="mdi-hardware-keyboard-tab"></i>
-                Logout</a></li>
+                <spring:message code="registration.logout" /></a></li>
     </ul>
 </li>

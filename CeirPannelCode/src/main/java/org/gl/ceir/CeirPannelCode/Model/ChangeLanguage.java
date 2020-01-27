@@ -4,6 +4,16 @@ public class ChangeLanguage {
 
 	private long userId;
 	private String language;
+	
+	
+	public ChangeLanguage(long userId, String language) {
+		super();
+		this.userId = userId;
+		this.language = language;
+	}
+	public ChangeLanguage() {
+		super();
+	}
 	public long getUserId() {
 		return userId;
 	}
