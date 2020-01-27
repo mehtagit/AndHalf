@@ -67,127 +67,15 @@ public class GrievanceDatatableController {
 		log.info("session value user Type==" + session.getAttribute("usertype") + " grievanceSessionUsesFlag=="
 				+ grievanceSessionUsesFlag);
 		String userType = (String) session.getAttribute("usertype");
-		int userId = (int) session.getAttribute("userid");
+		if(userType==null)
+		{
+			log.info("user type is null______________");
+			userType="End User";
+			
+		}
+		Integer userId = (Integer) session.getAttribute("userid");
 		log.info(" filterrequest*************" + filterrequest);
 		
-		/*
-		 * if(grievanceSessionUsesFlag==0) { if (filterrequest.getTxnId()==null &&
-		 * filterrequest.getGrievanceStatus()==null &&
-		 * filterrequest.getStartDate()==null && filterrequest.getEndDate()==null &&
-		 * filterrequest.getGrievanceId()==null ) {
-		 * log.info("filter params is  blank..... ");
-		 * 
-		 * }
-		 * 
-		 * else if(filterrequest.getTxnId()!=null &&
-		 * filterrequest.getGrievanceStatus()==null &&
-		 * filterrequest.getGrievanceId().equals("") &&
-		 * filterrequest.getStartDate().equals("") &&
-		 * filterrequest.getEndDate().equals("") ) { log.info("++++++++++++++++++++++");
-		 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
-		 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
-		 * session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
-		 * session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
-		 * session.setAttribute("grievanceId", filterrequest.getGrievanceId()); } else
-		 * if(filterrequest.getTxnId()!=null && filterrequest.getGrievanceStatus()!=null
-		 * && filterrequest.getGrievanceId()!=null &&
-		 * filterrequest.getStartDate().equals("") &&
-		 * filterrequest.getEndDate().equals("") ) {
-		 * log.info("111111111111111111111111");
-		 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
-		 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
-		 * session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
-		 * session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
-		 * session.setAttribute("grievanceId", filterrequest.getGrievanceId()); }
-		 * 
-		 * else if(filterrequest.getTxnId().equals("") &&
-		 * filterrequest.getGrievanceStatus()!=null &&
-		 * filterrequest.getGrievanceId().equals("") &&
-		 * filterrequest.getStartDate().equals("") &&
-		 * filterrequest.getEndDate().equals("") ) { log.info("#####################");
-		 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
-		 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
-		 * session.setAttribute("grievanceStatus",
-		 * filterrequest.getConsignmentStatus()); session.setAttribute("grievanceTxnId",
-		 * filterrequest.getTxnId()); session.setAttribute("grievanceId",
-		 * filterrequest.getGrievanceId()); }
-		 * 
-		 * else if(filterrequest.getTxnId()==null &&
-		 * filterrequest.getGrievanceStatus()==null &&
-		 * filterrequest.getGrievanceId()!=null && filterrequest.getStartDate()=="" &&
-		 * filterrequest.getEndDate()=="" ) { log.info("22222222222222222222222222");
-		 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
-		 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
-		 * session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
-		 * session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
-		 * session.setAttribute("grievanceId", filterrequest.getGrievanceId()); } else
-		 * if(filterrequest.getTxnId()==null && filterrequest.getGrievanceStatus()==null
-		 * && filterrequest.getTaxPaidStatus()==null &&
-		 * filterrequest.getStartDate()!=null && filterrequest.getEndDate()==null ) {
-		 * log.info("33333333333333333333333333");
-		 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
-		 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
-		 * session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
-		 * session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
-		 * session.setAttribute("grievanceId", filterrequest.getGrievanceId()); } else
-		 * if(filterrequest.getTxnId()==null && filterrequest.getGrievanceStatus()==null
-		 * && filterrequest.getTaxPaidStatus()==null &&
-		 * filterrequest.getStartDate()==null && filterrequest.getEndDate()!=null ) {
-		 * log.info("4444444444444444444444444444444");
-		 * session.setAttribute("grievanceStartDate", filterrequest.getStartDate());
-		 * session.setAttribute("grievanceEndDate",filterrequest.getEndDate());
-		 * session.setAttribute("grievanceStatus", filterrequest.getGrievanceStatus());
-		 * session.setAttribute("grievanceTxnId", filterrequest.getTxnId());
-		 * session.setAttribute("grievanceId", filterrequest.getGrievanceId()); }
-		 * 
-		 * String grievanceStartDate=(String)
-		 * session.getAttribute("grievanceStartDate"); String grievanceEndDate=(String)
-		 * session.getAttribute("grievanceEndDate"); Integer grievanceStatus=(Integer)
-		 * session.getAttribute("grievanceStatus"); String grievanceTxnId=(String)
-		 * session.getAttribute("grievanceTxnId"); String grievanceId=(String)
-		 * session.getAttribute("grievanceId");
-		 * 
-		 * log.info("filterd start date ="+filterrequest.getStartDate()
-		 * +" filterd end date=="+filterrequest.getEndDate()
-		 * +" filter consignment status="+filterrequest.getConsignmentStatus()
-		 * +" txn id=="+filterrequest.getTxnId());
-		 * 
-		 * if(session.getAttribute("grievanceStartDate")==null &&
-		 * session.getAttribute("grievanceEndDate")==null &&
-		 * session.getAttribute("grievanceStatus")==null &&
-		 * session.getAttribute("grievanceTxnId")==null &&
-		 * session.getAttribute("grievanceId")==null ) {
-		 * 
-		 * 
-		 * 
-		 * filterrequest.setStartDate(grievanceStartDate);
-		 * filterrequest.setEndDate(grievanceEndDate);
-		 * filterrequest.setGrievanceStatus(grievanceStatus);
-		 * filterrequest.setGrievanceId(grievanceId);
-		 * filterrequest.setTxnId(grievanceTxnId);
-		 * 
-		 * log.
-		 * info("session is  blank *********************** request send to the filter api ="
-		 * +filterrequest); response =
-		 * grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
-		 * 
-		 * 
-		 * } else {
-		 * 
-		 * filterrequest.setStartDate(grievanceStartDate);
-		 * filterrequest.setEndDate(grievanceEndDate);
-		 * filterrequest.setGrievanceStatus(grievanceStatus);
-		 * filterrequest.setGrievanceId(grievanceId);
-		 * filterrequest.setTxnId(grievanceTxnId);
-		 * 
-		 * log.
-		 * info("session is not blank ************************ request send to the filter api ="
-		 * +filterrequest); response =
-		 * grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
-		 * 
-		 * } } else { log.info("no session needed...."); response =
-		 * grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file); }
-		 */
 		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file);
 
 		try {
@@ -338,6 +226,26 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+				}
+				
+				else if (userType.equals("End User")) { 
+					log.info("End User request send to view api&&&&&&&&&&&&");
+					for (GrievanceContentModel dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String modifiedOn = dataInsideList.getModifiedOn();
+						String txnId = dataInsideList.getTxnId();
+						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
+						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
+						String grievanceStatus = dataInsideList.getStateInterp();
+						
+						log.info("**********createdOn=="+createdOn+"  modifiedOn=="+modifiedOn+" txnId=="+txnId+"grievanceId=="+grievanceId+"StatusofGrievance=="+StatusofGrievance);
+						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId, grievanceId);
+						log.info("--------------response*******"+action);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);

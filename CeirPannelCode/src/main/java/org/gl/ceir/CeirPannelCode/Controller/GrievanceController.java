@@ -61,10 +61,20 @@ public class GrievanceController {
 			)
 	    public ModelAndView viewGrievance(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		 
 		log.info(" view Grievance entry point."); 
-	    mv.setViewName("grievanceManagement");
-		log.info(" view Grievance exit point."); 
+		
+		if(session.getAttribute("")!=null)
+		{
+			log.info(" user type is not blank"); 
+			mv.setViewName("grievanceManagement");
+			log.info(" view Grievance exit point."); 
+		}
+		else {
+			log.info(" user type isblank");
+			mv.setViewName("grievanceManagement");
+			log.info(" view Grievance exit point."); 
+		}
+	    
 		return mv; 
 	}
 	

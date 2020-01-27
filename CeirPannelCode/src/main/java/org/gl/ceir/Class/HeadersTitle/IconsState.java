@@ -535,6 +535,8 @@ public class IconsState {
 		String action=reply.concat(view);
 		return action;
 	}
+	
+	
 
 	/********************************** Icons for Custom Grievance **********************************/ 
 
@@ -1235,5 +1237,43 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		String action=view;
 		return action;
 
+	}
+
+	public String endUserGrievanceState(String fileName,String txnId ,String grievanceId) {
+		int userId=1;
+		log.info(" entry in set view in data table.....");
+		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
+
+		// state related Code 
+		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		log.info("set view in data table.....");
+
+		/*
+		 * //Disable reply if( "0".equals(status) || "1".equals(status) ||
+		 * "3".equals(status)) { reply =
+		 * "<a onclick="+replyAction+" class=\"eventNone\"><i class="
+		 * +disableReplyIcon+" aria-hidden=\"true\" title="
+		 * +replyIconTitle+" ></i></a>";
+		 * 
+		 * }else if("0".equals(status)) {
+		 * view="<a onclick="+viewAction+" class=\"eventNone\"><i class="
+		 * +disableViewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
+		 * } else if("Disable".equals(userStatus)) {
+		 * log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus); reply
+		 * = "<a onclick="+replyAction+"><i class="
+		 * +disableReplyIcon+" aria-hidden=\"true\" title="
+		 * +replyIconTitle+" ></i></a>"; view="<a onclick="+viewAction+"><i class="
+		 * +disableViewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
+		 * 
+		 * }
+		 */
+
+		String action=reply.concat(view);
+		return action;
 	}
 }
