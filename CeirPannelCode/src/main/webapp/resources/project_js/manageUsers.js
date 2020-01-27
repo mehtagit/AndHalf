@@ -1,10 +1,10 @@
-var featureId = 12;
+var featureId = 19;
 var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	manageUserDataTable()
+	filter();
 	pageRendering();
 });
 
@@ -19,7 +19,7 @@ var userType = $("body").attr("data-roleType");
 
 //**************************************************Type Approved table**********************************************
 
-function manageUserDataTable(){
+function filter(){
 var userId = parseInt($("body").attr("data-userID"))
 			var filterRequest={
 				"endDate":$('#endDate').val(),
@@ -110,7 +110,7 @@ function pageRendering(){
 				}
 			} 
 
-			// dynamic drop down portion
+		/*	// dynamic drop down portion
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
@@ -127,7 +127,7 @@ function pageRendering(){
 							"</div>"+
 					"</div>");
 			}
-
+*/
 			$("#userManageTableDiv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' id='submitFilter' value='filter'></div>");
 			$("#userManageTableDiv").append("<div class='col s12 m2'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
@@ -145,13 +145,7 @@ function pageRendering(){
 			    });
 			
 
-			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
-
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].state).text(data[i].interp)
-					.appendTo('#Status');
-				}
-			});
+		
 		}
 		
 	}); 
