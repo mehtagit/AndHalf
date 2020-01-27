@@ -114,4 +114,10 @@ public class HeadersTitle {
 		public  String userName="User Name";
 		public  String subFeature="Sub Feature";	
 
+	/*
+	 * //ManageUserType public String registerDate="Register Date"; public String
+	 * passportNo="Passport Number"; public String name="Name"; public String
+	 * nationality="Nationality"; public String visaExpDate="Visa Expiry Date";
+	 * public String localContact="Local Contact Number";
+	 */
 }

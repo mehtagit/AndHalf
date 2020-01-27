@@ -31,7 +31,7 @@ $('#langlist').on('change', function() {
             usertypeData2("${usertypeId}");
         }); 
         populateCountries(
-                "country",    "state",
+                "country",    "state"
             );
         
        $("#country").val("Cambodia");

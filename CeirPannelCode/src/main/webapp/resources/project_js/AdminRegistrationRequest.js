@@ -343,8 +343,8 @@ function previewFile(srcFilePath,srcFileName){
 	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
 		console.log("File is not Avialable")
 	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
-		$("#viewuplodedModel").openModal();
 		$("#fileSource").attr("src",FinalLink);
+		$("#viewuplodedModel").openModal();
 	}else{
 		 window.open(FinalLink);
 	}
