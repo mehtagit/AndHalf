@@ -155,6 +155,7 @@ public class LoginService {
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
 		String status=(String)session.getAttribute("userStatus");
+		try {
 		if(username.trim()!=null) {
 			log.info("username from session:  "+username);
 			log.info("user status from session :   "+status); 
@@ -173,6 +174,12 @@ public class LoginService {
 			mv.addObject("msg","Please Login first");
 			mv.setViewName("login"); 
 			return mv;  
+		}
+		}
+		catch(Exception e) {
+			mv.addObject("msg","Please Login first");
+			mv.setViewName("login"); 
+			return mv; 	
 		}
 	}
 

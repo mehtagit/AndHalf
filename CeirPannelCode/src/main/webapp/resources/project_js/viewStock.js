@@ -401,7 +401,7 @@
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
 						$('#'+button[i].id).attr("href", button[i].buttonURL);
@@ -419,7 +419,7 @@
 
 					
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
 						/*$('#'+button[i].id).attr("onclick", button[i].buttonURL);*/
