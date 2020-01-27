@@ -55,6 +55,7 @@ public class LoginService {
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
 			log.info("login response:  "+response); 
+			log.info("language = "+response.getUserLanguage());
 			if(response.getStatusCode()==200) { 
 				session.setAttribute("username", response.getUsername());
 				session.setAttribute("userid", response.getUserId());
@@ -65,6 +66,7 @@ public class LoginService {
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
+				session.setAttribute("language",response.getUserLanguage());
 				mv.setViewName("redirect:/importerDashboard");  
 				return response;      
 			}       
@@ -81,10 +83,13 @@ public class LoginService {
 		}
 	}
 	
-	public HttpResponse changeLanguage(ChangeLanguage language) {
+	public HttpResponse changeLanguage(String language,HttpSession session) {
 		log.info("inside check change language controller ");
 		log.info("language data:  "+language);
-		HttpResponse response=userLoginFeignImpl.changeUserLanguage(language);
+		Integer userID=(Integer)session.getAttribute("userid");
+		log.info("userID from session: " +userID);
+		ChangeLanguage languageData=new ChangeLanguage(userID,language);
+		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
 		if(response!=null) {
 			log.info("response from controller: "+response);
 		}
@@ -117,7 +122,7 @@ public class LoginService {
 		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
-	}
+}
 	
 	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http){
 		log.info("inside index controller");
@@ -131,20 +136,20 @@ public class LoginService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		//return "redirect:.../"+dropdown.getValue();
 	}
 	
-	public void  redirectToHomePage(HttpServletResponse http){
+	public void redirectToHome(HttpServletResponse http){
 		log.info("inside index controller");
 		log.info("exit index controller");
 		Tag tagData=new Tag("link_dmc_portal");
 		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
-	    try {
-			http.sendRedirect(dropdown.getValue());
+		try {
+		http.sendRedirect(dropdown.getValue());
 		} catch (IOException e) {
-			e.printStackTrace();
+		e.printStackTrace();
 		}
-	}
-	
+		}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
