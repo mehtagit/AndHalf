@@ -197,7 +197,7 @@ public class ConsignmentServiceImpl {
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("statusList " + statusList);
 
-			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build());
+			List<ConsignmentMgmt> consignmentMgmts = consignmentRepository.findAll(buildSpecification(filterRequest, statusList).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 			logger.info("consignmentMgmts " + consignmentMgmts);
 
 			for(ConsignmentMgmt consignmentMgmt2 : consignmentMgmts) {
@@ -608,7 +608,7 @@ public class ConsignmentServiceImpl {
 		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
 		StatefulBeanToCsv<ConsignmentFileModel> csvWriter      = null;
 		List< ConsignmentFileModel> fileRecords                = null;
-		CustomMappingStrategy<ConsignmentFileModel> mappingStrategy = new CustomMappingStrategy<ConsignmentFileModel>();
+		CustomMappingStrategy<ConsignmentFileModel> mappingStrategy = new CustomMappingStrategy<>();
 		
 		try {
 			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);

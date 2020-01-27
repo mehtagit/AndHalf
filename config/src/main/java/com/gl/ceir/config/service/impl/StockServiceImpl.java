@@ -53,6 +53,7 @@ import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
+import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
@@ -65,6 +66,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -251,7 +253,7 @@ public class StockServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("statusList " + statusList);
-			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build());
+			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			logger.info(statusList);
 
@@ -512,7 +514,6 @@ public class StockServiceImpl {
 				for( StockMgmt stockMgmt : stockMgmts ) {
 					sfm = new StockFileModel();
 
-					sfm.setStockId(stockMgmt.getId());
 					sfm.setStockStatus(stockMgmt.getStateInterp());
 					sfm.setTxnId( stockMgmt.getTxnId());
 					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
@@ -527,6 +528,81 @@ public class StockServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+	
+	public FileDetails getFilteredStockInFileV2(FilterRequest filterRequest) {
+		String fileName = null;
+		Writer writer   = null;
+		StockFileModel sfm = null;
+
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_dir);
+		logger.info("CONFIG : file_stock_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_stock_download_link);
+		logger.info("CONFIG : file_stock_download_link [" + link + "]");
+
+		String filePath = filepath.getValue();
+
+		StatefulBeanToCsvBuilder<StockFileModel> builder = null;
+		StatefulBeanToCsv<StockFileModel> csvWriter = null;
+		List< StockFileModel > fileRecords = null;
+		CustomMappingStrategy<StockFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<StockMgmt> stockMgmts = getAll(filterRequest);
+			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stock.csv";
+			
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(StockFileModel.class);
+			
+			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy)
+					.withSeparator(',')
+					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( !stockMgmts.isEmpty() ) {
+
+				fileRecords = new ArrayList<>();
+				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
+
+				for( StockMgmt stockMgmt : stockMgmts ) {
+					sfm = new StockFileModel();
+
+					sfm.setStockStatus(stockMgmt.getStateInterp());
+					sfm.setTxnId( stockMgmt.getTxnId());
+					sfm.setCreatedOn(stockMgmt.getCreatedOn().format(dtf));
+					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
+					sfm.setFileName( stockMgmt.getFileName());
+					sfm.setSupplierName(stockMgmt.getSuplierName());
+
+					logger.debug(sfm);
+
+					fileRecords.add(sfm);
+				}
+
+				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write( new StockFileModel());
+			}
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
+					Long.valueOf(filterRequest.getFeatureId()),
+					Features.STOCK, SubFeatures.VIEW, ""));
+			logger.info("AUDIT : Saved file export request in audit.");
+			
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
