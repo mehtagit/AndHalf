@@ -127,7 +127,7 @@ public class StockServiceImpl {
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
 		User user = null;
-		
+
 		try {
 			stockMgmt.setStockStatus(StockStatus.UPLOADING.getCode());
 
@@ -176,17 +176,8 @@ public class StockServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(stockMgmt.getTxnId());
 
-			if(executeRegisterStock(stockMgmt, webActionDb)) {
-				if(isStockAssignRequest) {
-					emailUtil.saveNotification("ASSIGN_STOCK", 
-							user.getUserProfile(), 
-							4,
-							Features.STOCK,
-							SubFeatures.ASSIGN,
-							stockMgmt.getTxnId(),
-							MailSubjects.SUBJECT);
-					logger.info("Notification have been saved.");
-				}
+			if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest)) {
+				
 				logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
 			}else {
@@ -201,7 +192,9 @@ public class StockServiceImpl {
 	}
 
 	@Transactional(rollbackOn = Exception.class)
-	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
+	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb, UserProfile userProfile,
+			boolean isStockAssignRequest) {
+		
 		boolean queryStatus = Boolean.FALSE;
 
 		logger.info("Going to save webActionDb [" + webActionDb + "]");
@@ -212,8 +205,23 @@ public class StockServiceImpl {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, SubFeatures.REGISTER, ""));
+		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, 
+				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+		
+		if(isStockAssignRequest) {
+			if(emailUtil.saveNotification("ASSIGN_STOCK", 
+					userProfile, 
+					4,
+					Features.STOCK,
+					SubFeatures.ASSIGN,
+					stockMgmt.getTxnId(),
+					MailSubjects.SUBJECT)) {
+				logger.info("Notification have been saved.");
+			}else {
+				logger.info("Notification have been not saved.");
+			}
+		}
 
 		queryStatus = Boolean.TRUE;
 		return queryStatus;

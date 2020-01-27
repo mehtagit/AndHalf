@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,6 +39,8 @@ public class AuditTrail implements Serializable {
 	private String featureName;
 	private String subFeature;
 	private String jSessionId;
+	@Column(length = 20)
+	private String txnId;
 	
 	public AuditTrail() {
 
@@ -52,6 +55,19 @@ public class AuditTrail implements Serializable {
 		this.featureName = featureName;
 		this.subFeature = subFeature;
 		this.jSessionId = jSessionId;
+	}
+	
+	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
+			String featureName, String subFeature, String jSessionId, String txnId) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+		this.txnId = txnId;
 	}
 	
 	public Long getId() {
@@ -122,6 +138,13 @@ public class AuditTrail implements Serializable {
 	}
 	public void setjSessionId(String jSessionId) {
 		this.jSessionId = jSessionId;
+	}
+	public String getTxnId() {
+		return txnId;
+	}
+
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
 
 	@Override
