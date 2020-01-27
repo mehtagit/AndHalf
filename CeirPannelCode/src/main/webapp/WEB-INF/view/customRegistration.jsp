@@ -291,8 +291,8 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="postalCode" maxlength="30"
 										class="form-control boxBorder boxHeight" id="postalCode"
-										pattern="[A-Za-z0-9\s]{0,30}"
-										title="Please enter alphanumeric with special character upto 30 characters only">
+										pattern="[0-9]{0,30}"
+title="Please enter number upto 30 characters only">
 									<label for="postalCode"><spring:message code="registration.postalcode" /></label>
 								</div>
 								
@@ -341,8 +341,7 @@ var contextpath = "${context}";
 
 								<!-- <div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
-										<span> *<spring:message code="registration.uploadnationalid" /></span> <input id="NationalIdImage"
-											type="file" placeholder="">
+										<span> *<spring:message code="registration.uploadnationalid" /></span> <input type="file" id="NationalIdImage" placeholder="Upload National ID Image">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text"
@@ -354,7 +353,7 @@ var contextpath = "${context}";
 <h6 class="file-label"><spring:message code="registration.uploadnationalid" /><span class="star">*</span></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" placeholder="Upload National ID Image">
+<input type="file" id="NationalIdImage" placeholder="Upload National ID Image">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" placeholder="Upload National ID Image">
@@ -761,27 +760,25 @@ var contextpath = "${context}";
 
 	<!-- modal start -->
 
-	 <div id="otpVerification" class="modal" style="width: 40%;">
+<div id="otpVerification" class="modal" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-               <h6 class="modal-header"><spring:message code="registration.otp" /></h6>
+               <h6 class="modal-header">Enter OTP</h6>
         <div class="modal-content">  
                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-                       
-                        <p class="center" id="resendOtp" style="display: none;"></p>
+             <p class="center" id="verifyOtpResp"></p>
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" name="emailOtp" maxlength="6"
-                               
-										title="Please enter number characters only"
-                                  required="required" id="emailOtp" placeholder="Enter OTP of Email"/>
+                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
+                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" placeholder=""/>
                             </div> 
                             <div class="input-field col s12 m12">
-                                <input type="text" name="phoneOtp" maxlength="6" 
-                                
-										title="Please enter number characters only" 
-                                required="required" id="phoneOtp" placeholder="Enter OTP of Phone"/>
+                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
+										pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" 
+                                required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
@@ -791,10 +788,10 @@ var contextpath = "${context}";
     </div>
 
 	<!-- Modal End -->
+	
 	<!-- ================================================
     Scripts
     ================================================ -->
-	<!-- Modal End -->
 	<script>
 	$('#langlist').on('change', function() {
 		window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';

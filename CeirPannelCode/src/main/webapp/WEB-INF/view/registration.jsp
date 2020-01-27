@@ -421,8 +421,8 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="postalCode" maxlength="30"
 										class="form-control boxBorder boxHeight" id="postalCode"
-										pattern="[A-Za-z0-9\s]{0,30}"
-										title="Please enter alphanumeric with special character upto 30 characters only">
+								pattern="[0-9]{0,30}"
+title="Please enter number upto 30 characters only">
 									<label for="postalCode"><spring:message
 											code="registration.postalcode" /></label>
 								</div>
@@ -850,40 +850,36 @@ String usertypeId="${usertypeId}";
 
 
 
-	<!-- modal start -->
+<!-- modal start -->
 
-	<div id="otpVerification" class="modal" style="width: 40%;">
-		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+<div id="otpVerification" class="modal" style="width: 40%;">
+        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-		<h6 class="modal-header">
-			<spring:message code="registration.otp" />
-		</h6>
-		<div class="modal-content">
-			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
-				<p class="center" id="resendOtp" style="display: none;"></p>
-				<input type="hidden" id="userid" name="userid" value="${userId}">
-				<div class="row">
-					<div class="input-field col s12 m12">
-						<input type="text" name="emailOtp" maxlength="6"
-							title="Please enter number characters only" required="required"
-							id="emailOtp" placeholder="Enter OTP of Email" />
-					</div>
-					<div class="input-field col s12 m12">
-						<input type="text" name="phoneOtp" maxlength="6"
-							title="Please enter number characters only" required="required"
-							id="phoneOtp" placeholder="Enter OTP of Phone" />
-					</div>
-				</div>
-				<a href="#"
-					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
-					class="right"><spring:message code="registration.resendotp" /></a>
-				<button type="submit" id="otpVerifyBtn" class="btn"
-					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
-					<spring:message code="registration.resendotp" />
-				</button>
-			</form>
-		</div>
-	</div>
+               <h6 class="modal-header">Enter OTP</h6>
+        <div class="modal-content">  
+                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+             <p class="center" id="verifyOtpResp"></p>
+                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                        <div class="row">          
+                            <div class="input-field col s12 m12">
+                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
+                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" placeholder=""/>
+                            </div> 
+                            <div class="input-field col s12 m12">
+                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
+										pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" 
+                                required="required" id="phoneOtp" placeholder=""/>
+                            </div>
+                        </div>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
+                    </form>
+        </div>
+    </div>
+
+	<!-- Modal End -->
 
 	<!-- i18n library -->
 	<script type="text/javascript"
