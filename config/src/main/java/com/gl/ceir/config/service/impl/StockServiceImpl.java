@@ -137,6 +137,7 @@ public class StockServiceImpl {
 				}
 				stockMgmt.setUserId(new Long(user.getId()));
 				stockMgmt.setUser(user);
+				stockMgmt.setRoleType(user.getUsertype().getUsertypeName());
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				if(validateUserProfileOfStock(stockMgmt)) {
