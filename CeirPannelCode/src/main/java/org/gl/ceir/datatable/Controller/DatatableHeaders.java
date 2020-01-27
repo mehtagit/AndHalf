@@ -180,9 +180,9 @@ public class DatatableHeaders {
 
 			//operator view
 			else if("greyBlackList".equals(role)) {
-				String[] headers = {headersTitle.updatedOn,headersTitle.fileName,headersTitle.fileType,headersTitle.action};
+				String[] headers = {"table.updatedOn","table.fileName","table.fileType","table.action"};
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -202,7 +202,7 @@ public class DatatableHeaders {
 			else if("blockUnblock".equals(role)) {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -211,7 +211,7 @@ public class DatatableHeaders {
 			else if("blockUnblock".equals(role)) {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -220,7 +220,7 @@ public class DatatableHeaders {
 			else if("adminSystemMessage".equals(role)) {
 				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.channel,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -230,7 +230,7 @@ public class DatatableHeaders {
 			else if("adminConfigMessage".equals(role)) {
 				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.type,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -241,7 +241,7 @@ public class DatatableHeaders {
 			else if("adminPolicyManagement".equals(role)) {
 				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.description,headersTitle.value,headersTitle.period,headersTitle.Status,headersTitle.policyOrder,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -251,7 +251,7 @@ public class DatatableHeaders {
 			else if("AdmintrcManageType".equals(role)) {
 				String[] headers = {headersTitle.creationDate,headersTitle.transactionID,headersTitle.requestDate,headersTitle.manufacturerName,headersTitle.country,headersTitle.tac,headersTitle.trcStatus,headersTitle.approveRejectionDate,headersTitle.adminStatus,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -261,7 +261,7 @@ public class DatatableHeaders {
 			else if("BlockUnblockCEIRAdmin".equals(role)) {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.operator,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -272,7 +272,7 @@ public class DatatableHeaders {
 			else if("lawfulStolenHeaders".equals(role)) {
 				String[] headers = {headersTitle.requestDate,headersTitle.transactionID,headersTitle.blockType,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -281,7 +281,7 @@ public class DatatableHeaders {
 			else if("auditManagement".equals(role)) {
 				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.userId,headersTitle.userName,headersTitle.roll,headersTitle.feature,headersTitle.subFeature,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -290,7 +290,7 @@ public class DatatableHeaders {
 			else {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.NOT_FOUND);
 			}
