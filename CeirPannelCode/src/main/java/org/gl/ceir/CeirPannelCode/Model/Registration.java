@@ -16,7 +16,7 @@ public class Registration {
 	private String locality;
 	private String district;
 	private String commune;
-	private Integer postalCode;
+	private String postalCode;
 	private String province;
 	private String country; 
 	private Integer type;
@@ -303,10 +303,10 @@ public class Registration {
 	public void setCommune(String commune) {
 		this.commune = commune;
 	}
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 	public Integer getArrivalPort() {

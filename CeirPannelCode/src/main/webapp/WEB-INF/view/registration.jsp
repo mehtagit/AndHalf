@@ -771,12 +771,12 @@ String usertypeId="${usertypeId}";
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" name="emailOtp" maxlength="6"
+                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
                                  required="required" id="emailOtp" pattern="[0-9]{0,6}"
 										title="Please enter 6 digit number" placeholder=""/>
                             </div> 
                             <div class="input-field col s12 m12">
-                                <input type="text" name="phoneOtp" maxlength="6" 
+                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
 										pattern="[0-9]{0,6}"
 										title="Please enter 6 digit number" 
                                 required="required" id="phoneOtp" placeholder=""/>
