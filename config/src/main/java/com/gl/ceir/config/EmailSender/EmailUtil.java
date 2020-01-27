@@ -82,11 +82,10 @@ public class EmailUtil {
 			String featureName, String subFeature, String featureTxnId, String subject) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
-
+			logger.info("Message for tag [" + tag + "] " + messageDB);
 			// Save email in notification table.
 			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0);
-
 
 			return Boolean.TRUE;
 		}catch (Exception e) {
