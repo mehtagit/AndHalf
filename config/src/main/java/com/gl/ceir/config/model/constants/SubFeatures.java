@@ -11,4 +11,5 @@ public interface SubFeatures {
 	String DELETE = "DELETE";
 	String FILTER = "FILTER";
 	String VIEW = "VIEW";
+	String ASSIGN = "ASSIGN";
 }

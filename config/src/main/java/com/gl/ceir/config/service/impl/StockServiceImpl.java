@@ -53,7 +53,6 @@ import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
-import com.gl.ceir.config.model.file.ConsignmentFileModel;
 import com.gl.ceir.config.model.file.StockFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.StatesInterpretaionRepository;
@@ -126,12 +125,14 @@ public class StockServiceImpl {
 	StatesInterpretaionRepository statesInterpretaionRepository;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
-
+		boolean isStockAssignRequest = Boolean.FALSE;
+		User user = null;
+		
 		try {
 			stockMgmt.setStockStatus(StockStatus.UPLOADING.getCode());
 
 			if("Custom".equalsIgnoreCase(stockMgmt.getUserType())) {
-				User user =	userRepository.getByUsername(stockMgmt.getSupplierId());
+				user =	userRepository.getByUsername(stockMgmt.getSupplierId());
 
 				if(Objects.isNull(user)) {
 					logger.info("This is not a valid user to assign a stock. ");
@@ -140,10 +141,11 @@ public class StockServiceImpl {
 				stockMgmt.setUserId(new Long(user.getId()));
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(user.getUsertype().getUsertypeName());
+				isStockAssignRequest = Boolean.TRUE;
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				if(validateUserProfileOfStock(stockMgmt)) {
-					User user = User.getDefaultUser();
+					user = User.getDefaultUser();
 					UserProfile userProfile = UserProfile.getDefaultUserProfile();
 					userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
 					userProfile.setUser(user);
@@ -175,6 +177,16 @@ public class StockServiceImpl {
 			webActionDb.setTxnId(stockMgmt.getTxnId());
 
 			if(executeRegisterStock(stockMgmt, webActionDb)) {
+				if(isStockAssignRequest) {
+					emailUtil.saveNotification("ASSIGN_STOCK", 
+							user.getUserProfile(), 
+							4,
+							Features.STOCK,
+							SubFeatures.ASSIGN,
+							stockMgmt.getTxnId(),
+							MailSubjects.SUBJECT);
+					logger.info("Notification have been saved.");
+				}
 				logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
 			}else {
@@ -488,19 +500,10 @@ public class StockServiceImpl {
 		StatefulBeanToCsv<StockFileModel> csvWriter = null;
 		List< StockFileModel > fileRecords = null;
 
-		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<StockMgmt> stockMgmts = getAll(filterRequest);
-			/*
-			if( !stockMgmts.isEmpty() ) {
-				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-			 */
+
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stock.csv";
-			/*
-			 * }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
-			 * "_Stocks.csv"; } }else { fileName =
-			 * LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stocks.csv"; }
-			 */
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
@@ -509,7 +512,6 @@ public class StockServiceImpl {
 			if( !stockMgmts.isEmpty() ) {
 
 				fileRecords = new ArrayList<>();
-				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
 
 				for( StockMgmt stockMgmt : stockMgmts ) {
 					sfm = new StockFileModel();
@@ -541,7 +543,7 @@ public class StockServiceImpl {
 			} catch (IOException e) {}
 		}
 	}
-	
+
 	public FileDetails getFilteredStockInFileV2(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
@@ -563,10 +565,10 @@ public class StockServiceImpl {
 		try {
 			List<StockMgmt> stockMgmts = getAll(filterRequest);
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Stock.csv";
-			
+
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			mappingStrategy.setType(StockFileModel.class);
-			
+
 			builder = new StatefulBeanToCsvBuilder<StockFileModel>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy)
 					.withSeparator(',')
@@ -596,13 +598,13 @@ public class StockServiceImpl {
 			}else {
 				csvWriter.write( new StockFileModel());
 			}
-			
+
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
 					Features.STOCK, SubFeatures.VIEW, ""));
 			logger.info("AUDIT : Saved file export request in audit.");
-			
+
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
