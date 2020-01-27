@@ -23,14 +23,13 @@ function auditManagementDatatable(){
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
+			"featureId": parseInt(featureId)
 	}
-	/*nationalId == null ? $('#nId').val() : nationalId*/
 	$.ajax({
 		url: 'headers?type=auditManagement',
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
-			/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 			var table=	$("#auditLibraryTable").removeAttr('width').DataTable({
 				destroy:true,
 				"serverSide": true,
@@ -53,9 +52,9 @@ function auditManagementDatatable(){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 100, targets: result.length - 1 },
+		            { width: 50, targets: result.length - 1 },
 		            { width: 125, targets: 0 },
-		            { width: 125, targets: 1 }
+		            { width: 150, targets: 1 }
 		        ]
 			});
 		},
@@ -91,35 +90,13 @@ function pageRendering(){
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 					}
 					else if(date[i].type === "text"){
-						$("#auditTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for=userId' class='center-align'>"+date[i].title+"</label></div>");
-						$("#auditTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+						$("#auditTableDiv").append("<div class='col s12 m2 l12'><a href='JavaScript:void(0)' onclick='exportAuditData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
-						
 						}
 					}
-					
 				} 
-			
-	/*		// dynamic dropdown portion
-			var dropdown=data.dropdownList;
-			for(i=0; i<dropdown.length; i++){
-				var dropdownDiv=
-					$("#auditTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
-							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-							"<span class='caret'>"+"</span>"+
-							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-
-							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='-1'>"+dropdown[i].title+
-							"</option>"+
-							"</select>"+
-							"</div>"+
-					"</div>");
-			}*/
-
 			$('.datepicker').datepicker({
 				dateFormat: "yy-mm-dd"
 				});
@@ -144,7 +121,6 @@ function viewDetails(Id){
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
 		success : function(data) {
-			console.log(data);
 			setViewPopupData(data);
 		},
 		error : function() {
@@ -160,4 +136,14 @@ function setViewPopupData(data){
 	$("#viewRoleType").val(data.userType);
 	$("#viewFeature").val(data.featureName);
 	$("#viewSubFeature").val(data.subFeature);
+}
+
+
+function exportAuditData(){
+	var table = $('#auditLibraryTable').DataTable();
+	var info = table.page.info(); 
+	var pageNo=info.page;
+	var pageSize =info.length;
+	window.location.href="./exportAuditData?pageSize="+pageSize+"&pageNo="+pageNo;
+	
 }

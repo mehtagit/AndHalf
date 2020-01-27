@@ -100,6 +100,8 @@
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="nationalityInformation" id="nationalityInformation" value="${registration.nidFilename}" maxlength="20" value="file.csv" disabled="">
                                     <label for="nationalityInformation" class="active">Upload Nationality Information </label>
+                                      <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> 
+                                    
                                 </div>
 
                                 
@@ -205,7 +207,17 @@
 
 
 
+	<!-- Preview Modal start   -->
 
+	<div id="viewuplodedModel" class="modal">
+		<div class="modal-content">
+			<div class="row">
+					<img src="" id="fileSource" width="400" height="400">
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
+    
 
 
 

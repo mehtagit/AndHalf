@@ -100,9 +100,9 @@ public class TRC implements CRUD{
 						String status = trcContentModelList.getStateInterp();
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-						String adminState = (String) trcContentModelList.getAdminStateInterp();
+						String adminState = trcContentModelList.getAdminStateInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName1=(String) trcContentModelList.getFileName();
+						String fileName1= trcContentModelList.getFileName();
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
@@ -121,7 +121,7 @@ public class TRC implements CRUD{
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName1=(String) trcContentModelList.getFileName();
+						String fileName1= trcContentModelList.getFileName();
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
@@ -130,6 +130,7 @@ public class TRC implements CRUD{
 						datatableResponseModel.setData(finalList);
 					}
 				}
+
 				
 		}
 			datatableResponseModel.setRecordsTotal(trcPaginationModel.getNumberOfElements());

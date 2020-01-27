@@ -1,6 +1,12 @@
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.parent.$('#langlist').on('change', function() {
-			window.location.reload(true);
+			alert("hi10");
+		 var roleType = $("body").attr("data-roleType");
+	 var userId = $("body").attr("data-userID");
+	 var currentRoleType = $("body").attr("data-selected-roleType"); 
+	 var role = currentRoleType == null ? roleType : currentRoleType;
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+			window.location.assign("./assignDistributor?userTypeId="+role+"&lang="+lang);
 		});
 
 
@@ -362,15 +368,16 @@
 				var date=data.inputTypeDateList;
 				for(i=0; i<date.length; i++){
 					if(date[i].type === "date"){
-						$("#consignmentTableDIv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+						$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 								"<div id='enddatepicker' class='input-group date'>"+
-								"<label for='TotalPrice'>"+date[i].title
-								+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<label for="+date[i].id+">"+date[i].title
+								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
 								"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 					} 
 					else if(date[i].type === "text"){
-						$("#consignmentTableDIv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+						$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 					}
 				}
@@ -379,12 +386,12 @@
 				for(i=0; i<dropdown.length; i++){
 					var dropdownDiv=
 						$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-								"<br>"+
-								"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
 								"<span class='caret'>"+"</span>"+
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-								"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
 								"<option>"+dropdown[i].title+
 								"</option>"+
 								"</select>"+
@@ -394,8 +401,8 @@
 							
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
-					$("#consignmentTableDIv").append("<div class='col s12 m1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
-					$("#consignmentTableDIv").append("<div class='col s12 m3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
 						$('#'+button[i].id).attr("href", button[i].buttonURL);
@@ -412,8 +419,8 @@
 				}else{
 
 					
-					$("#consignmentTableDIv").append("<div class='col s12 m1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
-					$("#consignmentTableDIv").append("<div class='col s12 m3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
 						/*$('#'+button[i].id).attr("onclick", button[i].buttonURL);*/

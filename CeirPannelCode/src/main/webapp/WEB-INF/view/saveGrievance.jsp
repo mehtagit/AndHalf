@@ -292,7 +292,8 @@ function saveGrievance(){
 			"attachedFiles":fileInfo,
 			"txnId":txnId,
 			"categoryId":category,
-			"remarks":remark
+			"remarks":remark,
+			"featureId":6
 		}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));

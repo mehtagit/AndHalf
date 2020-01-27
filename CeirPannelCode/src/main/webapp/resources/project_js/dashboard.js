@@ -1,5 +1,6 @@
 $(document).ready(function () {
 	dataByTag("copyright_footer","copyrightText",2);
+	
      });   
 
 

@@ -15,14 +15,15 @@ public class StockUploadModel {
 	private int stockStatus;
 	private String supplierId;
 	private int userId;
-	private String userType,remarks;
+	private String userType,remarks,createdOn,modifiedOn,stateInterp;
 	private StockUserModel user;
 	@Override
 	public String toString() {
 		return "StockUploadModel [fileName=" + fileName + ", id=" + id + ", invoiceNumber=" + invoiceNumber
 				+ ", roleType=" + roleType + ", suplierName=" + suplierName + ", txnId=" + txnId + ", quantity="
 				+ quantity + ", stockStatus=" + stockStatus + ", supplierId=" + supplierId + ", userId=" + userId
-				+ ", userType=" + userType + ", remarks=" + remarks + ", user=" + user + "]";
+				+ ", userType=" + userType + ", remarks=" + remarks + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + ", stateInterp=" + stateInterp + ", user=" + user + "]";
 	}
 	public String getFileName() {
 		return fileName;
@@ -96,6 +97,24 @@ public class StockUploadModel {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
 	public StockUserModel getUser() {
 		return user;
 	}
@@ -103,8 +122,7 @@ public class StockUploadModel {
 		this.user = user;
 	}
 	
-	
-	
+
 	
 	
 	

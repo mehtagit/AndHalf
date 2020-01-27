@@ -6,7 +6,7 @@ public class StockUserModel {
 
 	private int   id ;
 	private String createdOn;
-	private String usertype;
+
 	private String username;
 	private String  password;
 	private int   fwstatus;
@@ -23,14 +23,15 @@ public class StockUserModel {
 	private String captcha;
     private String status;
     private Registration userProfile;
+    private AnonymousUser usertype;
 	@Override
 	public String toString() {
-		return "StockUserModel [id=" + id + ", createdOn=" + createdOn + ", usertype=" + usertype + ", username="
-				+ username + ", password=" + password + ", fwstatus=" + fwstatus + ", modifiedBy=" + modifiedBy
-				+ ", modifiedOn=" + modifiedOn + ", subuser_status=" + subuser_status + ", parent_id=" + parent_id
-				+ ", email=" + email + ", phone_no=" + phone_no + ", organization=" + organization + ", user_limit="
-				+ user_limit + ", organization_id=" + organization_id + ", captcha=" + captcha + ", status=" + status
-				+ ", userProfile=" + userProfile + "]";
+		return "StockUserModel [id=" + id + ", createdOn=" + createdOn + ", username=" + username + ", password="
+				+ password + ", fwstatus=" + fwstatus + ", modifiedBy=" + modifiedBy + ", modifiedOn=" + modifiedOn
+				+ ", subuser_status=" + subuser_status + ", parent_id=" + parent_id + ", email=" + email + ", phone_no="
+				+ phone_no + ", organization=" + organization + ", user_limit=" + user_limit + ", organization_id="
+				+ organization_id + ", captcha=" + captcha + ", status=" + status + ", userProfile=" + userProfile
+				+ ", usertype=" + usertype + "]";
 	}
 	public int getId() {
 		return id;
@@ -43,12 +44,6 @@ public class StockUserModel {
 	}
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
-	}
-	public String getUsertype() {
-		return usertype;
-	}
-	public void setUsertype(String usertype) {
-		this.usertype = usertype;
 	}
 	public String getUsername() {
 		return username;
@@ -140,6 +135,14 @@ public class StockUserModel {
 	public void setUserProfile(Registration userProfile) {
 		this.userProfile = userProfile;
 	}
+	public AnonymousUser getUsertype() {
+		return usertype;
+	}
+	public void setUsertype(AnonymousUser usertype) {
+		this.usertype = usertype;
+	}
 	
-
+	
+    
+    
 }
