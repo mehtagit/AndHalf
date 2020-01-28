@@ -3,6 +3,7 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -94,6 +95,10 @@ public class RegularizeDeviceDb implements Serializable {
 	@ManyToOne 
 	@JoinColumn(name = "userId") 
 	private EndUserDB endUserDB;
+	
+	@NotNull
+	@Column(length = 20)
+	private String origin;
 
 	public Long getId() {
 		return id;
@@ -315,6 +320,13 @@ public class RegularizeDeviceDb implements Serializable {
 	public void setStateInterp(String stateInterp) {
 		this.stateInterp = stateInterp;
 	}
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
 
 	@Override
 	public String toString() {
@@ -367,6 +379,8 @@ public class RegularizeDeviceDb implements Serializable {
 		builder.append(fourthImei);
 		builder.append(", remark=");
 		builder.append(remark);
+		builder.append(", origin=");
+		builder.append(origin);
 		builder.append(", status=");
 		builder.append(status);
 		builder.append(", endUserDB=");

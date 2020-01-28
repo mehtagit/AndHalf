@@ -70,6 +70,8 @@ public class EndUserDB implements Serializable {
 
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
+	
+	private String nationality;
 
 	public Long getId() {
 		return id;
@@ -200,7 +202,13 @@ public class EndUserDB implements Serializable {
 	public void setDocTypeInterp(Integer docTypeInterp) {
 		this.docTypeInterp = docTypeInterp;
 	}
-	
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

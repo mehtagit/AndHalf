@@ -264,13 +264,11 @@ public class RegularizedDeviceServiceImpl {
 
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
 
-					// statusSetter.setStatus(endUserDB.getRegularizeDeviceDbs(), RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					}
-
 					logger.info(">>>>>>>>>>>>>>>>>" + endUserDB.getRegularizeDeviceDbs());
+					
 					// End user is not registered with CEIR system.
 					if(Objects.isNull(endUserDB2)) {
 						endUserDbRepository.save(endUserDB);
@@ -482,7 +480,7 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			specificationBuilder.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

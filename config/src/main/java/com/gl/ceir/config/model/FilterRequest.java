@@ -15,17 +15,18 @@ public class FilterRequest {
 	private Integer featureId;
 	private Integer userTypeId;
 	private String searchString;
-	
+
 	public Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;
 	private Integer type;
 	private Integer channel;
-	
+
 	private String tag;
 	private Integer status;
-	
+
 	private Integer operatorTypeId;
+	private String origin;
 
 	public Integer getUserId() {
 		return userId;
@@ -33,7 +34,7 @@ public class FilterRequest {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
+
 	public String getNid() {
 		return nid;
 	}
@@ -156,6 +157,12 @@ public class FilterRequest {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
 	
 	@Override
 	public String toString() {
@@ -205,7 +212,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
 
 
