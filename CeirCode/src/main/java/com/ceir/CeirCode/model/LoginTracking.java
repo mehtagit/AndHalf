@@ -50,6 +50,12 @@ public class LoginTracking {
 	public LoginTracking() {
 		super();
 	}
+	public LoginTracking(Integer loginStatus, User userTrack) {
+		super();
+		this.loginStatus = loginStatus;
+		this.userTrack = userTrack;
+	}
+
 	public LoginTracking(Integer loginStatus, User userTrack,Date createdOn) {
 		super();
 		this.loginStatus = loginStatus;

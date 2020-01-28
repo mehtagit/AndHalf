@@ -56,7 +56,7 @@ public class LoginService {
 				if(UserData.getPassword().equals(user.getPassword())){
 				if(UserData.getCurrentStatus()==user.getCurrentStatus() || UserData.getCurrentStatus()==status2){
 					log.info("user data : "+UserData);  
-					LoginTracking loginTrack=new LoginTracking(1,UserData,new Date());
+					LoginTracking loginTrack = new LoginTracking(1, UserData);
 					log.info("loginTrack to save:"+loginTrack+"and user data: "+UserData.toString());
 					LoginTracking trackOutput=loginTrackingRepo.save(loginTrack); 
 					log.info("trackOutput:  "+ trackOutput);   
