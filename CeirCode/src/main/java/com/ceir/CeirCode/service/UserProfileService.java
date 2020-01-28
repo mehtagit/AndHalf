@@ -9,16 +9,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.UserProfileSpecificationBuilder;
@@ -45,68 +42,67 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 @Service
 public class UserProfileService {
 
-@Autowired
-FileStorageProperties fileStorageProperties;
-private final Logger log = LoggerFactory.getLogger(getClass());
+	@Autowired
+	FileStorageProperties fileStorageProperties;
+	private final Logger log = LoggerFactory.getLogger(getClass());
 
-@Autowired  
-UserProfileRepo  userProfileRepo;
+	@Autowired  
+	UserProfileRepo  userProfileRepo;
 
-@Autowired
-PropertiesReaders propertiesReader;
+	@Autowired
+	PropertiesReaders propertiesReader;
 
-@Autowired
-SystemConfigDbListRepository systemConfigRepo;
+	@Autowired
+	SystemConfigDbListRepository systemConfigRepo;
 
-@Autowired
-SystemConfigDbRepoImpl systemConfigurationDbRepoImpl;
+	@Autowired
+	SystemConfigDbRepoImpl systemConfigurationDbRepoImpl;
 
-public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
-	try { 
-		
-        log.info("filter data:  "+filterRequest);
-        Integer currentStatus=null;
-        if(filterRequest.getStatus()!=null && filterRequest.getStatus()!=-1){
-        currentStatus=UserStatus.PENDING_ADMIN_APPROVAL.getCode();
-        }
-		Pageable pageable = PageRequest.of(pageNo, pageSize);
+	public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+		try { 
 
-		UserProfileSpecificationBuilder uPSB = new UserProfileSpecificationBuilder(propertiesReader.dialect);	
+			log.info("filter data:  "+filterRequest);
+			Integer currentStatus=null;
+			if(filterRequest.getStatus()!=null && filterRequest.getStatus()!=-1){
+				currentStatus=UserStatus.PENDING_ADMIN_APPROVAL.getCode();
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE)));
+			UserProfileSpecificationBuilder uPSB = new UserProfileSpecificationBuilder(propertiesReader.dialect);	
 
-		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE)));
+			if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
+				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE)));
 
-		if(Objects.nonNull(filterRequest.getAsType()) && filterRequest.getAsType()!=-1)
-			uPSB.with(new SearchCriteria("type",filterRequest.getAsType(), SearchOperation.EQUALITY, Datatype.INTEGER));
-		
-		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId() !=0 && filterRequest.getUserRoleTypeId()!=-1)
-			uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));
-		
-		if(Objects.nonNull(currentStatus) && currentStatus!=-1) 
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
-		else  
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
-		log.info("uPSB specification:  "+uPSB);
+			if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
+				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE)));
+
+			if(Objects.nonNull(filterRequest.getAsType()) && filterRequest.getAsType()!=-1)
+				uPSB.with(new SearchCriteria("type",filterRequest.getAsType(), SearchOperation.EQUALITY, Datatype.INTEGER));
+
+			if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId() !=0 && filterRequest.getUserRoleTypeId()!=-1)
+				uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));
+
+			if(Objects.nonNull(currentStatus) && currentStatus!=-1) 
+				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
+			else  
+				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
+			log.info("uPSB specification:  "+uPSB);
 			return userProfileRepo.findAll(uPSB.build(),pageable);
 
-	} catch (Exception e) {
-		log.info("Exception found ="+e.getMessage());
+		} catch (Exception e) {
+			log.info("Exception found ="+e.getMessage());
 
-		e.printStackTrace();
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+
+	public List<UserProfile> assigneeInfo(SearchAssignee searchAssignee ){
+	//	Specification<UserProfile> specification=new Specification<UserProfile>(propertiesReader.dialect) ;
 		return null;
 	}
-}
 
-	/*
-	 * public List<UserProfile> assigneeInfo(SearchAssignee searchAssignee ){
-	 * Specification<UserProfile> specification=new
-	 * Specification<UserProfile>(propertiesReader.dialect) ;
-	 * 
-	 * return null; }
-	 */
 
 	public FileDetails getFilterUSerPRofileInFile(FilterRequest profileFilter, Integer pageNo, Integer pageSize) {
 		log.info("inside export user profile data into file service");
@@ -124,9 +120,9 @@ public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pag
 		HeaderColumnNameTranslateMappingStrategy<UserProfileFileModel> mapStrategy = null;
 		try {
 			Page<UserProfile> userProfileData = this.viewAllRecord(profileFilter, pageNo, pageSize);
-			
+
 			List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
-			
+
 			for(UserProfile profile:userProfileData.getContent()) {
 				for(SystemConfigListDb asType:asTypeList) {
 					if(profile.getType()==asType.getValue()) {
@@ -134,12 +130,12 @@ public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pag
 					}
 				}
 			}
-			
+
 			if( userProfileData.getSize()> 0 ) {
 				//if(Objects.nonNull(profileFilter.getUserId()) && (profileFilter.getUserId() != -1 && grievance.getUserId() != 0)) {
-					//fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_"+grievances.get(0).getUser().getUsername()+"_Grievances.csv";
+				//fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_"+grievances.get(0).getUser().getUsername()+"_Grievances.csv";
 				//}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_UserProfile.csv";
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_UserProfile.csv";
 				//}
 			}else {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_UserProfile.csv";
@@ -197,7 +193,7 @@ public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pag
 			try {
 
 				if( writer != null )
-				writer.close();
+					writer.close();
 			} catch (IOException e) {}
 		}
 
