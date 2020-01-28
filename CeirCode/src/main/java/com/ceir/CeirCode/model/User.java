@@ -2,6 +2,7 @@ package com.ceir.CeirCode.model;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -44,7 +45,8 @@ public class User {
 	private String remark;
    
 	private long parentId=0;
-    private String language;
+	@Column(name = "user_language")
+    private String userLanguage;
     
 	
 	@JsonIgnore
@@ -186,11 +188,12 @@ public class User {
 		this.parentId = parentId;
 	}
 	
-	public String getLanguage() {
-		return language;
+	
+	public String getUserLanguage() {
+		return userLanguage;
 	}
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setUserLanguage(String userLanguage) {
+		this.userLanguage = userLanguage;
 	}
 	public List<Notification> getNotificationData() {
 		return notificationData;
@@ -250,8 +253,8 @@ public class User {
 		builder.append(remark);
 		builder.append(", parentId=");
 		builder.append(parentId);
-		builder.append(", language=");
-		builder.append(language);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
 		builder.append(", notificationData=");
 		builder.append(notificationData);
 		builder.append("]");

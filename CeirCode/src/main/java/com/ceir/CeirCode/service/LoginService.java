@@ -73,7 +73,7 @@ public class LoginService {
 					response.setStatus(UserStatus.getUserStatusByCode(UserData.getCurrentStatus()).getDescription());   
 					response.setOperatorTypeId(UserData.getUserProfile().getOperatorTypeId());
 					response.setOperatorTypeName(UserData.getUserProfile().getOperatorTypeName());
-					response.setUserLanguage(UserData.getLanguage());
+					response.setUserLanguage(UserData.getUserLanguage());
 					List<Userrole> userroleList=new ArrayList<Userrole>();
 					userroleList=userRoleRepo.findByUserData_Id(UserData.getId());
 					List<Usertype> userRoles=new ArrayList<Usertype>();   
@@ -145,7 +145,7 @@ public class LoginService {
              User user=new User();
              user=userRepo.findById(languageData.getUserId());
              if(user!=null) {
-            	 user.setLanguage(languageData.getLanguage());
+            	 user.setUserLanguage(languageData.getLanguage());
             	 User output=userRepo.save(user);
 			if(output!=null) {
 				HttpResponse response=new HttpResponse();
