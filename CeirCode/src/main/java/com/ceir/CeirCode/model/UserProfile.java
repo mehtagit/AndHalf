@@ -113,9 +113,12 @@ public class UserProfile {
 	@JoinColumn(name = "userid", nullable = false)
 	private User user;  
     private String source;
+    
 	@Type(type="date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	
 	private Date expiryDate;
+	
     private String sourceUsername;
     
 	public long[] getRoles() {
