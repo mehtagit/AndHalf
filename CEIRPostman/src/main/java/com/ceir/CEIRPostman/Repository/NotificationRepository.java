@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import com.ceir.CEIRPostman.model.Notification;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long>, JpaSpecificationExecutor<Notification>{
-	public List<Notification> findByStatus(int status);
+	public List<Notification> findByStatusAndChannelType(int status,String channelType);
 }

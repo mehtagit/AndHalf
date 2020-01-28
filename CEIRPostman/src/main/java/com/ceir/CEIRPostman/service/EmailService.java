@@ -35,7 +35,7 @@ public class EmailService implements Runnable {
 		while (true) {
 			log.info("inside run method");
 			try {
-				List<Notification> notificationData=notificationRepoImpl.notitificationByStatus(1);
+				List<Notification> notificationData=notificationRepoImpl.notitificationByStatus(1,"EMAIL");
 				int totalMailsent=0;
 				int totalMailNotsent=0;
 				if(notificationData!=null) {
@@ -73,7 +73,7 @@ public class EmailService implements Runnable {
 				e.printStackTrace();
 			}
 			try {
-				Thread.sleep(3600000);
+				Thread.sleep(60000);
 			}
 			catch(Exception e) {
 				e.printStackTrace();

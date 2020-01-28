@@ -2,6 +2,8 @@ package com.ceir.CEIRPostman.RepositoryImpl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,14 @@ public class NotificationRepoImpl {
 	@Autowired
 	NotificationRepository notificationRepository;
 	
-	public List<Notification> notitificationByStatus(int status) {
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	public List<Notification> notitificationByStatus(int status,String channelType) {
 		try {
-			List<Notification> notification=notificationRepository.findByStatus(status);
+			List<Notification> notification=notificationRepository.findByStatusAndChannelType(status,channelType);
 		    return notification;
 		}
 		catch(Exception e) {
+			log.info(e.toString());
             return null;
 		}
 	}
