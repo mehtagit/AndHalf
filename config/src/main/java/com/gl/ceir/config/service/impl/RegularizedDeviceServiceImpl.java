@@ -52,6 +52,7 @@ import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.RegularizeDeviceHistoryDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
+import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
@@ -109,6 +110,9 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	UserProfileRepository userProfileRepository;
+	
+	@Autowired
+	SystemConfigurationDbRepository systemConfigurationDbRepository;
 
 	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
 
@@ -143,9 +147,16 @@ public class RegularizedDeviceServiceImpl {
 	public Page<RegularizeDeviceDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 
 		List<StateMgmtDb> stateList = null;
+		SystemConfigurationDb newYearDateRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.new_year_date_register_device);
+		SystemConfigurationDb gracePeriodDorRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
+				// TODO
+				
+			}
 
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 
@@ -192,15 +203,7 @@ public class RegularizedDeviceServiceImpl {
 		try {
 			List<RegularizeDeviceDb> regularizeDevices = getAll(filterRequest);
 
-			/*if( !regularizeDevices.isEmpty() ) {
-				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_" + "_RegularizeDevices.csv";
-				}else {*/
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_RegularizeDevice.csv";
-			/*
-			 * } }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
-			 * "_RegularizeDevices.csv"; }
-			 */
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<RegularizeDeviceFileModel>(writer);

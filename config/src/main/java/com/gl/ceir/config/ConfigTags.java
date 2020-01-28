@@ -16,6 +16,8 @@ public interface ConfigTags {
 	String file_custom_regularized_download_link = "file_custom_regularized_download_link"; 
 	String file_audit_trail_download_dir = "file_audit_trail_download_dir";
 	String file_audit_trail_download_link = "file_audit_trail_download_link";
+	String new_year_date_register_device = "new_year_date_register_device";
+	String grace_period_for_rgister_device = "grace_period_for_rgister_device";
 	
 	// User
 	
