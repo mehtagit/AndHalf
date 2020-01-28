@@ -1,3 +1,5 @@
+page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -110,7 +112,7 @@
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading"> Update Report Recovery</p>
+                                            <p class="PageHeading"> <spring:message code="registration.updatereportrecovery" /></p>
                                         </div>
 
                                       <!--   <div class="row">
@@ -127,42 +129,42 @@
                                                         <div class="col-s12 m12">
                                                              <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" maxlength="30">
-                                                                <label for="sigleRecoverydeviceBrandName">Device Brand Name</label>
+                                                                <label for="sigleRecoverydeviceBrandName"> <spring:message code="registration.devicebrandname" /></label>
                                                             </div>
 
                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" maxlength="30">
-                                                                <label for="sigleRecoveryimeiNumber">IMEI/MEID/ESN Number <span class="star">*</span></label>
+                                                                <label for="sigleRecoveryimeiNumber"> <spring:message code="registration.imei/meid/esnnumber" /><span class="star">*</span></label>
                                                             </div>
 
                                                             <div class="col s6 m6 selectDropdwn">
-                                                                <label for="sigleRecoverydeviceIDType">Device ID Type <span class="star">*</span></label>
+                                                                <label for="sigleRecoverydeviceIDType"><spring:message code="select.deviceIDType" /> <span class="star">*</span></label>
                                                                 <select id="sigleRecoverydeviceIDType" class="browser-default">
-                                                                  <option value="" disabled selected>Device ID Type</option>
+                                                                  <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                 </select>
                                                               </div>
 
                                                               <div class="col s6 m6 selectDropdwn">
-                                                                <label for="sigleRecoverydeviceType">Device Type </label>
+                                                                <label for="sigleRecoverydeviceType"> <spring:message code="select.deviceType" /></label>
                                                                 <select class="browser-default" id="sigleRecoverydeviceType">
-                                                                    <option value="" disabled selected>Device Type</option>
+                                                                    <option value="" disabled selected><spring:message code="select.deviceType" /></option>
                                                                 </select>
                                                               </div> 
                                                               
                                                               <div class="col s6 m6 selectDropdwn">
-                                                                <label for="sigleRecoverydeviceSimStatus">Multiple Sim Status </label>
+                                                                <label for="sigleRecoverydeviceSimStatus"> <spring:message code="select.multiSimStatus" /></label>
                                                                 <select id="sigleRecoverydeviceSimStatus" class="browser-default">
-                                                                  <option value="" disabled selected>Multiple Sim Status</option>
+                                                                  <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
                                                                 </select>
                                                               </div>
 
                                                               <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" maxlength="30">
-                                                                <label for="sigleRecoveryserialNumber">Device Serial Number</label>
+                                                                <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
 
                                                             <div class="col s12 m12" style="margin-top: 30px;">
-                                                                <h5>Place Of Device Recovery</h5>
+                                                                <h5><spring:message code="registration.placeofdevicerecovery" /></h5>
                                                                 <hr>
                                                             </div>
                                                             <!-- <div class="col s12 m12">
@@ -171,74 +173,74 @@
                                                             <div class="input-field col s12 m12">
                                                                 <input type="text" name="sigleRecoveryaddress" class="form-control boxBorder boxHeight"
                                                                      pattern=[A-Za-z] title="Please enter your address">
-                                                                <label for="sigleRecoveryaddress">Address(Property Location) <span class="star">*</span></label>
+                                                                <label for="sigleRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                             </div>
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverystreetNumber" class="form-control boxBorder boxHeight"
                                                                     id="sigleRecoverystreetNumber" maxlength="30" pattern=[A-Za-z0-9] title="Please enter street number">
-                                                                <label for="sigleRecoverystreetNumber">Street Number <span class="star">*</span></label>
+                                                                <label for="sigleRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                             </div>
         
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoveryvillage" id="sigleRecoveryvillage" maxlength="20">
-                                                                <label for="sigleRecoveryvillage">Village <span class="star">*</span></label>
+                                                                <label for="sigleRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
                                                             </div>
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight"
                                                                     id="sigleRecoverylocality" maxlength="20" pattern=[A-Za-z0-9] title="Please enter your locality">
-                                                                <label for="sigleRecoverylocality">Locality <span class="star">*</span></label>
+                                                                <label for="sigleRecoverylocality"><spring:message code="input.locality" />  <span class="star">*</span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" maxlength="20">
-                                                                <label for="sigleRecoverydistrict">District <span class="star">*</span></label>
+                                                                <label for="sigleRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverycommune" id="sigleRecoverycommune" maxlength="20">
-                                                                <label for="sigleRecoverycommune">Commune <span class="star">*</span></label>
+                                                                <label for="sigleRecoverycommune"><spring:message code="input.commune" /> <span class="star">*</span></label>
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
                                                                     id="sigleRecoverypin" maxlength="20">
-                                                                <label for="sigleRecoverypin">Postalcode <span class="star">*</span></label>
+                                                                <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
                                                             </div>
                             
                                                             <div class="col s12 m6 l6">
-                                                                <label>Country <span class="star">*</span></label>
+                                                                <label><spring:message code="table.country" /> <span class="star">*</span></label>
                                                                 <select id="country1" class="browser-default" class="mySelect"
                                                                     style="padding-left: 0;" required></select>
                                                             </div>
                             
                                                             <div class="col s12 m6 l6">
-                                                                <label>Province <span class="star">*</span></label>
+                                                                <label> <spring:message code="input.province" /><span class="star">*</span></label>
                                                                 <select id="state1" class="browser-default" class="mySelect" style="padding-left: 0;"
                                                                     required></select>
                                                             </div>
 
                                                             <div class="col s6 m6 selectDropdwn">
-                                                                <label for="sigleRecoverydeviceStatus">Device Status <span class="star">*</span></label>
+                                                                <label for="sigleRecoverydeviceStatus"><spring:message code="select.deviceStatus" /> <span class="star">*</span></label>
                                                                 <select id="sigleRecoverydeviceStatus" class="browser-default">
-                                                                  <option value="" disabled selected>Device Status</option>
+                                                                  <option value="" disabled selected><spring:message code="select.deviceStatus" /></option>
                                                                 </select>
                                                               </div>
 
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="sigleRecovery" class="materialize-textarea"></textarea>
-                                                                <label for="sigleRecovery">Remark </label>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
                                                             </div>
                                                             </div>
                                                         </div>
-                                                    <p> Required Field are marked with <span class="star">*</span></p>
+                                                    <p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
 
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn modal-trigger" data-target="submitStolen">Submit</button>
+                                                        <button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn modal-trigger"
-                                                            style="margin-left: 10px;">Cancel</a>
+                                                            style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
                                             </div>
@@ -248,18 +250,18 @@
                                                     <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
                                                         <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoveryquantity" maxlength="10" pattern=[0-9] title="Please enter your locality">
-                                                        <label for="bulkRecoveryquantity">Quantity <span class="star">*</span></label>
+                                                        <label for="bulkRecoveryquantity"><spring:message code="operator.quantity" /> <span class="star">*</span></label>
                                                     </div>
 <input type="text" id="pageViewType" value="${viewType}" style="display: none;">
                                                     <div class="input-field col s12 m6">
                                                         <textarea id="bulkRecoveryRemark" class="materialize-textarea"></textarea>
-                                                        <label for="bulkRecoveryRemark">Remark</label>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 
                                                     <div class="file-field col s12 m6">
-                                                        <h6 style="margin: 2px;">Upload File <span class="star">*</span></h6>
+                                                        <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star">*</span></h6>
                                                         <div class="btn">
-                                                            <span>select file</span>
+                                                            <span><spring:message code="input.selectfile" /></span>
                                                             <input type="file" id="bulkRecoveryFile" placeholder="Upload Photo">
                                                         </div>
                                                         <div class="file-path-wrapper">
@@ -269,11 +271,11 @@
                                                     </div>
 
                                                    <div class="col s12 m12">
-                                                       <a href="">Download Sample Format</a>
+                                                       <a href=""><spring:message code="input.downlaod.sample" /></a>
                                                    </div>
 
                                                    <div class="col s12 m12" style="margin-top: 30px;">
-                                                    <h5>Place Of Device Recovery</h5>
+                                                    <h5><spring:message code="registration.placeofdevicerecovery" /></h5>
                                                     <hr>
                                                 </div>
                                                     <!-- <div class="col s12 m12">
@@ -282,62 +284,62 @@
                                                     <div class="input-field col s12 m12">
                                                         <input type="text" name="bulkRecoveryaddress" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoveryaddress" pattern=[A-Za-z] title="Please enter your address">
-                                                        <label for="bulkRecoveryaddress">Address(Property Location) <span class="star">*</span></label>
+                                                        <label for="bulkRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoverystreetNumber" maxlength="30" pattern=[A-Za-z0-9] title="Please enter street number">
-                                                        <label for="bulkRecoverystreetNumber">Street Number <span class="star">*</span></label>
+                                                        <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                     </div>
 
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" maxlength="20">
-                                                        <label for="bulkRecoveryvillage">Village <span class="star">*</span></label>
+                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoverylocality" maxlength="20" pattern=[A-Za-z0-9] title="Please enter your locality">
-                                                        <label for="bulkRecoverylocality">Locality <span class="star">*</span></label>
+                                                        <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" maxlength="20">
-                                                        <label for="bulkRecoverydistrict">District <span class="star">*</span></label>
+                                                        <label for="bulkRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" maxlength="20">
-                                                        <label for="bulkRecoverycommune">Commune <span class="star">*</span></label>
+                                                        <label for="bulkRecoverycommune"> <spring:message code="input.commune" /><span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoverypin" maxlength="20">
-                                                        <label for="bulkRecoverypin">Postalcode <span class="star">*</span></label>
+                                                        <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="col s12 m6 l6">
-                                                        <label>Country <span class="star">*</span></label>
+                                                        <label><spring:message code="table.country" /> <span class="star">*</span></label>
                                                         <select id="bulkRecoverycountry" class="browser-default" class="mySelect"
                                                             style="padding-left: 0;" required></select>
                                                     </div>
                     
                                                     <div class="col s12 m6 l6">
-                                                        <label>Province <span class="star">*</span></label>
+                                                        <label> <spring:message code="input.province" /><span class="star">*</span></label>
                                                         <select id="bulkRecoverystate" class="browser-default" class="mySelect" style="padding-left: 0;"
                                                             required></select>
                                                     </div>
 
                                                     <div class="col s12 m12">
-                                                        <p> Required Field are marked with <span class="star">*</span></p>
+                                                        <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn modal-trigger" data-target="submitStolen">Submit</button>
+                                                        <button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn modal-trigger"
-                                                            style="margin-left: 10px;">Cancel</a>
+                                                            style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
                                                 </form>
                                             </div>
