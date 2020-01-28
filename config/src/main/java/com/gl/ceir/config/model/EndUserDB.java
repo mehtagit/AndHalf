@@ -11,7 +11,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
@@ -71,7 +73,22 @@ public class EndUserDB implements Serializable {
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
+	@Column(length = 50)
 	private String nationality;
+	
+	@Column(length = 1)
+	private String onVisa="N";
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "visaDb")
+	private VisaDb visaDb;
+	
+	@Column(length = 1)
+	private String isVip="N";
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "userDepartment")
+	private UserDepartment userDepartment;
 
 	public Long getId() {
 		return id;
@@ -208,7 +225,30 @@ public class EndUserDB implements Serializable {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-
+	public String getOnVisa() {
+		return onVisa;
+	}
+	public void setOnVisa(String onVisa) {
+		this.onVisa = onVisa;
+	}
+	public VisaDb getVisaDb() {
+		return visaDb;
+	}
+	public void setVisaDb(VisaDb visaDb) {
+		this.visaDb = visaDb;
+	}
+	public String getIsVip() {
+		return isVip;
+	}
+	public void setIsVip(String isVip) {
+		this.isVip = isVip;
+	}
+	public UserDepartment getUserDepartment() {
+		return userDepartment;
+	}
+	public void setUserDepartment(UserDepartment userDepartment) {
+		this.userDepartment = userDepartment;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
