@@ -4,26 +4,10 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 
 
-
-var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-window.parent.$('#langlist').on('change', function() {
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var type = url.searchParams.get("type");
-	window.location.assign("greyList?type="+type+"&lang="+lang);				
-}); 
-
-$.i18n().locale = lang;	
-
-$.i18n().load( {
-	'en': './resources/i18n/en.json',
-	'km': './resources/i18n/km.json'
-} ).done( function() { });
 $(document).ready(function(){
-	operatorDatatable(lang);
-	pagetitle(lang);
+	operatorDatatable();
+	pagetitle();
+	
 });
 
 
@@ -38,7 +22,7 @@ if(window.location.search == "?type=greyList"){
 
 //**************************************************Registration table**********************************************
 
-function operatorDatatable(lang){
+function operatorDatatable(){
 
 	var fileType = $("#fileType").val();
 	var filterRequest={
@@ -50,11 +34,9 @@ function operatorDatatable(lang){
 			"serviceDump" : serviceDump,
 			"fileType" : parseInt(fileType)
 		}
-	if(lang=='km'){
-		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
-	}
+	
 	$.ajax({
-		url: 'headers?type=greyBlackList&lang='+lang,
+		url: 'headers?type=greyBlackList',
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -68,9 +50,6 @@ function operatorDatatable(lang){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
-				"oLanguage": {  
-					"sUrl": langFile  
-				},
 				ajax: {
 					url : 'operatorData',
 					type: 'POST',
@@ -98,14 +77,11 @@ function operatorDatatable(lang){
 	});
 }
 
-function pagetitle(lang){
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var type = url.searchParams.get("type");
-	if(type == "greyList"){
-			pageRendering("operator/pageRendering?featureType=greyList&lang="+lang);
-	}else if(type == "blackList"){
-			pageRendering("operator/pageRendering?featureType=blackList&lang="+lang);
+function pagetitle(){
+	if(window.location.search == "?type=greyList"){
+			pageRendering("operator/pageRendering?featureType=greyList")
+	}else if(window.location.search == "?type=blackList"){
+			pageRendering("operator/pageRendering?featureType=blackList")
 	}
 }
 
@@ -115,7 +91,7 @@ function pagetitle(lang){
 function pageRendering(URL){
 	$.ajax({
 		url: URL,
-		type: 'GET',
+		type: 'POST',
 		dataType: "json",
 		success: function(data){
 			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );

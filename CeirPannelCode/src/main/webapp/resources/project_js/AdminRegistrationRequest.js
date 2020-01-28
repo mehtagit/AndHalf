@@ -333,3 +333,19 @@ function exportButton(){
 	window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
+
+function previewFile(srcFilePath,srcFileName){
+	window.filePath = srcFilePath;
+	window.fileName = srcFileName;
+	window.fileExtension = fileName.replace(/^.*\./, '');
+	window.FinalLink = filePath.concat(fileName);
+	
+	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
+		console.log("File is not Avialable")
+	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
+		$("#fileSource").attr("src",FinalLink);
+		$("#viewuplodedModel").openModal();
+	}else{
+		 window.open(FinalLink);
+	}
+}

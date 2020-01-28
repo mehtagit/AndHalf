@@ -85,16 +85,13 @@ public class UploadPaidStatus {
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
-
+		log.info("filterrequest--->"+filterrequest);
+		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
+		log.info("request passed to the filter api  ="+filterrequest);
+		String apiResponse = gson.toJson(response);
 		//	filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			log.info("-----------filterrequest-------------"+filterrequest);
-			response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
-			log.info("--response----------"+response);
-			String apiResponse = gson.toJson(response);
-			log.info("--contentList----------"+apiResponse);
 			UserPaidStatusPaginationModel upsPaginationModel = gson.fromJson(apiResponse, UserPaidStatusPaginationModel.class);
-			log.info("::::::::::::::::"+upsPaginationModel);	
 			List<UserPaidStatusContent> contentList = upsPaginationModel.getContent();
 			if(contentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
@@ -149,6 +146,31 @@ public class UploadPaidStatus {
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
+			}else if("Immigration".equals(userType)) {
+				log.info("-----------------in Immigration Controller");
+				for(UserPaidStatusContent contentModelList : contentList) {
+					Integer sno = contentModelList.getId();
+					String createdOn = contentModelList.getCreatedOn();
+					String nid = contentModelList.getNid();
+					String txnId = contentModelList.getTxnId(); 
+					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
+					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
+					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
+					String country = contentModelList.getCountry();
+					String taxStatus = contentModelList.getTaxPaidStatusInterp();
+					String status = contentModelList.getStateInterp();
+					
+					//params for action 
+					Long imei1 = contentModelList.getFirstImei();
+					String action = iconState.manageUserIcon(imei1,createdOn,contentModelList.getTxnId());
+
+					Object[] data = {createdOn,txnId,nid,country,sno,status,action};
+
+					List<Object> datatableList = Arrays.asList(data);
+					finalList.add(datatableList);
+					datatableResponseModel.setData(finalList);
+				}
 			}
 			datatableResponseModel.setRecordsTotal(upsPaginationModel.getNumberOfElements());
 			datatableResponseModel.setRecordsFiltered(upsPaginationModel.getTotalElements());
@@ -176,9 +198,13 @@ public class UploadPaidStatus {
 
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
-
+		
+		if("Immigration".equals(userType)){
+			pageElement.setPageTitle(Translator.toLocale("Manage Users"));	
+		}else {
 		pageElement.setPageTitle(Translator.toLocale("view.uplaodpaidstatus"));
-
+		}
+		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
@@ -227,6 +253,19 @@ public class UploadPaidStatus {
 			dateRelatedFields.setClassName(dateParam[i]);
 			inputTypeDateList.add(dateRelatedFields);
 			}
+			}else if("Immigration".equals(userType)){
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+				for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+				}
 			}else {
 			//input type date list
 			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId",""};

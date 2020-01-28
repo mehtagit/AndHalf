@@ -151,7 +151,7 @@ padding: 0 !important;
                                                                 <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
                                                                 <label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
-                                                            
+                                                           
                                                         <div class="row input_fields_wrap">
                                                         <div class="col s12 m12">
                                                         <div class="col s12 m6">
@@ -176,7 +176,6 @@ style="margin-top: -9px" /> <span class="input-group-addon"
 style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
-
 </div>
                                                         </div>
                                                             <div class="col s12 m12">
@@ -207,7 +206,6 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                     maxlength="16">
                                                                 <label for="IMEI4"><spring:message code="title.four" /></label>
                                                             </div>
-                                                        	
                                                         	<div class="col s12 m12"><span><spring:message code="input.requiredfields" /> <span class="star">*</span></span></div>
                                                          </div>
                                                         </div>
@@ -218,9 +216,10 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" id="singleUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
+                                                      <button class="btn" id="singleUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
                                                         <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
-                                                    </div>
+                                                 
+                                                                 </div>
                                                 </form>
                                             </div>
                                             <div id="multipleImeiUnBlock" class="col s12" style="display: none">
@@ -237,7 +236,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     <div class="input-field col s12 m6 " style="margin-top: 22px;">
                                                         <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,9}" title="Please enter  numbers upto 9 characters only"
                                                          maxlength="16" required="required">
-                                                        <label for="unblockbulkquantity"><spring:message code="operator.quantity" /> <span class="star">*</span></label>
+                                                        <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                     </div>
                                                     
                                                     
@@ -257,13 +256,14 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <label for="unblockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
                                                     
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
+                                                <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                     <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
-
+                                                
                                                    <div class="input-field col s12 center">
-                                                        <button class="btn " id="bulkUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
+                                                <button class="btn " id="bulkUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
-                                                    </div>
+                                                    
+                                                           </div>
                                                 </form>
                                             </div>
                                         </div>

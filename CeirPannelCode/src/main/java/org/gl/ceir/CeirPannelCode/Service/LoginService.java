@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Feature;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
@@ -64,6 +65,7 @@ public class LoginService {
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
+				session.setAttribute("language",response.getUserLanguage());
 				mv.setViewName("redirect:/importerDashboard");  
 				return response;      
 			}       
@@ -78,6 +80,20 @@ public class LoginService {
 			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
 			return response; 
 		}
+	}
+	
+	public HttpResponse changeLanguage(String language,HttpSession session) {
+		log.info("inside check change language controller ");
+		log.info("language data:  "+language);
+		Integer userID=(Integer)session.getAttribute("userid");
+		log.info("userID from session: " +userID);
+		ChangeLanguage languageData=new ChangeLanguage(userID,language);
+		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
+		if(response!=null) {
+			log.info("response from controller: "+response);
+		}
+		log.info("exit from language controller ");
+		return response;
 	}
 
 	public void sessionRemoveCode(Integer userid,HttpSession session) {
@@ -105,7 +121,7 @@ public class LoginService {
 		mv.setViewName("login");
 		log.info("exit logout controller");
 		return mv;
-	}
+}
 	
 	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http){
 		log.info("inside index controller");
@@ -121,12 +137,25 @@ public class LoginService {
 		}
 		//return "redirect:.../"+dropdown.getValue();
 	}
+	
+	public void redirectToHome(HttpServletResponse http){
+		log.info("inside index controller");
+		log.info("exit index controller");
+		Tag tagData=new Tag("link_dmc_portal");
+		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
+		try {
+		http.sendRedirect(dropdown.getValue());
+		} catch (IOException e) {
+		e.printStackTrace();
+		}
+		}
 
 	public ModelAndView dashBoard(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
 		String status=(String)session.getAttribute("userStatus");
+		try {
 		if(username.trim()!=null) {
 			log.info("username from session:  "+username);
 			log.info("user status from session :   "+status); 
@@ -145,6 +174,12 @@ public class LoginService {
 			mv.addObject("msg","Please Login first");
 			mv.setViewName("login"); 
 			return mv;  
+		}
+		}
+		catch(Exception e) {
+			mv.addObject("msg","Please Login first");
+			mv.setViewName("login"); 
+			return mv; 	
 		}
 	}
 

@@ -10,20 +10,21 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
-import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.OperatorContentModel;
 import org.gl.ceir.pagination.model.OperatorPaginationModel;
+import org.gl.ceir.pagination.model.RegistrationContentModel;
+import org.gl.ceir.pagination.model.RegistrationPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -113,11 +114,13 @@ public class operatorDatatableController {
 			
 	
 	
-	@GetMapping("operator/pageRendering")
+	@PostMapping("operator/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "operator",required = false) String role,
-			@RequestParam(name="featureType",required = false) String featureType,HttpSession session){		
+			@RequestParam(name="featureType",required = false) String featureType,HttpSession session){
+		
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
+		
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
@@ -134,7 +137,7 @@ public class operatorDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"operatorDatatable()","submitFilter"};
+			String[] names= {"FilterButton", "filter","operatorDatatable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -149,7 +152,7 @@ public class operatorDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//Dropdown items			
-			String[] selectParam= {"select",Translator.toLocale("input.fileType"),"fileType",""};
+			String[] selectParam= {"select","File Type ","fileType",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -164,7 +167,7 @@ public class operatorDatatableController {
 			pageElement.setDropdownList(dropdownList);
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

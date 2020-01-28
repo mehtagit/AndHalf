@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.User;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +32,6 @@ public class LoginController {
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
 	public ModelAndView login(HttpSession session){
 			return loginService.loginPage();	
-			//return loginService.checkLogin(user,session);
 	} 
 	
 	@ResponseBody
@@ -39,6 +40,12 @@ public class LoginController {
 			return loginService.checkLogin(user,session);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value = "/changeLanguage/{lang}",method = {RequestMethod.POST})
+	public HttpResponse changeLanguage(@PathVariable("lang")String lang,HttpSession session){
+		    
+			return loginService.changeLanguage(lang,session);
+  }
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		return loginService.logout(session);
@@ -48,9 +55,13 @@ public class LoginController {
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public void indexSessionOut(HttpSession session,HttpServletResponse response) {
 		 loginService.indexPageSessionOut(session,response);
-
 	}
     
+
+	@RequestMapping(value = "/redirectToHomePage", method = RequestMethod.GET)
+	public void redirectHomePage(HttpSession session,HttpServletResponse response) {
+	loginService.redirectToHome(response);
+	}
 
 
 	@RequestMapping(value = "/forgotPassword",method = RequestMethod.GET)

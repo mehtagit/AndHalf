@@ -144,7 +144,7 @@
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" required="required"
                                                                     title="Please enter your device serial number first" maxlength="15">
-                                                                <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /> <span class="star">*</span></label>
+                                                                        <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /> <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
@@ -193,7 +193,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 <div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
 id="stolenDate">
 
-<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
+<label for="TotalPrice" class="center-align">Till date</label>
 <div id="startdatepicker" class="input-group" style="margin-top: 10px;">
 
 <input class="form-control" name="inputsaves" type="text"
@@ -279,11 +279,11 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
 
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
-                                                  <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
+                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
+                                                   <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" type="submit" id="blockBulkSubmitButton" ><spring:message code="button.submit" /></button>
+                                               <button class="btn" type="submit" id="blockBulkSubmitButton" ><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                                     </div>
                                                 </form>
@@ -391,7 +391,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
 		
-		<script type="text/javascript">
+			<script type="text/javascript">
+
 		window.parent.$('#langlist').on('change', function() {
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			

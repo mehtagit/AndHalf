@@ -159,6 +159,7 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
+			<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -884,7 +885,8 @@ input[type='search'] {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-		
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
 	<script type="text/javascript"

@@ -20,6 +20,9 @@ public interface UserRegistrationFeignImpl {
   
 	@PostMapping("/userRegistration/getUsertypes")
 	public List<Usertype> userypeList();
+	
+	@PostMapping("/userRegistration/usertypeIdByName/{usertype}")
+	public Usertype userypeDataByName(@PathVariable("usertype")String usertype);
 	                                  
 	@PostMapping("/userRegistration/getSecurityQuestion")
 	public List<SecurityQuestion> securityQuestionList();

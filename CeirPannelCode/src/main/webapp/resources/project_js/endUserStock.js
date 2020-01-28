@@ -47,7 +47,7 @@ function validateTxnId()
 {
 	var txnId=$('#checktransactionID').val();
 	$.ajax({
-		url : "./openEndUserStockPopup?txnId="+txnId,
+		url : "./fetchUploadAstock?txnId="+txnId,
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'GET',
@@ -70,25 +70,29 @@ function setViewPopupData(data){
 	$('#singleInput').css("display", "none");
 	$('#inputDetails').css("display", "block");
 	$("#transactionID").val(data.txnId);
-	$("#uploadDate").val(data.user.createdOn);
+	$("#uploadDate").val(data.modifiedOn);
 	$("#viewUploadFile").val(data.fileName);
+	$("#errorFileStatus").val(data.stateInterp);
 	console.log(data.stockStatus);
 	if(data.stockStatus=='2')
 		{
 		console.log("if condition");
 		$('#errorFileStatusDiv').css("display", "block");
-    	$("#errorFileStatus").val('Error');
     	$("#errorFileName").val(data.fileName);
     	$('#updateEndUserStockOK').css("display", "none");
     	$('#updateEndUserStock').css("display", "block");
-    	
-		}
-	else{
+    	}
+	else if(data.stockStatus=='3'){
 		console.log("else condition");
 		$('#errorFileStatusDiv').css("display", "none");
 		$('#updateEndUserStockOK').css("display", "block");
 		$('#updateEndUserStock').css("display", "none");
-		
+	}
+	else {
+		console.log("else condition");
+		$('#errorFileStatusDiv').css("display", "none");
+		$('#updateEndUserStockOK').css("display", "block");
+		$('#updateEndUserStock').css("display", "none");
 	}
 }
 
@@ -103,14 +107,14 @@ function endUserStockFileDownload(){
 
 function updateFile()
 {
-	var fileName=$("#viewUploadFile").val();
 	var txnId=$("#transactionID").val();
 	
 	var formData= new FormData();
-	formData.append('file', $('#viewUploadFile')[0].files[0]);
+	formData.append('file', $('#csvUploadFile')[0].files[0]);
 	formData.append('txnId',txnId);
+	
 	$.ajax({
-		url: 'updateEndUserUploadedStock',
+		url: 'updateUploadedAstock',
 		type: 'POST',
 		data: formData,
 		processData: false,
@@ -118,9 +122,17 @@ function updateFile()
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
-		/*	$('#editStockModal').closeModal();
-			$('#successUpdateStockModal').openModal();
-			if(data.errorCode==200){
+			$('#fileUpdateSucessModal').openModal();
+			if(data.errorCode=='0')
+				{
+			$('#endUserStockSuceesMessage').text('');
+			$('#endUserStockSuceesMessage').text('File Updated Successfully');
+				}
+			else{
+				$('#endUserStockSuceesMessage').text('');
+				$('#endUserStockSuceesMessage').text(data.message);
+			}
+			/*	if(data.errorCode==200){
 
 				$('#stockSucessMessage').text('');
 				$('#stockSucessMessage').text(operationNotAllowed);

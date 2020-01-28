@@ -57,10 +57,10 @@ select {
 }
 
 .container {
-  padding: 0 0.5rem;
+  /* padding: 0 0.5rem; */
   margin: 0 auto;
   max-width: 100% !important;
-  width: 98%;
+  width: 100%;
 }
 /* @media only screen and(max-width: 992px) {
 	.container {
@@ -96,13 +96,13 @@ select {
 
 @media only screen and (min-width: 601px) {
   .container {
-    width: 98%;
+    width: 100%;
   }
 }
 
 @media only screen and (min-width: 993px) {
   .container {
-    width: 99%;
+    width: 100%;
   }
 }
 
@@ -2556,11 +2556,12 @@ input[type='search'] {
 color: #2979a5;
 float: right;
 border: solid 1px rgba(33, 167, 201, 0.774);
-padding: 4px 10px;
+padding: 4px 7px;
 border-radius: 2px;
 font-size: 14px;
 background-color: #fff;
-margin-top: 26px;
+margin-top: 20px;
+height: 32px;
 } 
 
  @media only screen and (max-width: 425px){
@@ -2685,5 +2686,30 @@ margin: -20px -10px 1rem -10px;
 }
 
 .btn{background-color:#ff4081 !important;}
+.select-lang-drpdwn {
+width: 75px;
+margin-top: -21px;
+border-bottom: none;
+}
+
+.select-lang-lable {
+margin-top: -12px;
+text-align: right;
+padding: 0;
+}
+
+.row.card-panel.login-card-panel {
+margin: auto;
+margin-top: 10vh;
+padding-top: 0;
+}
 
 
+.selectDropdwn {
+    margin-top: 15px;
+}
+
+div#viewuplodedModel {
+    width: fit-content;
+    padding-top: 1.5rem;
+}
