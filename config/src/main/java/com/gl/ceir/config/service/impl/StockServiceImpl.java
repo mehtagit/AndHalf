@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -126,6 +128,8 @@ public class StockServiceImpl {
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
+		boolean isUserDistributorOrRetailer = Boolean.FALSE;
+
 		User user = null;
 
 		try {
@@ -133,15 +137,36 @@ public class StockServiceImpl {
 
 			if("Custom".equalsIgnoreCase(stockMgmt.getUserType())) {
 				user =	userRepository.getByUsername(stockMgmt.getSupplierId());
+				logger.info(user);
 
 				if(Objects.isNull(user)) {
 					logger.info("This is not a valid user to assign a stock. ");
 					return new GenricResponse(2, "This is not a valid user.", "");
 				}
+
+				// Fetch all roles of user.
+				List<String> userRoles = user.getUserRole().stream()
+						.map(u -> u.getUsertypeData().getUsertypeName())
+						.collect(Collectors.toList());
+
+				logger.info(userRoles);
+
+				if(userRoles.isEmpty()) {
+					logger.info("No role assigned to the user.");
+					return new GenricResponse(4, "No role assigned to the user.", "");
+				}
+
+				if(!isUserRetailerOrDistributor(userRoles)) {
+					logger.info("User is not a distributer or retailer to assign a stock.");
+					return new GenricResponse(5, "User is not a distributer or retailer to assign a stock.", "");
+				}
+
 				stockMgmt.setUserId(new Long(user.getId()));
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(user.getUsertype().getUsertypeName());
 				isStockAssignRequest = Boolean.TRUE;
+
+
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				if(validateUserProfileOfStock(stockMgmt)) {
@@ -177,7 +202,7 @@ public class StockServiceImpl {
 			webActionDb.setTxnId(stockMgmt.getTxnId());
 
 			if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest)) {
-				
+
 				logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 				return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
 			}else {
@@ -194,7 +219,7 @@ public class StockServiceImpl {
 	@Transactional(rollbackOn = Exception.class)
 	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb, UserProfile userProfile,
 			boolean isStockAssignRequest) {
-		
+
 		boolean queryStatus = Boolean.FALSE;
 
 		logger.info("Going to save webActionDb [" + webActionDb + "]");
@@ -208,7 +233,7 @@ public class StockServiceImpl {
 		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, 
 				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-		
+
 		if(isStockAssignRequest) {
 			if(emailUtil.saveNotification("ASSIGN_STOCK", 
 					userProfile, 
@@ -734,5 +759,9 @@ public class StockServiceImpl {
 			}
 		}
 		return Boolean.FALSE;
+	}
+	
+	private boolean isUserRetailerOrDistributor(List<String> userRoles) {
+		return userRoles.contains("Distributor") || userRoles.contains("Retailer");
 	}
 }
