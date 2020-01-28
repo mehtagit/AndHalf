@@ -1,3 +1,7 @@
+
+
+
+
 package com.ceir.CeirCode.service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -79,7 +82,7 @@ public class UserService {
 
 	@Autowired
 	SystemConfigDbListRepository systemConfigRepo;
-
+	
 	@Autowired
 	SystemConfigurationDbRepoImpl systemConfigurationRepo;
 
@@ -91,13 +94,13 @@ public class UserService {
 
 	@Autowired
 	NotificationRepository notificationRepo;
-
+	
 	@Autowired
 	UserPassHistoryRepoImpl userPassHistoryRepoImpl;
-
+	
 	@Autowired
 	UserPasswordHistoryRepo userPasswordHistoryRepo;
-
+	
 
 	public ResponseEntity<?> getUsertypeData(){
 
@@ -112,7 +115,7 @@ public class UserService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
-
+	
 	public ResponseEntity<?> usertypeIdByName(String usertype){
 
 		try {    
@@ -126,7 +129,7 @@ public class UserService {
 				response.setStatusCode(204);
 				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
-
+			
 		}
 		catch(Exception e){
 			HttpResponse response=new HttpResponse();
@@ -135,7 +138,7 @@ public class UserService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}
 	}
-
+	
 
 	public ResponseEntity<?> getSecurityQuestion(){
 		try {
@@ -249,7 +252,7 @@ public class UserService {
 
 				}
 
-
+				
 			}
 			return 0;
 		}
@@ -315,27 +318,20 @@ public class UserService {
 		log.info("user details----::::   "+userDetails); 
 		Usertype userType=usertypeRepo.findByUsertypeName(userDetails.getUsertypeName());
 		if(userType!=null) {
-			if(userDetails.getRoles()==null) {
-				long data[]= {userType.getId()}; userDetails.setRoles(data);
-			}
+		if(userDetails.getRoles()==null) {
+			long data[]= {userType.getId()}; userDetails.setRoles(data);
+		}
 		}
 		long rolesOutput=roleCheck(userDetails.getRoles());
 		log.info("roles output:  "+rolesOutput);
 		if(rolesOutput > 0) {
-			String displayName =usertypeCheck(userType.getId(),userDetails);
-			userDetails.setDisplayName(displayName);
-			log.info("primary usertypeId is:  "+rolesOutput);
-			userDetails.setSource("Self");
-			Usertype userTypeData=new Usertype(rolesOutput);
+			List<Long> usertypeList=usertypeCheck();
+			log.info("primary usertypeId is:  "+rolesOutput);	
+			Usertype userTypeData=new Usertype();
+			userTypeData.setId(rolesOutput);  
 			User userData=new User(userDetails.getUsername(),userDetails.getPassword(),
-					LocalDateTime.now(),LocalDateTime.now(),UserStatus.INIT.getCode(),null,userTypeData);  
-			UserPasswordHistory userPassHistory=new UserPasswordHistory(userDetails.getPassword());
-			List<UserPasswordHistory> upserPasswordList=new ArrayList<UserPasswordHistory>();
-			upserPasswordList.add(userPassHistory);
-			userData.setUserProfile(userDetails);
-			userData.setUserSecurityquestion(questionList(userDetails));
-			userData.setUserPasswordHistory(upserPasswordList);
-			User userOutput=userRepo.save(userData);    			
+			LocalDateTime.now(),LocalDateTime.now(),UserStatus.INIT.getCode(),null,userTypeData);  
+			User userOutput=userRepo.save(userData);    
 			if(userOutput!=null) {
 				int rolesAddStatus=saveRoles(userDetails.getRoles(),userOutput.getId());
 				log.info("role addition status:  "+rolesAddStatus); 
@@ -344,30 +340,64 @@ public class UserService {
 				User users=new User();
 				users.setId(userid);
 				userDetails.setUser(userData);
-				UserProfile output=userOutput.getUserProfile();			 
-				log.info("going to save user passowrd in user_password_history table");
-				String phoneOtp=otpService.phoneOtp(output.getPhoneNo());
-				output.setPhoneOtp(phoneOtp);
-				userProfileRepo.save(output);
-				int outputGot=saveUserSecurityquestion(output);	
-				log.info("user security question output:  "+outputGot);
-				String emailOtp=randomDigits.getNumericString(6);
-				output.setEmailOtp(emailOtp); 
-				log.info("from email:  "+fromEmail);
-				userProfileRepo.save(output);	
-				boolean notificationStatus =emailUtils.saveNotification("REG_VERIFY_OTP_EMAIL_MSG", output, 0,
-						"User Registration", "Registration", userOutput.getUsername(), "Email verification otp",emailOtp,ChannelType.EMAIL);
-				log.info("notification save:  "+notificationStatus);
-				boolean notificationStatusForSms =emailUtils.saveNotification("REG_VERIFY_OTP_SMS_MSG", output, 0,
-						"User Registration", "Registration", userOutput.getUsername(), "Phone verification otp",phoneOtp,ChannelType.SMS);
-				log.info("notificationStatusForSms save:  "+notificationStatusForSms);
-				userOutput.setPreviousStatus(UserStatus.INIT.getCode());
-				userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
-				userRepo.save(userOutput); 
-				String message=new String("The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID");
-				OtpResponse response=new OtpResponse(message,200,userOutput.getId());
-				log.info("response:   "+response);
-				return new ResponseEntity<>(response,HttpStatus.OK);
+				
+				if(usertypeList.contains(userType.getId())) {
+								if(userDetails.getType()==0){
+					String displayName=userDetails.getFirstName()+" "+userDetails.getMiddleName()+" "+userDetails.getLastName();
+					userDetails.setDisplayName(displayName);
+				}
+				else {
+					String displayName=userDetails.getCompanyName();      
+					userDetails.setDisplayName(displayName);	  
+				}
+				}
+				else {
+					List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
+						for(SystemConfigListDb asType:asTypeList) {
+							if(userDetails.getType()==asType.getValue()) {
+								userDetails.setDisplayName(asType.getInterp());
+							}
+						}
+				}
+				UserProfile output=userProfileRepo.save(userDetails);			 
+				if(output!=null) {
+					UserPasswordHistory userPassHistory=new UserPasswordHistory(userOutput,userDetails.getPassword());
+					log.info("going to save user passowrd in user_password_history table");
+					UserPasswordHistory userPasswordOtput=userPassHistoryRepoImpl.saveUserPassword(userPassHistory);
+					if(userPasswordOtput!=null) {
+						log.info("user passowrd sucessfully save");
+					}
+					User dataForProfile=new User();
+					dataForProfile.setId(userOutput.getId());
+					String phoneOtp=otpService.phoneOtp(output.getPhoneNo());
+					output.setPhoneOtp(phoneOtp);
+					userProfileRepo.save(output);
+					int outputGot=saveUserSecurityquestion(output);	
+					log.info("user security question output:  "+outputGot);
+					String emailOtp=randomDigits.getNumericString(6);
+					output.setEmailOtp(emailOtp); 
+					log.info("from email:  "+fromEmail);
+					output.setSource("Self");
+					userProfileRepo.save(output);	
+					boolean notificationStatus =emailUtils.saveNotification("REG_VERIFY_OTP_EMAIL_MSG", output, 0,
+							"User Registration", "Registration", userOutput.getUsername(), "Email verification otp",emailOtp,ChannelType.EMAIL);
+					log.info("notification save:  "+notificationStatus);
+					boolean notificationStatusForSms =emailUtils.saveNotification("REG_VERIFY_OTP_SMS_MSG", output, 0,
+							"User Registration", "Registration", userOutput.getUsername(), "Phone verification otp",phoneOtp,ChannelType.SMS);
+					log.info("notificationStatusForSms save:  "+notificationStatusForSms);
+					userOutput.setPreviousStatus(UserStatus.INIT.getCode());
+					userOutput.setCurrentStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
+					userRepo.save(userOutput); 
+					String message=new String();
+					message="The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID";
+					OtpResponse response=new OtpResponse(message,200,userOutput.getId());
+					log.info("response:   "+response);
+					return new ResponseEntity<>(response,HttpStatus.OK);
+				} 
+				else { 
+					HttpResponse response=new HttpResponse("user profile data not added",409);
+					return new ResponseEntity<>(response,HttpStatus.OK);
+				}
 			}
 			else {
 				HttpResponse response=new HttpResponse("user data not added",409);
@@ -381,38 +411,15 @@ public class UserService {
 		}
 	}
 
-
-	public String usertypeCheck(long usertypeId,UserProfile profile ){
-		List<Long> usertypeList=new ArrayList<Long>();
-		usertypeList.add(4l);
-		usertypeList.add(5l);
-		usertypeList.add(6l);
-		if(usertypeList.contains(usertypeId)) {
-			if(profile.getType()==0){
-				String displayName=profile.getFirstName()+" "+profile.getMiddleName()+" "+profile.getLastName();
-				return displayName;
-			}
-			else {
-				String displayName=profile.getCompanyName();    
-				return displayName;
-			}
-		}
-		else {
-			String displayName=profile.getFirstName()+" "+profile.getMiddleName()+" "+profile.getLastName();
-			return displayName;
-		}
+	
+	public List<Long> usertypeCheck(){
+		List<Long> usertypeId=new ArrayList<Long>();
+		usertypeId.add(4l);
+		usertypeId.add(5l);
+		usertypeId.add(6l);
+		return usertypeId;
 	}
-	public List<UserSecurityquestion> questionList(UserProfile profile){
-		
-		List<UserSecurityquestion> questionList=new ArrayList<UserSecurityquestion>();
-		for(QuestionPair questionPair:profile.getQuestionList()) {
-			Securityquestion question=new Securityquestion(questionPair.getQuestionId(),questionPair.getQuestion());
-			UserSecurityquestion userQuestion=new UserSecurityquestion(question,questionPair.getAnswer());
-			questionList.add(userQuestion);
-		}
-		return questionList;
-	}
-
+	
 
 	public ResponseEntity<?> UpdateOtpStatus(Otp  otp)
 	{                                
@@ -443,7 +450,7 @@ public class UserService {
 						response.setResponse("Your OTP is verified! ");
 						return new ResponseEntity<>(response,HttpStatus.OK);	
 					}
-
+					
 					else {
 						log.info("otp are incorrect");
 						HttpResponse response=new HttpResponse();
@@ -456,31 +463,56 @@ public class UserService {
 					log.info("user profile data from db:  "+output); 
 					if(otp.getEmailOtp().equals(output.getUserProfile().getEmailOtp()) && otp.getPhoneOtp().equals(output.getUserProfile().getPhoneOtp())) {      
 						log.info("if otp are correct");
-						HttpResponse response=new HttpResponse("Your OTP is verified! The form has been submitted for approval. You will receive an intimation on your registered e-mail with the approval status within 2 to 3 working days",200); 
+						HttpResponse response=new HttpResponse(); 
 						User user=userRepo.findById(output.getId());
 						user.setPreviousStatus(UserStatus.OTP_VERIFICATION_PENDING.getCode());
 						user.setCurrentStatus(UserStatus.PENDING_ADMIN_APPROVAL.getCode());     
 						User output2=userRepo.save(user); 
+
+						EmailDetails details=new EmailDetails(); details.setFromEmail(fromEmail);
+						details.setToEmail(output2.getUserProfile().getEmail());
+						details.setSubject("Email verification otp");
+						details.setMsgBody("You are sucessfully registered, Your username is "+user.
+								getUsername()+" and password is "+user.getPassword()+" ");
+						log.info("from email:  "+fromEmail); //boolean
+						//emailOtpStatus=otpService.emailOtp(details);
+						/*
+						 * boolean notificationStatus1=emailUtils.saveNotification(
+						 * "REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER", output2.getUserProfile(),0,
+						 * "Registration", "notify admin to user saved and validated",
+						 * output2.getUsername(),"User Registration Alert for approval  on CEIR Portal",
+						 * ""); log.info("notification save for ceir admin:  "+notificationStatus1);
+						 */
+						
 						boolean notificationStatus2=emailUtils.saveNotification("REG_WAIT_USER_FOR_APPROV_STATUS", output2.getUserProfile(),
 								0, "Registration", "user phone and email details validated", output2.getUsername(),"CEIR Portal Registration Alert","",ChannelType.EMAIL);
 						log.info("notification save:  "+notificationStatus2);
+
+						response.setStatusCode(200);  
+						response.setResponse("Your OTP is verified! The form has been submitted for approval. You will receive an intimation on your registered e-mail with the approval status within 2 to 3 working days");
 						return new ResponseEntity<>(response,HttpStatus.OK);	
 					}  
 					else { 
 						log.info("if otp are incorrect");
-						HttpResponse response=new HttpResponse("Otp failed to verify",409);
+						HttpResponse response=new HttpResponse();
+						response.setStatusCode(409);  
+						response.setResponse("Otp failed to verify"); 
 						return new ResponseEntity<>(response,HttpStatus.OK);	
 					}
 				}
 			}
 			else {
-				HttpResponse response=new HttpResponse("user id is wrong",409);
+				HttpResponse response=new HttpResponse();
+				response.setStatusCode(409);
+				response.setResponse("user id is wrong");
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			HttpResponse response=new HttpResponse("Oops something wrong happened",409);
+			HttpResponse response=new HttpResponse();
+			response.setStatusCode(409); 
+			response.setResponse("Oops something wrong happened");
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
 	}
@@ -541,7 +573,7 @@ public class UserService {
 				else {
 					log.info("if this password does not exist");
 					long count=userPassHistoryRepoImpl.countByUserId(password.getUserid());
-					log.info("password count: "+count);
+                    log.info("password count: "+count);
 					if(count!=0) {
 						if(count>=3) {
 							log.info("going to delete password history greater than 3");
@@ -560,10 +592,10 @@ public class UserService {
 						user.setPassword(password.getPassword());
 						return setPassword(user);	
 					}
-
+					
 				}
-
-
+				
+				
 			} 
 			else {
 				HttpResponse response=new HttpResponse();
@@ -584,7 +616,7 @@ public class UserService {
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
 	}
-
+	
 	public ResponseEntity<?> setPassword(User user){
 		User output=userRepo.save(user);
 		if(output!=null) {
@@ -925,19 +957,19 @@ public class UserService {
 				arr = Longs.toArray(rolesId); 
 				user.setRoles(arr); 
 				List<SystemConfigListDb> asTypeList=systemConfigRepo.getByTag("AS_TYPE");
-				for(SystemConfigListDb asType:asTypeList) {
-					if(user.getType()==asType.getValue()) {
-						user.setAsTypeName(asType.getInterp());
-					}
+					for(SystemConfigListDb asType:asTypeList) {
+						if(user.getType()==asType.getValue()) {
+							user.setAsTypeName(asType.getInterp());
+						}
 				}
 				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
 						user.setNidFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/NID/");				
 					}
-					if(user.getPhotoFilename()!=null || !"null".equalsIgnoreCase(user.getPhotoFilename())) {
-						user.setPhotoFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/photo/");	
-					}
+		            if(user.getPhotoFilename()!=null || !"null".equalsIgnoreCase(user.getPhotoFilename())) {
+		            	user.setPhotoFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/photo/");	
+		            }
 					if(user.getIdCardFilename()!=null || !"null".equalsIgnoreCase(user.getIdCardFilename())) {
 						user.setIdCardFilePath(filePath.getValue()+"/"+user.getUser().getUsername()+"/IDCard/");	
 					}
@@ -952,7 +984,7 @@ public class UserService {
 				response.setStatusCode(204);  
 				response.setResponse("User profile data not found"); 
 				log.info("response send to user:  "+response);
-
+				
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			}
 		}
@@ -1030,7 +1062,7 @@ public class UserService {
 		log.info("value: "+msgConfigDb.getValue());
 		log.info("user data:  "+profile.getUser());
 		String emailBody=null;
-
+		
 		emailBody=msgConfigDb.getValue();
 		if("REG_ACCEPT_BY_CEIR_ADMIN".equals(msgConfigDb.getTag())){
 			emailBody=emailBody.replaceAll("<First name>", profile.getFirstName());
@@ -1051,15 +1083,15 @@ public class UserService {
 				"PRO_DISABLE_ACC_BY_USER".equals(msgConfigDb.getTag()) || "PRO_ENABLE_ACC_BY_USER".equals(msgConfigDb.getTag())
 				|| "REG_WAIT_USER_FOR_APPROV_STATUS".equals(msgConfigDb.getTag()) ){
 			emailBody=emailBody.replaceAll("<First name>", profile.getFirstName());
-			return emailBody;
+           return emailBody;
 		}
 		else  if("REG_VERIFY_OTP_SMS_MSG".equals(msgConfigDb.getTag())){
 			emailBody=emailBody.replaceAll("<number>", otp);
 			return emailBody; 
 		}
-
-
-
+		
+		
+		
 
 
 		else {return emailBody;}
