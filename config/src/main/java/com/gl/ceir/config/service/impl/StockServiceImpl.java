@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -128,8 +127,6 @@ public class StockServiceImpl {
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
-		boolean isUserDistributorOrRetailer = Boolean.FALSE;
-
 		User user = null;
 
 		try {
@@ -166,24 +163,27 @@ public class StockServiceImpl {
 				stockMgmt.setRoleType(user.getUsertype().getUsertypeName());
 				isStockAssignRequest = Boolean.TRUE;
 
-
-
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
+				// TODO Check if this feature is supported in current period.
 				if(validateUserProfileOfStock(stockMgmt)) {
 					user = User.getDefaultUser();
+					
 					UserProfile userProfile = UserProfile.getDefaultUserProfile();
 					userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
 					userProfile.setUser(user);
 					Usertype usertype = new Usertype();
 					usertype.setId(17);
-					Userrole roles = new Userrole(user,usertype);
+					
+					Userrole roles = new Userrole(user, usertype);
 					List<Userrole> userRolesList = new ArrayList<Userrole>();
 					userRolesList.add(roles);
 					user.setUserRole(userRolesList);
 					user.setUserProfile(userProfile);
 					user.setUsertype(usertype);
+					
 					user = userRepository.save(user);
 					logger.info("User [" + user + "] have been saved successfully.");
+					
 					stockMgmt.setUserId(new Long(user.getId()));
 					stockMgmt.setUser(user);
 					stockMgmt.setRoleType("End User");
