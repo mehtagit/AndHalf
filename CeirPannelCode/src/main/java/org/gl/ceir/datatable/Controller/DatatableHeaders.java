@@ -285,8 +285,7 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
-			
-           //ManageUserType Headers 
+//ManageUserType Headers 
 			
 			else if("ManageUserType".equals(role)) {
 				String[] headers = {headersTitle.registerDate,headersTitle.transactionID,headersTitle.passportNo,headersTitle.nationality,headersTitle.visaExpDate,headersTitle.localContact,headersTitle.action};		
@@ -295,7 +294,6 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
-
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};		

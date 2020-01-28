@@ -1236,7 +1236,6 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		return action;
 
 	}
-	
 	/********************************** Icons for AdminUPS **********************************/ 	
 	public String manageUserIcon(Long imei1,String createdOn,String txnId) {
 		String viewAction="viewDetails('"+imei1+"')";
@@ -1253,5 +1252,4 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		String action = view.concat(edit);
 		return action;
 	}
-
 }

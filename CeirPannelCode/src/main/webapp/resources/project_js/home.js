@@ -7,7 +7,9 @@
 
 	var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 	window.parent.$('#langlist').on('change', function() {
+		var langValue=$("#langlist option:selected").val();
 		var lang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
+		changeLanguage(lang);
 		window.location.assign("./Home?lang="+lang);
 		});
 
@@ -102,3 +104,15 @@
 	}
 
 
+	function changeLanguage(lang){
+		$.ajax({
+			type : 'POST',
+			url :'./changeLanguage/'+lang,
+			contentType :"application/json",
+			dataType : 'html',
+			success : function(data) {
+			},      
+			error: function (xhr, ajaxOptions, thrownError) {
+			}
+		});
+	}

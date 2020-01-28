@@ -352,7 +352,7 @@ function table(url,dataUrl){
 
 
 				$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
-				$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,12 +41,11 @@ public class LoginController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/changeLanguage",method = {RequestMethod.POST})
-	public HttpResponse changeLanguage(@RequestBody ChangeLanguage language){
-			return loginService.changeLanguage(language);
-	}
-	
-	
+	@RequestMapping(value = "/changeLanguage/{lang}",method = {RequestMethod.POST})
+	public HttpResponse changeLanguage(@PathVariable("lang")String lang,HttpSession session){
+		    
+			return loginService.changeLanguage(lang,session);
+  }
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		return loginService.logout(session);
