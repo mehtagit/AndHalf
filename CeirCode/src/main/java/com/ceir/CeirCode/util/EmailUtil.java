@@ -115,7 +115,7 @@ public class EmailUtil {
 		}
 	}
 
-	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp) {
+	public boolean saveNotification(@NonNull String tag, UserProfile userProfileData, long featureId, String featureName, String subFeature, String featureTxnId,String subject,String otp,String channelType) {
 		try {
 			String emailBody=null;
 			MessageConfigurationDb messageDB = new MessageConfigurationDb();
@@ -124,7 +124,7 @@ public class EmailUtil {
 			emailBody=userService.emailContent(messageDB, userProfileData, otp);
 			logger.info("email body=  "+emailBody);
 			Notification notification=new Notification();
-			notification.setChannelType(ChannelType.EMAIL);
+			notification.setChannelType(channelType);
 			notification.setCreatedOn(LocalDateTime.now());
 			notification.setFeatureId(featureId);
 			notification.setFeatureName(featureName);

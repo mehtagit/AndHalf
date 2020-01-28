@@ -6,7 +6,20 @@ public class HttpResponse {
 	private User user;
 	
 	
-	
+	public HttpResponse(String response, Integer statusCode) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+	}
+	public HttpResponse(String response, Integer statusCode, User user) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.user = user;
+	}
+	public HttpResponse() {
+		super();
+	}
 	public String getResponse() {
 		return response;
 	}

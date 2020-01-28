@@ -23,7 +23,6 @@ import com.ceir.CeirCode.util.EmailUtil2;
 import com.ceir.CeirCode.util.GenerateRandomDigits;
 import com.ceir.CeirCode.util.HttpResponse;
 import io.swagger.annotations.ApiOperation;
-
 @RestController  
 @RequestMapping("/userRegistration")
 public class UserRegistrationController {
@@ -53,7 +52,16 @@ public class UserRegistrationController {
 	@PostMapping("/getUsertypes") 
 	public ResponseEntity<?> getUsertypes(){
 		return userService.getUsertypeData();
-	} 
+	}
+	
+	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/usertypeIdByName/{usertype}") 
+	public ResponseEntity<?> usertypeIdByName(@PathVariable("usertype")String usertype){
+		return userService.usertypeIdByName(usertype);
+	}
+	
+	
 
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
 	@CrossOrigin
@@ -85,49 +93,4 @@ public class UserRegistrationController {
 	{     
 		return userService.resendOtp(id);
 	}        
-
-
-	
-
-	/*
-	 * @ApiOperation(value = "resend sms otp", response = HttpResponse.class)
-	 * 
-	 * @CrossOrigin
-	 * 
-	 * @PostMapping("/resendSmsOtp/{mobile}/{userid}") public ResponseEntity<?>
-	 * resendSmsOtp(@PathVariable("mobile")String mobile){ try { String
-	 * smsOtp=otpService.phoneOtp(mobile); OtpResponse response=new OtpResponse();
-	 * response.setStatusCode(200); //response.setPhoneOtp(smsOtp);
-	 * response.setResponse("sms sucessfully sent on your phone"); return new
-	 * ResponseEntity<>(response,HttpStatus.OK); } catch(Exception e) {
-	 * e.printStackTrace(); e.printStackTrace(); HttpResponse response=new
-	 * HttpResponse(); response.setStatusCode(409);
-	 * response.setResponse("Oops something wrong happened"); return new
-	 * ResponseEntity<>(response,HttpStatus.CONFLICT); } }
-	 * 
-	 * @ApiOperation(value = "resend email otp", response = HttpResponse.class)
-	 * 
-	 * @CrossOrigin
-	 * 
-	 * @PostMapping("/resendEmailOtp/{email}") public ResponseEntity<?>
-	 * resendEmailOtp(@PathVariable("email")String email){ try {
-	 * 
-	 * EmailDetails details=new EmailDetails(); details.setFromEmail(fromEmail);
-	 * details.setToEmail(email); details.setSubject("Email verification otp");
-	 * String emailOtp=randomDigits.getNumericString(6);
-	 * details.setMsgBody("your otp is "+emailOtp); boolean
-	 * emailOtpStatus=otpService.emailOtp(details); if(emailOtpStatus==true) {
-	 * OtpResponse response=new OtpResponse(); response.setStatusCode(200); //
-	 * response.setEmailOtp(emailOtp);
-	 * response.setResponse("otp sucessfully sent on email"); return new
-	 * ResponseEntity<>(response,HttpStatus.OK); } else { OtpResponse response=new
-	 * OtpResponse(); response.setStatusCode(409); //response.setPhoneOtp(emailOtp);
-	 * response.setResponse("otp failed to sent"); return new
-	 * ResponseEntity<>(response,HttpStatus.CONFLICT); }
-	 * 
-	 * } catch(Exception e) { e.printStackTrace(); e.printStackTrace(); HttpResponse
-	 * response=new HttpResponse(); response.setStatusCode(409);
-	 * response.setResponse("Oops something wrong happened"); return new
-	 * ResponseEntity<>(response,HttpStatus.CONFLICT); } }
-	 */
 }

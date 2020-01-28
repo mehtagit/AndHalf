@@ -49,6 +49,15 @@ public class UserSecurityquestion {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public UserSecurityquestion() {
+		super();
+	}
+	public UserSecurityquestion(Securityquestion securityQuestion, String answer) {
+		super();
+		this.securityQuestion = securityQuestion;
+		this.answer = answer;
+	}
 	@Override
 	public String toString() {
 		return "UserSecurityquestion [id=" + id + ", answer=" + answer + "]";

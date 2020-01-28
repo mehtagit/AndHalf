@@ -32,6 +32,21 @@ public class UserPasswordHistory {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
 	
+	
+	public UserPasswordHistory() {
+		super();
+	}
+	
+	public UserPasswordHistory(String password) {
+		super();
+		this.password = password;
+	}
+
+	public UserPasswordHistory(User userPassword, String password) {
+		super();
+		this.userPassword = userPassword;
+		this.password = password;
+	}
 	public long getId() {
 		return id;
 	}

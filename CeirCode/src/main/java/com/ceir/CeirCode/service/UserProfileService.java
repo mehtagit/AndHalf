@@ -34,7 +34,7 @@ import com.ceir.CeirCode.model.UserProfileFileModel;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repo.UserProfileRepo;
-import com.ceir.CeirCode.repoImpl.SystemConfigurationDbRepoImpl;
+import com.ceir.CeirCode.repoImpl.SystemConfigDbRepoImpl;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -57,7 +57,7 @@ PropertiesReaders propertiesReader;
 SystemConfigDbListRepository systemConfigRepo;
 
 @Autowired
-SystemConfigurationDbRepoImpl systemConfigurationDbRepoImpl;
+SystemConfigDbRepoImpl systemConfigurationDbRepoImpl;
 
 public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 	try { 

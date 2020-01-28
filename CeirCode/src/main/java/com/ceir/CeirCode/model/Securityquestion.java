@@ -53,6 +53,14 @@ public class Securityquestion {
 	public String toString() {
 		return "Securityquestion [id=" + id + ", question=" + question + ", category=" + category + "]";
 	}
+	public Securityquestion(long id, String question) {
+		super();
+		this.id = id;
+		this.question = question;
+	}
+	public Securityquestion() {
+		super();
+	}
 	
 
 	

@@ -4,6 +4,17 @@ public class OtpResponse {
 	private Integer statusCode;
 
 	
+	public OtpResponse() {
+		super();
+	}
+
+	public OtpResponse(String response, Integer statusCode, long userId) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.userId = userId;
+	}
+
 	private long userId;
 
 	public long getUserId() {

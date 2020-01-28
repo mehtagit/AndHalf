@@ -23,7 +23,7 @@ import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
-import com.ceir.CeirCode.repoImpl.SystemConfigurationDbRepoImpl;
+import com.ceir.CeirCode.repoImpl.SystemConfigDbRepoImpl;
 import com.ceir.CeirCode.util.HttpResponse;
 import com.ceir.CeirCode.util.Utility;
 @Service
@@ -37,7 +37,7 @@ public class FeatureService {
 	UserToStakehoderfeatureMappingRepo userFeatureRepo;
 	
 	@Autowired
-	SystemConfigurationDbRepoImpl systemConfigurationDbRepoImpl;
+	SystemConfigDbRepoImpl systemConfigurationDbRepoImpl;
 	
 	@Autowired
 	Utility utility;

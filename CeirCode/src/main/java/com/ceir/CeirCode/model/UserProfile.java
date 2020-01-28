@@ -1,6 +1,7 @@
 package com.ceir.CeirCode.model;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,19 +37,20 @@ public class UserProfile {
 	private String propertyLocation;
 	private String street;
 	private String locality;
+
 	@NotNull
 	@Column(length = 50)
 	private String district;
-		
+
 	@NotNull
 	@Column(length = 50)
 	private String commune;
-		
+
 	@NotNull
 	@Column(length = 50)
 	private String village;
-		
-	@NotNull
+
+	
 	@Column(length = 50)
 	private Integer postalCode;
 	private String province;   
@@ -60,53 +63,61 @@ public class UserProfile {
 	private String arrivalPortName;
 	@Transient
 	private String asTypeName;
-	
-	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
-	
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime  modifiedOn;
 	private String phoneOtp;  
 	private String emailOtp;
-    private String displayName;
-    private String employeeId;
-    private String natureOfEmployment;
-    private String designation;
-    private String authorityName;
-    private String authorityEmail;
-    private String authorityPhoneNo;
+	private String displayName;
+	private String employeeId;
+	private String natureOfEmployment;
+	private String designation;
+	private String authorityName;
+	private String authorityEmail;
+	private String authorityPhoneNo;
 	private String operatorTypeName;
-    private Integer operatorTypeId;
-    
-    
-    private String nidFilename;
-    private String photoFilename;
-    private String idCardFilename;
-    
-      
+	private Integer operatorTypeId;
+	private String nidFilename;
+	private String photoFilename;
+	private String idCardFilename;
+	private String vatFilename;
+	
+	@Transient
+	private String nidFilePath;
+	@Transient
+	private String photoFilePath;
+	@Transient
+	private String idCardFilePath;
+    @Transient
+    private String  vatFilePath;
+
 	@Transient
 	private String username;
 	@Transient
 	private List<QuestionPair> questionList ; 
 	@Transient 
 	private long[] roles;
+
 	@Transient
-	private long usertypeId;
+	private String usertypeName;
 	@Transient
 	private String password;    
- 
-	
+
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL, optional = false)
 	@JoinColumn(name = "userid", nullable = false)
 	private User user;  
-         
-	
-	
+    private String source;
+	@Type(type="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date expiryDate;
+    private String sourceUsername;
+    
 	public long[] getRoles() {
 		return roles;
 	}
@@ -119,11 +130,17 @@ public class UserProfile {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public long getUsertypeId() {
-		return usertypeId;
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
-	public void setUsertypeId(long usertypeId) {
-		this.usertypeId = usertypeId;
+	public static void setSerialVersionUID(long serialVersionUID) {
+		UserProfile.serialVersionUID = serialVersionUID;
+	}
+	public String getUsertypeName() {
+		return usertypeName;
+	}
+	public void setUsertypeName(String usertypeName) {
+		this.usertypeName = usertypeName;
 	}
 	public User getUser() {
 		return user;
@@ -131,11 +148,11 @@ public class UserProfile {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -256,15 +273,15 @@ public class UserProfile {
 	public void setQuestionList(List<QuestionPair> questionList) {
 		this.questionList = questionList; 
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	
+
+
 	public String getDisplayName() {
 		return displayName;
 	}
@@ -310,9 +327,9 @@ public class UserProfile {
 	public void setAuthorityPhoneNo(String authorityPhoneNo) {
 		this.authorityPhoneNo = authorityPhoneNo;
 	}
-	
-	
-	
+
+
+
 	public String getOperatorTypeName() {
 		return operatorTypeName;
 	}
@@ -343,14 +360,14 @@ public class UserProfile {
 	public void setIdCardFilename(String idCardFilename) {
 		this.idCardFilename = idCardFilename;
 	}
-	
+
 	public String getAsTypeName() {
 		return asTypeName;
 	}
 	public void setAsTypeName(String asTypeName) {
 		this.asTypeName = asTypeName;
 	}
-	
+
 	public String getVillage() {
 		return village;
 	}
@@ -387,23 +404,167 @@ public class UserProfile {
 	public void setArrivalPortName(String arrivalPortName) {
 		this.arrivalPortName = arrivalPortName;
 	}
-	@Override
-	public String toString() {
-		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus=" + vatStatus + ", vatNo="
-				+ vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street + ", village=" + village
-				+ ", locality=" + locality + ", district=" + district + ", commune=" + commune + ", postalCode="
-				+ postalCode + ", province=" + province + ", country=" + country + ", passportNo=" + passportNo
-				+ ", email=" + email + ", phoneNo=" + phoneNo + ", arrivalPort=" + arrivalPort + ", arrivalPortName="
-				+ arrivalPortName + ", asTypeName=" + asTypeName + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", displayName=" + displayName
-				+ ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation="
-				+ designation + ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail
-				+ ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + ", nidFilename=" + nidFilename + ", photoFilename="
-				+ photoFilename + ", idCardFilename=" + idCardFilename + ", username=" + username + ", questionList="
-				+ questionList + ", roles=" + roles + ", usertypeId=" + usertypeId + ", password=" + password + "]";
+
+	public void setNidFilePath(String nidFilePath) {
+		this.nidFilePath = nidFilePath;
+	}
+	public String getPhotoFilePath() {
+		return photoFilePath;
+	}
+	public void setPhotoFilePath(String photoFilePath) {
+		this.photoFilePath = photoFilePath;
+	}
+	public String getIdCardFilePath() {
+		return idCardFilePath;
+	}
+	public void setIdCardFilePath(String idCardFilePath) {
+		this.idCardFilePath = idCardFilePath;
+	}
+
+	public String getVatFilename() {
+		return vatFilename;
+	}
+	public void setVatFilename(String vatFilename) {
+		this.vatFilename = vatFilename;
+	}
+	public String getVatFilePath() {
+		return vatFilePath;
+	}
+	public void setVatFilePath(String vatFilePath) {
+		this.vatFilePath = vatFilePath;
+	}
+	public String getNidFilePath() {
+		return nidFilePath;
 	}
 	
-	
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public String getSourceUsername() {
+		return sourceUsername;
+	}
+	public void setSourceUsername(String sourceUsername) {
+		this.sourceUsername = sourceUsername;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserProfile [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", vatStatus=");
+		builder.append(vatStatus);
+		builder.append(", vatNo=");
+		builder.append(vatNo);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", passportNo=");
+		builder.append(passportNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", arrivalPort=");
+		builder.append(arrivalPort);
+		builder.append(", arrivalPortName=");
+		builder.append(arrivalPortName);
+		builder.append(", asTypeName=");
+		builder.append(asTypeName);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", phoneOtp=");
+		builder.append(phoneOtp);
+		builder.append(", emailOtp=");
+		builder.append(emailOtp);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append(", employeeId=");
+		builder.append(employeeId);
+		builder.append(", natureOfEmployment=");
+		builder.append(natureOfEmployment);
+		builder.append(", designation=");
+		builder.append(designation);
+		builder.append(", authorityName=");
+		builder.append(authorityName);
+		builder.append(", authorityEmail=");
+		builder.append(authorityEmail);
+		builder.append(", authorityPhoneNo=");
+		builder.append(authorityPhoneNo);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", nidFilename=");
+		builder.append(nidFilename);
+		builder.append(", photoFilename=");
+		builder.append(photoFilename);
+		builder.append(", idCardFilename=");
+		builder.append(idCardFilename);
+		builder.append(", vatFilename=");
+		builder.append(vatFilename);
+		builder.append(", nidFilePath=");
+		builder.append(nidFilePath);
+		builder.append(", photoFilePath=");
+		builder.append(photoFilePath);
+		builder.append(", idCardFilePath=");
+		builder.append(idCardFilePath);
+		builder.append(", vatFilePath=");
+		builder.append(vatFilePath);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", questionList=");
+		builder.append(questionList);
+		builder.append(", roles=");
+		builder.append(roles);
+		builder.append(", usertypeName=");
+		builder.append(usertypeName);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", source=");
+		builder.append(source);
+		builder.append(", expiryDate=");
+		builder.append(expiryDate);
+		builder.append(", sourceUsername=");
+		builder.append(sourceUsername);
+		builder.append("]");
+		return builder.toString();
+	}
+
+
 }

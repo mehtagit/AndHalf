@@ -88,6 +88,15 @@ public class Usertype {
 	public void setUserTofeatureMapping(List<UserToStakehoderfeatureMapping> userTofeatureMapping) {
 		this.userTofeatureMapping = userTofeatureMapping;
 	}
+	public Usertype(long id) {
+		super();
+		this.id = id;
+	}
+	public Usertype() {
+		super();
+	}
+	
+	
 	
 	
 	

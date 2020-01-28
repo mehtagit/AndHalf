@@ -1,4 +1,3 @@
-
 package com.ceir.CeirCode.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -9,6 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ceir.CeirCode.model.ChangeLanguage;
 import com.ceir.CeirCode.model.ForgotPassword;
 import com.ceir.CeirCode.model.LoginTracking;
 import com.ceir.CeirCode.model.NewPassword;
@@ -18,8 +19,6 @@ import com.ceir.CeirCode.service.LoginService;
 import com.ceir.CeirCode.util.HttpResponse;
 
 import io.swagger.annotations.ApiOperation;
-@PropertySource(ignoreResourceNotFound = true, value =
-		"classpath:application.properties")
 
 @RestController
 @RequestMapping("/Login")
@@ -33,7 +32,6 @@ public class LoginController{
 	public ResponseEntity<?> userLogin(@RequestBody UserLogin user){
 		return loginService.userLogin(user); 
 	}  
-  
 
 	@ApiOperation(value = "user session", response = HttpResponse.class)
 	@CrossOrigin
@@ -45,8 +43,18 @@ public class LoginController{
 		user.setId(userid);    
 		loginTracking.setUserTrack(user);  
 		return loginService.sessionTracking(loginTracking);  
-	} 
-      
+	}
+	
+	@ApiOperation(value = "change langauge", response = HttpResponse.class)
+	@CrossOrigin
+	@PostMapping("/changeLanguage")     
+	public ResponseEntity<?> sessionTracking(@RequestBody ChangeLanguage languageData  ){
+		return loginService.changeLanguage(languageData);  
+	}
+	
+     
+	
+	
 	@ApiOperation(value = "forgot password", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/forgotPassword")   

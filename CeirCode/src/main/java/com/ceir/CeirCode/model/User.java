@@ -11,12 +11,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
+@Table(name = "users")
 public class User {  
 	private static long serialVersionUID = 1L;
 	@Id
@@ -39,28 +42,30 @@ public class User {
 	private Integer currentStatus;  
 	private Integer previousStatus; 
 	private String remark;
-
+   
 	private long parentId=0;
-
+    private String language;
+    
+	
 	@JsonIgnore
 	@OneToMany(mappedBy = "userForNofication", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<Notification> notificationData;
 
-	
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	UserProfile userProfile;
- 
-	
-	
+
+
+
 	@JsonIgnore
 	@OneToOne(mappedBy = "userDetails", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
 	UserTemporarydetails userTemporarydetails;  
 
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "usertype_id", nullable = false) private Usertype
-	usertype;
+	@JoinColumn(name = "usertype_id", nullable = false)
+	private Usertype usertype;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "userTrack",cascade=CascadeType.ALL, fetch=FetchType.LAZY)
@@ -74,10 +79,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserSecurityquestion> userSecurityquestion;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "userPassword",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<UserPasswordHistory> userPasswordHistory;
-    
+	@JsonIgnore
+	@OneToMany(mappedBy = "userPassword",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	private List<UserPasswordHistory> userPasswordHistory;
+
 
 	public long getId() {      
 		return id;
@@ -168,10 +173,10 @@ public class User {
 		this.remark = remark;
 	}
 
-//	public List<TypeApprovedDb> getTypeApprovedDb() { return typeApprovedDb; }
-//	public void setTypeApprovedDb(List<TypeApprovedDb> typeApprovedDb) {
-//		this.typeApprovedDb = typeApprovedDb; }
-//
+	//	public List<TypeApprovedDb> getTypeApprovedDb() { return typeApprovedDb; }
+	//	public void setTypeApprovedDb(List<TypeApprovedDb> typeApprovedDb) {
+	//		this.typeApprovedDb = typeApprovedDb; }
+	//
 
 
 	public long getParentId() {
@@ -179,6 +184,13 @@ public class User {
 	}
 	public void setParentId(long parentId) {
 		this.parentId = parentId;
+	}
+	
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	public List<Notification> getNotificationData() {
 		return notificationData;
@@ -192,13 +204,59 @@ public class User {
 	public void setUserPasswordHistory(List<UserPasswordHistory> userPasswordHistory) {
 		this.userPasswordHistory = userPasswordHistory;
 	}
+
+
+
+	public User() {
+		super();
+	}
+	public User(String username, String password, LocalDateTime createdOn, LocalDateTime modifiedOn,
+			Integer currentStatus, Integer previousStatus, Usertype usertype) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.createdOn = createdOn;
+		this.modifiedOn = modifiedOn;
+		this.currentStatus = currentStatus;
+		this.previousStatus = previousStatus;
+		this.usertype = usertype;
+	}
+	
+	
+	
+	public User(Integer currentStatus, Integer previousStatus) {
+		super();
+		this.currentStatus = currentStatus;
+		this.previousStatus = previousStatus;
+	}
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createdOn=" + createdOn
-				+ ", modifiedOn=" + modifiedOn + ", currentStatus=" + currentStatus + ", previousStatus="
-				+ previousStatus + ", remark=" + remark + ", parentId=" + parentId + ", userProfile=" + userProfile + ", userTemporarydetails=" + userTemporarydetails
-				+ ", usertype=" + usertype + ", loginTracking=" + loginTracking
-				+ ", userRole=" + userRole + ", userSecurityquestion=" + userSecurityquestion + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [id=");
+		builder.append(id);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", currentStatus=");
+		builder.append(currentStatus);
+		builder.append(", previousStatus=");
+		builder.append(previousStatus);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", parentId=");
+		builder.append(parentId);
+		builder.append(", language=");
+		builder.append(language);
+		builder.append(", notificationData=");
+		builder.append(notificationData);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 
 }

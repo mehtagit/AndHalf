@@ -12,6 +12,7 @@ public class LoginResponse {
 	private String status;
 	private String operatorTypeName;
     private Integer operatorTypeId;
+	private String userLanguage;
 	
 	public String getStatus() {
 		return status;
@@ -80,12 +81,41 @@ public class LoginResponse {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
+	
+	public String getUserLanguage() {
+		return userLanguage;
+	}
+	public void setUserLanguage(String userLanguage) {
+		this.userLanguage = userLanguage;
+	}
 	@Override
 	public String toString() {
-		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", username=" + username
-				+ ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole + ", primaryRoleId="
-				+ primaryRoleId + ", status=" + status + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("LoginResponse [response=");
+		builder.append(response);
+		builder.append(", statusCode=");
+		builder.append(statusCode);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", primaryRole=");
+		builder.append(primaryRole);
+		builder.append(", primaryRoleId=");
+		builder.append(primaryRoleId);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
+		builder.append("]");
+		return builder.toString();
 	}
-
+	
 
 }

@@ -196,8 +196,8 @@
 	</dependencies>
 	<build>
 
-		<finalName>${artifactId}-${version}</finalName>
-		<!-- <finalName>${artifactId}-${version}_Test</finalName> -->
+		<!-- <finalName>${artifactId}-${version}</finalName> -->
+		<finalName>${artifactId}-${version}_Test</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

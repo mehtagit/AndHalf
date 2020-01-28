@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.ceir.CeirCode.model.ChangeLanguage;
 import com.ceir.CeirCode.model.ForgotPassword;
 import com.ceir.CeirCode.model.LoginResponse;
 import com.ceir.CeirCode.model.LoginTracking;
@@ -70,10 +72,12 @@ public class LoginService {
 					response.setPrimaryRoleId(UserData.getUsertype().getId());
 					response.setStatus(UserStatus.getUserStatusByCode(UserData.getCurrentStatus()).getDescription());   
 					response.setOperatorTypeId(UserData.getUserProfile().getOperatorTypeId());
-					response.setOperatorTypeName(UserData.getUserProfile().getOperatorTypeName()); 
+					response.setOperatorTypeName(UserData.getUserProfile().getOperatorTypeName());
+					response.setUserLanguage(UserData.getLanguage());
 					List<Userrole> userroleList=new ArrayList<Userrole>();
 					userroleList=userRoleRepo.findByUserData_Id(UserData.getId());
 					List<Usertype> userRoles=new ArrayList<Usertype>();   
+					
 					for(Userrole userRole:userroleList) {
 						userRoles.add(userRole.getUsertypeData());
 					}
@@ -135,6 +139,46 @@ public class LoginService {
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		}    
 	}
+	
+	public ResponseEntity<?> changeLanguage(ChangeLanguage languageData){
+		try {
+             User user=new User();
+             user=userRepo.findById(languageData.getUserId());
+             if(user!=null) {
+            	 user.setLanguage(languageData.getLanguage());
+            	 User output=userRepo.save(user);
+			if(output!=null) {
+				HttpResponse response=new HttpResponse();
+				response.setStatusCode(200);     
+				response.setResponse("user language sucessfully update");
+				return new ResponseEntity<>(response,HttpStatus.OK);	
+			}   
+			else {
+				HttpResponse response=new HttpResponse();
+				response.setStatusCode(204);     
+				response.setResponse("user language fails to update");
+				return new ResponseEntity<>(response,HttpStatus.OK);	
+			}
+             }
+             else {
+            	 HttpResponse response=new HttpResponse();
+ 				response.setStatusCode(204);     
+ 				response.setResponse("user id is incorrect");
+ 				return new ResponseEntity<>(response,HttpStatus.OK);	
+             }
+		}  
+		catch(Exception e) {
+			e.printStackTrace();
+			HttpResponse response=new HttpResponse();
+			response.setStatusCode(409); 
+			response.setResponse("Oops something wrong happened");
+			return new ResponseEntity<>(response,HttpStatus.OK);
+		}    
+	}
+	
+	
+	
+	
 
 	public ResponseEntity<?> forgotPassword(ForgotPassword forgotPassword){ 
 		log.info("inside forgot controller");
