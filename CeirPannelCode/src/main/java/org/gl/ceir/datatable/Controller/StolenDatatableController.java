@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -258,7 +259,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", ""};
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", ""};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -273,8 +274,8 @@ public class StolenDatatableController {
 			
 		//This is for Operator Dropdown for CEIRadmin
 			if("CEIRAdmin".equals(userType)){
-				String[] selectParam = { "select", "Operator", "operator", "","select", "Request Type", "requestType", "", "select",
-						"Mode", "sourceStatus", "","select", "Status", "status","" };	
+				String[] selectParam = { "select", "Operator", "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select",Translator.toLocale("table.status"), "status","" };	
 				for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -289,8 +290,8 @@ public class StolenDatatableController {
 				pageElement.setDropdownList(dropdownList);
 				
 			}else {
-				String[] selectParam = { "select", "Request Type", "requestType", "", "select",
-						"Mode", "sourceStatus", "","select", "Status", "status","" };	
+				String[] selectParam = { "select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
 				for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
