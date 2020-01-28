@@ -45,7 +45,7 @@ public class User {
 	private String remark;
    
 	private long parentId=0;
-	@Column(name = "user_language")
+	
     private String userLanguage;
     
 	
