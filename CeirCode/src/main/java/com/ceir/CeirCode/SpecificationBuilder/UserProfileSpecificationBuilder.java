@@ -1,16 +1,12 @@
 package com.ceir.CeirCode.SpecificationBuilder;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
-
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
@@ -18,8 +14,6 @@ import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.util.DbFunctions;
-
-
 
 public class UserProfileSpecificationBuilder {
 
@@ -45,8 +39,6 @@ public class UserProfileSpecificationBuilder {
 	
 
 	public Specification<UserProfile> build() { 
-		// convert each of SearchCriteria params to Specification and construct combined specification based on custom rules.
-
 		Specification<UserProfile> finalSpecification = null;
 
 		createSpecifications();
@@ -63,11 +55,9 @@ public class UserProfileSpecificationBuilder {
 	}
 
 	private List<Specification<UserProfile>> createSpecifications(){
-		//List<Specification<UserProfile>> specifications = new ArrayList<Specification<UserProfile>>();
 		try {
 		for(SearchCriteria searchCriteria : params) {
 			specifications.add((root, query, cb)-> {
-				// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
 				if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 						&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 					return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
@@ -131,7 +121,6 @@ public class UserProfileSpecificationBuilder {
 		log.info("inside join with user and data is: "+searchCriteria);
 		return (root, query, cb) -> { 
 			Join<UserProfile, User> user = root.join("user".intern());
-			//return cb.equal(addresses.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 			if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 				return cb.greaterThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());

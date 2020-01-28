@@ -1,8 +1,5 @@
 package com.ceir.CeirCode.controller;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.ceir.CeirCode.model.ChangePassword;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
@@ -43,10 +39,7 @@ public class UserProfileController {
 	@Autowired 
 	UserProfileService userProService;
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
-
 	@ApiOperation(value = "change password", response = HttpResponse.class)
-
 	@PostMapping("/changePassword")
 	public ResponseEntity<?> changePassword(@RequestBody ChangePassword password){
 		return userService.changePassword(password);   
@@ -76,7 +69,6 @@ public class UserProfileController {
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file){
-
 		MappingJacksonValue mapping = null;
 		if( file == 0) {
 			Page<UserProfile> userProfileResponse  = userProService.viewAllRecord(filterRequest, pageNo, pageSize);

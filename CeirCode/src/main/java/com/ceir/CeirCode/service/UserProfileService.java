@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.ceir.CeirCode.Constants.Datatype;
@@ -24,6 +25,7 @@ import com.ceir.CeirCode.SpecificationBuilder.UserProfileSpecificationBuilder;
 import com.ceir.CeirCode.configuration.FileStorageProperties;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.exceptions.ResourceServicesException;
+import com.ceir.CeirCode.filtermodel.SearchAssignee;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.SearchCriteria;
@@ -67,8 +69,6 @@ public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pag
         if(filterRequest.getStatus()!=null && filterRequest.getStatus()!=-1){
         currentStatus=UserStatus.PENDING_ADMIN_APPROVAL.getCode();
         }
-        
-        log.info("status from form:  "+currentStatus);
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 
 		UserProfileSpecificationBuilder uPSB = new UserProfileSpecificationBuilder(propertiesReader.dialect);	
@@ -89,25 +89,6 @@ public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pag
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
 		else  
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
-
-		/*
-		 * if(Objects.nonNull(grievance.getGrievanceStatus()) &&
-		 * grievance.getGrievanceStatus() != -1) gsb.with(new
-		 * SearchCriteria("grievanceStatus", grievance.getGrievanceStatus(),
-		 * SearchOperation.EQUALITY, Datatype.INT));
-		 */
-		
-
-		
-		/*
-		 * if(Objects.nonNull(filterRequest.getStatus()))
-		 * uPSB.addSpecification(uPSB.joinWithMultiple(new
-		 * SearchCriteria("status",filterRequest.getStatus(), SearchOperation.EQUALITY,
-		 * Datatype.STRING)));
-		 */
-//		if(Objects.nonNull(filterRequest.getRoleType())) 
-//uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT)));
-//			
 		log.info("uPSB specification:  "+uPSB);
 			return userProfileRepo.findAll(uPSB.build(),pageable);
 
@@ -118,6 +99,14 @@ public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pag
 		return null;
 	}
 }
+
+	/*
+	 * public List<UserProfile> assigneeInfo(SearchAssignee searchAssignee ){
+	 * Specification<UserProfile> specification=new
+	 * Specification<UserProfile>(propertiesReader.dialect) ;
+	 * 
+	 * return null; }
+	 */
 
 	public FileDetails getFilterUSerPRofileInFile(FilterRequest profileFilter, Integer pageNo, Integer pageSize) {
 		log.info("inside export user profile data into file service");
