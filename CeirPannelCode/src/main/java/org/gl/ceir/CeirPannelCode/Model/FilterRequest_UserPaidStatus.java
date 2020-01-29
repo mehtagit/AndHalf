@@ -3,7 +3,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class FilterRequest_UserPaidStatus {
 	
 	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId;
-	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin;
+	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString;
 	  private Long imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
@@ -113,6 +113,12 @@ public class FilterRequest_UserPaidStatus {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	public Long getImei1() {
 		return imei1;
 	}
@@ -126,8 +132,8 @@ public class FilterRequest_UserPaidStatus {
 				+ ", featureId=" + featureId + ", roleTypeUserId=" + roleTypeUserId + ", userId=" + userId
 				+ ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", startDate=" + startDate + ", endDate="
 				+ endDate + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", remarks=" + remarks + ", userType="
-				+ userType + ", txnId=" + txnId + ", origin=" + origin + ", imei1=" + imei1 + "]";
+				+ userType + ", txnId=" + txnId + ", origin=" + origin + ", searchString=" + searchString + ", imei1="
+				+ imei1 + "]";
 	}
 	
-	  
 }

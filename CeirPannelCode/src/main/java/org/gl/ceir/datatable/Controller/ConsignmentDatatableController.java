@@ -76,7 +76,7 @@ public class ConsignmentDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
 		log.info("session flag value==####@@@@@@@@@@@@@="+sessionFlag);
 		log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$="+filterrequest);

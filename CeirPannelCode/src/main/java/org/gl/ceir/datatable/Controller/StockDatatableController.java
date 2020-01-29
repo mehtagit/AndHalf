@@ -63,7 +63,7 @@ public class StockDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 
-
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		Object response = feignCleintImplementation.stockFilter(filterrequest,pageNo,pageSize,exportFile);
 		log.info("request passed to the filter api  ="+filterrequest);
 		log.info("response::::::::::::::::"+response);

@@ -72,7 +72,7 @@ public class StolenDatatableController {
 		log.info("flter request=="+filterrequest);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
-
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
