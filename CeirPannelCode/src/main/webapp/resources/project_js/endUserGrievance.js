@@ -53,11 +53,55 @@
 				return false;
 			}
 			
-			
-			
-			/*function endUserGrievanceReply(userId,grievanceId,txnId)
+
+			function endUserviewGrievanceHistory(grievanceId,projectPath,userId)
 			{
-				alert("end user pop up");
+
+
+
+
+				console.log(projectPath+path);
+				$.ajax({
+					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
+					type: 'GET',
+					processData: false,
+					contentType: false,
+					success: function (data, textStatus, jqXHR) {
+
+						console.log(JSON.stringify(data));
+						$('#chatMsg').empty();
+						$('#manageAccount').openModal();
+						console.log("****projectPath"+projectPath);
+						console.log("+++++path"+path);
+						
+						var projectpath=path+"/Consignment/dowloadFiles/actual";
+						console.log("--projectpath--"+projectpath);
+						for(var i=0; i<data.length; i++)
+						{
+							console.log("iiiiiii"+i);
+							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p></div>");
+								for (var j=0 ; j<data[i].attachedFiles.length;j++)
+								{
+									
+									console.log("jjjjjj"+j);
+									$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+								}
+								$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
+						
+						}
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log("error in ajax")
+					}
+				});
+			}
+
+
+			
+			
+			function endUserGrievanceReply(userId,grievanceId,txnId)
+			{
+				
 
 				$.ajax({
 					url: './endUserViewGrievance?recordLimit=2&grievanceId='+grievanceId+"&userId="+userId,
@@ -70,6 +114,7 @@
 						$('#replyModal').openModal();
 						$('#grievanceIdToSave').text(grievanceId);
 						$('#grievanceTxnId').text(txnId);
+						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
 						console.log("usertype=="+usertype);
 						$("#viewPreviousMessage").empty();
@@ -89,14 +134,24 @@
 							$("#closeTicketCheckbox").css("display","none");	
 							console.log("none");
 						}
+						$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+							for (i = 0; i < data.length; i++) {
+								console.log(data[i].interp);
+								$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+								
+							}
+						});
 
 
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("error in ajax")
+						 $('#errorModal').openModal();
 					}
 				});
 			}
+			
+			
+			
 			
 			function saveEndUserGrievanceReply()
 			{
@@ -192,4 +247,6 @@
 					}
 				});
 				return false;
-			}*/
+			}
+			
+			

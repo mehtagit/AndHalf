@@ -344,6 +344,7 @@
 						$('#replyModal').openModal();
 						$('#grievanceIdToSave').text(grievanceId);
 						$('#grievanceTxnId').text(txnId);
+						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
 						console.log("usertype=="+usertype);
 						$("#viewPreviousMessage").empty();
@@ -385,7 +386,18 @@
 					grievanceTicketStatus=0;
 				}
 			
-				
+				 var roleType = $("body").attr("data-roleType");
+				 var userId ='';
+				 
+				 if (roleType==undefined)
+				 {
+					 roleType="End User";
+					 userId=$('#grievanceUserid').val();
+				 }
+				 else{
+					 userId = $("body").attr("data-userID");
+				 }
+				 alert(roleType+userId);
 				var remark=$('#replyRemark').val();
 				var replyFile=$('#replyFile').val();
 				var  grievanceIdToSave= $('#grievanceIdToSave').text();
@@ -423,6 +435,8 @@
 						"grievanceId":grievanceIdToSave,
 						"grievanceStatus":grievanceTicketStatus,
 						"featureId":6,
+						"userId":userId,
+						"userType":roleType
 					
 					}
 
@@ -582,7 +596,7 @@
 						var optionId=id-1;
 						$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
 						$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
-						console.log('#docTypetag'+optionId);
+						console.log('#----docTypetag'+optionId);
 
 					}
 				});
