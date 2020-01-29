@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Registration</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -171,7 +171,7 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="expectedDispatcheDate"
 												id='expectedDispatcheDate' class='form-control datepick'
-												autocomplete='off' required="required"> <label
+												autocomplete='off' required="required" oninvalid="this.setCustomValidity(<spring:message code="validation.requiredMsg" />)"> <label
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>

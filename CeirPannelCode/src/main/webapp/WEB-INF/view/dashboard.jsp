@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix='spring' uri='http://www.springframework.org/tags'%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -44,7 +46,7 @@ var contextpath = "${context}";
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 </head>
 
-<body data-list="${features}">
+<body data-lang="${language}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 		<div id="loader"></div>
@@ -157,7 +159,9 @@ class="dropdownColor"> Logout</span></a></li>
 					<ul class="navData">
 					<c:forEach items="${features}"  var="feature">
 							<li class="bold"><a href="${feature.link}" target="mainArea"
-								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>${feature.name}</a></li>
+								class="waves-effect waves-cyan" data-featureID="${feature.id}"><i class="${feature.logo}"></i>
+								<spring:message code="sidebar.${fn:replace(feature.name, ' ', '_')}" />
+								</a></li>
 					</c:forEach>
 					</ul>
 					</li>
@@ -213,7 +217,7 @@ class="dropdownColor"> Logout</span></a></li>
 	<footer class="page-footer">
 		<div class="footer-copyright">
 			<div class="container">
-				<span id="copyrightText">Copyright © 2018 Sterlite Technologies Ltd, All rights
+				<span id="copyrightText">Copyright © 2020 Sterlite Technologies Ltd, All rights
 					reserved.</span>
 
 			</div>
