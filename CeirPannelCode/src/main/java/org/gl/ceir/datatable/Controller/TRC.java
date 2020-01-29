@@ -15,6 +15,7 @@ import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.interfacepackage.CRUD;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -181,7 +182,7 @@ public class TRC implements CRUD{
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("Manage Type-Approved");
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Manage_Type-Approved"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -192,7 +193,7 @@ public class TRC implements CRUD{
 			
 			
 			if("Importer".equals(userType)) {
-				String[] names= {"HeaderButton","Report Type-Approved Devices","./register-form-importer","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form-importer","btnLink","FilterButton", Translator.toLocale("button.filter"),"typeApprovedDataTable()","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
@@ -206,7 +207,7 @@ public class TRC implements CRUD{
 				}			
 				pageElement.setButtonList(buttonList);
 			}else {
-				String[] names= {"HeaderButton","Report Type-Approved Devices","./register-form","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable()","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
@@ -260,7 +261,7 @@ public class TRC implements CRUD{
 			
 			if("Importer".equals(userType)) {
 				//input type date list		
-				String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","TAC","tac",""};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.TAC"),"tac",""};
 				for(int i=0; i< dateParam.length; i++) {
 					dateRelatedFields= new InputFields();
 					dateRelatedFields.setType(dateParam[i]);
