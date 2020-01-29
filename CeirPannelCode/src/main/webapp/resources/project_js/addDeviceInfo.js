@@ -59,7 +59,8 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					      "price": parseFloat(Price1),
 					      "taxPaidStatus": parseInt(taxStatus1),
 					      "nid":nationalID,
-					      "txnId":""
+					      "txnId":"",
+					      "origin":"CUSTOMS"
 				}
 				regularizeDeviceDbs.push(deviceInfo);  
 				fieldId++;

@@ -79,7 +79,7 @@ var contextpath = "${context}";
 									-	<%=session.getAttribute("operatorTypeName") %>
 									<%}else{}%>   
 										
-									</a> <span class="logo-text">Materialize</span>
+									</a> <span class="logo-text"><spring:message code="registration.materialize" /></span>
 							</h1> 
 						</li>
 					</ul>
@@ -97,7 +97,7 @@ style="overflow: inherit !important;">
 					</select></div>
 			</div>
 			</li>
-		<li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;">Home</a>	</li>			
+		<li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>			
 					
 <li class="profileInfo"><a
 class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
@@ -107,21 +107,21 @@ style="color: #fff; font-size: 40px;"></i></a>
 <ul id="profile-dropdown" class="dropdown-content">
 <li><a href="${context}/editProfile" target="mainArea"><i
 class="fa fa-pencil dropdownColor" style="float: left;"></i><span
-style="float: left" class="dropdownColor">Edit Info</span></a></li>
+style="float: left" class="dropdownColor"><spring:message code="registration.editinfo" /></span></a></li>
 <li class="divider"></li>
 <li><a data-target="changePassword" class="modal-trigger"><i
 class="fa fa-key dropdownColor" style="float: left"></i><span
-style="float: left" class="dropdownColor">Change
-Password</span></a></li>
+style="float: left" class="dropdownColor">
+<spring:message code="registration.changepassword" /></span></a></li>
 
 <li class="divider"></li>
 <li><a href="#manageAccount" class="modal-trigger"><i class="mdi-action-settings dropdownColor"></i><span
-class="dropdownColor"> Activate/Deactivate Account</span></a></li>	
+class="dropdownColor"> <spring:message code="registration.activate/deactivateaccount" /></span></a></li>	
 <li class="divider"></li>
 
 <li><a href="${context}/logout" id=""><i style="float: left;"
 class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
-class="dropdownColor"> Logout</span></a></li>
+class="dropdownColor"> <spring:message code="registration.logout" /></span></a></li>
 
 </ul></li>
 </ul>
@@ -217,8 +217,8 @@ class="dropdownColor"> Logout</span></a></li>
 	<footer class="page-footer">
 		<div class="footer-copyright">
 			<div class="container">
-				<span id="copyrightText">Copyright © 2020 Sterlite Technologies Ltd, All rights
-					reserved.</span>
+	
+				<span id="copyrightText"><spring:message code="registration.copyright2020" /></span>
 
 			</div>
 		</div>
@@ -226,19 +226,19 @@ class="dropdownColor"> Logout</span></a></li>
 
 	<!-- END FOOTER -->
 	<div id="manageAccount" class="modal">
-			<h6 class="modal-header">Manage Account</h6>
+			<h6 class="modal-header"><spring:message code="registration.manageaccount" /></h6>
 		
 		<div class="modal-content">
 		<form id="userStatusForm"  onsubmit="return updateUSerStatus()">
 			 <span style="text-align: center;color: red;" id="errorMsg"></span> 
 			 
-			<p>Request CEIR ADMIN to</p>
+			<p><spring:message code="registration.requestceiradminto" /></p>
 			<div class="row" style="height: 30px;">
 			
 				<p>
 					<label style="margin-right: 50px"> <input  type="radio"
-						name="status" value="Deactivate" required="required" ><span> Deactivate</span></label>Permanently delete
-					the account, you will not login into the portal.
+						name="status" value="Deactivate" required="required" ><span> <spring:message code="registration.deactivate" /></span></label>
+				 <spring:message code="registration.permanentlydeleteportal" />
 				</p>                        
 			</div>
 			<%String status=(String)session.getAttribute("userStatus");%>
@@ -246,23 +246,22 @@ class="dropdownColor"> Logout</span></a></li>
 			<div class="row" style="height: 30px;">
 				<p>                
 					<label style="margin-right: 67px"> <input type="radio" value="Disable"
-						name="status" required="required"><span> Disable</span></label>All the action will be
-					disabled, only view option will be available
+						name="status" required="required"><span> <spring:message code="registration.disable" /></span></label>
+					<spring:message code="registration.alltheactionwillbe" />
 				</p> 
 			</div>
 			<%} else if(status.equalsIgnoreCase("Disable")){ %>
                     <div class="row" style="height: 30px;">
 				<p>            
 					<label style="margin-right: 67px"> <input type="radio" value="Approved"
-						name="status" required="required"><span> Enable</span></label>All the action will be
-					Enable 
+						name="status" required="required"><span> <spring:message code="registration.enable" /></span></label> <spring:message code="registration.allactionable" />
 				</p>
 			</div>
 
 <%} else {} %>
 			<div class="input-field col s12 center">
-				<button class="btn" id="updateStatusBtn">Submit</button>
-				<button type="button" class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+				<button class="btn" id="updateStatusBtn"><spring:message code="button.submit" /></button>
+				<button type="button" class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.cancel" /></button>
 			</div>
 			</form>
 		</div>
@@ -275,7 +274,7 @@ class="dropdownColor"> Logout</span></a></li>
 		<button type="button"
 			class=" modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
-			<h6 class="modal-header">Manage Account</h6>
+			<h6 class="modal-header"><spring:message code="registration.manageaccount" /></h6>
 		<div class="modal-content">
 			<h6 id="mgAccount"><!-- The request has been successfully registered with CEIR
 				Admin. Please find confirmation over registered mail in 2 to 3
@@ -291,7 +290,7 @@ class="dropdownColor"> Logout</span></a></li>
 	<!-- Modal 4 start   -->
 
 <div id="changePassword" class="modal" style="width: 40%;">
-<h6 class="modal-header">Change Password</h6>
+<h6 class="modal-header"><spring:message code="registration.changepassword" /></h6>
 <div class="modal-content">
 <form onsubmit="return changePassword()">
 <div class="row">
@@ -309,7 +308,7 @@ title="Please enter atleast one numeric char, one alphabet, one special characte
 required="required"
 />
 <label for="oldPassword" class="center-align"
-style="color: #000; font-size: 12px;"> Old Password </label>
+style="color: #000; font-size: 12px;">  <spring:message code="registration.oldpassword" /></label>
 <div class="password"></div>
 </div>
 
@@ -322,8 +321,7 @@ class="fa fa-lock fa-stack-1x"></i>
 </div>
 <div class="input-field col s11">
 
-<label for="newPassword" style="color: #000; font-size: 12px;">New
-Password</label> <input type="password"
+<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.newpassword" /></label> <input type="password"
 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 required="required"
@@ -337,8 +335,7 @@ style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
 </div>
 <div class="input-field col s11">
 
-<label for="confirm_password" style="color: #000; font-size: 12px;">Confirm
-Password</label> <input type="password" class="" id="confirm_password"
+<label for="confirm_password" style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input type="password" class="" id="confirm_password"
 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 required="required"
@@ -347,8 +344,8 @@ required="required"
 </div>
 <div class="row" style="margin-top: 30px;">
 <div class="input-field col s12 center">
-<button class="btn" id="updateStatusBtn">Submit</button>
-<button type="button"  class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+<button class="btn" id="updateStatusBtn"><spring:message code="button.submit" /></button>
+<button type="button"  class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.cancel" /></button>
 </div>
 
 </div>
@@ -370,16 +367,14 @@ data-dismiss="modal">&times;</button>
 <div class="modal-content">
 
 <div class="row">
-<h6>The request has been successfully registered with CEIR
-Admin. Please find the confirmation over registered mail <
-mail@mail.com> in 2 to 3 working days.</h6>
+<h6><spring:message code="registration.therequesthasbee" /></h6>
 </div>
 <div class="row">
 <div class="input-field col s12 center">
 <div class="input-field col s12 center">
 <button class="modal-close waves-effect waves-light btn"
 style="margin-left: 10px;" type="submit" name="add_user"
-id="add_user">Cancel</button>
+id="add_user"><spring:message code="modal.cancel" /></button>
 </div>
 </div>
 </div>
@@ -396,14 +391,14 @@ data-dismiss="modal">&times;</button>
 <div class="modal-content">
 
 <div class="row">
-<h6>Do you want to cancel the request?</h6>
+<h6><spring:message code="registration.cancelRequest" /></h6>
 </div>
 <div class="row">
 <div class="input-field col s12 center">
 <div class="input-field col s12 center">
 <a href="index.html" class="btn" type="submit" name="add_user"
-id="add_user">yes</a> <a href="#activateDeactivate"
-class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
+id="add_user"><spring:message code="modal.yes" /></a> <a href="#activateDeactivate"
+class="modal-close modal-trigger btn" style="margin-left: 10px;"><spring:message code="modal.no" /></a>
 </div>
 </div>
 </div>
@@ -413,14 +408,14 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 
 <!-- modal start -->
 <div id="changePasswordMessage" class="modal" style="width: 40%;">
-<h6 class="modal-header">Change Password</h6>
+<h6 class="modal-header"><spring:message code="registration.changepassword" /></h6>
 <div class="modal-content">
 <div class="row">
 <h6 id="cPassSucessMsg"></h6>
 </div>
 <div class="row">
 <div class="center">
-<a href="" class="btn">ok</a>
+<a href="" class="btn"><spring:message code="modal.ok" /></a>
 </div>
 </div>
 </div>
@@ -430,16 +425,16 @@ class="modal-close modal-trigger btn" style="margin-left: 10px;">no</a>
 <div id="goToHome" class="modal modal-small" style="width: 40%;">
 <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
 data-dismiss="modal">&times;</button> -->
-<h6 class="modal-header">Home Page</h6>
+<h6 class="modal-header"><spring:message code="registration.homepage" /></h6>
 <div class="modal-content">
 <div class="row">
-<h6>This page will redirect to home page. Do you want to logout the panel?</h6>
+<h6><spring:message code="registration.pagewillredirectpanel" /></h6>
 </div>
 <div class="input-field col s12 center">
 <div class="input-field col s12 center">
-<a href="./homePage" class="btn" type="submit" name="add_user" id="add_user">yes</a>
+<a href="./homePage" class="btn" type="submit" name="add_user" id="add_user"><spring:message code="modal.yes" /></a>
 <a href="#" class="modal-close btn"
-style="margin-left: 10px;">no</a>
+style="margin-left: 10px;"><spring:message code="modal.no" /></a>
 </div>
 </div>
 </div>

@@ -374,6 +374,7 @@
 
 			function saveGrievanceReply()
 			{
+			
 				var grievanceTicketStatus;
 				if ($('#closeTicketCheck').is(":checked"))
 				{
@@ -383,6 +384,8 @@
 				else{
 					grievanceTicketStatus=0;
 				}
+			
+				
 				var remark=$('#replyRemark').val();
 				var replyFile=$('#replyFile').val();
 				var  grievanceIdToSave= $('#grievanceIdToSave').text();
@@ -419,7 +422,8 @@
 						"reply":remark,
 						"grievanceId":grievanceIdToSave,
 						"grievanceStatus":grievanceTicketStatus,
-						"featureId":6
+						"featureId":6,
+					
 					}
 
 				formData.append('fileInfo[]',JSON.stringify(fileInfo));

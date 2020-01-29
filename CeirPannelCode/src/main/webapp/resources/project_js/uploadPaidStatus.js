@@ -539,7 +539,7 @@ function table(url,dataUrl){
 
 
 	function exportpaidStatus(){
-	
+	var txnId = $('#transactionID').val();
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var taxPaidStatus = $('#taxPaidStatus').val();
@@ -552,7 +552,7 @@ function table(url,dataUrl){
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
 
@@ -616,7 +616,8 @@ function submitDeviceInfo(){
 			"price": parseFloat(Price1),
 			"taxPaidStatus": parseInt(taxStatus1),
 			"nid":nationalId,
-			"txnId":""
+			"txnId":"",
+			"origin":"CUSTOMS"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);

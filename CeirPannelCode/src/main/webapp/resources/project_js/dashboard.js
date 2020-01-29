@@ -7,7 +7,7 @@
   $(document).ready(function () {
     var url = new URL(window.location.href);
     var langParameter = url.searchParams.get("lang");
-    $('#langlist').val(langParameter == 'km' ? 'km' : 'en').change();
+    $('#langlist').val(langParameter == 'km' ? 'km' : 'en');
     dataByTag("copyright_footer","copyrightText",2);
       });   
 
