@@ -167,23 +167,23 @@ public class StockServiceImpl {
 				// TODO Check if this feature is supported in current period.
 				if(validateUserProfileOfStock(stockMgmt)) {
 					user = User.getDefaultUser();
-					
+
 					UserProfile userProfile = UserProfile.getDefaultUserProfile();
 					userProfile.setEmail(stockMgmt.getUser().getUserProfile().getEmail());
 					userProfile.setUser(user);
 					Usertype usertype = new Usertype();
 					usertype.setId(17);
-					
+
 					Userrole roles = new Userrole(user, usertype);
 					List<Userrole> userRolesList = new ArrayList<Userrole>();
 					userRolesList.add(roles);
 					user.setUserRole(userRolesList);
 					user.setUserProfile(userProfile);
 					user.setUsertype(usertype);
-					
+
 					user = userRepository.save(user);
 					logger.info("User [" + user + "] have been saved successfully.");
-					
+
 					stockMgmt.setUserId(new Long(user.getId()));
 					stockMgmt.setUser(user);
 					stockMgmt.setRoleType("End User");
@@ -201,13 +201,24 @@ public class StockServiceImpl {
 			webActionDb.setState(WebActionDbState.INIT.getCode());
 			webActionDb.setTxnId(stockMgmt.getTxnId());
 
-			if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest)) {
+			if(isStockAssignRequest) {
+				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest)) {
 
-				logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
-				return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
+					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
+					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
+				}else {
+					logger.info("Stock registeration have been failed." + stockMgmt.getTxnId());
+					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
+				}
 			}else {
-				logger.info("Stock registeration have been failed." + stockMgmt.getTxnId());
-				return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
+				if(executeRegisterStock(stockMgmt, webActionDb)) {
+
+					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
+					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
+				}else {
+					logger.info("Stock registeration have been failed." + stockMgmt.getTxnId());
+					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
+				}
 			}
 
 		} catch (Exception e) {
@@ -247,6 +258,27 @@ public class StockServiceImpl {
 				logger.info("Notification have been not saved.");
 			}
 		}
+
+		queryStatus = Boolean.TRUE;
+		return queryStatus;
+	}
+
+	@Transactional(rollbackOn = Exception.class)
+	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb) {
+
+		boolean queryStatus = Boolean.FALSE;
+
+		logger.info("Going to save webActionDb [" + webActionDb + "]");
+		webActionDbRepository.save(webActionDb);
+		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
+
+		logger.info("Going to save Stock [" + stockMgmt + "]");
+		stockManagementRepository.save(stockMgmt);
+		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
+
+		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, 
+				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
+		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
 		return queryStatus;
@@ -760,7 +792,7 @@ public class StockServiceImpl {
 		}
 		return Boolean.FALSE;
 	}
-	
+
 	private boolean isUserRetailerOrDistributor(List<String> userRoles) {
 		return userRoles.contains("Distributor") || userRoles.contains("Retailer");
 	}
