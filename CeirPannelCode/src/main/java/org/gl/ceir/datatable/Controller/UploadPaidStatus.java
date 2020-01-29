@@ -122,7 +122,8 @@ public class UploadPaidStatus {
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
-			}else if("CEIRAdmin".equals(userType)) {
+			}
+			else if("CEIRAdmin".equals(userType)) {
 				for(UserPaidStatusContent contentModelList : contentList) {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
@@ -147,7 +148,6 @@ public class UploadPaidStatus {
 					datatableResponseModel.setData(finalList);
 				}
 			}else if("Immigration".equals(userType)) {
-				log.info("-----------------in Immigration Controller");
 				for(UserPaidStatusContent contentModelList : contentList) {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
@@ -268,7 +268,7 @@ public class UploadPaidStatus {
 				}
 			}else {
 			//input type date list
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

@@ -32,7 +32,7 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootConfiguration 
 @ComponentScan(basePackages ="org.gl.ceir")
 /* @PropertySource("classpath:application_Production.properties") */
- @PropertySource("classpath:application.properties") 
+ @PropertySource("classpath:awsConfiguration.properties") 
 public class App extends SpringBootServletInitializer
 {
 	@Override

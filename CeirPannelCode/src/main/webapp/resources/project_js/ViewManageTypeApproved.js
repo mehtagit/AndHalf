@@ -16,6 +16,8 @@ var userType = $("body").attr("data-roleType");
 function typeApprovedDataTable(){
 	if(userType=="CEIRAdmin"){
 		Datatable('headers?type=AdmintrcManageType','./trc');
+	}else if(userType=="Importer"){
+		Datatable('headers?type=ImporterTrcManageType','./trc');
 	}else{
 		Datatable('headers?type=trcManageType','./trc');
 	}
@@ -133,25 +135,29 @@ function pageRendering(){
 					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='tac' class='center-align'>"+date[i].title+"</label></div>");
 				}
 			} 
+			
+			if(userType=="Importer"){
+				console.log("userType is----->"+userType)
+			}else{
+				// dynamic drop down portion
+				var dropdown=data.dropdownList;
+				for(i=0; i<dropdown.length; i++){
+					var dropdownDiv=
+						$("#typeAprroveTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+								"<br>"+
+								"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+								"<span class='caret'>"+"</span>"+
+								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-			// dynamic drop down portion
-			var dropdown=data.dropdownList;
-			for(i=0; i<dropdown.length; i++){
-				var dropdownDiv=
-					$("#typeAprroveTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
-							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-							"<span class='caret'>"+"</span>"+
-							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-
-							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value = '-1'>"+dropdown[i].title+
-							"</option>"+
-							"</select>"+
-							"</div>"+
-					"</div>");
+								"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+								"<option value = '-1'>"+dropdown[i].title+
+								"</option>"+
+								"</select>"+
+								"</div>"+
+						"</div>");
+				}
 			}
-
+	
 			$("#typeAprroveTableDiv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' id='submitFilter' value='filter'></div>");
 			$("#typeAprroveTableDiv").append("<div class='col s12 m2'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){

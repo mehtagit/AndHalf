@@ -2713,3 +2713,18 @@ div#viewuplodedModel {
     width: fit-content;
     padding-top: 1.5rem;
 }
+.register-device-responsive-page {
+width: 50%;
+}
+
+@media only screen and (max-width: 992px) {
+.register-device-responsive-page {
+width: 100%;
+}
+}
+
+@media only screen and (max-width: 425px) {
+select {
+height: 2.7rem;
+}
+}

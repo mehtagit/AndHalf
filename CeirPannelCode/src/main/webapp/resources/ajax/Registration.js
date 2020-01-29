@@ -592,3 +592,9 @@ function  openEndUserStockPage(reportType)
 		}
 	});*/
 }
+function selfRegisterDevice(){
+	window.location.href="./selfRegisterDevice";
+}
+function updateVisaValidity(){
+	window.location.href="./updateVisaValidaity";
+}

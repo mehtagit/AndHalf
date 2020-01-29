@@ -341,9 +341,9 @@ input[type='search'] {
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-													<input type="email" name="email" id="email" required
+														<input type="email" name="email" id="email" 
 														maxlength="30"> <label for="email"><spring:message code="input.email" /><span
-														class="star">*</span></label>
+														class="star"></span></label>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
@@ -385,8 +385,8 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star">*</span>
-															</label> <select class="browser-default" required="required"
+																			<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+															</label> <select class="browser-default" 
 																id="multipleSimStatus1">
 																<option value="" disabled selected><spring:message code="select.select" />
 															</select>

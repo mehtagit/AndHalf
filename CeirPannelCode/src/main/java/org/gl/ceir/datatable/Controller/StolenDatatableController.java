@@ -231,7 +231,7 @@ public class StolenDatatableController {
 		
 		
 		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
-		pageElement.setPageTitle(Translator.toLocale("view.Block/UnblockDevices"));
+			pageElement.setPageTitle(Translator.toLocale("view.Block/UnblockDevices"));
 		}else {
 			pageElement.setPageTitle("Stolen/Recovery");
 		}
@@ -276,7 +276,8 @@ public class StolenDatatableController {
 			if("CEIRAdmin".equals(userType)){
 				String[] selectParam = { "select", Translator.toLocale("operator.Operator"), "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
 						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
-				for (int i = 0; i < selectParam.length; i++) {
+
+			for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
 					i++;
@@ -346,6 +347,7 @@ public class StolenDatatableController {
 
 			String[] selectParam = { "select", Translator.toLocale("table.status"), "status", "", "select",
 					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.requestType"), "requestType","" };	
+
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);
