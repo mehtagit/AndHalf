@@ -84,7 +84,9 @@ public class TrcController {
 	@PostMapping("register-approved-device")
 	public GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller register-approved-device-------request---------"+request.getParameter("manufacturerId"));
-		// log.info(""+request.getParameter("file"));
+		 log.info("headers name==="+request.getHeaderNames());
+		
+		
 		String userName=session.getAttribute("username").toString();
 		String userId= session.getAttribute("userid").toString();
 		String name=session.getAttribute("name").toString();

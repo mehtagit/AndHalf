@@ -242,9 +242,9 @@ public class GrievanceDatatableController {
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
-						
+						Integer endUserId=dataInsideList.getUserId();
 						log.info("**********createdOn=="+createdOn+"  modifiedOn=="+modifiedOn+" txnId=="+txnId+"grievanceId=="+grievanceId+"StatusofGrievance=="+StatusofGrievance);
-						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId, grievanceId);
+						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,endUserId);
 						log.info("--------------response*******"+action);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));

@@ -1239,10 +1239,10 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 
 	}
 
-	public String endUserGrievanceState(String fileName,String txnId ,String grievanceId) {
-		int userId=1;
+	public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId) {
+		
 		log.info(" entry in set view in data table.....");
-		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
 
 		// state related Code 

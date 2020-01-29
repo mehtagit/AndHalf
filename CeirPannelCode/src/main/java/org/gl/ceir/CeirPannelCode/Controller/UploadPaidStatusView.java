@@ -213,4 +213,25 @@ public class UploadPaidStatusView {
 		log.info("---------response--------"+response);
 		return response;
 	}
+	
+	
+	@GetMapping("selfRegisterDevice")
+	public ModelAndView selfRegisterDevice(HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		log.info("---entry point in self register page");
+		modelAndView.setViewName("selfRegisterDevice");
+		log.info("---exit  point in self register page");
+		return modelAndView;
+	}
+	
+	@GetMapping("updateVisaValidaity")
+	public ModelAndView updateVisaValidaity(HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		log.info("---entry point in update visa validity page");
+		modelAndView.setViewName("endUserUpdateVisaValidity");
+		log.info("---exit  point in update visa validity page");
+		return modelAndView;
+	}
 }
+
+

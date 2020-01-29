@@ -119,10 +119,10 @@ var contextpath = "${context}";
 								</select>
 							</li>
                             <li class="haed-btn-style"><a href="./checkDeviceslogin" style="color: #000;" >Check Device</a></li>
-                            <li class="haed-btn-style"><a href="#" style="color: #000;">Upload
-                                    Document</a></li>
-                            <li class="haed-btn-style"><a href="#" style="color: #000;">Register
-                                    Complaint</a></li>
+                            <li class="haed-btn-style"><a onclick="selfRegisterDevice()" style="color: #000;">Register
+                                    Device</a></li>
+                            <li class="haed-btn-style"><a onclick="updateVisaValidity()" style="color: #000;">Update
+                                    Visa Validity</a></li>
                             <!-- <li class="haed-btn-style"><a href="#" style="color: #000;">Report
                                     Grievance</a></li> -->
                             <!-- <li class="haed-btn-style">

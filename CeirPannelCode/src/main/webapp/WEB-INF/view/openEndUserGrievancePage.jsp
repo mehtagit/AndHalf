@@ -3,7 +3,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html>  
 <head>
@@ -16,8 +15,6 @@
     <meta name="keywords"
         content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
     <title>CEIR | Importer Portal</title>
-
-
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
@@ -43,7 +40,7 @@
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-	   
+
     <style>
         ul li {
             display: inline-flex;
@@ -197,7 +194,7 @@ style="overflow: inherit !important;">
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="firstName" name="firstName" pattern="[a-zA-Z]{0,20}"
+                                            <input type="text" id="firstName" required="required" name="firstName" pattern="[a-zA-Z]{0,20}"
                                                 title="Please enter alphabets upto 20 characters only" maxlength="20" />
                                             <label for="firstName">First Name <span class="star">*</span></label>
                                         </div>
@@ -209,13 +206,13 @@ style="overflow: inherit !important;">
                                         </div>
 
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]{0,20}" title="Please enter alphabets upto 20 characters only"
+                                            <input type="text" id="lastName" required="required" name="lastName" pattern="[a-zA-Z]{0,20}" title="Please enter alphabets upto 20 characters only"
                                                 maxlength="20" />
                                             <label for="lastName">Last Name <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{10,12}"
+                                            <input type="text" id="contactNumber" required="required" name="contactNumber" pattern="[0-9]{10,12}"
                                                 title=numbers maxlength="10" />
                                             <label for="contactNumber">Contact Number <span
                                                     class="star">*</span></label>
@@ -229,13 +226,13 @@ style="overflow: inherit !important;">
 
                                         <div class="col s12 m6 selectDropdwn">
                                             <label for="Category">Category <span class="star">*</span></label>
-                                            <select class="browser-default" id="category">
+                                            <select class="browser-default" required="required" id="category">
                                                 <option value="" disabled selected>Category</option>
                                             </select>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <textarea id="Remark" class="materialize-textarea"></textarea>
+                                            <textarea id="Remark" required="required" class="materialize-textarea"></textarea>
                                             <label for="Remark">Remark <span
                                                     class="star">*</span></label>
                                         </div>
@@ -254,7 +251,7 @@ style="overflow: inherit !important;">
                                     <div class="row">
                                         <div class="col s12 m6">
                                             <label for="Category">Document Type </label>
-                                            <select class="browser-default" id="docTypetag1">
+                                            <select class="browser-default" id="endUserdocTypetag1">
                                                 <option value="" disabled selected>Select Document Type </option>
                                             </select>
                                         </div>
@@ -265,7 +262,7 @@ style="overflow: inherit !important;">
                                             </h6>
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input id="docTypeFile1" type="file" name="files[]" id="filer_input"
+                                                <input id="endUserdocTypeFile1" type="file" name="files[]" id="filer_input"
                                                     multiple="multiple" />
                                             </div>
                                             <div class="file-path-wrapper">
@@ -283,13 +280,13 @@ style="overflow: inherit !important;">
 									</div>	
 
                                       <div class="col s12 m6 right">
-                                            <button class="btn right add_field_button"><span
+                                            <button class="btn right endUser_add_field_button"><span
                                                     style="font-size: 20px;">+</span> Add More files</button>
                                         </div>
                                          <p>Required Field are marked with <span class="star">*</span></p>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="input-field col s12 m12 l12 center">
-                                            <button class="btn" type="submit">Submit</button>
+                                            <button class="btn" id="saveAnonymousGrieavance" type="submit">Submit</button>
                                             <a href="#cancelMessage" class="btn modal-trigger"
                                                 style="margin-left: 10px;">Cancel</a>
                                         </div>
@@ -300,9 +297,9 @@ style="overflow: inherit !important;">
                         </div>
                         
                         
-                           <div class="row card-panel track-grievance-responsive-page" >
+                           <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
                               
-                            <a href="index.html" class="modal-close btn-flat modal-btn right" data-dismiss="modal">×</a>
+                            <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">×</a>
                             <h6 class="fixPage-modal-header ">Track Grievance</h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
@@ -366,15 +363,15 @@ style="overflow: inherit !important;">
     <!-- cancel Modal start   -->
 
     <div id="cancelMessage" class="modal" style="width: 40%;">
+         <h6 class="modal-header">Cancel</h6>
         <div class="modal-content">
-            <h6 class="modal-header">Cancel</h6>
-            <div class="row">
+           <div class="row">
                 <h6>Are you sure you want to close this window. The form data will be lost</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="index.html" class="btn">yes</a>
+                        <a href="./redirectToHomePage" class="btn">yes</a>
                         <button class="modal-close btn" style="margin-left: 10px;">no</button>
                     </div>
                 </div>
@@ -416,12 +413,13 @@ style="overflow: inherit !important;">
             </div>
         </div>
     </div>
-    
-    	<div id="replyModal" class="modal">
+    <!-- cancel Modal End -->
+
+	<div id="replyModal" class="modal">
         <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header"><spring:message code="input.reply" /></h6>
              <div class="modal-content">
-             <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
+             <form id="replymessageForm" onsubmit="return saveEndUserGrievanceReply()" method="POST" enctype="multipart/form-data" >
             <div class="row">
                 <div class="col s12 m12">
                     <h6 style="font-weight: bold;"><spring:message code="input.grievID" /><span id="grievanceIdToSave"></span></h6>
@@ -512,26 +510,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
             </form>
         </div>
     </div>
-    <!-- cancel Modal End -->
 
-
-<div id="manageAccount" class="modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
-<h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
-<div class="modal-content">
-<div id="live-chat">
-<div class="chat">
-<div class="chat-history">
-<div class="chat-message clearfix" id="chatMsg">
-
-</div> <!-- end chat-message -->
-
-
-</div>
-</div>
-</div>
-</div>
-</div>  
 
     <!-- ================================================
     Scripts
@@ -540,9 +519,6 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     <%-- <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
-		<script type="text/javascript">
-var path="${context}";
-</script>
     <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
@@ -553,6 +529,10 @@ var path="${context}";
     <!-- chartist -->
     <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 <!-- i18n library -->
+	<script type="text/javascript">
+var path="${context}";
+</script>
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -642,10 +622,10 @@ var path="${context}";
 
     		
     		var x={
-    		"docType":$('#docTypetag'+fieldId).val(),
-    		"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+    		"docType":$('#endUserdocTypetag'+fieldId).val(),
+    		"fileName":$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
     		}
-    		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+    		formData.append('files[]',$('#endUserdocTypeFile'+fieldId)[0].files[0]);
     		fileInfo.push(x);
     		fieldId++;
     		i++;
@@ -679,7 +659,7 @@ var path="${context}";
     		async:false,
     		success: function (data, textStatus, jqXHR) {
     			console.log(data);
-    			 $("#saveGrievancesubmitButton").prop('disabled', true);
+    			 $("#saveAnonymousGrieavance").prop('disabled', true);
     			var x=data;
     			var y= JSON.parse(x);
     			 $('#GrievanceMsg').openModal(); 
@@ -699,15 +679,15 @@ var path="${context}";
     
 	var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDiv"); //Fields wrapper
-	var add_button = $(".add_field_button"); //Add button ID
+	var add_button = $(".endUser_add_field_button"); //Add button ID
 	var x = 1; //initlal text box count
 	var id=2;
-	$(".add_field_button").click(function (e) { //on add input button click
+	$(".endUser_add_field_button").click(function (e) { //on add input button click
 		e.preventDefault();
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
 			$(wrapper).append(
-					'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-Remove</div></div></div>'
+					'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
 					/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
 			); //add input box
 		}
@@ -719,8 +699,8 @@ var path="${context}";
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i].interp);
 				var optionId=id-1;
-				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
-				console.log('#docTypetag'+optionId);
+				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
+				
 
 			}
 		});
@@ -728,7 +708,7 @@ var path="${context}";
 
 	});
 
-$(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+$(wrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
  e.preventDefault();
  var Iid=id-1;
  /*alert("@@@"+Iid)*/
@@ -743,7 +723,7 @@ $(wrapper).on("click", ".remove_field", function (e) { //user click on remove te
 $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
-		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag1');
 		
 	}
 });
@@ -761,6 +741,7 @@ if($('#pageTypeValue').val()==0)
 	console.log("if condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "block");
 $('#trackGrievanceDiv').css("display", "none");
+$('#trackGrievanceHeader').css("display", "none");
 }
 else
 {

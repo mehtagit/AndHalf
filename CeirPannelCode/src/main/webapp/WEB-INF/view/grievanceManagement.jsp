@@ -162,7 +162,7 @@ placeholder="Upload one or more files">
 </div>
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
+<label for="Category"><spring:message code="input.documenttype" /></label>
 <select class="browser-default" id="docTypetag1" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 

@@ -606,7 +606,8 @@ function submitDeviceInfo(){
 			"price": parseFloat(Price1),
 			"taxPaidStatus": parseInt(taxStatus1),
 			"nid":nationalId,
-			"txnId":""
+			"txnId":"",
+			"origin":"CUSTOMS"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);
