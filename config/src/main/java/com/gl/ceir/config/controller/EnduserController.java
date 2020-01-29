@@ -3,11 +3,19 @@ package com.gl.ceir.config.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.EndUserDB;
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.service.impl.EnduserServiceImpl;
@@ -30,6 +38,29 @@ public class EnduserController {
 
 		GenricResponse genricResponse = enduserServiceImpl.endUserByNid(nid);
 		mapping = new MappingJacksonValue(genricResponse);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
+	@PostMapping("/filter/end-users")
+	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+
+		MappingJacksonValue mapping = null;
+		if(file == 0) {
+			logger.info("Request to view filtered consignment = " + filterRequest);
+			Page<EndUserDB> consignment =  enduserServiceImpl.filter(filterRequest, pageNo, pageSize);
+			mapping = new MappingJacksonValue(consignment);
+		}else {
+			logger.info("Request to export filtered consignment = " + filterRequest);
+			FileDetails fileDetails = enduserServiceImpl.getFilteredEndUserInFileV2(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
+		}
+
+		logger.info("Response of view Request = " + mapping);
 
 		return mapping;
 	}

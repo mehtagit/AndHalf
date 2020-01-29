@@ -3,11 +3,13 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +22,10 @@ public class VisaDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
@@ -30,17 +36,16 @@ public class VisaDb implements Serializable {
 	@NotNull
 	private Integer visaType; 
 	
-	@NotNull
 	@Column(length = 50)
 	private String visaNumber;
 	
 	@NotNull
 	private String entryDateInCountry;
 	
-	@NotNull
 	private String visaExpiryDate;
 	
-	@OneToOne(mappedBy = "visaDb", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@ManyToOne
+	@JoinColumn(name = "userId")
 	EndUserDB endUserDB;
 
 	public LocalDateTime getCreatedOn() {

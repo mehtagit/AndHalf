@@ -130,5 +130,13 @@ public class SpecificationBuilder<T> {
 			return cb.in(root.get(key)).value(status);
 		};
 	}
+	
+	public Specification<T> notIn(String key, List<String> status){
+		return (root, query, cb) -> {
+			logger.info("In query save ");
+			return cb.in(root.get(key)).value(status)
+					.not();
+		};
+	}
 
 }

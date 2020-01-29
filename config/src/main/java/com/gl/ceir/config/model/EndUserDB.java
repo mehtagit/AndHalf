@@ -11,7 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -39,6 +38,9 @@ public class EndUserDB implements Serializable {
 	private LocalDateTime modifiedOn;
 
 	private String nid;
+	
+	@NotNull
+	private String txnId;
 	private String firstName;  
 	private String middleName;
 	private String lastName;
@@ -79,15 +81,13 @@ public class EndUserDB implements Serializable {
 	@Column(length = 1)
 	private String onVisa="N";
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "visaDb")
-	private VisaDb visaDb;
+	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<VisaDb> visaDb;
 	
 	@Column(length = 1)
 	private String isVip="N";
 	
-	@OneToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "userDepartment")
+	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private UserDepartment userDepartment;
 
 	public Long getId() {
@@ -95,6 +95,12 @@ public class EndUserDB implements Serializable {
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
@@ -231,10 +237,11 @@ public class EndUserDB implements Serializable {
 	public void setOnVisa(String onVisa) {
 		this.onVisa = onVisa;
 	}
-	public VisaDb getVisaDb() {
+	
+	public List<VisaDb> getVisaDb() {
 		return visaDb;
 	}
-	public void setVisaDb(VisaDb visaDb) {
+	public void setVisaDb(List<VisaDb> visaDb) {
 		this.visaDb = visaDb;
 	}
 	public String getIsVip() {

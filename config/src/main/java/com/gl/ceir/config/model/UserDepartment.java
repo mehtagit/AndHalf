@@ -3,10 +3,12 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,6 +21,10 @@ public class UserDepartment implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
@@ -32,7 +38,8 @@ public class UserDepartment implements Serializable {
 	@Column(length = 50)
 	private String departmentId;
 	
-	@OneToOne(mappedBy = "userDepartment", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+	@OneToOne
+	@JoinColumn(name = "userId")
 	EndUserDB endUserDB;
 	
 	public LocalDateTime getCreatedOn() {

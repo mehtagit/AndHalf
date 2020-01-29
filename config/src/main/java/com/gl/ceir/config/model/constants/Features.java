@@ -8,4 +8,5 @@ public interface Features {
 	String GRIEVANCE = "GRIEVANCE";
 	String REGISTER_DEVICE = "REGISTER_DEVICE";
 	String BLOCK_UNBLOCK = "BLOCK_UNBLOCK";
+	String MANAGE_USER = "MANAGE_USER";
 }

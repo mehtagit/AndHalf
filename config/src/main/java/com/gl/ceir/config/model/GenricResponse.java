@@ -3,12 +3,20 @@ package com.gl.ceir.config.model;
 public class GenricResponse {
 
 	private int errorCode;
+	private String tag;
 	private String message;
 	private String txnId;
 	private Object data;
 
 	public GenricResponse(int errorCode, String message, String txnId) {
 		this.errorCode = errorCode;
+		this.message = message;
+		this.txnId = txnId;
+	}
+	
+	public GenricResponse(int errorCode, String tag, String message, String txnId) {
+		this.errorCode = errorCode;
+		this.tag = tag;
 		this.message = message;
 		this.txnId = txnId;
 	}
@@ -26,6 +34,18 @@ public class GenricResponse {
 	public void setErrorCode(int errorCode) {
 		this.errorCode = errorCode;
 	}
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
 	public String getMessage() {
 		return message;
 	}
