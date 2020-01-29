@@ -161,7 +161,7 @@ a#newUserLink {
 
 										<div class="input-field col s12" id="show_hide_password">
 											<input type="password" required="required" class=""
-												name="password" id="password" maxlength="10" /> <label
+												name="password" id="password" maxlength="10" oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
 											<div class="input-field-addon">

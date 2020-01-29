@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -53,85 +54,46 @@
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-	
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-	
 
+<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
+<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+  <!------------------------------------------- Dragable Model---------------------------------->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
+<style>
+
+</style>
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body>
 
+        <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
+        <div class="footer-copyright">
+            <div class="container">
+                <span class="right">Copyright © 2018 Sterlite Technologies Ltd, All rights reserved.</span>
+            </div>
+        </div>
+    </footer>
 
-	<!-- START CONTENT -->
-	<!-- START CONTENT -->
-	<section id="content">
-		<!--start container-->
-		<div class="container">
-			<div class="section">
-				<div class="row">
-					<div class="col s12 m12 l12">
-						<div class="row card-panel">
-							<div class="container-fluid pageHeader" id="pageHeader">
-
-								<a href="" class="boton right" id="btnLink"></a>
-							</div>
-							<form action="${context}/greyList"
-								method="post">
-								<div class="col s12 m12 l12" id="operatorTableDiv"
-									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
-									</div>
-								</div>
-							</form>
-							<table id="operatorLibraryTable"
-								class="responsive-table striped display"></table>
-
-						</div>
-
-					</div>
-				</div>
-				<div id="footerBtn"></div>
-			</div>
-		</div>
-		<!--end container-->
-	</section>
-
-
-
-	
-	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
-	
-
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
-	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/Validator.js"></script>
-	<!--prism
-    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
-	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
-		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
+			<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -161,14 +123,5 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
-			<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/viewOperatorFeature.js"></script>
 		
-</body>
-</html>
+	

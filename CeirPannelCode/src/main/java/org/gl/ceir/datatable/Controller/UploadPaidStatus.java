@@ -85,6 +85,7 @@ public class UploadPaidStatus {
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("filterrequest--->"+filterrequest);
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
 		log.info("request passed to the filter api  ="+filterrequest);
@@ -97,6 +98,8 @@ public class UploadPaidStatus {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else if("Custom".equals(userType)) {
+				log.info("in Custom Userpaid Status---" +userType);
+				
 				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId();
@@ -120,7 +123,8 @@ public class UploadPaidStatus {
 					finalList.add(datatableList);
 					datatableResponseModel.setData(finalList);
 				}
-			}else if("CEIRAdmin".equals(userType)) {
+			}
+			else if("CEIRAdmin".equals(userType)) {
 				for(UserPaidStatusContent contentModelList : contentList) {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
@@ -265,7 +269,7 @@ public class UploadPaidStatus {
 				}
 			}else {
 			//input type date list
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);
