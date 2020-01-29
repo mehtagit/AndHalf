@@ -152,13 +152,13 @@
                                              <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadnationalId" id="uploadnationalId" value="${registration.nidFilename}" maxlength="30" download="download" disabled="">
                                                 <label for="uploadnationalId" class="active">Upload National ID </label>
-                                                 <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> 
+                                               <span></span>  <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> </span>
                                             </div> 
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadPhoto" id="uploadPhoto" value="${registration.photoFilename}" maxlength="30" disabled="">
                                                 <label for="uploadPhoto" class="active">Uploaded Photo </label>
-                                                 <a href="#" onclick="previewFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> 
+                                               <span>  <a href="#" onclick="previewFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -169,7 +169,7 @@
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadIDCard" id="uploadIDCard" value="${registration.idCardFilename}"  maxlength="30" disabled="">
                                                 <label for="uploadIDCard" class="active">Uploaded ID Card</label>
-                                                 <a href="#"  onclick="previewFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> Preview </a> 
+                                                <span> <a href="#"  onclick="previewFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> Preview </a> </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
