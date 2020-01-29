@@ -1231,7 +1231,7 @@ maxlength="16">
 
                                                     <div class="input-field col s12 center popup-btn-div">
                                                        <!--  <button class="btn" type="submit">Submit</button> -->
-                                                         <button type="button" class="modal-close btn"><spring:message code="button.cancel" /></button>
+                                                         <button type="button" class="modal-close btn"><spring:message code="modal.cancel" /></button>
                                                     </div>
                                                 </form>
                                            
@@ -1245,27 +1245,24 @@ maxlength="16">
                                                         <div class="row">
                                                        		<div class="row">
                                         					<div class="col s12 m6">
-                                                                <label for="editblockdeviceType">Device Type <span class="star">*</span></label>
+                                                                <label for="editblockdeviceType"><spring:message code="table.devicetype" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="editblockdeviceType" required="required" >
-                                                                    <option value="" disabled selected>Device Type</option> 
+                                                                    <option value="" disabled selected><spring:message code="table.devicetype" /></option> 
                                                                     
                                                                 </select>
                                                             </div>
-                                                            <div class="col s12 m6"><label for="editblockdeviceIdType">Device ID
-                                                                    Type <span class="star">*</span></label>
+                                                            <div class="col s12 m6"><label for="editblockdeviceIdType"><spring:message code="select.deviceIDType" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="editblockdeviceIdType"  required="required">
-                                                                    <option value="" disabled selected>Select Device ID
-                                                                        Type
-                                                                    </option>
+                                                                    <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                    
                                                                 </select>
                                                             </div>
                                                             </div>
                                         					<div class="row">
                                                             <div class="col s12 m6">
-                                                                <label for="editblockmultipleSimStatus">Multiple Sim Status <span class="star">*</span></label>
+                                                                <label for="editblockmultipleSimStatus"><spring:message code="select.multiSimStatus" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="editblockmultipleSimStatus"  required="required">
-                                                                    <option value="" disabled selected>Multiple Sim Status</option>
+                                                                    <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
                                                                     
                                                                 </select>
                                                             </div>
@@ -1273,37 +1270,32 @@ maxlength="16">
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[A-Za-z0-9]{1,15}" required="required"
                                                                     title="Please enter your device serial number first"  maxlength="15">
-                                                                <label for="editsingleblockserialNumber">Device Serial Number <span class="star">*</span></label>
+                                                                <label for="editsingleblockserialNumber"><spring:message code="input.deviceSerialNumber" /> <span class="star">*</span></label>
                                                             </div>
                                                             </div>
                                                              <div class="row">
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="editsingleblockremark"  placeholder="" class="materialize-textarea" required="required"></textarea>
-                                                                <label for="editsingleblockremark">Remark <span class="star">*</span></label>
+                                                                <label for="editsingleblockremark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
                                                            
-                                                               <div class="col s12 m6"><label for="editbulkBlockdeviceCategory">Category
-                                                            <span class="star">*</span></label>
+                                                               <div class="col s12 m6"><label for="editbulkBlockdeviceCategory"><spring:message code="operator.category" /> <span class="star">*</span></label>
                                                         <select class="browser-default" id="editbulkBlockdeviceCategory" required="required" >
-                                                            <option value="" disabled selected>Select Category
-                                                            </option>
+                                                            <option value="" disabled selected><spring:message code="operator.selectcategory" /></option>
                                                             
                                                         </select>
                                                     </div>
-                                                            <div class="" style="margin-left: 36%; margin-top: -25px;">
-				BlockingType
-				<label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
+                                                            <div class="" style="margin-left: 36%; margin-top: -25px;"><spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 					value="Immediate"
 					onchange="document.getElementById('calender').style.display = 'none';"
-					name="stolenBlockPeriod" checked> Immediate
+					name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
 				</label> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"
 					value="Default"
 					onchange="document.getElementById('calender').style.display = 'none';"
-					name="stolenBlockPeriod"> Default
+					name="stolenBlockPeriod"><spring:message code="operator.default" />
 				</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required" value="tilldate" class="blocktypeRadio"
 					onchange="document.getElementById('calender').style.display = 'block';"
-					name="stolenBlockPeriod"> Later
-				</label>
+					name="stolenBlockPeriod"><spring:message code="operator.later" /></label>
 				<div class="col s6 m2 responsiveDiv"
 					style="display: none; width: 30%;" id="calender">
 					<div id="startdatepicker" class="input-group date">
@@ -1319,7 +1311,7 @@ maxlength="16">
 				<div class="col s12 m2 l2" style="width: 40%; display: none"
 					id="stolenDate">
 
-					<label for="TotalPrice" class="center-align">Till date</label>
+					<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
 					<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
 
 						<input class="form-control" name="inputsaves" type="text"
@@ -1334,48 +1326,48 @@ maxlength="16">
                                                         <div class="row">
                                                         <div class="row input_fields_wrap">
                                                             <div class="col s12 m12">
-                                                                <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+                                                                <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
                                                             </div>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder=""  pattern="[0-9]{15,16}" required="required"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="editsingleblockIMEI1">1 <span class="star">*</span></label>
+                                                                <label for="editsingleblockIMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""  pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="editsingleblockIMEI2">2</label>
+                                                                <label for="editsingleblockIMEI2"><spring:message code="title.two" /></label>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""  pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="editsingleblockIMEI3">3</label>
+                                                                <label for="editsingleblockIMEI3"><spring:message code="title.three" /></label>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""  pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="editsingleblockIMEI4">4</label>
+                                                                <label for="editsingleblockIMEI4"><spring:message code="title.four" /></label>
                                                                 <input type="text" id="editsingleblockTxnid" style="display: none">
                                                                 <input type="text" id="editsingleblocRequestType" style="display: none">
                                                                 
                                                             </div>
                                                         </div>
                                                         </div>
-                                                        <span> Required Field are marked with <span class="star">*</span></span>
+                                                        <span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
                                                     </div>
 
                                                     </div>
 
                                                    
                                                     <div class="input-field col s12 center popup-btn-div">
-                                                       <button class="btn" type="submit" >Update</button>
+                                                       <button class="btn" type="submit" ><spring:message code="button.update" /></button>
                                                 
-                                                        <button type="button" class="modal-close btn popup-btn-div" onclick="singleImeiFormClear()">Cancel</button>
+                                                        <button type="button" class="modal-close btn popup-btn-div" onclick="singleImeiFormClear()"><spring:message code="button.cancel" /></button>
                                                     </div>
                                                 </form>
                                            
@@ -1577,22 +1569,42 @@ type="submit" >Update</button>
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
-		
-		
-		
-		
-		
-		
-		
-		
-					
+		src="${context}/resources/project_js/dragableModal.js"></script>			
 
 </body>
 </html>

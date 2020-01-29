@@ -231,7 +231,7 @@ public class StolenDatatableController {
 		
 		
 		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
-		pageElement.setPageTitle("Block/Unblock Devices");
+		pageElement.setPageTitle(Translator.toLocale("view.Block/UnblockDevices"));
 		}else {
 			pageElement.setPageTitle("Stolen/Recovery");
 		}
@@ -242,8 +242,8 @@ public class StolenDatatableController {
 		//This Block is for Operator & Admin Upper Filter/Button Forms------------------------------------------------
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType)) {
-			String[] names = { "HeaderButton", "Report Block/Unblock", "./selectblockUnblockPage",
-					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
+			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
+					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
@@ -259,7 +259,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", ""};
+			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", ""};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -274,8 +274,8 @@ public class StolenDatatableController {
 			
 		//This is for Operator Dropdown for CEIRadmin
 			if("CEIRAdmin".equals(userType)){
-				String[] selectParam = { "select", "Operator", "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
-						Translator.toLocale("input.mode"), "sourceStatus", "","select",Translator.toLocale("table.status"), "status","" };	
+				String[] selectParam = { "select", Translator.toLocale("operator.Operator"), "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
 				for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -290,8 +290,8 @@ public class StolenDatatableController {
 				pageElement.setDropdownList(dropdownList);
 				
 			}else {
-				String[] selectParam = { "select",Translator.toLocale("table.requestType"), "requestType", "", "select",
-					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
+				String[] selectParam = { "select", Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
 				for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -329,7 +329,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "","text","Transaction ID","transactionID",""};
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -344,8 +344,8 @@ public class StolenDatatableController {
 			
 		
 
-			String[] selectParam = { "select", "Status", "status", "", "select",
-					"Mode", "sourceStatus", "","select", "Request Type", "requestType","" };	
+			String[] selectParam = { "select", Translator.toLocale("table.status"), "status", "", "select",
+					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.requestType"), "requestType","" };	
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -361,7 +361,7 @@ public class StolenDatatableController {
 			
 			if("viaExistingRecovery".equals(sourceType)) {
 				//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
-				String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","redirectToViewStolenPage()","cancel"};
+				String[] footerBtn = {"FooterButton", Translator.toLocale("button.MarkAsRecovered"),"markedRecovered()","markedRecovered","FooterButton",Translator.toLocale("button.cancel"),"redirectToViewStolenPage()","cancel"};
 				for (int i = 0; i < footerBtn.length; i++) {
 					button = new Button();
 

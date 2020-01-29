@@ -180,9 +180,9 @@ public class DatatableHeaders {
 
 			//operator view
 			else if("greyBlackList".equals(role)) {
-				String[] headers = {headersTitle.updatedOn,headersTitle.fileName,headersTitle.fileType,headersTitle.action};
+				String[] headers = {"headersTitle.updatedOn","headersTitle.fileName","headersTitle.fileType","table.action"};
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
@@ -200,18 +200,9 @@ public class DatatableHeaders {
 
 			//adminUserPaidStatus Headers 
 			else if("blockUnblock".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
+				String[] headers = {"table.date","table.transactionID","table.requestType","input.mode","table.status","table.action"};		
 				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
-			}
-
-			//adminUserPaidStatus Headers 
-			else if("blockUnblock".equals(role)) {
-				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.requestType,headersTitle.mode,headersTitle.Status,headersTitle.action};		
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(header));
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
