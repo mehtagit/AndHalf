@@ -299,7 +299,7 @@ style="overflow: inherit !important;">
                         
                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
                               
-                            <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">×</a>
+                            <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">Ã—</a>
                             <h6 class="fixPage-modal-header ">Track Grievance</h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
@@ -344,7 +344,7 @@ style="overflow: inherit !important;">
     <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
         <div class="footer-copyright">
             <div class="container">
-                <span class="right">Copyright © 2018 Sterlite Technologies Ltd, All rights reserved.</span>
+                <span class="right">Copyright Â© 2018 Sterlite Technologies Ltd, All rights reserved.</span>
             </div>
         </div>
     </footer>
@@ -415,7 +415,7 @@ style="overflow: inherit !important;">
     </div>
     <!-- cancel Modal End -->
 
-	<div id="replyModal" class="modal">
+<%-- 	<div id="replyModal" class="modal">
         <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header"><spring:message code="input.reply" /></h6>
              <div class="modal-content">
@@ -509,7 +509,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
             </div>
             </form>
         </div>
-    </div>
+    </div> --%>
 
 
     <!-- ================================================
@@ -572,8 +572,8 @@ var path="${context}";
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
     
-    <script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js"></script>
+   <%--  <script type="text/javascript"
+		src="${context}/resources/project_js/grievanceManagement.js"></script> --%>
     <script type="text/javascript"
 		src="${context}/resources/project_js/endUserGrievance.js"></script>
   <!--   <script>
@@ -595,7 +595,7 @@ var path="${context}";
         });
   
     function saveaAonymousGrievance(){
-    
+
     	var firstName=$('#firstName').val();
     	var middleName=$('#middleName').val();
     	var lastName=$('#lastName').val();
@@ -641,8 +641,7 @@ var path="${context}";
     			"lastName":lastName,
     			"middleName":middleName,
     			"phoneNo":contactNumber,
-    	
-    		}
+    	}
     	
     	formData.append('fileInfo[]',JSON.stringify(fileInfo));
     	formData.append('multirequest',JSON.stringify(multirequest));

@@ -1238,8 +1238,23 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		return action;
 
 	}
+	/********************************** Icons for AdminUPS **********************************/ 	
+	public String manageUserIcon(Long imei1,String createdOn,String txnId) {
+		String viewAction="viewDetails('"+imei1+"')";
 
-	public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId) {
+		String editAction="";
+
+
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action = view.concat(edit);
+		return action;
+	}
+public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId) {
 		
 		log.info(" entry in set view in data table.....");
 		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
@@ -1276,4 +1291,32 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		String action=reply.concat(view);
 		return action;
 	}
+
+
+/********************************** Icons for Importal TRC Datatable **********************************/ 
+
+
+public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
+	// URL link 
+	//String downloadURL = "JavaScript:void(0)";
+
+	String viewAction="viewByID("+id+",'view')";
+	String editAction= "viewByID("+id+",'edit')";
+	// state related Code 
+	
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+
+	String edit="<a onclick="+editAction+"><i class="
+			+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+
+
+	String action=view.concat(edit);		  
+	return action;
+
+}
+
+
 }

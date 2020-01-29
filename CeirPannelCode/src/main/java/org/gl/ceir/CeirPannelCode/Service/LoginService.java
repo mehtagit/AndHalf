@@ -65,6 +65,7 @@ public class LoginService {
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
+				session.setAttribute("language",response.getUserLanguage());
 				mv.setViewName("redirect:/importerDashboard");  
 				return response;      
 			}       
@@ -81,10 +82,13 @@ public class LoginService {
 		}
 	}
 	
-	public HttpResponse changeLanguage(ChangeLanguage language) {
+	public HttpResponse changeLanguage(String language,HttpSession session) {
 		log.info("inside check change language controller ");
 		log.info("language data:  "+language);
-		HttpResponse response=userLoginFeignImpl.changeUserLanguage(language);
+		Integer userID=(Integer)session.getAttribute("userid");
+		log.info("userID from session: " +userID);
+		ChangeLanguage languageData=new ChangeLanguage(userID,language);
+		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
 		if(response!=null) {
 			log.info("response from controller: "+response);
 		}
@@ -151,6 +155,7 @@ public class LoginService {
 		log.info("importer dashboard entry point..");
 		String username=(String)session.getAttribute("username");
 		String status=(String)session.getAttribute("userStatus");
+		try {
 		if(username.trim()!=null) {
 			log.info("username from session:  "+username);
 			log.info("user status from session :   "+status); 
@@ -169,6 +174,12 @@ public class LoginService {
 			mv.addObject("msg","Please Login first");
 			mv.setViewName("login"); 
 			return mv;  
+		}
+		}
+		catch(Exception e) {
+			mv.addObject("msg","Please Login first");
+			mv.setViewName("login"); 
+			return mv; 	
 		}
 	}
 

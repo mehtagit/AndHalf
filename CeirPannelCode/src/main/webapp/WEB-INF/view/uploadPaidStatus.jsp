@@ -159,6 +159,7 @@ input[type='search'] {
 
 	<!-- START CONTENT -->
 	<section id="content">
+			<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -340,7 +341,7 @@ input[type='search'] {
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-													<input type="email" name="email" id="email" 
+														<input type="email" name="email" id="email" 
 														maxlength="30"> <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
@@ -384,7 +385,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+																			<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
 															</label> <select class="browser-default" 
 																id="multipleSimStatus1">
 																<option value="" disabled selected><spring:message code="select.select" />
@@ -884,7 +885,8 @@ input[type='search'] {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-		
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
 	<script type="text/javascript"

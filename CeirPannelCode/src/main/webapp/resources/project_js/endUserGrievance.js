@@ -55,7 +55,7 @@
 			
 			
 			
-			function endUserGrievanceReply(userId,grievanceId,txnId)
+			/*function endUserGrievanceReply(userId,grievanceId,txnId)
 			{
 				alert("end user pop up");
 
@@ -156,12 +156,12 @@
 				endUserformData.append('fileInfo[]',JSON.stringify(endUserfileInfo));
 				endUserformData.append('multirequest',JSON.stringify(endUsermultirequest));
 				
-				/*
+				
 				formData.append('file', $('#replyFile')[0].files[0]);
 				formData.append('remark',remark);
 				formData.append('grievanceId',grievanceIdToSave);
 				formData.append('txnId',grievanceTxnId);
-				formData.append('grievanceStatus',grievanceTicketStatus);*/
+				formData.append('grievanceStatus',grievanceTicketStatus);
 					alert("before ajax");
 				$.ajax({
 					url: './saveEndUserGrievanceReply',
@@ -192,4 +192,4 @@
 					}
 				});
 				return false;
-			}
+			}*/

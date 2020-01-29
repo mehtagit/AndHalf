@@ -79,14 +79,19 @@ public class TrcController {
 		return modelAndView;
 
 	}
+	
+	@GetMapping("register-form-importer")
+	public ModelAndView regiserImporterForm() {
+		ModelAndView modelAndView = new ModelAndView("importerTypeApproved");
+		return modelAndView;
+
+	}
 
 	@ResponseBody
 	@PostMapping("register-approved-device")
 	public GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller register-approved-device-------request---------"+request.getParameter("manufacturerId"));
-		 log.info("headers name==="+request.getHeaderNames());
-		
-		
+		// log.info(""+request.getParameter("file"));
 		String userName=session.getAttribute("username").toString();
 		String userId= session.getAttribute("userid").toString();
 		String name=session.getAttribute("name").toString();

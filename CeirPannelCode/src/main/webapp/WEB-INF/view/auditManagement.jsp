@@ -114,12 +114,6 @@
 			<div class="row">
 				<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="viewUserId"
-							placeholder="" disabled
-							style="height: 28px;"> <label for="viewUserId">User ID</label>
-					</div>
-
-					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="viewUserName"
 							placeholder="" disabled style="height: 28px;">
 						<label for="viewUserName">User Name</label>

@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -76,30 +79,28 @@
             height: 40px;
         } */
 input[type=text] {
-
 	margin: 0 0 5px 0;
 }
 
-.fa-eye-slash,
-.fa-eye {
+.fa-eye-slash, .fa-eye {
 	position: absolute;
-    right: 10px;
-    top: 10px;
+	right: 10px;
+	top: 10px;
 }
 
 a#newUserLink {
-    padding-right: 10px;
-    line-height: 13px;
-    }
-    
+	padding-right: 10px;
+	line-height: 13px;
+}
+
 .forgotPassword {
 	padding-left: 10px;
-    border-left: solid 2px #9e9e9e;
-    line-height: 13px;
+	border-left: solid 2px #9e9e9e;
+	line-height: 13px;
 }
 </style>
 <script>
-var contextpath = "${context}";
+	var contextpath = "${context}";
 </script>
 </head>
 
@@ -129,38 +130,43 @@ var contextpath = "${context}";
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
 									<div class="row">
-									
-									 <div class="col s10 m10 select-lang-lable">
-<label for="">Language :</label>
-</div>
-<div class="col s2 m2 right" style="padding: 0;">
-<select class="browser-default select-lang-drpdwn">
-<option value="1">English</option>
-<option value="2">Khmer</option>
-</select>
-</div>
-<div class="col s12 m12">
-<h5 style="text-align: -webkit-center;">Login</h5>
-<span id="errorMsg" style="color: red;">${msg}</span>
-										<hr>
 
-</div>
+										<div class="col s10 m10 select-lang-lable">
+											<label for="">Language :</label>
+										</div>
+										<div class="col s2 m2 right" style="padding: 0;">
+											<select class="browser-default select-lang-drpdwn"
+												id="langlist">
+												<option value="en">English</option>
+												<option value="km">Khmer</option>
+											</select>
+										</div>
+										<div class="col s12 m12">
+											<h5 style="text-align: -webkit-center;">
+												<spring:message code="registration.login" />
+											</h5>
+											<span id="errorMsg" style="color: red;">${msg}</span>
+											<hr>
+
+										</div>
 
 
-										
+
 										<div class="input-field col s12">
- 										<input type="text" required="required" name="username"
-												id="username" class="" maxlength="10" />
-										<label for="username">Username</label>
+											<input type="text" required="required" name="username"
+												id="username" class="" maxlength="10" /> <label
+												for="username"><spring:message
+													code="registration.username" /></label>
 										</div>
 
 										<div class="input-field col s12" id="show_hide_password">
-										<input type="password" required="required" class="" name="password"
-												id="password" maxlength="10" />
-										<label for="password">Password</label> 
-										<div class="input-field-addon">
-										<a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-										</div>
+											<input type="password" required="required" class=""
+												name="password" id="password" maxlength="10" oncopy="return false" onpaste="return false" /> <label
+												for="password"> <spring:message
+													code="registration.password" /></label>
+											<div class="input-field-addon">
+												<a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+											</div>
 										</div>
 
 										<div class="form-group form-actions col s12 m12">
@@ -176,28 +182,34 @@ var contextpath = "${context}";
 												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="captcha" style="left:0.01rem;">Enter
-														your captcha <span class="star">*</span>
-													</label>
+														required="required"> <label for="captcha"
+														style="left: 0.01rem;"><spring:message
+															code="registration.enteryourcaptcha" /><span
+														class="star">*</span> </label>
 												</div>
 
 											</span>
 										</div>
 
-										
+
 
 
 										<div class="row" style="margin: 30px 0 20px 0;">
 											<div class="input-field col s12 m12 l12 center">
 												<%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>
 												<button type="submit" class="btn" id="save"
-													style="width: 100%;"  value="Login">Login</button>
+													style="width: 100%;" value="Login">
+													<spring:message code="registration.login" />
+												</button>
 											</div>
 										</div>
 
-							<a href="${context}/forgotPassword" class="right forgotPassword"> Forgot Password</a>
-							<span><a href="#" id="newUserLink" class="right"> New User?</a></span>	
-							
+										<a href="${context}/forgotPassword"
+											class="right forgotPassword"><spring:message
+												code="registration.forgotpassword" /></a> <span><a
+											href="#" id="newUserLink" class="right"><spring:message
+													code="registration.newUser" /></a></span>
+
 
 									</div>
 
@@ -238,7 +250,7 @@ var contextpath = "${context}";
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
-  <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>		
+	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -263,27 +275,7 @@ var contextpath = "${context}";
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function () {
-	dataByTag("link_dmc_portal","newUserLink",1);
-        }); 
-
-$(document).ready(function() {
-    $("#show_hide_password a").on('click', function(event) {
-        event.preventDefault();
-        if($('#show_hide_password input').attr("type") == "text"){
-            $('#show_hide_password input').attr('type', 'password');
-            $('#show_hide_password i').addClass( "fa-eye-slash" );
-            $('#show_hide_password i').removeClass( "fa-eye" );
-        }else if($('#show_hide_password input').attr("type") == "password"){
-            $('#show_hide_password input').attr('type', 'text');
-            $('#show_hide_password i').removeClass( "fa-eye-slash" );
-            $('#show_hide_password i').addClass( "fa-eye" );
-        }
-    });
-});
-
-</script>
+	<script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
 </body>
 
 </html>

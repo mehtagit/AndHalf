@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -55,11 +54,12 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 	
- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-   <!------------------------------------------- Dragable Model---------------------------------->
+<!--  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script> -->
+ 
+<!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 	
 
 
@@ -80,11 +80,11 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a href="" class="boton right" id="btnLink"></a>
+								<a href="" class="boton right" id="btnLink" hidden></a>
 							</div>
-							<form action="${context}/registrationRequest"
+							<form action="${context}/userManageTrail"
 								method="post">
-								<div class="col s12 m12 l12" id="registrationTableDiv"
+								<div class="col s12 m12 l12" id="userManageTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -92,7 +92,7 @@
 									</div>
 								</div>
 							</form>
-							<table id="registrationLibraryTable"
+							<table id="userManageLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -105,88 +105,10 @@
 		<!--end container-->
 	</section>
 
-   
-	<div id="approveInformation" class="modal">
-           <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
-           <div class="modal-content">
-            <div class="row">
-                <form action="">
-                 	<h6> <spring:message code="registration.Thetransactionid" /><span id="registrationTxnId"> </span> <spring:message code="registration.pendingforapproval" /></h6>
-                    <p><spring:message code="registration.dorequest" /></p>
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a onclick="aprroveUser()" class="btn modal-trigger"><spring:message code="modal.yes" /></a>
-                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-                      <span id="userId" hidden></span>
-                       <span id="adminCurrentStatus" hidden></span>
-                </div>
-            </div>
-        </div>
-    </div>
-	<div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
-               <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
-                <div class="modal-content">
-            <div class="row">
-                <form action="">
-            
-                    <h6><spring:message code="registration.emailregister" /> <br> <spring:message code="registration.registrationid" />  <span id="RegistrationId"></span>
-                          <spring:message code="registration.registrationdate" /><span id="registrationDate"></span>.</h6>
-                   
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.ok" /></a>
-                   
-                </div>
-            </div>
-        </div>
-    </div>
-	<div id="rejectInformation" class="modal">
-           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
-            <div class="modal-content">
-            <div class="row">
-                <form action="">
-                
-                    <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
-                    </div>
-                    <h6><spring:message code="registration.doreject" /></h6>
-                    
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
-                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-                </div>
-            </div>
-        </div>
-    </div>
-	<div id="confirmRejectInformation" class="modal">
-         <h6 class="modal-header"><spring:message code="registration.reject" /></h6>
-          <div class="modal-content">
-            <div class="row">
-                <form action="">
-                  
-                    <h6><spring:message code="registration.rejectionreason" /></h6>
-                </form>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    
-    
 
-    
+
+	
+	
 	
 	<!--materialize js-->
 	<script type="text/javascript"
@@ -218,9 +140,9 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
+		src="${context}/resources/project_js/manageUsers.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>		
+		src="${context}/resources/project_js/dragableModal.js"></script>
 		
 </body>
 </html>

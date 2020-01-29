@@ -171,8 +171,7 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,
-HttpServletRequest request) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,HttpServletRequest request) {
 
 	log.info("headers request="+request.getHeaderNames());
 	log.info("user-agent"+request.getHeader("user-agent"));

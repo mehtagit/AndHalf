@@ -1,3 +1,14 @@
+
+<% 
+  
+        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+
+        
+        
+        if(session.getAttribute("usertype") !=null){ %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -73,6 +84,10 @@
 	data-selected-consignmentStatus="${consignmentStatus}"
 	session-value="en">
 
+<%-- <%
+  out.println(session.getAttribute("usertype"));
+%>
+ --%>
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
@@ -775,7 +790,17 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+			<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 
 </body>
 </html>
+<%
+        }
+        else{
+        	request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);
+        	
+        }
+%>

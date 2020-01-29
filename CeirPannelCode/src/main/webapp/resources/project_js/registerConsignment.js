@@ -172,8 +172,7 @@
 						});
 
 						$('.datepick').datepicker({
-							dateFormat : "yy-mm-dd",
-							minDate: '0'
+							dateFormat : "yy-mm-dd"
 						});
 
 
