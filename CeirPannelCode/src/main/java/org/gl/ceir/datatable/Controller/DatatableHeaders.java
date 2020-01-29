@@ -279,7 +279,7 @@ public class DatatableHeaders {
 //auditManagement Headers 
 			
 			else if("auditManagement".equals(role)) {
-				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.userId,headersTitle.userName,headersTitle.roll,headersTitle.feature,headersTitle.subFeature,headersTitle.action};		
+				String[] headers = {headersTitle.creationDate,headersTitle.lastUpdateDate,headersTitle.transactionID,headersTitle.userName,headersTitle.roll,headersTitle.feature,headersTitle.subFeature,headersTitle.action};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -294,6 +294,17 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+		//ManageUserType Headers 
+		
+			else if("ImporterTrcManageType".equals(role)) {
+				String[] headers = {headersTitle.trademark,headersTitle.product,headersTitle.model,headersTitle.manufactureCountry,headersTitle.tac,headersTitle.action};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(header));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {headersTitle.date,headersTitle.transactionID,headersTitle.fileName,headersTitle.stockStatus,headersTitle.action};		

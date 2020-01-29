@@ -237,20 +237,29 @@
 
 	var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
 function table(url,dataUrl){
-	var request={
-			"endDate":$('#endDate').val(),
-			"startDate":$('#startDate').val(),
-			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
-			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
-			"deviceIdType":parseInt($('#deviceIDType').val()),
-			"deviceType":parseInt($('#deviceTypeFilter').val()),
-			"txnId":$('#transactionID').val(),
-			"consignmentStatus": null,
-			"nid": nationalId == null ? $('#nId').val() : nationalId
-	}
+	/*if(roleType=="Custom"){
+		var origin = "CUSTOMS"
+	}else{
+		var origin = ""
+	}*/
+		var request={
+				//"origin" : origin,
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+				"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"deviceIdType":parseInt($('#deviceIDType').val()),
+				"deviceType":parseInt($('#deviceTypeFilter').val()),
+				"txnId":$('#transactionID').val(),
+				"consignmentStatus": null,
+				"nid": nationalId == null ? $('#nId').val() : nationalId
+		}
+
+	
+	
 	
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -278,6 +287,7 @@ function table(url,dataUrl){
 					dataType: "json",
 					data : function(d) {
 						d.filter = JSON.stringify(request); 
+						console.log(request);
 						
 					}
 
@@ -539,20 +549,25 @@ function table(url,dataUrl){
 
 
 	function exportpaidStatus(){
-	
+	/*	if(roleType=="Custom"){
+			var origin = "CUSTOMS"
+		}else{
+			var origin = ""
+		}	*/
+
+	//var	origin = origin;
+	var txnId = $('#transactionID').val();
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var taxPaidStatus = $('#taxPaidStatus').val();
 	var deviceIdType = $('#deviceIDType').val();
 	var deviceType = $('#deviceTypeFilter').val();
-	
-	
 	var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
 

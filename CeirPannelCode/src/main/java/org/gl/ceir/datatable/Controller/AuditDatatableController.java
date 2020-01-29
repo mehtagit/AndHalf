@@ -78,6 +78,7 @@ public class AuditDatatableController {
 				  String id = String.valueOf(dataInsideList.getId());	
 				  String createdOn = dataInsideList.getCreatedOn();
 				  String modifiedOn = dataInsideList.getModifiedOn();
+				  String txnId = dataInsideList.getTxnId();
 				  String getuserId = String.valueOf(dataInsideList.getUserId());
 				  String userName = dataInsideList.getUserName();
 				  String userTypeName = dataInsideList.getUserType();
@@ -85,7 +86,7 @@ public class AuditDatatableController {
 				  String subFeature = dataInsideList.getSubFeature();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);			   
-				   Object[] finalData={createdOn,modifiedOn,getuserId,userName,userTypeName,featureName,subFeature,action}; 
+				   Object[] finalData={createdOn,modifiedOn,txnId,userName,userTypeName,featureName,subFeature,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	

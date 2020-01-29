@@ -121,5 +121,11 @@ public class HeadersTitle {
 		  public String nationality="Nationality"; 
 		  public String visaExpDate="Visa Expiry Date";
 		  public String localContact="Local Contact Number";
-		 
+	
+		 //Importer Manage Type  
+		  public String trademark="Trademark";
+		  public String product="Product Name";
+		  public String model="Model Number";
+		  public String manufactureCountry="Country of Manufacture";
+		  
 }

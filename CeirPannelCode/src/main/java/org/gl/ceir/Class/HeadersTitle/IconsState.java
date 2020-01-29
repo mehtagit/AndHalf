@@ -1252,4 +1252,32 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		String action = view.concat(edit);
 		return action;
 	}
+	
+
+	/********************************** Icons for Importal TRC Datatable **********************************/ 
+
+
+	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
+		// URL link 
+		//String downloadURL = "JavaScript:void(0)";
+	
+		String viewAction="viewByID("+id+",'view')";
+		String editAction= "viewByID("+id+",'edit')";
+		// state related Code 
+		
+
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action=view.concat(edit);		  
+		return action;
+
+	}
+
+
 }

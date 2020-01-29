@@ -97,8 +97,6 @@ public class UploadPaidStatus {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else if("Custom".equals(userType)) {
-				log.info("in Custom Userpaid Status---" +userType);
-				
 				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId();
@@ -147,7 +145,6 @@ public class UploadPaidStatus {
 					datatableResponseModel.setData(finalList);
 				}
 			}else if("Immigration".equals(userType)) {
-				log.info("-----------------in Immigration Controller");
 				for(UserPaidStatusContent contentModelList : contentList) {
 					Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
