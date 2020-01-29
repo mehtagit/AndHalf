@@ -31,8 +31,10 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.EndUserFileModel;
@@ -84,30 +86,47 @@ public class EnduserServiceImpl {
 
 	public GenricResponse updateVisaEndUser(EndUserDB endUserDB) {
 		try {
+			VisaDb latestVisa = null;
 			if(Objects.isNull(endUserDB.getNid())) {
 				logger.info("Request should not have nid as null.");
-				return new GenricResponse(2, "NULL_NID", "Request should not have nid as null.", null);
+				return new GenricResponse(2, GenericMessageTags.NULL_NID, "Request should not have nid as null.", null);
 			}
 
+			// Check if requested VISA is null or empty.
+			if(Objects.isNull(endUserDB.getVisaDb())) {
+				logger.info("Request visa update should not be null.");
+				return new GenricResponse(3, GenericMessageTags.NULL_VISA, "Request visa update should not be null.", null);
+			}else if(endUserDB.getVisaDb().isEmpty()){
+				logger.info("Request visa update should not be empty.");
+				return new GenricResponse(4, GenericMessageTags.EMPTY_VISA, "Request visa update should not be empty.", null);
+			}else {
+				latestVisa = endUserDB.getVisaDb().get(0);
+			}
+			
 			EndUserDB endUserDB1 = endUserDbRepository.getByNid(endUserDB.getNid());
 
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB1)) {
 				logger.info("Going to update VISA of user. " + endUserDB1);
 
-				// VisaDb visaDb = endUserDB1.getVisaDb();
-				/*
-				 * if(Objects.isNull(visaDb)) { return new GenricResponse(3,
-				 * "VISA_UPDATE_NOT_ALLOWED", "You are not allowed to update Visa.",
-				 * endUserDB.getNid()); }else {
-				 * endUserDB1.getVisaDb().setVisaExpiryDate(visaDb.getVisaExpiryDate()); }
-				 */
+				List<VisaDb> visaDbs = endUserDB1.getVisaDb();
+
+				if(Objects.isNull(visaDbs)) { 
+					if(visaDbs.isEmpty()) {
+						logger.info("You are not allowed to update Visa." + endUserDB.getNid());
+						return new GenricResponse(3, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED, "You are not allowed to update Visa.", endUserDB.getNid());
+					}
+				}else {
+					// Update expiry date of latest Visa
+					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
+					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
+				}
 
 				endUserDbRepository.save(endUserDB1);
 				logger.info("Visa of user have been updated succesfully." +  endUserDB1);
-				return new GenricResponse(0, "VISA_UPDATE_SUCCESS", "Visa of user have been updated succesfully.", endUserDB.getNid());
+				return new GenricResponse(0, GenericMessageTags.VISA_UPDATE_SUCCESS, "Visa of user have been updated succesfully.", endUserDB.getNid());
 			}else {
-				return new GenricResponse(1, "INVALID_USER", "User does not exist.", endUserDB.getNid());
+				return new GenricResponse(1, GenericMessageTags.INVALID_USER, "User does not exist.", endUserDB.getNid());
 			}
 
 		} catch (Exception e) {
@@ -198,14 +217,26 @@ public class EnduserServiceImpl {
 
 			if( endUserDBs.size() > 0 ) {
 				fileRecords = new ArrayList<>();
-				// TODO
 
 				for( EndUserDB endUserDB : endUserDBs ) { 
-					fm = new EndUserFileModel(consignmentMgmt.getStateInterp(),
-							consignmentMgmt.getTxnId(), consignmentMgmt.getSupplierName(),
-							consignmentMgmt.getTaxInterp(), consignmentMgmt.getFileName(),
-							consignmentMgmt.getCreatedOn().format(dtf),
-							consignmentMgmt.getModifiedOn().format(dtf));
+					String visaExpiryDate = "";
+					if(Objects.nonNull(endUserDB.getVisaDb())) {
+						if(!endUserDB.getVisaDb().isEmpty()) {
+							VisaDb visaDb = endUserDB.getVisaDb().get(endUserDB.getVisaDb().size()-1);
+							visaExpiryDate = visaDb.getVisaExpiryDate();
+						}
+					}
+
+					fm = new EndUserFileModel(endUserDB.getTxnId(), 
+							endUserDB.getCreatedOn().toString(), 
+							endUserDB.getNid(), 
+							endUserDB.getFirstName() +" "+ endUserDB.getLastName(), 
+							endUserDB.getNationality(), 
+							visaExpiryDate, 
+							endUserDB.getPhoneNo());
+
+					/*consignmentMgmt.getCreatedOn().format(dtf),
+							consignmentMgmt.getModifiedOn().format(dtf)*/
 
 					fileRecords.add(fm); 
 				}
