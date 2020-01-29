@@ -85,6 +85,7 @@ public class UploadPaidStatus {
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("filterrequest--->"+filterrequest);
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
 		log.info("request passed to the filter api  ="+filterrequest);

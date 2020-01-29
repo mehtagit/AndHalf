@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -104,20 +105,20 @@
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
                                     <div class="container-fluid pageHeader">
-                                        <p class="PageHeading">Type Approve</p>
+                                        <p class="PageHeading"><spring:message code="registration.typeapprove" /></p>
                                     </div>
 
                                     <div id="ForeignerFormId">
                                         <div class="row" style="margin-top: 10px;">
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" id="trademark"  name="trademark"  maxlength="50">
-                                                <label for="trademark">Trademark</label>
+                                                <label for="trademark"><spring:message code="registration.trademark" /></label>
                                             </div>
 
                                             <div class="col s12 m6 l6">
-                                                <label for="productName">Product Name</label>
+                                                <label for="productName"><spring:message code="registration.productname" /></label>
                                                 <select class="browser-default">
-                                                    <option value="" disabled selected>Select Product </option>
+                                                    <option value="" disabled selected><spring:message code="registration.selectproduct" /> </option>
                                                     <option value="1">abc</option>
                                                     <option value="2">xyz</option>
                                                 </select>
@@ -126,9 +127,9 @@
 
                                         <div class="row">
                                             <div class="col s12 m6 l6" style="margin-top: 7px;">
-                                                <label for="modalNumber">Model Number</label>
+                                                <label for="modalNumber"><spring:message code="registration.modelnumber" /></label>
                                                 <select class="browser-default">
-                                                    <option value="" disabled selected>Select Model Number </option>
+                                                    <option value="" disabled selected> <spring:message code="registration.selectmodelnumber" /></option>
                                                     <option value="1">abc</option>
                                                     <option value="2">Vxyz</option>
                                                 </select>
@@ -136,13 +137,13 @@
                                             
                                             <div class="input-field col s12 m6 l6">
                                                 <textarea id="Remark" class="materialize-textarea" maxlength="50"></textarea>
-                                                <label for="Remark">Frequency Range</label>
+                                                <label for="Remark"><spring:message code="registration.frequencyrange" /></label>
                                             </div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col s12 m6 l6">
-                                                <p style="margin-top: 0; margin-bottom: 5px; font-size: 0.9rem;">Country of Manufacture
+                                                <p style="margin-top: 0; margin-bottom: 5px; font-size: 0.9rem;"><spring:message code="registration.countrymanufacture" />
                                                     </p>
                                                 <select id="country" class="browser-default" class="mySelect"
                                                     style="padding-left: 0;" required></select>
@@ -150,24 +151,24 @@
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" id="tac"  name="tac" maxlength="8">
-                                                <label for="tac">TAC</label>
+                                                <label for="tac"><spring:message code="registration.tac" /></label>
                                             </div>
                                         </div>
 
                                         <div class="row">                                            
                                             <div class="col s12 m6 l6" style="margin-top: 7px;">
-                                                <label for="documenttype">Document Type</label>
+                                                <label for="documenttype"><spring:message code="input.documenttype" /></label>
                                                 <select class="browser-default">
-                                                    <option value="" disabled selected>Select Document Type </option>
-                                                    <option value="1">Technical Specification</option>
-                                                    <option value="2">Professional Report</option>
+                                                    <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+                                                    <option value="1"><spring:message code="registration.technicalspecification" /></option>
+                                                    <option value="2"><spring:message code="registration.professionalreport" /></option>
                                                 </select>
                                             </div>
 
                                             <div class="file-field col s12 m6">
-                                                <h6 style="color: #000;">Upload Documnet</h6>
+                                                <h6 style="color: #000;"><spring:message code="registration.uploaddocumnet" /></h6>
                                                 <div class="btn">
-                                                    <span>Select File</span>
+                                                    <span><spring:message code="input.selectfile" /></span>
                                                     <input id="myInput" type="file" multiple>
                                                 </div>
                                                 <div class="file-path-wrapper">
@@ -184,16 +185,16 @@
 
                                         <div class="col s12 m6 right">
                                             <button class="btn right add_field_button"><span
-                                                    style="font-size: 20px;">+</span> Add More files</button>
+                                                    style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
                                         </div>
                                         </div>
 
-                                        <span style="margin-left: 5px;"> Required Field are marked with <span
+                                        <span style="margin-left: 5px;"> <spring:message code="input.requiredfields" /> <span
                                                 class="star">*</span>
 
                                             <div class="center" style="margin-top: 50px;">
-                                                <button class=" waves-light btn" type="submit">Submit</button>
-                                                <a href="./manageTypeDevices" class="btn" id="Cancel" style="margin-left: 10px;">Cancel</a>
+                                                <button class=" waves-light btn" type="submit"><spring:message code="button.submit" /></button>
+                                                <a href="./manageTypeDevices" class="btn" id="Cancel" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                             </div>
                                     </form>
                                 </div>
