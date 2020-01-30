@@ -102,7 +102,7 @@ public class EnduserServiceImpl {
 						GenericMessageTags.NULL_REQ.getMessage(), "");
 			}
 
-			// Validate and set visa expiry date.
+			// Validate and set visa expiry date as per default rule.
 			GenricResponse response = setVisaExpiryDate(endUserDB);
 			if(response.getErrorCode() != 0) 
 				return response;
