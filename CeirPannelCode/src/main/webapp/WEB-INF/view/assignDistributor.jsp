@@ -91,7 +91,7 @@
                             <div class="col s12 m12 l12">
                                 <div class="row card-panel">
                                 <div class="col s12 m12 l12" id="roleTypeDiv">
-                                        <h5 class="center">Role Type</h5>
+                                        <h5 class="center"><spring:message code="table.roleType" /></h5>
                                         <form action="${context}/selectModuleType" method="POST">
                                             <h5 class="center">
                                             <c:forEach items="${userTypelist}" var="userTypelist">
@@ -116,6 +116,8 @@
                                     </div>
                                   
  
+ 
+ 
                                  </div>
 
                             </div>
@@ -127,33 +129,33 @@
     <div id="modal1" class="modal">
         <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button>
-            <h6>Assign Distributor</h6>
+            <h6><spring:message code="registration.assigndistributor" /></h6>
             <div class="modal-content">
  <!-- <h4 class="header2 pb-2">User Info</h4> -->
 
             <div class="row">
                 <div class="input-field col s10 m6">
                     <input type="text" name="name" id="name" />
-                    <label for="Name" class="center-align">Distributor ID</label>
+                    <label for="Name" class="center-align"><spring:message code="registration.distributorid" /></label>
                 </div>
 
                 <div class="input-field col s10 m6">
                     <input type="text" name="name" id="name" />
-                    <label for="Name" class="center-align">Distributor Name</label>
+                    <label for="Name" class="center-align"><spring:message code="registration.distributorname" /></label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s10 m6">
                     <input type="text" name="name" id="name" />
-                    <label for="Name" class="center-align">Invoice Number</label>
+                    <label for="Name" class="center-align"><spring:message code="input.invoiceNumber" /></label>
                 </div>
             </div>
 
             <div class="row">
-                <h6 style="color: #000; margin-left: 10px;">Upload Bulk Stock *</h6>
+                <h6 style="color: #000; margin-left: 10px;"> <spring:message code="input.uploadBulkStock" /></h6>
                 <div class="file-field input-field col s12 m6">
                     <div class="btn" style="height: 35px; line-height:2.5rem;">
-                        <span>Select File</span>
+                        <span><spring:message code="input.selectfile" /></span>
                         <input type="file" id="csvUploadFile" accept=".csv">
                     </div>
                     <div class="file-path-wrapper">
@@ -167,10 +169,10 @@
                 <div class="input-field col s12">
                     <button
                         class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1"
-                        type="submit" name="add_user" id="add_user" style="margin-left: 35%;">Submit</button>
+                        type="submit" name="add_user" id="add_user" style="margin-left: 35%;"><spring:message code="button.submit" /></button>
                     <button
                         class="modal-close waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow-none border-round mr-1"
-                        type="submit" name="add_user" id="add_user">Cancel</button>
+                        type="submit" name="add_user" id="add_user"><spring:message code="button.cancel" /><spring:message code="input.selectfile" /></button>
 
 
                 </div>

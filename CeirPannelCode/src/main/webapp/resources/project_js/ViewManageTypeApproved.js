@@ -9,7 +9,6 @@ window.parent.$('#langlist').on('change', function() {
 }); 
 
 $.i18n().locale = lang;	
-
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
 	'km': './resources/i18n/km.json'

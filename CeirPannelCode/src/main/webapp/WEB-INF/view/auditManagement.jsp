@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -108,7 +110,7 @@
    <!-- Modal 2 start   -->
 
 	<div id="viewAuditModel" class="modal">
-		<h6 class="modal-header">View Audit Management</h6>
+		<h6 class="modal-header"><spring:message code="registration.viewauditmanagement" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
@@ -116,27 +118,27 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="viewUserName"
 							placeholder="" disabled style="height: 28px;">
-						<label for="viewUserName">User Name</label>
+						<label for="viewUserName"><spring:message code="table.UserName" /></label>
 					</div>	
 						
 					<div class="row" style="margin-top: 20px;">	
 					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
 						<input type="text" name="period" id="viewRoleType"
 							placeholder="" disabled style="height: 28px;">
-						<label for="viewRoleType">Role Type</label>
+						<label for="viewRoleType"><spring:message code="table.roleType" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 20px;">
 						<input type="text" id="viewFeature" name="status"
 							placeholder="" maxlength="20" disabled style="height: 28px;">
-						<label for="viewFeature">Feature</label>
+						<label for="viewFeature"><spring:message code="table.feature" /></label>
 					</div>
 					</div>	
 					
 					<div class="input-field col s12 m6" style="margin-top: 20px;">
 						<input type="text" id="viewSubFeature" name="status"
 							placeholder="" maxlength="20" disabled style="height: 28px;">
-						<label for="viewSubFeature">Sub Feature</label>
+						<label for="viewSubFeature"><spring:message code="table.SubFeature" /></label>
 					</div>
 					
 				</div>
@@ -144,7 +146,7 @@
 				
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
 				</div>
 
 				</div>

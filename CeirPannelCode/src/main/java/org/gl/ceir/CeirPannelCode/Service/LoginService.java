@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Feature;
@@ -36,6 +37,9 @@ public class LoginService {
 	@Autowired
 	FeatureFeignImpl featureFeignImpl;
 
+	@Autowired
+	UserProfileFeignImpl userProfileFeignImpl;
+	
 	public  ModelAndView loginPage(){
 		log.info("inside login controller");
 		ModelAndView mv=new ModelAndView();
@@ -55,6 +59,7 @@ public class LoginService {
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
 			log.info("login response:  "+response); 
+			log.info("language = "+response.getUserLanguage());
 			if(response.getStatusCode()==200) { 
 				session.setAttribute("username", response.getUsername());
 				session.setAttribute("userid", response.getUserId());
@@ -206,4 +211,22 @@ public class LoginService {
 		}
 
 	}
+	
+	public HttpResponse changeExpirePassword(Password password) {
+		log.info("inside change password controller");
+		log.info("password data is :  "+password);                 
+		if(password.getPassword().equals(password.getConfirmPassword())) {
+			HttpResponse response=new HttpResponse();             
+			response=userProfileFeignImpl.changePassword(password);
+			log.info("response got:  "+response);
+			return response; 	
+		}
+		else {    
+			HttpResponse response=new HttpResponse();             
+            response.setResponse("Both Passwords do the match");
+			return response; 
+		}
+		  
+	} 
+	
 }

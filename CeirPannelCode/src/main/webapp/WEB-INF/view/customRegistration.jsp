@@ -134,6 +134,9 @@ var contextpath = "${context}";
 
 <body>
 
+<%String userType=request.getParameter("type");
+%>
+
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
@@ -200,7 +203,7 @@ var contextpath = "${context}";
 							<hr></div>
 							
 
-							<input type="hidden" id="usertypeId" value="1">
+							<input type="hidden" id="usertypeId" value="${usertypeId}">
 							<input type="hidden" id="usertypeName" value="<%=name%>">
 							<input type="hidden" id="type" value="2">
 							<div class="row">
@@ -419,7 +422,7 @@ title="Please enter number upto 30 characters only">
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail"
+									<input type="email" name="authorityEmail" maxlength="320"
 										class="form-control boxBorder boxHeight" id="authorityEmail">
 									<label for="authorityEmail">
 										<spring:message code="registration.ReportingAuthorityEmailid" /></label>
