@@ -128,12 +128,13 @@ var path="${context}";
                         <span style="float:right;"></span> -->
                 </div>
                
- 
-               <div class="col s12 m12">
+ <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
+                    <input type="text" style="display: none" id="grievanceUserid">
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
-                </div>
+ 
+                 </div>
                <!--   <div class="file-field col s12 m12">
                     <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
                     <div class="file-path-wrapper"><input class="file-path validate" type="text"

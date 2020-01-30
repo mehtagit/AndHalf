@@ -3174,7 +3174,7 @@
   }
 
   footer.page-footer {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     padding-top: 20px;
     background-color: #00bcd4;
     z-index: 11;
@@ -7063,8 +7063,8 @@
   } */
 
   .section {
-    /*padding-top: 1rem;*/
-    padding-bottom: 1rem;
+    /*padding-top: 1rem;
+    padding-bottom: 1rem;*/
   }
 
   @media only screen and (max-width: 768px) {

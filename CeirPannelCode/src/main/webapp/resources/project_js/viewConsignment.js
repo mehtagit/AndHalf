@@ -38,12 +38,7 @@
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 		 });
-		/*$(document).ready(function(){
-			$('div#initialloader').fadeIn('fast');
-			filterConsignment(lang);
-			sessionStorage.removeItem("session-value");
-			pageRendering();
-		});*/
+		
 
 		$('.datepick').datepicker({
 			dateFormat: "yy-mm-dd"
@@ -321,7 +316,13 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-					/*	$('div#initialloader').fadeOut('slow');*/
+						$('#consignmentLibraryTable input').unbind();
+						$('#consignmentLibraryTable input').bind('keyup', function (e) {
+							if (e.keyCode == 13) {
+								table.search(this.value).draw();
+							}
+
+						});
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					

@@ -1258,7 +1258,7 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 		
 		log.info(" entry in set view in data table.....");
 		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
-		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
+		String viewAction = "endUserviewGrievanceHistory('"+grievanceId+"','"+projectPath+"','"+userId+"')";
 
 		// state related Code 
 		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="

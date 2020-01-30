@@ -202,16 +202,18 @@ public class GrievanceController {
 				
 
 				//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
+	
 					//int userId= (int) session.getAttribute("userid"); 
-					String roletype=(String) session.getAttribute("usertype");
-				    log.info("+ roletype="+roletype);
-				    
+		/*
+		 * String roletype=(String) session.getAttribute("usertype");
+		 * log.info("+ roletype="+roletype);
+		 */ 
 				    String grievanceDetails=request.getParameter("multirequest");
 					log.info("grievanceDetails------"+grievanceDetails);
 					Gson gson= new Gson(); 	
 					GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
 					//grievanceRequest.setUserId(userId);
-					grievanceRequest.setUserType(roletype);
+					//grievanceRequest.setUserType(roletype);
 					int i=0;
 					for( MultipartFile file : fileUpload) {
 						String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
