@@ -100,7 +100,7 @@
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="nationalityInformation" id="nationalityInformation" value="${registration.nidFilename}" maxlength="20" value="file.csv" disabled="">
                                     <label for="nationalityInformation" class="active">Upload Nationality Information </label>
-                                      <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> 
+                                   <span> <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a></span> 
                                     
                                 </div>
 

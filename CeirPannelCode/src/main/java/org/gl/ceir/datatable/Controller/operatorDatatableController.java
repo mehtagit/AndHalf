@@ -126,9 +126,9 @@ public class operatorDatatableController {
 		InputFields dateRelatedFields;
 		
 		if("greyList".equals(featureType)) {
-		pageElement.setPageTitle("Grey List");	
+		pageElement.setPageTitle(Translator.toLocale("modal.header.title.grey"));	
 		}else if("blackList".equals(featureType)) {
-		pageElement.setPageTitle("Black List");
+		pageElement.setPageTitle(Translator.toLocale("modal.header.title.black"));
 		}
 		
 		List<Button> buttonList = new ArrayList<>();
@@ -138,7 +138,7 @@ public class operatorDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", "filter","operatorDatatable()","submitFilter"};
+			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"operatorDatatable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

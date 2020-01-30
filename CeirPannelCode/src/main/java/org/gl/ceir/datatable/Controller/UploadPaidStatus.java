@@ -85,6 +85,7 @@ public class UploadPaidStatus {
 		Gson gsonObject=new Gson();
 		Gson gson=new Gson();
 		FilterRequest_UserPaidStatus filterrequest = gsonObject.fromJson(filter, FilterRequest_UserPaidStatus.class);
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("filterrequest--->"+filterrequest);
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file);
 		log.info("request passed to the filter api  ="+filterrequest);
@@ -102,21 +103,21 @@ public class UploadPaidStatus {
 				for(UserPaidStatusContent contentModelList : contentList) {
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId();
-					Integer sno = contentModelList.getId();
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String status = contentModelList.getTaxPaidStatusInterp();
-
+					String origin = contentModelList.getOrigin();
 					//params for action 
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.userPaidStatusIcon(imei1);
 
 					
-					Object[] data = {sno,createdOn,nid,txnId,deviceTypeInterp,country,status,action};
+					Object[] data = {createdOn,nid,txnId,country,status,origin,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -125,23 +126,23 @@ public class UploadPaidStatus {
 			}
 			else if("CEIRAdmin".equals(userType)) {
 				for(UserPaidStatusContent contentModelList : contentList) {
-					Integer sno = contentModelList.getId();
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId(); 
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
 					String taxStatus = contentModelList.getTaxPaidStatusInterp();
 					String status = contentModelList.getStateInterp();
-					
+					String origin = contentModelList.getOrigin();
 					//params for action 
 					Long imei1 = contentModelList.getFirstImei();
 					String action = iconState.adminUserPaidStatusIcon(imei1,createdOn,contentModelList.getTxnId());
 
-					Object[] data = {sno,createdOn,nid,txnId,deviceTypeInterp,country,taxStatus,status,action};
+					Object[] data = {createdOn,nid,txnId,country,taxStatus,origin,status,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -149,12 +150,13 @@ public class UploadPaidStatus {
 				}
 			}else if("Immigration".equals(userType)) {
 				for(UserPaidStatusContent contentModelList : contentList) {
-					Integer sno = contentModelList.getId();
+					log.info("in Immigration -----> "+userType);
+					//Integer sno = contentModelList.getId();
 					String createdOn = contentModelList.getCreatedOn();
 					String nid = contentModelList.getNid();
 					String txnId = contentModelList.getTxnId(); 
 					String deviceIDInterp = contentModelList.getDeviceIdTypeInterp();
-					String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
+					//String deviceTypeInterp = contentModelList.getDeviceTypeInterp();
 					String currency = contentModelList.getCurrencyInterp() == null ? "" : contentModelList.getCurrencyInterp();
 					String price = currency.concat(String.valueOf(contentModelList.getPrice()));
 					String country = contentModelList.getCountry();
@@ -163,9 +165,9 @@ public class UploadPaidStatus {
 					
 					//params for action 
 					Long imei1 = contentModelList.getFirstImei();
-					String action = iconState.manageUserIcon(imei1,createdOn,contentModelList.getTxnId());
+					String action = iconState.deviceActivationIcon(imei1,createdOn,contentModelList.getTxnId());
 
-					Object[] data = {createdOn,txnId,nid,country,sno,status,action};
+					Object[] data = {createdOn,txnId,nid,action};
 
 					List<Object> datatableList = Arrays.asList(data);
 					finalList.add(datatableList);
@@ -200,7 +202,7 @@ public class UploadPaidStatus {
 		InputFields dateRelatedFields;
 		
 		if("Immigration".equals(userType)){
-			pageElement.setPageTitle(Translator.toLocale("Manage Users"));	
+			pageElement.setPageTitle(Translator.toLocale("Device Activation"));	
 		}else {
 		pageElement.setPageTitle(Translator.toLocale("view.uplaodpaidstatus"));
 		}
@@ -208,21 +210,41 @@ public class UploadPaidStatus {
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-
 		
-		String[] names= {"HeaderButton",Translator.toLocale("button.adddevice"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
-		for(int i=0; i< names.length ; i++) {
-			button = new Button();
-			button.setType(names[i]);
-			i++;
-			button.setButtonTitle(names[i]);
-			i++;
-			button.setButtonURL(names[i]);
-			i++;
-			button.setId(names[i]);
-			buttonList.add(button);
-		}			
-		pageElement.setButtonList(buttonList);
+		
+		
+		if("Immigration".equals(userType)){
+			String[] names= {"HeaderButton",Translator.toLocale("button.register"),"./register-devices","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);
+			
+		}else {
+			String[] names= {"HeaderButton",Translator.toLocale("button.adddevice"),"./add-device-information","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
+			for(int i=0; i< names.length ; i++) {
+				button = new Button();
+				button.setType(names[i]);
+				i++;
+				button.setButtonTitle(names[i]);
+				i++;
+				button.setButtonURL(names[i]);
+				i++;
+				button.setId(names[i]);
+				buttonList.add(button);
+			}			
+			pageElement.setButtonList(buttonList);
+		}
+		
+		
 
 		//Dropdown items			
 		String[] selectParam= {"select",Translator.toLocale("select.deviceIDType"),"deviceIDType","","select",Translator.toLocale("select.deviceType"),"deviceTypeFilter","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
@@ -254,7 +276,7 @@ public class UploadPaidStatus {
 			inputTypeDateList.add(dateRelatedFields);
 			}
 			}else if("Immigration".equals(userType)){
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.passportNo"),"nId",""};
 				for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

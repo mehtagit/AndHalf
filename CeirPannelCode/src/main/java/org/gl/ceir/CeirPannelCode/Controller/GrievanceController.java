@@ -202,6 +202,7 @@ public class GrievanceController {
 				
 
 				//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
+	
 					//int userId= (int) session.getAttribute("userid"); 
 		/*
 		 * String roletype=(String) session.getAttribute("usertype");

@@ -397,7 +397,6 @@
 				 else{
 					 userId = $("body").attr("data-userID");
 				 }
-				 alert(roleType+userId);
 				var remark=$('#replyRemark').val();
 				var replyFile=$('#replyFile').val();
 				var  grievanceIdToSave= $('#grievanceIdToSave').text();

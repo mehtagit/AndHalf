@@ -76,7 +76,7 @@ public class ConsignmentDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
 		log.info("session flag value==####@@@@@@@@@@@@@="+sessionFlag);
 		log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$="+filterrequest);
@@ -222,7 +222,8 @@ public class ConsignmentDatatableController {
 				String consignmentStatusName = dataInsideList.getStateInterp();
 			//	String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
-				Object[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName}; 
+				String quantity = String.valueOf(dataInsideList.getQuantity());
+				Object[] finalData={checboxes,createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,quantity}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -241,9 +242,10 @@ public class ConsignmentDatatableController {
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
+				String quantity = String.valueOf(dataInsideList.getQuantity());
 				String action=iconState.state(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus);
 				
-				Object[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,action}; 
+				Object[] finalData={createdOn,txnId,supplierName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -264,9 +266,10 @@ public class ConsignmentDatatableController {
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
+				String quantity = String.valueOf(dataInsideList.getQuantity());
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
-				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
@@ -284,10 +287,11 @@ public class ConsignmentDatatableController {
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
+				String quantity = String.valueOf(dataInsideList.getQuantity());
 				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,companyName);
 				
 				
-				String[] finalData={createdOn,txnId,companyName,consignmentStatusName,taxPaidStatusName,action}; 
+				String[] finalData={createdOn,txnId,companyName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);
