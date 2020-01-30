@@ -55,6 +55,7 @@ import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.StatusSetter;
 import com.opencsv.CSVWriter;
@@ -110,6 +111,9 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	UserProfileRepository userProfileRepository;
+
+	@Autowired
+	DateUtil dateUtil;
 	
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
@@ -152,10 +156,10 @@ public class RegularizedDeviceServiceImpl {
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			
+
 			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
 				// TODO
-				
+
 			}
 
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
@@ -268,13 +272,9 @@ public class RegularizedDeviceServiceImpl {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					}
 					logger.info(">>>>>>>>>>>>>>>>>" + endUserDB.getRegularizeDeviceDbs());
-					
+
 					// End user is not registered with CEIR system.
 					if(Objects.isNull(endUserDB2)) {
-						if("Y".equalsIgnoreCase(endUserDB.getOnVisa())) {
-							// TODO Set VISA expiry date.
-							
-						}
 						endUserDbRepository.save(endUserDB);
 					}else {
 						regularizedDeviceDbRepository.saveAll(endUserDB.getRegularizeDeviceDbs());
@@ -484,7 +484,7 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-		
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			specificationBuilder.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -509,4 +509,5 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(regularizeDeviceDb.getCurrency()))
 			regularizeDeviceDb.setCurrencyInterp(interpSetter.setConfigInterp(Tags.CURRENCY, regularizeDeviceDb.getCurrency(), 0, 1));
 	}
+
 }

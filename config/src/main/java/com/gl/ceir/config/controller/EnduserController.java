@@ -30,9 +30,21 @@ public class EnduserController {
 	@Autowired
 	EnduserServiceImpl enduserServiceImpl;
 
-	@ApiOperation(value = "View Regularized DB of end User", response = RegularizeDeviceDb.class)
+	@ApiOperation(value = "View Regularized DB of end User", response = GenricResponse.class)
 	@GetMapping("/end-user/{nid}")
 	public MappingJacksonValue getEnduserByNid(@PathVariable("nid") String nid) {
+
+		MappingJacksonValue mapping = null;
+
+		GenricResponse genricResponse = enduserServiceImpl.endUserByNid(nid);
+		mapping = new MappingJacksonValue(genricResponse);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "Save Regularized DB of end User", response = GenricResponse.class)
+	@PostMapping("/end-user")
+	public MappingJacksonValue saveEndUser( String nid) {
 
 		MappingJacksonValue mapping = null;
 

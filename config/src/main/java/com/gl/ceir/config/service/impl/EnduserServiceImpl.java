@@ -30,6 +30,7 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -37,13 +38,16 @@ import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.EndUserFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
+import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.CustomMappingStrategy;
+import com.gl.ceir.config.util.DateUtil;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -68,6 +72,9 @@ public class EnduserServiceImpl {
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
 
+	@Autowired
+	SystemConfigurationDbRepository systemConfigurationDbRepository;
+
 	public GenricResponse endUserByNid(String nid) {
 		try {
 			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
@@ -85,19 +92,45 @@ public class EnduserServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
-	
+
+	@Transactional
+	public GenricResponse saveEndUser(EndUserDB endUserDB) {
+		try {
+			// End user is not registered with CEIR system.
+			if(Objects.isNull(endUserDB)) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), "");
+			}
+
+			// Validate and set visa expiry date.
+			GenricResponse response = setVisaExpiryDate(endUserDB);
+			if(response.getErrorCode() != 0) 
+				return response;
+
+
+			endUserDbRepository.save(endUserDB);
+			logger.info(GenericMessageTags.USER_REGISTER_SUCCESS.getMessage() + " with nid [" + endUserDB.getNid() + "]");
+			return new GenricResponse(0, GenericMessageTags.USER_REGISTER_SUCCESS.getTag(),GenericMessageTags.USER_REGISTER_SUCCESS.getMessage(), endUserDB.getNid());
+
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Custom Service", e.getMessage());
+		}
+	}
+
 	public GenricResponse updateEndUser(EndUserDB endUserDB) {
 		try {
 			if(Objects.isNull(endUserDB)) {
 				logger.info("Request can't be null.");
-				return new GenricResponse(2, GenericMessageTags.NULL_REQ.getTag(), GenericMessageTags.NULL_REQ.getMessage(), null);
+				return new GenricResponse(2, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 			String nid = endUserDB.getNid();
 			if(Objects.isNull(endUserDB)) {
 				logger.info("Request have nid as null.");
 				return new GenricResponse(3, GenericMessageTags.NULL_NID.getTag(), GenericMessageTags.NULL_NID.getMessage(), null);
 			}
-			
+
 			EndUserDB endUserDB1 = endUserDbRepository.getByNid(nid);
 
 			// End user is not registered with CEIR system.
@@ -119,14 +152,14 @@ public class EnduserServiceImpl {
 	public GenricResponse updateVisaEndUser(EndUserDB endUserDB) {
 		try {
 			VisaDb latestVisa = null;
-			
+
 			// Check if request is null
 			if(Objects.isNull(endUserDB.getNid())) {
 				logger.info("Request should not have nid as null.");
 				return new GenricResponse(2, GenericMessageTags.NULL_NID.getTag(), 
 						GenericMessageTags.NULL_NID.getMessage(), null);
 			}
-			
+
 			// Check if requested VISA is null or empty.
 			if(Objects.isNull(endUserDB.getVisaDb())) {
 				logger.info("Request visa update should not be null.");
@@ -139,7 +172,7 @@ public class EnduserServiceImpl {
 			}else {
 				latestVisa = endUserDB.getVisaDb().get(0);
 			}
-			
+
 			EndUserDB endUserDB1 = endUserDbRepository.getByNid(endUserDB.getNid());
 
 			// End user is not registered with CEIR system.
@@ -147,7 +180,7 @@ public class EnduserServiceImpl {
 				return new GenricResponse(5, GenericMessageTags.INVALID_USER.getTag(), 
 						GenericMessageTags.INVALID_USER.getMessage(), 
 						endUserDB.getNid());
-				
+
 			}else {
 				logger.info("Going to update VISA of user. " + endUserDB1);
 
@@ -172,7 +205,7 @@ public class EnduserServiceImpl {
 					return new GenricResponse(1, GenericMessageTags.VISA_UPDATE_FAIL.getTag(), 
 							GenericMessageTags.VISA_UPDATE_FAIL.getMessage(), endUserDB.getNid());
 				}
-				
+
 			}
 
 		} catch (Exception e) {
@@ -180,16 +213,16 @@ public class EnduserServiceImpl {
 			throw new ResourceServicesException("End user Service", e.getMessage());
 		}
 	}
-	
+
 	@Transactional
 	private boolean executeUpdateVisa(EndUserDB endUserDB) {
 		boolean status = Boolean.FALSE;
-		
+
 		endUserDbRepository.save(endUserDB);
 		logger.info("Visa of user have been updated succesfully." +  endUserDB);
-		
+
 		// TODO Update History.
-		
+
 		return Boolean.TRUE;
 	}
 
@@ -346,6 +379,37 @@ public class EnduserServiceImpl {
 	}
 
 	private void setInterp(EndUserDB endUserDB) {
+
+	}
+
+	private GenricResponse setVisaExpiryDate(EndUserDB endUserDB) {
+		if("Y".equalsIgnoreCase(endUserDB.getOnVisa())) {
+			if(Objects.isNull(endUserDB.getVisaDb())) {
+				return new GenricResponse(11, GenericMessageTags.NULL_VISA.getTag(), GenericMessageTags.NULL_VISA.getMessage(), "");
+			}else {
+				List<VisaDb> visaDbs = endUserDB.getVisaDb();
+				if(visaDbs.isEmpty()) {
+					return new GenricResponse(12, GenericMessageTags.VISA_EMPTY.getTag(), GenericMessageTags.VISA_EMPTY.getMessage(), "");
+				}else if(Objects.isNull(visaDbs.get(0).getVisaExpiryDate()) || visaDbs.get(0).getVisaExpiryDate().isEmpty()) {
+					SystemConfigurationDb defaultVisaExpirationDays = systemConfigurationDbRepository.getByTag(ConfigTags.default_visa_expiration_days);
+					int day = 0;
+					try {
+						day = Integer.parseInt(defaultVisaExpirationDays.getValue());
+					}catch (NumberFormatException e) {
+						logger.info("Config value 'default_visa_expiration_days' [" + defaultVisaExpirationDays.getValue() + "] must be cast to numeric value.");
+						return new GenricResponse(13, GenericMessageTags.DISCREPENCY_IN_CONFIG.getTag(), 
+								GenericMessageTags.DISCREPENCY_IN_CONFIG.getMessage(), "default_visa_expiration_days must be cast to numeric value");
+					}
+					String date = DateUtil.nextDate(day, null);
+					visaDbs.get(0).setVisaExpiryDate(date);
+					return new GenricResponse(0);
+				}else {
+					return new GenricResponse(0);
+				}
+			}
+		}else {
+			return new GenricResponse(0);
+		}
 
 	}
 }

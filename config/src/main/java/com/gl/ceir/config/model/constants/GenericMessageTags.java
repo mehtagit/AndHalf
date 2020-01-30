@@ -10,7 +10,10 @@ public enum GenericMessageTags {
 	VISA_UPDATE_FAIL ("VISA_UPDATE_FAIL", "Updation of Visa of user have been failed."),
 	INVALID_USER ("INVALID_USER", "User does not exist."),
 	NULL_REQ ("NULL_REQ", "Request can't be null."),
-	USER_UPDATE_SUCCESS("USER_UPDATE_SUCCESS", "User have been updated successfully.");	
+	USER_UPDATE_SUCCESS("USER_UPDATE_SUCCESS", "User have been updated successfully."),
+	VISA_EMPTY("VISA_EMPTY", "Visa information in request not found"),	
+	DISCREPENCY_IN_CONFIG("DISCREPENCY_IN_CONFIG", "Discrepancy found in configuration."),
+	USER_REGISTER_SUCCESS("USER_REGISTER_SUCCESS", "User have been registered successfully.");
 	
 	private String tag;
 	private String message;
