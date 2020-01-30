@@ -751,14 +751,14 @@ public class IconsState {
 		// URL link 
 		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
 			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
-				featureID == 5 ? "./stolenRecovery?txnID="+txnID+"" :
+				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
 					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
 						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
 							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
 								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										"JavaScript:void(0);";
-		System.out.println("featureID::::::::::"+featureID);
+		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
 		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
