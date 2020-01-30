@@ -80,7 +80,7 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
-								<a href="" class="boton right" id="btnLink" hidden></a>
+								<a href="" class="boton right" id="btnLink"></a>
 							</div>
 							<form action="${context}/userManageTrail"
 								method="post">

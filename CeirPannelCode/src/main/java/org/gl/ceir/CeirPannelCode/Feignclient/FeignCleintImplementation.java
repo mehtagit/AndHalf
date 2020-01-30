@@ -321,6 +321,16 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PostMapping(value="/checkDevice")
 				public @ResponseBody GenricResponse viewDetails(FilterRequest filterRequest);
+				
+				
+
+				//************************************ manage User Feign  *************************************************
+
+				@RequestMapping(value="/filter/end-users" ,method=RequestMethod.POST) 
+				public Object manageUserFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(value = "file", defaultValue = "0") Integer file);
 					
 		}
 

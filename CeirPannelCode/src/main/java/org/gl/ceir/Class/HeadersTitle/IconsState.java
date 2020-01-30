@@ -26,6 +26,9 @@ public class IconsState {
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
 	String rejectIcon = "\"fa fa-user-times reject-icon\"";
 	String payTaxIcon = "\"fa fa-money pay-tax-icon\"";
+	String ListIcon =  "\"fa fa-list list-icon\"";
+	String plusIcon = "\"fa fa-plus-square download-icon\"";
+	
 	// icon title  
 	String errorIconTitle="Error-File";
 	String downloadIconTitle="Download"; 
@@ -36,7 +39,8 @@ public class IconsState {
 	String approveIconTitle="Approve";
 	String rejectIconTitle="Reject";
 	String payTaxIconTitle ="Pay Tax";
-
+	String ListIconTittle = "List";
+	String plusIconTittle = "Add device";
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
@@ -1302,6 +1306,8 @@ public String importalTrcManageIcons(String status,Integer id,String fileName,St
 
 	String viewAction="viewByID("+id+",'view')";
 	String editAction= "viewByID("+id+",'edit')";
+	String deleteAction = "JavaScript:void(0);"; 
+	
 	// state related Code 
 	
 
@@ -1311,9 +1317,12 @@ public String importalTrcManageIcons(String status,Integer id,String fileName,St
 	String edit="<a onclick="+editAction+"><i class="
 			+editIcon+" aria-hidden=\"true\"  title="
 			+editIconTitle+"></i></a>"; 
+	
+	String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+			+deletionIcon+" aria-hidden=\"true\"  title="
+			+deleteIconTitle+"></i></a>"; 
 
-
-	String action=view.concat(edit);		  
+	String action=view.concat(edit).concat(delete);		  
 	return action;
 
 }
@@ -1335,5 +1344,29 @@ public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
 	return action;
 }
 
+
+
+/********************************** Icons for Manage Users**********************************/ 
+
+public String manageUserIcons(String id) { 
+
+	String viewAction="viewDetails('"+id+"')";
+	String editAction="";
+	String ListAction ="";
+	String AddAction = "";
+	// state related Code 
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+	String List = "<a onclick="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
+			+ListIconTittle+"></i></a>"; 
+	String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
+			+plusIconTittle+"></i></a>"; 
+
+	String action = view.concat(edit).concat(List).concat(Add);
+	return action;
+
+}
 
 }

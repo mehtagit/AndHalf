@@ -10,6 +10,9 @@ public class Dropdown {
 	private String interp;
 	private String value;
 	private String tagId;
+	private String brand_name;
+	private String modelName;
+	private Integer brand_id;
 	public Integer getId() {
 		return id;
 	}
@@ -64,12 +67,32 @@ public class Dropdown {
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
+	}
+	public String getModelName() {
+		return modelName;
+	}
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+	public Integer getBrand_id() {
+		return brand_id;
+	}
+	public void setBrand_id(Integer brand_id) {
+		this.brand_id = brand_id;
+	}
 	@Override
 	public String toString() {
 		return "Dropdown [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", featureId="
 				+ featureId + ", userTypeId=" + userTypeId + ", state=" + state + ", interp=" + interp + ", value="
-				+ value + ", tagId=" + tagId + "]";
+				+ value + ", tagId=" + tagId + ", brand_name=" + brand_name + ", modelName=" + modelName + ", brand_id="
+				+ brand_id + "]";
 	}
+	
 	
 	
 	

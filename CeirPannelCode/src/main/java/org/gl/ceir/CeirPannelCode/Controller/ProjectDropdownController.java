@@ -2,8 +2,12 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
+import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +15,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProjectDropdownController {
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
+	
+	@Autowired
+	GsmaFeignClient gsmaFeignClient;
 	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -60,6 +70,21 @@ public class ProjectDropdownController {
 	public List<Dropdown> asRequestType(@PathVariable("tagId") String tagId, @PathVariable("featureId") Integer featureId ) {
 		List<Dropdown> dropdown = feignCleintImplementation.modeType(tagId, featureId);
 		return dropdown;
+	}
+	
+	@ResponseBody
+	@GetMapping("productList")
+	public List<Dropdown> productList() {
+		List<Dropdown> dropdown = gsmaFeignClient.viewAllProductList();
+		return dropdown;
+	}
+	
+	@RequestMapping(value="/productModelList",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+	public @ResponseBody List<Dropdown> productModelList(@RequestParam(name="brand_id") Integer brand_id){
+		List<Dropdown> productModelList = gsmaFeignClient.viewAllmodel(brand_id);
+		
+		return productModelList;
+		
 	}
 	
 	
