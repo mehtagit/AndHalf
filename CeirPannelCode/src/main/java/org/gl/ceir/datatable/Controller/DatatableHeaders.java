@@ -25,7 +25,7 @@ public class DatatableHeaders {
 
 			// CONSIGNMENT DATATABLE HEADERS			
 			if("consignment".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","table.quantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -47,7 +47,7 @@ public class DatatableHeaders {
 
 			//CUSTOM DATATABLE HEADERS
 			else if("customConsignment".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.quantity","table.action"};		
 				for(String header : headers) {
 					log.info("Translator.toLocale(header)----"+Translator.toLocale(header));
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
@@ -58,7 +58,7 @@ public class DatatableHeaders {
 
 			//Admin DATATABLE HEADERS
 			else if("adminConsignment".equals(role)) {
-				String[] headers = {"table.submissiondate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.action"};		
+				String[] headers = {"table.submissiondate","table.transactionID","table.importerCompanyName","table.consignmentStatus","table.taxPaidStatus","table.quantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -67,7 +67,7 @@ public class DatatableHeaders {
 
 			//consignments from stolen headers
 			else if("stolenconsignment".equals(role)) {
-				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus"};		
+				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.suppliername","table.consignmentStatus","table.taxPaidStatus","table.quantity"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -76,7 +76,7 @@ public class DatatableHeaders {
 
 			//stock headers
 			else if("stockcheckHeaders".equals(role)) {
-				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.fileName","table.stockStatus"};		
+				String[] headers = {"table.blankheader","table.requestdate","table.transactionID","table.fileName","table.stockStatus","table.quantity"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -85,7 +85,7 @@ public class DatatableHeaders {
 
 			//stockHeaders
 			else if("stockHeaders".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};
+				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.quantity","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -94,7 +94,7 @@ public class DatatableHeaders {
 
 			//customStock Headers
 			else if("customStockHeaders".equals(role)) {
-				String[] headers = {"table.date","table.assignto","table.transactionID","table.fileName","table.stockStatus","table.action"};	
+				String[] headers = {"table.date","table.assignto","table.transactionID","table.fileName","table.stockStatus","table.quantity","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -104,7 +104,7 @@ public class DatatableHeaders {
 
 			//AdminStock Headers
 			else if("adminStockHeaders".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.displayName","table.roleType","table.fileName","table.stockStatus","table.action"};	
+				String[] headers = {"table.date","table.transactionID","table.displayName","table.roleType","table.fileName","table.stockStatus","table.quantity","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -165,7 +165,7 @@ public class DatatableHeaders {
 
 			//DEFAULT PORTION  
 			else if("userPaidStatus".equals(role)) {
-				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.status","table.action"};		
+				String[] headers = {"table.date","table.nid","table.transactionID","table.country","table.status","table.origin","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -187,22 +187,13 @@ public class DatatableHeaders {
 			//adminUserPaidStatus Headers 
 			else if("adminUserPaidStatus".equals(role)) {
 
-				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.taxPaidStatus","table.status","table.action"};		
+				String[] headers = {"table.date","table.nid","table.transactionID","table.country","table.taxPaidStatus","table.origin","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
-
-			//adminUserPaidStatus Headers 
-			else if("adminUserPaidStatus".equals(role)) {
-
-				String[] headers = {"table.sno","table.date","table.nid","table.transactionID","table.devicetype","table.country","table.taxPaidStatus","table.status","table.action"};		
-				for(String header : headers) {
-					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
-				}
-				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
-			}
+			
 
 			//adminUserPaidStatus Headers 
 			else if("blockUnblock".equals(role)) {
@@ -295,6 +286,16 @@ public class DatatableHeaders {
 			
 			else if("ImporterTrcManageType".equals(role)) {
 				String[] headers = {"table.Trademark","table.ProductName","table.ModelNumber","table.CountryofManufacture","table.TAC","table.action"};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
+			//deviceActivation Headers 
+			
+			else if("deviceActivation".equals(role)) {
+				String[] headers = {"table.RegisterDate","table.transactionID","table.PassportNumber","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

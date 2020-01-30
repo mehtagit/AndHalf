@@ -1258,7 +1258,7 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 		
 		log.info(" entry in set view in data table.....");
 		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
-		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
+		String viewAction = "endUserviewGrievanceHistory('"+grievanceId+"','"+projectPath+"','"+userId+"')";
 
 		// state related Code 
 		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
@@ -1316,6 +1316,23 @@ public String importalTrcManageIcons(String status,Integer id,String fileName,St
 	String action=view.concat(edit);		  
 	return action;
 
+}
+
+/********************************** Icons for Device Activation **********************************/ 	
+
+public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
+	String viewAction="viewDetails('"+imei1+"')";
+	String editAction="";
+
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+
+
+	String action = view.concat(edit);
+	return action;
 }
 
 

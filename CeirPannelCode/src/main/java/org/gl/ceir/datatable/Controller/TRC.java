@@ -182,6 +182,7 @@ public class TRC implements CRUD{
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
+		
 		pageElement.setPageTitle(Translator.toLocale("sidebar.Manage_Type-Approved"));
 		
 		List<Button> buttonList = new ArrayList<>();
@@ -190,6 +191,7 @@ public class TRC implements CRUD{
 			
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
+			
 			
 			
 			if("Importer".equals(userType)) {
@@ -259,6 +261,7 @@ public class TRC implements CRUD{
 						
 			
 			
+
 			if("Importer".equals(userType)) {
 				//input type date list		
 				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.TAC"),"tac",""};
