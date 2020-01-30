@@ -1,3 +1,14 @@
+
+<% 
+  
+        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+
+        
+        
+        if(session.getAttribute("usertype") !=null){ %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -73,14 +84,16 @@
 	data-selected-consignmentStatus="${consignmentStatus}"
 	session-value="en">
 
+<%-- <%
+  out.println(session.getAttribute("usertype"));
+%>
+ --%>
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
 		<div id="initialloader"></div>
-
-
 
 		<!--start container-->
 		<div class="container">
@@ -122,8 +135,8 @@
 			<div class="row myRow">
 				<div class="input-field col s12 m6">
 					<input type="text" name="name" id="supplierId"
-						placeholder="Supplier/Manufacturer ID" readonly="readonly" /> <label
-						for="Name" class="center-align"><spring:message
+						placeholder="Supplier/Manufacturer ID" readonly="readonly" />
+					 <label	for="Name" class="center-align"><spring:message
 							code="input.supplier" /></label>
 				</div>
 
@@ -777,7 +790,17 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+			<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 
 </body>
 </html>
+<%
+        }
+        else{
+        	request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);
+        	
+        }
+%>

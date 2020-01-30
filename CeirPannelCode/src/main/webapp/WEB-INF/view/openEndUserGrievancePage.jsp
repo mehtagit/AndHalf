@@ -54,7 +54,7 @@
         }
         select{
             height: 1.5rem;
-            border: none;
+           /*  border: none; */
         }
         footer {
             padding-left: 0;
@@ -185,81 +185,74 @@ style="overflow: inherit !important;">
             <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
-                <div class="container" style="padding-bottom: 70px; margin-top:10vh;">
+                <div class="container" style="padding-bottom: 70px; margin-top:10vh;" >
                     <div class="section">
-                        <div class="row card-panel responsive-page">
+                        <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
                             <h6 class="fixPage-modal-header ">Grievance</h6>
-                            <form action="">
+                            <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
+                             <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="firstName" name="firstName" pattern="[a-zA-Z]"
-                                                title="" maxlength="15" />
+                                            <input type="text" id="firstName" required="required" name="firstName" pattern="[a-zA-Z]{0,20}"
+                                                title="Please enter alphabets upto 20 characters only" maxlength="20" />
                                             <label for="firstName">First Name <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="middleName" name="middleName" pattern="[a-zA-Z]"
-                                                title="" maxlength="15" />
+                                            <input type="text" id="middleName" name="middleName" pattern="[a-zA-Z]{0,20}"
+                                                title="Please enter alphabets upto 20 characters only" maxlength="20" />
                                             <label for="middleName">Middle Name</label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]" title=""
-                                                maxlength="15" />
+                                            <input type="text" id="lastName" required="required" name="lastName" pattern="[a-zA-Z]{0,20}" title="Please enter alphabets upto 20 characters only"
+                                                maxlength="20" />
                                             <label for="lastName">Last Name <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]"
-                                                title="" maxlength="10" />
+                                            <input type="text" id="contactNumber" required="required" name="contactNumber" pattern="[0-9]{10,12}"
+                                                title=numbers maxlength="10" />
                                             <label for="contactNumber">Contact Number <span
                                                     class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="emailID" name="emailID"
-                                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
+                                            <input type="email" id="emailID" name="emailID"
                                                 maxlength="30" />
                                             <label for="emailID">Email ID</label>
                                         </div>
 
                                         <div class="col s12 m6 selectDropdwn">
-                                            <label for="Category">Category <span class="star">*</span></label>
-                                            <select class="browser-default">
+                                            <label for="endUsercategory">Category <span class="star">*</span></label>
+                                            <select class="browser-default" required="required" id="endUsercategory">
                                                 <option value="" disabled selected>Category</option>
-                                                <option value="1">Report Related</option>
-                                                <option value="2">Device Stolen Related</option>
-                                                <option value="3">Device Recovery Related</option>
-                                                <option value="4">Stock Related</option>
-                                                <option value="5">Other</option>
                                             </select>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <textarea id="Remark" class="materialize-textarea"></textarea>
-                                            <label for="Remark">Remark <span
+                                            <textarea id="endUserRemark" required="required" class="materialize-textarea"></textarea>
+                                            <label for="endUserRemark">Remark <span
                                                     class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="transactionId" name="transactionId"
-                                                pattern="[a-zA-Z0-9" title=""
-                                                maxlength="15" />
-                                            <label for="transactionId">Transaction ID</label>
+                                            <input type="text" id="endUsertransactionId" name="transactionId"
+                                                pattern="[A-Z0-9]{18,18}" title="transaction id must be in 18 digit"
+                                                maxlength="18" />
+                                            <label for="endUsertransactionId">Transaction ID</label>
                                         </div>
 
                                         
                                     </div>
-
+									<div id="endUsermainDiv" class="endUsermainDiv">
+									<div id="endUserfilediv" class="endUserfileDiv">	
                                     <div class="row">
                                         <div class="col s12 m6">
-                                            <label for="Category">Document Type </label>
-                                            <select class="browser-default">
+                                            <label for="endUserdocTypetag1">Document Type </label>
+                                            <select class="browser-default" id="endUserdocTypetag1">
                                                 <option value="" disabled selected>Select Document Type </option>
-                                                <option value="1">Passport Number</option>
-                                                <option value="2">Visa Number</option>
-                                                <option value="3">Pan Number</option>
                                             </select>
                                         </div>
 
@@ -269,7 +262,7 @@ style="overflow: inherit !important;">
                                             </h6>
                                             <div class="btn">
                                                 <span>Select File</span>
-                                                <input id="files" type="file" name="files[]" id="filer_input"
+                                                <input id="endUserdocTypeFile1" type="file" name="files[]" id="filer_input"
                                                     multiple="multiple" />
                                             </div>
                                             <div class="file-path-wrapper">
@@ -280,18 +273,20 @@ style="overflow: inherit !important;">
 
                                         <div class="input_fields_wrap"></div>
 
-                                        <div class="col s12 m6 right">
-                                            <button class="btn right add_field_button"><span
+                                      
+                                       
+                                    </div>
+									</div>
+									</div>	
+
+                                      <div class="col s12 m6 right">
+                                            <button class="btn right endUser_add_field_button"><span
                                                     style="font-size: 20px;">+</span> Add More files</button>
                                         </div>
-                                        <p>Required Field are marked with <span class="star">*</span></p>
-                                    </div>
-
-
-                                    
+                                         <p>Required Field are marked with <span class="star">*</span></p>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="input-field col s12 m12 l12 center">
-                                            <a href="#submitGrievance" class="btn modal-trigger">Submit</a>
+                                            <button class="btn" id="saveAnonymousGrieavance" type="submit">Submit</button>
                                             <a href="#cancelMessage" class="btn modal-trigger"
                                                 style="margin-left: 10px;">Cancel</a>
                                         </div>
@@ -300,6 +295,43 @@ style="overflow: inherit !important;">
                                 </div>
                             </form>
                         </div>
+                        
+                        
+                           <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
+                              
+                            <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a>
+                            <h6 class="fixPage-modal-header ">Track Grievance</h6>
+                           <div id="trackGrievanceDiv" style="display: none;">
+                            <div class="col s12 m12 l12">
+                                <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data" id="saveGrievance">
+                                    <div class="row" id="singleInput">
+                                        <!-- <h6>Track Grievance</h6>
+                                        <hr> -->
+                                        <div class="row">
+                                            <div class="input-field col s6 m6">
+                                                <label for="trackGrievanceId">Please Enter The Grievance ID <span class="star">*</span> :</label>
+                                            </div>
+                                            <div class="input-field col s6 m6">
+                                                <input type="text" id="trackGrievanceId" required="required" name="trackGrievanceId" pattern="[A-Za-z0-9]{3,18}" title="Please enter maximum 18 characters only" maxlength="18">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12 center">
+                                                <button class="btn" type="submit" >Submit</button>
+                                                <a href="#cancelRequest" class="btn modal-trigger" style="margin-left: 10px;">Cancel</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </div>
+                               
+                            </div>
+                            <table id="endUsergrivanceLibraryTable" style="display: none"
+								class="responsive-table striped display"></table>
+                               
+                        </div>
+                         
+                        
                     </div>
                 </div>
                 <!--end container-->
@@ -312,7 +344,7 @@ style="overflow: inherit !important;">
     <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
         <div class="footer-copyright">
             <div class="container">
-                <span class="right">Copyright © 2018 Sterlite Technologies Ltd, All rights reserved.</span>
+                <span class="right">Copyright Â© 2018 Sterlite Technologies Ltd, All rights reserved.</span>
             </div>
         </div>
     </footer>
@@ -320,108 +352,218 @@ style="overflow: inherit !important;">
 
     <!-- Grievance Modal start   -->
 
-    <div id="GrievanceMsg" class="modal" style="width: 40%;">
-        <div class="modal-content">
-            <h6 class="modal-header">Submit Grievance Report</h6>
-            <div class="row">
-                <h6>Your grievance report has been successfully submitted. Your Grievance Id is GB12345</h6>
-
-                <p>(Note: Please remember your grievance Id. This is used for future reference)</p>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="index.html" class="btn">ok</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Grievance Modal End -->
 
     <!-- Otp Modal start   -->
 
-    <div id="submitGrievance" class="modal small-modal">
-        <div class="modal-content">
-            <form action="">
-                <h6 class="modal-header">Enter OTP</h6>
-                <p class="center" id="resendOtp" style="display: none;">A text message and e-mail with OTP has been sent
-                </p>
-                <div class="row">
-                    <div class="input-field col s12 m12">
-                        <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Email" />
-                    </div>
 
-                    <div class="input-field col s12 m12">
-                        <input type="text" name="SupplierID" id="SupplierID" placeholder="Enter OTP of Phone" />
-                    </div>
-                </div>
-
-                <a href="#" onclick="document.getElementById('resendOtp').style.display ='block';" class="right">Resend
-                    OTP</a>
-
-                <a href="#GrievanceMsg" class="btn modal-trigger modal-close"
-                    style="width: 100%; margin-top: 20px; margin-bottom: 20px;">Done</a>
-            </form>
-        </div>
-    </div>
 
     <!-- Otp Modal End -->
 
     <!-- cancel Modal start   -->
 
     <div id="cancelMessage" class="modal" style="width: 40%;">
+         <h6 class="modal-header">Cancel</h6>
         <div class="modal-content">
-            <h6 class="modal-header">Cancel</h6>
-            <div class="row">
+           <div class="row">
                 <h6>Are you sure you want to close this window. The form data will be lost</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="index.html" class="btn">yes</a>
+                        <a href="./redirectToHomePage" class="btn">yes</a>
                         <button class="modal-close btn" style="margin-left: 10px;">no</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
+     <div id="exceptionMessage" class="modal" style="width: 40%;">
+       <h6 class="modal-header">Save Grievance</h6>
+        <div class="modal-content">
+            <div class="row">
+                <h6>Something wrong happened ,please resubmit the form</h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        
+                        <button class="modal-close btn" style="margin-left: 10px;">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="GrievanceMsg" class="modal">
+    <h6 class="modal-header">Submit Grievance Report</h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 >Your grievance report has been successfully submitted. Your Grievance Id is <span id="sucessMessageGrievance"></span></h6>
+
+                <p >(Note: Please remember your grievance Id. This is used for future reference)</p>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="./redirectToHomePage" class="btn">ok</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- cancel Modal End -->
 
+	<div id="replyModal" class="modal" style="width: 50%;">
+        <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
+             <h6 class="modal-header"><spring:message code="input.reply" /></h6>
+             <div class="modal-content">
+             <form id="replymessageForm" onsubmit="return saveGrievanceReply()" method="POST" enctype="multipart/form-data" >
+            <div class="row">
+                <div class="col s12 m12">
+                    <h6 style="font-weight: bold;"><spring:message code="input.grievID" /><span id="grievanceIdToSave"></span></h6>
+                    <span id="grievanceTxnId" style="display: none;"></span>
+                    <hr>
+                </div>
 
-    <script>
-        $(document).ready(function () {
-            $('.modal').modal();
-        });
-    </script>
+                <div class="col s12 m12" id="viewPreviousMessage">
+                   <!--  <h6 style="float: left; font-weight: bold;" id="mesageUserType"> </h6>
+                    <h6 style="float: left;"></h6>
+                        <span style="float:right;"></span> -->
+                </div>
+               
+ 
+               <div class="col s12 m12">
+                  <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
+                    <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
+                    <input type="text" style="display: none" id="grievanceUserid">
+                    <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
+                </div>
+               <!--   <div class="file-field col s12 m12">
+                    <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
+                    <div class="file-path-wrapper"><input class="file-path validate" type="text"
+                            placeholder="">
+                        <div>
+                            <p id="myFiles"></p>
+                        </div>
+                    </div>
+                </div> -->
+                
+ <div id="mainDiv" class="mainDiv">
+<div id="filediv" class="fileDiv">
+<div class="row">
+<div class="file-field col s12 m6">
+<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<div class="btn">
+<span><spring:message code="input.selectfile" /></span>
+<input type="file" name="files[]" id="docTypeFile1"  multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" multiple
+placeholder="Upload one or more files">
+<div>
+<p id="myFiles"></p>
+</div>
+</div>
+</div>
+<div class="col s12 m6 l6" style="margin-top: 8px;">
+<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
+<select class="browser-default" id="docTypetag1" >
+<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+
+</select>
+
+</div>
+</div>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            var max_fields = 15; //maximum input boxes allowed
-            var wrapper = $(".input_fields_wrap"); //Fields wrapper
-            var add_button = $(".add_field_button"); //Add button ID
-            var x = 1; //initlal text box count
-            $(add_button).click(function (e) { //on add input button click
-                e.preventDefault();
-                if (x < max_fields) { //max input box allowed
-                    x++; //text box increment
-                    $(wrapper).append(
-                        '<div class="row"><div class="col s12 m6"><label for="Category">Document Type</label><select class="browser-default"><option value="" disabled selected>Select Document Type </option><option value="1">Passport Number</option><option value="2">Visa Number</option><option value="3">Pan Number</option></select></div><div class="file-field col s12 m6" style="margin-top: 25px;"><div class="btn"><span>Select File</span><input id="files" type="file" name="files[]" id="filer_input" multiple="multiple" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text" placeholder="Upload File"></div></div><div style="cursor:pointer;background-color:red; margin-right: 2%;" class="remove_field btn right btn-info">- remove</div></div>'
-                    ); //add input box
-                }
-            });
-            $(wrapper).on("click", ".remove_field", function (e) { //user click on remove text
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-            })
-        });
-    </script>
+</div>
+
+</div>
+<div class="col s12 m6 right">
+<button class="btn right add_field_button"><span
+style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
+</div>
+              <div class="col s12 m12">  <p>
+              <p id="closeTicketCheckbox" style="float: left; display: none;">
+                        <label>
+                            <span><spring:message code="modal.message.griev.closeticket" /></span>
+                            <input type="checkbox" id="closeTicketCheck" />
+                        </label>
+                    </p> <br>
+				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
+			
+
+			<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
+			
+                </div>
+                <div class="col s12 m12 center">
+                 <p id="closeTicketCheckbox" style="float: left; display: none;">
+                        <label>
+                            <span><spring:message code="modal.message.griev.closeticket" /></span>
+                            <input type="checkbox" id="closeTicketCheck" />
+                        </label>
+                    </p>
+                    <button class="right btn" type="submit"><spring:message code="input.reply" /></button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+ <div id="replyMsg" class="modal">
+    <h6 class="modal-header"><spring:message code="modal.header.grievancereply" /></h6>
+    <div class="modal-content">
+        
+        <div class="row">
+            <h6 id="showReplyResponse"><spring:message code="modal.message.grievance.reply" /><span id="replyGrievanceId"> </span> <spring:message code="modal.issuccessful" /></h6>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 center">
+                <div class="input-field col s12 center">
+                    <a href="./redirectToHomePage" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  <div id="errorModal" class="modal">
+         <h6 class="modal-header">Check Stock Status</h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6 id="">stock not found please enter valid Transaction Id.
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <!-- <a href="homePage" class="btn">Yes</a> -->
+                        <button class="modal-close btn" style="margin-left: 10px;">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="manageAccount" class="modal" style="width: 40%;">
+<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
+<h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
+<div class="modal-content">
+<div id="live-chat">
+<div class="chat">
+<div class="chat-history">
+<div class="chat-message clearfix" id="chatMsg">
+
+</div> <!-- end chat-message -->
 
 
-
-
+</div>
+</div>
+</div>
+</div>
+</div> 
     <!-- ================================================
     Scripts
     ================================================ -->
@@ -438,6 +580,40 @@ style="overflow: inherit !important;">
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
     <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+<!-- i18n library -->
+	<script type="text/javascript">
+var path="${context}";
+</script>
+
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
@@ -447,13 +623,190 @@ style="overflow: inherit !important;">
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-    <script>
+    
+    <script type="text/javascript"
+		src="${context}/resources/project_js/grievanceManagement.js"></script>
+    <script type="text/javascript"
+		src="${context}/resources/project_js/endUserGrievance.js"></script>
+  <!--   <script>
         $(document).ready(function () {
         	  usertypeDropDownData();
             $('.modal').modal();
         });
       
-    </script>
+        
+        
+        
+    </script> -->
+    
+
+    <script>
+        $(document).ready(function () {
+            $('.modal').modal();
+         
+        });
+  
+    function saveaAonymousGrievance(){
+
+    	var firstName=$('#firstName').val();
+    	var middleName=$('#middleName').val();
+    	var lastName=$('#lastName').val();
+    	var contactNumber=$('#contactNumber').val();
+    	var emailID=$('#emailID').val();
+    	var category=$('#endUsercategory').val();
+    	
+    	var txnId=$('#endUsertransactionId').val();
+    	var remark=$('#endUserRemark').val();
+    	var file=$('#myInput').val();
+    	var fieldId=1;
+    	var fileInfo =[];
+    	var formData= new FormData();
+    	var fileData = [];
+    	
+    	var x;
+    	var filename='';
+    	var filediv;
+    	var i=0;
+    	var formData= new FormData();
+    	var docTypeTagIdValue='';
+    	var filename='';
+    	$('.endUserfileDiv').each(function() {	
+
+    		
+    		var x={
+    		"docType":$('#endUserdocTypetag'+fieldId).val(),
+    		"fileName":$('#endUserdocTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+    		}
+    		formData.append('files[]',$('#endUserdocTypeFile'+fieldId)[0].files[0]);
+    		fileInfo.push(x);
+    		fieldId++;
+    		i++;
+    	});
+    	
+    	var multirequest={
+    			"attachedFiles":fileInfo,
+    			"txnId":txnId,
+    			"categoryId":category,
+    			"remarks":remark,
+    			"email":emailID,
+    			"firstName":firstName,
+    			"lastName":lastName,
+    			"middleName":middleName,
+    			"phoneNo":contactNumber,
+    	}
+    	
+    	formData.append('fileInfo[]',JSON.stringify(fileInfo));
+    	formData.append('multirequest',JSON.stringify(multirequest));
+    	/*formData.append('categoryId',category);
+    	formData.append('remarks',remark);
+    */
+    	$.ajax({
+    		url: './saveEndUserGrievance',
+    		type: 'POST',
+    		data: formData,
+    		mimeType: 'multipart/form-data',
+    		processData: false,
+    		contentType: false,
+    		async:false,
+    		success: function (data, textStatus, jqXHR) {
+    			console.log(data);
+    			 $("#saveAnonymousGrieavance").prop('disabled', true);
+    			var x=data;
+    			var y= JSON.parse(x);
+    			 $('#GrievanceMsg').openModal(); 
+    			 $('#sucessMessageGrievance').text(y.txnId); 
+    			
+    		},
+    		error: function (jqXHR, textStatus, errorThrown) {
+    			/* console.log("error in ajax") */
+    			 $('#exceptionMessage').openModal(); 
+    		}
+    	});
+    return false;
+
+    }
+    
+    
+    
+	var max_fields = 15; //maximum input boxes allowed
+	var wrapper = $(".endUsermainDiv"); //Fields wrapper
+	var add_button = $(".endUser_add_field_button"); //Add button ID
+	var x = 1; //initlal text box count
+	var id=2;
+	$(".endUser_add_field_button").click(function (e) { //on add input button click
+		e.preventDefault();
+		if (x < max_fields) { //max input box allowed
+			x++; //text box increment
+			$(wrapper).append(
+					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
+					/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
+			); //add input box
+		}
+		
+		
+		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+
+
+			for (i = 0; i < data.length; i++) {
+				console.log(data[i].interp);
+				var optionId=id-1;
+				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag'+optionId);
+				
+
+			}
+		});
+		id++;
+
+	});
+
+$(wrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
+ e.preventDefault();
+ var Iid=id-1;
+ /*alert("@@@"+Iid)*/
+ $('#endUserfilediv'+Iid).remove();
+ $(this).parent('div').remove();
+ x--;
+ id--;
+
+ })
+ 
+ 
+$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		console.log(data[i].interp);
+		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag1');
+		
+	}
+});
+$.getJSON('./getDropdownList/GRIEVANCE_CATEGORY', function(data) {
+	for (i = 0; i < data.length; i++) {
+		console.log(data[i].interp);
+		$('<option>').val(data[i].value).text(data[i].interp).appendTo('#endUsercategory');
+		
+	}
+});
+    
+
+if($('#pageTypeValue').val()==0)
+{
+	console.log("if condition ++++++++");
+$('#endUserRaiseGrievance').css("display", "block");
+$('#trackGrievanceDiv').css("display", "none");
+$('#trackGrievanceHeader').css("display", "none");
+}
+else
+{
+console.log("else condition ++++++++");
+$('#endUserRaiseGrievance').css("display", "none");
+$('#trackGrievanceDiv').css("display", "block");
+}
+    
+  
+  
+  
+   </script>
+
+    
 
    
 </body>

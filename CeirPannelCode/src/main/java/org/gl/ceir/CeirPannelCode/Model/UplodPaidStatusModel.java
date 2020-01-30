@@ -5,8 +5,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class UplodPaidStatusModel {
 	private String currency,currencyInterp,deviceIdType,deviceIdTypeInterp,deviceSerialNumber,deviceStatus,deviceType,deviceTypeInterp ,
-	   firstImei,secondImei,thirdImei,fourthImei,multiSimStatus,taxPaidStatus,taxPaidStatusInterp,txnId,price,nid,modifiedOn,createdOn,country;
+	   firstImei,secondImei,thirdImei,fourthImei,multiSimStatus,taxPaidStatus,taxPaidStatusInterp,txnId,price,nid,modifiedOn,createdOn,country,origin;
 
+	
+	
+	
 	@Override
 	public String toString() {
 		return "UplodPaidStatusModel [currency=" + currency + ", currencyInterp=" + currencyInterp + ", deviceIdType="
@@ -16,8 +19,22 @@ public class UplodPaidStatusModel {
 				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", multiSimStatus=" + multiSimStatus
 				+ ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp + ", txnId="
 				+ txnId + ", price=" + price + ", nid=" + nid + ", modifiedOn=" + modifiedOn + ", createdOn="
-				+ createdOn + ", country=" + country + "]";
+				+ createdOn + ", country=" + country + ", origin=" + origin + "]";
 	}
+	
+	
+
+	public String getOrigin() {
+		return origin;
+	}
+
+
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+
 
 	public String getCurrency() {
 		return currency;

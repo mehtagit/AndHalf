@@ -830,6 +830,13 @@ var contextpath = "${context}";
 	</div>
 	
     <script> 
+    var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.parent.$('#langlist').on('change', function() {
+		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.location.assign("./editProfile?lang="+lang);
+
+	}); 
+	
         $(document).ready(function () {
         	questionDataByCategory();
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});

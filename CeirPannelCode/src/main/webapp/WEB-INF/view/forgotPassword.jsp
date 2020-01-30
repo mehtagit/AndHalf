@@ -299,28 +299,8 @@ var contextpath='${context}';
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
 
-
-    <script>
-        $(document).ready(function () {
-            //$('.modal').openModal();
-            questionData();
-        });
-        
-        var password = document.getElementById("password")
-        , confirm_password = document.getElementById("confirm_password");
-
-        function validatePassword(){
-        if(password.value != confirm_password.value) {
-          confirm_password.setCustomValidity("Passwords Don't Match");
-        } else {
-          confirm_password.setCustomValidity('');
-        }
-        }
-        password.onchange = validatePassword;
-        confirm_password.onkeyup = validatePassword;
-
-        // $('.dropdown-trigger').dropdown();
-    </script>
+	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
+    
 
   
 </body>

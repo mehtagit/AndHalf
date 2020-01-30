@@ -79,6 +79,13 @@ public class TrcController {
 		return modelAndView;
 
 	}
+	
+	@GetMapping("register-form-importer")
+	public ModelAndView regiserImporterForm() {
+		ModelAndView modelAndView = new ModelAndView("importerTypeApproved");
+		return modelAndView;
+
+	}
 
 	@ResponseBody
 	@PostMapping("register-approved-device")

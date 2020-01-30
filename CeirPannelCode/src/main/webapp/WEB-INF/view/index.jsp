@@ -90,7 +90,7 @@ var contextpath = "${context}";
 <li class="haed-btn-style"><a href="${context}/login" style="color: #000;"><spring:message code="registration.login" /></a></li>
 <li class="haed-btn-style" style="padding: 0;">
 <select id="usertypes" class="browser-default" onchange="openRegistrationPage(this.value)" style="height: 35px; width: 150px;">
-<option value="" disabled selected>Registration</option>
+<option value="" disabled selected><spring:message code="select.registration" /></option>
 <option value="Importer">Importer</option>
 <option value="Distributor">Distributor</option>
 
@@ -107,23 +107,23 @@ var contextpath = "${context}";
 
 <li class="haed-btn-style" style="padding: 0;">
 <select id="usertypes" class="browser-default" onchange="openEndUserGrievancePage(this)" style="height: 35px; width: 150px;">
-<option value="" disabled selected>Register Grievance</option>
+<option value="" disabled selected><spring:message code="select.registerGrievance" /></option>
 <option value="0">Report Grievance</option>
 <option value="1">Track Grievance</option>
 </select>
 </li>
 <li class="haed-btn-style" style="padding: 0;">
 <select id="usertypes" class="browser-default" onchange="openEndUserStockPage(this)" style="height: 35px; width: 150px;">
-<option value="" disabled selected>Stock</option>
+<option value="" disabled selected><spring:message code="select.stock" /></option>
 <option value="0">Upload Stock</option>
 <option value="1">Check Upload Status</option>
 </select>
 </li>
 <li class="haed-btn-style"><a href="./checkDeviceslogin" style="color: #000;" ><spring:message code="registration.checkdevice" /></a></li>
-<li class="haed-btn-style"><a href="#" style="color: #000;">
-<spring:message code="registration.uploaddocument" /></a></li>
-<li class="haed-btn-style"><a href="#" style="color: #000;">
-<spring:message code="registration.registercomplaint" /></a></li>
+     <li class="haed-btn-style"><a onclick="selfRegisterDevice()" style="color: #000;">Register
+                                    Device</a></li>
+                            <li class="haed-btn-style"><a onclick="updateVisaValidity()" style="color: #000;">Update
+                                    Visa Validity</a></li>
 <!-- <li class="haed-btn-style"><a href="#" style="color: #000;">Report
 Grievance</a></li> -->
 <!-- <li class="haed-btn-style">
@@ -175,7 +175,7 @@ Grievance</a></li> -->
 <!-- <div class="col s1"><i class="fa fa-lock" aria-hidden="true" style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i></div> -->
 <div class="input-field col s12">
 <select class="browser-default">
-<option value="" disabled selected>User type</option>
+<option value="" disabled selected><spring:message code="select.userType" /></option>
 <option value="Air">Importer</option>
 <option value="Land">Distributor</option>
 <option value="Water">Retailer</option>

@@ -3,19 +3,15 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
-import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
-import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -153,6 +148,8 @@ public class UploadPaidStatusView {
 			@RequestParam(name="deviceIdType", required = false) Integer deviceIdType,
 			@RequestParam(name="deviceType",required = false) Integer deviceType,
 			@RequestParam(name="nid",required = false) String nid,
+			@RequestParam(name="origin",required = false) String origin,
+			@RequestParam(name="txnId",required = false) String txnId,
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
 			HttpServletRequest request,
@@ -170,6 +167,7 @@ public class UploadPaidStatusView {
 		filterRequestuserpaidStatus.setDeviceIdType(deviceIdType);
 		filterRequestuserpaidStatus.setDeviceType(deviceType);
 		filterRequestuserpaidStatus.setNid(nid);
+		filterRequestuserpaidStatus.setTxnId(txnId);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file);
 		Gson gson= new Gson(); 
@@ -218,4 +216,25 @@ public class UploadPaidStatusView {
 		log.info("---------response--------"+response);
 		return response;
 	}
+	
+	
+	@GetMapping("selfRegisterDevice")
+	public ModelAndView selfRegisterDevice(HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		log.info("---entry point in self register page");
+		modelAndView.setViewName("selfRegisterDevice");
+		log.info("---exit  point in self register page");
+		return modelAndView;
+	}
+	
+	@GetMapping("updateVisaValidaity")
+	public ModelAndView updateVisaValidaity(HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		log.info("---entry point in update visa validity page");
+		modelAndView.setViewName("endUserUpdateVisaValidity");
+		log.info("---exit  point in update visa validity page");
+		return modelAndView;
+	}
 }
+
+

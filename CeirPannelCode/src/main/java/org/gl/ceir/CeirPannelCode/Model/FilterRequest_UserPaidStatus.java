@@ -3,7 +3,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class FilterRequest_UserPaidStatus {
 	
 	private Integer deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId;
-	private String createdOn,modifiedOn,nid,remarks,userType,txnId;
+	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString;
 	  private Long imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
@@ -65,6 +65,18 @@ public class FilterRequest_UserPaidStatus {
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
 	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
@@ -95,6 +107,18 @@ public class FilterRequest_UserPaidStatus {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+	public String getSearchString() {
+		return searchString;
+	}
+	public void setSearchString(String searchString) {
+		this.searchString = searchString;
+	}
 	public Long getImei1() {
 		return imei1;
 	}
@@ -106,12 +130,10 @@ public class FilterRequest_UserPaidStatus {
 		return "FilterRequest_UserPaidStatus [deviceIdType=" + deviceIdType + ", deviceType=" + deviceType
 				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", action=" + action
 				+ ", featureId=" + featureId + ", roleTypeUserId=" + roleTypeUserId + ", userId=" + userId
-				+ ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
-				+ nid + ", remarks=" + remarks + ", userType=" + userType + ", txnId=" + txnId + ", imei1=" + imei1
-				+ "]";
+				+ ", userTypeId=" + userTypeId + ", createdOn=" + createdOn + ", startDate=" + startDate + ", endDate="
+				+ endDate + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", remarks=" + remarks + ", userType="
+				+ userType + ", txnId=" + txnId + ", origin=" + origin + ", searchString=" + searchString + ", imei1="
+				+ imei1 + "]";
 	}
-	  
-	  
 	
-		  
 }
