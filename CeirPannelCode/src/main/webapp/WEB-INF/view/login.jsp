@@ -161,7 +161,8 @@ a#newUserLink {
 
 										<div class="input-field col s12" id="show_hide_password">
 											<input type="password" required="required" class=""
-												name="password" id="password" maxlength="10" oncopy="return false" onpaste="return false" /> <label
+												name="password" id="password" maxlength="10"
+												oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
 											<div class="input-field-addon">
@@ -232,6 +233,87 @@ a#newUserLink {
 	<!-- END MAIN -->
 
 
+<div id="changePasswordMessage" class="modal" style="width: 40%;">
+<h6 class="modal-header">Change Password</h6>
+<div class="modal-content">
+<div class="row">
+<h6 id="cPassSucessMsg"></h6>
+</div>
+<div class="row">
+<div class="center">
+<a href="" class="btn">ok</a>
+</div>
+</div>
+</div>
+</div>
+
+
+	<div id="changePassword" class="modal" style="width: 40%;">
+		<h6 class="modal-header">Change Password</h6>
+		<div class="modal-content">
+			<form onsubmit="return changeExpiryPassword()">
+				<div class="row">
+
+                   <input type="hidden" id="userId" >
+					<span style="text-align: center; color: red;" id="errorMsg"></span>
+					<div class="col s1">
+						<i class="fa fa-lock" aria-hidden="true"
+							style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
+					</div>
+					<div class="input-field col s11">
+						<input type="password" id="oldPassword" class="validate"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							maxlength="10" min="8"
+							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+							required="required" /> <label for="oldPassword"
+							class="center-align" style="color: #000; font-size: 12px;">
+							Old Password </label>
+						<div class="password"></div>
+					</div>
+
+					<div class="col s1">
+						<span class="fa-passwd-reset fa-stack"
+							style="margin-top: 12px; color: #ff4081;"> <i
+							class="fa fa-undo fa-stack-2x"></i> <i
+							class="fa fa-lock fa-stack-1x"></i>
+						</span>
+					</div>
+					<div class="input-field col s11">
+
+						<label for="newPassword" style="color: #000; font-size: 12px;">New
+							Password</label> <input type="password"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							maxlength="10" min="8"
+							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+							required="required" id="password" class="" />
+					</div>
+
+					<div class="col s1">
+						<i class="fa fa-check-square-o" aria-hidden="true"
+							style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
+					</div>
+					<div class="input-field col s11">
+
+						<label for="confirm_password"
+							style="color: #000; font-size: 12px;">Confirm Password</label> <input
+							type="password" class="" id="confirm_password"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							maxlength="10" min="8"
+							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+							required="required" />
+					</div>
+				</div>
+				<div class="row" style="margin-top: 30px;">
+					<div class="input-field col s12 center">
+						<button class="btn" id="updateStatusBtn">Submit</button>
+						<button type="button" class="btn modal-close"
+							style="margin-left: 10px;">Cancel</button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -275,7 +357,8 @@ a#newUserLink {
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-	<script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/login.js"></script>
 </body>
 
 </html>
