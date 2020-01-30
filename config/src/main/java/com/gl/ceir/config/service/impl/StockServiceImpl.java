@@ -29,8 +29,10 @@ import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.ConsignmentUpdateRequest;
+import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -124,6 +126,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	StatesInterpretaionRepository statesInterpretaionRepository;
+	
+	@Autowired
+	UserFeignClient userFeignClient;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -165,6 +170,8 @@ public class StockServiceImpl {
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// TODO Check if this feature is supported in current period.
+				// userFeignClient.validatePeriod(new FeatureValidateReq(4, 17));
+				
 				if(validateUserProfileOfStock(stockMgmt)) {
 					user = User.getDefaultUser();
 
