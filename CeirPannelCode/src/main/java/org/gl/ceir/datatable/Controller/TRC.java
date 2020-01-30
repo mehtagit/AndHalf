@@ -229,7 +229,7 @@ public class TRC implements CRUD{
 			
 			if("CEIRAdmin".equals(userType)) {
 				//Dropdown items
-				String[] selectParam= {"select","CEIR Admin Status ","Status",""};
+				String[] selectParam= {"select",Translator.toLocale("table.CEIRAdminStatus"),"Status",""};
 				for(int i=0; i< selectParam.length; i++) {
 					inputFields= new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -244,7 +244,7 @@ public class TRC implements CRUD{
 				pageElement.setDropdownList(dropdownList);
 			}else if("TRC".equals(userType)){
 				//Dropdown items
-				String[] selectParam= {"select","Status ","Status",""};
+				String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
 				for(int i=0; i< selectParam.length; i++) {
 					inputFields= new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -279,7 +279,7 @@ public class TRC implements CRUD{
 	
 			}else {
 				//input type date list		
-				String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID","","text","TAC","tac",""};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
 				for(int i=0; i< dateParam.length; i++) {
 					dateRelatedFields= new InputFields();
 					dateRelatedFields.setType(dateParam[i]);
