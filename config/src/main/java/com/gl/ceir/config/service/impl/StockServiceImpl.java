@@ -653,6 +653,7 @@ public class StockServiceImpl {
 					sfm.setModifiedOn( stockMgmt.getModifiedOn().format(dtf));
 					sfm.setFileName( stockMgmt.getFileName());
 					sfm.setSupplierName(stockMgmt.getSuplierName());
+					sfm.setQuantity(stockMgmt.getQuantity());
 
 					logger.debug(sfm);
 

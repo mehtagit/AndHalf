@@ -521,75 +521,6 @@ public class ConsignmentServiceImpl {
 		queryStatus = Boolean.TRUE;
 		return queryStatus;
 	}
-
-	public FileDetails getFilteredConsignmentInFile(FilterRequest filterRequest) {
-		String fileName = null;
-		Writer writer   = null;
-		ConsignmentFileModel cfm = null;
-
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_consignment_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_consignment_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-
-		String filePath = filepath.getValue();
-		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
-		StatefulBeanToCsv<ConsignmentFileModel> csvWriter = null;
-		List< ConsignmentFileModel > fileRecords = null;
-		ConsignmentCsvMappingStrategy<ConsignmentFileModel> mappingStrategy = new ConsignmentCsvMappingStrategy<>();
-		mappingStrategy.setType(ConsignmentFileModel.class);
-		mappingStrategy.setColumnMapping(mappingStrategy.generateHeader());
-
-		try {
-			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);
-			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Consignment.csv";
-			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<ConsignmentFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
-					.withMappingStrategy(mappingStrategy)
-					.build();
-
-			if( !consignmentMgmts.isEmpty() ) {
-
-				fileRecords = new ArrayList<>(); 
-
-				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
-
-					cfm = new ConsignmentFileModel(consignmentMgmt.getStateInterp(), 
-							consignmentMgmt.getTxnId(), 
-							consignmentMgmt.getSupplierName(), consignmentMgmt.getTaxInterp(), consignmentMgmt.getFileName(), 
-							consignmentMgmt.getCreatedOn().format(dtf),
-							consignmentMgmt.getModifiedOn().format(dtf));
-
-					logger.debug(cfm);
-
-					fileRecords.add(cfm);
-				}
-
-				csvWriter.write(fileRecords);
-			}
-
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
-					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, ""));
-			logger.info("AUDIT : Saved file export request in audit.");
-
-			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
-			try {
-
-				if( Objects.nonNull(writer) )
-					writer.close();
-			} catch (IOException e) {}
-		}
-	}
 	
 	public FileDetails getFilteredConsignmentInFileV2(FilterRequest filterRequest) {
 		String fileName = null;
@@ -613,7 +544,7 @@ public class ConsignmentServiceImpl {
 		try {
 			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest);
 			
-			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_")+"_Consignment.csv";
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Consignment.csv";
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
 			mappingStrategy.setType(ConsignmentFileModel.class);
 			
@@ -627,7 +558,8 @@ public class ConsignmentServiceImpl {
 							consignmentMgmt.getTxnId(), 
 							consignmentMgmt.getSupplierName(), consignmentMgmt.getTaxInterp(), consignmentMgmt.getFileName(), 
 							consignmentMgmt.getCreatedOn().format(dtf),
-							consignmentMgmt.getModifiedOn().format(dtf));
+							consignmentMgmt.getModifiedOn().format(dtf),
+							consignmentMgmt.getQuantity());
 					
 					fileRecords.add(cfm);
 				}

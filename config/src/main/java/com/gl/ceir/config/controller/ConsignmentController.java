@@ -47,10 +47,10 @@ public class ConsignmentController {
 	@RequestMapping(path = "/consignment/register", method = RequestMethod.POST)
 	public GenricResponse uploadFile(@RequestBody ConsignmentMgmt consignmentUploadRequest) {
 
-		logger.info("Consignment Register Request="+consignmentUploadRequest);
+		logger.info("Consignment Register Request = " + consignmentUploadRequest);
 
 		GenricResponse genricResponse = consignmentServiceImpl.registerConsignment( consignmentUploadRequest);
-		logger.info("Consignment Register Response="+genricResponse);
+		logger.info("Consignment Register Response = " + genricResponse);
 
 		return genricResponse;
 	}
@@ -74,7 +74,7 @@ public class ConsignmentController {
 
 		logger.info("Request TO view TO all record of user="+userId);
 
-		List<ConsignmentMgmt> consignment =  consignmentServiceImpl.getAll(userId);
+		List<ConsignmentMgmt> consignment = consignmentServiceImpl.getAll(userId);
 		MappingJacksonValue mapping = new MappingJacksonValue(consignment);
 		logger.info("Response of view Request = " + mapping);
 

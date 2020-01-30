@@ -56,7 +56,7 @@ public class StockMgmt implements Serializable {
 	@Column(length = 15)
 	private String roleType;
 
-	private int  quantity;
+	private int quantity;
 
 	@Column(length = 3)
 	private int stockStatus;
