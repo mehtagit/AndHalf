@@ -71,7 +71,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 @RequestMapping(value=
 {"/viewConsignment"},method={org.springframework.web.bind.annotation.
 RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-public ModelAndView viewConsignment(HttpSession session) {
+public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 ModelAndView mv = new ModelAndView();
 
 

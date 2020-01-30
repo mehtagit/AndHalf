@@ -21,7 +21,7 @@ function registrationDatatable(){
 	var asType = $('#asType').val();
 	var userRoleTypeId = $("#role").val();
 	var status =  $('#recentStatus').val();
-	
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -29,6 +29,7 @@ function registrationDatatable(){
 			"userRoleTypeId" : parseInt(userRoleTypeId),
 			"status" : parseInt(status),
 			"userId":parseInt(userId),
+			"txnId":txn,
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),

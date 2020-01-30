@@ -747,16 +747,16 @@ public class IconsState {
 	/********************************** Icons for DashBoard Notification **********************************/ 
 
 
-	public String dashboardIcon(String userStatus,Integer featureID) {
+	public String dashboardIcon(String userStatus,Integer featureID,String txnID) {
 		// URL link 
-		String viewAction = featureID == 3 ?"./Consignment/viewConsignment" :
-			featureID == 4 ? "./assignDistributor": 
-				featureID == 5 ? "./stolenRecovery" :
-					featureID == 6 ? "./grievanceManagement" :
-						featureID == 7 ? "./stolenRecovery" :
-							featureID == 8 ? "./registrationRequest" :
-								featureID == 11 ? "./manageTypeDevices":
-									featureID == 12 ? "./uploadPaidStatus" :
+		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
+			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
+				featureID == 5 ? "./stolenRecovery?txnID="+txnID+"" :
+					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
+						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
+							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
+								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
+									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										"JavaScript:void(0);";
 		System.out.println("featureID::::::::::"+featureID);
 		// state related Code 

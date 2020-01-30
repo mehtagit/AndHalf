@@ -70,7 +70,10 @@ textarea {
 </style>
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}"
+ data-selected-roleType="${selectedUserTypeId}" 
+ data-stolenselected-roleType="${stolenselectedUserTypeId}"
+ session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -512,6 +515,7 @@ textarea {
 		
 		
 		
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>
 	<script type="text/javascript"

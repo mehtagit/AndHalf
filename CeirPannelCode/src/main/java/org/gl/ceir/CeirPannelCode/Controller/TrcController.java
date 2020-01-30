@@ -64,7 +64,7 @@ public class TrcController {
 		{"/manageTypeDevices"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	public ModelAndView viewManageType(HttpSession session) {
+	public ModelAndView viewManageType(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
 		log.info(" view TRC entry point."); 
 		mv.setViewName("viewManageTypeApproved");

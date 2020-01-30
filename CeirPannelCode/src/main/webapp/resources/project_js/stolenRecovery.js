@@ -334,10 +334,11 @@ function filterStolen(){
 
 
 function Datatable(url,dataUrl){
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
-			"txnId":$('#transactionID').val(),
+			"txnId": txn,
 			"consignmentStatus":parseInt($('#status').val()),
 			"requestType":parseInt($('#requestType').val()),
 			"sourceType":parseInt($('#sourceStatus').val()),

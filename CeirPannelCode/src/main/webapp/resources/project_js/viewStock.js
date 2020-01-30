@@ -286,6 +286,7 @@
 
 
 	function Datatable(url,dataUrl) {
+		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 		var jsonObj = {
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
@@ -294,7 +295,7 @@
 				"userType" : role,
 				"featureId":featureId,
 				"userTypeId":$("body").attr("data-userTypeID"),
-				"txnId":$('#transactionID').val(),
+				"txnId":txn,
 				"consignmentStatus":parseInt($('#StockStatus').val())
 		}
 		if(lang=='km'){
