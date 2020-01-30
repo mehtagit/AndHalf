@@ -163,7 +163,7 @@ var contextpath = "${context}";
 
 <body>
 	<%String userType=request.getParameter("type");
-String usertypeId="${usertypeId}";
+
 %>
 	<!-- Modal End -->
 	<!-- ================================================
@@ -237,8 +237,8 @@ String usertypeId="${usertypeId}";
 								<span id="msg" style="color: red;">${msg}</span>
 							</div>
 
-							<input type="hidden" id="usertypeId" value=""> <input
-								type="hidden" id="usertypeName" value="<%=userType%>">
+							<input type="hidden" id="usertypeId" value="${usertypeId}">
+							<input type="hidden" id="usertypeName" value="<%=userType%>">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -339,7 +339,7 @@ String usertypeId="${usertypeId}";
 								</div> -->
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="email"
+									<input type="email" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
 										required="required"> <label for="email"><spring:message
 											code="input.email" /> <span class="star">*</span> </label>
