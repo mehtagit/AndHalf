@@ -362,7 +362,7 @@ style="overflow: inherit !important;">
 
     <!-- cancel Modal start   -->
 
-    <div id="cancelMessage" class="modal" style="width: 40%;">
+    <div id="cancelMessage" class= " full-screen-modal modal" >
          <h6 class="modal-header">Cancel</h6>
         <div class="modal-content">
            <div class="row">
@@ -379,7 +379,7 @@ style="overflow: inherit !important;">
         </div>
     </div>
     
-     <div id="exceptionMessage" class="modal" style="width: 40%;">
+     <div id="exceptionMessage" class="full-screen-modal modal">
        <h6 class="modal-header">Save Grievance</h6>
         <div class="modal-content">
             <div class="row">
@@ -397,7 +397,7 @@ style="overflow: inherit !important;">
     </div>
     
 
-    <div id="GrievanceMsg" class="modal">
+    <div id="GrievanceMsg" class="full-screen-modal modal">
     <h6 class="modal-header">Submit Grievance Report</h6>
         <div class="modal-content">
             
@@ -415,7 +415,7 @@ style="overflow: inherit !important;">
     </div>
     <!-- cancel Modal End -->
 
-	<div id="replyModal" class="modal" style="width: 50%;">
+	<div id="replyModal" class="full-screen-modal modal" >
         <button class="modal-close btn-flat right" onclick="cleanReplyPopUp()">&times;</button>
              <h6 class="modal-header"><spring:message code="input.reply" /></h6>
              <div class="modal-content">
@@ -468,7 +468,7 @@ placeholder="Upload one or more files">
 </div>
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
+<label for="Category"><spring:message code="input.documenttype" /></label>
 <select class="browser-default" id="docTypetag1" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
@@ -512,7 +512,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
         </div>
     </div>
 
- <div id="replyMsg" class="modal">
+ <div id="replyMsg" class="full-screen-modal modal">
     <h6 class="modal-header"><spring:message code="modal.header.grievancereply" /></h6>
     <div class="modal-content">
         
@@ -528,7 +528,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
         </div>
     </div>
 </div>
-  <div id="errorModal" class="modal">
+  <div id="errorModal" class=" full-screen-modal modal">
          <h6 class="modal-header">Check Stock Status</h6>
         <div class="modal-content">
            
@@ -547,7 +547,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
         </div>
     </div>
     
-    <div id="manageAccount" class="modal" style="width: 40%;">
+    <div id="manageAccount" class=" full-screen-modal modal">
 <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
 <h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
 <div class="modal-content">

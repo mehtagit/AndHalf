@@ -59,7 +59,8 @@
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/intlTelInput.css">
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
   <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -76,94 +77,113 @@
                 <!--start container-->
                 <div class="container">
                     <div class="section">
-                        <div class="row card-panel update-visa-responsive-page">
-                            <form action="">
+                        <div class="row card-panel update-visa-responsive-page" style="width:50%; margin:auto;margin-bottom: 50px;margin-top: 20px;">
+                           
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         <h5>Update Visa Validity</h5>
                                         <hr style="margin-bottom: 0px;">
+                                         
                                         <div class="row">
+                       					 
                                             <div id="submitbtn">
-                                                <div class="input-field col s12 m1 l1">
+                                             <div class="input-field col s12 m1 l1">
                                                     <label for="Search" class="center-align ml-10">NID :</label>
                                                 </div>
                                                 <div class="input-field col s12 m3 l3">
-                                                    <input type="text" id="Search" name="Search" placeholder="NID" />
+                                                    <input type="text" id="nidForEndUser" pattern="[A-Za-z0-9]{0,15}" name="Search"  />
                                                 </div>
                                                 <div class="input-field col s12 m2 l2">
-                                                    <button class="btn" type="submit" onclick="hide();">Submit</button>
+                                                    <button class="btn" type="button" onclick="hide();">Submit</button>
                                                 </div>
-                                            </div>
-                                        </div>
+                                               </div>
+                                            
+                                      </div>
+                                       
 
-                                        <div id="no-data" style="display: none;">
+                                        <div id="EndUserInfoForm" style="display: none;">
+                                              <form id="replymessageForm" onsubmit="return updateEndDateVisaDetails()" method="POST" enctype="multipart/form-data" >
                                             <div class="row">
-                                                <div class="input-field col s12 m12">
-                                                    <input type="text" id="passportNumber" name="passportNumber"
-                                                        pattern="[a-zA-Z0-9]" title="" maxlength="15" />
-                                                    <label for="passportNumber">Passport Number <span
+                                                <div class="input-field col s12 m6">
+                                                    <input type="text" id="endUserpassportNumber" name="passportNumber" required
+                                                        pattern="[a-zA-Z0-9]{1,15}" title="Please enter alphabets upto 15 characters only" maxlength="15" />
+                                                    <label for="endUserpassportNumber">Passport Number <span
                                                             class="star">*</span></label>
+                                                </div>
+                                                <div class="file-field col s12 m6" style="margin-top: -8px;">
+                                                    <h6 style="font-size: 12px;">Upload Passport Image <span class="star">*</span></h6>
+                                                    <div class="btn">
+                                                        <span>select file</span>
+                                                        <input type="file" id="uploadPassportID">
+                                                    </div>
+                                                    <div class="file-path-wrapper">
+                                                        <input class="file-path validate" type="text" placeholder="Upload Visa Image" value="">
+                                                    </div>
                                                 </div>
 
                                                 <div class="input-field col s12 m4">
-                                                    <input type="text" id="firstName" name="firstName"
-                                                        pattern="[a-zA-Z]" title="" maxlength="15" />
+                                                    <input type="text" id="endUserfirstName" name="firstName"
+                                                        pattern="[a-zA-Z]{1,20}" required title="Please enter alphabets upto 20 characters only" maxlength="20" />
                                                     <label for="firstName">First Name <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m4">
-                                                    <input type="text" id="middleName" name="middleName"
-                                                        pattern="[a-zA-Z]" title="" maxlength="15" />
-                                                    <label for="middleName">Middle Name</label>
+                                                    <input type="text" id="endUsermiddleName" name="endUsermiddleName"
+                                                        pattern="[a-zA-Z]" title="Please enter alphabets upto 20 characters only" maxlength="20" />
+                                                    <label for="endUsermiddleName">Middle Name</label>
                                                 </div>
 
                                                 <div class="input-field col s12 m4">
-                                                    <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]"
-                                                        title="" maxlength="15" />
-                                                    <label for="lastName">Last Name <span class="star">*</span></label>
+                                                    <input type="text" id="endUserlastName" name="endUserlastName" pattern="[a-zA-Z]{1,20}"
+                                                        title="Please enter alphabets upto 20 characters only" required="required" maxlength="20" />
+                                                    <label for="endUserlastName">Last Name <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m12 l12">
-                                                    <input type="text" name="address"
-                                                        class="form-control boxBorder boxHeight" id="address">
+                                                    <input type="text" name="address" title="Please enter alphabets upto 50 characters only" required="required"
+                                                     pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"  class="form-control boxBorder boxHeight" id="endUseraddress" maxlength="200"> 
                                                     <label for="address">Address(Property Location) <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="streetNumber"
-                                                        class="form-control boxBorder boxHeight" id="streetNumber"
-                                                        maxlength="30">
+                                                    <input type="text" name="streetNumber" required="required"
+                                                       pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"   class="form-control boxBorder boxHeight" id="endUserstreetNumber"
+                                                   title="Please enter alphabets upto 200 characters only"     maxlength="200">
                                                     <label for="streetNumber">Street Number <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="locality"
-                                                        class="form-control boxBorder boxHeight" id="locality"
-                                                        maxlength="20">
+                                                    <input type="text" name="locality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                        class="form-control boxBorder boxHeight" id="endUserlocality"  maxlength="20" required="required">
                                                     <label for="locality">Locality <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="village" id="village" maxlength="20">
+                                                    <input type="text" name="village" id="endUservillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                     maxlength="20" required="required" >
                                                     <label for="village">Village <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="commune" id="commune" maxlength="20">
+                                                    <input type="text" name="commune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+														title="Please enter alphabets and numbers upto 50 characters only"
+                                                     id="endUsercommune" maxlength="50" required="required">
                                                     <label for="commune">Commune <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="district" id="district" maxlength="20">
+                                                    <input type="text" name="district" id="endUserdistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+												required="required"		title="Please enter alphabets and numbers upto 50 characters only" maxlength="50">
                                                     <label for="district">District <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="pin"
-                                                        class="form-control boxBorder boxHeight" id="pin"
+                                                    <input type="text" name="pin"  required="required" pattern="[0-9]{6,10}"
+														title="Please enter Postel code upto 10 Numbers only" 
+                                                        class="form-control boxBorder boxHeight" id="endUserpin"
                                                         maxlength="20">
                                                     <label for="pin">Pincode <span class="star">*</span></label>
                                                 </div>
@@ -172,7 +192,7 @@
                                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
                                                         Country
                                                         <span class="star">*</span></p>
-                                                    <select id="country" class="browser-default" class="mySelect"
+                                                    <select id="country" class="browser-default" required class="mySelect"
                                                         style="padding-left: 0;" required></select>
                                                 </div>
 
@@ -180,37 +200,36 @@
                                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
                                                         Province
                                                         <span class="star">*</span></p>
-                                                    <select id="state" class="browser-default" class="mySelect"
+                                                    <select id="state" class="browser-default" required class="mySelect"
                                                         style="padding-left: 0;" required></select>
                                                 </div>
 
                                                 <div class="input-field col s12 m6">
                                                     <p class="contact-label">Contact Number <span class="star">*</span>
                                                     </p>
-                                                    <input type="tel" name="phone" id="phone" maxlength="15">
+                                                    <input type="tel" required="required" name="phone" id="phone" maxlength="15">
                                                 </div>
 
                                                 <div class="input-field col s12 m6">
-                                                    <input type="text" id="emailID" name="emailID"
-                                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
+                                                    <input type="email" id="endUseremailID" name="emailID"
+                                                        title=""
                                                         maxlength="30" />
-                                                    <label for="emailID">Email ID <span class="star">*</span></label>
+                                                    <label for="emailID">Email ID</label>
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col s12 m6">
                                                     <label for="visaType">Visa Type <span class="star">*</span></label>
-                                                    <select class="browser-default" id="visaType"
+                                                    <select class="browser-default" id="endUservisaType" required
                                                         style="padding: 0; height: 35px;">
                                                         <option value="" disabled selected>Select Visa Type</option>
-                                                        <option value="Yes">Tourist</option>
-                                                        <option value="No">Other</option>
+                                                        
                                                     </select>
                                                 </div>
 
                                                 <div class="input-field col s12 m6">
-                                                    <input type="text" id="datepicker1" name="entryDate" pattern="[]"
+                                                    <input type="text" id="endUserdatepicker1" required="required" name="entryDate" pattern="[]"
                                                         title="" maxlength="15" />
                                                     <label for="datepicker1">Entry Date In Country <span
                                                             class="star">*</span></label>
@@ -220,7 +239,7 @@
                                                     <h6>Upload Visa Image <span class="star">*</span></h6>
                                                     <div class="btn">
                                                         <span>select file</span>
-                                                        <input type="file" id="uploadnationalID"
+                                                        <input type="file" id="endUseruploadnationalID" required="required"
                                                             placeholder="Upload Visa Image">
                                                     </div>
                                                     <div class="file-path-wrapper">
@@ -230,7 +249,7 @@
                                                 </div>
 
                                                 <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                    <input type="text" id="datepicker" name="expiryDate" pattern="[]"
+                                                    <input type="text" id="endUserdatepicker" name="expiryDate"  required="required" pattern="[]"
                                                         title="" maxlength="15" />
                                                     <label for="datepicker">Visa Expiry Date <span
                                                             class="star">*</span></label>
@@ -240,11 +259,12 @@
                                              <p>Required Field are marked with <span class="star">*</span></p>
                                                 <div class="row">
                                                     <div class="input-field col s12 m12 l12 center">
-                                                        <a href="#updateMsg" class="btn modal-trigger">Update</a>
-                                                        <a href="index.html" class="btn"
+                                                        <button  class="btn" type="submit" >Update</button>
+                                                        <a href="./redirectToHomePage" class="btn"
                                                             style="margin-left: 10px;">cancel</a>
                                                     </div>
                                                 </div>
+                                                </form>
                                         </div>
 
                                         <div id="match-data" style="display: none;">
@@ -344,7 +364,7 @@
                                                     <input type="text" id="emailID" name="emailID"
                                                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
                                                         maxlength="30" value="mail@mail.com" disabled />
-                                                    <label for="emailID">Email ID <span class="star">*</span></label>
+                                                    <label for="emailID">Email ID</label>
                                                 </div>
                                             </div>
 
@@ -402,9 +422,10 @@
                                             </div>
                                         </div>
                                     </div>
-                            </form>
+                            
                         </div>
                     </div>
+                </div>
                 </div>
                 <!--end container-->
             </section>
@@ -419,8 +440,7 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
-	<script type="text/javascript"
+	
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
@@ -456,15 +476,28 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 		
 	<script type="text/javascript"
-		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
+		src="${context}/resources/project_js/endUserUpdateVisaValidity.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
-			
+					<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+		
+			<script type="text/javascript"
+		src="${context}/resources/js/intlTelInput.js"></script>
+		
+	<script type="text/javascript">
 
-
+	 var input = document.querySelector("#phone1");
+     window.intlTelInput(input, {
+         utilsScript: "js/utils.js",
+     });
+     
+     var input = document.querySelector("#phone");
+     window.intlTelInput(input, {
+         utilsScript: "js/utils.js",
+     });
+	</script>		
 
 </body>
 </html>
 
-</body>
-</html>

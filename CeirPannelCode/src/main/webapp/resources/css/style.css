@@ -2733,3 +2733,7 @@ height: 2.7rem;
     right: 0;
     padding-right: 10px;
 }
+
+.full-screen-modal {
+    width: 50%;
+}

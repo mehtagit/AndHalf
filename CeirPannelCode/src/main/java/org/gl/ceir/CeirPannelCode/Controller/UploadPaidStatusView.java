@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -234,6 +235,15 @@ public class UploadPaidStatusView {
 		modelAndView.setViewName("endUserUpdateVisaValidity");
 		log.info("---exit  point in update visa validity page");
 		return modelAndView;
+	}
+	
+	@GetMapping("findEndUserByNid")
+	public @ResponseBody EndUserVisaInfo findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid) {
+		log.info("---entry point in update visa validity page");
+		EndUserVisaInfo endUserVisaInfo= new EndUserVisaInfo();
+		
+		log.info("---exit  point in update visa validity page");
+		return endUserVisaInfo;
 	}
 }
 
