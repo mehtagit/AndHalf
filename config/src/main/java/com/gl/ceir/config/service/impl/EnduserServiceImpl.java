@@ -75,7 +75,7 @@ public class EnduserServiceImpl {
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB)) {
 				logger.info("End User with nid [" + nid + "] does exist.");
-				return new GenricResponse(1, "End User does exist.", nid);
+				return new GenricResponse(1, "End User does exist.", nid, endUserDB);
 			}else {
 				logger.info("End User with nid [" + nid + "] does not exist.");
 				return new GenricResponse(0, "User does not exist.", "");
@@ -144,7 +144,8 @@ public class EnduserServiceImpl {
 
 			// End user is not registered with CEIR system.
 			if(Objects.isNull(endUserDB1)) {
-				return new GenricResponse(5, GenericMessageTags.INVALID_USER.getTag(), GenericMessageTags.INVALID_USER.getMessage(), 
+				return new GenricResponse(5, GenericMessageTags.INVALID_USER.getTag(), 
+						GenericMessageTags.INVALID_USER.getMessage(), 
 						endUserDB.getNid());
 				
 			}else {

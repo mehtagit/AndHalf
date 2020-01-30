@@ -271,6 +271,10 @@ public class RegularizedDeviceServiceImpl {
 					
 					// End user is not registered with CEIR system.
 					if(Objects.isNull(endUserDB2)) {
+						if("Y".equalsIgnoreCase(endUserDB.getOnVisa())) {
+							// TODO Set VISA expiry date.
+							
+						}
 						endUserDbRepository.save(endUserDB);
 					}else {
 						regularizedDeviceDbRepository.saveAll(endUserDB.getRegularizeDeviceDbs());

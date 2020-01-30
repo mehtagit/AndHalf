@@ -29,6 +29,7 @@ public interface ConfigTags {
 	String grace_period_for_rgister_device = "grace_period_for_rgister_device";
 	
 	// User
+	String default_visa_expiration_days = "default_visa_expiration_days";
 	
 	// Policy
 	String max_end_user_device_count = "max_end_user_device_count";
