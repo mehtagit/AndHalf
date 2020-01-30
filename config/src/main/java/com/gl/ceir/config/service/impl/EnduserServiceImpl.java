@@ -83,22 +83,45 @@ public class EnduserServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
 	}
+	
+	public GenricResponse updateEndUser(EndUserDB endUserDB) {
+		try {
+			if(Objects.isNull(endUserDB)) {
+				logger.info("Request can't be null.");
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), GenericMessageTags.NULL_REQ.getTag(), null);
+			}
+			
+			EndUserDB endUserDB1 = endUserDbRepository.getByNid(endUserDB.getNid());
+
+			// End user is not registered with CEIR system.
+			if(Objects.nonNull(endUserDB1)) {
+				//logger.info("End User with nid [" + nid + "] does exist.");
+				return new GenricResponse(1, "End User does exist.", endUserDB.getNid());
+			}else {
+				//logger.info("End User with nid [" + nid + "] does not exist.");
+				return new GenricResponse(0, "User does not exist.", "");
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException("Custom Service", e.getMessage());
+		}
+	}
 
 	public GenricResponse updateVisaEndUser(EndUserDB endUserDB) {
 		try {
 			VisaDb latestVisa = null;
 			if(Objects.isNull(endUserDB.getNid())) {
 				logger.info("Request should not have nid as null.");
-				return new GenricResponse(2, GenericMessageTags.NULL_NID, "Request should not have nid as null.", null);
+				return new GenricResponse(2, GenericMessageTags.NULL_NID.getTag(), "Request should not have nid as null.", null);
 			}
 
 			// Check if requested VISA is null or empty.
 			if(Objects.isNull(endUserDB.getVisaDb())) {
 				logger.info("Request visa update should not be null.");
-				return new GenricResponse(3, GenericMessageTags.NULL_VISA, "Request visa update should not be null.", null);
+				return new GenricResponse(3, GenericMessageTags.NULL_VISA.getTag(), "Request visa update should not be null.", null);
 			}else if(endUserDB.getVisaDb().isEmpty()){
 				logger.info("Request visa update should not be empty.");
-				return new GenricResponse(4, GenericMessageTags.EMPTY_VISA, "Request visa update should not be empty.", null);
+				return new GenricResponse(4, GenericMessageTags.EMPTY_VISA.getTag(), "Request visa update should not be empty.", null);
 			}else {
 				latestVisa = endUserDB.getVisaDb().get(0);
 			}
@@ -114,7 +137,7 @@ public class EnduserServiceImpl {
 				if(Objects.isNull(visaDbs)) { 
 					if(visaDbs.isEmpty()) {
 						logger.info("You are not allowed to update Visa." + endUserDB.getNid());
-						return new GenricResponse(3, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED, "You are not allowed to update Visa.", endUserDB.getNid());
+						return new GenricResponse(3, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getTag(), "You are not allowed to update Visa.", endUserDB.getNid());
 					}
 				}else {
 					// Update expiry date of latest Visa
@@ -124,9 +147,9 @@ public class EnduserServiceImpl {
 
 				endUserDbRepository.save(endUserDB1);
 				logger.info("Visa of user have been updated succesfully." +  endUserDB1);
-				return new GenricResponse(0, GenericMessageTags.VISA_UPDATE_SUCCESS, "Visa of user have been updated succesfully.", endUserDB.getNid());
+				return new GenricResponse(0, GenericMessageTags.VISA_UPDATE_SUCCESS.getTag(), "Visa of user have been updated succesfully.", endUserDB.getNid());
 			}else {
-				return new GenricResponse(1, GenericMessageTags.INVALID_USER, "User does not exist.", endUserDB.getNid());
+				return new GenricResponse(1, GenericMessageTags.INVALID_USER.getTag(), "User does not exist.", endUserDB.getNid());
 			}
 
 		} catch (Exception e) {

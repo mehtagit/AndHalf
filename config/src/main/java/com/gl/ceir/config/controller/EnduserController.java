@@ -51,11 +51,11 @@ public class EnduserController {
 
 		MappingJacksonValue mapping = null;
 		if(file == 0) {
-			logger.info("Request to view filtered consignment = " + filterRequest);
-			Page<EndUserDB> consignment =  enduserServiceImpl.filter(filterRequest, pageNo, pageSize);
+			logger.info("Request to view filtered end users = " + filterRequest);
+			Page<EndUserDB> consignment = enduserServiceImpl.filter(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(consignment);
 		}else {
-			logger.info("Request to export filtered consignment = " + filterRequest);
+			logger.info("Request to export filtered end users = " + filterRequest);
 			FileDetails fileDetails = enduserServiceImpl.getFilteredEndUserInFileV2(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
