@@ -69,37 +69,37 @@
                 <form id="registrationForm">
                     <div class="card-panel registration-form">
                         <div class="row">
-                            <h5>View Individual Information</h5>
+                            <h5>View Individual Information<spring:message code="input.ViewIndividual" /></h5>
                             <hr>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="input-field col s12 m4 l4">
                                     <input type="text" name="firstName" id="firstName" value="${registration.firstName}" maxlength="20" placeholder="" disabled="">
-                                    <label for="firstName" class="center-align active">First Name</label>
+                                    <label for="firstName" class="center-align active"><spring:message code="input.firstName" /></label>
                                 </div>
 
                                 <div class="input-field col s12 m4 l4">
                                     <input type="text" name="middleName" id="middleName" value="${registration.middleName}"  maxlength="20" placeholder="" disabled="">
-                                    <label for="middleName" class="active">Middle Name</label>
+                                    <label for="middleName" class="active"><spring:message code="input.middleName" /></label>
                                 </div>
 
                                 <div class="input-field col s12 m4 l4">
                                     <input type="text" name="lastName" id="lastName" value="${registration.lastName}" maxlength="20" placeholder="" disabled="">
-                                    <label for="lastName" class="active">Last Name </label>
+                                    <label for="lastName" class="active"><spring:message code="input.lastName" /> </label>
                                 </div>
 
                                 <div class="input-field col s12 m6">
                                     <input type="text" name="asType" id="asType" value="${registration.asTypeName}" maxlength="20" placeholder="" disabled="">
-                                    <label for="asType" class="active">As Type </label>
+                                    <label for="asType" class="active"><spring:message code="input.AsType" /></label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6" id="passportNumberDiv">
                                     <input type="text" name="passportNumber" id="passportNumber" value="${registration.passportNo}" maxlength="20" placeholder="" disabled="">
-                                    <label for="passportNumber" class="active">National ID</label>
+                                    <label for="passportNumber" class="active"><spring:message code="registration.nationalid" /></label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="nationalityInformation" id="nationalityInformation" value="${registration.nidFilename}" maxlength="20" value="file.csv" disabled="">
-                                    <label for="nationalityInformation" class="active">Upload Nationality Information </label>
+                                    <label for="nationalityInformation" class="active"><spring:message code="registration.uploadNationalityInformation" /> </label>
                                    <span> <a href="#" onclick="previewFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a></span> 
                                     
                                 </div>
@@ -108,12 +108,12 @@
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="email" id="email" maxlength="30" value="${registration.email}" placeholder="" disabled="">
-                                    <label for="email" class="active">Email </label>
+                                    <label for="email" class="active"><spring:message code="input.email" /></label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="phone" id="phone" value="${registration.phoneNo}" maxlength="10" placeholder="" disabled="">
-                                    <label for="phone" class="active">Contact Number </label>
+                                    <label for="phone" class="active"><spring:message code="input.contactNum" /> </label>
                                 </div>
 
 
@@ -122,79 +122,77 @@
                             <div class="row">
                                 <div class="input-field col s12 m12 l12">
                                     <input type="text" name="address" id="address" value="${registration.propertyLocation}" placeholder="" disabled="">
-                                    <label for="address" class="active">Address(Property Location)</label>
+                                    <label for="address" class="active"><spring:message code="input.address" /></label>
                                 </div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="streetNumber" id="streetNumber" value="${registration.street}" maxlength="30" placeholder="" disabled="">
-                                    <label for="streetNumber" class="active">Street Number</label>
+                                    <label for="streetNumber" class="active"><spring:message code="input.streetNumber" /></label>
                                 </div>
                                 
                                 <div class="input-field col s12 m6 l6">
 									<input type="text" name="village" id="village" maxlength="20" value="${registration.village}" disabled="" placeholder="">
-									<label for="village">Village</label>
+									<label for="village"><spring:message code="input.village" /></label>
 								</div>
 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="locality" id="locality" value="${registration.locality}" maxlength="20" placeholder="" disabled="">
-                                    <label for="locality" class="active">Locality </label>
+                                    <label for="locality" class="active"><spring:message code="input.locality" /></label>
                                 </div>
                                 
                                 <div class="input-field col s12 m6 l6">
 									<input type="text" name="district" id="district" maxlength="20" value="${registration.district	}" disabled="" placeholder="">
-									<label for="district">District</label>
+									<label for="district"><spring:message code="input.district" /></label>
 								</div>
                                 
                                 
                                  <div class="input-field col s12 m6 l6">
                                        <input type="text" name="commune" id="commune" maxlength="20" value="${registration.commune}" disabled="" placeholder="">
-                                       <label for="commune" class="active">Commune </label>
+                                       <label for="commune" class="active"><spring:message code="input.commune" /> </label>
                                   </div>
 								
 								<div class="input-field col s12 m6 l6">
 									  <input type="text" name="pin" id="pin" maxlength="20" value="${registration.postalCode}" disabled="" placeholder="">
-									  <label for="pin">Postal code </label>
+									  <label for="pin"><spring:message code="registration.postalcode" /> </label>
 								</div> 	
 									
                                 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="country" id="country" value="${registration.country}" maxlength="20" placeholder="" disabled="">
-                                    <label for="country" class="active">Country</label>
+                                    <label for="country" class="active"><spring:message code="input.Country" /></label>
                                 </div>
                                 
                                 
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="province" id="province" value="${registration.province}" maxlength="20" placeholder="" disabled="">
-                                    <label for="province" class="active">Province</label>
+                                    <label for="province" class="active"><spring:message code="input.province" /></label>
                                 </div>
 						</div>
 
                             <div class="row">
                                     <div class="col s12 m6 l6">
-                                            <label for="vatNumber">VAT Registration </label>
+                                            <label for="vatNumber"><spring:message code="registration.vatregistration" /> </label>
                                             <div class=" boxHeight">
-                                                <input class="with-gap" name="group3" type="radio" disabled="">
-                                                Yes
-                                                <input class="with-gap" name="group3" type="radio" style="margin-left: 20px;" disabled="">
-                                                No
+                                                <input class="with-gap" name="group3" type="radio" disabled=""><spring:message code="modal.yes" />
+                                                <input class="with-gap" name="group3" type="radio" style="margin-left: 20px;" disabled=""><spring:message code="modal.no" />
                                             </div>
                                </div>
 
                                 <div class="input-field col s12 m6" id="vatNumberField">
                                     <input type="text" name="roleType" id="roleType" value="${registration.type}" maxlength="16" placeholder="" disabled="">
-                                    <label for="roleType" class="active">Role Type </label>
+                                    <label for="roleType" class="active"><spring:message code="table.RoleType" /> </label>
                                 </div>
 
                                 <div class="input-field col s12 m6" id="vatNumberField">
                                     <input type="text" name="vatNumber" id="vatNumber" value="${registration.vatStatus}" maxlength="16" placeholder="" disabled="">
-                                    <label for="vatNumber" class="active">VAT Number </label>
+                                    <label for="vatNumber" class="active"><spring:message code="registration.vatnumber" /> </label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                           	<div class="input-field col s12 center">
-                                  <a class="btn modal-close" href="./registrationRequest">cancel</a>
+                                  <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.cancel" /></a>
                             </div>
                         </div>
 
