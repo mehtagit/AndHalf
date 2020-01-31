@@ -1,4 +1,3 @@
-
 package org.gl.ceir.CeirPannelCode;
 
 import org.springframework.boot.SpringApplication;
