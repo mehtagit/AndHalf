@@ -127,8 +127,9 @@ public class StockServiceImpl {
 	@Autowired
 	StatesInterpretaionRepository statesInterpretaionRepository;
 	
-	@Autowired
-	UserFeignClient userFeignClient;
+	/*
+	 * @Autowired UserFeignClient userFeignClient;
+	 */
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -171,6 +172,7 @@ public class StockServiceImpl {
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// TODO Check if this feature is supported in current period.
 				// userFeignClient.validatePeriod(new FeatureValidateReq(4, 17));
+				
 				
 				if(validateUserProfileOfStock(stockMgmt)) {
 					user = User.getDefaultUser();

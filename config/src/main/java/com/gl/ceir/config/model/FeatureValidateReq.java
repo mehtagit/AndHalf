@@ -6,20 +6,20 @@ public class FeatureValidateReq implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private int featureID;
+	private int featureId;
 	private int usertypeId;
 	
-	public FeatureValidateReq(int featureID, int usertypeId) {
-		this.featureID = featureID;
+	public FeatureValidateReq(int featureId, int usertypeId) {
+		this.featureId = featureId;
 		this.usertypeId = usertypeId;
 	}
 
-	public int getFeatureID() {
-		return featureID;
+	public int getFeatureId() {
+		return featureId;
 	}
 
-	public void setFeatureID(int featureID) {
-		this.featureID = featureID;
+	public void setFeatureId(int featureID) {
+		this.featureId = featureID;
 	}
 
 	public int getUsertypeId() {
@@ -37,8 +37,8 @@ public class FeatureValidateReq implements Serializable{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("FeatureValidateReq [featureID=");
-		builder.append(featureID);
+		builder.append("FeatureValidateReq [featureId=");
+		builder.append(featureId);
 		builder.append(", usertypeId=");
 		builder.append(usertypeId);
 		builder.append("]");
