@@ -40,12 +40,14 @@ public class LoginController {
 			return loginService.checkLogin(user,session);
 	}
 	
+	
 	@ResponseBody
 	@RequestMapping(value = "/changeLanguage/{lang}",method = {RequestMethod.POST})
 	public HttpResponse changeLanguage(@PathVariable("lang")String lang,HttpSession session){
 		    
 			return loginService.changeLanguage(lang,session);
   }
+	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		return loginService.logout(session);
@@ -63,6 +65,11 @@ public class LoginController {
 	loginService.redirectToHome(response);
 	}
 
+	@RequestMapping(value = "changeExpirePassword",method = RequestMethod.POST)
+	@ResponseBody
+	public  HttpResponse changePassword(@RequestBody Password password) {
+		return loginService.changeExpirePassword(password);
+	}
 
 	@RequestMapping(value = "/forgotPassword",method = RequestMethod.GET)
 	public ModelAndView forgotPassword(){ 

@@ -72,7 +72,9 @@ var path="${context}";
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-grievanceStatus="${grievanceStatus}" >
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -304,10 +306,12 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js"></script>
-	<script type="text/javascript"
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/grievanceManagement.js"></script>
+		<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 		
 	
 </body>

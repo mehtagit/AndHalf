@@ -344,7 +344,7 @@
 														
 														
 														<div class="col s12 m6 l6">
-															<label>Multiple Sim Status  <span class="star">*</span></label> <select
+															<label>Multiple Sim Status  </label> <select
 																class="browser-default" id="singleStolenSimStatus">
 																<option value="" disabled selected> SelectMultiple Sim Status 
 																	</option>

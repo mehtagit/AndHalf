@@ -65,7 +65,7 @@
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
-	<section id="content">
+		<section id="content" style="margin:0 0.5rem">
                 <!--start container-->
                 <div class="container">
                     <div class="section">

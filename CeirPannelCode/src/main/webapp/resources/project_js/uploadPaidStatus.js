@@ -237,6 +237,8 @@
 
 	var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
 function table(url,dataUrl){
+	var txnIdValue = $("body").attr("session-valueTxnID");
+var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var request={
 		"origin":"CUSTOMS",
 			"endDate":$('#endDate').val(),
@@ -248,11 +250,12 @@ function table(url,dataUrl){
 			"userType":$("body").attr("data-roleType"),
 			"deviceIdType":parseInt($('#deviceIDType').val()),
 			"deviceType":parseInt($('#deviceTypeFilter').val()),
-			"txnId":$('#transactionID').val(),
+			"txnId":txn,
 			"consignmentStatus": null,
 			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}
 	
+
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
@@ -913,7 +916,6 @@ function deviceApprovalPopup(imei,date,txnId){
 				"userId":parseInt(userId),
 				"userType": $("body").attr("data-roleType")	  	
 		}
-
 		$.ajax({
 			url : './approveRejectDevice',
 			data : JSON.stringify(rejectRequest),

@@ -152,7 +152,9 @@ input[type='search'] {
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}" session-value="${not empty param.NID ? param.NID : 'null'}">
+	data-selected-consignmentStatus="${consignmentStatus}" 
+	session-value="${not empty param.NID ? param.NID : 'null'}"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -887,6 +889,8 @@ input[type='search'] {
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
+		
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/uploadPaidStatus.js"></script>
 	<script type="text/javascript"

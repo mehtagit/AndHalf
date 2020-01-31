@@ -82,7 +82,7 @@
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
-	session-value="en">
+	session-value="en" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 <%-- <%
   out.println(session.getAttribute("usertype"));
@@ -645,7 +645,7 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
 							pattern="[0-9]{0,7}" title="Please enter price in numbers"
-							required placeholder="" /> <label for="totalPrice"
+							 placeholder="" /> <label for="totalPrice"
 							class="center-align"><spring:message code="input.totalprice" /></label>
 					</div>
 
@@ -654,7 +654,7 @@
 							class="browser-default">
 							<option value="" disabled selected><spring:message code="input.currency" /></option>
 
-						</select> <input type="text" required="required" id="hideCurrency"
+						</select> <input type="text"  id="hideCurrency"
 							style="display: none;">
 					</div>
 
@@ -784,13 +784,14 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
+		
 			<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 

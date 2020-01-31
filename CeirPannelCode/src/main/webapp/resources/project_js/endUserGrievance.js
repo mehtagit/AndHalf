@@ -10,8 +10,8 @@
 			function endUsergrivanceLibraryTable(){
 						var filterRequest={
 						        "featureId":parseInt(featureId),
-								"grievanceId":$('#trackGrievanceId').val(),
-								"grievanceStatus":-1
+						        "grievanceId":$('#trackGrievanceId').val(),
+						        "grievanceStatus":-1
 				      }
 						$('#endUsergrivanceLibraryTable').css("display", "block");
 						$('#trackGrievanceDiv').css("display", "none");

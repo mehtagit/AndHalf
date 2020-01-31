@@ -66,7 +66,10 @@
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 
+data-selected-roleType="${selectedUserTypeId}" 
+data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -217,7 +220,9 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-		<!-- i18n library -->
+		
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"

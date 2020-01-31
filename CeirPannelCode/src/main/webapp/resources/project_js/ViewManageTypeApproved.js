@@ -9,7 +9,6 @@ window.parent.$('#langlist').on('change', function() {
 }); 
 
 $.i18n().locale = lang;	
-
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
 	'km': './resources/i18n/km.json'
@@ -46,13 +45,14 @@ function typeApprovedDataTable(lang){
 //**************************************************Type Approved table**********************************************
 
 function Datatable(Url,dataUrl){
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 if(userType=="CEIRAdmin"){
 var userId = 0;
 		var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 			  	"tac" : $('#tac').val(),
-			  	"txnId" : $('#transactionID').val(),
+			  	"txnId" : txn,
 			  	"userId":userId,
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -65,7 +65,7 @@ var userId = 0;
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 			  	"tac" : $('#tac').val(),
-			  	"txnId" : $('#transactionID').val(),
+			  	"txnId" : txn,
 			  	"userId":userId,
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),

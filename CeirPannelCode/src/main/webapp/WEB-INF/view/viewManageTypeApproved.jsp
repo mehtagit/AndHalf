@@ -198,7 +198,6 @@ textarea {
 									
 
 				</div>
-
 				<div class="row ">
 				<div class="center  popup-btn-div" style="margin-top: 10px;">
 					<button class="modal-close btn" type="button" id="Cancel"
@@ -359,7 +358,7 @@ textarea {
 				</h6> -->
 			</div>
 			<div class="row">
-				<h6><spring:message code="input.transactionId" /><span id="ApproveTacTxnId"></span> ?</h6>
+				<h6><spring:message code="input.approveTACStatus" /><span id="ApproveTacTxnId"></span> ?</h6>
 				<input type="text" id="setApproveTacTxnId"
 					style="display: none">
 			</div>
@@ -405,7 +404,7 @@ textarea {
 				</h6> -->
 			</div>
 			<div class="row">
-				<h6><spring:message code="input.transactionID" /> <span id="RejectTacTxnId"></span> ?</h6>
+				<h6><spring:message code="input.rejectTAC" /> <span id="RejectTacTxnId"></span> ?</h6>
 				<input type="text" id="setRejectTacTxnId"
 					style="display: none">
 			</div>
@@ -505,15 +504,9 @@ textarea {
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-		
-		
-		
-		
-		
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>		
+		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>	
 
 </body>
 </html>

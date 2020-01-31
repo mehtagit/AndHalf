@@ -1,4 +1,5 @@
-			var featureId = 6;
+
+var featureId = 6;
 			var cierRoletype = sessionStorage.getItem("cierRoletype");
 
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -18,7 +19,7 @@
 						documenttype=$.i18n('documenttype');
 						selectfile=$.i18n('selectfile');
 						selectDocumentType=$.i18n('selectDocumentType');
-					console.log("done");
+				
 				});
 
 
@@ -44,31 +45,27 @@
 			//**************************************************Grievance table**********************************************
 
 			function grievanceDataTable(lang){
+				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+	
 				var grievancePageSource =localStorage.getItem("grievancePageSource");
 				var grievanceSessionUsesFlag;
-				console.log("grievancePageSource=="+grievancePageSource);
 				var grievanceStatus=$('#recentStatus').val();
-				console.log("grievanceStatus=="+grievanceStatus);
 				if(grievanceStatus==null)
 				{
 					grievanceStatus=-1;
-					console.log("**********"+grievanceStatus);
 				}
 				else{
-					console.log("selected user status==*"+grievanceStatus);
 					grievanceStatus=$('#recentStatus').val();
 				}
 				if(grievancePageSource=="viaDashBoard")
 				{
 					grievanceSessionUsesFlag=1;
-					console.log("1111111");
 				}
 				else{
 					grievanceSessionUsesFlag=0;
-					console.log("00000000");
 				}
 				localStorage.removeItem('grievancePageSource');
-				console.log("grievanceSessionUsesFlag=="+grievanceSessionUsesFlag);
+			
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
 						"endDate":$('#endDate').val(),
@@ -78,7 +75,7 @@
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						"txnId":$('#transactionID').val(),
+						"txnId":txn,
 						"grievanceId":$('#grievanceID').val(),
 						"userType":$("body").attr("data-roleType"),
 
@@ -93,7 +90,6 @@
 					type: 'POST',
 					dataType: "json",
 					success: function(result){
-						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 						var table=	$("#grivanceLibraryTable").DataTable({
 							destroy:true,
 							"serverSide": true,
@@ -213,14 +209,14 @@
 
 
 							var grievanceStatus= $("body").attr("data-grievanceStatus");
-							console.log("#################33"+grievanceStatus);
+							
 							if(grievanceStatus=="")
 							{
-								console.log("grievance status is blank ");
+								
 
 							}
 							else{
-								console.log(" grievanceStatus is Not blank ");
+								
 								$("#recentStatus").val(grievanceStatus).change();
 
 
@@ -231,16 +227,13 @@
 						var grievanceId = $("body").attr("data-grievanceId");
 						var txnid = $("body").attr("data-grievanceTxnId");
 
-						console.log("*******************"+txnid+" grievanceId="+grievanceId);
 						$('#transactionID').val(txnid);
 						$('#grievanceID').val(grievanceId);
 						if(txnid=="" )
 						{
-							console.log("txnid is null");
 						}
 						else{
-							console.log("txnid is not null")
-							$('label[for=TransactionID]').remove();
+						$('label[for=TransactionID]').remove();
 
 						}
 
@@ -277,20 +270,13 @@
 					currentDate=now.getDate();
 				}
 				var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-				//alert("today"+today);
-				console.log("dispatche="+dispatcDate);
-				console.log("todays parse date"+Date.parse(today));
-				console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
+				
 				if(Date.parse(today)>Date.parse(dispatcDate))
 				{
 					myFunction("dispatche date should be greater then or equals to today");
 					$('#expectedDispatcheDate').val("");
 				}
-
-				//alert("current date="+today+" dispatche date="+dispatcDate)
-			}
+}
 
 			function arrivalDateValidation(){
 				var currentDate;
@@ -299,25 +285,17 @@
 				if(now.getDate().toString().charAt(0) != '0'){
 					currentDate='0'+now.getDate();
 
-					/* alert("only date="+currentDate); */
 				}
 				else{
 					currentDate=now.getDate();
 				}
 				var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-				//alert("today"+today);
-				console.log("dispatche="+dispatcDate);
-				console.log("todays parse date"+Date.parse(today));
-				console.log("dispatche parse date"+Date.parse(dispatcDate));
-
-
 				if(Date.parse(today)>Date.parse(dispatcDate))
 				
 							{
 					myFunction("Arrival date should be greater then or equals to today");
 					$('#expectedArrivalDate').val("");
 				}
-				//alert("current date="+today+" dispatche date="+dispatcDate)
 			}
 
 			$('.datepicker').on('mousedown',function(event){
@@ -339,14 +317,11 @@
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-
-						console.log(JSON.stringify(data));
 						$('#replyModal').openModal();
 						$('#grievanceIdToSave').text(grievanceId);
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
-						console.log("usertype=="+usertype);
 						$("#viewPreviousMessage").empty();
 						for(var i=0; i<data.length; ++i)
 						{
@@ -358,11 +333,9 @@
 						if(usertype=='CEIRAdmin')
 						{
 							$("#closeTicketCheckbox").css("display","block");
-							console.log("block");
 						}
 						else{
 							$("#closeTicketCheckbox").css("display","none");	
-							console.log("none");
 						}
 
 
@@ -402,7 +375,6 @@
 				var  grievanceIdToSave= $('#grievanceIdToSave').text();
 				var  grievanceTxnId=  $('#grievanceTxnId').text();
 
-				console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="+grievanceTicketStatus);
 				var fieldId=1;
 				var fileInfo =[];
 				var formData= new FormData();
@@ -457,9 +429,7 @@
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						console.log(data);
 						$('#replyMsg').openModal();
-						console.log(data.txnId);
 						if(data.errorCode=="0")
 						{
 							
@@ -485,32 +455,22 @@
 			{
 
 
-
-
-				console.log(projectPath+path);
-				$.ajax({
+			$.ajax({
 					url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
 					type: 'GET',
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						console.log(JSON.stringify(data));
 						$('#chatMsg').empty();
 						$('#manageAccount').openModal();
-						console.log("****projectPath"+projectPath);
-						console.log("+++++path"+path);
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
-						console.log("--projectpath--"+projectpath);
-						for(var i=0; i<data.length; i++)
+							for(var i=0; i<data.length; i++)
 						{
-							console.log("iiiiiii"+i);
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
-									
-									console.log("jjjjjj"+j);
 									$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 								}
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
@@ -541,8 +501,6 @@
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				console.log("--------"+pageSize+"---------"+pageNo);
-				console.log(" grievanceStartDate  ="+grievanceStartDate+"  grievanceEndDate=="+grievanceEndDate+"  grievancetxnId="+grievancetxnId+" grievanceId ="+grievanceId+"grievanceStatus  "+grievanceStatus)
 				window.location.href="./exportGrievance?grievanceStartDate="+grievanceStartDate+"&grievanceEndDate="+grievanceEndDate+"&grievancetxnId="+grievancetxnId+"&grievanceId="+grievanceId+"&grievanceStatus="+grievanceStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 			}
 
@@ -550,9 +508,7 @@
 			
 			$(document).ready(function(){
 				$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-					console.log("@@@@@"+JSON.stringify(data));
 					for (i = 0; i < data.length; i++) {
-						console.log(data[i].interp);
 						$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
 						$('#docTypetagValue1').val(data[i].value);
 					}
@@ -564,7 +520,6 @@
 
 			function cleanReplyPopUp()
 			{
-				console.log("reset form function");
 				$('#replymessageForm').trigger("reset");
 			}
 
@@ -591,12 +546,10 @@
 
 
 					for (i = 0; i < data.length; i++) {
-						console.log(data[i].interp);
 						var optionId=id-1;
 						$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
 						$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
-						console.log('#----docTypetag'+optionId);
-
+						
 					}
 				});
 				id++;

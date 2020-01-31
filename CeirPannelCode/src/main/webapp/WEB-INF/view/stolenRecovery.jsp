@@ -1444,12 +1444,17 @@ type="submit" ><spring:message code="button.update" /></button>
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/reportBlock.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>			
+		src="${context}/resources/project_js/reportBlock.js"></script>			
 
 </body>
 </html>

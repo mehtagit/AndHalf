@@ -10,14 +10,14 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	window.location.assign("./Consignment/viewConsignment?lang="+lang);				
+	window.location.assign("registrationRequest?lang="+lang);				
 }); 
 
 $.i18n().locale = lang;	
 
 $.i18n().load( {
-	'en': '../resources/i18n/en.json',
-	'km': '../resources/i18n/km.json'
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
 } ).done( function() {
 	
 });
@@ -37,7 +37,7 @@ function registrationDatatable(){
 	var asType = $('#asType').val();
 	var userRoleTypeId = $("#role").val();
 	var status =  $('#recentStatus').val();
-	
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -45,14 +45,19 @@ function registrationDatatable(){
 			"userRoleTypeId" : parseInt(userRoleTypeId),
 			"status" : parseInt(status),
 			"userId":parseInt(userId),
+			"txnId":txn,
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			
 	}
 	
+	if(lang=='km'){
+				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			}
+
 	$.ajax({
-		url: 'headers?type=adminRegistration',
+		url: 'headers?type=adminRegistration&lang='+lang,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -66,6 +71,9 @@ function registrationDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+							"sUrl": langFile  
+						},
 				ajax: {
 					url : 'registrationData',
 					type: 'POST',
@@ -131,7 +139,7 @@ function pageRendering(){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-							"<option>"+dropdown[i].title+
+							"<option value='-1'>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -139,7 +147,7 @@ function pageRendering(){
 			}
 			
 			$("#registrationTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-			$("#registrationTableDiv").append("<div class='col s12 m2'><a onclick='exportButton()' type='button' class='export-to-excel right'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#registrationTableDiv").append("<div class=' col s3 m2 l1'><a onclick='exportButton()' type='button' class='export-to-excel right'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
