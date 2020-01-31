@@ -39,6 +39,10 @@ public class VisaDb implements Serializable {
 	@Column(length = 50)
 	private String visaNumber;
 	
+	@Column(length = 50)
+	@NotNull
+	private String visaFileName;
+	
 	@NotNull
 	private String entryDateInCountry;
 	
@@ -115,11 +119,21 @@ public class VisaDb implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public String getVisaFileName() {
+		return visaFileName;
+	}
+
+	public void setVisaFileName(String visaFileName) {
+		this.visaFileName = visaFileName;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("VisaDb [createdOn=");
+		builder.append("VisaDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
@@ -127,12 +141,17 @@ public class VisaDb implements Serializable {
 		builder.append(visaType);
 		builder.append(", visaNumber=");
 		builder.append(visaNumber);
+		builder.append(", visaFileName=");
+		builder.append(visaFileName);
 		builder.append(", entryDateInCountry=");
 		builder.append(entryDateInCountry);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
+		builder.append(", endUserDB=");
+		builder.append(endUserDB);
 		builder.append("]");
 		return builder.toString();
 	}
+
 	
 }

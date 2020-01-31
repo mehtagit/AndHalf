@@ -41,19 +41,20 @@ public class EnduserController {
 
 		return mapping;
 	}
-	
-	@ApiOperation(value = "Save Regularized DB of end User", response = GenricResponse.class)
+
+	@ApiOperation(value = "Save End User", response = GenricResponse.class)
 	@PostMapping("/end-user")
-	public MappingJacksonValue saveEndUser( String nid) {
+	public MappingJacksonValue saveEndUser(@RequestBody EndUserDB endUserDB) {
 
 		MappingJacksonValue mapping = null;
-
-		GenricResponse genricResponse = enduserServiceImpl.endUserByNid(nid);
+		logger.info("Request to save end users = " + endUserDB);
+		GenricResponse genricResponse = enduserServiceImpl.saveEndUser(endUserDB);
+		logger.info("Response of save end users = " + endUserDB);
 		mapping = new MappingJacksonValue(genricResponse);
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "pagination View filtered consignment", response = ConsignmentMgmt.class)
 	@PostMapping("/filter/end-users")
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,

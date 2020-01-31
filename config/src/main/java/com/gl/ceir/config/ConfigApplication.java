@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
@@ -23,6 +24,7 @@ import com.gl.ceir.config.service.DeviceSnapShotService;
 @EnableJpaAuditing
 @EnableAutoConfiguration
 @EnableCaching
+@EnableFeignClients
 public class ConfigApplication {
 
 	public static void main(String[] args) {

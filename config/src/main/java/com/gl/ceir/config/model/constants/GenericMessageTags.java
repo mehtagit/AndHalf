@@ -13,7 +13,8 @@ public enum GenericMessageTags {
 	USER_UPDATE_SUCCESS("USER_UPDATE_SUCCESS", "User have been updated successfully."),
 	VISA_EMPTY("VISA_EMPTY", "Visa information in request not found"),	
 	DISCREPENCY_IN_CONFIG("DISCREPENCY_IN_CONFIG", "Discrepancy found in configuration."),
-	USER_REGISTER_SUCCESS("USER_REGISTER_SUCCESS", "User have been registered successfully.");
+	USER_REGISTER_SUCCESS("USER_REGISTER_SUCCESS", "User have been registered successfully."),
+	FEATURE_NOT_ALLOWED("FEATURE_NOT_ALLOWED", "This functionality is not supported now.");
 	
 	private String tag;
 	private String message;

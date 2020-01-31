@@ -37,15 +37,20 @@ public class VisaHistoryDb implements Serializable {
 	@Column(length = 50)
 	private String visaNumber;
 	
+	@Column(length = 50)
+	@NotNull
+	private String visaFileName;
+	
 	private String visaExpiryDate;
 	
 	private Long userId;
 	
-	public VisaHistoryDb(int visaType, String visaNumber, String visaExpiryDate, Long userId) {
+	public VisaHistoryDb(int visaType, String visaNumber, String visaExpiryDate, Long userId, String visaFileName) {
 		this.visaType = visaType;
 		this.visaNumber = visaNumber;
 		this.visaExpiryDate = visaExpiryDate;
 		this.userId = userId;
+		this.visaFileName = visaFileName;
 	}
 
 	public LocalDateTime getCreatedOn() {
@@ -108,6 +113,14 @@ public class VisaHistoryDb implements Serializable {
 		return serialVersionUID;
 	}
 
+	public String getVisaFileName() {
+		return visaFileName;
+	}
+
+	public void setVisaFileName(String visaFileName) {
+		this.visaFileName = visaFileName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -121,6 +134,8 @@ public class VisaHistoryDb implements Serializable {
 		builder.append(visaType);
 		builder.append(", visaNumber=");
 		builder.append(visaNumber);
+		builder.append(", visaFileName=");
+		builder.append(visaFileName);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
 		builder.append(", userId=");
@@ -128,5 +143,7 @@ public class VisaHistoryDb implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 	
 }

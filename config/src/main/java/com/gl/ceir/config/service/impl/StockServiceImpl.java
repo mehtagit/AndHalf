@@ -50,6 +50,7 @@ import com.gl.ceir.config.model.Usertype;
 import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -69,6 +70,7 @@ import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.CustomMappingStrategy;
+import com.gl.ceir.config.util.HttpResponse;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -126,10 +128,9 @@ public class StockServiceImpl {
 
 	@Autowired
 	StatesInterpretaionRepository statesInterpretaionRepository;
-	
-	/*
-	 * @Autowired UserFeignClient userFeignClient;
-	 */
+
+	@Autowired 
+	UserFeignClient userFeignClient;
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
@@ -170,10 +171,14 @@ public class StockServiceImpl {
 				isStockAssignRequest = Boolean.TRUE;
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
-				// TODO Check if this feature is supported in current period.
-				// userFeignClient.validatePeriod(new FeatureValidateReq(4, 17));
-				
-				
+				// Check if this feature is supported in current period.
+				HttpResponse response = userFeignClient.validatePeriod(new FeatureValidateReq(4, 17));
+				if(response.getStatusCode() == 420) {
+					logger.info("Feature [Stock] user [End User]" + GenericMessageTags.FEATURE_NOT_ALLOWED.getMessage());
+					return new GenricResponse(420, GenericMessageTags.FEATURE_NOT_ALLOWED.getTag(), 
+							GenericMessageTags.FEATURE_NOT_ALLOWED.getMessage(), "");
+				}
+
 				if(validateUserProfileOfStock(stockMgmt)) {
 					user = User.getDefaultUser();
 

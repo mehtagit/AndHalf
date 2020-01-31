@@ -89,6 +89,9 @@ public class EndUserDB implements Serializable {
 	
 	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private UserDepartment userDepartment;
+	
+	@Column(length = 50)
+	private String passportFileName;
 
 	public Long getId() {
 		return id;
@@ -256,6 +259,13 @@ public class EndUserDB implements Serializable {
 	public void setUserDepartment(UserDepartment userDepartment) {
 		this.userDepartment = userDepartment;
 	}
+	
+	public String getPassportFileName() {
+		return passportFileName;
+	}
+	public void setPassportFileName(String passportFileName) {
+		this.passportFileName = passportFileName;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -267,6 +277,8 @@ public class EndUserDB implements Serializable {
 		builder.append(modifiedOn);
 		builder.append(", nid=");
 		builder.append(nid);
+		builder.append(", txnId=");
+		builder.append(txnId);
 		builder.append(", firstName=");
 		builder.append(firstName);
 		builder.append(", middleName=");
@@ -279,6 +291,14 @@ public class EndUserDB implements Serializable {
 		builder.append(street);
 		builder.append(", locality=");
 		builder.append(locality);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
 		builder.append(", province=");
 		builder.append(province);
 		builder.append(", country=");
@@ -287,8 +307,24 @@ public class EndUserDB implements Serializable {
 		builder.append(email);
 		builder.append(", phoneNo=");
 		builder.append(phoneNo);
+		builder.append(", docType=");
+		builder.append(docType);
+		builder.append(", docTypeInterp=");
+		builder.append(docTypeInterp);
 		builder.append(", regularizeDeviceDbs=");
 		builder.append(regularizeDeviceDbs);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append(", onVisa=");
+		builder.append(onVisa);
+		builder.append(", visaDb=");
+		builder.append(visaDb);
+		builder.append(", isVip=");
+		builder.append(isVip);
+		builder.append(", userDepartment=");
+		builder.append(userDepartment);
+		builder.append(", passportFileName=");
+		builder.append(passportFileName);
 		builder.append("]");
 		return builder.toString();
 	}

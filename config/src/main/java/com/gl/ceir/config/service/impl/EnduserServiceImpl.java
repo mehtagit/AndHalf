@@ -30,7 +30,6 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -39,7 +38,6 @@ import com.gl.ceir.config.model.VisaHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
-import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.EndUserFileModel;
@@ -229,7 +227,7 @@ public class EnduserServiceImpl {
 		logger.info("Visa of user have been updated succesfully." +  endUserDB);
 
 		visaHistoryDBRepository.save(new VisaHistoryDb(visaDb.getVisaType(), visaDb.getVisaNumber(), 
-				visaDb.getVisaExpiryDate(), visaDb.getEndUserDB().getId()));
+				visaDb.getVisaExpiryDate(), visaDb.getEndUserDB().getId(), visaDb.getVisaFileName()));
 		logger.info("Visa of user have been updated in history." +  visaDb);
 		
 		status = Boolean.TRUE;
