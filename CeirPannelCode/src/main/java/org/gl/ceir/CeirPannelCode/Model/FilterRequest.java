@@ -1,5 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class FilterRequest {
 	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid;
 	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType;

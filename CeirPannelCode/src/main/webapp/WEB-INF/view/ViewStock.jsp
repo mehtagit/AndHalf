@@ -84,7 +84,9 @@
 
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
-	data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+	data-selected-roleType="${selectedUserTypeId}"
+	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -523,6 +525,7 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>

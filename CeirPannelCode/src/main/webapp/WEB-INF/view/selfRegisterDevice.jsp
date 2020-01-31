@@ -685,8 +685,8 @@
                                     <p>Required Field are marked with <span class="star">*</span></p>
                                     <div class="row" style="padding-bottom: 50px;">
                                         <div class="input-field col s12 m12 center">
-                                            <a href="#successMsg" class="btn modal-trigger">Submit</a>
-                                            <a href="index.html" class="btn" style="margin-left: 10px;">cancel</a>
+                                            <button type="button" class="btn">Submit</button>
+                                            <a href="JavaScript:void(0)" class="btn" style="margin-left: 10px;">cancel</a>
                                         </div>
                                     </div>
                                 </div>

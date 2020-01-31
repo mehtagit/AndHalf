@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
@@ -57,7 +58,8 @@ public class UploadPaidStatusView {
 
 
 	@GetMapping("uploadPaidStatus")
-	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session) {
+	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
+			,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView modelAndView = new ModelAndView();
 		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
 			modelAndView.setViewName("uploadPaidStatus");
@@ -234,6 +236,15 @@ public class UploadPaidStatusView {
 		modelAndView.setViewName("endUserUpdateVisaValidity");
 		log.info("---exit  point in update visa validity page");
 		return modelAndView;
+	}
+	
+	@GetMapping("findEndUserByNid")
+	public @ResponseBody EndUserVisaInfo findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid) {
+		log.info("---entry point in update visa validity page");
+		EndUserVisaInfo endUserVisaInfo= new EndUserVisaInfo();
+		
+		log.info("---exit  point in update visa validity page");
+		return endUserVisaInfo;
 	}
 }
 

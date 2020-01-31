@@ -108,7 +108,7 @@ var contextpath = "${context}";
 
 <body>
 	<%String name=request.getParameter("type");%>
-
+String userType=request.getParameter("type");
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
@@ -388,7 +388,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail"
+									<input type="email" name="authorityEmail" maxlength="320"
 										class="form-control boxBorder boxHeight" id="authorityEmail">
 									<label for="authorityEmail"><spring:message
 											code="registration.reportingAuthorityEmailid" /></label>

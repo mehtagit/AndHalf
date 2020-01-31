@@ -313,8 +313,8 @@ public class StolenDatatableController {
 			
 			//This Block is for all other Stolen Upper Filter/Button Forms------------------------------------------------
 			
-			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
+			String[] names = { "HeaderButton", Translator.toLocale("button.repoertStolen/Recovery"), "openStolenRecoveryModal()",
+					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 

@@ -321,9 +321,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@PostMapping(value="/checkDevice")
 				public @ResponseBody GenricResponse viewDetails(FilterRequest filterRequest);
-				
-				
-
+					
 				//************************************ manage User Feign  *************************************************
 
 				@RequestMapping(value="/filter/end-users" ,method=RequestMethod.POST) 

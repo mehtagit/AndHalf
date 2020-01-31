@@ -87,7 +87,7 @@ public class NotificationDatatableController {
 				  String featureName = dataInsideList.getFeatureName();
 				  String message =  dataInsideList.getMessage();
 				  String userStatus = (String) session.getAttribute("userStatus");
-				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId());			   
+				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId(),txnID);			   
 				  Object[] finalData={createdOn,txnID,featureName,message,action}; 
 				  List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				  finalList.add(finalDataList);

@@ -390,6 +390,13 @@ header .brand-logo {
   padding: 14px 20px;
 }
 
+@media only screen and (max-width:992px)
+{
+  header .brand-logo {
+  margin: 0;
+  padding: 14px 20px;
+};
+}
 header .brand-logo img {
   width: 172px;
 }
@@ -2732,4 +2739,16 @@ height: 2.7rem;
     position: absolute;
     right: 0;
     padding-right: 10px;
+}
+
+
+
+@media only screen and (max-width:992px){
+   img.darken-1.my-2 {
+     margin-left: 50px;
+}
+}
+
+.full-screen-modal {
+    width: 50%;
 }
