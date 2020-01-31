@@ -22,7 +22,6 @@ public class StockMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -70,6 +69,8 @@ public class StockMgmt implements Serializable {
 	private Double totalPrice;
 
 	private String remarks;
+	
+	private Long assignerId;
 
 	@Transient
 	private String stateInterp; 
@@ -226,6 +227,14 @@ public class StockMgmt implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Long getAssignerId() {
+		return assignerId;
+	}
+
+	public void setAssignerId(Long assignerId) {
+		this.assignerId = assignerId;
 	}
 
 	@Override

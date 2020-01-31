@@ -684,13 +684,15 @@ public class StolenAndRecoveryServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
 				}else {
+					// TODO : NOTI
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOLEN_RECOVERY,
 							action,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
+							MailSubjects.SUBJECT,
+							null);
 					logger.info("Notfication have been saved.");
 				}
 			}else {

@@ -7,8 +7,10 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -260,13 +262,20 @@ public class StockServiceImpl {
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 
 		if(isStockAssignRequest) {
+			User user = userRepository.getById(stockMgmt.getUserId());
+			logger.info(user);
+			Map<String, String> placeholderMap = new HashMap<String, String>();
+			placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
+			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
+			
 			if(emailUtil.saveNotification("ASSIGN_STOCK", 
 					userProfile, 
 					4,
 					Features.STOCK,
 					SubFeatures.ASSIGN,
 					stockMgmt.getTxnId(),
-					MailSubjects.SUBJECT)) {
+					MailSubjects.SUBJECT,
+					placeholderMap)) {
 				logger.info("Notification have been saved.");
 			}else {
 				logger.info("Notification have been not saved.");
@@ -734,7 +743,9 @@ public class StockServiceImpl {
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
-
+			
+			Map<String, String> placeholderMap = new HashMap<String, String>();
+			
 			// 0 - Accept, 1 - Reject
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
@@ -743,10 +754,18 @@ public class StockServiceImpl {
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
+					
+					// placeholderMap.put("<Custom first name>", user.getUserProfile().getFirstName());
+					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+					
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
+					
+					// placeholderMap.put("<Custom first name>", user.getUserProfile().getFirstName());
+					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
+					
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 				}
@@ -756,13 +775,15 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
+					// TODO : NOTI
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.STOCK,
 							action,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
+							MailSubjects.SUBJECT,
+							placeholderMap);
 					logger.info("Notfication have been saved.");
 				}
 

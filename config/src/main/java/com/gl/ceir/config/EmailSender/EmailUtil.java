@@ -1,5 +1,8 @@
 package com.gl.ceir.config.EmailSender;
 
+import java.util.Map;
+import java.util.Objects;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -79,12 +82,22 @@ public class EmailUtil {
 	}
 
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
-			String featureName, String subFeature, String featureTxnId, String subject) {
+			String featureName, String subFeature, String featureTxnId, String subject, 
+			Map<String, String> placeholders) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 			logger.info("Message for tag [" + tag + "] " + messageDB);
+			String message = messageDB.getValue();
+
+			// Replace Placeholders from message.
+			if(Objects.nonNull(placeholders)) {
+				for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+					logger.info("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
+					message = message.replaceAll(entry.getKey(), entry.getValue());
+				}
+			}
 			// Save email in notification table.
-			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, messageDB.getValue(), 
+			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
 					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0);
 
 			return Boolean.TRUE;

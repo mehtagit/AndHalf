@@ -429,13 +429,15 @@ public class ConsignmentServiceImpl {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
 
+						// TODO : NOTI
 						emailUtil.saveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
-								MailSubjects.SUBJECT);
+								MailSubjects.SUBJECT,
+								null);
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -447,13 +449,15 @@ public class ConsignmentServiceImpl {
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
 
+						// TODO : NOTI
 						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
 								Features.CONSIGNMENT, 
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
-								MailSubjects.SUBJECT);
+								MailSubjects.SUBJECT,
+								null);
 
 					}
 				}
@@ -467,13 +471,15 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
+					// TODO : NOTI
 					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
+							MailSubjects.SUBJECT,
+							null);
 
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
@@ -485,13 +491,15 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
+					// TODO : NOTI
 					emailUtil.saveNotification("Consignment_Rejected_Custom_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT, 
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
+							MailSubjects.SUBJECT,
+							null);
 				}
 			}
 
