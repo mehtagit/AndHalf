@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,7 +16,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class VisaDb implements Serializable {
+public class VisaHistoryDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,14 +37,16 @@ public class VisaDb implements Serializable {
 	@Column(length = 50)
 	private String visaNumber;
 	
-	@NotNull
-	private String entryDateInCountry;
-	
 	private String visaExpiryDate;
 	
-	@ManyToOne
-	@JoinColumn(name = "userId")
-	EndUserDB endUserDB;
+	private Long userId;
+	
+	public VisaHistoryDb(int visaType, String visaNumber, String visaExpiryDate, Long userId) {
+		this.visaType = visaType;
+		this.visaNumber = visaNumber;
+		this.visaExpiryDate = visaExpiryDate;
+		this.userId = userId;
+	}
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
@@ -80,12 +80,20 @@ public class VisaDb implements Serializable {
 		this.visaNumber = visaNumber;
 	}
 
-	public String getEntryDateInCountry() {
-		return entryDateInCountry;
+	public Long getId() {
+		return id;
 	}
 
-	public void setEntryDateInCountry(String entryDateInCountry) {
-		this.entryDateInCountry = entryDateInCountry;
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getVisaExpiryDate() {
@@ -96,22 +104,6 @@ public class VisaDb implements Serializable {
 		this.visaExpiryDate = visaExpiryDate;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public EndUserDB getEndUserDB() {
-		return endUserDB;
-	}
-
-	public void setEndUserDB(EndUserDB endUserDB) {
-		this.endUserDB = endUserDB;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -119,7 +111,9 @@ public class VisaDb implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("VisaDb [createdOn=");
+		builder.append("VisaHistoryDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
@@ -127,10 +121,10 @@ public class VisaDb implements Serializable {
 		builder.append(visaType);
 		builder.append(", visaNumber=");
 		builder.append(visaNumber);
-		builder.append(", entryDateInCountry=");
-		builder.append(entryDateInCountry);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append("]");
 		return builder.toString();
 	}

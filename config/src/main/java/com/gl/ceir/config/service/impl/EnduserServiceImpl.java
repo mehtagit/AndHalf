@@ -35,6 +35,7 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.VisaDb;
+import com.gl.ceir.config.model.VisaHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
@@ -45,6 +46,7 @@ import com.gl.ceir.config.model.file.EndUserFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
+import com.gl.ceir.config.repository.VisaHistoryDBRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
@@ -74,6 +76,9 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
+
+	@Autowired
+	VisaHistoryDBRepository visaHistoryDBRepository;
 
 	public GenricResponse endUserByNid(String nid) {
 		try {
@@ -196,6 +201,7 @@ public class EnduserServiceImpl {
 					// Update expiry date of latest Visa
 					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
 					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
+
 				}
 
 				if(executeUpdateVisa(endUserDB1)) {
@@ -217,13 +223,17 @@ public class EnduserServiceImpl {
 	@Transactional
 	private boolean executeUpdateVisa(EndUserDB endUserDB) {
 		boolean status = Boolean.FALSE;
+		VisaDb visaDb = endUserDB.getVisaDb().get(0);
 
 		endUserDbRepository.save(endUserDB);
 		logger.info("Visa of user have been updated succesfully." +  endUserDB);
 
-		// TODO Update History.
-
-		return Boolean.TRUE;
+		visaHistoryDBRepository.save(new VisaHistoryDb(visaDb.getVisaType(), visaDb.getVisaNumber(), 
+				visaDb.getVisaExpiryDate(), visaDb.getEndUserDB().getId()));
+		logger.info("Visa of user have been updated in history." +  visaDb);
+		
+		status = Boolean.TRUE;
+		return status;
 	}
 
 	public Page<EndUserDB> filter(FilterRequest filterRequest, Integer pageNo, 
