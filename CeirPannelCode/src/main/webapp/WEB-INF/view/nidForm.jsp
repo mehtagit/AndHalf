@@ -176,7 +176,7 @@ section {
 						<div class="input-field col s12 m3 l3">
 							<input type="text" id="Search" name="Search"
 								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
-								placeholder="<spring:message code="input.nid" />" />
+								placeholder="<spring:message code="input.nidInput" />" />
 						</div>
 						<div class="input-field col s12 m2 l2">
 							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
