@@ -2748,3 +2748,7 @@ height: 2.7rem;
      margin-left: 50px;
 }
 }
+
+.full-screen-modal {
+    width: 50%;
+}

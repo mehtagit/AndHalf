@@ -190,6 +190,15 @@
 
 
 		function setViewPopupData(data){
+			var totalPrice='';
+			console.log(data.totalPrice);
+			if(data.totalPrice==null){
+			     totalPrice="";
+			}
+			else{
+				totalPrice=(parseInt(data.totalPrice));
+			}
+			
 			$("#supplierId").val(data.supplierId);
 			$("#supplierName").val(data.supplierName);
 			$("#consignmentNumber").val(data.consignmentNumber);
@@ -202,7 +211,7 @@
 			$("#remark").val(data.remarks);
 			$("#fileName").val(data.fileName); 
 			$("#viewcurrency").val(data.currency);
-			$("#viewtotalPrice").val(parseInt(data.totalPrice,10));
+			$("#viewtotalPrice").val(totalPrice);
 			$("#viewhideCurrency").val(data.currency);
 
 
@@ -210,7 +219,15 @@
 
 		function setEditPopupData(data){
 
-
+			var totalPrice='';
+			console.log(data.totalPrice);
+			if(data.totalPrice==null){
+			     totalPrice="";
+			}
+			else{
+				totalPrice=(parseInt(data.totalPrice));
+			}
+			
 			$("#supplierIdEdit").val(data.supplierId);
 			$("#supplierNameEdit").val(data.supplierName);
 			$("#consignmentNumberEdit").val(data.consignmentNumber);
@@ -222,7 +239,7 @@
 			$("#TransactionIdEdit").val(data.txnId);
 			$("#fileNameEdit").val(data.fileName);
 			$("#currency").val(data.currency);
-			$("#totalPrice").val(parseInt(data.totalPrice),10);
+			$("#totalPrice").val(totalPrice);
 			$("#hideCurrency").val(data.currency);
 
 
@@ -235,6 +252,7 @@
 		{       	
 			
 			var sessionFlag;
+			
 			if(sourceType==null){
 				sessionFlag=2;
 				
@@ -266,6 +284,8 @@
 
 		}
 
+		
+		
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){

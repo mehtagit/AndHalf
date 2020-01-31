@@ -222,7 +222,7 @@ style="overflow: inherit !important;">
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;">Quantity <span class="star">*</span></label>
-                                                <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0.7}
+                                                <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0,7}
                                                     title="Please enter maximum 10 characters only" maxlength="10" required/>
                                             </div>
 
