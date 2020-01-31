@@ -87,7 +87,8 @@ var contextpath = "${context}";
 <div class="col s12 m12 l12">
 
 <ul class="haed-btn">
-<li class="haed-btn-style"><a href="${context}/login" style="color: #000;"><spring:message code="registration.login" /></a></li>
+<a href="${context}/login" style="color: #000;">
+<li class="haed-btn-style"><spring:message code="registration.login" /></li></a>
 <li class="haed-btn-style" style="padding: 0;">
 <select id="usertypes" class="browser-default" onchange="openRegistrationPage(this.value)" style="height: 35px; width: 150px;">
 <option value="" disabled selected><spring:message code="select.registration" /></option>
@@ -119,11 +120,12 @@ var contextpath = "${context}";
 <option value="1">Check Upload Status</option>
 </select>
 </li>
-<li class="haed-btn-style"><a href="./checkDeviceslogin" style="color: #000;" ><spring:message code="registration.checkdevice" /></a></li>
-     <li class="haed-btn-style"><a onclick="selfRegisterDevice()" style="color: #000;">Register
-                                    Device</a></li>
-                            <li class="haed-btn-style"><a onclick="updateVisaValidity()" style="color: #000;">Update
-                                    Visa Validity</a></li>
+<a href="./checkDeviceslogin" style="color: #000;" >
+<li class="haed-btn-style"><spring:message code="registration.checkdevice" /></li></a>
+    <a onclick="selfRegisterDevice()" style="color: #000;"> <li class="haed-btn-style">Register
+                                    Device</li></a>
+                         <a onclick="updateVisaValidity()" style="color: #000;">   <li class="haed-btn-style">Update
+                                    Visa Validity</li></a>
 <!-- <li class="haed-btn-style"><a href="#" style="color: #000;">Report
 Grievance</a></li> -->
 <!-- <li class="haed-btn-style">

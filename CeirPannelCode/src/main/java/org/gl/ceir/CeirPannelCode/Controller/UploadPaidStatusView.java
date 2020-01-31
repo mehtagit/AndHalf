@@ -58,7 +58,8 @@ public class UploadPaidStatusView {
 
 
 	@GetMapping("uploadPaidStatus")
-	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session) {
+	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
+			,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView modelAndView = new ModelAndView();
 		if(session.getAttribute("usertype").equals("CEIRAdmin") && !("other".equals(via))) {
 			modelAndView.setViewName("uploadPaidStatus");

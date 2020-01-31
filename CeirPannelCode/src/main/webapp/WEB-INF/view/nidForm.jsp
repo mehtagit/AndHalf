@@ -145,6 +145,10 @@ input[type='search'] {
 	background-repeat: no-repeat;
 	color: #444;
 }
+
+section {
+	margin: 0 0.5rem;
+}
 </style>
 </head>
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
@@ -166,7 +170,7 @@ input[type='search'] {
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
 					<div id="submitbtn">
-						<div class="input-field col s12 m1 l1">
+						<div class="input-field col s12 m2">
 							<label for="Search" class="center-align ml-10"><spring:message code="input.nid" /></label>
 						</div>
 						<div class="input-field col s12 m3 l3">

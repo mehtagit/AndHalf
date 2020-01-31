@@ -284,9 +284,13 @@
 
 		}
 
+		
+		
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
+		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+		
 			var filterRequest={
 					"consignmentStatus":parseInt($('#filterConsignmentStatus').val()),
 					"endDate":$('#endDate').val(),
@@ -295,10 +299,9 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"txnId":$('#transactionID').val(),
+					"txnId":txn,
 					"userType":$("body").attr("data-roleType")
 			}
-
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
@@ -650,8 +653,9 @@
 
 					var txnid = $("body").attr("data-selected-consignmentTxnId");
 
-					
-					$('#transactionID').val(txnid);$('#transactionID').attr("placeholder","" );
+				/* 	$('#transactionID').val('');
+					$('#transactionID').val(txnid); */
+					$('#transactionID').attr("placeholder","" );
 					if(txnid=="")
 					{
 					

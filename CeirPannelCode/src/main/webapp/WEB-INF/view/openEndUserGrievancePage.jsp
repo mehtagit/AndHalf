@@ -312,7 +312,7 @@ style="overflow: inherit !important;">
                                                 <label for="trackGrievanceId">Please Enter The Grievance ID <span class="star">*</span> :</label>
                                             </div>
                                             <div class="input-field col s6 m6">
-                                                <input type="text" id="trackGrievanceId" required="required" name="trackGrievanceId" pattern="[A-Za-z0-9]{3,18}" title="Please enter maximum 18 characters only" maxlength="18">
+                                                <input type="text" id="trackGrievanceId" required="required" name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" title="Please enter maximum 18 characters only" maxlength="18">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -729,7 +729,7 @@ var path="${context}";
     
     
 	var max_fields = 15; //maximum input boxes allowed
-	var wrapper = $(".endUsermainDiv"); //Fields wrapper
+	var endUserwrapper = $(".endUsermainDiv"); //Fields wrapper
 	var add_button = $(".endUser_add_field_button"); //Add button ID
 	var x = 1; //initlal text box count
 	var id=2;
@@ -737,7 +737,7 @@ var path="${context}";
 		e.preventDefault();
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
-			$(wrapper).append(
+			$(endUserwrapper).append(
 					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
 					/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
 			); //add input box
@@ -759,7 +759,7 @@ var path="${context}";
 
 	});
 
-$(wrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
+$(endUserwrapper).on("click", ".endUser_remove_field", function (e) { //user click on remove text
  e.preventDefault();
  var Iid=id-1;
  /*alert("@@@"+Iid)*/

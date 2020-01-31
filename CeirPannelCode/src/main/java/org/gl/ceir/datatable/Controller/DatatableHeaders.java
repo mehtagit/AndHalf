@@ -285,7 +285,7 @@ public class DatatableHeaders {
 			//ManageUserType Headers 
 			
 			else if("ImporterTrcManageType".equals(role)) {
-				String[] headers = {"table.Trademark","table.ProductName","table.ModelNumber","table.CountryofManufacture","table.TAC","table.action"};		
+				String[] headers = {"table.Trademark","table.ProductName","table.transactionID","table.ModelNumber","table.CountryofManufacture","table.TAC","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
