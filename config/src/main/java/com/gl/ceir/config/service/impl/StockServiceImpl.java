@@ -745,6 +745,10 @@ public class StockServiceImpl {
 			}
 			
 			Map<String, String> placeholderMap = new HashMap<String, String>();
+			User user = userRepository.getById(stockMgmt.getUserId());
+			logger.info(user);
+			
+			// TODO : Have to fix mail.
 			
 			// 0 - Accept, 1 - Reject
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
