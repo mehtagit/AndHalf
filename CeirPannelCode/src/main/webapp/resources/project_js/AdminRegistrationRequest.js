@@ -270,7 +270,8 @@ function aprroveUser(){
 	var approveRequest={
 			"userId": parseInt(userid),
 			"status" : "Approved",
-			"remark": $("#Reason").val()	
+			"remark": $("#Reason").val(),	
+			"featureId" : parseInt(featureId)
 	}
 	
 	$.ajax({
@@ -309,7 +310,8 @@ function rejectUser(userId){
 	var rejectRequest={
 			"userId": parseInt(userid),
 			"status" : "Rejected",
-			"remark": $("#Reason").val()	
+			"remark": $("#Reason").val(),
+			"featureId" : parseInt(featureId)
 	}
 	
 	$.ajax({

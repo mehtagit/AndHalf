@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.CeirPannelCode.Model.TypeApprovedStatusModel;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -87,13 +89,18 @@ public class TrcController {
 
 	}
 
-	@ResponseBody
-	@PostMapping("register-approved-device")
-	public GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	
+	@RequestMapping(value= {"/register-approved-device"},method= RequestMethod.POST,consumes = "multipart/form-data") 
+	public @ResponseBody GenricResponse saveGrievance(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
+		
+		
+
+		Integer userId= (int) session.getAttribute("userid");
+		String roletype=(String) session.getAttribute("usertype");
+		
 		log.info("-inside controller register-approved-device-------request---------"+request.getParameter("manufacturerId"));
 		// log.info(""+request.getParameter("file"));
 		String userName=session.getAttribute("username").toString();
-		String userId= session.getAttribute("userid").toString();
 		String name=session.getAttribute("name").toString();
 		Map<String, String[]> parameterMap = request.getParameterMap();
 		log.info("************"+parameterMap.toString());
@@ -101,32 +108,68 @@ public class TrcController {
 		String txnNumber="T" + utildownload.getTxnId();
 		log.info("Random transaction id number="+txnNumber);
 		request.getParameterValues("");
-		try { byte[] bytes = file.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
-		File dir = new File(rootPath + File.separator);
+		
+		Gson gson= new Gson(); 
+		String trcDetails=request.getParameter("multirequest");
+		
+		TRCRegisteration trcRequest = gson.fromJson(trcDetails, TRCRegisteration.class);
+		trcRequest.setUserId(userId);
+		trcRequest.setUserType(roletype);
+		trcRequest.setTxnId(txnNumber);
+		
+		for (int i=0;i<trcRequest.getAttachedFiles().size();i++) {
+			trcRequest.getAttachedFiles().get(i).setTxnId(txnNumber);
+			//grievanceRequest.getMultifile().get(i).getDocType();
+		}
+		
+		log.info("Random  genrated transaction number ="+txnNumber);
+		int i=0;
+		for( MultipartFile file : fileUpload) {
 
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+file.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
+			log.info("-----"+ file.getOriginalFilename());
+			log.info("++++"+ file);
+		
+			String tagName=trcRequest.getAttachedFiles().get(i).getDocType();
+			log.info("doctype Name==="+tagName+"value of index="+i);
+			
+
+			try {
+				byte[] bytes =
+						file.getBytes(); String rootPath = filePathforUploadFile+txnNumber+"/"+tagName+"/"; 
+						File dir =   new File(rootPath + File.separator);
+						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+						File serverFile = new File(rootPath+file.getOriginalFilename());
+						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						stream.write(bytes); stream.close(); 
+						//  grievanceRequest.setFileName(file.getOriginalFilename());
+
+			}
+			catch (Exception e) { //
+				// TODO: handle exception e.printStackTrace(); }
+
+				// set reaquest parameters into model class
+
+			}
+			i++;
+
+
+		}
+		
+		log.info("TRC form parameters passed to save TRC api "+trcRequest);
+		GenricResponse response = typeApprovedFeignImpl.register(trcRequest);
+		 response.setTxnId(txnNumber);
+		
+
+		 log.info("TRC from register TRC api"+response);
+		 log.info("register TRC exit point.");
+		 return response;
+		
+		
+	
 		} 
 
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		log.info("above model"+txnNumber);
-		// set request parameters into model class
-		TRCRegisteration model = registerationImpl.register(request,file.getOriginalFilename(),txnNumber);
-		log.info("---------model--------"+model);
-		GenricResponse response = typeApprovedFeignImpl.register(model);
-		//GenricResponse response = null;
-		log.info("---------response--------"+response);
-		return response;
-	}
+	
 
 	@ResponseBody
 	@PostMapping("viewByID/{id}")
@@ -165,7 +208,6 @@ public class TrcController {
 			model.setTac(tac);
 			model.setApproveDisapproveDate(approveDisapproveDate);
 			model.setApproveStatus(approveStatus);
-			model.setStatus(approveStatus);
 			model.setRemark(remark);
 			model.setFileName(fileName);
 			model.setTxnId(txnId);

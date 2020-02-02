@@ -1304,8 +1304,8 @@ public String importalTrcManageIcons(String status,Integer id,String fileName,St
 	// URL link 
 	//String downloadURL = "JavaScript:void(0)";
 
-	String viewAction="viewByID("+id+",'view')";
-	String editAction= "viewByID("+id+",'edit')";
+	String viewAction="ImporterviewByID("+id+",'view')";
+	String editAction= "ImporterviewByID("+id+",'edit')";
 	String deleteAction = "JavaScript:void(0);";
 	// state related Code 
 	
