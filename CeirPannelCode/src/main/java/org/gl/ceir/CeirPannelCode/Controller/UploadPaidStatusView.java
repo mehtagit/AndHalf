@@ -238,11 +238,95 @@ public class UploadPaidStatusView {
 		return modelAndView;
 	}
 	
-	@GetMapping("findEndUserByNid")
-	public @ResponseBody EndUserVisaInfo findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid) {
+	@PostMapping("findEndUserByNid")
+	public @ResponseBody GenricResponse findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid) {
 		log.info("---entry point in update visa validity page");
-		EndUserVisaInfo endUserVisaInfo= new EndUserVisaInfo();
+		GenricResponse endUserVisaInfo= new GenricResponse();
+		log.info("Request send to the fetch recoed by Passport="+findEndUserByNid);
+		endUserVisaInfo=	uploadPaidStatusFeignClient.fetchVisaDetailsbyPassport(findEndUserByNid);
+		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
+		log.info("---exit  point in update visa validity page");
+		return endUserVisaInfo;
+	}
+	
+	@PostMapping("updateEndUSerVisaValidity")
+	public @ResponseBody GenricResponse updateEndUSerVisaValidity(@RequestParam(name="passportImage",required = false) MultipartFile passportImage,@RequestParam(name="visaImage",required = false) MultipartFile visaImage,HttpServletRequest request,HttpSession session) {
+		log.info("---entry point in update visa validity page");
 		
+		String txnNumber="A" + utildownload.getTxnId();
+		log.info("Random transaction id number="+txnNumber);
+		//request.setAttribute("txnId", txnNumber);
+		//request.setAttribute("request[regularizeDeviceDbs][txnId]",txnNumber);
+		String filter = request.getParameter("request");
+		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
+		Gson gson= new Gson(); 
+		log.info("before casting request in to pojo classs"+filter);
+
+		EndUserVisaInfo endUservisaInfo  = gson.fromJson(filter, EndUserVisaInfo.class);
+
+		log.info("after casting request in to pojo classs"+endUservisaInfo);
+		log.info("device db size--"+endUservisaInfo.getVisaDb().size());
+		  for(int i =0; i<endUservisaInfo.getVisaDb().size();i++) {
+		  //regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
+		  endUservisaInfo.setTxnId(txnNumber);
+		 // endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
+		  endUservisaInfo.getVisaDb().get(i).setVisaFileName((visaImage.getOriginalFilename()));
+		  log.info("file name to be set in varivable="+endUservisaInfo.getVisaDb().get(i).getVisaFileName());
+		  
+		  }
+		 
+		endUservisaInfo.setTxnId(txnNumber);
+		//endUservisaInfo.getVisaDb().get(1).setVisaFileName((visaImage.getOriginalFilename()));
+
+		log.info(""+endUservisaInfo);
+		log.info(" upload status  entry point.");
+		if(passportImage==null)
+		{
+			endUservisaInfo.setPassportFileName("");	
+		}
+		else {
+			try {
+				byte[] bytes = passportImage.getBytes();
+			String rootPath =filePathforUploadFile+txnNumber+"/"; 
+			File dir = new File(rootPath + File.separator);
+
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+passportImage.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
+			endUservisaInfo.setPassportFileName(passportImage.getOriginalFilename());
+			} 
+
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}	
+		}
+		
+		try {
+			byte[] bytes = visaImage.getBytes();
+		String rootPath =filePathforUploadFile+txnNumber+"/"; 
+		File dir = new File(rootPath + File.separator);
+
+		if (!dir.exists()) dir.mkdirs();
+		// Create the file on server 
+		File serverFile = new File(rootPath+visaImage.getOriginalFilename());
+		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		stream.write(bytes); 
+		stream.close();
+	} 
+	catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}	
+		GenricResponse endUserVisaInfo= new GenricResponse();
+		log.info("Request send to the update emd user visa details ="+endUservisaInfo);
+		endUserVisaInfo=	uploadPaidStatusFeignClient.updateEndUSerVisaDetailsby(endUservisaInfo);
+		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
 		log.info("---exit  point in update visa validity page");
 		return endUserVisaInfo;
 	}
