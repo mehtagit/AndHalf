@@ -63,16 +63,14 @@ var contextpath = "${context}";
 				<div class="nav-wrapper">
 					<ul class="left">
 						<li>
-						<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
-            <a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
-                <img src="./resources/images/dmc_gl.png" class="darken-1 my-2">
-            </a>
-        </div>
-        </li>
+					<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
+            					<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
+                				<img src="./resources/images/dmc_gl.png" class="darken-1 my-2"></a>
+        					</div>
+        				</li>
 						<li>
 							<h1 class="logo-wrapper">
-							
-								<a href="#" class="brand-logo darken-1">CEIR -
+							<a href="#" class="brand-logo darken-1">CEIR -
 									<span id="cierRoletype"><%=usertype%></span> Portal 
 									 
 									<%if("Operator".equalsIgnoreCase(usertype)){%>
@@ -82,49 +80,36 @@ var contextpath = "${context}";
 									</a> <span class="logo-text"><spring:message code="registration.materialize" /></span>
 							</h1> 
 						</li>
+					 </ul>
+					<ul id="chat-out" class="right hide-on-med-and-down" style="overflow: inherit !important;"> 
+						<li>
+							<div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
+							<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
+							<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
+							<option value="en">English</option>
+							<option value="km">Khmer</option>
+							</select></div>
+							</div>
+						</li>
+						<li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>			
+						<li class="profileInfo"><a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown" style="height: 65px;"><i
+						class="mdi-action-account-circle" style="color: #fff; font-size: 40px;"></i></a>
+					<ul id="profile-dropdown" class="dropdown-content">
+						<li><a href="${context}/editProfile" target="mainArea"><i class="fa fa-pencil dropdownColor" style="float: left;"></i><span
+						style="float: left" class="dropdownColor"><spring:message code="registration.editinfo" /></span></a></li>
+						<li class="divider"></li>
+						<li><a data-target="changePassword" class="modal-trigger"><i class="fa fa-key dropdownColor" style="float: left"></i><span
+						style="float: left" class="dropdownColor"><spring:message code="registration.changepassword" /></span></a></li>
+						<li class="divider"></li>
+						<li><a href="#manageAccount" class="modal-trigger"><i class="mdi-action-settings dropdownColor"></i>
+						<span class="dropdownColor"> <spring:message code="registration.activate/deactivateaccount" /></span></a></li>	
+						<li class="divider"></li>
+
+						<li><a href="${context}/logout" id=""><i style="float: left;" class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
+						class="dropdownColor"> <spring:message code="registration.logout" /></span></a></li>
+
+							</ul></li>
 					</ul>
-					
-					
-				
-					<ul id="chat-out" class="right hide-on-med-and-down"
-style="overflow: inherit !important;">
-
-<li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
-			<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
-			<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
-					<option value="en">English</option>
-					<option value="km">Khmer</option>
-					</select></div>
-			</div>
-			</li>
-		<li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>			
-					
-<li class="profileInfo"><a
-class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
-href="#" data-activates="profile-dropdown" style="height: 65px;"><i
-class="mdi-action-account-circle"
-style="color: #fff; font-size: 40px;"></i></a>
-<ul id="profile-dropdown" class="dropdown-content">
-<li><a href="${context}/editProfile" target="mainArea"><i
-class="fa fa-pencil dropdownColor" style="float: left;"></i><span
-style="float: left" class="dropdownColor"><spring:message code="registration.editinfo" /></span></a></li>
-<li class="divider"></li>
-<li><a data-target="changePassword" class="modal-trigger"><i
-class="fa fa-key dropdownColor" style="float: left"></i><span
-style="float: left" class="dropdownColor">
-<spring:message code="registration.changepassword" /></span></a></li>
-
-<li class="divider"></li>
-<li><a href="#manageAccount" class="modal-trigger"><i class="mdi-action-settings dropdownColor"></i><span
-class="dropdownColor"> <spring:message code="registration.activate/deactivateaccount" /></span></a></li>	
-<li class="divider"></li>
-
-<li><a href="${context}/logout" id=""><i style="float: left;"
-class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
-class="dropdownColor"> <spring:message code="registration.logout" /></span></a></li>
-
-</ul></li>
-</ul>
 				</div>
 			</nav>
 </div>

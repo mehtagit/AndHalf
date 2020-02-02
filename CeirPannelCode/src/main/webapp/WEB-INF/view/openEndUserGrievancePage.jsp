@@ -18,7 +18,8 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
@@ -42,7 +43,7 @@
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <style>
-        ul li {
+ /*        ul li {
             display: inline-flex;
         }
 
@@ -138,7 +139,7 @@
             .small-modal {
             width: 95%;
         }
-        }
+        } */
     </style>
 <script>
 var contextpath = "${context}";
@@ -146,43 +147,7 @@ var contextpath = "${context}";
 
 </head>
 <body>
-
-
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR </a> <span
-                                    class="logo-text">Materialize</span></h1>
-                        </li>
-                    </ul>
-                    
-                    <ul id="chat-out" class="right hide-on-med-and-down"
-style="overflow: inherit !important;">
-
-<li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
-			<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
-			<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
-					<option value="en">English</option>
-					<option value="km">Khmer</option>
-					</select></div>
-			</div>
-			</li>
-		<li><a href="./homePage" id="newUserLink" style="color:white;">Home</a>	</li>			
-</ul>
-                    
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-
-
-
-            <!-- START CONTENT -->
+         <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
                 <div class="container" style="padding-bottom: 70px; margin-top:10vh;" >
@@ -318,7 +283,7 @@ style="overflow: inherit !important;">
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <button class="btn" type="submit" >Submit</button>
-                                                <a href="#cancelRequest" class="btn modal-trigger" style="margin-left: 10px;">Cancel</a>
+                                                <a href="./redirectToHomePage" class="btn modal-trigger" style="margin-left: 10px;">Cancel</a>
                                             </div>
                                         </div>
                                     </div>
@@ -340,14 +305,7 @@ style="overflow: inherit !important;">
 
 
 
- <!-- START FOOTER -->
-    <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
-        <div class="footer-copyright">
-            <div class="container">
-                <span class="right">Copyright Â© 2018 Sterlite Technologies Ltd, All rights reserved.</span>
-            </div>
-        </div>
-    </footer>
+ 
     <!-- END FOOTER -->
 
     <!-- Grievance Modal start   -->

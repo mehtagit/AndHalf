@@ -182,6 +182,16 @@
 								</div>
 
 								<div class="row">
+
+									<div class="col s12 m6 l6" style="margin-top: 8px;">
+										<label for="Category">Document Type</label> <select
+											class="browser-default" id="docTypetag1">
+											<option value="" disabled="" selected="">Select
+												Document Type</option>
+										</select> 
+									</div>
+
+
 									<h6 style="color: #000; margin-left: 10px;">
 										Upload Supporting Document <span class="star">*</span>
 									</h6>
@@ -277,24 +287,54 @@ var featureId = 11;
 			var requestDate= $('#requestDate').val();
 			var remark = $('#remark').val();
 			var userId = $("body").attr("data-userID");
-			var formData = new FormData();
-			formData.append('file', $('#file')[0].files[0]);
-			formData.append('manufacturerId', manufacturerId);
-			formData.append('manufacturerName', manufacturerName);
-			formData.append('country', country);
-			formData.append('tac', tac);
-			formData.append('approveStatus', approveStatus);
-			formData.append('approveDisapproveDate', approveDisapproveDate);
-			formData.append('requestDate',requestDate);
-			formData.append('remark', remark);
-			formData.append('userId',userId);
 			
+			var fieldId=1;
+			var fileInfo =[];
+			var formData= new FormData();
+			var fileData = [];
+	
+			var x;
+			var filename='';
+			var filediv;
+			var i=0;
+			var formData= new FormData();
+			var docTypeTagIdValue='';
+			var filename='';
+			
+			
+			$('.fileDiv').each(function() {	
+			var x={
+				"docType":$('#docTypetag'+fieldId).val(),
+				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+				}
+				formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+				fileInfo.push(x);
+				fieldId++;
+				i++;
+			});
+			
+			var multirequest={
+					"attachedFiles":fileInfo,
+					"manufacturerId" : $('#manufacturerId').val(),
+					"manufacturerName" : $('#manufacturerName').val(),
+					"country" : $('#country').val(),
+		 			"tac" : $('#tac').val(),
+					"approveStatus" : parseInt($('#status').val()),
+		 			"approveDisapproveDate" : $('#approveDisapproveDate').val(),
+					"requestDate" : $('#requestDate').val(),
+					"remark" : $('#remark').val(),
+					"userId" : $("body").attr("data-userID")
+				}
+			
+			console.log("multirequest------------->" +JSON.stringify(multirequest))
 			$.ajax({
 				url : './register-approved-device',
 				type : 'POST',
 				data : formData,
-				 processData : false,
+				mimeType: 'multipart/form-data',
+				processData : false,
 				contentType : false, 
+				async:false,
 				success : function(data, textStatus, jqXHR) {
 						console.log("-----success"+data);
 						$("#trcSubmitButton").prop('disabled', true);
@@ -325,6 +365,15 @@ var featureId = 11;
 			return false;
 
 		}
+		
+		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+			console.log("@@@@@" + JSON.stringify(data));
+			for (i = 0; i < data.length; i++) {
+				console.log(data[i].interp);
+				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+						'#docTypetag1');
+			}
+		});
 		
 		
 

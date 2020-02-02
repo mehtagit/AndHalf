@@ -219,6 +219,10 @@ if(userType=="CEIRAdmin"){
 	$("#btnLink").css({display: "none"});
 	}
 
+if(userType=="CEIRAdmin"){
+	$("#btnLink").css({display: "none"});
+	}
+
 function viewByID(id,actionType){
 	
 	
@@ -235,12 +239,21 @@ function viewByID(id,actionType){
 				$("#viewModal").openModal();
 				console.log("222222222");
 				setViewPopupData(data);
+			
 				}
 			else if(actionType=='edit')
 				{
 				console.log("3333333333");
 				$("#editModal").openModal();
 				setEditPopupData(data)
+				
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
 				}
 			
 		},
@@ -251,6 +264,76 @@ function viewByID(id,actionType){
 	
 }
 
+
+function ImporterviewByID(id,actionType){
+	
+	
+	
+	$.ajax({
+		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(+data);
+			if(actionType=='view')
+				{
+				$("#viewImporterModal").openModal();
+				console.log("222222222");
+				setImporterViewPopupData(data);
+			
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
+				}
+			
+		},
+		error : function() {
+			console.log("failed");
+		}
+	});
+	
+}
+
+function ImporterviewByID(id,actionType){
+	
+	
+	
+	$.ajax({
+		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(+data);
+			if(actionType=='view')
+				{
+				$("#viewImporterModal").openModal();
+				console.log("222222222");
+				setImporterViewPopupData(data);
+			
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
+				}
+			
+		},
+		error : function() {
+			console.log("failed");
+		}
+	});
+	
+}
+
+
 function setViewPopupData(data){
 	$("#viewmanufacturerId").val(data.manufacturerId);
 	$("#viewmanufacturerName").val(data.manufacturerName);
@@ -260,7 +343,19 @@ function setViewPopupData(data){
 	$('#viewrequestDate').val(data.requestDate)
 	$("#viewapproveDisapproveDate").val(data.approveDisapproveDate);
 	$("#viewremark").val(data.remark);
+	
 }
+
+function setImporterViewPopupData(data){
+	$("#viewtradmark").val(data.trademark);
+	$("#viewmodelName").val(data.productName);
+	$("#viewModelnumber").val(data.modelNumber);
+	$("#viewManufacturercountry").val(data.manufacturerCountry);
+	$('#viewrequestDate').val(data.requestDate)
+	$('#viewFrequency').val(data.frequencyRange)
+	$("#viewtac").val(data.tac);
+}
+
 function setEditPopupData(data){
 	$("#editmanufacturerId").val(data.manufacturerId);
 	$("#editmanufacturerName").val(data.manufacturerName);
@@ -274,6 +369,17 @@ function setEditPopupData(data){
 	$("#transactionid").val(data.txnId);
 	$("#columnid").val(data.id);
 	
+	
+}
+
+function setImporterEditPopupData(data){
+		$("#editTradmark").val(data.trademark);
+		$("#editmodelName").val(data.productName);
+		$("#editmodelNumber").val(data.modelNumber);
+		$("#editcountry").val(data.manufacturerCountry);
+		$('#editRequestDate').val(data.requestDate)
+		$('#editfrequency').val(data.frequencyRange)
+		$("#edittac").val(data.tac);
 	
 }
 

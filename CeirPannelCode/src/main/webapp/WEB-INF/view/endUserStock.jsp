@@ -18,6 +18,8 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
@@ -42,7 +44,7 @@
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <style>
-        ul li {
+   /*      ul li {
             display: inline-flex;
         }
 
@@ -143,48 +145,14 @@
         .modal {
         	width: 50%;
         }
-    </style>
+ */    </style>
 <script>
 var contextpath = "${context}";
 </script>
 
 </head>
 <body>
-
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR </a> <span
-                                    class="logo-text">Materialize</span></h1>
-                        </li>
-                    </ul>
-                    
-                    <ul id="chat-out" class="right hide-on-med-and-down"
-style="overflow: inherit !important;">
-
-<li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
-			<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
-			<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
-					<option value="en">English</option>
-					<option value="km">Khmer</option>
-					</select></div>
-			</div>
-			</li>
-		<li><a href="./homePage" id="newUserLink" style="color:white;">Home</a>	</li>			
-</ul>
-                    
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-
-
-           <section id="content">
+<section id="content">
                 <!--start container-->
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
                 <div class="container" style="margin-top:10vh;" id="uploadPaidStatusDiv" style="dispay:none">
@@ -256,7 +224,7 @@ style="overflow: inherit !important;">
                                     <div class="row" style="margin: 30px 0 30px 0;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <!-- <a href="#submitStock" class="btn modal-trigger">Submit</a> -->
-                                            <button class=" btn" type="submit">Submit</button>
+                                            <button class=" btn" id="endUserStock" type="submit">Submit</button>
                                             <a href="#cancelStock" class="btn modal-trigger"
                                                 style="margin-left: 10px;">Cancel</a>
                                         </div>
