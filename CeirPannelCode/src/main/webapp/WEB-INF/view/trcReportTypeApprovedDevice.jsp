@@ -197,8 +197,9 @@
 									</h6>
 									<div class="file-field col s12 m6">
 										<div class="btn">
-											<span>Select File</span> <input id="file" type="file" required="required"
-												multiple>
+											<span>Select File</span> 
+										
+											<input type="file" name="files[]" id="docTypeFile1">
 										</div>
 										<div class="file-path-wrapper">
 											<input class="file-path validate" type="text" multiple>

@@ -20,8 +20,8 @@ $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
 	typeApprovedDataTable(lang)
 	pageRendering();
+	setAllDropdown();
 });
-
 
 
 
@@ -197,10 +197,11 @@ function pageRendering(){
 				}
 			}
 	
-			$('.dateClass').datepicker({
-			    dateFormat: "yy-mm-dd"
-			    });
 			
+			
+			$('.datepicker').datepicker({
+				dateFormat: "yy-mm-dd"
+			});
 
 			$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 
@@ -348,12 +349,14 @@ function setViewPopupData(data){
 
 function setImporterViewPopupData(data){
 	$("#viewtradmark").val(data.trademark);
-	$("#viewmodelName").val(data.productName);
-	$("#viewModelnumber").val(data.modelNumber);
+	$("#viewmodelName").val(data.productNameInterp);
+	$("#viewModelnumber").val(data.modelNumberInterp);
 	$("#viewManufacturercountry").val(data.manufacturerCountry);
 	$('#viewrequestDate').val(data.requestDate)
 	$('#viewFrequency').val(data.frequencyRange)
-	$("#viewtac").val(data.tac);
+	$("#viewImportertac").val(data.tac);
+	
+	
 }
 
 function setEditPopupData(data){
@@ -373,50 +376,108 @@ function setEditPopupData(data){
 }
 
 function setImporterEditPopupData(data){
+		var model  = data.modelNumber;
+		$("#editImportertransactionid").val(data.txnId);
 		$("#editTradmark").val(data.trademark);
-		$("#editmodelName").val(data.productName);
-		$("#editmodelNumber").val(data.modelNumber);
-		$("#editcountry").val(data.manufacturerCountry);
-		$('#editRequestDate').val(data.requestDate)
+		$("#productname").val(data.productName);
+		
+		var brand_id = $('#productname').val();
+		$.getJSON('./productModelList?brand_id=' + brand_id,
+				function(data) {
+					$("#modelNumber").empty();
+					for (i = 0; i < data.length; i++) {
+						$('<option>').val(data[i].id).text(
+								data[i].modelName).appendTo(
+								'#modelNumber');
+					}
+					$('#modelNumber').val(model);
+				});
+		
+		//setTimeout(function(){ $('#modelNumber').val(data.modelNumber); },200);
+		$("#editmanufacturercountry").val(data.manufacturerCountry);
 		$('#editfrequency').val(data.frequencyRange)
-		$("#edittac").val(data.tac);
-	
+		$("#editImportertac").val(data.tac);
+		$("#editImporterFileName").val(data.attachedFiles[0].fileName);
+		$("#docTypetag1").val(data.attachedFiles[0].docType);
 }
+
+
+
 
 populateCountries
 (   
 		"editcountry"
 );
 
+populateCountries
+(   
+		"editmanufacturercountry"
+);
 
 function updateReportTypeDevice()
 {
+	var trademark = $('#trademark').val();
+	var productName = $('#productname').val();
+	var modelNumber = $('#modelNumber').val();
+	var manufacturerCountry = $('#country').val();
+	var frequencyRange = $('#frequencyrange').val();
+	var tac = $('#tac').val();
+	var userId = $("body").attr("data-userID");
 	var manufacturerId=$("#editmanufacturerId").val();
 	var manufacturerName=$("#editmanufacturerName").val();
 	 var country=$("#editcountry").val();
 	 var tac=$("#edittac").val();
 	 var approveStatus=$("#editdeviceType").val();
-    var requestDate=$('#editRequestDate').val()
+	 var requestDate=$('#editRequestDate').val()
 	 var approveDisapproveDate=$("#editApproveRejectionDate").val();
 	 var remark =$("#editRemark").val();
 	 var file=$("#editFileName").val();
-	 var txnid=$("#transactionid").val();
+	 var txnid=$("#editImportertransactionid").val();
 	 var id=$("#columnid").val();
-	 console.log("approveStatus=="+approveStatus);
 	 
-	 var formData = new FormData();
-		formData.append('file', $('#editUploadFile')[0].files[0]);
-		formData.append('manufacturerId', manufacturerId);
-		formData.append('manufacturerName', manufacturerName);
-		formData.append('country', country);
-		formData.append('tac', tac);
-		formData.append('status', approveStatus);
-		formData.append('approveDisapproveDate', approveDisapproveDate);
-		formData.append('remark', remark);
-		formData.append('txnId', txnid);
-		formData.append('id', id);
-		formData.append('fileName', file);
-		formData.append('requestDate', requestDate);
+		var fieldId=1;
+		var fileInfo =[];
+		var formData= new FormData();
+		var fileData = [];
+
+		var x;
+		var filename='';
+		var filediv;
+		var i=0;
+		var formData= new FormData();
+		var docTypeTagIdValue='';
+		var filename='';
+		
+		
+		$('.fileDiv').each(function() {	
+		var x={
+			"docType":$('#docTypetag'+fieldId).val(),
+			"fileName":$("#editImporterFileName").val(),
+			}
+			formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+			fileInfo.push(x);
+			fieldId++;
+			i++;
+		});
+		
+		var multirequest={
+				"attachedFiles":fileInfo,
+				"trademark" : $('#editTradmark').val(),
+				"productName" : $('#productname').val(),
+	 			"modelNumber" : $('#modelNumber').val(),
+				"manufacturerCountry" : $('#editmanufacturercountry').val(),
+	 			"frequencyRange" : $('#editfrequency').val(),
+				"tac" : $('#editImportertac').val(),
+				"txnId": $("#editImportertransactionid").val(),
+				"userId" : $("body").attr("data-userID")
+			}
+		
+		
+		
+		console.log("multirequest------------->" +JSON.stringify(multirequest))
+		formData.append('fileInfo[]',JSON.stringify(fileInfo));
+		formData.append('multirequest',JSON.stringify(multirequest));
+	 
 		
 		$.ajax({
 			url : './update-register-approved-device',
@@ -460,16 +521,18 @@ function updateReportTypeDevice()
 //**********************************************************Export Excel file************************************************************************
 function exportTacData()
 {
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var tacStartDate=$('#startDate').val();
 	var tacEndDate=$('#endDate').val();
 	var tacStatus=parseInt($('#Status').val());
 	var tacNumber=$('#tac').val();
+	var txnId = txn;
+	
 	console.log("tacStatus=="+tacStatus);
      if(isNaN(tacStatus))
 	   {
     	 tacStatus='';
-  	   console.log(" tacStatus=="+tacStatus);
-	   }
+  	   }
  
 	var table = $('#typeAprroveTable').DataTable();
 	var info = table.page.info(); 
@@ -477,7 +540,7 @@ function exportTacData()
   var pageSize =info.length;
 	console.log("--------"+pageSize+"---------"+pageNo+" tacStartDate="+tacStartDate+" tacEndDate="+tacEndDate+" tacStatus= "+tacStatus);
 	
-	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
 }
 
@@ -587,4 +650,39 @@ return false;
 } else {
 return true;
 }
+}
+
+
+function setAllDropdown(){
+$.getJSON('./productList', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].id).text(data[i].brand_name)
+				.appendTo('#productname');
+	}
+});
+
+$('#productname').on(
+		'change',
+		function() {
+			var brand_id = $('#productname').val();
+			$.getJSON('./productModelList?brand_id=' + brand_id,
+					function(data) {
+						$("#modelNumber").empty();
+						for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].id).text(
+									data[i].modelName).appendTo(
+									'#modelNumber');
+						}
+					});
+		});
+
+
+$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		console.log(data[i].interp);
+		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+				'#docTypetag1');
+	}
+});
+
 }

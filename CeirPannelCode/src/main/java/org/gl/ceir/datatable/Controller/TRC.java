@@ -116,9 +116,9 @@ public class TRC implements CRUD{
 					log.info("--------in Importal Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
 						String trademark = trcContentModelList.getTrademark();
-						String productName = trcContentModelList.getProductName();
+						String productName = trcContentModelList.getProductNameInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String modelNumber = trcContentModelList.getModelNumber();
+						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						String status = trcContentModelList.getStateInterp();

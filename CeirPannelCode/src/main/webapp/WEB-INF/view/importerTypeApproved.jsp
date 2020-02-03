@@ -354,8 +354,8 @@
 			var multirequest={
 					"attachedFiles":fileInfo,
 					"trademark" : $('#trademark').val(),
-					"productName" : $('#productname').val(),
-		 			"modelNumber" : $('#modelNumber').val(),
+					"productName" : parseInt($('#productname').val()),
+		 			"modelNumber" : parseInt($('#modelNumber').val()),
 					"manufacturerCountry" : $('#country').val(),
 		 			"frequencyRange" : $('#frequencyrange').val(),
 					"tac" : $('#tac').val(),
