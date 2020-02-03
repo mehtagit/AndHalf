@@ -430,8 +430,11 @@ public class IconsState {
 	public String adminState(String fileName,String txnId ,String status,String userStatus,String companyName) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-		String approveAction = "openApprovePopUp('" + txnId + "','"+companyName.replaceAll( " ", "+20")+ "')";
+		String viewAction="viewConsignmentDetails('"+txnId+"')";
+		if(companyName == null) {
+			companyName= " ";
+		}
+		String approveAction = "openApprovePopUp('" + txnId+ "','"+companyName.replaceAll( " ", "+20")+ "')";
 		//String approveAction = "openApprovePopUp('"+txnId+"')";
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.replaceAll( " ", "+20")+"')";
 
@@ -764,8 +767,16 @@ public class IconsState {
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
-		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view=null;
+		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
+		view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
+		}
+		else {
+			
+			view="<a href="+viewAction+" class="+disableIconClass+"><i  class="+disableViewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
+		}
 		String action=view;		  
 		return action;
 
@@ -1304,8 +1315,8 @@ public String importalTrcManageIcons(String status,Integer id,String fileName,St
 	// URL link 
 	//String downloadURL = "JavaScript:void(0)";
 
-	String viewAction="viewByID("+id+",'view')";
-	String editAction= "viewByID("+id+",'edit')";
+	String viewAction="ImporterviewByID("+id+",'view')";
+	String editAction= "ImporterviewByID("+id+",'edit')";
 	String deleteAction = "JavaScript:void(0);";
 	// state related Code 
 	

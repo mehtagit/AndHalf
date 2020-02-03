@@ -438,7 +438,7 @@ title="Please enter number upto 30 characters only">
 
 								<div class="input-field col s12 m6 l6">
 									<input type="email" name="email" required="required" id="email"
-										maxlength="30"> <label for="email"><spring:message code="input.email" /> <span
+										maxlength="320"> <label for="email"><spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
 

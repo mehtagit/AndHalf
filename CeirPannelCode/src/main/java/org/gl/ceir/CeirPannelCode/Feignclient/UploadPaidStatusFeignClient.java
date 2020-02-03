@@ -1,5 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
@@ -49,6 +50,11 @@ public interface UploadPaidStatusFeignClient {
 	@PutMapping("/accept-reject/end-user-device")
 	public @ResponseBody GenricResponse approveRejectFeign(FilterRequest_UserPaidStatus filterRequest);
 	
+	@GetMapping("/end-user/{nid}")
+	public @ResponseBody GenricResponse fetchVisaDetailsbyPassport(@PathVariable("nid") String  nid);
+	
+	@PutMapping("visa/end-user")
+	public @ResponseBody GenricResponse updateEndUSerVisaDetailsby(EndUserVisaInfo visaInfo);
 	
 	
 }

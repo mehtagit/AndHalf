@@ -18,6 +18,8 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
 
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
@@ -42,7 +44,7 @@
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
 
     <style>
-        ul li {
+   /*      ul li {
             display: inline-flex;
         }
 
@@ -143,54 +145,20 @@
         .modal {
         	width: 50%;
         }
-    </style>
+ */    </style>
 <script>
 var contextpath = "${context}";
 </script>
 
 </head>
 <body>
-
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR </a> <span
-                                    class="logo-text">Materialize</span></h1>
-                        </li>
-                    </ul>
-                    
-                    <ul id="chat-out" class="right hide-on-med-and-down"
-style="overflow: inherit !important;">
-
-<li><div id="divLang" style="display:flex;margin: 8px 6px;" class="darken-1">
-			<div id="iconLable" class="darken-1"><i class="fa fa-globe fa-6" aria-hidden="true"></i></div>	
-			<div><select class="darken-1" id="langlist" style="border-bottom: none;height: 42px;background: #00bcd4;border: 1px solid #00bcd4 !important;">
-					<option value="en">English</option>
-					<option value="km">Khmer</option>
-					</select></div>
-			</div>
-			</li>
-		<li><a href="./homePage" id="newUserLink" style="color:white;">Home</a>	</li>			
-</ul>
-                    
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-
-
-           <section id="content">
+<section id="content">
                 <!--start container-->
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
                 <div class="container" style="margin-top:10vh;" id="uploadPaidStatusDiv" style="dispay:none">
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page">
-                            <h6 class="fixPage-modal-header ">Upload Stock</h6>
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" /></h6>
                            	<form action="" onsubmit="return uploadEndUserStock()" method="POST"
 								enctype="multipart/form-data" id="uploadStock">
                                 <div class="col s12 m12 l12">
@@ -216,21 +184,21 @@ style="overflow: inherit !important;">
 
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
-                                                <label for="endUser" style="color: #000;">Email ID </label>
+                                                <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
                                                 <input type="email" id="endUseremail" maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
-                                                <label for="endUserquantity" style="color: #000;">Quantity <span class="star">*</span></label>
+                                                <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                 <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0,7}
                                                     title="Please enter maximum 10 characters only" maxlength="10" required/>
                                             </div>
 
                                             <div class="file-field col s12 m6">
-                                                <h6 style="margin-top: 15px;">Upload File <span
+                                                <h6 style="margin-top: 15px;"><spring:message code="registration.uploadfile" /> <span
                                                         class="star">*</span></h6>
                                                 <div class="btn">
-                                                    <span>Select File</span>
+                                                    <span><spring:message code="input.selectfile" /></span>
                                                     <input type="file" id="endUsercsvUploadFile" accept=".csv" required="required">
                                                 </div>
                                                 <div class="file-path-wrapper">
@@ -249,16 +217,15 @@ style="overflow: inherit !important;">
                                             </div> -->
                                         </div>
                                         
-                                        <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/4">Download Sample
-                                            Format</a></p>
-                                        <p style="margin-left: 10px;"> Required Field are marked with <span class="star">*</span></p>
+                                        <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/4"><spring:message code="input.downlaod.sample" /></a></p>
+                                        <p style="margin-left: 10px;"><spring:message code="input.requiredfields" /><span class="star">*</span></p>
                                     </div>
                                     <div class="row" style="margin: 30px 0 30px 0;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <!-- <a href="#submitStock" class="btn modal-trigger">Submit</a> -->
-                                            <button class=" btn" type="submit">Submit</button>
+                                            <button class=" btn" id="endUserStock" type="submit"><spring:message code="button.submit" /></button>
                                             <a href="#cancelStock" class="btn modal-trigger"
-                                                style="margin-left: 10px;">Cancel</a>
+                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                         </div>
                                     </div>
 
@@ -273,7 +240,7 @@ style="overflow: inherit !important;">
                         <div class="row card-panel upload-stock-responsive-page" >
                             <!-- <a href="index.html" class="modal-close btn-flat modal-btn right"
                                 data-dismiss="modal">&times;</a> -->
-                                <h6 class="fixPage-modal-header ">Check Upload Status</h6>
+                                <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" /></h6>
                                  	
                                 <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return validateTxnId()" method="POST"
@@ -281,7 +248,7 @@ style="overflow: inherit !important;">
                                     <div class="row" id="singleInput">
                                         <div class="row">
                                             <div class="input-field col s6 m5">
-                                                <label for="transactionID">Please Enter The Transaction ID <span class="star">*</span> :</label>
+                                                <label for="transactionID"><spring:message code="input.TransactionID2" /><span class="star">*</span> :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="checktransactionID" name="checktransactionID"
@@ -294,9 +261,9 @@ style="overflow: inherit !important;">
                                                <!--  <a href="#" class="btn"
                                                     onclick="document.getElementById('singleInput').style.display ='none'; 
                                                     document.getElementById('inputDetails').style.display ='block';">Submit</a> -->
-                                                    <button class=" btn" type="submit">Submit</button>
+                                                    <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
                                                 <a href="#cancelStock" class="btn modal-trigger modal-close"
-                                                    style="margin-left: 10px;">Cancel</a>
+                                                    style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                             </div>
                                         </div>
                                     </div></form>
@@ -305,7 +272,7 @@ style="overflow: inherit !important;">
 								enctype="multipart/form-data" id="uploadStock">
                                         <div class="row">
                                             <div class="input-field col s6 m5">
-                                                <label for="transactionID">Transaction ID :</label>
+                                                <label for="transactionID"><spring:message code="input.TransactionID3" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="transactionID" name="transactionID"
@@ -313,14 +280,14 @@ style="overflow: inherit !important;">
                                             </div>
 
                                             <div class="input-field col s6 m5">
-                                                <label for="uploadDate">Upload Date :</label>
+                                                <label for="uploadDate"><spring:message code="input.UploadDate" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="uploadDate" name="uploadDate"
                                                     placeholder="" readonly="readonly">
                                             </div>
                                             <div class="input-field col s6 m5">
-                                                <label for="viewUploadFile">View Upload File :</label>
+                                                <label for="viewUploadFile"><spring:message code="input.ViewUploadFile" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                <a href="JavaScript:void();" onclick="endUserStockFileDownload()" > <i class="fa fa-download download-icon" aria-hidden="true"
@@ -330,7 +297,7 @@ style="overflow: inherit !important;">
                                                      placeholder="" readonly="readonly">
                                             </div>
                                              <div class="input-field col s6 m5">
-                                                <label for="errorFileStatus">Stock Status :</label>
+                                                <label for="errorFileStatus"><spring:message code="input.StockStatus" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="errorFileStatus" name="errorFileStatus"
@@ -341,7 +308,7 @@ style="overflow: inherit !important;">
                                             
 
                                             <div class="input-field col s6 m5">
-                                                <label for="errorFileName">View Error Report :</label>
+                                                <label for="errorFileName"><spring:message code="input.ViewErrorReport" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <a href="JavaScript:void();"><i class="fa fa-download download-icon" aria-hidden="true"
@@ -352,14 +319,12 @@ style="overflow: inherit !important;">
                                             </div>
 
                                             <div class="input-field col s6 m5">
-                                                <label for="viewUploadFile">Do you want to upload a fresh file?</label>
+                                                <label for="viewUploadFile"><spring:message code="input.freshfile" /></label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <div class=" boxHeight" style="margin-top: 15px;">
                                                     <input class="with-gap" name="group3" type="radio"
-                                                        onclick="document.getElementById('uploadFile').style.display = 'block';">
-                                                    Yes
-                                                </div>
+                                                        onclick="document.getElementById('uploadFile').style.display = 'block';"><spring:message code="modal.yes" /></div>
                                             </div>
 
 													
@@ -370,7 +335,7 @@ style="overflow: inherit !important;">
                                                 <div class="file-field input-field col s12 m12"
                                                     style="margin-top: 5px;">
                                                     <div class="btn">
-                                                        <span>Select File</span>
+                                                        <span><spring:message code="input.selectfile" /></span>
                                                         <input type="file" id="csvUploadFile" required="required" accept=".csv">
                                                     </div>
                                                     <div class="file-path-wrapper">
@@ -384,27 +349,27 @@ style="overflow: inherit !important;">
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
-                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type="">OK</a>
-                                                <button class=" btn" id="updateEndUserStock" type="submit">Submit</button>
+                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.ok" /></a>
+                                                <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button>
                                             </div>
                                         </div>
                                          </form>
                                     </div>
 
                                     <div class="row" id="cancelInputDetails" style="display: none;">
-                                        <h6>Cancel Stock</h6>
+                                        <h6><spring:message code="input.CancelStock" /></h6>
                                         <div class="row">
-                                            <h6 style="margin-left: 15px;">Do you really want to Exit page?
+                                            <h6 style="margin-left: 15px;"><spring:message code="input.Exitpage" />
                                             </h6>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <div class="input-field col s12 center">
-                                                    <a href="index.html" class="btn">Yes</a>
+                                                    <a href="index.html" class="btn"><spring:message code="modal.yes" /></a>
                                                     <button class="btn" style="margin-left: 10px;"
                                                         onclick="document.getElementById('singleInput').style.display = 'none';
                                                         document.getElementById('cancelInputDetails').style.display = 'none';
-                                                        document.getElementById('inputDetails').style.display = 'block';">No</button>
+                                                        document.getElementById('inputDetails').style.display = 'block';"><spring:message code="modal.no" /></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -424,7 +389,7 @@ style="overflow: inherit !important;">
     <!-- Submit Modal start   -->
 
     <div id="endUserStockModal" class="modal">
-     <h6 class="modal-header">Submit Stock</h6>
+     <h6 class="modal-header"><spring:message code="modal.header.submitStock" /></h6>
         <div class="modal-content">
            
             <div class="row">
@@ -432,31 +397,31 @@ style="overflow: inherit !important;">
                     save this for future reference.
                     Kindly check the status of file upload by clicking on the check upload status button on the previous
                     page and providing the Transaction ID. -->
-                   <h6 id="sucessMessageId"> Your form has been successfully submitted. The Transaction ID for future reference is <span id="endUsertXnId"></span></h6>
+                   <h6 id="sucessMessageId"><spring:message code="modal.message.futureRef" /> <span id="endUsertXnId"></span></h6>
              <!--    </h6> -->
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn">ok</a>
+                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
         <div id="cancelStock" class="modal">
-         <h6 class="modal-header">Cancel Stock</h6>
+         <h6 class="modal-header"><spring:message code="input.CancelStock" /></h6>
         <div class="modal-content">
            
             <div class="row">
-                <h6>Do you really want to Exit page?
+                <h6><spring:message code="input.Exitpage" />
                 </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn">Yes</a>
-                        <button class="modal-close btn" style="margin-left: 10px;">No</button>
+                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                     </div>
                 </div>
             </div>
@@ -464,25 +429,25 @@ style="overflow: inherit !important;">
     </div>
     
      <div id="errorModal" class="modal">
-         <h6 class="modal-header">Check Stock Status</h6>
+         <h6 class="modal-header"><spring:message code="input.CheckStock" /></h6>
         <div class="modal-content">
            
             <div class="row">
-                <h6 id="">stock not found please enter valid Transaction Id.
+                <h6 id=""><spring:message code="input.notTransactionId" />
                 </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
                         <!-- <a href="homePage" class="btn">Yes</a> -->
-                        <button class="modal-close btn" style="margin-left: 10px;">OK</button>
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
          <div id="fileUpdateSucessModal" class="modal">
-         <h6 class="modal-header">Stock file uplaod</h6>
+         <h6 class="modal-header"><spring:message code="modal.Stockfileuplaod" /></h6>
         <div class="modal-content">
            
             <div class="row">
@@ -492,7 +457,7 @@ style="overflow: inherit !important;">
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn">Ok</a>
+                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
                         <!-- <button class="modal-close btn" style="margin-left: 10px;">OK</button> -->
                     </div>
                 </div>

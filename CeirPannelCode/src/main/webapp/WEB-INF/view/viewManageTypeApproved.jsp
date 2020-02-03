@@ -70,7 +70,9 @@ textarea {
 </style>
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}"
+ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"
+ session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -436,6 +438,200 @@ textarea {
             </div>
         </div>
     </div>
+
+<div id="viewImporterModal" class="modal" style="overflow-y: hidden;">
+			<h6 class="modal-header"><spring:message code="input.ViewType" /></h6>
+			<div class="modal-content">
+
+				
+
+
+				<div class="row" style="margin-top: 10px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtradmark" name="tradmark"
+							placeholder="" disabled=""> <label
+							for="viewtradmark" class="active"><spring:message code="input.Tradmark" /></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewmodelName" name="modelName"
+							placeholder="" disabled="disabled"> <label
+							for="viewmodelName" class="active"><spring:message code="input.ModelName" /> <span
+							class="star"></span></label>
+					</div>
+					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewModelnumber" name="modelNumber"
+							placeholder="" disabled="disabled"> <label
+							for="viewModelnumber" class="active"><spring:message code="input.ModelNumber" /> <span
+							class="star"></span></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewManufacturercountry" name="Country"
+							placeholder="" disabled=""> <label
+							for="viewManufacturercountry" class="active"><spring:message code="input.ManufacturerCountry" /></label>
+					</div>
+			<div class="input-field col s12 m6 l6">
+			 			<input type="text" id="viewrequestDate"
+							class="datepicker picker__input" name="requestDate" pattern="[]"
+							title="" maxlength="20" placeholder="" disabled="" readonly=""
+							tabindex="-1" aria-haspopup="true" aria-expanded="false"
+							aria-readonly="false" aria-owns="bdate2_root"> <span
+							class="input-group-addon" style="color: #ff4081"><i
+							class="fa fa-calendar" aria-hidden="true"
+							style="float: right; margin-top: -37px;"></i></span> <label
+							for="dateRequested" class="active"><spring:message code="input.RequestDate" /> </label>
+					</div>
+					<!-- <div class="input-field col s12 m6 l6">
+						<input type="text" id="viewDeviceType" name="deviceType"
+							placeholder="" disabled=""> <label
+							for="deviceType" class="active">Device Type </label>
+					</div> -->
+
+
+				</div>
+
+				<!-- <div class="row" style="margin-top: 5px;">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewdeviceTypeID" name="deviceType"
+							placeholder="" disabled=""> <label for="deviceType"
+							class="active">Device ID Type</label>
+					</div> -->
+
+
+					<div class="row">
+					
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewFrequency" name="tac" placeholder=""
+							disabled=""> <label for="viewFrequency" class="active"><spring:message code="input.frequency" /></label>
+					</div>
+
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewtac" name="tac" placeholder=""
+							disabled=""> <label for="tac" class="active"><spring:message code="input.TAC" /></label>
+					</div>
+			</div>
+			
+									
+									
+
+				</div>
+				<div class="row ">
+				<div class="center  popup-btn-div" style="margin-top: 10px;">
+					<button class="modal-close btn" type="button" id="Cancel"
+						style="margin-left: 10px;"><spring:message code="modal.close" /></button>
+				</div>
+
+
+
+			</div>
+		</div>
+		
+		
+		
+		<div id="importereditModal" class="modal" style="overflow-y: hidden;">
+		<h6 class="modal-header" > <spring:message code="modal.UpdateDevices" /></h6>
+		<div class="modal-content">
+                                    
+<form action="" onsubmit="return updateReportTypeDevice()" method="post" style="margin-top: 30px;">
+                                   
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="editTradmark" name="trademarkName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
+                                                    required="required" />
+                                                <label for="editTradmark"><spring:message code="input.Tradmark" /> <span
+                                                        class="star">*</span></label>
+                                            </div>
+                                           
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="editmodelName" name="ModelName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
+                                                    required="required" />
+                                                <label for="editmodelName"><spring:message code="input.ModelName" /> <span
+                                                        class="star">*</span></label>
+                                            </div>
+                                            
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="editmodelNumber" name="ModelNumber" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
+                                                    required="required" />
+                                                <label for="editmodelNumber"><spring:message code="input.modelNumber" /> <span
+                                                        class="star">*</span></label>
+                                            </div>
+								
+                                            <div class="col s12 m6 l6">
+                                                <label for="country"><spring:message code="input.Country" /> <span class="star">*</span></label>
+                                                <select id="editcountry"  required="required" class="browser-default" class="mySelect"
+                                                    required></select>
+                                            </div>
+
+                                            <div class="input-field col s12 m6">
+                                              <input type="text" id="editRequestDate" required="required"
+											class="form-control dateClass" name="requestDate" 
+											title="" placeholder="" autocomplete="off"> <label for="bdate2"><spring:message code="input.RequestDate" /> <span class="star">*</span></label>
+                                            </div>
+
+                                          
+                                        </div>
+
+                                        <div class="row" style="margin-top: 5px;">
+                                            <!-- <div class="col s12 m6 l6">
+                                                <label for="deviceType">Device ID Type </label>
+                                                <select class="browser-default" id="deviceType">
+                                                    <option value="" disabled selected>Select Device ID Type</option>
+                                                    <option value="IMEI">IMEI</option>
+                                                    <option value="ESN">ESN</option>
+                                                    <option value="MEID">MEID</option>
+                                                </select>
+                                            </div> -->
+										
+										 <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="editfrequency" name="frequency" placeholder="" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160" required="required" />
+                                                <label for="editfrequency"><spring:message code="input.frequency" /> <span class="star">*</span></label>
+                                            </div>
+											
+
+
+                                            <div class="input-field col s12 m6 l6">
+                                                <input type="text" id="edittac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required" />
+                                                <label for="tac"><spring:message code="input.TAC" /> <span class="star">*</span></label>
+                                            </div>
+
+                                            
+                                        </div>
+
+                                       
+
+                                        <div class="row">
+                                            <h6 style="color: #000; margin-left: 10px;"><spring:message code="input.supportingdocument" /> <span
+                                                    class="star">*</span></h6>
+                                            <div class="file-field col s12 m6">
+                                                <div class="btn">
+                                                    <span><spring:message code="input.selectfile" /></span>
+                                                    <input id="editUploadFile" type="file"  multiple>
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input class="file-path validate" required="required" type="text" id="editFileName" placeholder=""
+                                                        multiple>
+                                                    <div>
+                                                        <p id="myFiles"></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
+                                                class="star">*</span></span>
+                                            <div class="center" >
+                                                <button class="btn " type="submit"><spring:message code="button.update" /></button>
+                                                <!-- <a href="manageTypeDevices.html" class="btn" id="Cancel"
+                                                    style="margin-left: 10px;">Cancel</a> -->
+                                                    <button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                                            </div>
+                                            </form>
+                                    </div>
+                                    
+                                </div>	
+
+
 
 
 	<!--materialize js-->

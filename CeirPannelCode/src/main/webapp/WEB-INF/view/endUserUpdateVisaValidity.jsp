@@ -81,116 +81,117 @@
                            
                                 <div class="col s12 m12 l12">
                                     <div class="row">
-                                        <h5>Update Visa Validity</h5>
+                                        <h5><spring:message code="input.UpdateVisaValidity" /></h5>
                                         <hr style="margin-bottom: 0px;">
                                          
                                         <div class="row">
-                       					 
+                       					  <form id="" onsubmit="return findEndUserByNid()" method="POST" enctype="multipart/form-data" >
                                             <div id="submitbtn">
                                              <div class="input-field col s12 m1 l1">
-                                                    <label for="Search" class="center-align ml-10">NID :</label>
+                                                    <label for="Search" class="center-align ml-10"><spring:message code="input.NID4" /></label>
                                                 </div>
                                                 <div class="input-field col s12 m3 l3">
-                                                    <input type="text" id="nidForEndUser" pattern="[A-Za-z0-9]{0,15}" name="Search"  />
+                                                    <input type="text" id="nidForEndUser" required="required" pattern="[A-Za-z0-9]{0,15}" maxlength="15" name="Search"  />
                                                 </div>
                                                 <div class="input-field col s12 m2 l2">
-                                                    <button class="btn" type="button" onclick="hide();">Submit</button>
+                                                    <button class="btn" type="submit" ><spring:message code="button.submit" /></button>
                                                 </div>
                                                </div>
+                                               </form>
                                             
                                       </div>
                                        
 
                                         <div id="EndUserInfoForm" style="display: none;">
-                                              <form id="replymessageForm" onsubmit="return updateEndDateVisaDetails()" method="POST" enctype="multipart/form-data" >
+                                              <form id="" onsubmit="return updateVisaDetails()" method="POST" enctype="multipart/form-data" >
                                             <div class="row">
                                                 <div class="input-field col s12 m6">
-                                                    <input type="text" id="endUserpassportNumber" name="passportNumber" required
+                                                    <input type="text" id="endUserpassportNumber" name="endUserpassportNumber" required  placeholder=""
                                                         pattern="[a-zA-Z0-9]{1,15}" title="Please enter alphabets upto 15 characters only" maxlength="15" />
-                                                    <label for="endUserpassportNumber">Passport Number <span
+                                                    <label for="endUserpassportNumber"><spring:message code="input.passportNo" /> <span
                                                             class="star">*</span></label>
                                                 </div>
                                                 <div class="file-field col s12 m6" style="margin-top: -8px;">
-                                                    <h6 style="font-size: 12px;">Upload Passport Image <span class="star">*</span></h6>
-                                                    <div class="btn">
-                                                        <span>select file</span>
+                                                    <h6 style="font-size: 12px;"><spring:message code="input.UploadImage" /> <span class="star">*</span></h6>
+                                                    <div class="btn" id="passportFileDiv">
+                                                        <span><spring:message code="input.selectfile" /></span>
                                                         <input type="file" id="uploadPassportID">
                                                     </div>
-                                                    <div class="file-path-wrapper">
-                                                        <input class="file-path validate" type="text" placeholder="Upload Visa Image" value="">
+                                                    <div class="file-path-wrapper" id="passportFileNameDiv">
+                                                        <input class="file-path validate" type="text" id="passportFileName" placeholder="" value="">
                                                     </div>
                                                 </div>
 
                                                 <div class="input-field col s12 m4">
-                                                    <input type="text" id="endUserfirstName" name="firstName"
+                                                    <input type="text" id="endUserfirstName"  placeholder=""
                                                         pattern="[a-zA-Z]{1,20}" required title="Please enter alphabets upto 20 characters only" maxlength="20" />
-                                                    <label for="firstName">First Name <span
+                                                    <label for="endUserfirstName"><spring:message code="input.firstName" /><span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m4">
-                                                    <input type="text" id="endUsermiddleName" name="endUsermiddleName"
+                                                    <input type="text" id="endUsermiddleName"  placeholder=""
                                                         pattern="[a-zA-Z]" title="Please enter alphabets upto 20 characters only" maxlength="20" />
-                                                    <label for="endUsermiddleName">Middle Name</label>
+                                                    <label for="endUsermiddleName"><spring:message code="input.middleName" /></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m4">
-                                                    <input type="text" id="endUserlastName" name="endUserlastName" pattern="[a-zA-Z]{1,20}"
+                                                    <input type="text" id="endUserlastName"  placeholder="" pattern="[a-zA-Z]{1,20}"
                                                         title="Please enter alphabets upto 20 characters only" required="required" maxlength="20" />
-                                                    <label for="endUserlastName">Last Name <span class="star">*</span></label>
+                                                    <label for="endUserlastName"><spring:message code="input.lastName" /><span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m12 l12">
-                                                    <input type="text" name="address" title="Please enter alphabets upto 50 characters only" required="required"
+                                                    <input type="text" name="address" placeholder="" title="Please enter alphabets upto 50 characters only" required="required"
                                                      pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"  class="form-control boxBorder boxHeight" id="endUseraddress" maxlength="200"> 
-                                                    <label for="address">Address(Property Location) <span
+                                                    <label for="address"><spring:message code="input.address" /> <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="streetNumber" required="required"
+                                                    <input type="text" name="streetNumber" required="required" placeholder=""
                                                        pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"   class="form-control boxBorder boxHeight" id="endUserstreetNumber"
                                                    title="Please enter alphabets upto 200 characters only"     maxlength="200">
-                                                    <label for="streetNumber">Street Number <span
+                                                    <label for="streetNumber"><spring:message code="input.streetNumber" /> <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="locality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                    <input type="text" placeholder="" placeholder=""  pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
                                                         class="form-control boxBorder boxHeight" id="endUserlocality"  maxlength="20" required="required">
-                                                    <label for="locality">Locality <span class="star">*</span></label>
+                                                    <label for="locality"><spring:message code="input.locality" /><span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="village" id="endUservillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                    <input type="text"  placeholder="" id="endUservillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
                                                      maxlength="20" required="required" >
-                                                    <label for="village">Village <span class="star">*</span></label>
+                                                    <label for="village"><spring:message code="input.village" /><span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="commune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+                                                    <input type="text" placeholder=""  pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
 														title="Please enter alphabets and numbers upto 50 characters only"
                                                      id="endUsercommune" maxlength="50" required="required">
-                                                    <label for="commune">Commune <span class="star">*</span></label>
+                                                    <label for="commune"><spring:message code="input.commune" /><span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="district" id="endUserdistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+                                                    <input type="text"  placeholder=""  id="endUserdistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
 												required="required"		title="Please enter alphabets and numbers upto 50 characters only" maxlength="50">
-                                                    <label for="district">District <span class="star">*</span></label>
+                                                    <label for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="pin"  required="required" pattern="[0-9]{6,10}"
+                                                    <input type="text"  placeholder=""  required="required" pattern="[0-9]{6,10}"
 														title="Please enter Postel code upto 10 Numbers only" 
                                                         class="form-control boxBorder boxHeight" id="endUserpin"
                                                         maxlength="20">
-                                                    <label for="pin">Pincode <span class="star">*</span></label>
+                                                    <label for="pin"><spring:message code="input.Pincode" /><span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
                                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-                                                        Country
+                                                        Country<spring:message code="input.Remark" />
                                                         <span class="star">*</span></p>
                                                     <select id="country" class="browser-default" required class="mySelect"
                                                         style="padding-left: 0;" required></select>
@@ -198,47 +199,47 @@
 
                                                 <div class="input-field col s12 m6 l6">
                                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-                                                        Province
+                                                        <spring:message code="input.province" />
                                                         <span class="star">*</span></p>
                                                     <select id="state" class="browser-default" required class="mySelect"
                                                         style="padding-left: 0;" required></select>
                                                 </div>
 
                                                 <div class="input-field col s12 m6">
-                                                    <p class="contact-label">Contact Number <span class="star">*</span>
+                                                    <p class="contact-label"> <spring:message code="input.contactNum" /><span class="star">*</span>
                                                     </p>
-                                                    <input type="tel" required="required" name="phone" id="phone" maxlength="15">
+                                                    <input type="tel" required="required" placeholder=""  id="phone" maxlength="15">
                                                 </div>
 
                                                 <div class="input-field col s12 m6">
-                                                    <input type="email" id="endUseremailID" name="emailID"
+                                                    <input type="email" id="endUseremailID" placeholder="" 
                                                         title=""
                                                         maxlength="30" />
-                                                    <label for="emailID">Email ID</label>
+                                                    <label for="emailID"><spring:message code="input.EmailID" /></label>
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col s12 m6">
-                                                    <label for="visaType">Visa Type <span class="star">*</span></label>
+                                                    <label for="visaType"><spring:message code="input.VisaType" /><span class="star">*</span></label>
                                                     <select class="browser-default" id="endUservisaType" required
                                                         style="padding: 0; height: 35px;">
-                                                        <option value="" disabled selected>Select Visa Type</option>
+                                                        <option value="" disabled selected><spring:message code="input.SelectVisaType" /></option>
                                                         
                                                     </select>
                                                 </div>
 
-                                                <div class="input-field col s12 m6">
-                                                    <input type="text" id="endUserdatepicker1" required="required" name="entryDate" pattern="[]"
+                                                <div class="input-field col s12 m6" id="endUserdatepickerDiv">
+                                                    <input type="text" id="endUserdatepicker1" placeholder="" required="required"  
                                                         title="" maxlength="15" />
-                                                    <label for="datepicker1">Entry Date In Country <span
+                                                    <label for="datepicker1"><spring:message code="input.EntryCountry" /> <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="file-field col s12 m6" style="margin-top: -8px;">
-                                                    <h6>Upload Visa Image <span class="star">*</span></h6>
+                                                    <h6><spring:message code="input.UploadVisa" /> <span class="star">*</span></h6>
                                                     <div class="btn">
-                                                        <span>select file</span>
+                                                        <span><spring:message code="input.selectfile" /></span>
                                                         <input type="file" id="endUseruploadnationalID" required="required"
                                                             placeholder="Upload Visa Image">
                                                     </div>
@@ -249,25 +250,25 @@
                                                 </div>
 
                                                 <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                    <input type="text" id="endUserdatepicker" name="expiryDate"  required="required" pattern="[]"
+                                                    <input type="text" id="endUserdatepicker"  placeholder=""  required="required" 
                                                         title="" maxlength="15" />
-                                                    <label for="datepicker">Visa Expiry Date <span
+                                                    <label for="datepicker"><spring:message code="input.VisaExpiry" /> <span
                                                             class="star">*</span></label>
                                                 </div>
                                             </div>
 
-                                             <p>Required Field are marked with <span class="star">*</span></p>
+                                             <p><spring:message code="input.requiredfields" /><span class="star">*</span></p>
                                                 <div class="row">
                                                     <div class="input-field col s12 m12 l12 center">
-                                                        <button  class="btn" type="submit" >Update</button>
+                                                        <button id="updateVisaButton"  class="btn" type="submit" ><spring:message code="button.update" /></button>
                                                         <a href="./redirectToHomePage" class="btn"
-                                                            style="margin-left: 10px;">cancel</a>
+                                                            style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                                     </div>
                                                 </div>
                                                 </form>
                                         </div>
 
-                                        <div id="match-data" style="display: none;">
+                                       <!--  <div id="match-data" style="display: none;">
                                             <div class="row">
                                                 <div class="input-field col s12 m12">
                                                     <input type="text" id="passportNumber" name="passportNumber"
@@ -348,7 +349,7 @@
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="Province" id="state" maxlength="20"
+                                                    <input type="text" name="Province" id="states" maxlength="20"
                                                         value="Abc" disabled>
                                                     <label for="state">Province <span class="star">*</span></label>
                                                 </div>
@@ -369,14 +370,14 @@
                                             </div>
 
                                             <div class="row">
-                                                <!-- <div class="col s12 m6">
+                                                <div class="col s12 m6">
                                                 <label for="visaType">Visa Type <span class="star">*</span></label>
                                                 <select class="browser-default" id="visaType">
                                                     <option value="" disabled selected>Select Visa Type</option>
                                                     <option value="Yes">Tourist</option>
                                                     <option value="No">Other</option>
                                                 </select>
-                                            </div> -->
+                                            </div>
 
                                                 <div class="input-field col s12 m6">
                                                     <input type="text" id="visaType" name="visaType" pattern="[]"
@@ -420,15 +421,32 @@
                                                         style="margin-left: 10px;">cancel</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                             
                         </div>
                     </div>
                 </div>
                 </div>
+                         <div id="successMsg" class="modal open" style="width: 45%; z-index: 1003;  opacity: 1; transform: scaleX(1); top: 10%;">
+       <h6 class="modal-header"><spring:message code="button.submit" /></h6>
+        <div class="modal-content">
+           <div class="row">
+                <h6 id="messageResponse"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                 <!--end container-->
             </section>
+            
+   
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
