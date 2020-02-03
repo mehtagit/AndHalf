@@ -224,7 +224,7 @@ var contextpath = "${context}";
                                     <div class="row" style="margin: 30px 0 30px 0;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <!-- <a href="#submitStock" class="btn modal-trigger">Submit</a> -->
-                                            <button class=" btn" type="submit">Submit</button>
+                                            <button class=" btn" id="endUserStock" type="submit">Submit</button>
                                             <a href="#cancelStock" class="btn modal-trigger"
                                                 style="margin-left: 10px;">Cancel</a>
                                         </div>

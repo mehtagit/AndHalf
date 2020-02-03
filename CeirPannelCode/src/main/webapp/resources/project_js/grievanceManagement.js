@@ -45,7 +45,7 @@ var featureId = 6;
 			//**************************************************Grievance table**********************************************
 
 			function grievanceDataTable(lang){
-				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+				var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#grievanceID').val() : transactionIDValue;
 	
 				var grievancePageSource =localStorage.getItem("grievancePageSource");
 				var grievanceSessionUsesFlag;
@@ -75,8 +75,8 @@ var featureId = 6;
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						"txnId":txn,
-						"grievanceId":$('#grievanceID').val(),
+						"txnId":  $('#transactionID').val(),
+						"grievanceId":txn,
 						"userType":$("body").attr("data-roleType"),
 
 				}

@@ -77,7 +77,7 @@
                                     <div class="row" style="margin-top: 10px;">
                                         <div class="input-field col s12 m4 l4">
                                             <input type="text" name="firstName" id="firstName" value="${registration.firstName}" maxlength="20" disabled="" placeholder="">
-                                            <label for="firstName" class="center-align active"><spring:message code="nput.firstName" /> </label>
+                                            <label for="firstName" class="center-align active"><spring:message code="input.firstName" /> </label>
                                         </div>
 
                                         <div class="input-field col s12 m4 l4">
