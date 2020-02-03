@@ -178,8 +178,8 @@ public class RegularizedDeviceServiceImpl {
 			}
 
 			stateList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-
-			System.out.println("dialect : " + propertiesReader.dialect);
+			logger.info(stateList);
+			logger.info("dialect : " + propertiesReader.dialect);
 
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
 
