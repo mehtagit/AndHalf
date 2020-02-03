@@ -38,6 +38,7 @@ import com.gl.ceir.config.model.FeatureValidateReq;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -137,7 +138,7 @@ public class StockServiceImpl {
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
 		boolean isAnonymousUpload = Boolean.FALSE;
-		
+
 		User user = null;
 
 		try {
@@ -177,6 +178,7 @@ public class StockServiceImpl {
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// Check if this feature is supported in current period.
 				HttpResponse response = userFeignClient.validatePeriod(new FeatureValidateReq(4, 17));
+				logger.info("FEIGN : response for validatePeriod " + response);
 				if(response.getStatusCode() == 420) {
 					logger.info("Feature [Stock] user [End User]" + GenericMessageTags.FEATURE_NOT_ALLOWED.getMessage());
 					return new GenricResponse(420, GenericMessageTags.FEATURE_NOT_ALLOWED.getTag(), 
@@ -222,7 +224,6 @@ public class StockServiceImpl {
 
 			if(isStockAssignRequest) {
 				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, isAnonymousUpload)) {
-
 					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
 				}else {
@@ -230,7 +231,8 @@ public class StockServiceImpl {
 					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
 				}
 			}else if(isAnonymousUpload) {
-				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, isAnonymousUpload)) {
+				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, 
+						isAnonymousUpload)) {
 
 					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
@@ -293,21 +295,31 @@ public class StockServiceImpl {
 				logger.info("Notification have been not saved.");
 			}
 		}else if(isAnonymousUpload) {
+			List<RawMail> rawMails = new ArrayList<RawMail>();
+
 			User user = userRepository.getByUsername("CEIRAdmin");
 			logger.info(user);
-			
-			Map<String, String> placeholderMap = new HashMap<String, String>();
-			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
 
-			if(emailUtil.saveNotification("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", 
-					user.getUserProfile(), 
-					4,
-					Features.STOCK,
-					SubFeatures.REGISTER,
-					stockMgmt.getTxnId(),
-					MailSubjects.SUBJECT,
-					placeholderMap)) {
-				logger.info("Notification have been saved.");
+			// Send notification to the CeirAdmin. 
+			Map<String, String> placeholderMapForCeirAdmin = new HashMap<String, String>();
+			placeholderMapForCeirAdmin.put("<txn_id>", stockMgmt.getTxnId());
+
+			rawMails.add(new RawMail("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", user.getUserProfile(), 
+					4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT, 
+					placeholderMapForCeirAdmin));
+			
+			// Send notification to the anonymous user if mail is provided.
+			if(Objects.nonNull(userProfile.getEmail()) && !userProfile.getEmail().isEmpty()) {
+				Map<String, String> placeholderMapForAnonymousUser = new HashMap<String, String>();
+				placeholderMapForAnonymousUser.put("<txn_id>", stockMgmt.getTxnId());
+
+				rawMails.add(new RawMail("MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD", userProfile, 
+						4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT,  
+						placeholderMapForAnonymousUser));
+			}
+			
+			if(emailUtil.saveNotification(rawMails)) {
+				logger.info("Notifications [" + rawMails.size() + "] have been saved.");
 			}else {
 				logger.info("Notification have been not saved.");
 			}
@@ -776,15 +788,15 @@ public class StockServiceImpl {
 				user = userRepository.getById(stockMgmt.getUserId());
 			}
 			userProfile = user.getUserProfile();
-			
+
 			if(Objects.isNull(stockMgmt)) {
 				String message = "TxnId Does not Exist";
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
-			
+
 			logger.info(user);
-			
+
 			if(Objects.nonNull(user)) {
 				firstName = user.getUserProfile().getFirstName();
 			}

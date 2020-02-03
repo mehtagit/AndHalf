@@ -25,14 +25,16 @@ public class RawmailServiceImpl {
 	}
 	
 	public String createMailContent(String tag, Map<String, String> placeholders) {
-		String message = null;
+		String message = "";
 		MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 		logger.info("Message for tag [" + tag + "] " + messageDB);
 		
 		if(Objects.isNull(messageDB)) {
 			logger.info("No mail content is configured for tag [" + tag + "]");
+			return message;
+		}else {
+			message = messageDB.getValue();	
 		}
-		message = messageDB.getValue();
 
 		// Replace Placeholders from message.
 		if(Objects.nonNull(placeholders)) {

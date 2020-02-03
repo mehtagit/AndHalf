@@ -96,6 +96,10 @@ public class EmailUtil {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 			logger.info("Message for tag [" + tag + "] " + messageDB);
 			String message = messageDB.getValue();
+			
+			if(Objects.isNull(message)) {
+				return Boolean.TRUE;
+			}
 
 			// Replace Placeholders from message.
 			if(Objects.nonNull(placeholders)) {
@@ -125,6 +129,10 @@ public class EmailUtil {
 		try {
 			for(RawMail rawMail : rawMails) {
 				String message = rawmailServiceImpl.createMailContent(rawMail);
+				if(message.isEmpty()) {
+					continue;
+				}
+				
 				notifications.add(new Notification(ChannelType.EMAIL, 
 						message, 
 						rawMail.getUserProfile().getUser().getId(), 
