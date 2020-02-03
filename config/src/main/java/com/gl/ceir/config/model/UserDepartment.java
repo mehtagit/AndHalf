@@ -38,6 +38,9 @@ public class UserDepartment implements Serializable {
 	@Column(length = 50)
 	private String departmentId;
 	
+	@Column(length = 50)
+	private String departmentFilename;
+	
 	@OneToOne
 	@JoinColumn(name = "userId")
 	EndUserDB endUserDB;
@@ -70,6 +73,25 @@ public class UserDepartment implements Serializable {
 		return serialVersionUID;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getDepartmentFilename() {
+		return departmentFilename;
+	}
+	public void setDepartmentFilename(String departmentFilename) {
+		this.departmentFilename = departmentFilename;
+	}
+	public EndUserDB getEndUserDB() {
+		return endUserDB;
+	}
+	public void setEndUserDB(EndUserDB endUserDB) {
+		this.endUserDB = endUserDB;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -84,5 +106,4 @@ public class UserDepartment implements Serializable {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 }

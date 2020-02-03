@@ -92,6 +92,8 @@ public class EndUserDB implements Serializable {
 	
 	@Column(length = 50)
 	private String passportFileName;
+	
+	private long creatorUserId;
 
 	public Long getId() {
 		return id;
@@ -265,6 +267,13 @@ public class EndUserDB implements Serializable {
 	}
 	public void setPassportFileName(String passportFileName) {
 		this.passportFileName = passportFileName;
+	}
+	
+	public long getCreatorUserId() {
+		return creatorUserId;
+	}
+	public void setCreatorUserId(long creatorUserId) {
+		this.creatorUserId = creatorUserId;
 	}
 	@Override
 	public String toString() {

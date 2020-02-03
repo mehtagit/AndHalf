@@ -27,6 +27,7 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
 import com.gl.ceir.config.model.Count;
 import com.gl.ceir.config.model.EndUserDB;
@@ -42,8 +43,10 @@ import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -59,6 +62,7 @@ import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
+import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
@@ -86,6 +90,9 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	EndUserDbRepository endUserDbRepository;
+
+	@Autowired
+	WebActionDbRepository webActionDbRepository;
 
 	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
@@ -188,6 +195,13 @@ public class RegularizedDeviceServiceImpl {
 				setInterp(regularizeDeviceDb);
 			}
 
+			// Save in audit.
+			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), "", 0L, 
+					"", 12, Features.REGISTER_DEVICE, 
+					SubFeatures.VIEW, "");
+			auditTrailRepository.save(auditTrail);
+			logger.info("AUDIT : View in audit_trail. " + auditTrail);
+
 			return page;
 
 		} catch (Exception e) {
@@ -251,6 +265,14 @@ public class RegularizedDeviceServiceImpl {
 
 				csvWriter.write(fileRecords);
 			}
+
+			// Save in audit.
+			AuditTrail auditTrail = new AuditTrail(filterRequest.getUserId(), "", 0L, 
+					"", 12, Features.REGISTER_DEVICE, 
+					SubFeatures.EXPORT, "");
+			auditTrailRepository.save(auditTrail);
+			logger.info("AUDIT : Export in audit_trail. " + auditTrail);
+
 			return new FileDetails(fileName, filePath, link.getValue() + fileName ); 
 
 		} catch (Exception e) {
@@ -268,42 +290,99 @@ public class RegularizedDeviceServiceImpl {
 	@Transactional
 	public GenricResponse saveDevices(EndUserDB endUserDB) {
 		try {
+			List<WebActionDb> webActionDbs = new ArrayList<>();
 			String nid = endUserDB.getNid();
+
+			if(Objects.isNull(endUserDB.getNid())) {
+				logger.info(GenericMessageTags.NULL_NID);
+				return new GenricResponse(1, GenericMessageTags.NULL_NID.getTag(), 
+						GenericMessageTags.NULL_NID.getMessage(), 
+						"");
+			}
 
 			EndUserDB endUserDB2 = endUserDbRepository.getByNid(nid);
 
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
-
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
-
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 
 						if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 						}
-					}
-					logger.info(">>>>>>>>>>>>>>>>>" + endUserDB.getRegularizeDeviceDbs());
 
-					// End user is not registered with CEIR system.
+						// Add in web action list.
+						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
+								regularizeDeviceDb.getTxnId()));
+					}
+
+					logger.info(endUserDB.getRegularizeDeviceDbs());
+
+					boolean executionSuccess = Boolean.FALSE;
+
+					// Start query execution.
 					if(Objects.isNull(endUserDB2)) {
-						endUserDbRepository.save(endUserDB);
+						// End user is not registered with CEIR system.
+						executionSuccess = executeSaveDevices(webActionDbs, endUserDB);
 					}else {
-						regularizedDeviceDbRepository.saveAll(endUserDB.getRegularizeDeviceDbs());
+						executionSuccess = executeSaveDevices(webActionDbs, endUserDB.getRegularizeDeviceDbs());
 					}
 
-					return new GenricResponse(0, "User register sucessfully.", endUserDB.getRegularizeDeviceDbs().get(0).getTxnId());
+					// Return message to the client.
+					if(executionSuccess) {
+						logger.info("End user device registration is sucessful." + endUserDB);
+
+						// Save in audit.
+						AuditTrail auditTrail = new AuditTrail(endUserDB.getCreatorUserId(), "", 0L, 
+								"", 12, Features.REGISTER_DEVICE, 
+								SubFeatures.REGISTER, "");
+						auditTrailRepository.save(auditTrail);
+						logger.info("AUDIT : Saved in audit_trail. " + auditTrail);
+
+						return new GenricResponse(0, "End user device registration is sucessful.", "");
+					}else {
+						logger.info("End user device registration have been failed" + endUserDB);
+						return new GenricResponse(2, "End user device registration have been failed.", "");
+					}
+
 				}else {
 					logger.warn("Regularized Devices are exceeding the allowed count." + endUserDB);
-					return new GenricResponse(1, "Regularized Devices are exceeding the allowed count.", "");
+					return new GenricResponse(3, "Regularized Devices are exceeding the allowed count.", "");
 				}
+
 			}else {
-				return new GenricResponse(2, "No device found in the system.", "");
+				return new GenricResponse(4, "No device found in the request.", "");
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException("Custom Service", e.getMessage());
 		}
+	}
+
+	@Transactional
+	private boolean executeSaveDevices(List<WebActionDb> webActionDbs, EndUserDB endUserDB) {
+		boolean status = Boolean.FALSE;
+		webActionDbRepository.saveAll(webActionDbs);
+		logger.info("Batch update in web_action_db. " + webActionDbs );
+
+		endUserDbRepository.save(endUserDB);
+		logger.info("End user have been saved with its devices. " + endUserDB);
+
+		status = Boolean.TRUE;
+		return status;
+	}
+
+	@Transactional
+	private boolean executeSaveDevices(List<WebActionDb> webActionDbs, List<RegularizeDeviceDb> regularizeDeviceDbs) {
+		boolean status = Boolean.FALSE;
+		webActionDbRepository.saveAll(webActionDbs);
+		logger.info("Batch update in web_action_db. " + webActionDbs );
+
+		regularizedDeviceDbRepository.saveAll(regularizeDeviceDbs);
+		logger.info("Regularized devices have been saved. " + regularizeDeviceDbs);
+
+		status = Boolean.TRUE;
+		return status;
 	}
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
@@ -317,7 +396,7 @@ public class RegularizedDeviceServiceImpl {
 
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
-				
+
 				placeholders.put("<device>", Long.toString(regularizeDeviceDb.getFirstImei()));
 
 				// Send Notifications
@@ -338,6 +417,14 @@ public class RegularizedDeviceServiceImpl {
 
 
 				emailUtil.saveNotification(rawMails);
+				
+				// Save in audit.
+				AuditTrail auditTrail = new AuditTrail(0, "", 0L, 
+						"", 12, Features.REGISTER_DEVICE, 
+						SubFeatures.UPDATE, "");
+				auditTrailRepository.save(auditTrail);
+				logger.info("AUDIT : update in audit_trail. " + auditTrail);
+				
 				return new GenricResponse(0, "Update Successfully.", Long.toString(userCustomDbDetails.getFirstImei()));
 
 			}else {

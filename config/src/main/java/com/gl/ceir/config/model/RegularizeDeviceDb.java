@@ -99,6 +99,8 @@ public class RegularizeDeviceDb implements Serializable {
 	@NotNull
 	@Column(length = 20)
 	private String origin;
+	
+	private long creatorUserId;
 
 	public Long getId() {
 		return id;
@@ -312,7 +314,6 @@ public class RegularizeDeviceDb implements Serializable {
 		this.status = status;
 	}
 
-	
 	public String getStateInterp() {
 		return stateInterp;
 	}
@@ -326,6 +327,14 @@ public class RegularizeDeviceDb implements Serializable {
 
 	public void setOrigin(String origin) {
 		this.origin = origin;
+	}
+
+	public long getCreatorUserId() {
+		return creatorUserId;
+	}
+
+	public void setCreatorUserId(long creatorUserId) {
+		this.creatorUserId = creatorUserId;
 	}
 
 	@Override

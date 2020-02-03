@@ -12,4 +12,5 @@ public interface SubFeatures {
 	String FILTER = "FILTER";
 	String VIEW = "VIEW";
 	String ASSIGN = "ASSIGN";
+	String EXPORT = "EXPORT";
 }
