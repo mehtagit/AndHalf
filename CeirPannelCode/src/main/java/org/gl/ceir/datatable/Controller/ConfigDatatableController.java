@@ -63,7 +63,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-				
+				filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.adminConfigFeign(filterrequest, pageNo, pageSize, file);

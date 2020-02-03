@@ -31,7 +31,6 @@ public class Registration {
 	private Long[] roles;
 	private String captcha;
 	private String usertypeName;
-	private long usertypeId;
 	private String employeeId;
 	private String natureOfEmployment;
 	private String designation;
@@ -333,14 +332,6 @@ public class Registration {
 	public void setVatFilePath(String vatFilePath) {
 		this.vatFilePath = vatFilePath;
 	}
-	
-	
-	public long getUsertypeId() {
-		return usertypeId;
-	}
-	public void setUsertypeId(long usertypeId) {
-		this.usertypeId = usertypeId;
-	}
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -350,14 +341,19 @@ public class Registration {
 				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
 				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
-				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeName=" + usertypeName + ", usertypeId="
-				+ usertypeId + ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment
-				+ ", designation=" + designation + ", authorityName=" + authorityName + ", authorityEmail="
-				+ authorityEmail + ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
+				+ ", roles=" + Arrays.toString(roles) + ", captcha=" + captcha + ", usertypeName=" + usertypeName
+				+ ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation="
+				+ designation + ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail
+				+ ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
 				+ ", operatorTypeId=" + operatorTypeId + ", nidFilename=" + nidFilename + ", photoFilename="
 				+ photoFilename + ", idCardFilename=" + idCardFilename + ", arrivalPort=" + arrivalPort
 				+ ", arrivalPortName=" + arrivalPortName + ", vatFilename=" + vatFilename + ", userLanguage="
 				+ userLanguage + ", nidFilePath=" + nidFilePath + ", photoFilePath=" + photoFilePath
 				+ ", idCardFilePath=" + idCardFilePath + ", vatFilePath=" + vatFilePath + "]";
 	}
+    
+    
+    
+    
+   
 }

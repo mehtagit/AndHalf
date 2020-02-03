@@ -19,6 +19,7 @@ public class AuditContentModel {
 	private String featureName;
 	private String subFeature;
 	private String jSessionId;
+	private String txnId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -86,6 +87,12 @@ public class AuditContentModel {
 	public void setjSessionId(String jSessionId) {
 		this.jSessionId = jSessionId;
 	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -94,32 +101,12 @@ public class AuditContentModel {
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AuditContentModel [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", subFeature=");
-		builder.append(subFeature);
-		builder.append(", jSessionId=");
-		builder.append(jSessionId);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
-		builder.append("]");
-		return builder.toString();
+		return "AuditContentModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userId="
+				+ userId + ", userName=" + userName + ", userTypeId=" + userTypeId + ", userType=" + userType
+				+ ", featureId=" + featureId + ", featureName=" + featureName + ", subFeature=" + subFeature
+				+ ", jSessionId=" + jSessionId + ", txnId=" + txnId + ", additionalProperties=" + additionalProperties
+				+ "]";
 	}
+	
+	
 }

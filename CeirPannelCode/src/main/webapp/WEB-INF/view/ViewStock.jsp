@@ -1,4 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+
+<% 
+  
+        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+
+        
+        
+        if(session.getAttribute("usertype") !=null){ %>
+        <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -73,7 +84,9 @@
 
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
-	data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+	data-selected-roleType="${selectedUserTypeId}"
+	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -512,6 +525,7 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
@@ -522,3 +536,11 @@
 </body>
 </html>
 
+<%
+        }
+        else{
+        	request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);
+        	
+        }
+%>

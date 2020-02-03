@@ -48,7 +48,6 @@ public class LoginController {
 			return loginService.changeLanguage(lang,session);
   }
 	
-	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logout(HttpSession session) {
 		return loginService.logout(session);

@@ -390,6 +390,13 @@ header .brand-logo {
   padding: 14px 20px;
 }
 
+@media only screen and (max-width:992px)
+{
+  header .brand-logo {
+  margin: 0;
+  padding: 14px 20px;
+};
+}
 header .brand-logo img {
   width: 172px;
 }
@@ -2712,4 +2719,50 @@ padding-top: 0;
 div#viewuplodedModel {
     width: fit-content;
     padding-top: 1.5rem;
+}
+.register-device-responsive-page {
+width: 50%;
+}
+
+@media only screen and (max-width: 992px) {
+.register-device-responsive-page {
+width: 100%;
+}
+}
+
+@media only screen and (max-width: 425px) {
+select {
+height: 2.7rem;
+}
+}
+.input-field span a {
+    position: absolute;
+    right: 0;
+    padding-right: 10px;
+}
+
+
+
+@media only screen and (max-width:992px){
+   img.darken-1.my-2 {
+     margin-left: 50px;
+}
+}
+
+.full-screen-modal {
+    width: 50%;
+}
+
+.full-screen-modal .chat-time {
+position: absolute;
+right: 25px;
+font-size: 12px;
+}
+
+.full-screen-modal h5 {
+font-size: 16px;
+margin: 0;
+}
+.full-screen-modal p {
+margin: 0;
 }

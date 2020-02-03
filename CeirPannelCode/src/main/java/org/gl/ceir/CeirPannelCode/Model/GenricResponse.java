@@ -6,7 +6,7 @@ public class GenricResponse {
 	private String txnId;
 	private String  message;
 	private String response,statusCode,user;
-	private CountApprovedData data;
+	private Object data ;
 	public String getErrorCode() {
 		return errorCode;
 	}
@@ -43,10 +43,12 @@ public class GenricResponse {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	public CountApprovedData getData() {
+	
+	
+	public Object getData() {
 		return data;
 	}
-	public void setData(CountApprovedData data) {
+	public void setData(Object data) {
 		this.data = data;
 	}
 	@Override

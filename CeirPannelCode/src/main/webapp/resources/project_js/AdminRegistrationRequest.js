@@ -6,6 +6,22 @@ var currentRoleType = $("body").attr("data-selected-roleType");
 var startdate=$('#startDate').val(); 
 var endDate=$('#endDate').val();
 
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+window.parent.$('#langlist').on('change', function() {
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.location.assign("registrationRequest?lang="+lang);				
+}); 
+
+$.i18n().locale = lang;	
+
+$.i18n().load( {
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() {
+	
+});
+
 $(document).ready(function(){
 	registrationDatatable();
 	pageRendering();
@@ -21,7 +37,7 @@ function registrationDatatable(){
 	var asType = $('#asType').val();
 	var userRoleTypeId = $("#role").val();
 	var status =  $('#recentStatus').val();
-	
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -29,14 +45,19 @@ function registrationDatatable(){
 			"userRoleTypeId" : parseInt(userRoleTypeId),
 			"status" : parseInt(status),
 			"userId":parseInt(userId),
+			"txnId":txn,
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			
 	}
 	
+	if(lang=='km'){
+				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			}
+
 	$.ajax({
-		url: 'headers?type=adminRegistration',
+		url: 'headers?type=adminRegistration&lang='+lang,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -50,6 +71,9 @@ function registrationDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+							"sUrl": langFile  
+						},
 				ajax: {
 					url : 'registrationData',
 					type: 'POST',
@@ -89,15 +113,16 @@ function pageRendering(){
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-				$("#registrationTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-						"<div id='enddatepicker' class='input-group date'>"+
-						"<label for='TotalPrice'>"+date[i].title
-						+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+				$("#registrationTableDiv").append("<div class='input-field col s6 m2'>"+
+						"<div id='enddatepicker' class='input-group'>"+
+						"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+						"<label for="+date[i].id+">"+date[i].title
+						+"</label>"+
 						"<span	class='input-group-addon' style='color: #ff4081'>"+
 						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}
 				else if(date[i].type === "select"){
-					$("#registrationTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					$("#registrationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 					
 				}
 				
@@ -107,13 +132,13 @@ function pageRendering(){
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
-					$("#registrationTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
-							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
+					$("#registrationTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+							
+							"<div class='select-wrapper select2  initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
+							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
 							"<option value='-1'>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
@@ -121,8 +146,8 @@ function pageRendering(){
 					"</div>");
 			}
 			
-			$("#registrationTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#registrationTableDiv").append("<div class='col s12 m2'><a onclick='exportButton()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#registrationTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+			$("#registrationTableDiv").append("<div class=' col s3 m2 l1'><a onclick='exportButton()' type='button' class='export-to-excel right'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -252,7 +277,8 @@ function aprroveUser(){
 	var approveRequest={
 			"userId": parseInt(userid),
 			"status" : "Approved",
-			"remark": $("#Reason").val()	
+			"remark": $("#Reason").val(),	
+			"featureId" : parseInt(featureId)
 	}
 	
 	$.ajax({
@@ -291,7 +317,8 @@ function rejectUser(userId){
 	var rejectRequest={
 			"userId": parseInt(userid),
 			"status" : "Rejected",
-			"remark": $("#Reason").val()	
+			"remark": $("#Reason").val(),
+			"featureId" : parseInt(featureId)
 	}
 	
 	$.ajax({
@@ -343,8 +370,8 @@ function previewFile(srcFilePath,srcFileName){
 	if(filePath == null || filePath == "" || filePath == undefined && fileName == null || fileName == "" || fileName == undefined ){
 		console.log("File is not Avialable")
 	}else if(fileExtension=="jpg" || fileExtension=="jpeg" || fileExtension=="png" || fileExtension=="gif" ){
-		$("#viewuplodedModel").openModal();
 		$("#fileSource").attr("src",FinalLink);
+		$("#viewuplodedModel").openModal();
 	}else{
 		 window.open(FinalLink);
 	}

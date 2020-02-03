@@ -56,15 +56,24 @@ public class GrievanceController {
 	GenricResponse response = new GenricResponse();
 	
 	@RequestMapping(value=
-		{"grievanceManagement"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+		{"grievanceManagement"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewGrievance(HttpSession session) {
+	    public ModelAndView viewGrievance(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
-		 
 		log.info(" view Grievance entry point."); 
-	    mv.setViewName("grievanceManagement");
-		log.info(" view Grievance exit point."); 
+		
+		if(session.getAttribute("")!=null)
+		{
+			log.info(" user type is not blank"); 
+			mv.setViewName("grievanceManagement");
+			log.info(" view Grievance exit point."); 
+		}
+		else {
+			log.info(" user type isblank");
+			mv.setViewName("grievanceManagement");
+			log.info(" view Grievance exit point."); 
+		}
+	    
 		return mv; 
 	}
 	
@@ -170,6 +179,19 @@ public class GrievanceController {
 			return grievanceModel;
 	}
 		
+		//***************************************** end  view Grievance controller *********************************
+				@RequestMapping(value="/endUserViewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+				public @ResponseBody List<GrievanceModel> EndUserviewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,@RequestParam(name="userId") Integer userId )
+				{
+					log.info("entery point in end user view grievance.");
+		/* int userId= (int) session.getAttribute("userid"); */
+					List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
+					log.info("Request pass to the end view grievance api ="+grievanceId+"  userId= "+userId);
+					grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
+					log.info("Response from  end view grievance api = "+grievanceModel);
+					return grievanceModel;
+			}
+		
 		
 		
 		//***************************************** view Grievance controller *********************************
@@ -179,16 +201,18 @@ public class GrievanceController {
 				
 
 				//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
-					int userId= (int) session.getAttribute("userid"); 
-					String roletype=(String) session.getAttribute("usertype");
-				    log.info("userid=="+userId+" roletype="+roletype);
-				    
+	
+					//int userId= (int) session.getAttribute("userid"); 
+		/*
+		 * String roletype=(String) session.getAttribute("usertype");
+		 * log.info("+ roletype="+roletype);
+		 */ 
 				    String grievanceDetails=request.getParameter("multirequest");
 					log.info("grievanceDetails------"+grievanceDetails);
 					Gson gson= new Gson(); 	
 					GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
-					grievanceRequest.setUserId(userId);
-					grievanceRequest.setUserType(roletype);
+					//grievanceRequest.setUserId(userId);
+					//grievanceRequest.setUserType(roletype);
 					int i=0;
 					for( MultipartFile file : fileUpload) {
 						String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
@@ -236,6 +260,70 @@ public class GrievanceController {
 				return response;
 			}
 
+				
+
+				//***************************************** view Grievance controller *********************************
+						@RequestMapping(value="/saveEndUserGrievanceReply",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
+						public @ResponseBody GenricResponse saveEndUserGrievanceReply(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session)
+						{
+						
+
+						//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
+							//int userId= (int) session.getAttribute("userid"); 
+							String roletype="End User";
+						    log.info("+ roletype="+roletype);
+						    String grievanceDetails=request.getParameter("multirequest");
+							log.info("grievanceDetails------"+grievanceDetails);
+							Gson gson= new Gson(); 	
+							GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+							//grievanceRequest.setUserId(userId);
+							grievanceRequest.setUserType(roletype);
+							int i=0;
+							for( MultipartFile file : fileUpload) {
+								String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
+							try {
+								if(fileUpload==null)
+								{
+									grievanceRequest.getAttachedFiles().get(i).setFileName("");
+								}
+								else {
+								byte[] bytes = file.getBytes();
+								String rootPath = filePathforUploadFile+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
+								File dir = new File(rootPath + File.separator);
+
+								if (!dir.exists()) 
+									dir.mkdirs();
+								// Create the file on server
+								// Calendar now = Calendar.getInstance();
+
+								File serverFile = new File(rootPath+file.getOriginalFilename());
+								log.info("uploaded file path on server" + serverFile);
+								BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+								stream.write(bytes);
+								stream.close();
+								}
+								
+								
+							}
+							catch (Exception e) {
+								// TODO: handle exception
+								e.printStackTrace();
+							}
+							i++;
+							}
+				/*
+				 * grievanceModel.setTxnId(txnId); grievanceModel.setReply(remark);
+				 * grievanceModel.setGrievanceId(grievanceId); grievanceModel.setUserId(userId);
+				 * grievanceModel.setUserType(roletype);
+				 * grievanceModel.setGrievanceStatus(grievanceTicketStatus);
+				 */
+						
+						log.info("request passed to the save grievance method="+grievanceRequest);
+						response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
+						log.info("response  from   save grievance method="+response);	
+						response.setTxnId(grievanceRequest.getGrievanceId());
+						return response;
+					}
 				//***************************************** Export Grievance controller *********************************
 						@RequestMapping(value="/exportGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 						public String exportToExcel(@RequestParam(name="grievanceStartDate",required = false) String grievanceStartDate,@RequestParam(name="grievanceEndDate",required = false) String grievanceEndDate,

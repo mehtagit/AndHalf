@@ -561,9 +561,11 @@ function openEndUserGrievancePage(reportType){
 
 function  openEndUserStockPage(reportType)
 {
+	//alert(reportType.value);
 	console.log("reportType=="+reportType.value);
 	window.location.href="./uploadAstock?reportType="+reportType.value;
 	console.log("details."+window.location.href);
+	/*alert(window.location.href);*/
 /*	$.ajax({   
 		type : 'POST',
 		url : contextpath + '/openEndUserStockPage?reportType='+reportType.value,
@@ -589,4 +591,10 @@ function  openEndUserStockPage(reportType)
 			$("#btnSave").prop('disabled', false);
 		}
 	});*/
+}
+function selfRegisterDevice(){
+	window.location.href="./selfRegisterDevice";
+}
+function updateVisaValidity(){
+	window.location.href="./updateVisaValidaity";
 }

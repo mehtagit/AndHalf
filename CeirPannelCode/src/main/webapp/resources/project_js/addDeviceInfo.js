@@ -59,7 +59,8 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					      "price": parseFloat(Price1),
 					      "taxPaidStatus": parseInt(taxStatus1),
 					      "nid":nationalID,
-					      "txnId":""
+					      "txnId":"",
+					      "origin":"CUSTOMS"
 				}
 				regularizeDeviceDbs.push(deviceInfo);  
 				fieldId++;
@@ -247,11 +248,13 @@ function defaultDeviceForm(){
                	$('#taxStatus'+dropdownid).prop('disabled', 'disabled');
            		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus'+dropdownid);
            			//console.log("+++++taxStatus"+dropdownid);
+           		//alert("Regularised");
            		}
                	else{
                		for (i = 0; i < data.length; i++) {
                			$('<option>').val(data[i].value).text(data[i].interp)
                			.appendTo('#taxStatus'+dropdownid);
+               			//alert("NonRegularised");
                			// $('#taxStatus'+dropdownid).prop('disabled', 'false');
                			console.log("+++++taxStatus"+dropdownid);
                		}

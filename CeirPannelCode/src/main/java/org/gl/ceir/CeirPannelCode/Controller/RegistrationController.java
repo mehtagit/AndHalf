@@ -60,6 +60,8 @@ public class RegistrationController {
 		return dropdown;
 	}
 	
+	
+	
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> usertypeList(){ 
@@ -135,12 +137,16 @@ public class RegistrationController {
 		return response;       
 	}
 
+
+
 	@RequestMapping(value = "/resendOtp/{userid}",method = {RequestMethod.POST})
 	@ResponseBody
 	public HttpResponse resendOtp(@PathVariable Integer userid){
 		HttpResponse response =registrationService.resendOtp(userid);
 		return response;                 
 	}  
+
+
 
 	@GetMapping("/editProfile")
 	public ModelAndView editProfile() {

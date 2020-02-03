@@ -159,6 +159,9 @@ a#newUserLink {
 													code="registration.username" /></label>
 										</div>
 
+
+
+
 										<div class="input-field col s12" id="show_hide_password">
 											<input type="password" required="required" class=""
 												name="password" id="password" maxlength="10"
@@ -168,6 +171,7 @@ a#newUserLink {
 											<div class="input-field-addon">
 												<a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
 											</div>
+
 										</div>
 
 										<div class="form-group form-actions col s12 m12">
@@ -357,8 +361,7 @@ a#newUserLink {
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/login.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
 </body>
 
 </html>

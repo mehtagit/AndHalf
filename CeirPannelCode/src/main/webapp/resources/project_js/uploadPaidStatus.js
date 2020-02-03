@@ -237,7 +237,10 @@
 
 	var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr("session-value");
 function table(url,dataUrl){
+	var txnIdValue = $("body").attr("session-valueTxnID");
+var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var request={
+		"origin":"CUSTOMS",
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
@@ -247,11 +250,12 @@ function table(url,dataUrl){
 			"userType":$("body").attr("data-roleType"),
 			"deviceIdType":parseInt($('#deviceIDType').val()),
 			"deviceType":parseInt($('#deviceTypeFilter').val()),
-			"txnId":$('#transactionID').val(),
+			"txnId":txn,
 			"consignmentStatus": null,
 			"nid": nationalId == null ? $('#nId').val() : nationalId
 	}
 	
+
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
@@ -352,7 +356,7 @@ function table(url,dataUrl){
 
 
 				$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
-				$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('button.export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
@@ -539,7 +543,7 @@ function table(url,dataUrl){
 
 
 	function exportpaidStatus(){
-	
+	var txnId = $('#transactionID').val();
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var taxPaidStatus = $('#taxPaidStatus').val();
@@ -552,7 +556,7 @@ function table(url,dataUrl){
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&deviceIdType="+deviceIdType+"&deviceType="+deviceType+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
 
@@ -616,7 +620,8 @@ function submitDeviceInfo(){
 			"price": parseFloat(Price1),
 			"taxPaidStatus": parseInt(taxStatus1),
 			"nid":nationalId,
-			"txnId":""
+			"txnId":"",
+			"origin":"CUSTOMS"
 
 		}
 		regularizeDeviceDbs.push(deviceInfo);
@@ -911,7 +916,6 @@ function deviceApprovalPopup(imei,date,txnId){
 				"userId":parseInt(userId),
 				"userType": $("body").attr("data-roleType")	  	
 		}
-
 		$.ajax({
 			url : './approveRejectDevice',
 			data : JSON.stringify(rejectRequest),

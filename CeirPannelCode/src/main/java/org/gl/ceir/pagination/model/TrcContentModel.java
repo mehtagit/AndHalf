@@ -1,12 +1,12 @@
 package org.gl.ceir.pagination.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
 @Component
 public class TrcContentModel {
-	
 	private Integer id;
 	private String manufacturerId;
 	private String manufacturerName;
@@ -28,6 +28,12 @@ public class TrcContentModel {
 	private String txnId;
 	private String stateInterp;
 	private String adminStateInterp;
+	private String trademark;
+	private String productName;
+	private String modelNumber;
+	private String manufacturerCountry;
+	private String frequencyRange;
+	private List<Object> attachedFiles = null;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -155,6 +161,42 @@ public class TrcContentModel {
 	public void setAdminStateInterp(String adminStateInterp) {
 		this.adminStateInterp = adminStateInterp;
 	}
+	public String getTrademark() {
+		return trademark;
+	}
+	public void setTrademark(String trademark) {
+		this.trademark = trademark;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getModelNumber() {
+		return modelNumber;
+	}
+	public void setModelNumber(String modelNumber) {
+		this.modelNumber = modelNumber;
+	}
+	public String getManufacturerCountry() {
+		return manufacturerCountry;
+	}
+	public void setManufacturerCountry(String manufacturerCountry) {
+		this.manufacturerCountry = manufacturerCountry;
+	}
+	public String getFrequencyRange() {
+		return frequencyRange;
+	}
+	public void setFrequencyRange(String frequencyRange) {
+		this.frequencyRange = frequencyRange;
+	}
+	public List<Object> getAttachedFiles() {
+		return attachedFiles;
+	}
+	public void setAttachedFiles(List<Object> attachedFiles) {
+		this.attachedFiles = attachedFiles;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -170,8 +212,12 @@ public class TrcContentModel {
 				+ adminUserType + ", approveDisapproveDate=" + approveDisapproveDate + ", remark=" + remark
 				+ ", adminRemark=" + adminRemark + ", fileName=" + fileName + ", createdOn=" + createdOn
 				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
-				+ ", adminStateInterp=" + adminStateInterp + ", additionalProperties=" + additionalProperties + "]";
+				+ ", adminStateInterp=" + adminStateInterp + ", trademark=" + trademark + ", productName=" + productName
+				+ ", modelNumber=" + modelNumber + ", manufacturerCountry=" + manufacturerCountry + ", frequencyRange="
+				+ frequencyRange + ", attachedFiles=" + attachedFiles + ", additionalProperties=" + additionalProperties
+				+ "]";
 	}
+	
 	
 	
 	

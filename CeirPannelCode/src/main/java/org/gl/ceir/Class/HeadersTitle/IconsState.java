@@ -26,6 +26,9 @@ public class IconsState {
 	String approveIcon = "\"fa fa-check-circle-o approve-icon\"";
 	String rejectIcon = "\"fa fa-user-times reject-icon\"";
 	String payTaxIcon = "\"fa fa-money pay-tax-icon\"";
+	String ListIcon =  "\"fa fa-list list-icon\"";
+	String plusIcon = "\"fa fa-plus-square download-icon\"";
+	
 	// icon title  
 	String errorIconTitle="Error-File";
 	String downloadIconTitle="Download"; 
@@ -36,7 +39,8 @@ public class IconsState {
 	String approveIconTitle="Approve";
 	String rejectIconTitle="Reject";
 	String payTaxIconTitle ="Pay Tax";
-
+	String ListIconTittle = "List";
+	String plusIconTittle = "Add device";
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
@@ -426,8 +430,11 @@ public class IconsState {
 	public String adminState(String fileName,String txnId ,String status,String userStatus,String companyName) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-		String approveAction = "openApprovePopUp('" + txnId + "','"+companyName.replaceAll( " ", "+20")+ "')";
+		String viewAction="viewConsignmentDetails('"+txnId+"')";
+		if(companyName == null) {
+			companyName= " ";
+		}
+		String approveAction = "openApprovePopUp('" + txnId+ "','"+companyName.replaceAll( " ", "+20")+ "')";
 		//String approveAction = "openApprovePopUp('"+txnId+"')";
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.replaceAll( " ", "+20")+"')";
 
@@ -535,6 +542,8 @@ public class IconsState {
 		String action=reply.concat(view);
 		return action;
 	}
+	
+	
 
 	/********************************** Icons for Custom Grievance **********************************/ 
 
@@ -745,21 +754,29 @@ public class IconsState {
 	/********************************** Icons for DashBoard Notification **********************************/ 
 
 
-	public String dashboardIcon(String userStatus,Integer featureID) {
+	public String dashboardIcon(String userStatus,Integer featureID,String txnID) {
 		// URL link 
-		String viewAction = featureID == 3 ?"./Consignment/viewConsignment" :
-			featureID == 4 ? "./assignDistributor": 
-				featureID == 5 ? "./stolenRecovery" :
-					featureID == 6 ? "./grievanceManagement" :
-						featureID == 7 ? "./stolenRecovery" :
-							featureID == 8 ? "./registrationRequest" :
-								featureID == 11 ? "./manageTypeDevices":
-									featureID == 12 ? "./uploadPaidStatus" :
+		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
+			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
+				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
+					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
+						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
+							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
+								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
+									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										"JavaScript:void(0);";
-		System.out.println("featureID::::::::::"+featureID);
+		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
-		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view=null;
+		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
+		view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
+		}
+		else {
+			
+			view="<a href="+viewAction+" class="+disableIconClass+"><i  class="+disableViewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
+		}
 		String action=view;		  
 		return action;
 
@@ -1236,4 +1253,127 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		return action;
 
 	}
+	/********************************** Icons for AdminUPS **********************************/ 	
+	public String manageUserIcon(Long imei1,String createdOn,String txnId) {
+		String viewAction="viewDetails('"+imei1+"')";
+
+		String editAction="";
+
+
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+
+
+		String action = view.concat(edit);
+		return action;
+	}
+public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId) {
+		
+		log.info(" entry in set view in data table.....");
+		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
+		String viewAction = "endUserviewGrievanceHistory('"+grievanceId+"','"+projectPath+"','"+userId+"')";
+
+		// state related Code 
+		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+				+replyIconTitle+" ></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		log.info("set view in data table.....");
+
+		/*
+		 * //Disable reply if( "0".equals(status) || "1".equals(status) ||
+		 * "3".equals(status)) { reply =
+		 * "<a onclick="+replyAction+" class=\"eventNone\"><i class="
+		 * +disableReplyIcon+" aria-hidden=\"true\" title="
+		 * +replyIconTitle+" ></i></a>";
+		 * 
+		 * }else if("0".equals(status)) {
+		 * view="<a onclick="+viewAction+" class=\"eventNone\"><i class="
+		 * +disableViewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
+		 * } else if("Disable".equals(userStatus)) {
+		 * log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus); reply
+		 * = "<a onclick="+replyAction+"><i class="
+		 * +disableReplyIcon+" aria-hidden=\"true\" title="
+		 * +replyIconTitle+" ></i></a>"; view="<a onclick="+viewAction+"><i class="
+		 * +disableViewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
+		 * 
+		 * }
+		 */
+
+		String action=reply.concat(view);
+		return action;
+	}
+
+
+/********************************** Icons for Importal TRC Datatable **********************************/ 
+
+
+public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
+	// URL link 
+	//String downloadURL = "JavaScript:void(0)";
+
+	String viewAction="ImporterviewByID("+id+",'view')";
+	String editAction= "ImporterviewByID("+id+",'edit')";
+	String deleteAction = "JavaScript:void(0);";
+	// state related Code 
+	
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+
+	String edit="<a onclick="+editAction+"><i class="
+			+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+	String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+			+deletionIcon+" aria-hidden=\"true\"  title="
+			+deleteIconTitle+"></i></a>";
+
+	String action=view.concat(edit).concat(delete);		  
+	return action;
+
+}
+
+/********************************** Icons for Device Activation **********************************/ 	
+
+public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
+	String viewAction="viewDetails('"+imei1+"')";
+	String editAction="";
+
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+
+
+	String action = view.concat(edit);
+	return action;
+}
+
+/********************************** Icons for Manage Users**********************************/ 
+
+public String manageUserIcons(String id) { 
+
+	String viewAction="viewDetails('"+id+"')";
+	String editAction="";
+	String ListAction ="";
+	String AddAction = "";
+	// state related Code 
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+			+editIconTitle+"></i></a>"; 
+	String List = "<a onclick="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
+			+ListIconTittle+"></i></a>"; 
+	String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
+			+plusIconTittle+"></i></a>"; 
+
+	String action = view.concat(edit).concat(List).concat(Add);
+	return action;
+
+}
+
 }

@@ -1,10 +1,24 @@
 var featureId = 11;
 var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+window.parent.$('#langlist').on('change', function() {
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.location.assign("./manageTypeDevices?lang="+lang);				
+}); 
+
+$.i18n().locale = lang;	
+$.i18n().load( {
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() { 
+});
+
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	typeApprovedDataTable()
+	typeApprovedDataTable(lang)
 	pageRendering();
 });
 
@@ -13,11 +27,13 @@ $(document).ready(function(){
 
 var userType = $("body").attr("data-roleType");
 
-function typeApprovedDataTable(){
+function typeApprovedDataTable(lang){
 	if(userType=="CEIRAdmin"){
-		Datatable('headers?type=AdmintrcManageType','./trc');
+		Datatable('headers?type=AdmintrcManageType&lang='+lang,'./trc');
+	}else if(userType=="Importer"){
+		Datatable('headers?type=ImporterTrcManageType&lang='+lang,'./trc');
 	}else{
-		Datatable('headers?type=trcManageType','./trc');
+		Datatable('headers?type=trcManageType&lang='+lang,'./trc');
 	}
 	
 }
@@ -29,13 +45,14 @@ function typeApprovedDataTable(){
 //**************************************************Type Approved table**********************************************
 
 function Datatable(Url,dataUrl){
+	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 if(userType=="CEIRAdmin"){
 var userId = 0;
 		var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 			  	"tac" : $('#tac').val(),
-			  	"txnId" : $('#transactionID').val(),
+			  	"txnId" : txn,
 			  	"userId":userId,
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -48,7 +65,7 @@ var userId = 0;
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 			  	"tac" : $('#tac').val(),
-			  	"txnId" : $('#transactionID').val(),
+			  	"txnId" : txn,
 			  	"userId":userId,
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -57,6 +74,11 @@ var userId = 0;
 				}
 	}
 	
+
+
+if(lang=='km'){
+	var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+}
 	$.ajax({
 		url: Url,
 		type: 'POST',
@@ -71,6 +93,9 @@ var userId = 0;
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
@@ -123,37 +148,45 @@ function pageRendering(){
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-					$("#typeAprroveTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-							"<div id='enddatepicker' class='input-group date'>"+
-							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+					$("#typeAprroveTableDiv")
+					.append("<div class='input-field col s6 m2'>"+
+							"<div id='enddatepicker' class='input-group'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<label for="+date[i].id+">"+date[i].title
+							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+	
 				}else if(date[i].type === "text"){
-					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='tac' class='center-align'>"+date[i].title+"</label></div>");
+					$("#typeAprroveTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 			} 
+			
+			if(userType=="Importer"){
+				console.log("userType is----->"+userType)
+			}else{
+				// dynamic drop down portion
+				var dropdown=data.dropdownList;
+				for(i=0; i<dropdown.length; i++){
+					var dropdownDiv=
+						$("#typeAprroveTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
+								"<span class='caret'>"+"</span>"+
+								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-			// dynamic drop down portion
-			var dropdown=data.dropdownList;
-			for(i=0; i<dropdown.length; i++){
-				var dropdownDiv=
-					$("#typeAprroveTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
-							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-							"<span class='caret'>"+"</span>"+
-							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-
-							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value = '-1'>"+dropdown[i].title+
-							"</option>"+
-							"</select>"+
-							"</div>"+
-					"</div>");
+								"<select id="+dropdown[i].id+" class='select2 initialized'>"+
+								"<option>"+dropdown[i].title+
+								"</option>"+
+								"</select>"+
+								"</div>"+
+						"</div>");
+				
+				}
 			}
-
-			$("#typeAprroveTableDiv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' id='submitFilter' value='filter'></div>");
-			$("#typeAprroveTableDiv").append("<div class='col s12 m2'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+	
+			$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+			$("#typeAprroveTableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -186,6 +219,10 @@ if(userType=="CEIRAdmin"){
 	$("#btnLink").css({display: "none"});
 	}
 
+if(userType=="CEIRAdmin"){
+	$("#btnLink").css({display: "none"});
+	}
+
 function viewByID(id,actionType){
 	
 	
@@ -202,12 +239,21 @@ function viewByID(id,actionType){
 				$("#viewModal").openModal();
 				console.log("222222222");
 				setViewPopupData(data);
+			
 				}
 			else if(actionType=='edit')
 				{
 				console.log("3333333333");
 				$("#editModal").openModal();
 				setEditPopupData(data)
+				
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
 				}
 			
 		},
@@ -218,6 +264,76 @@ function viewByID(id,actionType){
 	
 }
 
+
+function ImporterviewByID(id,actionType){
+	
+	
+	
+	$.ajax({
+		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(+data);
+			if(actionType=='view')
+				{
+				$("#viewImporterModal").openModal();
+				console.log("222222222");
+				setImporterViewPopupData(data);
+			
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
+				}
+			
+		},
+		error : function() {
+			console.log("failed");
+		}
+	});
+	
+}
+
+function ImporterviewByID(id,actionType){
+	
+	
+	
+	$.ajax({
+		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(+data);
+			if(actionType=='view')
+				{
+				$("#viewImporterModal").openModal();
+				console.log("222222222");
+				setImporterViewPopupData(data);
+			
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
+				}
+			
+		},
+		error : function() {
+			console.log("failed");
+		}
+	});
+	
+}
+
+
 function setViewPopupData(data){
 	$("#viewmanufacturerId").val(data.manufacturerId);
 	$("#viewmanufacturerName").val(data.manufacturerName);
@@ -227,7 +343,19 @@ function setViewPopupData(data){
 	$('#viewrequestDate').val(data.requestDate)
 	$("#viewapproveDisapproveDate").val(data.approveDisapproveDate);
 	$("#viewremark").val(data.remark);
+	
 }
+
+function setImporterViewPopupData(data){
+	$("#viewtradmark").val(data.trademark);
+	$("#viewmodelName").val(data.productName);
+	$("#viewModelnumber").val(data.modelNumber);
+	$("#viewManufacturercountry").val(data.manufacturerCountry);
+	$('#viewrequestDate').val(data.requestDate)
+	$('#viewFrequency').val(data.frequencyRange)
+	$("#viewtac").val(data.tac);
+}
+
 function setEditPopupData(data){
 	$("#editmanufacturerId").val(data.manufacturerId);
 	$("#editmanufacturerName").val(data.manufacturerName);
@@ -241,6 +369,17 @@ function setEditPopupData(data){
 	$("#transactionid").val(data.txnId);
 	$("#columnid").val(data.id);
 	
+	
+}
+
+function setImporterEditPopupData(data){
+		$("#editTradmark").val(data.trademark);
+		$("#editmodelName").val(data.productName);
+		$("#editmodelNumber").val(data.modelNumber);
+		$("#editcountry").val(data.manufacturerCountry);
+		$('#editRequestDate').val(data.requestDate)
+		$('#editfrequency').val(data.frequencyRange)
+		$("#edittac").val(data.tac);
 	
 }
 

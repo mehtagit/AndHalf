@@ -12,7 +12,6 @@
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 		window.parent.$('#langlist').on('change', function() {
-			alert("hi8");
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			window.location.assign("./Consignment/viewConsignment?lang="+lang);				
 		}); 
@@ -39,12 +38,7 @@
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 		 });
-		/*$(document).ready(function(){
-			$('div#initialloader').fadeIn('fast');
-			filterConsignment(lang);
-			sessionStorage.removeItem("session-value");
-			pageRendering();
-		});*/
+		
 
 		$('.datepick').datepicker({
 			dateFormat: "yy-mm-dd"
@@ -196,6 +190,15 @@
 
 
 		function setViewPopupData(data){
+			var totalPrice='';
+			console.log(data.totalPrice);
+			if(data.totalPrice==null){
+			     totalPrice="";
+			}
+			else{
+				totalPrice=(parseInt(data.totalPrice));
+			}
+			
 			$("#supplierId").val(data.supplierId);
 			$("#supplierName").val(data.supplierName);
 			$("#consignmentNumber").val(data.consignmentNumber);
@@ -208,7 +211,7 @@
 			$("#remark").val(data.remarks);
 			$("#fileName").val(data.fileName); 
 			$("#viewcurrency").val(data.currency);
-			$("#viewtotalPrice").val(parseInt(data.totalPrice,10));
+			$("#viewtotalPrice").val(totalPrice);
 			$("#viewhideCurrency").val(data.currency);
 
 
@@ -216,7 +219,15 @@
 
 		function setEditPopupData(data){
 
-
+			var totalPrice='';
+			console.log(data.totalPrice);
+			if(data.totalPrice==null){
+			     totalPrice="";
+			}
+			else{
+				totalPrice=(parseInt(data.totalPrice));
+			}
+			
 			$("#supplierIdEdit").val(data.supplierId);
 			$("#supplierNameEdit").val(data.supplierName);
 			$("#consignmentNumberEdit").val(data.consignmentNumber);
@@ -228,7 +239,7 @@
 			$("#TransactionIdEdit").val(data.txnId);
 			$("#fileNameEdit").val(data.fileName);
 			$("#currency").val(data.currency);
-			$("#totalPrice").val(parseInt(data.totalPrice),10);
+			$("#totalPrice").val(totalPrice);
 			$("#hideCurrency").val(data.currency);
 
 
@@ -241,6 +252,7 @@
 		{       	
 			
 			var sessionFlag;
+			
 			if(sourceType==null){
 				sessionFlag=2;
 				
@@ -272,9 +284,13 @@
 
 		}
 
+		
+		
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
+		var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
+		
 			var filterRequest={
 					"consignmentStatus":parseInt($('#filterConsignmentStatus').val()),
 					"endDate":$('#endDate').val(),
@@ -283,10 +299,9 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"txnId":$('#transactionID').val(),
+					"txnId":txn,
 					"userType":$("body").attr("data-roleType")
 			}
-
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
@@ -322,7 +337,13 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-					/*	$('div#initialloader').fadeOut('slow');*/
+						$('#consignmentLibraryTable input').unbind();
+						$('#consignmentLibraryTable input').bind('keyup', function (e) {
+							if (e.keyCode == 13) {
+								table.search(this.value).draw();
+							}
+
+						});
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					
@@ -555,7 +576,7 @@
 						$("#btnLink").css({display: "none"});
 
 						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -581,7 +602,7 @@
 
 					}else{
 						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('button.export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 
 
 						for(i=0; i<button.length; i++){
@@ -632,8 +653,9 @@
 
 					var txnid = $("body").attr("data-selected-consignmentTxnId");
 
-					
-					$('#transactionID').val(txnid);$('#transactionID').attr("placeholder","" );
+				/* 	$('#transactionID').val('');
+					$('#transactionID').val(txnid); */
+					$('#transactionID').attr("placeholder","" );
 					if(txnid=="")
 					{
 					
