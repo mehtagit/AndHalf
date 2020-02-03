@@ -189,17 +189,14 @@ public class EnduserServiceImpl {
 
 				List<VisaDb> visaDbs = endUserDB1.getVisaDb();
 
-				if(Objects.isNull(visaDbs)) { 
-					if(visaDbs.isEmpty()) {
-						logger.info("You are not allowed to update Visa." + endUserDB.getNid());
-						return new GenricResponse(6, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getTag(), 
-								GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getMessage(), endUserDB.getNid());
-					}
+				if(visaDbs.isEmpty()) {
+					logger.info("You are not allowed to update Visa." + endUserDB.getNid());
+					return new GenricResponse(6, GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getTag(), 
+							GenericMessageTags.VISA_UPDATE_NOT_ALLOWED.getMessage(), endUserDB.getNid());
 				}else {
 					// Update expiry date of latest Visa
 					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
-					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
-
+					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
 				}
 
 				if(executeUpdateVisa(endUserDB1)) {
@@ -229,7 +226,7 @@ public class EnduserServiceImpl {
 		visaHistoryDBRepository.save(new VisaHistoryDb(visaDb.getVisaType(), visaDb.getVisaNumber(), 
 				visaDb.getVisaExpiryDate(), visaDb.getEndUserDB().getId(), visaDb.getVisaFileName()));
 		logger.info("Visa of user have been updated in history." +  visaDb);
-		
+
 		status = Boolean.TRUE;
 		return status;
 	}

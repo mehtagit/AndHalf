@@ -7,7 +7,9 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +34,7 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.PolicyConfigurationDb;
+import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.RegularizeDeviceHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
@@ -40,8 +43,10 @@ import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
@@ -114,9 +119,12 @@ public class RegularizedDeviceServiceImpl {
 
 	@Autowired
 	DateUtil dateUtil;
-	
+
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
+
+	@Autowired
+	UserStaticServiceImpl userStaticServiceImpl;
 
 	private List<RegularizeDeviceDb> getAll(FilterRequest filterRequest){
 
@@ -270,7 +278,7 @@ public class RegularizedDeviceServiceImpl {
 
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
-						
+
 						if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 						}
@@ -300,12 +308,36 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {
+			String tag = "";
+			List<RawMail> rawMails = new ArrayList<>();
+			Map<String, String> placeholders = new HashMap<>();
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 
 			if(Objects.nonNull(userCustomDbDetails)) {
 
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
+				
+				placeholders.put("<device>", Long.toString(regularizeDeviceDb.getFirstImei()));
+
+				// Send Notifications
+				if(regularizeDeviceDb.getTaxPaidStatus() == 0) {
+					// Mail to CEIR Admin on tax update status change.
+					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID";
+				}else {
+					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID";	
+				}
+				rawMails.add(new RawMail(tag, 
+						userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
+						4, 
+						Features.REGISTER_DEVICE, 
+						SubFeatures.REGISTER, 
+						regularizeDeviceDb.getTxnId(), 
+						"Subject", 
+						placeholders));
+
+
+				emailUtil.saveNotification(rawMails);
 				return new GenricResponse(0, "Update Successfully.", Long.toString(userCustomDbDetails.getFirstImei()));
 
 			}else {

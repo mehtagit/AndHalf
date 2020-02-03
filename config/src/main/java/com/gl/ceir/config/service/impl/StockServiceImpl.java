@@ -136,6 +136,8 @@ public class StockServiceImpl {
 
 	public GenricResponse uploadStock(StockMgmt stockMgmt) {
 		boolean isStockAssignRequest = Boolean.FALSE;
+		boolean isAnonymousUpload = Boolean.FALSE;
+		
 		User user = null;
 
 		try {
@@ -203,6 +205,7 @@ public class StockServiceImpl {
 					stockMgmt.setUserId(new Long(user.getId()));
 					stockMgmt.setUser(user);
 					stockMgmt.setRoleType("End User");
+					isAnonymousUpload = Boolean.TRUE;
 				}else {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
@@ -218,7 +221,16 @@ public class StockServiceImpl {
 			webActionDb.setTxnId(stockMgmt.getTxnId());
 
 			if(isStockAssignRequest) {
-				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest)) {
+				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, isAnonymousUpload)) {
+
+					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
+					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
+				}else {
+					logger.info("Stock registeration have been failed." + stockMgmt.getTxnId());
+					return new GenricResponse(1, "Stock registeration have been failed.", stockMgmt.getTxnId());
+				}
+			}else if(isAnonymousUpload) {
+				if(executeRegisterStock(stockMgmt, webActionDb, user.getUserProfile(), isStockAssignRequest, isAnonymousUpload)) {
 
 					logger.info("Stock have been registered Successfully" + stockMgmt.getTxnId());
 					return new GenricResponse(0, "Stock have been registered Successfully.", stockMgmt.getTxnId());	
@@ -245,7 +257,7 @@ public class StockServiceImpl {
 
 	@Transactional(rollbackOn = Exception.class)
 	private boolean executeRegisterStock(StockMgmt stockMgmt, WebActionDb webActionDb, UserProfile userProfile,
-			boolean isStockAssignRequest) {
+			boolean isStockAssignRequest, boolean isAnonymousUpload) {
 
 		boolean queryStatus = Boolean.FALSE;
 
@@ -267,12 +279,31 @@ public class StockServiceImpl {
 			Map<String, String> placeholderMap = new HashMap<String, String>();
 			placeholderMap.put("<First name>", user.getUserProfile().getFirstName());
 			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
-			
+
 			if(emailUtil.saveNotification("ASSIGN_STOCK", 
 					userProfile, 
 					4,
 					Features.STOCK,
 					SubFeatures.ASSIGN,
+					stockMgmt.getTxnId(),
+					MailSubjects.SUBJECT,
+					placeholderMap)) {
+				logger.info("Notification have been saved.");
+			}else {
+				logger.info("Notification have been not saved.");
+			}
+		}else if(isAnonymousUpload) {
+			User user = userRepository.getByUsername("CEIRAdmin");
+			logger.info(user);
+			
+			Map<String, String> placeholderMap = new HashMap<String, String>();
+			placeholderMap.put("<txn_id>", stockMgmt.getTxnId());
+
+			if(emailUtil.saveNotification("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", 
+					user.getUserProfile(), 
+					4,
+					Features.STOCK,
+					SubFeatures.REGISTER,
 					stockMgmt.getTxnId(),
 					MailSubjects.SUBJECT,
 					placeholderMap)) {
@@ -733,23 +764,31 @@ public class StockServiceImpl {
 	public GenricResponse acceptReject(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
+			String firstName = "";
+			User user = null;
+			Map<String, String> placeholderMap = new HashMap<String, String>();
 			StockMgmt stockMgmt = stockManagementRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
-			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
-
+			if("Custom".equals(stockMgmt.getRoleType())) {
+				user = userRepository.getById(stockMgmt.getAssignerId());				
+			}else {
+				user = userRepository.getById(stockMgmt.getUserId());
+			}
+			userProfile = user.getUserProfile();
+			
 			if(Objects.isNull(stockMgmt)) {
 				String message = "TxnId Does not Exist";
 				logger.info(message + " " + consignmentUpdateRequest.getTxnId());
 				return new GenricResponse(4, message, consignmentUpdateRequest.getTxnId());
 			}
 			
-			Map<String, String> placeholderMap = new HashMap<String, String>();
-			User user = userRepository.getById(stockMgmt.getUserId());
 			logger.info(user);
 			
-			// TODO : Have to fix mail.
-			
+			if(Objects.nonNull(user)) {
+				firstName = user.getUserProfile().getFirstName();
+			}
+
 			// 0 - Accept, 1 - Reject
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
@@ -758,18 +797,18 @@ public class StockServiceImpl {
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
-					
-					// placeholderMap.put("<Custom first name>", user.getUserProfile().getFirstName());
+
+					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
-					
+
 					stockMgmt.setStockStatus(StockStatus.APPROVED_BY_CEIR_ADMIN.getCode());
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
-					
-					// placeholderMap.put("<Custom first name>", user.getUserProfile().getFirstName());
+
+					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
-					
+
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 				}

@@ -383,6 +383,18 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+	
+	public GenricResponse saveAllNotifications(List<Notification> notifications) {
+		try {
+
+			List<Notification> notifications2 = notificationRepository.saveAll(notifications);
+
+			return new GenricResponse(0, "Notification have been saved Sucessfully", "", notifications2);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
 		try {

@@ -7,8 +7,10 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -62,7 +64,6 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
-import com.gl.ceir.config.strategy.ConsignmentCsvMappingStrategy;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -407,6 +408,9 @@ public class ConsignmentServiceImpl {
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
+			String firstName = "";
+			Map<String, String> placeholderMap = new HashMap<String, String>();
+			
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 
@@ -448,7 +452,10 @@ public class ConsignmentServiceImpl {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
-
+						
+						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
+						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+						
 						// TODO : NOTI
 						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
@@ -457,7 +464,7 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								MailSubjects.SUBJECT,
-								null);
+								placeholderMap);
 
 					}
 				}
@@ -471,6 +478,9 @@ public class ConsignmentServiceImpl {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
+					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
+					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					
 					// TODO : NOTI
 					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
@@ -479,7 +489,7 @@ public class ConsignmentServiceImpl {
 							SubFeatures.REJECT,
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT,
-							null);
+							placeholderMap);
 
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
@@ -487,11 +497,12 @@ public class ConsignmentServiceImpl {
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
 
-
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_CUSTOMS.getCode());
 					consignmentMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 
-					// TODO : NOTI
+					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
+					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					
 					emailUtil.saveNotification("Consignment_Rejected_Custom_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
@@ -499,7 +510,7 @@ public class ConsignmentServiceImpl {
 							SubFeatures.REJECT, 
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT,
-							null);
+							placeholderMap);
 				}
 			}
 

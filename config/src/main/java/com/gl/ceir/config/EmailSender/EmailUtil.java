@@ -1,5 +1,7 @@
 package com.gl.ceir.config.EmailSender;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -17,10 +19,13 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.model.MessageConfigurationDb;
+import com.gl.ceir.config.model.Notification;
+import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.constants.ChannelType;
 import com.gl.ceir.config.repository.MessageConfigurationDbRepository;
 import com.gl.ceir.config.service.impl.ConfigurationManagementServiceImpl;
+import com.gl.ceir.config.service.impl.RawmailServiceImpl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +46,9 @@ public class EmailUtil {
 
 	@Autowired
 	MessageConfigurationDbRepository messageConfigurationDbRepository;
+	
+	@Autowired
+	RawmailServiceImpl rawmailServiceImpl;
 
 	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody) {
 
@@ -106,5 +114,37 @@ public class EmailUtil {
 			return Boolean.FALSE;
 		}
 	}
+	
+	public boolean saveNotification(List<RawMail> rawMails) {
+		List<Notification> notifications = new ArrayList<>();
+		
+		if(rawMails.isEmpty()) {
+			return Boolean.TRUE;
+		}
+		
+		try {
+			for(RawMail rawMail : rawMails) {
+				String message = rawmailServiceImpl.createMailContent(rawMail);
+				notifications.add(new Notification(ChannelType.EMAIL, 
+						message, 
+						rawMail.getUserProfile().getUser().getId(), 
+						rawMail.getFeatureId(),
+						rawMail.getFeatureName(), 
+						rawMail.getSubFeature(), 
+						rawMail.getFeatureTxnId(), 
+						rawMail.getSubject(), 
+						0));
+			}
+			
+			configurationManagementServiceImpl.saveAllNotifications(notifications);
+			
+			return Boolean.TRUE;
+		}catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return Boolean.FALSE;
+		}
+	}
+	
+	
 }
 
