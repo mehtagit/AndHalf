@@ -111,6 +111,11 @@ public class SpecificationBuilder<T> {
 						return cb.equal(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					
+					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.like(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+					}
+					
 					else {
 						return null;
 					}
