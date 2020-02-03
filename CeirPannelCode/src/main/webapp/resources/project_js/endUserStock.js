@@ -26,6 +26,7 @@ function uploadEndUserStock()
 				console.log("in suucess method");
 				console.log(data);
 				$('#endUserStockModal').openModal();
+				$("#endUserStock").prop('disabled', true);
 				if(data.errorCode==0){
 					$('#endUsertXnId').text(data.txnId);
 				}

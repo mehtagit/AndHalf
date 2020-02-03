@@ -2752,3 +2752,17 @@ height: 2.7rem;
 .full-screen-modal {
     width: 50%;
 }
+
+.full-screen-modal .chat-time {
+position: absolute;
+right: 25px;
+font-size: 12px;
+}
+
+.full-screen-modal h5 {
+font-size: 16px;
+margin: 0;
+}
+.full-screen-modal p {
+margin: 0;
+}

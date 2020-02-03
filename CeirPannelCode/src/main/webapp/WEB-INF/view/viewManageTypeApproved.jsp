@@ -438,8 +438,8 @@ textarea {
             </div>
         </div>
     </div>
-    
-    	<div id="viewImporterModal" class="modal" style="overflow-y: hidden;">
+
+<div id="viewImporterModal" class="modal" style="overflow-y: hidden;">
 			<h6 class="modal-header"><spring:message code="input.ViewType" /></h6>
 			<div class="modal-content">
 
@@ -630,6 +630,8 @@ textarea {
                                     </div>
                                     
                                 </div>	
+
+
 
 
 	<!--materialize js-->

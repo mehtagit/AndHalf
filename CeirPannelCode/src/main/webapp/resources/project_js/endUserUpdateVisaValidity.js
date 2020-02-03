@@ -17,19 +17,70 @@
    
  
  function   findEndUserByNid(){
+	 var passport=$('#nidForEndUser').val();
+	
 		$.ajax({
-			url: './findEndUserByNid?Nid='+grievanceId,
-			type: 'GET',
+			url: './findEndUserByNid?findEndUserByNid='+passport,
+			type: 'POST',
 			processData: false,
 			contentType: false,
 			success: function (data, textStatus, jqXHR) {
 
 				console.log(JSON.stringify(data));
+			
+				if(data.errorCode==1)
+					{
+					
+					 $("#match-data").css("display", "block");
+		                $("#EndUserInfoForm").css("display", "block");
+		                $("#submitbtn").css("display", "none");
+		                $("#footer-submit").css("display", "block");
+		                
+		                $("#passportFileNameDiv").css("display", "block")
+		                $("#passportFileDiv").css("display", "none");
+		                $("#passportFileName").prop('readonly', true);
+		                $('#endUserpassportNumber').val(data.data.nid).prop('readonly', true);
+		                 $('#endUserfirstName').val(data.data.firstName).prop('readonly', true);
+		                  $('#endUsermiddleName').val(data.data.middleName).prop('readonly', true);
+		                   $('#endUserlastName').val(data.data.lastName).prop('readonly', true);
+		                    $('#endUseraddress').val("").prop('readonly', true);
+		                     $('#endUserstreetNumber').val(data.data.street).prop('readonly', true);
+		                      $('#endUserlocality').val(data.data.locality).prop('readonly', true);
+		                       $('#endUservillage').val(data.data.village).prop('readonly', true);
+		                        $('#endUsercommune').val(data.data.commune).prop('readonly', true);
+		                         $('#endUserdistrict').val(data.data.district).prop('readonly', true);
+		                          $('#endUserpin').val(data.data.postalCode).prop('readonly', true);
+		                           $('#country').val(data.data.country).attr("disabled", true);
+		                            $('#state').val(data.data.province).attr("disabled", true);
+		                             $('#phone').val(data.data.phoneNo).prop('readonly', true);
+		                              $('#endUservisaType').val(data.data.visaType).attr("disabled", true);
+		                             // $('#endUserdatepickerDiv').attr("disabled", true);
+		                              $("#endUserdatepickerDiv").css("pointer-events","none");
+		                              
+		                               $('#endUserdatepicker1').val(data.data.endUserdatepicker1).prop('readonly', true);
+		                                 $('#endUseruploadnationalID').val(data.data.endUseruploadnationalID);
+		                                 // $('#endUserdatepicker').val(data.data.endUserdatepicker).prop('readonly', true);
+		                                   $('#endUseremailID').val(data.data.email).prop('readonly', true); 
+		               
+		                
+		                
+		                
+					}
+				else{
+					 $("#match-data").css("display", "none");
+		                $("#EndUserInfoForm").css("display", "block");
+		                $("#submitbtn").css("display", "none");
+		                $("#footer-submit").css("display", "block");
+		                $('#endUserpassportNumber').val(passport);                  
+		                
+		                
+		      }
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
 			}
 		});
+		return false;
  }
  
  function updateEndDateVisaDetails()
@@ -118,3 +169,97 @@
 			
 		}
 	});
+   	
+    $(function () {
+        $("#endUserdatepicker1").datepicker();
+    });
+    
+    $(function () {
+        $("#endUserdatepicker").datepicker();
+    });
+    
+    
+    
+    function updateVisaDetails(){
+    
+    	var formData = new FormData()
+    	var passportNumber=$('#endUserpassportNumber').val();
+    	var firstName=$('#endUserfirstName').val();
+    	var middleName =$('#endUsermiddleName').val();
+        var lastName=$('#endUserlastName').val();
+        var address=$('#endUseraddress').val();
+        var street=$('#endUserstreetNumber').val();
+        var locality=$('#endUserlocality').val();
+        var village= $('#endUservillage').val();
+        var commune=$('#endUsercommune').val();
+        var district=$('#endUserdistrict').val();
+        var postalCode=$('#endUserpin').val();
+        var country=$('#country').val();
+        var province=$('#state').val();
+        var phoneNo=$('#phone').val();
+        var visaType=$('#endUservisaType').val(); 
+        var entryDate=$('#endUserdatepicker1').val();
+        var expiryDate=$('#endUserdatepicker').val();
+        var email=$('#endUseremailID').val();  
+        var visaDb=[];
+        var visa={
+				"visaType":visaType,
+				"visaExpiryDate":expiryDate,
+				"entryDateInCountry":entryDate,
+			}
+        var passportFileName=$('#passportFileName').val();
+        if(passportFileName=="")
+        	{
+        
+        	 formData.append('passportImage', $('#uploadPassportID')[0].files[0]);
+        	}
+        else{
+        	 formData.append('passportImage',passportFileName );
+        }
+       
+        visaDb.push(visa);
+        var request={	
+        		"nid":passportNumber,
+        		"firstName":firstName,
+        		"middleName":middleName,
+        		"lastName":lastName,
+        		"propertyLocation":address,
+        		"street":street,
+        		"locality":locality,
+        		"district":district,
+        		"commune":commune,
+        		"village":village,
+        		"postalCode":postalCode,
+        		"province":province,
+        		"country":country,
+        		"email":email,
+        		"phoneNo":phoneNo,
+        		"visaDb":visaDb
+        }
+       
+        
+        formData.append('visaImage', $('#endUseruploadnationalID')[0].files[0]);
+    	formData.append("request",JSON.stringify(request));
+    	
+        $.ajax({
+			url: './updateEndUSerVisaValidity',
+			type: 'POST',
+			processData: false,
+			contentType: false,
+			data: formData,
+			success: function (data, textStatus, jqXHR) {
+				
+				console.log(JSON.stringify(data));
+				if(data.errorCode==5){
+					$('#successMsg').openModal();
+					$('#messageResponse').text(data.message);
+				    $("#updateVisaButton").prop('disabled', true);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});
+		return false;
+    }
+    

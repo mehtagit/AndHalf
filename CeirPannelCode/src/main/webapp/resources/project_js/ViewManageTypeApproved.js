@@ -219,6 +219,10 @@ if(userType=="CEIRAdmin"){
 	$("#btnLink").css({display: "none"});
 	}
 
+if(userType=="CEIRAdmin"){
+	$("#btnLink").css({display: "none"});
+	}
+
 function viewByID(id,actionType){
 	
 	
@@ -242,6 +246,13 @@ function viewByID(id,actionType){
 				console.log("3333333333");
 				$("#editModal").openModal();
 				setEditPopupData(data)
+				
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
 				
 				}
 			
@@ -287,6 +298,41 @@ function ImporterviewByID(id,actionType){
 	});
 	
 }
+
+function ImporterviewByID(id,actionType){
+	
+	
+	
+	$.ajax({
+		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data) {
+			console.log(+data);
+			if(actionType=='view')
+				{
+				$("#viewImporterModal").openModal();
+				console.log("222222222");
+				setImporterViewPopupData(data);
+			
+				}
+			else if(actionType=='edit')
+				{
+				console.log("3333333333");
+				$("#importereditModal").openModal();
+				setImporterEditPopupData(data)
+				
+				}
+			
+		},
+		error : function() {
+			console.log("failed");
+		}
+	});
+	
+}
+
 
 function setViewPopupData(data){
 	$("#viewmanufacturerId").val(data.manufacturerId);
