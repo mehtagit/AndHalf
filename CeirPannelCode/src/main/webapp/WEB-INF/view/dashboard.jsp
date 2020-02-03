@@ -169,11 +169,11 @@ var contextpath = "${context}";
 
 				<!--start container-->
 				<div class="container">
-					<div class="section">
-
+					<div class="section" id="section">
+<!-- 
 						<iframe name="mainArea" class="embed-responsive-item" id="mainArea"
 							scrolling="yes" frameBorder="0" src="./Home" width="100%"
-							height="700px"></iframe>
+							height="700px"></iframe> -->
 					</div>
 					<!-- Floating Action Button -->
 

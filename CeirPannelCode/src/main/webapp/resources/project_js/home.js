@@ -10,9 +10,13 @@
 		var langValue=$("#langlist option:selected").val();
 		var lang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 		changeLanguage(lang);
-		window.location.assign("./Home?lang="+lang);
+	window.location.assign("./Home?lang="+lang);
+
+	
 		});
 
+
+	
 
 	$(document).ready(function(){
 		$('div#initialloader').fadeIn('fast');
