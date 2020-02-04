@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpRequest;
 import org.gl.ceir.CeirPannelCode.Model.ChangeLanguage;
 import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
@@ -36,8 +37,8 @@ public class LoginController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/saveLogin",method = {RequestMethod.POST})
-	public LoginResponse saveLogin(@RequestBody User user,HttpSession session,HttpServletResponse http){
-			return loginService.checkLogin(user,session);
+	public LoginResponse saveLogin(@RequestBody User user,HttpSession session,HttpServletRequest request){
+			return loginService.checkLogin(user,session,request);
 	}
 	
 	

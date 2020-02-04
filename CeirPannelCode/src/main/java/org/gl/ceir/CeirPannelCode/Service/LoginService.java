@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpRequest;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
@@ -18,6 +20,7 @@ import org.gl.ceir.CeirPannelCode.Model.ForgotPassword;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.User;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
@@ -40,6 +43,10 @@ public class LoginService {
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	
+	@Autowired
+	RegistrationService registerService;
+	
+	
 	public  ModelAndView loginPage(){
 		log.info("inside login controller");
 		ModelAndView mv=new ModelAndView();
@@ -48,9 +55,13 @@ public class LoginService {
 		return mv;
 	}
 
-	public LoginResponse checkLogin(User user,HttpSession session) {
+	public LoginResponse checkLogin(User user,HttpSession session,HttpServletRequest request) {
 		log.info("check login controller ");
+		UserHeader header=registerService.getUserHeaders(request);
+		user.setUserAgent(header.getUserAgent());
+		user.setPublicIp(header.getPublicIp());
 		log.info("user data:  "+user);
+        log.info("user agent=  "+user.getUserAgent() +" public ip of user: "+user.getPublicIp());		
 		String validCaptcha=(String)session.getAttribute("captcha_security");
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
