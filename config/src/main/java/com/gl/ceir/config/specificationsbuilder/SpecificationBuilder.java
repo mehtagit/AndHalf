@@ -80,7 +80,7 @@ public class SpecificationBuilder<T> {
 	private List<Specification<T>> createSpecifications(List<SearchCriteria> criterias){
 
 		try {
-			for(SearchCriteria searchCriteria : params) {
+			for(SearchCriteria searchCriteria : criterias) {
 				specifications.add((root, query, cb)-> {
 					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
