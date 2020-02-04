@@ -15,7 +15,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.util.DbFunctions;
 
-public class SpecificationBuilder<T> {
+public class SpecificationBuilder2<T> {
 
 	private static final Logger logger = LogManager.getLogger(SpecificationBuilder.class);
 
@@ -24,19 +24,19 @@ public class SpecificationBuilder<T> {
 	private final String dialect;
 	private List<Specification<T>> specifications;
 
-	public SpecificationBuilder(String dialect) {
+	public SpecificationBuilder2(String dialect) {
 		params = new ArrayList<>();
 		searchParams = new ArrayList<>();
 		specifications = new LinkedList<>();
 		this.dialect = dialect;
 	}
 
-	public final SpecificationBuilder<T> with(SearchCriteria criteria) { 
+	public final SpecificationBuilder2<T> with(SearchCriteria criteria) { 
 		params.add(criteria);
 		return this;
 	}
 
-	public final SpecificationBuilder<T> orSearch(SearchCriteria criteria) { 
+	public final SpecificationBuilder2<T> orSearch(SearchCriteria criteria) { 
 		searchParams.add(criteria);
 		return this;
 	}
@@ -46,14 +46,16 @@ public class SpecificationBuilder<T> {
 
 		Specification<T> finalSpecification = null;
 		Specification<T> searchSpecification  = null;
-		List<Specification<T>> specifications = createSpecifications( params );
+		if( !params.isEmpty() ) {
+			List<Specification<T>> andSpecifications = createSpecifications( params );
 
-		logger.info("length on params : " + specifications.size());
-		if(!specifications.isEmpty()) {
-			finalSpecification = Specification.where(specifications.get(0));
+			logger.info("length on params : " + specifications.size());
+			if(!specifications.isEmpty()) {
+				finalSpecification = Specification.where(specifications.get(0));
 
-			for(int i = 1; i<specifications.size(); i++) {
-				finalSpecification = finalSpecification.and(specifications.get(i));
+				for(int i = 1; i<specifications.size(); i++) {
+					finalSpecification = finalSpecification.and(specifications.get(i));
+				}
 			}
 		}
 		

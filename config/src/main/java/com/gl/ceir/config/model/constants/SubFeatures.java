@@ -13,4 +13,5 @@ public interface SubFeatures {
 	String VIEW = "VIEW";
 	String ASSIGN = "ASSIGN";
 	String EXPORT = "EXPORT";
+	String ACCEPT_REJECT = "ACCEPT_REJECT";
 }

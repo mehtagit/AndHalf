@@ -564,12 +564,13 @@ public class StockServiceImpl {
 
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
 		StockMgmt stockMgmt = null;
-		
+
 		if("End User".equalsIgnoreCase(distributerManagement.getUserType())){
 			distributerManagement.setRoleType("End User");
-		}else {
-			stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
 		}
+		stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), 
+				distributerManagement.getTxnId());
+		logger.info(stockMgmt);
 		
 		if(Objects.isNull(stockMgmt)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());

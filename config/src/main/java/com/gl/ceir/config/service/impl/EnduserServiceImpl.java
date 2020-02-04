@@ -7,7 +7,9 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.transaction.Transactional;
@@ -22,23 +24,32 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
+import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.EmailSender.MailSubjects;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
+import com.gl.ceir.config.model.StockMgmt;
+import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.User;
+import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.VisaHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.EndUserStatus;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.EndUserFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
@@ -77,6 +88,9 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	VisaHistoryDBRepository visaHistoryDBRepository;
+	
+	@Autowired
+	EmailUtil emailUtil;
 
 	public GenricResponse endUserByNid(String nid) {
 		try {
@@ -417,4 +431,95 @@ public class EnduserServiceImpl {
 		}
 
 	}
+
+	
+	public GenricResponse acceptReject(ConsignmentUpdateRequest updateRequest) {
+		try {
+			UserProfile userProfile = null;
+			String firstName = "";
+			String nid = updateRequest.getNid();
+			Map<String, String> placeholderMap = new HashMap<String, String>();
+			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
+			
+			logger.info(endUserDB);
+
+			if(Objects.isNull(endUserDB)) {
+				logger.info(GenericMessageTags.INVALID_USER.getMessage() + " of NID [" +nid+"]");
+				return new GenricResponse(4, GenericMessageTags.INVALID_USER.getTag(), 
+						GenericMessageTags.INVALID_USER.getMessage(), updateRequest.getTxnId());
+			}
+
+			// 0 - Accept, 1 - Reject
+			if("CEIRADMIN".equalsIgnoreCase(updateRequest.getUserType())){
+				String mailTag = null;
+				String action = null;
+
+				if(updateRequest.getAction() == 0) {
+					action = SubFeatures.ACCEPT;
+					mailTag = "END_USER_APPROVED_BY_CEIR_ADMIN"; 
+
+					placeholderMap.put("<txn_name>", endUserDB.getTxnId());
+
+					endUserDB.setStatus(EndUserStatus.APPROVED.getCode());
+				}else {
+					action = SubFeatures.REJECT;
+					mailTag = "END_USER_REJECT_BY_CEIR_ADMIN";
+
+					placeholderMap.put("<txn_name>", endUserDB.getTxnId());
+
+					endUserDB.setStatus(EndUserStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					endUserDB.setRemarks(updateRequest.getRemarks());
+				}
+
+				// Update Stock and its history.
+				if(!updateStatusWithHistory(endUserDB)){
+					logger.warn("Unable to update End userdb.");
+					return new GenricResponse(3, "Unable to update End Userdb.", updateRequest.getTxnId()); 
+				}else {
+					// TODO : NOTI
+					emailUtil.saveNotification(mailTag, 
+							userProfile, 
+							updateRequest.getFeatureId(),
+							Features.STOCK,
+							action,
+							updateRequest.getTxnId(),
+							MailSubjects.SUBJECT,
+							placeholderMap);
+					logger.info("Notfication have been saved.");
+				}
+
+			}else {
+				logger.warn("Accept/reject of Stock not allowed to you.");
+				new GenricResponse(1, "Operation not Allowed", updateRequest.getTxnId());
+			}
+
+			return new GenricResponse(0, "Consignment Update SuccessFully.", updateRequest.getTxnId());
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@Transactional
+	private boolean updateStatusWithHistory(EndUserDB endUserDB) {
+		boolean status = Boolean.FALSE;
+
+		endUserDbRepository.save(endUserDB);
+		logger.info("End_user [" + endUserDB.getTxnId() + "] saved in end_userdb.");
+
+		/*
+		 * stockMgmtHistoryRepository.save( new StockMgmtHistoryDb(stockMgmt.getTxnId(),
+		 * stockMgmt.getStockStatus()) ); logger.info("End_user [" +
+		 * endUserDB.getTxnId() + "] saved in stock_mgmt_history_db.");
+		 */
+
+		auditTrailRepository.save(new AuditTrail(0, "", 0L, "", 0L, Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, ""));
+		logger.info("End_user [" + endUserDB.getTxnId() + "] saved in audit_trail.");
+
+		status = Boolean.TRUE;
+
+		return status;
+	}
+
 }

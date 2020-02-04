@@ -94,6 +94,10 @@ public class EndUserDB implements Serializable {
 	private String passportFileName;
 	
 	private long creatorUserId;
+	
+	private Integer status;
+	
+	private String remarks;
 
 	public Long getId() {
 		return id;
@@ -275,6 +279,20 @@ public class EndUserDB implements Serializable {
 	public void setCreatorUserId(long creatorUserId) {
 		this.creatorUserId = creatorUserId;
 	}
+
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+	public String getRemarks() {
+		return remarks;
+	}
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

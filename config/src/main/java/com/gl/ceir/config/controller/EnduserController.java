@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -77,4 +80,24 @@ public class EnduserController {
 
 		return mapping;
 	}
+	
+	
+	/*
+	 * @ApiOperation(value = "Accept Reject end-users.", response =
+	 * GenricResponse.class)
+	 * 
+	 * @RequestMapping(path = "/accept-reject/end-users", method =
+	 * RequestMethod.PUT) public GenricResponse updateConsigmentStatus(@RequestBody
+	 * ConsignmentUpdateRequest acceptRejectRequest) {
+	 * 
+	 * logger.info("Request to accept/reject the stock= " + acceptRejectRequest);
+	 * 
+	 * GenricResponse genricResponse =
+	 * enduserServiceImpl.acceptReject(acceptRejectRequest);
+	 * 
+	 * return genricResponse ;
+	 * 
+	 * }
+	 */
+	
 }

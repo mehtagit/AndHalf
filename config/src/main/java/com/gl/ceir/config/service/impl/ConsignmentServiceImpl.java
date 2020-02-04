@@ -64,6 +64,7 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
+import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder2;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -630,8 +631,8 @@ public class ConsignmentServiceImpl {
 		}
 	}
 
-	private SpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
-		SpecificationBuilder<ConsignmentMgmt> cmsb = new SpecificationBuilder<>(propertiesReader.dialect);
+	private SpecificationBuilder2<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
+		SpecificationBuilder2<ConsignmentMgmt> cmsb = new SpecificationBuilder2<>(propertiesReader.dialect);
 
 		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType())) {
 			if(Objects.nonNull(consignmentMgmt.getUserId()))

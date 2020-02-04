@@ -10,6 +10,8 @@ public interface EndUserDbRepository extends JpaRepository<EndUserDB, Long>, Jpa
 	@SuppressWarnings("unchecked")
 	public EndUserDB save (EndUserDB customRegistrationDB);
 	
+	public EndUserDB getByTxnId(String txnId);
+
 	public EndUserDB getByNid(String nid);
 	
 }
