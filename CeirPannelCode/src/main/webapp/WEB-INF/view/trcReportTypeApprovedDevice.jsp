@@ -303,16 +303,15 @@ var featureId = 11;
 			var filename='';
 			
 			
-			$('.fileDiv').each(function() {	
+	
 			var x={
 				"docType":$('#docTypetag'+fieldId).val(),
 				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 				}
-				formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+		
 				fileInfo.push(x);
-				fieldId++;
-				i++;
-			});
+				
+		
 			
 			var multirequest={
 					"attachedFiles":fileInfo,

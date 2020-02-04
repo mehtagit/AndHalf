@@ -234,7 +234,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		
 	<!-- Preview Modal start   -->
 
-	<div id="viewuplodedModel" class="modal">
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+	<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
 		<div class="modal-content">
 			<div class="row">
 					<img src="" id="fileSource" width="400" height="400">

@@ -2802,3 +2802,10 @@
   .full-screen-modal p {
   margin: 0;
   }
+  a.modal-close.waves-effect.waves-green.btn-flat {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #80cbf7;
+    border-radius: 100px;
+}
