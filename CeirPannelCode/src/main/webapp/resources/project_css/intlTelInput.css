@@ -1,7 +1,7 @@
 .iti {
   position: relative;
   display: inline-block;
-  width: 90%;
+  width: 84%;
 }
 
 /* @media only screen and(min-width: 1024px) {
@@ -1545,4 +1545,7 @@
 
 .iti__flag.iti__np {
   background-color: transparent;
+}
+p.contact-label {
+margin: 0;
 }

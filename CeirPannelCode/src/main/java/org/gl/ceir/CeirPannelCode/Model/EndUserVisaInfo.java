@@ -229,12 +229,16 @@ public void setTxnId(String txnId) {
 this.txnId = txnId;
 }
 
+
+
+
+
 public UserDepartment getUserDepartment() {
-return userDepartment;
+	return userDepartment;
 }
 
 public void setUserDepartment(UserDepartment userDepartment) {
-this.userDepartment = userDepartment;
+	this.userDepartment = userDepartment;
 }
 
 public String getVillage() {
@@ -285,7 +289,6 @@ public String toString() {
 			+ ", userDepartment=" + userDepartment + ", village=" + village + ", visaDb=" + visaDb
 			+ ", additionalProperties=" + additionalProperties + "]";
 }
-
 
 
 }

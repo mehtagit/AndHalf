@@ -21,6 +21,7 @@
 					type: 'POST',
 					dataType: "json",
 					success: function(result){
+						
 						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 						var table=	$("#endUsergrivanceLibraryTable").DataTable({
 							destroy:true,
@@ -37,12 +38,15 @@
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
+									alert(JSON.stringify(d.order)+""+JSON.stringify(d))
 									d.filter = JSON.stringify(filterRequest); 
 									console.log(JSON.stringify(filterRequest));
+									
 								}
 
 							},
-							"columns": result
+						
+							"columns": result,
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
 					},
@@ -84,8 +88,14 @@
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									
-									console.log("jjjjjj"+j);
-									$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									if(data[i].attachedFiles[j].docType==null)
+									{
+									console.log("if condition file and doctype is empty");		$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+								
+									$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+								}
 								}
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
 						

@@ -39,30 +39,32 @@
 		                $("#passportFileNameDiv").css("display", "block")
 		                $("#passportFileDiv").css("display", "none");
 		                $("#passportFileName").prop('readonly', true);
+		                $('#endUserTxnId').val(data.data.txnId);
+		                $("#passportFileName").val(data.data.passportFileName).prop('readonly', true);
 		                $('#endUserpassportNumber').val(data.data.nid).prop('readonly', true);
 		                 $('#endUserfirstName').val(data.data.firstName).prop('readonly', true);
 		                  $('#endUsermiddleName').val(data.data.middleName).prop('readonly', true);
 		                   $('#endUserlastName').val(data.data.lastName).prop('readonly', true);
-		                    $('#endUseraddress').val("").prop('readonly', true);
+		                    $('#endUseraddress').val(data.data.propertyLocation).prop('readonly', true);
 		                     $('#endUserstreetNumber').val(data.data.street).prop('readonly', true);
 		                      $('#endUserlocality').val(data.data.locality).prop('readonly', true);
 		                       $('#endUservillage').val(data.data.village).prop('readonly', true);
 		                        $('#endUsercommune').val(data.data.commune).prop('readonly', true);
 		                         $('#endUserdistrict').val(data.data.district).prop('readonly', true);
 		                          $('#endUserpin').val(data.data.postalCode).prop('readonly', true);
-		                           $('#country').val(data.data.country).attr("disabled", true);
+		                           $('#country').val(data.data.country).change().attr("disabled", true);
 		                            $('#state').val(data.data.province).attr("disabled", true);
 		                             $('#phone').val(data.data.phoneNo).prop('readonly', true);
-		                              $('#endUservisaType').val(data.data.visaType).attr("disabled", true);
+		                              $('#endUservisaType').val(data.data.visaDb[0].visaType).attr("disabled", true);
 		                             // $('#endUserdatepickerDiv').attr("disabled", true);
 		                              $("#endUserdatepickerDiv").css("pointer-events","none");
-		                              
-		                               $('#endUserdatepicker1').val(data.data.endUserdatepicker1).prop('readonly', true);
+		                              $('#endUserdatepicker1').val(data.data.visaDb[0].entryDateInCountry).prop('readonly', true);
+		                               $('#endUserdatepicker1').prop('readonly', true);
 		                                 $('#endUseruploadnationalID').val(data.data.endUseruploadnationalID);
 		                                 // $('#endUserdatepicker').val(data.data.endUserdatepicker).prop('readonly', true);
 		                                   $('#endUseremailID').val(data.data.email).prop('readonly', true); 
 		               
-		                
+		                                   
 		                
 		                
 					}
@@ -181,7 +183,7 @@
     
     
     function updateVisaDetails(){
-    
+    	
     	var formData = new FormData()
     	var passportNumber=$('#endUserpassportNumber').val();
     	var firstName=$('#endUserfirstName').val();
@@ -202,6 +204,7 @@
         var expiryDate=$('#endUserdatepicker').val();
         var email=$('#endUseremailID').val();  
         var visaDb=[];
+        var txnid=$('#endUserTxnId').val();
         var visa={
 				"visaType":visaType,
 				"visaExpiryDate":expiryDate,
@@ -234,7 +237,8 @@
         		"country":country,
         		"email":email,
         		"phoneNo":phoneNo,
-        		"visaDb":visaDb
+        		"visaDb":visaDb,
+        		"txnId":txnid
         }
        
         
@@ -251,6 +255,11 @@
 				
 				console.log(JSON.stringify(data));
 				if(data.errorCode==5){
+					$('#successMsg').openModal();
+					$('#messageResponse').text(data.message);
+				    $("#updateVisaButton").prop('disabled', true);
+				}
+				else{
 					$('#successMsg').openModal();
 					$('#messageResponse').text(data.message);
 				    $("#updateVisaButton").prop('disabled', true);

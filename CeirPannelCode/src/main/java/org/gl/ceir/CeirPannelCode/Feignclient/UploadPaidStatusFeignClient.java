@@ -56,5 +56,7 @@ public interface UploadPaidStatusFeignClient {
 	@PutMapping("visa/end-user")
 	public @ResponseBody GenricResponse updateEndUSerVisaDetailsby(EndUserVisaInfo visaInfo);
 	
+	@PostMapping("/end-user")
+	public @ResponseBody GenricResponse RegisterEndUserDevice(EndUserVisaInfo visaInfo);
 	
 }
