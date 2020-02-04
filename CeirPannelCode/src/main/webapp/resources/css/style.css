@@ -387,7 +387,7 @@
 
   header .brand-logo {
     margin: 2px 68px;
-    padding: 14px 20px;
+    padding: 8px 20px;
   }
 
   @media only screen and (max-width:992px)
@@ -436,7 +436,7 @@
 
   @media only screen and (max-width:479px){
   ul#chat-out.right {
-  margin-top: -20px;
+  margin-top: -105px;
   }
   }
 
@@ -654,7 +654,7 @@
   }
 
   ul.side-nav.leftside-navigation {
-    top: 64px;
+    top: 56px;
     overflow: hidden;
   }
 
@@ -2596,6 +2596,7 @@
   }
       
   .export-to-excel {
+    width: 75px;
   color: #2979a5;
   float: right;
   border: solid 1px rgba(33, 167, 201, 0.774);
@@ -2609,6 +2610,7 @@
 
   @media only screen and (max-width: 425px){
   .export-to-excel {
+    width: 75px;
   color: #2979a5;
   float: right;
   border: solid 1px rgba(33, 167, 201, 0.774);
@@ -2781,6 +2783,7 @@
 
   @media only screen and (max-width:992px){
     img.darken-1.my-2 {
+      height:56px;
       margin-left: 50px;
   }
   }

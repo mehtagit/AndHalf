@@ -65,7 +65,7 @@ var contextpath = "${context}";
 						<li>
 					<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
             					<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
-                				<img src="./resources/images/dmc_gl.png" class="darken-1 my-2"></a>
+                				<img src="./resources/images/dmc_gl.png" class="darken-1 my-2" style="height:56px;"></a>
         					</div>
         				</li>
 						<li>
@@ -92,7 +92,7 @@ var contextpath = "${context}";
 							</div>
 						</li>
 						<li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>			
-						<li class="profileInfo"><a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown" style="height: 65px;"><i
+						<li class="profileInfo"><a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown" style="height: 40px;"><i
 						class="mdi-action-account-circle" style="color: #fff; font-size: 40px;"></i></a>
 					<ul id="profile-dropdown" class="dropdown-content">
 						<li><a href="${context}/editProfile" target="mainArea"><i class="fa fa-pencil dropdownColor" style="float: left;"></i><span

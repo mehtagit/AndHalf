@@ -1,3 +1,4 @@
+
     $('#langlist').on('change', function() {
         lang=$('#langlist').val() == 'km' ? 'km' : 'en';  
       $('#mainArea').attr('src', function () {
@@ -6,14 +7,13 @@
     }); 
     // sessionStorage.getItem("a") == 'null' ? "./Home" : sessionStorage.getItem("a");
           window.location.assign("importerDashboard?lang="+lang);
-          $("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+sessionStorage.getItem("a")+" width='100%' height='700px'></iframe>");
-    
-      }); 
+        }); 
        var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
-      $("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
+  $(document).ready(function () {
+ $("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
     
-      $(document).ready(function () {
-      //  sessionStorage.removeItem("a");
+       sessionStorage.removeItem("a");
+
         var url = new URL(window.location.href);
         var langParameter = url.searchParams.get("lang");
         $('#langlist').val(langParameter == 'km' ? 'km' : 'en');

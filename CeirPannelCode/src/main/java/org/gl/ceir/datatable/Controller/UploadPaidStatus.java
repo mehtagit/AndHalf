@@ -290,7 +290,7 @@ public class UploadPaidStatus {
 				}
 			}else {
 			//input type date list
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nid"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nidInput"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
 			dateRelatedFields= new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

@@ -8,8 +8,8 @@ window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	var url_string = window.location.href;
 	var url = new URL(url_string);
-	var type = url.searchParams.get("type");
-	window.location.assign("./greyList?type="+type+"&lang="+lang);				
+	var type_val = url.searchParams.get("type"); 
+	window.location.assign("./greyList?type="+type_val+"&lang="+lang);				
 }); 
 
 $.i18n().locale = lang;	

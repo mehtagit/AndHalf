@@ -11,11 +11,10 @@
 
 	window.parent.$('#langlist').on('change', function() {
 		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		var id= parseInt($("#mainArea").contents().find("body").attr("data-session-id"));
+		var id= $("#mainArea").contents().find("body").html();
 		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
 		var type= $("#mainArea").contents().find("body").attr("data-session-type");
 
-		alert(id+""+roles+""+type)
 		window.location.assign("trcInformation?id="+id+"&roles="+roles+"&type="+type+"&lang="+langParam);	
 			
 	}); 
