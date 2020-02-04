@@ -307,7 +307,7 @@ public class StockServiceImpl {
 			rawMails.add(new RawMail("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", user.getUserProfile(), 
 					4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT, 
 					placeholderMapForCeirAdmin));
-			
+
 			// Send notification to the anonymous user if mail is provided.
 			if(Objects.nonNull(userProfile.getEmail()) && !userProfile.getEmail().isEmpty()) {
 				Map<String, String> placeholderMapForAnonymousUser = new HashMap<String, String>();
@@ -317,7 +317,7 @@ public class StockServiceImpl {
 						4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT,  
 						placeholderMapForAnonymousUser));
 			}
-			
+
 			if(emailUtil.saveNotification(rawMails)) {
 				logger.info("Notifications [" + rawMails.size() + "] have been saved.");
 			}else {
@@ -563,9 +563,14 @@ public class StockServiceImpl {
 	}
 
 	public GenricResponse updateStockInfo(StockMgmt distributerManagement) {
-
-		StockMgmt stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
-
+		StockMgmt stockMgmt = null;
+		
+		if("End User".equalsIgnoreCase(distributerManagement.getUserType())){
+			distributerManagement.setRoleType("End User");
+		}else {
+			stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), distributerManagement.getTxnId());
+		}
+		
 		if(Objects.isNull(stockMgmt)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
 
