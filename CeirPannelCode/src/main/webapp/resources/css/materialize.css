@@ -8030,7 +8030,7 @@
     position: fixed;
   }
 
-  @media only screen and (min-width: 601px) {
+  @media only screen and (max-width: 660px) {
 
     nav,
     nav .nav-wrapper i,
@@ -8045,7 +8045,15 @@
     }
   }
 
-  @media only screen and (max-width: 425px) {
+
+  @media only screen and (max-width: 660px){
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 120px;
+    line-height: 62px;
+}
+  }
+
+  /* @media only screen and (max-width: 425px) {
 
     nav,
     nav .nav-wrapper i,
@@ -8058,7 +8066,7 @@
     .navbar-fixed {
       height: 64px;
     }
-  }
+  } */
 
   @font-face {
     font-family: "Roboto";
@@ -8601,11 +8609,11 @@
     line-height: 37px;
   }
 
-@media only screen and (max-width: 991px) and (min-width: 526px){
+/* @media only screen and (max-width: 991px) and (min-width: 526px){
 	.btn-floating i {
     margin-top: -14px;
   }
-}
+} */
 
   .btn-floating:before {
     border-radius: 0;

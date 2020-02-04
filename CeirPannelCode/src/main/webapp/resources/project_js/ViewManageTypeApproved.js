@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 
 
+
 var userType = $("body").attr("data-roleType");
 
 function typeApprovedDataTable(lang){
@@ -401,9 +402,6 @@ function setImporterEditPopupData(data){
 		$("#docTypetag1").val(data.attachedFiles[0].docType);
 }
 
-
-
-
 populateCountries
 (   
 		"editcountry"
@@ -518,6 +516,7 @@ function updateReportTypeDevice()
 
 
 
+
 //**********************************************************Export Excel file************************************************************************
 function exportTacData()
 {
@@ -543,6 +542,7 @@ function exportTacData()
 	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
 }
+
 
 
 function openApproveTACPopUp(txnId,	manufacturerName)
@@ -651,7 +651,6 @@ return false;
 return true;
 }
 }
-
 
 function setAllDropdown(){
 $.getJSON('./productList', function(data) {
