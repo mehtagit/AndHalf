@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -109,7 +111,7 @@
 			class=" modal-action modal-close  btn-flat right"
 			data-dismiss="modal">&times;</button>
         <div class="row" style="padding-bottom: 20px;" id="stolenRecoveryDivPage">
-        <h6 class="modal-header">Report Stolen/Recovery</h6>
+        <h6 class="modal-header"><spring:message code="modal.Stolen/Recovery" /></h6>
             <div class="col s12 m12 modal-content">
                 
                 <div class="row">
@@ -117,12 +119,12 @@
                         <h5 class="center">
                             <label>
                                 <input name="group1" type="radio" onclick="openStolenRecoveryPage('stolen','default')" />
-                                <span class="checkboxFont"> Stolen</span>
+                                <span class="checkboxFont"><spring:message code="input.Stolen" /></span>
                             </label>
 
                             <label>
                                 <input name="group1" type="radio" onclick="openStolenRecoveryPage('recovery','default')" />
-                                <span class="checkboxFont"> Recovery</span>
+                                <span class="checkboxFont"><spring:message code="input.Recovery" /></span>
                             </label>
                         </h5>
                     </form>

@@ -456,7 +456,7 @@
                                                         <label for="visaType"><spring:message code="input.VisaType" /> <span
                                                                 class="star">*</span></label>
                                                         <select class="browser-default" id="visaType">
-                                                            <option value="" disabled selected>Select Visa Type</option>
+                                                            <option value="" disabled selected><spring:message code="input.SelectVisaType" /></option>
                                                             <option value="Yes">Tourist</option>
                                                             <option value="No">Other</option>
                                                         </select>
@@ -546,7 +546,7 @@
                                                         <label for="visaType"><spring:message code="input.VisaType" />  <span
                                                                 class="star">*</span></label>
                                                         <select class="browser-default" id="visaType">
-                                                            <option value="" disabled selected>Select Visa Type</option>
+                                                            <option value="" disabled selected><spring:message code="input.SelectVisaType" /></option>
                                                             <option value="Yes">Tourist</option>
                                                             <option value="No">Other</option>
                                                         </select>

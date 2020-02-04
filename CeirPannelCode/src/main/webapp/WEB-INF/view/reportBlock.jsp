@@ -193,7 +193,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 <div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
 id="stolenDate">
 
-<label for="TotalPrice" class="center-align">Till date</label>
+<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
 <div id="startdatepicker" class="input-group" style="margin-top: 10px;">
 
 <input class="form-control" name="inputsaves" type="text"
@@ -279,7 +279,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
 
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
+                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
