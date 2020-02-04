@@ -15,6 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class UserDepartment implements Serializable {
@@ -43,7 +44,18 @@ public class UserDepartment implements Serializable {
 	
 	@OneToOne
 	@JoinColumn(name = "userId")
+	@JsonIgnore
 	EndUserDB endUserDB;
+	
+	public UserDepartment() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UserDepartment(String name, String departmentId, String departmentFilename) {
+		this.name = name;
+		this.departmentId = departmentId;
+		this.departmentFilename = departmentFilename;
+	}
 	
 	public LocalDateTime getCreatedOn() {
 		return createdOn;

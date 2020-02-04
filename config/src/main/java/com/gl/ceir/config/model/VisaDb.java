@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class VisaDb implements Serializable {
@@ -50,7 +51,16 @@ public class VisaDb implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "userId")
+	@JsonIgnore
 	EndUserDB endUserDB;
+	
+	public VisaDb() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public VisaDb(Integer visaType, String visaNumber, String visaFileName, String entryDateInCountry, String visaExpiryDate) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;

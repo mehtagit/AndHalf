@@ -35,12 +35,14 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
+import com.gl.ceir.config.model.UserDepartment;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.VisaHistoryDb;
@@ -51,6 +53,7 @@ import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.EndUserFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
@@ -88,7 +91,7 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	VisaHistoryDBRepository visaHistoryDBRepository;
-	
+
 	@Autowired
 	EmailUtil emailUtil;
 
@@ -113,17 +116,44 @@ public class EnduserServiceImpl {
 	@Transactional
 	public GenricResponse saveEndUser(EndUserDB endUserDB) {
 		try {
+			// TODO if user is already registerd.
+			
+			
 			// End user is not registered with CEIR system.
 			if(Objects.isNull(endUserDB)) {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), "");
 			}
-
+			
+			// Add department if user is VIP.
+			if("Y".equals(endUserDB.getIsVip())) {
+				UserDepartment userDepartment = endUserDB.getUserDepartment();
+				UserDepartment newUserDepartment = new UserDepartment(userDepartment.getName(), userDepartment.getDepartmentId(), 
+						userDepartment.getDepartmentFilename());
+				newUserDepartment.setEndUserDB(endUserDB);
+				
+				if(Objects.isNull(userDepartment)) {
+					return new GenricResponse(2, GenericMessageTags.NULL_USER_DEPARTMENT.getTag(), 
+							GenericMessageTags.NULL_USER_DEPARTMENT.getMessage(), "");
+				}else {
+					endUserDB.setUserDepartment(newUserDepartment);	
+				}
+			}
+			
 			// Validate and set visa expiry date as per default rule.
 			GenricResponse response = setVisaExpiryDate(endUserDB);
 			if(response.getErrorCode() != 0) 
 				return response;
 
+			// Validate end user devices.
+			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
+				for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
+					if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus()))
+							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+				}
+				
+				logger.info(endUserDB.getRegularizeDeviceDbs());
+			}
 
 			endUserDbRepository.save(endUserDB);
 			logger.info(GenericMessageTags.USER_REGISTER_SUCCESS.getMessage() + " with nid [" + endUserDB.getNid() + "]");
@@ -421,8 +451,10 @@ public class EnduserServiceImpl {
 					}
 					String date = DateUtil.nextDate(day, null);
 					visaDbs.get(0).setVisaExpiryDate(date);
+					visaDbs.get(0).setEndUserDB(endUserDB);
 					return new GenricResponse(0);
 				}else {
+					visaDbs.get(0).setEndUserDB(endUserDB);
 					return new GenricResponse(0);
 				}
 			}
@@ -432,7 +464,7 @@ public class EnduserServiceImpl {
 
 	}
 
-	
+
 	public GenricResponse acceptReject(ConsignmentUpdateRequest updateRequest) {
 		try {
 			UserProfile userProfile = null;
@@ -440,7 +472,7 @@ public class EnduserServiceImpl {
 			String nid = updateRequest.getNid();
 			Map<String, String> placeholderMap = new HashMap<String, String>();
 			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
-			
+
 			logger.info(endUserDB);
 
 			if(Objects.isNull(endUserDB)) {

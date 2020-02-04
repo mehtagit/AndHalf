@@ -14,8 +14,9 @@ public enum GenericMessageTags {
 	VISA_EMPTY("VISA_EMPTY", "Visa information in request not found"),	
 	DISCREPENCY_IN_CONFIG("DISCREPENCY_IN_CONFIG", "Discrepancy found in configuration."),
 	USER_REGISTER_SUCCESS("USER_REGISTER_SUCCESS", "User have been registered successfully."),
-	FEATURE_NOT_ALLOWED("FEATURE_NOT_ALLOWED", "This functionality is not supported now.")
+	FEATURE_NOT_ALLOWED("FEATURE_NOT_ALLOWED", "This functionality is not supported now."),
 	//----------
+	NULL_USER_DEPARTMENT ("NULL_USER_DEPARTMENT", "User Department is null for VIP.")
 	;
 	
 	private String tag;

@@ -66,6 +66,7 @@ import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
@@ -277,8 +278,8 @@ public class StolenAndRecoveryServiceImpl {
 		}	
 	}
 
-	private SpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
-		SpecificationBuilder<StolenandRecoveryMgmt> srsb = new SpecificationBuilder<>(propertiesReader.dialect);
+	private GenericSpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
+		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())
 				&& !"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {

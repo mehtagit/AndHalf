@@ -71,6 +71,7 @@ import com.gl.ceir.config.repository.UserProfileRepo;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.HttpResponse;
@@ -418,8 +419,8 @@ public class StockServiceImpl {
 		}
 	}
 
-	private SpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
-		SpecificationBuilder<StockMgmt> specificationBuilder = new SpecificationBuilder<>(propertiesReader.dialect);
+	private GenericSpecificationBuilder<StockMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList){
+		GenericSpecificationBuilder<StockMgmt> specificationBuilder = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		if("Importer".equalsIgnoreCase(filterRequest.getUserType()) || 
 				"Distributor".equalsIgnoreCase(filterRequest.getUserType()) || 

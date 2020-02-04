@@ -63,6 +63,7 @@ import com.gl.ceir.config.repository.StokeDetailsRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
@@ -579,8 +580,8 @@ public class RegularizedDeviceServiceImpl {
 		}
 	}
 
-	private SpecificationBuilder<RegularizeDeviceDb> buildSpecification(FilterRequest filterRequest){
-		SpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new SpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
+	private GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(FilterRequest filterRequest){
+		GenericSpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new GenericSpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
