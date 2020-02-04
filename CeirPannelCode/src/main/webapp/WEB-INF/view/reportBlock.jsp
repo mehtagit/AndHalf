@@ -279,7 +279,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
 
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
+                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">

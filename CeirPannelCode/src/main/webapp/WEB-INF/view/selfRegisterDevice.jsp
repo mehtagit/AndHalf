@@ -112,7 +112,7 @@
                                                 <div class="input-field col s12 m4">
                                                     <input type="text" id="firstName" name="firstName"
                                                         pattern="[a-zA-Z]" title="" maxlength="15" />
-                                                    <label for="firstName">First Name <spring:message code="input.firstName" /> <span
+                                                    <label for="firstName"><spring:message code="input.firstName" /> <span
                                                             class="star">*</span></label>
                                                 </div>
 
@@ -260,7 +260,7 @@
                                                         <label for="deviceType"><spring:message code="select.multiSimStatus" />  <span
                                                                 class="star">*</span></label>
                                                         <select class="browser-default" id="deviceType">
-                                                            <option value="" disabled selected>Multiple Sim Status</option>
+                                                            <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                         </select>
@@ -270,7 +270,7 @@
                                                         <label for="deviceType"><spring:message code="select.deviceType" /> <span
                                                                 class="star">*</span></label>
                                                         <select class="browser-default" id="deviceType">
-                                                            <option value="" disabled selected>Device Type</option>
+                                                            <option value="" disabled selected><spring:message code="select.deviceType" /></option>
                                                             <option value="Handheld">Handheld</option>
                                                             <option value="MobilePhone">Mobile Phone/Feature phone
                                                             </option>
@@ -348,7 +348,7 @@
                                                 <div class="input-field col s12 m4">
                                                     <input type="text" id="firstName" name="firstName"
                                                         pattern="[a-zA-Z]" title="" maxlength="15" />
-                                                    <label for="firstName">First Name<spring:message code="input.firstName" />  <span
+                                                    <label for="firstName"><spring:message code="input.firstName" />  <span
                                                             class="star">*</span></label>
                                                 </div>
 
@@ -361,7 +361,7 @@
                                                 <div class="input-field col s12 m4">
                                                     <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]"
                                                         title="" maxlength="15" />
-                                                    <label for="lastName">Last Name<spring:message code="input.lastName" />  <span class="star">*</span></label>
+                                                    <label for="lastName"><spring:message code="input.lastName" />  <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m12 l12">
@@ -472,14 +472,14 @@
                                                     <div class="input-field col s12 m6">
                                                         <input type="text" id="datepicker" name="entryDate" pattern="[]"
                                                             title="" maxlength="15" />
-                                                        <label for="datepicker">Entry Date In Country<spring:message code="input.firstName" />  <span
+                                                        <label for="datepicker"><spring:message code="input.EntryCountry" />  <span
                                                                 class="star">*</span></label>
                                                     </div>
 
                                                     <div class="input-field col s12 m6">
                                                         <input type="text" id="visaNumber" name="visaNumber"
                                                             pattern="[a-zA-Z0-9]" title="" maxlength="15" />
-                                                        <label for="visaNumber">Visa Number<spring:message code="input.firstName" />  <span
+                                                        <label for="visaNumber"><spring:message code="input.VisaNumber" />  <span
                                                                 class="star">*</span></label>
                                                     </div>
 
@@ -571,7 +571,7 @@
                                                         <label for="deviceIdType"><spring:message code="select.deviceIDType" />  <span
                                                                 class="star">*</span></label>
                                                         <select class="browser-default" id="deviceType">
-                                                            <option value="" disabled selected>Select Device ID Type
+                                                            <option value="" disabled selected><spring:message code="select.selectDeviceIDType" />
                                                             </option>
                                                             <option value="IMEI">IMEI</option>
                                                             <option value="ESN">ESN</option>
@@ -595,7 +595,7 @@
                                                         <label for="deviceType"><spring:message code="operator.devicetype" />  <span
                                                                 class="star">*</span></label>
                                                         <select class="browser-default" id="deviceType">
-                                                            <option value="" disabled selected>Device Type</option>
+                                                            <option value="" disabled selected><spring:message code="select.deviceType" /></option>
                                                             <option value="Handheld">Handheld</option>
                                                             <option value="MobilePhone">Mobile Phone/Feature phone
                                                             </option>
