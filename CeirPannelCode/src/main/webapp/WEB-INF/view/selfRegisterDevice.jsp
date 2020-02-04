@@ -405,7 +405,7 @@
                                                     <input type="text" name="pin"
                                                         class="form-control boxBorder boxHeight" id="pin"
                                                         maxlength="20">
-                                                    <label for="pin"><spring:message code="input.Pincode" />  <span class="star">*</span></label>
+                                                    <label for="pin"><spring:message code="registration.postalcode" />  <span class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">

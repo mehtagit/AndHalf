@@ -8062,10 +8062,18 @@ a.btn-flat.dropdown-button.waves-effect.waves-light.white-text.profile-btn {
 
 @media only screen and (max-width: 660px){
 img.darken-1.my-2 {
-    margin-left: 0; 
+    margin-left: 0 !important 
     width: 100%;
 }
 }
+
+
+@media only screen and(max-width: 660px){
+#chat-out.right {
+    padding-top: 64px;
+}
+}
+
 
 @media only screen and (max-width: 992px)and(min-width:661px){
 img.darken-1.my-2 {
@@ -9341,10 +9349,10 @@ select:focus {
     background-color: #ff548e;
   }
 
-  label {
-    font-size: 1rem;
-    color: #9e9e9e;
-  }
+label {
+font-size: 0.8rem;
+color: #444;
+}
 
   .fa-calendar {
     float: right;
@@ -9713,18 +9721,22 @@ select:focus {
   }
 
   .input-field label {
-    color: #444;
-    position: absolute;
-    top: 0.4rem;
-    left: 0.75rem;
-    font-size: 1rem;
-    cursor: text;
-    -webkit-transition: 0.2s ease-out;
-    -moz-transition: 0.2s ease-out;
-    -o-transition: 0.2s ease-out;
-    -ms-transition: 0.2s ease-out;
-    transition: 0.2s ease-out;
-  }
+color: #444;
+position: absolute;
+top: 0.4rem;
+left: 0.55rem;
+font-size: 1rem;
+cursor: text;
+-webkit-transition: 0.2s ease-out;
+-moz-transition: 0.2s ease-out;
+-o-transition: 0.2s ease-out;
+-ms-transition: 0.2s ease-out;
+transition: 0.2s ease-out;
+}
+
+
+
+
 
   @media screen and (max-width: 50em) {
     .input-field label {

@@ -2,11 +2,11 @@
     $('#langlist').on('change', function() {
         lang=$('#langlist').val() == 'km' ? 'km' : 'en';  
       $('#mainArea').attr('src', function () {
-      currentPageLocation=$(this).contents().get(0).location.pathname;
+      currentPageLocation=$(this).contents().get(0).location;
       sessionStorage.setItem("a", currentPageLocation);
     }); 
     // sessionStorage.getItem("a") == 'null' ? "./Home" : sessionStorage.getItem("a");
-          window.location.assign("importerDashboard?lang="+lang);
+          window.location.replace("importerDashboard?lang="+lang);
         }); 
        var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
   $(document).ready(function () {

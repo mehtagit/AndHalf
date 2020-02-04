@@ -4,6 +4,7 @@
 	 var userId = $("body").attr("data-userID");
 	 var currentRoleType = $("body").attr("data-selected-roleType"); 
 	 var role = currentRoleType == null ? roleType : currentRoleType;
+	
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			window.location.assign("./assignDistributor?userTypeId="+role+"&lang="+lang);
 		});
@@ -435,7 +436,7 @@
 				}
 
 				sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-				if(currentRoleType=="CEIRAdmin"){
+				if(currentRoleType=="CEIRAdmin" || currentRoleType=="Importer"){
 					$("#btnLink").css({display: "none"});
 				}
 				
@@ -633,6 +634,7 @@
 
 
 	var role = currentRoleType == null ? roleType : currentRoleType;
+
 //**********************************************************Export Excel file************************************************************************
 	function exportStockData()
 	{
