@@ -62,7 +62,11 @@
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}"
+ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"
+data-session-id="${not empty param.id ? param.id : 'null'}"
+data-session-roles="${not empty param.roles ? param.roles : 'null'}"
+data-session-type="${not empty param.type ? param.type : 'null'}">
 		
 		<section id="content" style="margin:0 0.5rem">
                 <!--start container-->

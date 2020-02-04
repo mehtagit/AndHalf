@@ -44,7 +44,7 @@ public class operatorController {
 	@RequestMapping(value=
 		{"/blackList"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
+)
 	    public ModelAndView ViewBlackList(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		 log.info(" viewOperator entry point."); 

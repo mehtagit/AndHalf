@@ -182,93 +182,68 @@ public class TrcController {
 
 	//************************************************ update consignment record page********************************************************************************/
 
-	@PostMapping("update-register-approved-device")
-	public @ResponseBody GenricResponse updateRegister(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session,
-			@RequestParam(name="manufacturerId",required = false) String manufacturerId,@RequestParam(name="manufacturerName",required = false) String manufacturerName,@RequestParam(name="country",required = false) String country,
-			@RequestParam(name="requestDate",required = false) String requestDate,@RequestParam(name="tac",required = false) String tac,@RequestParam(name="approveDisapproveDate",required = false) String approveDisapproveDate,
-			@RequestParam(name="status",required = false) Integer approveStatus,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="txnId",required = false) String txnId,
-			@RequestParam(name="fileName",required = false) String fileName,@RequestParam(name="id",required = false) Integer id) {
+	@RequestMapping(value= {"/update-register-approved-device"},method= RequestMethod.POST) 
+	public @ResponseBody GenricResponse updateRegister(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
 		log.info("---------request---------"+request.getParameter("manufacturerId"));
 		// log.info(""+request.getParameter("file"));
 
-		Integer userId= Integer.parseInt(session.getAttribute("userid").toString());
-		request.setAttribute("userId",userId );
+		Integer userId= (int) session.getAttribute("userid");
+		String roletype=(String) session.getAttribute("usertype");
 		log.info(" updateRegister consignment entry point.");
-		log.info(" requestDate=="+requestDate);
-		TRCRegisteration model = new TRCRegisteration();
-
-		log.info("txnid="+txnId);
-		if (file==null)
-		{	
-			log.info("file is not empty");
-			model.setManufacturerId(manufacturerId);
-			model.setManufacturerName(manufacturerName);
-			model.setCountry(country);
-			model.setRequestDate(requestDate);
-			model.setTac(tac);
-			model.setApproveDisapproveDate(approveDisapproveDate);
-			model.setApproveStatus(approveStatus);
-			model.setRemark(remark);
-			model.setFileName(fileName);
-			model.setTxnId(txnId);
-			model.setId(id);
-			model.setUserId(userId);
-		}
-		else {
-
-			try { byte[] bytes = file.getBytes();
-			String rootPath =filePathforUploadFile+txnId+"/"; 
-			File dir = new File(rootPath + File.separator);
-			File tmpDir = new File(rootPath+file.getOriginalFilename());
-			boolean exists = tmpDir.exists();
-			if(exists) {
-
-				Path temp = Files.move 
-						(Paths.get(filePathforUploadFile+txnId+"/"+file.getOriginalFilename()), 
-								Paths.get(filePathforMoveFile+file.getOriginalFilename())); 
-				String movedPath=filePathforMoveFile+file.getOriginalFilename();	
-				// tmpDir.renameTo(new File("/home/ubuntu/apache-tomcat-9.0.4/webapps/MovedFile/"+txnId+"/"));
-				log.info("file is already exist, moved to this "+movedPath+" path. ");
-				tmpDir.delete();
+		
+		Gson gson= new Gson(); 
+		String trcDetails=request.getParameter("multirequest");
+		TRCRegisteration trcRequest = gson.fromJson(trcDetails, TRCRegisteration.class);
+		
+		int i=0;
+		for( MultipartFile file : fileUpload) {
+			String tagName=trcRequest.getAttachedFiles().get(i).getDocType();
+		try {
+			if(fileUpload==null)
+			{
+				trcRequest.getAttachedFiles().get(i).setFileName("");
 			}
-			if (!dir.exists()) dir.mkdirs();
-			// Create the file on server 
-			File serverFile = new File(rootPath+file.getOriginalFilename());
-			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			stream.write(bytes); stream.close();
-			log.info("before hit");
-			model.setManufacturerId(manufacturerId);
-			model.setManufacturerName(manufacturerName);
-			model.setCountry(country);
-			model.setRequestDate(requestDate);
-			model.setTac(tac);
-			model.setApproveDisapproveDate(approveDisapproveDate);
-			model.setApproveStatus(approveStatus);
-			model.setRemark(remark);
-			model.setFileName(fileName);
-			model.setTxnId(txnId);
-			model.setUserId(userId);
-			model.setId(id);
-			} 
+			else {
+			byte[] bytes = file.getBytes();
+			String rootPath = filePathforUploadFile+trcRequest.getTxnId()+"/"+tagName+"/";
+			File dir = new File(rootPath + File.separator);
 
-			catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
-			} 
+			if (!dir.exists()) 
+				dir.mkdirs();
+			// Create the file on server
+			// Calendar now = Calendar.getInstance();
+
+			File serverFile = new File(rootPath+file.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile);
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes);
+			stream.close();
+			}
+			
+			
 		}
-		// set request parameters into model class
-		log.info("request passed to the update register api="+model);
-		GenricResponse response = typeApprovedFeignImpl.updateApproved(model);
-		log.info("response from update api=="+response);
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		i++;
+		}
+		
+		log.info("request passed to the update method="+trcRequest);
+		GenricResponse response = typeApprovedFeignImpl.updateApproved(trcRequest);
+		log.info("response  from   update method="+response);	
+		response.setTxnId(trcRequest.getTxnId());
 		return response;
 	}
+		
+
 
 
 
 	//***************************************** Export Grievance controller *********************************
 	@RequestMapping(value="/exportTac",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 	public String exportToExcel(@RequestParam(name="tacStartDate",required = false) String tacStartDate,@RequestParam(name="tacStatus",required = false) Integer tacStatus,
+			@RequestParam(name="txnId") String txnId,
 			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="tacNumber") String tacNumber,
 			@RequestParam(name="tacEndDate",required = false) String tacEndDate)
 	{
@@ -282,6 +257,7 @@ public class TrcController {
 		trcRequest.setTac(tacNumber);
 		trcRequest.setStatus(tacStatus);
 		trcRequest.setUserId(userId);
+		trcRequest.setTxnId(txnId);
 		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file);
 

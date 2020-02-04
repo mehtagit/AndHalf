@@ -726,27 +726,29 @@ var contextpath = "${context}";
 
     <!-- modal start -->
 
-    <div id="otpVerification" class="modal" onsubmit="return verifyOtp()" style="width: 40%;">
+       <div id="otpVerification" class="modal" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
                <h6 class="modal-header"><spring:message code="registration.otp" /></h6>
         <div class="modal-content">
-                <form id="verifyOtpForm" action="">
-                        <p class="center" id="resendOtp" style="display: none;"></p>
-                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+             <p class="center" id="verifyOtpResp"></p>
+                                       <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" name="emailOtp" id="emailOtp" placeholder=""/>
+                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
+                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" placeholder=""/>
                             </div> 
-                   
                             <div class="input-field col s12 m12">
-                                <input type="text" name="phoneOtp" id="phoneOtp" placeholder=""/>
+                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
+										pattern="[0-9]{0,6}"
+										title="Please enter 6 digit number" 
+                                required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-
                         <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
-
-                        <button  id="otpVerifyBtn"   class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
+                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>
     </div>
