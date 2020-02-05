@@ -328,7 +328,6 @@ onclick="_Services._selectstartDate()"></i></span>
         </div>
     </div>
 
-
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -391,72 +390,6 @@ onclick="_Services._selectstartDate()"></i></span>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
 		
-			<script type="text/javascript">
-
-		window.parent.$('#langlist').on('change', function() {
-			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-			
-			window.location.assign("openBlockUnblockPage?pageType=block&lang="+lang);
-		}); 
-		
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		$.i18n().locale = langParam;
-		var successMsg;
-		$.i18n().load( {
-			'en': './resources/i18n/en.json',
-			'km': './resources/i18n/km.json'
-		} ).done( function() { 
-		//	successMsg=$.i18n('successMsg');
-		});
-		
-
-		$(document).ready(function () {
-			
-			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#blockdeviceType');
-					console.log('#blockdeviceType')
-				}
-			});
-
-			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#blockmultipleSimStatus');
-					console.log('#blockmultipleSimStatus');
-				}
-			});
-		});
-		
-		$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-			
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#blockdeviceIdType');
-				console.log('#blockdeviceIdType');
-			}
-		});
-		$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
-			
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#bulkBlockdeviceCategory');
-				console.log('#bulkBlockdeviceCategory');
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#singleDeviceCategory');
-				console.log('#singleDeviceCategory');
-			}
-		});
-		
-		
-		
-		
-		
-		
-		</script>
 
 </body>
 </html>

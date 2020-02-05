@@ -484,7 +484,7 @@ else {
 
 
 		GenricResponse response= new GenricResponse();
-	
+		stockUpload.setUserType("End User");
 		
 		try {
 			log.info("file is not blank");

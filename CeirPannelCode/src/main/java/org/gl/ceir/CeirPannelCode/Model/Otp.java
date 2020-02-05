@@ -1,5 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Model;
-public class Otp {   
+public class Otp extends UserHeader{  
 	private String phoneOtp;
 	private String emailOtp;
 	private Integer userid;

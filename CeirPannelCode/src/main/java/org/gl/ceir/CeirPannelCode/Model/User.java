@@ -1,6 +1,6 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
-public class User {
+public class User extends UserHeader {
 	
 	private int   id ;
 	private String createdOn;

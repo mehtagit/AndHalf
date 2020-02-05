@@ -21,6 +21,7 @@
 					type: 'POST',
 					dataType: "json",
 					success: function(result){
+						
 						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 						var table=	$("#endUsergrivanceLibraryTable").DataTable({
 							destroy:true,
@@ -39,10 +40,12 @@
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
 									console.log(JSON.stringify(filterRequest));
+									
 								}
 
 							},
-							"columns": result
+						
+							"columns": result,
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
 					},
@@ -84,8 +87,14 @@
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
 									
-									console.log("jjjjjj"+j);
-									$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									if(data[i].attachedFiles[j].docType==null)
+									{
+									console.log("if condition file and doctype is empty");		$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+								
+									$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+								}
 								}
 								$("#chatMsg").append("<div class='chat-message-content clearfix'><hr></div>");
 						
@@ -156,7 +165,6 @@
 			
 			function saveEndUserGrievanceReply()
 			{
-				alert("inside message");
 				 var endUseruserId=488;
 				var endUsergrievanceTicketStatus;
 				if ($('#closeTicketCheck').is(":checked"))
@@ -167,18 +175,17 @@
 				else{
 					endUsergrievanceTicketStatus=0;
 				}
-				alert("---------");
 				var endUserremark=$('#replyRemark').val();
 				var endUserreplyFile=$('#replyFile').val();
 				var  endUsergrievanceIdToSave= $('#grievanceIdToSave').text();
 				var  endUsergrievanceTxnId=  $('#grievanceTxnId').text();
-				alert("+++++++++");
+				
 				//console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="+grievanceTicketStatus);
 				var endUserfieldId=1;
 				var endUserfileInfo =[];
 				var endUserformData= new FormData();
 				var endUserfileData = [];
-				alert("$$$$$$$$$$$$");
+			
 				var endUserx;
 				var endUserfilename='';
 				var endUserfilediv;
@@ -186,7 +193,7 @@
 				var formData= new FormData();
 				var endUserdocTypeTagIdValue='';
 				var endUserfilename='';
-				alert("@@@@@@@@");
+		
 				$('.fileDiv').each(function() {	
 					var endUserx={
 					"docType":$('#docTypetag'+endUserfieldId).val(),
@@ -198,7 +205,6 @@
 					endUserfieldId++;
 					endUseri++;
 				});
-				alert("$$$$$$$$$$$$$$-");
 				var endUsermultirequest={
 						"attachedFiles":endUserfileInfo,
 						"txnId":endUsergrievanceTxnId,
@@ -208,7 +214,6 @@
 						"featureId":6,
 						"userId":endUseruserId
 					}
-				alert("after form data");
 				endUserformData.append('fileInfo[]',JSON.stringify(endUserfileInfo));
 				endUserformData.append('multirequest',JSON.stringify(endUsermultirequest));
 				
@@ -218,7 +223,7 @@
 				formData.append('grievanceId',grievanceIdToSave);
 				formData.append('txnId',grievanceTxnId);
 				formData.append('grievanceStatus',grievanceTicketStatus);
-					alert("before ajax");
+			
 				$.ajax({
 					url: './saveEndUserGrievanceReply',
 					type: 'POST',
@@ -226,8 +231,7 @@
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-						alert("inside sucess");
-						console.log(data);
+					
 						$('#replyMsg').openModal();
 						console.log(data.txnId);
 						if(data.errorCode=="0")

@@ -152,13 +152,13 @@ var contextpath = "${context}";
 
 </head>
 <body>
-<section id="content">
+<section id="content" style="margin-bottom: 100px;">
                 <!--start container-->
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
-                <div class="container" style="margin-top:10vh;" id="uploadPaidStatusDiv" style="dispay:none">
+                <div class="container" style="margin-top:5vh;" id="uploadPaidStatusDiv" style="dispay:none">
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" /></h6>
+                            <h6 class="fixPage-modal-header ">Upload Stock</h6>
                            	<form action="" onsubmit="return uploadEndUserStock()" method="POST"
 								enctype="multipart/form-data" id="uploadStock">
                                 <div class="col s12 m12 l12">
@@ -184,21 +184,21 @@ var contextpath = "${context}";
 
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
-                                                <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
+                                                <label for="endUser" style="color: #000;">Email ID </label>
                                                 <input type="email" id="endUseremail" maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
-                                                <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" /> <span class="star">*</span></label>
+                                                <label for="endUserquantity" style="color: #000;">Quantity <span class="star">*</span></label>
                                                 <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0,7}
                                                     title="Please enter maximum 10 characters only" maxlength="10" required/>
                                             </div>
 
                                             <div class="file-field col s12 m6">
-                                                <h6 style="margin-top: 15px;"><spring:message code="registration.uploadfile" /> <span
+                                                <h6 style="margin-top: 15px;">Upload File <span
                                                         class="star">*</span></h6>
                                                 <div class="btn">
-                                                    <span><spring:message code="input.selectfile" /></span>
+                                                    <span>Select File</span>
                                                     <input type="file" id="endUsercsvUploadFile" accept=".csv" required="required">
                                                 </div>
                                                 <div class="file-path-wrapper">
@@ -217,15 +217,16 @@ var contextpath = "${context}";
                                             </div> -->
                                         </div>
                                         
-                                        <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/4"><spring:message code="input.downlaod.sample" /></a></p>
-                                        <p style="margin-left: 10px;"><spring:message code="input.requiredfields" /><span class="star">*</span></p>
+                                        <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/4">Download Sample
+                                            Format</a></p>
+                                        <p style="margin-left: 10px;"> Required Field are marked with <span class="star">*</span></p>
                                     </div>
                                     <div class="row" style="margin: 30px 0 30px 0;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <!-- <a href="#submitStock" class="btn modal-trigger">Submit</a> -->
-                                            <button class=" btn" id="endUserStock" type="submit"><spring:message code="button.submit" /></button>
+                                            <button class=" btn" id="endUserStock" type="submit">Submit</button>
                                             <a href="#cancelStock" class="btn modal-trigger"
-                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                style="margin-left: 10px;">Cancel</a>
                                         </div>
                                     </div>
 
@@ -235,12 +236,14 @@ var contextpath = "${context}";
                     </div>
                 </div>
                 
-                                       <div class="container" style="margin-top:10vh;display: none" id="checkUploadStatusDiv" >
+                                       <div class="container" style="margin-top:5vh;display: none" id="checkUploadStatusDiv" >
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page" >
                             <!-- <a href="index.html" class="modal-close btn-flat modal-btn right"
+                            
                                 data-dismiss="modal">&times;</a> -->
-                                <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" /></h6>
+                                 <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a>
+                                <h6 class="fixPage-modal-header ">Check Upload Status</h6>
                                  	
                                 <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return validateTxnId()" method="POST"
@@ -248,7 +251,7 @@ var contextpath = "${context}";
                                     <div class="row" id="singleInput">
                                         <div class="row">
                                             <div class="input-field col s6 m5">
-                                                <label for="transactionID"><spring:message code="input.TransactionID2" /><span class="star">*</span> :</label>
+                                                <label for="transactionID">Please Enter The Transaction ID <span class="star">*</span> :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="checktransactionID" name="checktransactionID"
@@ -261,9 +264,9 @@ var contextpath = "${context}";
                                                <!--  <a href="#" class="btn"
                                                     onclick="document.getElementById('singleInput').style.display ='none'; 
                                                     document.getElementById('inputDetails').style.display ='block';">Submit</a> -->
-                                                    <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                                <a href="#cancelStock" class="btn modal-trigger modal-close"
-                                                    style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                    <button class=" btn" type="submit">Submit</button>
+                                                <a href="./redirectToHomePage" class="btn"
+                                                    style="margin-left: 10px;">Cancel</a>
                                             </div>
                                         </div>
                                     </div></form>
@@ -272,7 +275,7 @@ var contextpath = "${context}";
 								enctype="multipart/form-data" id="uploadStock">
                                         <div class="row">
                                             <div class="input-field col s6 m5">
-                                                <label for="transactionID"><spring:message code="input.TransactionID3" /></label>
+                                                <label for="transactionID">Transaction ID :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="transactionID" name="transactionID"
@@ -280,14 +283,14 @@ var contextpath = "${context}";
                                             </div>
 
                                             <div class="input-field col s6 m5">
-                                                <label for="uploadDate"><spring:message code="input.UploadDate" /></label>
+                                                <label for="uploadDate">Upload Date :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="uploadDate" name="uploadDate"
                                                     placeholder="" readonly="readonly">
                                             </div>
                                             <div class="input-field col s6 m5">
-                                                <label for="viewUploadFile"><spring:message code="input.ViewUploadFile" /></label>
+                                                <label for="viewUploadFile">View Upload File :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                <a href="JavaScript:void();" onclick="endUserStockFileDownload()" > <i class="fa fa-download download-icon" aria-hidden="true"
@@ -297,7 +300,7 @@ var contextpath = "${context}";
                                                      placeholder="" readonly="readonly">
                                             </div>
                                              <div class="input-field col s6 m5">
-                                                <label for="errorFileStatus"><spring:message code="input.StockStatus" /></label>
+                                                <label for="errorFileStatus">Stock Status :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="errorFileStatus" name="errorFileStatus"
@@ -308,10 +311,10 @@ var contextpath = "${context}";
                                             
 
                                             <div class="input-field col s6 m5">
-                                                <label for="errorFileName"><spring:message code="input.ViewErrorReport" /></label>
+                                                <label for="errorFileName">View Error Report :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <a href="JavaScript:void();"><i class="fa fa-download download-icon" aria-hidden="true"
+                                                <a href="JavaScript:void();" onclick="endUserStockErrorFileDownload()"><i class="fa fa-download download-icon" aria-hidden="true"
                                                     style="position: absolute; right: 0; margin: 10px 15px 0 0;"
                                                     title="download"></i></a>
                                                 <input type="text" id="errorFileName" name="errorFileName"
@@ -319,12 +322,14 @@ var contextpath = "${context}";
                                             </div>
 
                                             <div class="input-field col s6 m5">
-                                                <label for="viewUploadFile"><spring:message code="input.freshfile" /></label>
+                                                <label for="viewUploadFile">Do you want to upload a fresh file?</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <div class=" boxHeight" style="margin-top: 15px;">
+                                                <div class=" boxHeight" style="margin-top: 8px;">
                                                     <input class="with-gap" name="group3" type="radio"
-                                                        onclick="document.getElementById('uploadFile').style.display = 'block';"><spring:message code="modal.yes" /></div>
+                                                        onclick="document.getElementById('uploadFile').style.display = 'block';">
+                                                    Yes
+                                                </div>
                                             </div>
 
 													
@@ -335,7 +340,7 @@ var contextpath = "${context}";
                                                 <div class="file-field input-field col s12 m12"
                                                     style="margin-top: 5px;">
                                                     <div class="btn">
-                                                        <span><spring:message code="input.selectfile" /></span>
+                                                        <span>Select File</span>
                                                         <input type="file" id="csvUploadFile" required="required" accept=".csv">
                                                     </div>
                                                     <div class="file-path-wrapper">
@@ -349,27 +354,27 @@ var contextpath = "${context}";
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="homePage" class="btn" style="width: 100%;">ok</a> -->
-                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type=""><spring:message code="modal.ok" /></a>
-                                                <button class=" btn" id="updateEndUserStock" type="submit"><spring:message code="button.submit" /></button>
+                                                 <a href="./redirectToHomePage" class=" btn" id="updateEndUserStockOK" type="">OK</a>
+                                                <button class=" btn" id="updateEndUserStock" type="submit">Submit</button>
                                             </div>
                                         </div>
                                          </form>
                                     </div>
 
                                     <div class="row" id="cancelInputDetails" style="display: none;">
-                                        <h6><spring:message code="input.CancelStock" /></h6>
+                                        <h6>Cancel Stock</h6>
                                         <div class="row">
-                                            <h6 style="margin-left: 15px;"><spring:message code="input.Exitpage" />
+                                            <h6 style="margin-left: 15px;">Do you really want to Exit page?
                                             </h6>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <div class="input-field col s12 center">
-                                                    <a href="index.html" class="btn"><spring:message code="modal.yes" /></a>
+                                                    <a href="index.html" class="btn">Yes</a>
                                                     <button class="btn" style="margin-left: 10px;"
                                                         onclick="document.getElementById('singleInput').style.display = 'none';
                                                         document.getElementById('cancelInputDetails').style.display = 'none';
-                                                        document.getElementById('inputDetails').style.display = 'block';"><spring:message code="modal.no" /></button>
+                                                        document.getElementById('inputDetails').style.display = 'block';">No</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -389,7 +394,7 @@ var contextpath = "${context}";
     <!-- Submit Modal start   -->
 
     <div id="endUserStockModal" class="modal">
-     <h6 class="modal-header"><spring:message code="modal.header.submitStock" /></h6>
+     <h6 class="modal-header">Submit Stock</h6>
         <div class="modal-content">
            
             <div class="row">
@@ -397,31 +402,31 @@ var contextpath = "${context}";
                     save this for future reference.
                     Kindly check the status of file upload by clicking on the check upload status button on the previous
                     page and providing the Transaction ID. -->
-                   <h6 id="sucessMessageId"><spring:message code="modal.message.futureRef" /> <span id="endUsertXnId"></span></h6>
+                   <h6 id="sucessMessageId"> Your form has been successfully submitted. The Transaction ID for future reference is <span id="endUsertXnId"></span></h6>
              <!--    </h6> -->
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
+                        <a href="./redirectToHomePage" class="btn">ok</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
         <div id="cancelStock" class="modal">
-         <h6 class="modal-header"><spring:message code="input.CancelStock" /></h6>
+         <h6 class="modal-header">Cancel Stock</h6>
         <div class="modal-content">
            
             <div class="row">
-                <h6><spring:message code="input.Exitpage" />
+                <h6>Do you really want to Exit page?
                 </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                        <a href="./redirectToHomePage" class="btn">Yes</a>
+                        <button class="modal-close btn" style="margin-left: 10px;">No</button>
                     </div>
                 </div>
             </div>
@@ -429,25 +434,25 @@ var contextpath = "${context}";
     </div>
     
      <div id="errorModal" class="modal">
-         <h6 class="modal-header"><spring:message code="input.CheckStock" /></h6>
+         <h6 class="modal-header">Check Stock Status</h6>
         <div class="modal-content">
            
             <div class="row">
-                <h6 id=""><spring:message code="input.notTransactionId" />
+                <h6 id="">stock not found please enter valid Transaction Id.
                 </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
                         <!-- <a href="homePage" class="btn">Yes</a> -->
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+                        <button class="modal-close btn" style="margin-left: 10px;">OK</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
          <div id="fileUpdateSucessModal" class="modal">
-         <h6 class="modal-header"><spring:message code="modal.Stockfileuplaod" /></h6>
+         <h6 class="modal-header">Stock file uplaod</h6>
         <div class="modal-content">
            
             <div class="row">
@@ -457,7 +462,7 @@ var contextpath = "${context}";
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
+                        <a href="./redirectToHomePage" class="btn">Ok</a>
                         <!-- <button class="modal-close btn" style="margin-left: 10px;">OK</button> -->
                     </div>
                 </div>

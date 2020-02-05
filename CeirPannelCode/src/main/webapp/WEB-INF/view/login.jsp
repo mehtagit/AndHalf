@@ -131,10 +131,10 @@ a#newUserLink {
 								<div class="col s12 m12 l12">
 									<div class="row">
 
-										<div class="col s10 m10 select-lang-lable">
+										<div class="col s9 m10 select-lang-lable">
 											<label for="">Language :</label>
 										</div>
-										<div class="col s2 m2 right" style="padding: 0;">
+										<div class="col s3 m2 right" style="padding: 0;">
 											<select class="browser-default select-lang-drpdwn"
 												id="langlist">
 												<option value="en">English</option>
@@ -317,6 +317,7 @@ a#newUserLink {
 			</form>
 		</div>
 	</div>
+
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 

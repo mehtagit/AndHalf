@@ -63,7 +63,9 @@
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script type="text/javascript">
+var path="${context}";
+</script>
 
 <style type="text/css">
 textarea {
@@ -506,11 +508,20 @@ textarea {
 							disabled=""> <label for="tac" class="active"><spring:message code="input.TAC" /></label>
 					</div>
 			</div>
-			
-									
-									
+		<div class="modal-content">
+<div id="live-chat">
+<div class="chat">
+<div class="chat-history">
+<div class="chat-message clearfix" id="chatMsg">
 
-				</div>
+</div> <!-- end chat-message -->
+
+
+</div>
+</div>
+</div>
+</div>
+		</div>
 				<div class="row ">
 				<div class="center  popup-btn-div" style="margin-top: 10px;">
 					<button class="modal-close btn" type="button" id="Cancel"
@@ -524,7 +535,7 @@ textarea {
 		
 		
 		
-		<div id="importereditModal" class="modal" style="overflow-y: hidden;">
+		<div id="importereditModal" class="modal">
 		<h6 class="modal-header" > <spring:message code="modal.UpdateDevices" /></h6>
 		<div class="modal-content">
                                     
@@ -611,7 +622,8 @@ textarea {
                                             
                                         </div>
 
-									 <div id="mainDiv" class="mainDiv">
+									
+										<div id="mainDiv" class="col s12 m12 mainDiv">
 											<div id="filediv" class="fileDiv">
 												<div class="row">
 													<div class="col s12 m6 l6" style="margin-top: 8px;">
@@ -639,8 +651,8 @@ textarea {
 															<input type="file" name="files[]" id="docTypeFile1">
 														</div>
 														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" id="editImporterFileName" placeholder="">
-																
+															<input class="file-path validate" type="text"
+																placeholder="Upload one or more files">
 															<div>
 																<p id="myFiles"></p>
 															</div>
@@ -652,14 +664,23 @@ textarea {
 											</div>
 
 										</div>
-                                        <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
+										<div class="row">
+										<div class="col s12 m12 right">
+										<span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
                                                 class="star">*</span></span>
-                                            <div class="center" >
+											<button class="btn right add_field_button">
+												<span style="font-size: 20px;">+</span>
+												<spring:message code="input.addmorefile" />
+											</button>
+										</div>
+                                        
+                                            <div class="col s12 m12 center" >
                                                 <button class="btn " type="submit"><spring:message code="button.update" /></button>
                                                 <!-- <a href="manageTypeDevices.html" class="btn" id="Cancel"
                                                     style="margin-left: 10px;">Cancel</a> -->
                                                     <button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
                                             </div>
+										</div>
                                             </form>
                                     </div>
                                     

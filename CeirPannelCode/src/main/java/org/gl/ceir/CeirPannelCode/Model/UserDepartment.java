@@ -9,46 +9,51 @@ public class UserDepartment {
 private String createdOn;
 private String departmentId;
 private String modifiedOn;
-private String name;
+private String name,departmentFilename;
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
+@Override
+public String toString() {
+	return "UserDepartment [createdOn=" + createdOn + ", departmentId=" + departmentId + ", modifiedOn=" + modifiedOn
+			+ ", name=" + name + ", departmentFilename=" + departmentFilename + ", additionalProperties="
+			+ additionalProperties + "]";
+}
 public String getCreatedOn() {
-return createdOn;
+	return createdOn;
 }
-
 public void setCreatedOn(String createdOn) {
-this.createdOn = createdOn;
+	this.createdOn = createdOn;
 }
-
 public String getDepartmentId() {
-return departmentId;
+	return departmentId;
 }
-
 public void setDepartmentId(String departmentId) {
-this.departmentId = departmentId;
+	this.departmentId = departmentId;
 }
-
 public String getModifiedOn() {
-return modifiedOn;
+	return modifiedOn;
 }
-
 public void setModifiedOn(String modifiedOn) {
-this.modifiedOn = modifiedOn;
+	this.modifiedOn = modifiedOn;
 }
-
 public String getName() {
-return name;
+	return name;
 }
-
 public void setName(String name) {
-this.name = name;
+	this.name = name;
 }
-
+public String getDepartmentFilename() {
+	return departmentFilename;
+}
+public void setDepartmentFilename(String departmentFilename) {
+	this.departmentFilename = departmentFilename;
+}
 public Map<String, Object> getAdditionalProperties() {
-return this.additionalProperties;
+	return additionalProperties;
+}
+public void setAdditionalProperties(Map<String, Object> additionalProperties) {
+	this.additionalProperties = additionalProperties;
 }
 
-public void setAdditionalProperty(String name, Object value) {
-this.additionalProperties.put(name, value);
-}
+
+
 }

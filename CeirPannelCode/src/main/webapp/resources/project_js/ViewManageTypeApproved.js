@@ -250,14 +250,6 @@ function viewByID(id,actionType){
 				setEditPopupData(data)
 				
 				}
-			else if(actionType=='edit')
-				{
-				console.log("3333333333");
-				$("#importereditModal").openModal();
-				setImporterEditPopupData(data)
-				
-				}
-			
 		},
 		error : function() {
 			console.log("failed");
@@ -267,8 +259,9 @@ function viewByID(id,actionType){
 }
 
 
-function ImporterviewByID(id,actionType){
+function ImporterviewByID(id,actionType,projectPath){
 	
+	window.projectPath = projectPath;
 	
 	
 	$.ajax({
@@ -281,47 +274,11 @@ function ImporterviewByID(id,actionType){
 			if(actionType=='view')
 				{
 				$("#viewImporterModal").openModal();
-				console.log("222222222");
-				setImporterViewPopupData(data);
+				setImporterViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
 				{
-				console.log("3333333333");
-				$("#importereditModal").openModal();
-				setImporterEditPopupData(data)
-				
-				}
-			
-		},
-		error : function() {
-			console.log("failed");
-		}
-	});
-	
-}
-
-function ImporterviewByID(id,actionType){
-	
-	
-	
-	$.ajax({
-		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
-		dataType : 'json',
-		contentType : 'application/json; charset=utf-8',
-		type : 'POST',
-		success : function(data) {
-			console.log(+data);
-			if(actionType=='view')
-				{
-				$("#viewImporterModal").openModal();
-				console.log("222222222");
-				setImporterViewPopupData(data);
-			
-				}
-			else if(actionType=='edit')
-				{
-				console.log("3333333333");
 				$("#importereditModal").openModal();
 				setImporterEditPopupData(data)
 				
@@ -348,7 +305,8 @@ function setViewPopupData(data){
 	
 }
 
-function setImporterViewPopupData(data){
+function setImporterViewPopupData(data,projectPath){
+
 	$("#viewtradmark").val(data.trademark);
 	$("#viewmodelName").val(data.productNameInterp);
 	$("#viewModelnumber").val(data.modelNumberInterp);
@@ -356,6 +314,20 @@ function setImporterViewPopupData(data){
 	$('#viewrequestDate').val(data.requestDate)
 	$('#viewFrequency').val(data.frequencyRange)
 	$("#viewImportertac").val(data.tac);
+	
+	var result= data;
+	var importerViewResponse = [];
+	importerViewResponse.push(result);
+	
+	$('#chatMsg').empty();
+	var projectpath=path+"/Consignment/dowloadFiles/actual";
+	for(var i=0; i< importerViewResponse.length; i++)
+	{
+		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++)
+			{
+				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+			}
+	}
 	
 	
 }
@@ -398,8 +370,8 @@ function setImporterEditPopupData(data){
 		$("#editmanufacturercountry").val(data.manufacturerCountry);
 		$('#editfrequency').val(data.frequencyRange)
 		$("#editImportertac").val(data.tac);
-		$("#editImporterFileName").val(data.attachedFiles[0].fileName);
-		$("#docTypetag1").val(data.attachedFiles[0].docType);
+		//$("#editImporterFileName").val(data.attachedFiles[0].fileName);
+		//$("#docTypetag1").val(data.attachedFiles[0].docType);
 }
 
 populateCountries
@@ -450,7 +422,7 @@ function updateReportTypeDevice()
 		$('.fileDiv').each(function() {	
 		var x={
 			"docType":$('#docTypetag'+fieldId).val(),
-			"fileName":$("#editImporterFileName").val(),
+			"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 			}
 			formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
 			fileInfo.push(x);
@@ -676,7 +648,15 @@ $('#productname').on(
 		});
 
 
-$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+/*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		console.log(data[i].interp);
+		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+				'#docTypetag1');
+	}
+});*/
+
+$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId+'', function(data) {
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
 		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
@@ -685,3 +665,62 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 });
 
 }
+
+
+var max_fields = 15; //maximum input boxes allowed
+var wrapper = $(".mainDiv"); //Fields wrapper
+var add_button = $(".add_field_button"); //Add button ID
+var x = 1; //initlal text box count
+var id = 2;
+$(".add_field_button")
+		.click(
+				function(e) { //on add input button click
+					e.preventDefault();
+					if (x < max_fields) { //max input box allowed
+						x++; //text box increment
+						$(wrapper)
+								.append(
+										'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
+												+ $
+														.i18n('documenttype')
+												+ ' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
+												+ $.i18n('selectfile')
+												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+					}
+
+					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId+'', function(
+							data) {
+
+						for (i = 0; i < data.length; i++) {
+							console.log(data[i].interp);
+							var optionId = id - 1;
+							$('<option>').val(data[i].tagId).text(
+									data[i].interp).appendTo(
+									'#docTypetag' + optionId);
+							$('<option>').val(data[i].value).text(
+									data[i].tagId).appendTo(
+									'#docTypetagValue' + optionId);
+							console.log('#docTypetag' + optionId);
+
+						}
+					});
+					id++;
+
+				});
+
+$(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+	e.preventDefault();
+	var Iid = id - 1;
+	/*alert("@@@"+Iid)*/
+	$('#filediv' + Iid).remove();
+	$(this).parent('div').remove();
+	x--;
+	id--;
+
+})

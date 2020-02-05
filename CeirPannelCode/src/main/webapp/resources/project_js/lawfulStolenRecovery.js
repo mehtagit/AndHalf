@@ -4,25 +4,10 @@ var currentRoleType = $("body").attr("data-stolenselected-roleType");
 var role = currentRoleType == null ? roleType : currentRoleType;
 var userType = $("body").attr("data-roleType");
 var featureId="5"; 
-var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-window.parent.$('#langlist').on('change', function() {
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	window.location.assign("./stolenRecovery?lang="+lang);				
-}); 
-
-$.i18n().locale = lang;	
-
-$.i18n().load( {
-	'en': './resources/i18n/en.json',
-	'km': './resources/i18n/km.json'
-} ).done( function() {});
-
-
-
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
-	filterStolen(lang);
+	filterStolen();
 	pageRendering();
 });
 
@@ -38,7 +23,7 @@ populateCountries
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
-function filterStolen(lang){
+function filterStolen(){
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -54,7 +39,7 @@ function filterStolen(lang){
 	}
 
 	$.ajax({
-		url: './headers?type=lawfulStolenHeaders&lang='+lang,
+		url: './headers?type=lawfulStolenHeaders',
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -116,21 +101,22 @@ function pageRendering(){
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
-					$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
-							
-							"<div class='select-wrapper select2  initialized'>"+
+					$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+							"<br>"+
+							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
+							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
 							"<option>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
-					"</div>");			}
+					"</div>");
+			}
 
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class='col s12 m4'><a href='JavaScript:void(0);' onclick='exportStolenRecoveryData()'  class='export-to-excel right'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m2 l2'><input type='button' class='btn primary botton' value='filter' id='submitFilter' /></div>");
+				$("#consignmentTableDIv").append("<div class='col s12 m4'><a href='JavaScript:void(0);' onclick='exportStolenRecoveryData()'  class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					$('#'+button[i].id).attr("onclick", button[i].buttonURL);

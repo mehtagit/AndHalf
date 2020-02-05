@@ -87,7 +87,7 @@
                                 <option value="Khmer">Khmer</option>
                             </select>
                         </li>
-                        <li>
+                     <!--    <li>
                             <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                                 data-activates="profile-dropdown" style="height: 64px;"><i
                                     class="mdi-action-account-circle" style="color: #fff; font-size: 40px;"></i></a>
@@ -110,7 +110,7 @@
                                             class="mdi-action-settings dropdownColor"></i>
                                         <span class="dropdownColor"> Activate/Deactivate Account</span></a></li>
                             </ul>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </nav>
