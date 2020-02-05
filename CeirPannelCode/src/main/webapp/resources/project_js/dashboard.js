@@ -11,13 +11,11 @@
        var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
   $(document).ready(function () {
  $("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
-    
-       sessionStorage.removeItem("a");
-
-        var url = new URL(window.location.href);
+    	var url = new URL(window.location.href);
         var langParameter = url.searchParams.get("lang");
         $('#langlist').val(langParameter == 'km' ? 'km' : 'en');
         dataByTag("copyright_footer","copyrightText",2);
+        sessionStorage.removeItem("a");
           });   
 
       var password = document.getElementById("password");

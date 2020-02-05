@@ -15,7 +15,7 @@
 		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
 		var type= $("#mainArea").contents().find("body").attr("data-session-type");
 
-		window.location.assign("trcInformation?id="+id+"&roles="+roles+"&type="+type+"&lang="+langParam);	
+		window.location.replace("trcInformation?id="+id+"&roles="+roles+"&type="+type+"&lang="+langParam);	
 			
 	}); 
 
