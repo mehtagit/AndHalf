@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+ <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -162,14 +162,14 @@ a#newUserLink {
 
 
 
-										<div class="input-field col s12" id="show_hide_password">
-											<input type="password" required="required" class=""
+										<div  class="input-field col s12" id="show_hide_password">
+											<input type="password"  required="required" class="password"
 												name="password" id="password" maxlength="10"
 												oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
 											<div class="input-field-addon">
-												<a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+												<a href="#"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
 											</div>
 
 										</div>
@@ -348,7 +348,6 @@ a#newUserLink {
 	<!-- chartist -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
-
 	<!-- data-tables -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
@@ -366,3 +365,4 @@ a#newUserLink {
 
 </html>
 
+ 

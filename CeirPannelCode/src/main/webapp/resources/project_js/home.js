@@ -5,12 +5,13 @@
 	var requestType="0";
 
 	var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
-	window.parent.$('#langlist').on('change', function() {
+/*	window.parent.$('#langlist').on('change', function() {
 		var langValue=$("#langlist option:selected").val();
 		var lang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
+
 		changeLanguage(lang);
 	window.location.assign("./Home?lang="+lang);	
-		});
+		});*/
 
 
 	
@@ -105,7 +106,7 @@
 	}
 
 
-	function changeLanguage(lang){
+/*	function changeLanguage(lang){
 		$.ajax({
 			type : 'POST',
 			url :'./changeLanguage/'+lang,
@@ -117,3 +118,4 @@
 			}
 		});
 	}
+*/

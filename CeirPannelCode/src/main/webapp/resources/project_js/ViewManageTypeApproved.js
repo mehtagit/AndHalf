@@ -3,10 +3,10 @@ var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-window.parent.$('#langlist').on('change', function() {
+/*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./manageTypeDevices?lang="+lang);				
-}); 
+}); */
 
 $.i18n().locale = lang;	
 $.i18n().load( {

@@ -84,14 +84,18 @@
 		<div class="container">
 			<div class="section">
 				<div class="row card-panel register-device-responsive-page"
-					style="margin: auto">
+					style="margin: auto;margin-top: 5vh;">
+					<h6 class="fixPage-modal-header ">Register Device</h6>
 					<form action="" onsubmit="return submitEndUserDeviceInfo()"
 						method="POST" enctype="multipart/form-data">
 						<div class="col s12 m12 l12">
 							<div class="row">
-								<h5><spring:message code="button.register" /></h5>
-								<hr style="margin-bottom: 0px;">
 								<div class="row">
+								
+								<div >
+													<h5>Personal Information</h5>
+													<hr>
+												</div>
 									<div class="col s12 m12">
 										<label for="nationality"><spring:message code="input.Nationality" /> <span
 											class="star">*</span></label>
@@ -213,7 +217,7 @@
 												style="padding-left: 0;" required></select>
 										</div>
 
-										<div class="input-field col s12 m6 l6">
+										<div class="input-field col s12 m6 l6" style="margin-bottom: 5px;">
 											<p
 												style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 												<spring:message code="input.province" /> <span class="star">*</span>
@@ -231,7 +235,7 @@
 										</div>
 
 										<div class="input-field col s12 m6">
-											<input type="email" id="endUseremailID" required="required"
+											<input type="email" id="endUseremailID" 
 												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
 												maxlength="30" /> <label for="emailID"><spring:message code="input.EmailID" /> </label>
 										</div>
@@ -264,8 +268,8 @@
 											</div>
 
 											<div class="file-field input-field col s12 m6 l6"
-												style="margin-top: 0;">
-												<h6 style="color: #000; margin: 0;">
+												>
+												<h6 style="color: #000;">
 													<spring:message code="input.UploadIDImage" /> <span class="star">*</span>
 												</h6>
 												<div class="btn">
@@ -297,7 +301,7 @@
 										<div class="row" id="visaDetails" style="display: none;">
 											<div class="col s12 m6">
 												<label for="visaType"><spring:message code="input.VisaType" /> <span class="star">*</span></label>
-												<select class="browser-default" id="visaType">
+												<select class="browser-default" id="visaType" style="height: 33px">
 													<option value="" disabled selected><spring:message code="input.SelectVisaType" /></option>
 
 												</select>
@@ -336,8 +340,8 @@
 											</div>
 
 											<div class="file-field input-field col s12 m6"
-												style="margin-top: 0;">
-												<h6 style="color: #000; margin: 0;">
+												>
+												<h6 style="color: #000;">
 													 <spring:message code="input.UploadVisa" /><span class="star">*</span>
 												</h6>
 												<div class="btn">
@@ -351,6 +355,10 @@
 											</div>
 										</div>
 										<div class="row">
+										<div class="col s12 m12" style="margin-top: 30px;">
+															<h5>Device Information</h5>
+															<hr>
+														</div>
 											<div id="mainDeviceInformation" class="mainDeviceInformation">
 												<div id="deviceInformation" class="deviceInformation">
 													<div class="col s12 m6">

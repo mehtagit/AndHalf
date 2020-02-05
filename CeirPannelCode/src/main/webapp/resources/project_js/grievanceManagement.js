@@ -3,11 +3,11 @@ var featureId = 6;
 			var cierRoletype = sessionStorage.getItem("cierRoletype");
 
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-				window.parent.$('#langlist').on('change', function() {
+		/*		window.parent.$('#langlist').on('change', function() {
 					var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				window.location.assign("./grievanceManagement?lang="+lang);
 			
-				}); 
+				});*/ 
 
 
 				$.i18n().locale = lang;

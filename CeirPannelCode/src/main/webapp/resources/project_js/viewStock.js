@@ -1,5 +1,5 @@
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		window.parent.$('#langlist').on('change', function() {
+/*		window.parent.$('#langlist').on('change', function() {
 		 var roleType = $("body").attr("data-roleType");
 	 var userId = $("body").attr("data-userID");
 	 var currentRoleType = $("body").attr("data-selected-roleType"); 
@@ -7,7 +7,7 @@
 	
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			window.location.assign("./assignDistributor?userTypeId="+role+"&lang="+lang);
-		});
+		});*/
 
 
 		$.i18n().locale = lang;

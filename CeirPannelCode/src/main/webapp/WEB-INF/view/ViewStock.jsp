@@ -173,7 +173,7 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
 							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
-							for="Quantity" class="center-align"><spring:message code="modal.quantity" /><span class="star">*</span></label></label>
+							for="Quantity" class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">

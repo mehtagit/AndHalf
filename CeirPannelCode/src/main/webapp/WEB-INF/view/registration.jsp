@@ -668,8 +668,7 @@ title="Please enter number upto 30 characters only">
 							<p>
 								<label style="color: black !important; padding-left: 16px;">
 									<input name="disclamer" type="checkbox" required="required"
-									style="margin-left: 12px;"> <span
-									style="margin-top: -18px !important;"> <span
+									style="margin-left: 12px;"> <span> <span
 										class="star">*</span> <spring:message
 											code="registration.certifyMsg" /></span>
 								</label>

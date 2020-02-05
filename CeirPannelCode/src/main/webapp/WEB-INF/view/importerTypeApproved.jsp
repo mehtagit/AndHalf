@@ -72,7 +72,7 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading">
-									<spring:message code="modal.header.Report Type-Approved Devices" />
+									<spring:message code="modal.header.typeApproved" />
 								</p>
 							</div>
 

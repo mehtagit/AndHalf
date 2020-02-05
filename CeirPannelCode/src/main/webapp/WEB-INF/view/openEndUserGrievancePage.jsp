@@ -41,9 +41,8 @@
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-    <link rel="stylesheet"
+   <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
-
     <style>
  /*        ul li {
             display: inline-flex;
@@ -87,7 +86,7 @@
         }
 
         input[type=text] {
-            height: 35px;
+           /*  height: 35px; */
             margin: 0 0 5px 0;
         }
 
@@ -141,7 +140,13 @@
             .small-modal {
             width: 95%;
         }
-        } */
+        }
+        .selectDropdwn {
+   margin-top: 0;
+}
+ div#trackGrievanctableDiv {
+    width: 70%;
+} 
     </style>
 <script>
 var contextpath = "${context}";
@@ -199,7 +204,7 @@ var contextpath = "${context}";
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <textarea id="endUserRemark" required="required" class="materialize-textarea"></textarea>
+                                            <textarea id="endUserRemark" required="required" maxlength="200" class="materialize-textarea"></textarea>
                                             <label for="endUserRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
@@ -225,7 +230,7 @@ var contextpath = "${context}";
 
                                         
                                         <div class="file-field col s12 m6">
-                                            <h6 style="color: #000;"><spring:message code="modal.UploadSupporting" />
+                                            <h6 class="upload-file-label"><spring:message code="modal.UploadSupporting" />
                                             </h6>
                                             <div class="btn">
                                                 <span><spring:message code="input.selectfile" /></span>
@@ -234,7 +239,7 @@ var contextpath = "${context}";
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate" type="text"
-                                                    placeholder="Upload one or more files">
+                                                    placeholder="Upload  file">
                                             </div>
                                         </div>
 
@@ -266,7 +271,7 @@ var contextpath = "${context}";
                         
                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
                               
-                            <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a>
+                     <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
                             <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
@@ -275,10 +280,10 @@ var contextpath = "${context}";
                                         <!-- <h6>Track Grievance</h6>
                                         <hr> -->
                                         <div class="row">
-                                            <div class="input-field col s6 m6">
+                                            <div class="input-field col s6 m6 l5">
                                                 <label for="trackGrievanceId"><spring:message code="modal.PleaseGrievanceID" /><span class="star">*</span> :</label>
                                             </div>
-                                            <div class="input-field col s6 m6">
+                                            <div class="input-field col s6 m6 l6">
                                                 <input type="text" id="trackGrievanceId" required="required" name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" title="Please enter maximum 18 characters only" maxlength="18">
                                             </div>
                                         </div>
@@ -293,14 +298,25 @@ var contextpath = "${context}";
                                 </div>
                                
                             </div>
-                            <table id="endUsergrivanceLibraryTable" style="display: none"
-								class="responsive-table striped display"></table>
+                            
                                
                         </div>
-                         
-                        
-                    </div>
+                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanctableDiv" style="display: none" >
+                              
+                           <!--  <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
+                          
+                        <table id="endUsergrivanceLibraryTable" style="display: none"
+								class="responsive-table striped display"></table>
+								  <div class="input-field col s12 m12 l12 center">
+                                           
+                                            <a href="./redirectToHomePage" class="btn modal-trigger"
+                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                        </div>
+                    
                 </div>
+                
+								</div></div>
                 <!--end container-->
             </section>
             <!-- END CONTENT -->
@@ -413,20 +429,7 @@ var contextpath = "${context}";
  <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
-<div class="file-field col s12 m6">
-<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
-<div class="btn">
-<span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  multiple>
-</div>
-<div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
-placeholder="Upload one or more files">
-<div>
-<p id="myFiles"></p>
-</div>
-</div>
-</div>
+
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
 <select class="browser-default" id="docTypetag1" >
@@ -435,6 +438,22 @@ placeholder="Upload one or more files">
 </select>
 
 </div>
+
+<div class="file-field col s12 m6">
+<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<div class="btn">
+<span><spring:message code="input.selectfile" /></span>
+<input type="file" name="files[]" id="docTypeFile1"  multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" multiple
+placeholder="Upload file">
+<div>
+<p id="myFiles"></p>
+</div>
+</div>
+</div>
+
 </div>
 
 
@@ -653,6 +672,7 @@ var path="${context}";
     			"lastName":lastName,
     			"middleName":middleName,
     			"phoneNo":contactNumber,
+    			"featureId":6
     	}
     	
     	formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -698,7 +718,7 @@ var path="${context}";
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
 			$(endUserwrapper).append(
-					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
+					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
 					/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
 			); //add input box
 		}
@@ -753,12 +773,15 @@ if($('#pageTypeValue').val()==0)
 $('#endUserRaiseGrievance').css("display", "block");
 $('#trackGrievanceDiv').css("display", "none");
 $('#trackGrievanceHeader').css("display", "none");
+$('#trackGrievanctableDiv').css("display", "none");
 }
 else
 {
 console.log("else condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "none");
 $('#trackGrievanceDiv').css("display", "block");
+$('#trackGrievanctableDiv').css("display", "none");
+
 }
     
   
