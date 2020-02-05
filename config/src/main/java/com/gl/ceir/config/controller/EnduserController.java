@@ -8,6 +8,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -80,24 +81,20 @@ public class EnduserController {
 
 		return mapping;
 	}
-	
-	
-	/*
-	 * @ApiOperation(value = "Accept Reject end-users.", response =
-	 * GenricResponse.class)
-	 * 
-	 * @RequestMapping(path = "/accept-reject/end-users", method =
-	 * RequestMethod.PUT) public GenricResponse updateConsigmentStatus(@RequestBody
-	 * ConsignmentUpdateRequest acceptRejectRequest) {
-	 * 
-	 * logger.info("Request to accept/reject the stock= " + acceptRejectRequest);
-	 * 
-	 * GenricResponse genricResponse =
-	 * enduserServiceImpl.acceptReject(acceptRejectRequest);
-	 * 
-	 * return genricResponse ;
-	 * 
-	 * }
-	 */
-	
+
+
+
+	@ApiOperation(value = "Accept Reject end-users.", response = GenricResponse.class)
+	@PutMapping("/accept-reject/end-users") 
+	public GenricResponse updateConsigmentStatus(@RequestBody ConsignmentUpdateRequest acceptRejectRequest) {
+
+		logger.info("Request to accept/reject the end-user = " + acceptRejectRequest);
+
+		GenricResponse genricResponse = enduserServiceImpl.acceptReject(acceptRejectRequest);
+
+		return genricResponse ;
+
+	}
+
+
 }

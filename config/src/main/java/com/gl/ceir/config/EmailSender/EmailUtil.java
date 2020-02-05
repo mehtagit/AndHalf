@@ -146,6 +146,7 @@ public class EmailUtil {
 			
 			configurationManagementServiceImpl.saveAllNotifications(notifications);
 			
+			logger.info("Notification have been saved." + rawMails);
 			return Boolean.TRUE;
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);

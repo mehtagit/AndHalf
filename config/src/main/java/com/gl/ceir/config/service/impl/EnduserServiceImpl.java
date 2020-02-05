@@ -35,6 +35,7 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -480,6 +481,9 @@ public class EnduserServiceImpl {
 				return new GenricResponse(4, GenericMessageTags.INVALID_USER.getTag(), 
 						GenericMessageTags.INVALID_USER.getMessage(), updateRequest.getTxnId());
 			}
+			
+			// Build placeholders map to replace placeholders from mail.
+			placeholderMap.put("<First name>", endUserDB.getFirstName());
 
 			// 0 - Accept, 1 - Reject
 			if("CEIRADMIN".equalsIgnoreCase(updateRequest.getUserType())){
@@ -490,14 +494,10 @@ public class EnduserServiceImpl {
 					action = SubFeatures.ACCEPT;
 					mailTag = "END_USER_APPROVED_BY_CEIR_ADMIN"; 
 
-					placeholderMap.put("<txn_name>", endUserDB.getTxnId());
-
 					endUserDB.setStatus(EndUserStatus.APPROVED.getCode());
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "END_USER_REJECT_BY_CEIR_ADMIN";
-
-					placeholderMap.put("<txn_name>", endUserDB.getTxnId());
 
 					endUserDB.setStatus(EndUserStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					endUserDB.setRemarks(updateRequest.getRemarks());
@@ -508,16 +508,14 @@ public class EnduserServiceImpl {
 					logger.warn("Unable to update End userdb.");
 					return new GenricResponse(3, "Unable to update End Userdb.", updateRequest.getTxnId()); 
 				}else {
-					// TODO : NOTI
-					emailUtil.saveNotification(mailTag, 
-							userProfile, 
-							updateRequest.getFeatureId(),
-							Features.STOCK,
-							action,
-							updateRequest.getTxnId(),
-							MailSubjects.SUBJECT,
-							placeholderMap);
-					logger.info("Notfication have been saved.");
+					List<RawMail> rawMails = new ArrayList<>();
+					
+					// Mail to End user.
+					rawMails.add(new RawMail(mailTag, userProfile, Long.valueOf(updateRequest.getFeatureId()), 
+							Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, updateRequest.getTxnId(), 
+							"SUBJECT", placeholderMap));
+					
+					emailUtil.saveNotification(rawMails);
 				}
 
 			}else {
