@@ -15,6 +15,9 @@
 				      }
 						$('#endUsergrivanceLibraryTable').css("display", "block");
 						$('#trackGrievanceDiv').css("display", "none");
+						$('#trackGrievanctableDiv').css("display", "block");
+						$('#trackGrievanceHeader').css("display", "none");
+						
 				
 				$.ajax({
 					url: 'headers?type=grievanceHeaders',
@@ -25,6 +28,7 @@
 						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 						var table=	$("#endUsergrivanceLibraryTable").DataTable({
 							destroy:true,
+							bAutoWidth: false,
 							"serverSide": true,
 							orderCellsTop : true,
 							"ordering" : false,
@@ -38,7 +42,6 @@
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
-									alert(JSON.stringify(d.order)+""+JSON.stringify(d))
 									d.filter = JSON.stringify(filterRequest); 
 									console.log(JSON.stringify(filterRequest));
 									
@@ -47,6 +50,13 @@
 							},
 						
 							"columns": result,
+							fixedColumns: true,
+							columnDefs: [
+					            { width: 137, targets: result.length - 1 },
+					            { width: 280, targets: 4 },
+					            { width: 155, targets: 2 },
+					            
+					        ]
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
 					},
@@ -166,7 +176,6 @@
 			
 			function saveEndUserGrievanceReply()
 			{
-				alert("inside message");
 				 var endUseruserId=488;
 				var endUsergrievanceTicketStatus;
 				if ($('#closeTicketCheck').is(":checked"))
@@ -177,18 +186,17 @@
 				else{
 					endUsergrievanceTicketStatus=0;
 				}
-				alert("---------");
 				var endUserremark=$('#replyRemark').val();
 				var endUserreplyFile=$('#replyFile').val();
 				var  endUsergrievanceIdToSave= $('#grievanceIdToSave').text();
 				var  endUsergrievanceTxnId=  $('#grievanceTxnId').text();
-				alert("+++++++++");
+				
 				//console.log("remark "+remark+"  replyFile="+replyFile+" grievanceTxnId="+grievanceTxnId+"grievanceIdToSave="+grievanceIdToSave+"grievanceTicketStatus=="+grievanceTicketStatus);
 				var endUserfieldId=1;
 				var endUserfileInfo =[];
 				var endUserformData= new FormData();
 				var endUserfileData = [];
-				alert("$$$$$$$$$$$$");
+			
 				var endUserx;
 				var endUserfilename='';
 				var endUserfilediv;
@@ -196,7 +204,7 @@
 				var formData= new FormData();
 				var endUserdocTypeTagIdValue='';
 				var endUserfilename='';
-				alert("@@@@@@@@");
+		
 				$('.fileDiv').each(function() {	
 					var endUserx={
 					"docType":$('#docTypetag'+endUserfieldId).val(),
@@ -208,7 +216,6 @@
 					endUserfieldId++;
 					endUseri++;
 				});
-				alert("$$$$$$$$$$$$$$-");
 				var endUsermultirequest={
 						"attachedFiles":endUserfileInfo,
 						"txnId":endUsergrievanceTxnId,
@@ -218,7 +225,6 @@
 						"featureId":6,
 						"userId":endUseruserId
 					}
-				alert("after form data");
 				endUserformData.append('fileInfo[]',JSON.stringify(endUserfileInfo));
 				endUserformData.append('multirequest',JSON.stringify(endUsermultirequest));
 				
@@ -228,7 +234,7 @@
 				formData.append('grievanceId',grievanceIdToSave);
 				formData.append('txnId',grievanceTxnId);
 				formData.append('grievanceStatus',grievanceTicketStatus);
-					alert("before ajax");
+			
 				$.ajax({
 					url: './saveEndUserGrievanceReply',
 					type: 'POST',
@@ -236,8 +242,7 @@
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-						alert("inside sucess");
-						console.log(data);
+					
 						$('#replyMsg').openModal();
 						console.log(data.txnId);
 						if(data.errorCode=="0")
@@ -261,3 +266,29 @@
 			}
 			
 			
+			
+			function dispatchDateValidation() {
+				var currentDate;
+				var dispatcDate = $('#expectedDispatcheDate').val();
+				var now = new Date();
+				if (now.getDate().toString().charAt(0) != '0') {
+					currentDate = '0' + now.getDate();
+
+					/* alert("only date="+currentDate); */
+				} else {
+					currentDate = now.getDate();
+				}
+				var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
+						+ currentDate;
+				//alert("today"+today);
+				console.log("dispatche=" + dispatcDate);
+				console.log("todays parse date" + Date.parse(today));
+				console.log("dispatche parse date" + Date.parse(dispatcDate));
+
+				if (Date.parse(today) > Date.parse(dispatcDate)) {
+					myFunction("dispatche date should be greater then or equals to today");
+					$('#expectedDispatcheDate').val("");
+				}
+
+				//alert("current date="+today+" dispatche date="+dispatcDate)
+			}

@@ -1,9 +1,7 @@
-$(function () {
-	$("#datepicker").datepicker();
-});
 
-$(function () {
-	$("#datepicker1").datepicker();
+
+$('#datepicker,#datepicker1').datepicker({
+	dateFormat: "yy-mm-dd"
 });
 
 
@@ -20,6 +18,22 @@ populateCountries(
 		"country1"
 		
 );
+
+
+/*var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+$.i18n().locale = lang;	
+
+$.i18n().load( {
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() { 
+});
+*/
+
+
+
+
 function showCambodianUserForm()
 {
 	$("#askVisaDetails").css("display", "none"); 

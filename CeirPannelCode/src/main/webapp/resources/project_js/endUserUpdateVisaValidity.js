@@ -57,11 +57,11 @@
 		                             $('#phone').val(data.data.phoneNo).prop('readonly', true);
 		                              $('#endUservisaType').val(data.data.visaDb[0].visaType).attr("disabled", true);
 		                             // $('#endUserdatepickerDiv').attr("disabled", true);
-		                              $("#endUserdatepickerDiv").css("pointer-events","none");
-		                              $('#endUserdatepicker1').val(data.data.visaDb[0].entryDateInCountry).prop('readonly', true);
-		                               $('#endUserdatepicker1').prop('readonly', true);
+		                               $("#endUserdatepickerDiv").css("pointer-events","none");
+		                                $('#endUserdatepicker1').val(data.data.visaDb[0].entryDateInCountry).prop('readonly', true);
+		                                 $('#endUserdatepicker1').prop('readonly', true);
 		                                 $('#endUseruploadnationalID').val(data.data.endUseruploadnationalID);
-		                                 // $('#endUserdatepicker').val(data.data.endUserdatepicker).prop('readonly', true);
+		                                  $('#endUserdatepicker').val(data.data.visaDb[0].visaExpiryDate).prop('readonly', true);
 		                                   $('#endUseremailID').val(data.data.email).prop('readonly', true); 
 		               
 		                                   
@@ -172,13 +172,12 @@
 		}
 	});
    	
-    $(function () {
-        $("#endUserdatepicker1").datepicker();
-    });
+  
     
-    $(function () {
-        $("#endUserdatepicker").datepicker();
+    $('#endUserdatepicker1,#endUserdatepicker').datepicker({
+    	dateFormat: "yy-mm-dd"
     });
+
     
     
     

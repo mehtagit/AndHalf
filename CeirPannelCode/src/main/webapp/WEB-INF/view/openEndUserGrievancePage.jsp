@@ -85,7 +85,7 @@
         }
 
         input[type=text] {
-            height: 35px;
+           /*  height: 35px; */
             margin: 0 0 5px 0;
         }
 
@@ -139,7 +139,13 @@
             .small-modal {
             width: 95%;
         }
-        } */
+        }
+        .selectDropdwn {
+   margin-top: 0;
+}
+ div#trackGrievanctableDiv {
+    width: 70%;
+} 
     </style>
 <script>
 var contextpath = "${context}";
@@ -153,7 +159,7 @@ var contextpath = "${context}";
                 <div class="container" style="padding-bottom: 70px; margin-top:10vh;" >
                     <div class="section">
                         <div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display: none">
-                            <h6 class="fixPage-modal-header ">Grievance</h6>
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.Grievance" /></h6>
                             <form onsubmit="return saveaAonymousGrievance()" method="POST" enctype="multipart/form-data" id="saveGrievance">
                              <input type="text" id="pageTypeValue" value="${reportType}" style="display: none;">
                                 <div class="col s12 m12 l12">
@@ -161,44 +167,44 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="firstName" required="required" name="firstName" pattern="[a-zA-Z]{0,20}"
                                                 title="Please enter alphabets upto 20 characters only" maxlength="20" />
-                                            <label for="firstName">First Name <span class="star">*</span></label>
+                                            <label for="firstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="middleName" name="middleName" pattern="[a-zA-Z]{0,20}"
                                                 title="Please enter alphabets upto 20 characters only" maxlength="20" />
-                                            <label for="middleName">Middle Name</label>
+                                            <label for="middleName"><spring:message code="input.middleName" /></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="lastName" required="required" name="lastName" pattern="[a-zA-Z]{0,20}" title="Please enter alphabets upto 20 characters only"
                                                 maxlength="20" />
-                                            <label for="lastName">Last Name <span class="star">*</span></label>
+                                            <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <input type="text" id="contactNumber" required="required" name="contactNumber" pattern="[0-9]{10,12}"
                                                 title=numbers maxlength="10" />
-                                            <label for="contactNumber">Contact Number <span
+                                            <label for="contactNumber"><spring:message code="input.contactNum" /><span
                                                     class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <input type="email" id="emailID" name="emailID"
                                                 maxlength="30" />
-                                            <label for="emailID">Email ID</label>
+                                            <label for="emailID"><spring:message code="input.EmailID" /></label>
                                         </div>
 
                                         <div class="col s12 m6 selectDropdwn">
-                                            <label for="endUsercategory">Category <span class="star">*</span></label>
+                                            <label for="endUsercategory"><spring:message code="input.Category" /> <span class="star">*</span></label>
                                             <select class="browser-default" required="required" id="endUsercategory">
-                                                <option value="" disabled selected>Category</option>
+                                                <option value="" disabled selected><spring:message code="input.Category" /></option>
                                             </select>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <textarea id="endUserRemark" required="required" class="materialize-textarea"></textarea>
-                                            <label for="endUserRemark">Remark <span
+                                            <textarea id="endUserRemark" required="required" maxlength="200" class="materialize-textarea"></textarea>
+                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
 
@@ -206,7 +212,7 @@ var contextpath = "${context}";
                                             <input type="text" id="endUsertransactionId" name="transactionId"
                                                 pattern="[A-Z0-9]{18,18}" title="transaction id must be in 18 digit"
                                                 maxlength="18" />
-                                            <label for="endUsertransactionId">Transaction ID</label>
+                                            <label for="endUsertransactionId"><spring:message code="input.TransactionID1" /></label>
                                         </div>
 
                                         
@@ -215,24 +221,24 @@ var contextpath = "${context}";
 									<div id="endUserfilediv" class="endUserfileDiv">	
                                     <div class="row">
                                         <div class="col s12 m6">
-                                            <label for="endUserdocTypetag1">Document Type </label>
+                                            <label for="endUserdocTypetag1"><spring:message code="input.documenttype" /></label>
                                             <select class="browser-default" id="endUserdocTypetag1">
-                                                <option value="" disabled selected>Select Document Type </option>
+                                                <option value="" disabled selected><spring:message code="select.documenttype" /></option>
                                             </select>
                                         </div>
 
                                         
                                         <div class="file-field col s12 m6">
-                                            <h6 style="color: #000;">Upload Supporting Document (if any)
+                                            <h6 class="upload-file-label"><spring:message code="modal.UploadSupporting" />
                                             </h6>
                                             <div class="btn">
-                                                <span>Select File</span>
+                                                <span><spring:message code="input.selectfile" /></span>
                                                 <input id="endUserdocTypeFile1" type="file" name="files[]" id="filer_input"
                                                     multiple="multiple" />
                                             </div>
                                             <div class="file-path-wrapper">
                                                 <input class="file-path validate" type="text"
-                                                    placeholder="Upload one or more files">
+                                                    placeholder="Upload  file">
                                             </div>
                                         </div>
 
@@ -246,14 +252,14 @@ var contextpath = "${context}";
 
                                       <div class="col s12 m6 right">
                                             <button class="btn right endUser_add_field_button"><span
-                                                    style="font-size: 20px;">+</span> Add More files</button>
+                                                    style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
                                         </div>
-                                         <p>Required Field are marked with <span class="star">*</span></p>
+                                         <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="input-field col s12 m12 l12 center">
-                                            <button class="btn" id="saveAnonymousGrieavance" type="submit">Submit</button>
+                                            <button class="btn" id="saveAnonymousGrieavance" type="submit"><spring:message code="button.submit" /></button>
                                             <a href="#cancelMessage" class="btn modal-trigger"
-                                                style="margin-left: 10px;">Cancel</a>
+                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                         </div>
                                     </div>
 
@@ -264,8 +270,8 @@ var contextpath = "${context}";
                         
                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanceHeader" >
                               
-                            <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a>
-                            <h6 class="fixPage-modal-header ">Track Grievance</h6>
+                     <!--        <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
                            <div id="trackGrievanceDiv" style="display: none;">
                             <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return endUsergrivanceLibraryTable()" method="POST" enctype="multipart/form-data" id="saveGrievance">
@@ -273,17 +279,17 @@ var contextpath = "${context}";
                                         <!-- <h6>Track Grievance</h6>
                                         <hr> -->
                                         <div class="row">
-                                            <div class="input-field col s6 m6">
-                                                <label for="trackGrievanceId">Please Enter The Grievance ID <span class="star">*</span> :</label>
+                                            <div class="input-field col s6 m6 l5">
+                                                <label for="trackGrievanceId"><spring:message code="modal.PleaseGrievanceID" /><span class="star">*</span> :</label>
                                             </div>
-                                            <div class="input-field col s6 m6">
+                                            <div class="input-field col s6 m6 l6">
                                                 <input type="text" id="trackGrievanceId" required="required" name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" title="Please enter maximum 18 characters only" maxlength="18">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12 center">
-                                                <button class="btn" type="submit" >Submit</button>
-                                                <a href="./redirectToHomePage" class="btn modal-trigger" style="margin-left: 10px;">Cancel</a>
+                                                <button class="btn" type="submit" ><spring:message code="button.submit" /></button>
+                                                <a href="./redirectToHomePage" class="btn modal-trigger" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                             </div>
                                         </div>
                                     </div>
@@ -291,14 +297,25 @@ var contextpath = "${context}";
                                 </div>
                                
                             </div>
-                            <table id="endUsergrivanceLibraryTable" style="display: none"
-								class="responsive-table striped display"></table>
+                            
                                
                         </div>
-                         
-                        
-                    </div>
+                            <div class="row card-panel track-grievance-responsive-page" id="trackGrievanctableDiv" style="display: none" >
+                              
+                           <!--  <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a> -->
+                            <h6 class="fixPage-modal-header "><spring:message code="modal.TrackGrievance" /></h6>
+                          
+                        <table id="endUsergrivanceLibraryTable" style="display: none"
+								class="responsive-table striped display"></table>
+								  <div class="input-field col s12 m12 l12 center">
+                                           
+                                            <a href="./redirectToHomePage" class="btn modal-trigger"
+                                                style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                        </div>
+                    
                 </div>
+                
+								</div></div>
                 <!--end container-->
             </section>
             <!-- END CONTENT -->
@@ -321,16 +338,16 @@ var contextpath = "${context}";
     <!-- cancel Modal start   -->
 
     <div id="cancelMessage" class= " full-screen-modal modal" >
-         <h6 class="modal-header">Cancel</h6>
+         <h6 class="modal-header"><spring:message code="button.cancel" /></h6>
         <div class="modal-content">
            <div class="row">
-                <h6>Are you sure you want to close this window. The form data will be lost</h6>
+                <h6><spring:message code="modal.message" /></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./redirectToHomePage" class="btn">yes</a>
-                        <button class="modal-close btn" style="margin-left: 10px;">no</button>
+                        <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                     </div>
                 </div>
             </div>
@@ -338,16 +355,16 @@ var contextpath = "${context}";
     </div>
     
      <div id="exceptionMessage" class="full-screen-modal modal">
-       <h6 class="modal-header">Save Grievance</h6>
+       <h6 class="modal-header"><spring:message code="modal.SaveGrievance" /></h6>
         <div class="modal-content">
             <div class="row">
-                <h6>Something wrong happened ,please resubmit the form</h6>
+                <h6><spring:message code="modal.Somethingwrong" /></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
                         
-                        <button class="modal-close btn" style="margin-left: 10px;">Close</button>
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
                     </div>
                 </div>
             </div>
@@ -356,17 +373,17 @@ var contextpath = "${context}";
     
 
     <div id="GrievanceMsg" class="full-screen-modal modal">
-    <h6 class="modal-header">Submit Grievance Report</h6>
+    <h6 class="modal-header"><spring:message code="modal.header.submitGReport" /></h6>
         <div class="modal-content">
             
             <div class="row">
-                <h6 >Your grievance report has been successfully submitted. Your Grievance Id is <span id="sucessMessageGrievance"></span></h6>
+                <h6 ><spring:message code="modal.message.grievance" /> <span id="sucessMessageGrievance"></span></h6>
 
-                <p >(Note: Please remember your grievance Id. This is used for future reference)</p>
+                <p ><spring:message code="modal.note" /></p>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./redirectToHomePage" class="btn">ok</a>
+                    <a href="./redirectToHomePage" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -411,20 +428,7 @@ var contextpath = "${context}";
  <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
-<div class="file-field col s12 m6">
-<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
-<div class="btn">
-<span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  multiple>
-</div>
-<div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
-placeholder="Upload one or more files">
-<div>
-<p id="myFiles"></p>
-</div>
-</div>
-</div>
+
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
 <select class="browser-default" id="docTypetag1" >
@@ -433,6 +437,22 @@ placeholder="Upload one or more files">
 </select>
 
 </div>
+
+<div class="file-field col s12 m6">
+<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<div class="btn">
+<span><spring:message code="input.selectfile" /></span>
+<input type="file" name="files[]" id="docTypeFile1"  multiple>
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text" multiple
+placeholder="Upload file">
+<div>
+<p id="myFiles"></p>
+</div>
+</div>
+</div>
+
 </div>
 
 
@@ -487,18 +507,18 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     </div>
 </div>
   <div id="errorModal" class=" full-screen-modal modal">
-         <h6 class="modal-header">Check Stock Status</h6>
+         <h6 class="modal-header"><spring:message code="input.CheckStock" /></h6>
         <div class="modal-content">
            
             <div class="row">
-                <h6 id="">stock not found please enter valid Transaction Id.
+                <h6 id=""><spring:message code="input.notTransactionId" />
                 </h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
                         <!-- <a href="homePage" class="btn">Yes</a> -->
-                        <button class="modal-close btn" style="margin-left: 10px;">OK</button>
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
                     </div>
                 </div>
             </div>
@@ -651,6 +671,7 @@ var path="${context}";
     			"lastName":lastName,
     			"middleName":middleName,
     			"phoneNo":contactNumber,
+    			"featureId":6
     	}
     	
     	formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -696,7 +717,7 @@ var path="${context}";
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
 			$(endUserwrapper).append(
-					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
+					'<div id="endUserfilediv'+id+'" class="endUserfileDiv"><div class="row"><div class="file-field col s12 m6"><label for="">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="endUserdocTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="endUserdocTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="Upload file" type="text"></div></div><div  class="endUser_remove_field btn right btn-info">-Remove</div></div></div>'
 					/* '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>' */
 			); //add input box
 		}
@@ -751,12 +772,15 @@ if($('#pageTypeValue').val()==0)
 $('#endUserRaiseGrievance').css("display", "block");
 $('#trackGrievanceDiv').css("display", "none");
 $('#trackGrievanceHeader').css("display", "none");
+$('#trackGrievanctableDiv').css("display", "none");
 }
 else
 {
 console.log("else condition ++++++++");
 $('#endUserRaiseGrievance').css("display", "none");
 $('#trackGrievanceDiv').css("display", "block");
+$('#trackGrievanctableDiv').css("display", "none");
+
 }
     
   
