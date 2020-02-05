@@ -417,8 +417,9 @@ public class ConsignmentServiceImpl {
 			logger.debug("Accept/Reject Consignment : " + consignmentMgmt);
 
 			// Fetch user_profile to update user over mail/sms regarding the action.
-			userProfile = userProfileRepository.getByUserId(consignmentUpdateRequest.getUserId());
+			userProfile = userProfileRepository.getByUserId(consignmentMgmt.getUserId());
 			logger.debug("UserProfile : " + userProfile);
+			
 
 			// 0 - Accept, 1 - Reject
 			if(0 == consignmentUpdateRequest.getAction()) {
@@ -435,7 +436,9 @@ public class ConsignmentServiceImpl {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode());
 
-						// TODO : NOTI
+						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
+						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+						
 						emailUtil.saveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
@@ -443,7 +446,7 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								MailSubjects.SUBJECT,
-								null);
+								placeholderMap);
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -458,7 +461,6 @@ public class ConsignmentServiceImpl {
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 						
-						// TODO : NOTI
 						emailUtil.saveNotification("Consignment_Approved_CustomImporter_Email_Message", 
 								userProfile, 
 								consignmentUpdateRequest.getFeatureId(),
@@ -483,7 +485,6 @@ public class ConsignmentServiceImpl {
 					placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
 					
-					// TODO : NOTI
 					emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 							userProfile, 
 							consignmentUpdateRequest.getFeatureId(),
