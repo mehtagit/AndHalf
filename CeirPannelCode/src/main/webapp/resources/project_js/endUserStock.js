@@ -117,6 +117,12 @@ function setViewPopupData(data){
 		$('#updateEndUserStockOK').css("display", "block");
 		$('#updateEndUserStock').css("display", "none");
 	}
+	
+	if(data.stockStatus==7)
+		{
+		$('#stockRemarkDivId').css("display", "block");
+		$("#stockRemark").val(data.remarks);
+		}
 }
 
 function endUserStockFileDownload(){

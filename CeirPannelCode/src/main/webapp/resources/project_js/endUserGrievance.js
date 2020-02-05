@@ -15,6 +15,9 @@
 				      }
 						$('#endUsergrivanceLibraryTable').css("display", "block");
 						$('#trackGrievanceDiv').css("display", "none");
+						$('#trackGrievanctableDiv').css("display", "block");
+						$('#trackGrievanceHeader').css("display", "none");
+						
 				
 				$.ajax({
 					url: 'headers?type=grievanceHeaders',
@@ -25,6 +28,7 @@
 						/*console.log("Url-------" +url+"--------"+ "dataUrl-------" +dataUrl);*/
 						var table=	$("#endUsergrivanceLibraryTable").DataTable({
 							destroy:true,
+							bAutoWidth: false,
 							"serverSide": true,
 							orderCellsTop : true,
 							"ordering" : false,
@@ -46,6 +50,13 @@
 							},
 						
 							"columns": result,
+							fixedColumns: true,
+							columnDefs: [
+					            { width: 137, targets: result.length - 1 },
+					            { width: 280, targets: 4 },
+					            { width: 155, targets: 2 },
+					            
+					        ]
 						});
 						$('div#initialloader').delay(300).fadeOut('slow');
 					},
@@ -255,3 +266,29 @@
 			}
 			
 			
+			
+			function dispatchDateValidation() {
+				var currentDate;
+				var dispatcDate = $('#expectedDispatcheDate').val();
+				var now = new Date();
+				if (now.getDate().toString().charAt(0) != '0') {
+					currentDate = '0' + now.getDate();
+
+					/* alert("only date="+currentDate); */
+				} else {
+					currentDate = now.getDate();
+				}
+				var today = now.getFullYear() + '-' + (now.getMonth() + 1) + '-'
+						+ currentDate;
+				//alert("today"+today);
+				console.log("dispatche=" + dispatcDate);
+				console.log("todays parse date" + Date.parse(today));
+				console.log("dispatche parse date" + Date.parse(dispatcDate));
+
+				if (Date.parse(today) > Date.parse(dispatcDate)) {
+					myFunction("dispatche date should be greater then or equals to today");
+					$('#expectedDispatcheDate').val("");
+				}
+
+				//alert("current date="+today+" dispatche date="+dispatcDate)
+			}

@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -181,33 +181,43 @@
 									</div>
 								</div>
 
-								<div class="row">
+								<div id="mainDiv" class="mainDiv">
+											<div id="filediv" class="fileDiv">
+												<div class="row">
+													<div class="col s12 m6 l6" style="margin-top: 8px;">
+														<label for="Category"><spring:message code="input.documenttype"/></label> <select
+															class="browser-default" id="docTypetag1">
+															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
+														
+														<select class="browser-default" id="docTypetagValue1"
+															style="display: none;">
+															<option value="" disabled selected><spring:message
+																	code="select.documenttype" /></option>
 
-									<div class="col s12 m6 l6" style="margin-top: 8px;">
-										<label for="Category"><spring:message code="input.documenttype" /></label> <select
-											class="browser-default" id="docTypetag1">
-											<option value="" disabled="" selected=""><spring:message code="select.documenttype" /></option>
-										</select> 
-									</div>
+														</select>
+													</div>
+
+													<div class="file-field col s12 m6">
+														<h6 style="color: #000;">
+															<spring:message code="input.supportingdocument" />
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span>
+															<input type="file" name="files[]" id="docTypeFile1">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text"
+																placeholder="Upload one or more files">
+															<div>
+																<p id="myFiles"></p>
+															</div>
+														</div>
+													</div>
+												</div>
 
 
-									<h6 style="color: #000; margin-left: 10px;">
-										<spring:message code="input.supportingdocument" /> <span class="star">*</span>
-									</h6>
-									<div class="file-field col s12 m6">
-										<div class="btn">
-											<span><spring:message code="input.selectfile" /></span> 
-										
-											<input type="file" name="files[]" id="docTypeFile1">
-										</div>
-										<div class="file-path-wrapper">
-											<input class="file-path validate" type="text" multiple>
-											<div>
-												<p id="myFiles"></p>
 											</div>
-										</div>
 									</div>
-								</div>
 								<span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span>
 								</span>
 								<div class="center" style="margin-top: 50px;">
@@ -301,12 +311,17 @@ var featureId = 11;
 			var filename='';
 			
 			
-		var x={
-				"docType":$('#docTypetag'+fieldId).val(),
-				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
-				}
-		
-				fileInfo.push(x);
+	
+			$('.fileDiv').each(function() {	
+				var x={
+					"docType":$('#docTypetag'+fieldId).val(),
+					"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+					}
+					formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+					fileInfo.push(x);
+					fieldId++;
+					i++;
+				});
 			
 			var multirequest={
 					"attachedFiles":fileInfo,
@@ -318,10 +333,15 @@ var featureId = 11;
 		 			"approveDisapproveDate" : $('#approveDisapproveDate').val(),
 					"requestDate" : $('#requestDate').val(),
 					"remark" : $('#remark').val(),
-					"userId" : $("body").attr("data-userID")
+					"userId" : $("body").attr("data-userID"),
+					"featureId" : featureId,
 				}
 			
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
+			
+			formData.append('fileInfo[]',JSON.stringify(fileInfo));
+			formData.append('multirequest',JSON.stringify(multirequest));
+			
 			$.ajax({
 				url : './register-approved-device',
 				type : 'POST',
@@ -387,6 +407,6 @@ var featureId = 11;
 		});
 		
 	</script>
-
+			
 </body>
 </html>

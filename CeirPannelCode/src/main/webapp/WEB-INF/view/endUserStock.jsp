@@ -224,7 +224,7 @@ var contextpath = "${context}";
                             <!-- <a href="index.html" class="modal-close btn-flat modal-btn right"
                             
                                 data-dismiss="modal">&times;</a> -->
-                                 <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a>
+                               
                                 <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" /></h6>
                                  	
                                 <div class="col s12 m12 l12">
@@ -270,6 +270,16 @@ var contextpath = "${context}";
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="uploadDate" name="uploadDate"
                                                     placeholder="" readonly="readonly">
+                                            </div>
+                                            
+                                            <div id="stockRemarkDivId" style="display: none">
+                                            <div class="input-field col s6 m5">
+                                                <label for="stockRemark"><spring:message code="input.Remark" /></label>
+                                            </div>
+                                            <div class="input-field col s6 m7">
+                                                <input type="text" id="stockRemark" name="stockRemark"
+                                                    placeholder="" readonly="readonly">
+                                            </div>
                                             </div>
                                             <div class="input-field col s6 m5">
                                                 <label for="viewUploadFile"><spring:message code="input.ViewUploadFile" /></label>
