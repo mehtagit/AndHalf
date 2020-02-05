@@ -1,4 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<% 
+  		response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+		if(session.getAttribute("usertype") !=null){ 
+		
+%>
+        <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -115,8 +123,8 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="#goToHome" id="newUserLink"
-							class="modal-trigger" style="color: white;"><spring:message
+						<li><a  data-target="goToHome" class="modal-trigger"
+							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
@@ -623,3 +631,10 @@ $(document).ready(function () {
 </body>
 
 </html>
+<%
+        }
+        else{            
+        request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);      	
+        }
+%>

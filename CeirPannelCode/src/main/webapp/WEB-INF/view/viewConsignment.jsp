@@ -1,13 +1,8 @@
-
 <% 
-  
-        response.setHeader("Cache-Control","no-cache");
+  		  response.setHeader("Cache-Control","no-cache");
         response.setHeader("Cache-Control","no-store");
         response.setDateHeader("Expires", 0);
         response.setHeader("Pragma","no-cache");
-
-        
-        
         if(session.getAttribute("usertype") !=null){ %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -800,10 +795,8 @@
 <%
         }
         else{
-         //  	%> <script language="javascript"> alert("Deletion successful"); </script> <%
-            
-        	request.setAttribute("msg", "  *Please login first");
-        request.getRequestDispatcher("./login.jsp").forward(request, response);
+         request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./dashboard.jsp").forward(request, response);
         	
         }
 %>
