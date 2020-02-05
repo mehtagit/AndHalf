@@ -3,6 +3,9 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -253,8 +256,8 @@ public class UploadPaidStatusView {
 	public @ResponseBody GenricResponse updateEndUSerVisaValidity(@RequestParam(name="passportImage",required = false) MultipartFile passportImage,@RequestParam(name="visaImage",required = false) MultipartFile visaImage,HttpServletRequest request,HttpSession session) {
 		log.info("---entry point in update visa validity page");
 		
-		String txnNumber="A" + utildownload.getTxnId();
-		log.info("Random transaction id number="+txnNumber);
+		
+	
 		//request.setAttribute("txnId", txnNumber);
 		//request.setAttribute("request[regularizeDeviceDbs][txnId]",txnNumber);
 		String filter = request.getParameter("request");
@@ -268,14 +271,14 @@ public class UploadPaidStatusView {
 		log.info("device db size--"+endUservisaInfo.getVisaDb().size());
 		  for(int i =0; i<endUservisaInfo.getVisaDb().size();i++) {
 		  //regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
-		  endUservisaInfo.setTxnId(txnNumber);
+		  endUservisaInfo.setTxnId(endUservisaInfo.getTxnId());
 		 // endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
 		  endUservisaInfo.getVisaDb().get(i).setVisaFileName((visaImage.getOriginalFilename()));
 		  log.info("file name to be set in varivable="+endUservisaInfo.getVisaDb().get(i).getVisaFileName());
 		  
 		  }
 		 
-		endUservisaInfo.setTxnId(txnNumber);
+		
 		//endUservisaInfo.getVisaDb().get(1).setVisaFileName((visaImage.getOriginalFilename()));
 
 		log.info(""+endUservisaInfo);
@@ -287,7 +290,7 @@ public class UploadPaidStatusView {
 		else {
 			try {
 				byte[] bytes = passportImage.getBytes();
-			String rootPath =filePathforUploadFile+txnNumber+"/"; 
+			String rootPath =filePathforUploadFile+endUservisaInfo.getTxnId()+"/"; 
 			File dir = new File(rootPath + File.separator);
 
 			if (!dir.exists()) dir.mkdirs();
@@ -307,17 +310,41 @@ public class UploadPaidStatusView {
 		}
 		
 		try {
-			byte[] bytes = visaImage.getBytes();
-		String rootPath =filePathforUploadFile+txnNumber+"/"; 
-		File dir = new File(rootPath + File.separator);
+			/*
+			 * byte[] bytes = visaImage.getBytes(); String rootPath
+			 * =filePathforUploadFile+endUservisaInfo.getTxnId()+"/"; File dir = new
+			 * File(rootPath + File.separator);
+			 * 
+			 * if (!dir.exists()) dir.mkdirs(); // Create the file on server File serverFile
+			 * = new File(rootPath+visaImage.getOriginalFilename());
+			 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+			 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			 * stream.write(bytes); stream.close();
+			 */
+			
 
-		if (!dir.exists()) dir.mkdirs();
-		// Create the file on server 
-		File serverFile = new File(rootPath+visaImage.getOriginalFilename());
-		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-		stream.write(bytes); 
-		stream.close();
+String rootPath = filePathforUploadFile+endUservisaInfo.getTxnId()+"/";
+File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
+boolean exists = tmpDir.exists();
+if(exists) {
+
+Path temp = Files.move 
+(Paths.get(filePathforUploadFile+"/"+endUservisaInfo.getTxnId()+"/"+visaImage.getOriginalFilename()), 
+Paths.get(filePathforMoveFile+visaImage.getOriginalFilename())); 
+String movedPath=filePathforMoveFile+visaImage.getOriginalFilename();	
+
+log.info("file is already exist, moved to this "+movedPath+" path. ");
+tmpDir.delete();
+}
+byte[] bytes = visaImage.getBytes();
+File dir = new File(rootPath + File.separator);
+if (!dir.exists()) 
+dir.mkdirs();
+File serverFile = new File(rootPath+visaImage.getOriginalFilename());
+log.info("uploaded file path on server" + serverFile);
+BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+stream.write(bytes);
+stream.close();
 	} 
 	catch (Exception e) {
 			// TODO: handle exception
@@ -330,6 +357,120 @@ public class UploadPaidStatusView {
 		log.info("---exit  point in update visa validity page");
 		return endUserVisaInfo;
 	}
+	
+	
+	
+	
+	@PostMapping("registerEndUserDevice")
+	public @ResponseBody GenricResponse registerEndUserDevice(@RequestParam(name="visaImage",required = false) MultipartFile visaImage,@RequestParam(name="endUserDepartmentFile",required = false) MultipartFile endUserDepartmentFile,@RequestParam(name="uploadnationalID",required = false) MultipartFile uploadnationalID,HttpServletRequest request,HttpSession session) {
+		log.info("---entry point in update visa validity page");
+		log.info("---request---"+request.getParameter("request"));
+       
+		
+		  String txnNumber="A" + utildownload.getTxnId();
+		  log.info("Random transaction id number="+txnNumber);
+		   String filter = request.getParameter("request");
+		   Gson gson= new Gson();
+		  log.info("before casting request in to pojo classs"+filter);
+		  
+		  EndUserVisaInfo endUservisaInfo = gson.fromJson(filter,  EndUserVisaInfo.class);
+		  
+		  if(endUservisaInfo.getNationality().equals(""))
+		  {
+			  log.info("nationality......");
+			  endUservisaInfo.setNationality("Cambodian");
+			  log.info("nationality......"+endUservisaInfo.getNationality());
+		  }
+		  if("N".equals(endUservisaInfo.getOnVisa())) {
+			  endUservisaInfo.setVisaDb(null);
+		  }
+		  
+		  if("N".equals(endUservisaInfo.getIsVip())) {
+			  endUservisaInfo.setUserDepartment(null);
+		  }
+		  
+		  
+		  
+		  log.info("after casting request in to pojo classs"+endUservisaInfo);
+
+		  endUservisaInfo.setTxnId(txnNumber);
+		  endUservisaInfo.setPassportFileName(uploadnationalID.getOriginalFilename());
+			for(int i =0; i<endUservisaInfo.getRegularizeDeviceDbs().size();i++) {
+				endUservisaInfo.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
+				endUservisaInfo.getRegularizeDeviceDbs().get(i).setCurrency("-1");
+			}
+		
+			try {
+				byte[] bytes = uploadnationalID.getBytes();
+			String rootPath =filePathforUploadFile+txnNumber+"/"; 
+			File dir = new File(rootPath + File.separator);
+
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+uploadnationalID.getOriginalFilename());
+			log.info("uploaded uploadnationalID file path on server" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
+			} 
+
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		  
+		  log.info(""+endUservisaInfo); 
+		  log.info(" upload status  entry point.");
+		  if(endUserDepartmentFile!=null) { 
+			  log.info("department  Image is not blank");
+		  
+		  try {
+			  byte[] bytes = endUserDepartmentFile.getBytes(); 
+			  String rootPath  =filePathforUploadFile+txnNumber+"/";
+			  File dir = new File(rootPath + File.separator);
+		  
+		  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
+		  File serverFile = new File(rootPath+endUserDepartmentFile.getOriginalFilename());
+		  log.info("uploaded department  File  path on server" + serverFile); BufferedOutputStream
+		  stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		  stream.write(bytes); stream.close();
+		  }
+		  
+		  catch (Exception e) { // TODO: handle
+			   e.printStackTrace(); } 
+		  }
+		  
+		  
+		
+			  if(visaImage!=null) { 
+				 log.info("visa Image is  not blank");
+				 
+			  try { byte[] bytes = visaImage.getBytes(); String rootPath
+			  =filePathforUploadFile+txnNumber+"/"; File dir = new File(rootPath +
+			  File.separator);
+			  
+			  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
+			  File serverFile = new File(rootPath+visaImage.getOriginalFilename());
+			  log.info("uploaded  visa Image path on server" + serverFile); BufferedOutputStream
+			  stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			  stream.write(bytes); stream.close();
+			  }
+			  
+			  catch (Exception ex) { // TODO: handle exception e.printStackTrace(); } }
+			  }
+			  }
+			
+		  log.info("Request send to the update emd user visa details ="+endUservisaInfo
+		  ); 
+		  GenricResponse endUserVisaInfo= new GenricResponse();
+		  endUserVisaInfo=uploadPaidStatusFeignClient.RegisterEndUserDevice(endUservisaInfo);
+		  log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
+		 
+		
+		log.info("---exit  point in update visa validity page");
+		return endUserVisaInfo;
+	}
+
 }
 
 

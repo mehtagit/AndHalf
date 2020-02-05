@@ -19,7 +19,9 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.ResendOtp;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.GenerateRandomDigits;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -107,9 +109,12 @@ public class RegistrationService {
 		return mv;                
 	}                    
 
-	public OtpResponse saveRegistration(String data, MultipartFile file,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,MultipartFile vatFile,HttpSession session) throws IOException {
+	public OtpResponse saveRegistration(String data, MultipartFile file,MultipartFile photo,MultipartFile nationalIdImage,MultipartFile idCard,MultipartFile vatFile,HttpSession session,HttpServletRequest request) throws IOException {
 		Gson gson=new Gson();                       
 		Registration registration=gson.fromJson(data, Registration.class);
+		UserHeader header=getUserHeaders(request);
+		registration.setUserAgent(header.getUserAgent());
+		registration.setPublicIp(header.getPublicIp());
 		log.info("save registration page starting point");
 		log.info("registration data:  "+registration);        
 		String validCaptcha=(String)session.getAttribute("captcha_security");      
@@ -120,7 +125,7 @@ public class RegistrationService {
 				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
+				StringBuilder combinedPath=new StringBuilder().append("/"+username);
 				log.info("filepath is : "+combinedPath);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
@@ -253,9 +258,12 @@ public class RegistrationService {
 		return "verifyOtp";  
 	} 
 
-	public HttpResponse verifyOtp(Otp otp) {
+	public HttpResponse verifyOtp(Otp otp,HttpServletRequest request) {
 		log.info("inside verify otp controller");
 		log.info("otp data:  "+otp);    
+		UserHeader header=getUserHeaders(request);
+		otp.setUserAgent(header.getUserAgent());
+		otp.setPublicIp(header.getPublicIp());
 		HttpResponse response=userRegistrationFeignImpl.otpValidate(otp);
 		log.info("verify otp api response:  "+response);
 		log.info("exit from verify otp controller");
@@ -267,10 +275,12 @@ public class RegistrationService {
 		List<SecurityQuestion> questionList =userRegistrationFeignImpl.securityQuestionList();
 		return questionList; 
 	}
-	public HttpResponse resendOtp(Integer id) {
+	public HttpResponse resendOtp(Integer id,HttpServletRequest request) {
 		log.info("inside resend otp controller");
 		log.info("id:   "+id);     
-		HttpResponse response=userRegistrationFeignImpl.otpResend(id); 
+		UserHeader header=getUserHeaders(request);
+		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
+		HttpResponse response=userRegistrationFeignImpl.otpResend(otp); 
 		log.info("resend otp api response:  "+response);
 		log.info("exit from resend otp controller");
 		return response;
@@ -305,5 +315,25 @@ public class RegistrationService {
 		g2dImage.dispose();
 		session.setAttribute("captcha_security", sImageCode);
 		log.info("exit from captcha controller");
+	}
+	
+	public UserHeader getUserHeaders(HttpServletRequest request) {
+		String userIp = request.getHeader("HTTP_CLIENT_IP");
+		if(userIp == null) {
+			userIp = request.getHeader("X-FORWARDED-FOR");
+		if(userIp == null) {
+			userIp = request.getRemoteAddr();
+		}
+		}
+		log.info("client Ip:  "+userIp);
+		String userAgent = request.getHeader("User-Agent");
+		if(userAgent!=null) {
+			log.info("user agent: "+userAgent);
+		}
+		else {
+			log.info("user-agent not available");
+		}
+		UserHeader headers=new UserHeader(userAgent,userIp);
+		return headers;
 	}
 }

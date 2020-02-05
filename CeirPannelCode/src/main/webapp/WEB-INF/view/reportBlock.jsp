@@ -193,7 +193,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 <div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
 id="stolenDate">
 
-<label for="TotalPrice" class="center-align">Till date</label>
+<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
 <div id="startdatepicker" class="input-group" style="margin-top: 10px;">
 
 <input class="form-control" name="inputsaves" type="text"
@@ -279,7 +279,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
 
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
+                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
 
                                                     <div class="input-field col s12 center">
@@ -327,7 +327,6 @@ onclick="_Services._selectstartDate()"></i></span>
             </div>
         </div>
     </div>
-
 
 <!--materialize js-->
 	<script type="text/javascript"
@@ -391,72 +390,6 @@ onclick="_Services._selectstartDate()"></i></span>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
 		
-			<script type="text/javascript">
-
-		window.parent.$('#langlist').on('change', function() {
-			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-			
-			window.location.assign("openBlockUnblockPage?pageType=block&lang="+lang);
-		}); 
-		
-		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-		$.i18n().locale = langParam;
-		var successMsg;
-		$.i18n().load( {
-			'en': './resources/i18n/en.json',
-			'km': './resources/i18n/km.json'
-		} ).done( function() { 
-		//	successMsg=$.i18n('successMsg');
-		});
-		
-
-		$(document).ready(function () {
-			
-			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#blockdeviceType');
-					console.log('#blockdeviceType')
-				}
-			});
-
-			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#blockmultipleSimStatus');
-					console.log('#blockmultipleSimStatus');
-				}
-			});
-		});
-		
-		$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-			
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#blockdeviceIdType');
-				console.log('#blockdeviceIdType');
-			}
-		});
-		$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
-			
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#bulkBlockdeviceCategory');
-				console.log('#bulkBlockdeviceCategory');
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#singleDeviceCategory');
-				console.log('#singleDeviceCategory');
-			}
-		});
-		
-		
-		
-		
-		
-		
-		</script>
 
 </body>
 </html>

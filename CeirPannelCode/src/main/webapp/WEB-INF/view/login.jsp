@@ -131,10 +131,10 @@ a#newUserLink {
 								<div class="col s12 m12 l12">
 									<div class="row">
 
-										<div class="col s10 m10 select-lang-lable">
+										<div class="col s9 m10 select-lang-lable">
 											<label for="">Language :</label>
 										</div>
-										<div class="col s2 m2 right" style="padding: 0;">
+										<div class="col s3 m2 right" style="padding: 0;">
 											<select class="browser-default select-lang-drpdwn"
 												id="langlist">
 												<option value="en">English</option>
@@ -238,14 +238,14 @@ a#newUserLink {
 
 
 <div id="changePasswordMessage" class="modal" style="width: 40%;">
-<h6 class="modal-header">Change Password</h6>
+<h6 class="modal-header"><spring:message code="registration.changepassword" /></h6>
 <div class="modal-content">
 <div class="row">
 <h6 id="cPassSucessMsg"></h6>
 </div>
 <div class="row">
 <div class="center">
-<a href="" class="btn">ok</a>
+<a href="" class="btn"><spring:message code="modal.ok" /></a>
 </div>
 </div>
 </div>
@@ -253,7 +253,7 @@ a#newUserLink {
 
 
 	<div id="changePassword" class="modal" style="width: 40%;">
-		<h6 class="modal-header">Change Password</h6>
+		<h6 class="modal-header"><spring:message code="registration.changepassword" /></h6>
 		<div class="modal-content">
 			<form onsubmit="return changeExpiryPassword()">
 				<div class="row">
@@ -271,7 +271,7 @@ a#newUserLink {
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" /> <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
-							Old Password </label>
+							 <spring:message code="registration.oldpassword" /></label>
 						<div class="password"></div>
 					</div>
 
@@ -284,8 +284,7 @@ a#newUserLink {
 					</div>
 					<div class="input-field col s11">
 
-						<label for="newPassword" style="color: #000; font-size: 12px;">New
-							Password</label> <input type="password"
+						<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.newpassword" /></label> <input type="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
@@ -299,7 +298,7 @@ a#newUserLink {
 					<div class="input-field col s11">
 
 						<label for="confirm_password"
-							style="color: #000; font-size: 12px;">Confirm Password</label> <input
+							style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input
 							type="password" class="" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
@@ -309,15 +308,16 @@ a#newUserLink {
 				</div>
 				<div class="row" style="margin-top: 30px;">
 					<div class="input-field col s12 center">
-						<button class="btn" id="updateStatusBtn">Submit</button>
+						<button class="btn" id="updateStatusBtn"><spring:message code="button.submit" /></button>
 						<button type="button" class="btn modal-close"
-							style="margin-left: 10px;">Cancel</button>
+							style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 					</div>
 
 				</div>
 			</form>
 		</div>
 	</div>
+
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
