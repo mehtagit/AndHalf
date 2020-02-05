@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -107,24 +107,25 @@
 						<div class="row card-panel">
 						<form action="" onsubmit="return registerTAC()"  method="POST" enctype="multipart/form-data"  id="registerTAC">
 							<div class="container-fluid pageHeader">
-								<p class="PageHeading"><spring:message code="table.ReportTypeApprovedDevices" /></p>
+								<p class="PageHeading">Report Type-Approved Devices</p>
 							</div>
 
 							
 								<div class="row" style="margin-top: 10px;">
 									<div class="input-field col s12 m6 l6">
 										<input type="text" id="manufacturerId" name="manufacturerId"  pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="10"/>
-										<label for="manufacturerId" ><spring:message code="input.ManufacturerID" /></label>
+										<label for="manufacturerId" >Manufacturer ID</label>
 									</div>
 
 									<div class="input-field col s12 m6 l6">
 										<input type="text" id="manufacturerName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
-											name="manufacturerName"  required="required" /> <label for="manufacturerName"><spring:message code="input.ManufacturerName" /> <span class="star">*</span>
+											name="manufacturerName"  required="required" /> <label for="manufacturerName">Manufacturer
+											Name <span class="star">*</span>
 										</label>
 									</div>
 
 									<div class="col s12 m6 l6">
-										<label for="country"><spring:message code="input.Country" /> <span class="star">*</span></label>
+										<label for="country">Country <span class="star">*</span></label>
 										<select id="country" class="browser-default" class="mySelect" required="required"
 											required></select>
 									</div>
@@ -136,7 +137,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="requestDate"><spring:message code="input.RequestDate" /> <span class="star">*</span></label>
+											for="requestDate">Request Date <span class="star">*</span></label>
 									</div>
 
 
@@ -146,14 +147,15 @@
 
 									<div class="input-field col s12 m6 l6">
 										<input type="text" id="tac" pattern="[0-9]{8,8}" title="Please enter 8 digits tac number"  maxlength="8" required="required"
-										 name="tac" /> <label for="tac"><spring:message code="input.TAC" /><span class="star">*</span>
+										 name="tac" /> <label for="tac">TAC
+											<span class="star">*</span>
 										</label>
 									</div>
 
 									<div class="col s12 m6 l6">
-										<label for="status"><spring:message code="input.Status" /> <span class="star">*</span></label>
+										<label for="status">Status <span class="star">*</span></label>
 										<select class="browser-default" required="required" id="status">
-											<option value=""><spring:message code="input.Status" /></option>
+											<option value="">Status</option>
 										</select>
 									</div>
 									
@@ -168,7 +170,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="approveDisapproveDate"><spring:message code="input.Approve/RejectionDate" /><span
+											for="approveDisapproveDate">Approve/Rejection Date <span
 											class="star">*</span></label>
 									</div>
 
@@ -177,44 +179,55 @@
                                             
 									<div class="input-field col s12 m6 l6" style="margin-top: 9px;">
 										<textarea id="remark" class="materialize-textarea"></textarea>
-										<label for="remark"><spring:message code="input.Remark" /> </label>
+										<label for="remark">Remark </label>
 									</div>
 								</div>
 
-								<div class="row">
+								<div id="mainDiv" class="mainDiv">
+											<div id="filediv" class="fileDiv">
+												<div class="row">
+													<div class="col s12 m6 l6" style="margin-top: 8px;">
+														<label for="Category"><spring:message code="input.documenttype"/></label> <select
+															class="browser-default" id="docTypetag1">
+															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
+														
+														<select class="browser-default" id="docTypetagValue1"
+															style="display: none;">
+															<option value="" disabled selected><spring:message
+																	code="select.documenttype" /></option>
 
-									<div class="col s12 m6 l6" style="margin-top: 8px;">
-										<label for="Category"><spring:message code="input.documenttype" /></label> <select
-											class="browser-default" id="docTypetag1">
-											<option value="" disabled="" selected=""><spring:message code="select.documenttype" /></option>
-										</select> 
-									</div>
+														</select>
+													</div>
+
+													<div class="file-field col s12 m6">
+														<h6 style="color: #000;">
+															<spring:message code="input.supportingdocument" />
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span>
+															<input type="file" name="files[]" id="docTypeFile1">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text"
+																placeholder="Upload one or more files">
+															<div>
+																<p id="myFiles"></p>
+															</div>
+														</div>
+													</div>
+												</div>
 
 
-									<h6 style="color: #000; margin-left: 10px;">
-										<spring:message code="input.supportingdocument" /> <span class="star">*</span>
-									</h6>
-									<div class="file-field col s12 m6">
-										<div class="btn">
-											<span><spring:message code="input.selectfile" /></span> 
-										
-											<input type="file" name="files[]" id="docTypeFile1">
-										</div>
-										<div class="file-path-wrapper">
-											<input class="file-path validate" type="text" multiple>
-											<div>
-												<p id="myFiles"></p>
 											</div>
-										</div>
 									</div>
-								</div>
-								<span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span>
+								<span style="margin-left: 5px;"> Required Field are
+									marked with <span class="star">*</span>
 								</span>
 								<div class="center" style="margin-top: 50px;">
 									<button  class=" btn" id="trcSubmitButton"
-                                                 type="submit"><spring:message code="button.submit" /></button>
+                                                 type="submit">Submit</button>
 									<a href="./manageTypeDevices" class="btn" id="Cancel"
-										style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+										style="margin-left: 10px;">Cancel</a>
 								</div>
 							</form>
 						</div>
@@ -227,15 +240,15 @@
 		</div>
 		</div>
 		  <div id="RegisterManageTypeDevice" class="modal">
-     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
+     <h6 class="modal-header" style="margin:0px;">Update</h6>
         <div class="modal-content">
             
             <div class="row">
-                <h6 id="updateTacMessage"><spring:message code="input.Yoursaved" /></h6>
+                <h6 id="updateTacMessage"> Your request has been successfully saved.</h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./manageTypeDevices" class="btn"><spring:message code="modal.ok" /></a>
+                    <a href="./manageTypeDevices" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -301,12 +314,17 @@ var featureId = 11;
 			var filename='';
 			
 			
-		var x={
-				"docType":$('#docTypetag'+fieldId).val(),
-				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
-				}
-		
-				fileInfo.push(x);
+	
+			$('.fileDiv').each(function() {	
+				var x={
+					"docType":$('#docTypetag'+fieldId).val(),
+					"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+					}
+					formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+					fileInfo.push(x);
+					fieldId++;
+					i++;
+				});
 			
 			var multirequest={
 					"attachedFiles":fileInfo,
@@ -318,10 +336,15 @@ var featureId = 11;
 		 			"approveDisapproveDate" : $('#approveDisapproveDate').val(),
 					"requestDate" : $('#requestDate').val(),
 					"remark" : $('#remark').val(),
-					"userId" : $("body").attr("data-userID")
+					"userId" : $("body").attr("data-userID"),
+					"featureId" : featureId,
 				}
 			
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
+			
+			formData.append('fileInfo[]',JSON.stringify(fileInfo));
+			formData.append('multirequest',JSON.stringify(multirequest));
+			
 			$.ajax({
 				url : './register-approved-device',
 				type : 'POST',
