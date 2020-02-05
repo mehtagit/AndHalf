@@ -13,39 +13,33 @@ $('#langlist').on('change', function() {
 			dataByTag("link_dmc_portal", "newUserLink", 1);
 		});
 
-		$(document)
-				.ready(
-						function() {
-							$("#show_hide_password a")
-									.on(
-											'click',
-											function(event) {
-												event.preventDefault();
-												if ($(
-														'#show_hide_password input')
-														.attr("type") == "text") {
-													$(
-															'#show_hide_password input')
-															.attr('type',
-																	'password');
-													$('#show_hide_password i')
-															.addClass(
-																	"fa-eye-slash");
-													$('#show_hide_password i')
-															.removeClass(
-																	"fa-eye");
-												} else if ($(
-														'#show_hide_password input')
-														.attr("type") == "password") {
-													$(
-															'#show_hide_password input')
-															.attr('type',
-																	'text');
-													$('#show_hide_password i')
-															.removeClass(
-																	"fa-eye-slash");
-													$('#show_hide_password i')
-															.addClass("fa-eye");
-												}
-											});
-						});
+		
+		$(document).on('click', '.toggle-password', function() {
+
+		    $(this).toggleClass("fa-eye fa-eye-slash");
+		    
+		    var input = $(".password");
+		    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+		});
+		
+		$(document).on('click', '.toggle-password2', function() {
+
+		    $(this).toggleClass("fa-eye fa-eye-slash");
+		    
+		    var input = $(".oldPassword");
+		    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+		});
+		$(document).on('click', '.toggle-password3', function() {
+
+		    $(this).toggleClass("fa-eye fa-eye-slash");
+		    
+		    var input = $(".newPassword");
+		    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+		});
+		
+		
+		
+		
+		
+					
+		

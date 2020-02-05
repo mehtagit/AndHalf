@@ -1,15 +1,18 @@
-
-    $('#langlist').on('change', function() {
+	$('#langlist').on('change', function() {
         lang=$('#langlist').val() == 'km' ? 'km' : 'en';  
       $('#mainArea').attr('src', function () {
       currentPageLocation=$(this).contents().get(0).location;
+  		changeLanguage(lang);
       sessionStorage.setItem("a", currentPageLocation);
-    }); 
-    // sessionStorage.getItem("a") == 'null' ? "./Home" : sessionStorage.getItem("a");
-          window.location.replace("importerDashboard?lang="+lang);
+    });    
+    window.location.replace("importerDashboard?lang="+lang);
         }); 
-       var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
-  $(document).ready(function () {
+	
+	
+    var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
+  
+    
+    $(document).ready(function () {
  $("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
     	var url = new URL(window.location.href);
         var langParameter = url.searchParams.get("lang");
@@ -40,3 +43,21 @@
     $(this).removeClass("inactive");
     $(this).addClass("active"); 
     });
+
+    
+	function changeLanguage(lang){
+		$.ajax({
+			type : 'POST',
+			url :'./changeLanguage/'+lang,
+			contentType :"application/json",
+			dataType : 'html',
+			success : function(data) {
+			},      
+			error: function (xhr, ajaxOptions, thrownError) {
+			}
+		});
+	}
+
+	
+	
+	

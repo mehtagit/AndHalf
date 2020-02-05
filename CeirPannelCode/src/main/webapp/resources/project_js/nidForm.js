@@ -1,8 +1,8 @@
-
+/*
 		window.parent.$('#langlist').on('change', function() {
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			window.location.assign("./uploadPaidStatus?lang="+lang);
-		}); 
+		}); */
 		
 		
 	$('#btnLink').css({"display":"none"});	

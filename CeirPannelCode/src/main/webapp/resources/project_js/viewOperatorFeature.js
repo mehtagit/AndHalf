@@ -4,13 +4,13 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-window.parent.$('#langlist').on('change', function() {
+/*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type_val = url.searchParams.get("type"); 
 	window.location.assign("./greyList?type="+type_val+"&lang="+lang);				
-}); 
+}); */
 
 $.i18n().locale = lang;	
 
@@ -154,7 +154,7 @@ function pageRendering(URL){
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option>"+dropdown[i].title+
+									"<option value='-1'>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -268,7 +268,7 @@ function exportButton(){
 	var userTypeId= parseInt($("body").attr("data-userTypeID"));
 	var userType=$("body").attr("data-roleType");
 	var serviceDump= window.serviceDump;
-	var fileType= parseInt($("#fileType").val());
+	var fileType= $("#fileType").val();
 
 	
 	var table = $('#operatorLibraryTable').DataTable();
