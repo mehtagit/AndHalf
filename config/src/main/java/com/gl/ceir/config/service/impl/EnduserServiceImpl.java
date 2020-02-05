@@ -475,7 +475,6 @@ public class EnduserServiceImpl {
 	public GenricResponse acceptReject(ConsignmentUpdateRequest updateRequest) {
 		try {
 			UserProfile userProfile = null;
-			String firstName = "";
 			String nid = updateRequest.getNid();
 			Map<String, String> placeholderMap = new HashMap<String, String>();
 			EndUserDB endUserDB = endUserDbRepository.getByNid(nid);
