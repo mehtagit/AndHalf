@@ -91,7 +91,7 @@ public class TrcController {
 
 	
 	@RequestMapping(value= {"/register-approved-device"},method= RequestMethod.POST,consumes = "multipart/form-data") 
-	public @ResponseBody GenricResponse saveGrievance(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse registerTypeApprove(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
 		
 		
 

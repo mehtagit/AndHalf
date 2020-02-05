@@ -193,7 +193,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 <div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
 id="stolenDate">
 
-<label for="TotalPrice" class="center-align">Till date</label>
+<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
 <div id="startdatepicker" class="input-group" style="margin-top: 10px;">
 
 <input class="form-control" name="inputsaves" type="text"
@@ -328,7 +328,6 @@ onclick="_Services._selectstartDate()"></i></span>
         </div>
     </div>
 
-
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -391,7 +390,6 @@ onclick="_Services._selectstartDate()"></i></span>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>
 		
-
 
 </body>
 </html>

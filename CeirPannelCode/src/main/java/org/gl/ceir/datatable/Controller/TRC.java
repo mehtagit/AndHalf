@@ -125,7 +125,7 @@ public class TRC implements CRUD{
 						String fileName1= trcContentModelList.getFileName();
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.importalTrcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
-						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,action};
+						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);

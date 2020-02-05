@@ -2887,3 +2887,17 @@ div#viewuplodedModel {
 .button-div {
 	padding: 20px 0;
 }
+ a.modal-close.waves-effect.waves-green.btn-flat {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #80cbf7;
+    border-radius: 100px;
+}
+
+
+.document-Type{
+    margin-right: 50px;
+    text-transform: uppercase;
+        font-size: 12px;
+	}

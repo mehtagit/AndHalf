@@ -436,7 +436,8 @@
 				}
 
 				sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-				if(currentRoleType=="CEIRAdmin" || currentRoleType=="Importer"){
+			/*	|| currentRoleType=="Importer"*/
+				if(currentRoleType=="CEIRAdmin" ){
 					$("#btnLink").css({display: "none"});
 				}
 				

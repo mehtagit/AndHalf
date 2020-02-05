@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.springframework.stereotype.Component;
 @Component
 public class TrcContentModel {
@@ -35,7 +36,7 @@ public class TrcContentModel {
 	private String frequencyRange;
 	private String productNameInterp;
 	private String modelNumberInterp;
-	private List<Object> attachedFiles = null;
+	private List<AttachedFile> attachedFiles; 
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -205,10 +206,10 @@ public class TrcContentModel {
 	public void setModelNumberInterp(String modelNumberInterp) {
 		this.modelNumberInterp = modelNumberInterp;
 	}
-	public List<Object> getAttachedFiles() {
+	public List<AttachedFile> getAttachedFiles() {
 		return attachedFiles;
 	}
-	public void setAttachedFiles(List<Object> attachedFiles) {
+	public void setAttachedFiles(List<AttachedFile> attachedFiles) {
 		this.attachedFiles = attachedFiles;
 	}
 	public Map<String, Object> getAdditionalProperties() {
@@ -232,6 +233,4 @@ public class TrcContentModel {
 				+ modelNumberInterp + ", attachedFiles=" + attachedFiles + ", additionalProperties="
 				+ additionalProperties + "]";
 	}
-	
-	
 }
