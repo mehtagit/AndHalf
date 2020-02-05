@@ -22,7 +22,7 @@ public class ConsignmentFileModel {
 	private String fileName;
 	@CsvBindByName(column = "Quantity")
 	@CsvBindByPosition(position = 5)
-	private int quantity;
+	private Integer quantity;
 	@CsvBindByName(column = "Create On")
 	@CsvBindByPosition(position = 6)
 	private String createdOn;
@@ -35,7 +35,7 @@ public class ConsignmentFileModel {
 	}
 
 	public ConsignmentFileModel(String consignmentStatus, String txnId, String supplierName, 
-			String taxPaidStatus, String fileName, String createdOn, String modifiedOn, int quantity) {
+			String taxPaidStatus, String fileName, String createdOn, String modifiedOn, Integer quantity) {
 		this.consignmentStatus = consignmentStatus;
 		this.txnId = txnId;
 		this.supplierName = supplierName;
@@ -102,11 +102,11 @@ public class ConsignmentFileModel {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 

@@ -19,7 +19,7 @@ public class StockFileModel {
 	
 	@CsvBindByName(column = "Quantity")
 	@CsvBindByPosition(position = 3)
-	private int quantity;
+	private Integer quantity;
 
 	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 4)
@@ -65,11 +65,11 @@ public class StockFileModel {
 		this.fileName = fileName;
 	}
 	
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 
