@@ -4,15 +4,12 @@
 	var featureId="3";
 	var requestType="0";
 
-
 	var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 	window.parent.$('#langlist').on('change', function() {
 		var langValue=$("#langlist option:selected").val();
 		var lang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
 		changeLanguage(lang);
-	window.location.assign("./Home?lang="+lang);
-
-	
+	window.location.assign("./Home?lang="+lang);	
 		});
 
 

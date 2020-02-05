@@ -1,4 +1,3 @@
-
 <% 
   
         response.setHeader("Cache-Control","no-cache");
@@ -801,7 +800,8 @@
         }
         else{
         	request.setAttribute("msg", "  *Please login first");
-        request.getRequestDispatcher("./login.jsp").forward(request, response);
+        	request.getRequestDispatcher("<script language='javascript'>self.parent.location='login.jsp';</script>'").forward(request, response);
+       // request.getRequestDispatcher("./login.jsp").forward(request, response);
         	
         }
 %>
