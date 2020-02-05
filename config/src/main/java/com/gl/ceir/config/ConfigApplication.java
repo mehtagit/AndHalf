@@ -10,7 +10,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.DeviceSnapShot;
@@ -25,6 +27,7 @@ import com.gl.ceir.config.service.DeviceSnapShotService;
 @EnableAutoConfiguration
 @EnableCaching
 @EnableFeignClients
+@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class) 
 public class ConfigApplication {
 
 	public static void main(String[] args) {

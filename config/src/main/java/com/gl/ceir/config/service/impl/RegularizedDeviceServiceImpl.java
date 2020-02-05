@@ -306,10 +306,13 @@ public class RegularizedDeviceServiceImpl {
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				if(validateRegularizedDevicesCount(nid, endUserDB.getRegularizeDeviceDbs())) {
 					for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
-						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 
 						if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+						}
+						
+						if(Objects.isNull(regularizeDeviceDb.getStatus())) {
+							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 						}
 
 						// Add in web action list.

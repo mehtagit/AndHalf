@@ -51,6 +51,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.EndUserStatus;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -118,21 +119,21 @@ public class EnduserServiceImpl {
 	public GenricResponse saveEndUser(EndUserDB endUserDB) {
 		try {
 			// TODO if user is already registerd.
-			
-			
+
+
 			// End user is not registered with CEIR system.
 			if(Objects.isNull(endUserDB)) {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), "");
 			}
-			
+
 			// Add department if user is VIP.
 			if("Y".equals(endUserDB.getIsVip())) {
 				UserDepartment userDepartment = endUserDB.getUserDepartment();
 				UserDepartment newUserDepartment = new UserDepartment(userDepartment.getName(), userDepartment.getDepartmentId(), 
 						userDepartment.getDepartmentFilename());
 				newUserDepartment.setEndUserDB(endUserDB);
-				
+
 				if(Objects.isNull(userDepartment)) {
 					return new GenricResponse(2, GenericMessageTags.NULL_USER_DEPARTMENT.getTag(), 
 							GenericMessageTags.NULL_USER_DEPARTMENT.getMessage(), "");
@@ -140,7 +141,7 @@ public class EnduserServiceImpl {
 					endUserDB.setUserDepartment(newUserDepartment);	
 				}
 			}
-			
+
 			// Validate and set visa expiry date as per default rule.
 			GenricResponse response = setVisaExpiryDate(endUserDB);
 			if(response.getErrorCode() != 0) 
@@ -149,10 +150,15 @@ public class EnduserServiceImpl {
 			// Validate end user devices.
 			if(!endUserDB.getRegularizeDeviceDbs().isEmpty()){
 				for(RegularizeDeviceDb regularizeDeviceDb : endUserDB.getRegularizeDeviceDbs()) {
-					if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus()))
-							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+					if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
+						regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
+					}
+					
+					if(Objects.isNull(regularizeDeviceDb.getStatus())) {
+						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
+					}
 				}
-				
+
 				logger.info(endUserDB.getRegularizeDeviceDbs());
 			}
 
@@ -481,7 +487,7 @@ public class EnduserServiceImpl {
 				return new GenricResponse(4, GenericMessageTags.INVALID_USER.getTag(), 
 						GenericMessageTags.INVALID_USER.getMessage(), updateRequest.getTxnId());
 			}
-			
+
 			// Build placeholders map to replace placeholders from mail.
 			placeholderMap.put("<First name>", endUserDB.getFirstName());
 
@@ -489,6 +495,13 @@ public class EnduserServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(updateRequest.getUserType())){
 				String mailTag = null;
 				String action = null;
+				
+				// If end user state is not pending approval on ceir admin, reject the request.
+				if(endUserDB.getStatus() != EndUserStatus.PENDING_APPROVAL_ON_CEIR_ADMIN.getCode()) {
+					logger.info(GenericMessageTags.INVALID_STATE_TRANSTION.getMessage() + " for user " + endUserDB);
+					return new GenricResponse(5, GenericMessageTags.INVALID_STATE_TRANSTION.getTag(), 
+							GenericMessageTags.INVALID_STATE_TRANSTION.getMessage(), "");
+				}
 
 				if(updateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
@@ -509,12 +522,12 @@ public class EnduserServiceImpl {
 					return new GenricResponse(3, "Unable to update End Userdb.", updateRequest.getTxnId()); 
 				}else {
 					List<RawMail> rawMails = new ArrayList<>();
-					
+
 					// Mail to End user.
 					rawMails.add(new RawMail(mailTag, userProfile, Long.valueOf(updateRequest.getFeatureId()), 
 							Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, updateRequest.getTxnId(), 
 							"SUBJECT", placeholderMap));
-					
+
 					emailUtil.saveNotification(rawMails);
 				}
 

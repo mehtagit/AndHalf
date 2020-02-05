@@ -18,10 +18,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Audited
 public class EndUserDB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -72,6 +75,7 @@ public class EndUserDB implements Serializable {
 	@Transient
 	private Integer docTypeInterp;
 
+	@NotAudited
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
@@ -81,12 +85,14 @@ public class EndUserDB implements Serializable {
 	@Column(length = 1)
 	private String onVisa="N";
 	
+	@NotAudited
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<VisaDb> visaDb;
 	
 	@Column(length = 1)
 	private String isVip="N";
 	
+	@NotAudited
 	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)
 	private UserDepartment userDepartment;
 	

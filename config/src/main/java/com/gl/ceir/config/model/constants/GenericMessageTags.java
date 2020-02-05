@@ -16,7 +16,8 @@ public enum GenericMessageTags {
 	USER_REGISTER_SUCCESS("USER_REGISTER_SUCCESS", "User have been registered successfully."),
 	FEATURE_NOT_ALLOWED("FEATURE_NOT_ALLOWED", "This functionality is not supported now."),
 	//----------
-	NULL_USER_DEPARTMENT ("NULL_USER_DEPARTMENT", "User Department is null for VIP.")
+	NULL_USER_DEPARTMENT ("NULL_USER_DEPARTMENT", "User Department is null for VIP."),
+	INVALID_STATE_TRANSTION("INVALID_STATE_TRANSTION", "Operation not allowed.")
 	;
 	
 	private String tag;
