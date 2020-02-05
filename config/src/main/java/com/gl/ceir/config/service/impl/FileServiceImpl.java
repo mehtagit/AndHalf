@@ -65,10 +65,19 @@ public class FileServiceImpl {
 		default:
 			break;
 		}
-		
+
 		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
 	}
-	
+
+	public FileDetails getManuals() {
+
+		String fileName = null;
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link);
+		fileName = "CEIRv1.0_User Manual (Importer)_v1.0";
+
+		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
+	}
+
 	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {
 
 		String fileLink = null;
@@ -79,7 +88,7 @@ public class FileServiceImpl {
 		}else {	
 			fileLink = systemConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;
 		}
-		
+
 		return new FileDetails("", "", fileLink);
 	}
 }

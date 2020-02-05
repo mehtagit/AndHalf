@@ -28,6 +28,8 @@ public interface ConfigTags {
 	String new_year_date_register_device = "new_year_date_register_device";
 	String grace_period_for_rgister_device = "grace_period_for_rgister_device";
 	
+	String manuals_link = "manuals_link";
+	
 	// User
 	String default_visa_expiration_days = "default_visa_expiration_days";
 	

@@ -159,4 +159,15 @@ public class FileController {
 		
 		return fileDetails;
 	}
+	
+	@ApiOperation(value = "Download manuals.", response = String.class)
+	@GetMapping("/Download/manuals")
+	public FileDetails downloadSampleFile() {		
+		
+		logger.info("Request manuals");
+		FileDetails fileDetails = fileServiceImpl.getManuals();
+		logger.info("Response for manuals " + fileDetails);
+		
+		return fileDetails;
+	}
 }
