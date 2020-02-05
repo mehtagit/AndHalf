@@ -248,7 +248,7 @@ var contextpath = "${context}";
                                                     document.getElementById('inputDetails').style.display ='block';">Submit</a> -->
                                                     <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
                                                 <a href="./redirectToHomePage" class="btn"
-                                                    style="margin-left: 10px;"><spring:message code="button.submit" /></a>
+                                                    style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                             </div>
                                         </div>
                                     </div></form>

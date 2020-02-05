@@ -611,8 +611,8 @@ data-dismiss="modal">&times;</button> -->
 $(document).ready(function () {
 <%String lang=(String)session.getAttribute("language");%>
 <%if(lang!=null){%>
-console.log("language="+"<%=lang%>");
- $("#langlist").val("<%=lang%>"); 
+<%-- console.log("language="+"<%=lang%>"); --%>
+<%--  $("#langlist").val("<%=lang%>");  --%>
 <%-- document.getElementById("langlist").value="<%=lang%>"; --%>
 <%}%>
 });
