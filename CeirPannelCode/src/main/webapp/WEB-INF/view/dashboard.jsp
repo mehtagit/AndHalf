@@ -614,8 +614,9 @@ data-dismiss="modal">&times;</button> -->
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
+	<%-- 	<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript">
-
 $(document).ready(function () {
 <%String lang=(String)session.getAttribute("language");%>
 <%if(lang!=null){%>

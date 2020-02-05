@@ -77,7 +77,8 @@
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
-	session-value="en" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-value="en" 
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 <%-- <%
   out.println(session.getAttribute("usertype"));
@@ -786,7 +787,8 @@
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-		
+			<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 
