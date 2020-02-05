@@ -47,6 +47,7 @@ import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -417,7 +418,8 @@ public class RegularizedDeviceServiceImpl {
 						SubFeatures.REGISTER, 
 						regularizeDeviceDb.getTxnId(), 
 						"Subject", 
-						placeholders));
+						placeholders,
+						ReferTable.USERS));
 
 
 				emailUtil.saveNotification(rawMails);

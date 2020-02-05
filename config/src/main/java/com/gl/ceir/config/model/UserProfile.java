@@ -239,8 +239,9 @@ public class UserProfile {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public void setId(long id) {
+	public UserProfile setId(long id) {
 		this.id = id;
+		return this;
 	}
 
 	public String getOperatorTypeName() {

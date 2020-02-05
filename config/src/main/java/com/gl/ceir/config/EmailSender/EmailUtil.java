@@ -110,7 +110,7 @@ public class EmailUtil {
 			}
 			// Save email in notification table.
 			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
-					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0);
+					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0, null);
 
 			return Boolean.TRUE;
 		}catch (Exception e) {
@@ -141,7 +141,8 @@ public class EmailUtil {
 						rawMail.getSubFeature(), 
 						rawMail.getFeatureTxnId(), 
 						rawMail.getSubject(), 
-						0));
+						0,
+						rawMail.getReferTable()));
 			}
 			
 			configurationManagementServiceImpl.saveAllNotifications(notifications);

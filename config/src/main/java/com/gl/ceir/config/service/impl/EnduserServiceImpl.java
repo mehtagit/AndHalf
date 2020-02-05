@@ -51,6 +51,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.EndUserStatus;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
@@ -523,9 +524,9 @@ public class EnduserServiceImpl {
 					List<RawMail> rawMails = new ArrayList<>();
 
 					// Mail to End user.
-					rawMails.add(new RawMail(mailTag, userProfile, Long.valueOf(updateRequest.getFeatureId()), 
+					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(updateRequest.getFeatureId()), 
 							Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, updateRequest.getTxnId(), 
-							"SUBJECT", placeholderMap));
+							"SUBJECT", placeholderMap, ReferTable.END_USER));
 
 					emailUtil.saveNotification(rawMails);
 				}

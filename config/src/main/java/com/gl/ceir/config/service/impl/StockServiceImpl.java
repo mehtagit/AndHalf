@@ -54,6 +54,7 @@ import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
@@ -317,7 +318,7 @@ public class StockServiceImpl {
 
 				rawMails.add(new RawMail("MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD", userProfile, 
 						4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT,  
-						placeholderMapForAnonymousUser));
+						placeholderMapForAnonymousUser, ReferTable.USERS));
 			}
 
 			if(emailUtil.saveNotification(rawMails)) {

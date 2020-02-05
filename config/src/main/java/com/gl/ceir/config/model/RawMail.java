@@ -14,10 +14,11 @@ public class RawMail implements Serializable{
 	private String subFeature;
 	private String featureTxnId;
 	private String subject; 
+	private String referTable;
 	private Map<String, String> placeholders;
 	
 	public RawMail(String tag, UserProfile userProfile, long featureId, String featureName, String subFeature,
-			String featureTxnId, String subject, Map<String, String> placeholders) {
+			String featureTxnId, String subject, Map<String, String> placeholders, String referTable) {
 		super();
 		this.tag = tag;
 		this.userProfile = userProfile;
@@ -27,6 +28,21 @@ public class RawMail implements Serializable{
 		this.featureTxnId = featureTxnId;
 		this.subject = subject;
 		this.placeholders = placeholders;
+		this.referTable = referTable;
+	}
+	
+	public RawMail(String tag, long userId, long featureId, String featureName, String subFeature,
+			String featureTxnId, String subject, Map<String, String> placeholders, String referTable) {
+		super();
+		this.tag = tag;
+		this.userProfile = new UserProfile().setId(userId);
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.featureTxnId = featureTxnId;
+		this.subject = subject;
+		this.placeholders = placeholders;
+		this.referTable = referTable;
 	}
 	
 	public String getTag() {
@@ -80,6 +96,14 @@ public class RawMail implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getReferTable() {
+		return referTable;
+	}
+
+	public void setReferTable(String referTable) {
+		this.referTable = referTable;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
