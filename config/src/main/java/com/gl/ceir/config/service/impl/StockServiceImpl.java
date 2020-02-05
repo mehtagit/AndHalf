@@ -298,17 +298,18 @@ public class StockServiceImpl {
 		}else if(isAnonymousUpload) {
 			List<RawMail> rawMails = new ArrayList<RawMail>();
 
-			User user = userRepository.getByUsername("CEIRAdmin");
-			logger.info(user);
-
 			// Send notification to the CeirAdmin. 
+			/*
+			User ceirAdmin = userRepository.getByUsername("CEIRAdmin");
+			logger.info("ceirAdmin : " + ceirAdmin);
+			
 			Map<String, String> placeholderMapForCeirAdmin = new HashMap<String, String>();
 			placeholderMapForCeirAdmin.put("<txn_id>", stockMgmt.getTxnId());
 
-			rawMails.add(new RawMail("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", user.getUserProfile(), 
+			rawMails.add(new RawMail("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", ceirAdmin.getUserProfile(), 
 					4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT, 
 					placeholderMapForCeirAdmin));
-
+*/
 			// Send notification to the anonymous user if mail is provided.
 			if(Objects.nonNull(userProfile.getEmail()) && !userProfile.getEmail().isEmpty()) {
 				Map<String, String> placeholderMapForAnonymousUser = new HashMap<String, String>();
