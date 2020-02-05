@@ -40,6 +40,7 @@ public class EndUserDB implements Serializable {
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
+	@Column(unique = true)
 	private String nid;
 	
 	@NotNull
@@ -80,6 +81,7 @@ public class EndUserDB implements Serializable {
 	private List<RegularizeDeviceDb> regularizeDeviceDbs ;
 	
 	@Column(length = 50)
+	@NotNull
 	private String nationality;
 	
 	@Column(length = 1)
