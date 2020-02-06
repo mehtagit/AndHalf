@@ -1,14 +1,12 @@
 
 
 function DeviceDetails(){
-	
 	var RequestData={
 			"deviceIdType":parseInt($("#deviceIdType").val()),
 			"deviceId":$("#DeviceID").val()
 	}
 
 	$.ajax({
-		
 		url : "./checkDevice",
 		data :	JSON.stringify(RequestData),
 		dataType : 'json',
@@ -16,13 +14,11 @@ function DeviceDetails(){
 		type : 'POST',
 		success : function(response) {
 			console.log(response);
-			
 			if (response.errorCode == 200) {
 				$("#singleInput").css("display", "none");
 				$("#validDetails").css("display", "block");
 				setvalidData(response)
 			}else{
-				
 				$("#singleInput").css("display", "none");
 				$("#invalidDetails").css("display", "block");
 				setInvalidData(response)
@@ -30,10 +26,9 @@ function DeviceDetails(){
 			
 		},
 		error : function() {
-			$('#errorModal').openModal();
+			alert("Failed");
 		}
 	});
-	return false;
 }
 
 
@@ -42,16 +37,14 @@ function setvalidData(response){
 	$("#validTac").val(response.data.tacNumber);
 	$("#validbrandName").val(response.data.brandName);
 	$("#validModelName").val(response.data.modelName);
-	
 }
 
 
 function setInvalidData(data){
-	
 	$("#InvalidImeiNumber").text(response.data.imei)
 	$("#invalidTac").val(response.data.tacNumber);
 	$("#invalidRemark").val(response.data.brandName);
-	
+
 	
 }
 
