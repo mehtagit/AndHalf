@@ -84,13 +84,14 @@ class="form-control boxBorder boxHeight"/>
 <div class=" col s12 m6 l6">
  <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
 <select class="browser-default" id="category" required="required">
+<option value="" selected disabled ><spring:message code="operator.category" /></option>
 </select>
 </div>
 </div>
 
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
-<textarea id="Remark" class="materialize-textarea" required="required"></textarea>
+<textarea id="Remark" class="materialize-textarea" maxlength="200" required="required"></textarea>
 <label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
@@ -352,7 +353,7 @@ $.ajax({
 	success: function (data, textStatus, jqXHR) {
 		console.log(data);
 
-		$('#category').empty();
+		//$('#category').empty();
 		//$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
 
 		for (i = 0; i < data.length; i++){
