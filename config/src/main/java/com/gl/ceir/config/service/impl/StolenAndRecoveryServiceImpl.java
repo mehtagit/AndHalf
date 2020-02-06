@@ -562,6 +562,8 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 				stolenandRecoveryMgmtInfo.setFileName(stolenandRecoveryMgmt.getFileName());
+				stolenandRecoveryMgmtInfo.setBlockCategory(stolenandRecoveryMgmt.getBlockCategory());
+				stolenandRecoveryMgmtInfo.setRemark(stolenandRecoveryMgmt.getRemark());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
