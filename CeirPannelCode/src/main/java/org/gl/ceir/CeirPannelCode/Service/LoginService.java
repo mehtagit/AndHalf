@@ -66,7 +66,6 @@ public class LoginService {
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
 			log.info("if captcha match");
-			ModelAndView mv=new ModelAndView();
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
 			log.info("login response:  "+response); 
@@ -82,7 +81,6 @@ public class LoginService {
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
 				session.setAttribute("language",response.getUserLanguage());
-				mv.setViewName("redirect:/importerDashboard");  
 				return response;      
 			}       
 			else {
@@ -97,7 +95,7 @@ public class LoginService {
 			return response; 
 		}
 	}
-	
+		
 	public HttpResponse changeLanguage(String language,HttpSession session) {
 		log.info("inside check change language controller ");
 		log.info("language data:  "+language);

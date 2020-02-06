@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -117,7 +119,7 @@
 
 									<div class="input-field col s12 m6 l6">
 										<input type="text" id="manufacturerName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
-											name="manufacturerName"  required="required" /> <label for="manufacturerName"><spring:message code="input.ManufacturerName" /><span class="star">*</span>
+											name="manufacturerName"  required="required" /> <label for="manufacturerName"><spring:message code="input.ManufacturerName" /> <span class="star">*</span>
 										</label>
 									</div>
 
@@ -149,7 +151,7 @@
 									</div>
 
 									<div class="col s12 m6 l6">
-										<label for="status"><spring:message code="input.Status" /><span class="star">*</span></label>
+										<label for="status"><spring:message code="input.Status" /> <span class="star">*</span></label>
 										<select class="browser-default" required="required" id="status">
 											<option value=""><spring:message code="input.Status" /></option>
 										</select>
@@ -166,7 +168,7 @@
 											class="input-group-addon" style="color: #ff4081"><i
 											class="fa fa-calendar" aria-hidden="true"
 											style="float: right; margin-top: -37px;"></i></span> <label
-											for="approveDisapproveDate"><spring:message code="input.Approve/RejectionDate" /> <span
+											for="approveDisapproveDate"><spring:message code="input.Approve/RejectionDate" /><span
 											class="star">*</span></label>
 									</div>
 
@@ -175,18 +177,28 @@
                                             
 									<div class="input-field col s12 m6 l6" style="margin-top: 9px;">
 										<textarea id="remark" class="materialize-textarea"></textarea>
-										<label for="remark"><spring:message code="input.Remark" /></label>
+										<label for="remark"><spring:message code="input.Remark" /> </label>
 									</div>
 								</div>
 
 								<div class="row">
+
+									<div class="col s12 m6 l6" style="margin-top: 8px;">
+										<label for="Category"><spring:message code="input.documenttype" /></label> <select
+											class="browser-default" id="docTypetag1">
+											<option value="" disabled="" selected=""><spring:message code="select.documenttype" /></option>
+										</select> 
+									</div>
+
+
 									<h6 style="color: #000; margin-left: 10px;">
-										 <spring:message code="input.supportingdocument" /><span class="star">*</span>
+										<spring:message code="input.supportingdocument" /> <span class="star">*</span>
 									</h6>
 									<div class="file-field col s12 m6">
 										<div class="btn">
-											<span><spring:message code="input.selectfile" /></span> <input id="file" type="file" required="required"
-												multiple>
+											<span><spring:message code="input.selectfile" /></span> 
+										
+											<input type="file" name="files[]" id="docTypeFile1">
 										</div>
 										<div class="file-path-wrapper">
 											<input class="file-path validate" type="text" multiple>
@@ -274,24 +286,50 @@ var featureId = 11;
 			var requestDate= $('#requestDate').val();
 			var remark = $('#remark').val();
 			var userId = $("body").attr("data-userID");
-			var formData = new FormData();
-			formData.append('file', $('#file')[0].files[0]);
-			formData.append('manufacturerId', manufacturerId);
-			formData.append('manufacturerName', manufacturerName);
-			formData.append('country', country);
-			formData.append('tac', tac);
-			formData.append('approveStatus', approveStatus);
-			formData.append('approveDisapproveDate', approveDisapproveDate);
-			formData.append('requestDate',requestDate);
-			formData.append('remark', remark);
-			formData.append('userId',userId);
 			
+			var fieldId=1;
+			var fileInfo =[];
+			var formData= new FormData();
+			var fileData = [];
+	
+			var x;
+			var filename='';
+			var filediv;
+			var i=0;
+			var formData= new FormData();
+			var docTypeTagIdValue='';
+			var filename='';
+			
+			
+		var x={
+				"docType":$('#docTypetag'+fieldId).val(),
+				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+				}
+		
+				fileInfo.push(x);
+			
+			var multirequest={
+					"attachedFiles":fileInfo,
+					"manufacturerId" : $('#manufacturerId').val(),
+					"manufacturerName" : $('#manufacturerName').val(),
+					"country" : $('#country').val(),
+		 			"tac" : $('#tac').val(),
+					"approveStatus" : parseInt($('#status').val()),
+		 			"approveDisapproveDate" : $('#approveDisapproveDate').val(),
+					"requestDate" : $('#requestDate').val(),
+					"remark" : $('#remark').val(),
+					"userId" : $("body").attr("data-userID")
+				}
+			
+			console.log("multirequest------------->" +JSON.stringify(multirequest))
 			$.ajax({
 				url : './register-approved-device',
 				type : 'POST',
 				data : formData,
-				 processData : false,
+				mimeType: 'multipart/form-data',
+				processData : false,
 				contentType : false, 
+				async:false,
 				success : function(data, textStatus, jqXHR) {
 						console.log("-----success"+data);
 						$("#trcSubmitButton").prop('disabled', true);
@@ -322,6 +360,15 @@ var featureId = 11;
 			return false;
 
 		}
+		
+		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+			console.log("@@@@@" + JSON.stringify(data));
+			for (i = 0; i < data.length; i++) {
+				console.log(data[i].interp);
+				$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+						'#docTypetag1');
+			}
+		});
 		
 		
 

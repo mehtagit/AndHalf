@@ -118,7 +118,7 @@ var contextpath = "${context}";
 						<li><a href="#goToHome" id="newUserLink"
 							class="modal-trigger" style="color: white;"><spring:message
 									code="registration.home" /></a></li>
-						<li class="profileInfo"><a
+						<li class="profileInfo"><a id="openUl"
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 							href="#" data-activates="profile-dropdown" style="height: 40px;"><i
 								class="mdi-action-account-circle"
@@ -616,6 +616,18 @@ console.log("language="+"<%=lang%>");
 <%-- document.getElementById("langlist").value="<%=lang%>"; --%>
 <%}%>
 });
+$('html').click(function() {
+    $('#profile-dropdown').hide();
+ })
+
+ $('.profileInfo').click(function(e){
+     e.stopPropagation();
+ });
+
+$('#openUl').click(function(e) {
+ $('#profile-dropdown').toggle();
+ });
+
 </script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>

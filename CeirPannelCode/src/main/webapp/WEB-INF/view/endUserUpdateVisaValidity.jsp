@@ -92,6 +92,7 @@
                                                 </div>
                                                 <div class="input-field col s12 m3 l3">
                                                     <input type="text" id="nidForEndUser" required="required" pattern="[A-Za-z0-9]{0,15}" maxlength="15" name="Search"  />
+                                                
                                                 </div>
                                                 <div class="input-field col s12 m2 l2">
                                                     <button class="btn" type="submit" >Submit</button>
@@ -108,9 +109,11 @@
                                                 <div class="input-field col s12 m6">
                                                     <input type="text" id="endUserpassportNumber" name="endUserpassportNumber" required  placeholder=""
                                                         pattern="[a-zA-Z0-9]{1,15}" title="Please enter alphabets upto 15 characters only" maxlength="15" />
+                                                        
                                                     <label for="endUserpassportNumber">Passport Number <span
                                                             class="star">*</span></label>
                                                 </div>
+                                                <input type="text" id="endUserTxnId" style="display:none">
                                                 <div class="file-field col s12 m6" style="margin-top: -8px;">
                                                     <h6 style="font-size: 12px;">Upload Passport Image <span class="star">*</span></h6>
                                                     <div class="btn" id="passportFileDiv">
@@ -142,14 +145,14 @@
                                                 </div>
 
                                                 <div class="input-field col s12 m12 l12">
-                                                    <input type="text" name="address" placeholder="" title="Please enter alphabets upto 50 characters only" required="required"
+                                                    <input type="text"  placeholder="" title="Please enter alphabets upto 50 characters only" required="required"
                                                      pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"  class="form-control boxBorder boxHeight" id="endUseraddress" maxlength="200"> 
                                                     <label for="address">Address(Property Location) <span
                                                             class="star">*</span></label>
                                                 </div>
 
                                                 <div class="input-field col s12 m6 l6">
-                                                    <input type="text" name="streetNumber" required="required" placeholder=""
+                                                    <input type="text" required="required" placeholder=""
                                                        pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"   class="form-control boxBorder boxHeight" id="endUserstreetNumber"
                                                    title="Please enter alphabets upto 200 characters only"     maxlength="200">
                                                     <label for="streetNumber">Street Number <span

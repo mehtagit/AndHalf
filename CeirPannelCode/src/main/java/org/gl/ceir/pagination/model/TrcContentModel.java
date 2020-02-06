@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.springframework.stereotype.Component;
 @Component
 public class TrcContentModel {
@@ -33,7 +34,9 @@ public class TrcContentModel {
 	private String modelNumber;
 	private String manufacturerCountry;
 	private String frequencyRange;
-	private List<Object> attachedFiles = null;
+	private String productNameInterp;
+	private String modelNumberInterp;
+	private List<AttachedFile> attachedFiles; 
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -191,10 +194,22 @@ public class TrcContentModel {
 	public void setFrequencyRange(String frequencyRange) {
 		this.frequencyRange = frequencyRange;
 	}
-	public List<Object> getAttachedFiles() {
+	public String getProductNameInterp() {
+		return productNameInterp;
+	}
+	public void setProductNameInterp(String productNameInterp) {
+		this.productNameInterp = productNameInterp;
+	}
+	public String getModelNumberInterp() {
+		return modelNumberInterp;
+	}
+	public void setModelNumberInterp(String modelNumberInterp) {
+		this.modelNumberInterp = modelNumberInterp;
+	}
+	public List<AttachedFile> getAttachedFiles() {
 		return attachedFiles;
 	}
-	public void setAttachedFiles(List<Object> attachedFiles) {
+	public void setAttachedFiles(List<AttachedFile> attachedFiles) {
 		this.attachedFiles = attachedFiles;
 	}
 	public Map<String, Object> getAdditionalProperties() {
@@ -214,11 +229,8 @@ public class TrcContentModel {
 				+ ", modifiedOn=" + modifiedOn + ", txnId=" + txnId + ", stateInterp=" + stateInterp
 				+ ", adminStateInterp=" + adminStateInterp + ", trademark=" + trademark + ", productName=" + productName
 				+ ", modelNumber=" + modelNumber + ", manufacturerCountry=" + manufacturerCountry + ", frequencyRange="
-				+ frequencyRange + ", attachedFiles=" + attachedFiles + ", additionalProperties=" + additionalProperties
-				+ "]";
+				+ frequencyRange + ", productNameInterp=" + productNameInterp + ", modelNumberInterp="
+				+ modelNumberInterp + ", attachedFiles=" + attachedFiles + ", additionalProperties="
+				+ additionalProperties + "]";
 	}
-	
-	
-	
-	
 }

@@ -71,7 +71,7 @@ function setViewPopupData(data){
 	$('#singleInput').css("display", "none");
 	$('#inputDetails').css("display", "block");
 	$("#transactionID").val(data.txnId);
-	$("#uploadDate").val(data.modifiedOn);
+	$("#uploadDate").val(data.createdOn);
 	$("#viewUploadFile").val(data.fileName);
 	$("#errorFileStatus").val(data.stateInterp);
 	console.log(data.stockStatus);
@@ -105,6 +105,13 @@ function endUserStockFileDownload(){
 	//.//Consignment%20(18).csv/C20200121142445617/DEFAULT
 }
 
+function endUserStockErrorFileDownload(){
+	var fileName=$("#errorFileName").val();
+	var txnId=$("#transactionID").val();
+	window.location.href=contextpath+"/Consignment/dowloadFiles/actual/"+fileName+"/"+txnId+"/DEFAULT";
+	
+	//.//Consignment%20(18).csv/C20200121142445617/DEFAULT
+}
 
 function updateFile()
 {

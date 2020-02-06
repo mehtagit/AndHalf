@@ -116,16 +116,16 @@ public class TRC implements CRUD{
 					log.info("--------in Importal Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
 						String trademark = trcContentModelList.getTrademark();
-						String productName = trcContentModelList.getProductName();
+						String productName = trcContentModelList.getProductNameInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String modelNumber = trcContentModelList.getModelNumber();
+						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						String status = trcContentModelList.getStateInterp();
 						String fileName1= trcContentModelList.getFileName();
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.importalTrcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
-						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,action};
+						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);

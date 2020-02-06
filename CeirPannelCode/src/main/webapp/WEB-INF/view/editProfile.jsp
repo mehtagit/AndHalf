@@ -114,6 +114,7 @@ var contextpath = "${context}";
        <!-- ajax js -->
     <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
       <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+      <script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
     <!--materialize js-->
     <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
@@ -726,14 +727,14 @@ var contextpath = "${context}";
 
     <!-- modal start -->
 
-    <div id="otpVerification" class="modal" style="width: 40%;">
+       <div id="otpVerification" class="modal" style="width: 40%;">
         <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-               <h6 class="modal-header">Enter OTP</h6>
-        <div class="modal-content">  
-                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+               <h6 class="modal-header"><spring:message code="registration.otp" /></h6>
+        <div class="modal-content">
+                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
              <p class="center" id="verifyOtpResp"></p>
-                        <input type="hidden" id="userid"  name="userid" value="${userId}">
+                                       <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
                                 <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
@@ -761,9 +762,8 @@ var contextpath = "${context}";
                     <div class="row">
                         
                            <div class="input-field col s12">
-
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
-                                <input required="required"  type="password" class="" id="confirmPassword" maxlength="10">
+                                <input required="required"   type="password" class="password" id="confirmPassword" maxlength="10">
                             </div>
                         
                     </div>

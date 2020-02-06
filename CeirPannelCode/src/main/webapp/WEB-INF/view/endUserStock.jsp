@@ -152,10 +152,10 @@ var contextpath = "${context}";
 
 </head>
 <body>
-<section id="content">
+<section id="content" style="margin-bottom: 100px;">
                 <!--start container-->
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
-                <div class="container" style="margin-top:10vh;" id="uploadPaidStatusDiv" style="dispay:none">
+                <div class="container" style="margin-top:5vh;" id="uploadPaidStatusDiv" style="dispay:none">
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page">
                             <h6 class="fixPage-modal-header ">Upload Stock</h6>
@@ -236,11 +236,13 @@ var contextpath = "${context}";
                     </div>
                 </div>
                 
-                                       <div class="container" style="margin-top:10vh;display: none" id="checkUploadStatusDiv" >
+                                       <div class="container" style="margin-top:5vh;display: none" id="checkUploadStatusDiv" >
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page" >
                             <!-- <a href="index.html" class="modal-close btn-flat modal-btn right"
+                            
                                 data-dismiss="modal">&times;</a> -->
+                                 <a href="./redirectToHomePage" class="modal-close btn-flat modal-btn right" data-dismiss="modal">&times;</a>
                                 <h6 class="fixPage-modal-header ">Check Upload Status</h6>
                                  	
                                 <div class="col s12 m12 l12">
@@ -263,7 +265,7 @@ var contextpath = "${context}";
                                                     onclick="document.getElementById('singleInput').style.display ='none'; 
                                                     document.getElementById('inputDetails').style.display ='block';">Submit</a> -->
                                                     <button class=" btn" type="submit">Submit</button>
-                                                <a href="#cancelStock" class="btn modal-trigger modal-close"
+                                                <a href="./redirectToHomePage" class="btn"
                                                     style="margin-left: 10px;">Cancel</a>
                                             </div>
                                         </div>
@@ -312,7 +314,7 @@ var contextpath = "${context}";
                                                 <label for="errorFileName">View Error Report :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <a href="JavaScript:void();"><i class="fa fa-download download-icon" aria-hidden="true"
+                                                <a href="JavaScript:void();" onclick="endUserStockErrorFileDownload()"><i class="fa fa-download download-icon" aria-hidden="true"
                                                     style="position: absolute; right: 0; margin: 10px 15px 0 0;"
                                                     title="download"></i></a>
                                                 <input type="text" id="errorFileName" name="errorFileName"
@@ -323,7 +325,7 @@ var contextpath = "${context}";
                                                 <label for="viewUploadFile">Do you want to upload a fresh file?</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <div class=" boxHeight" style="margin-top: 15px;">
+                                                <div class=" boxHeight" style="margin-top: 8px;">
                                                     <input class="with-gap" name="group3" type="radio"
                                                         onclick="document.getElementById('uploadFile').style.display = 'block';">
                                                     Yes

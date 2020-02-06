@@ -354,8 +354,8 @@
 			var multirequest={
 					"attachedFiles":fileInfo,
 					"trademark" : $('#trademark').val(),
-					"productName" : $('#productname').val(),
-		 			"modelNumber" : $('#modelNumber').val(),
+					"productName" : parseInt($('#productname').val()),
+		 			"modelNumber" : parseInt($('#modelNumber').val()),
 					"manufacturerCountry" : $('#country').val(),
 		 			"frequencyRange" : $('#frequencyrange').val(),
 					"tac" : $('#tac').val(),
@@ -387,7 +387,7 @@
 
 		}
 
-		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i].interp);
@@ -431,7 +431,7 @@
 														+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
 
-							$.getJSON('./getDropdownList/DOC_TYPE', function(
+							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(
 									data) {
 
 								for (i = 0; i < data.length; i++) {
