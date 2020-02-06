@@ -391,8 +391,8 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
-										required="required" title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
-										 <label for="email"><spring:message
+										required="required" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" >
+										 <label for="email"><spring:message                        
 											code="input.email" /> <span class="star">*</span> </label>
 								</div>
 

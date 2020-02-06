@@ -125,8 +125,7 @@ public class RegistrationService {
 				log.info("if password and confirm password match");
 				String username=randomDigits.getAlphaNumericString(4)+randomDigits.getNumericString(4)+randomDigits.getAlphaNumericString(1);
 				registration.setUsername(username);
-				StringBuilder combinedPath=new StringBuilder().append("/"+username);
-				log.info("filepath is : "+combinedPath);
+				StringBuilder combinedPath=new StringBuilder(filePath).append("/"+username);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
 				String idCardPath=new String(combinedPath+"/IDCard");  
