@@ -56,6 +56,7 @@
 
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
+	 data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
@@ -71,7 +72,7 @@
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
 								<p class="PageHeading">
-									<spring:message code="modal.header.Report Type-Approved Devices" />
+									<spring:message code="modal.header.typeApproved" />
 								</p>
 							</div>
 
@@ -112,7 +113,11 @@
 												</select>
 											</div>
 
-
+										<div class="col s12 m6 l6" hidden>
+										<select class="browser-default" required="required" id="status" >
+										</select>
+										</div>
+											
 											<div class="col s12 m6 l6">
 												<label><spring:message
 														code="registration.countrymanufacture" /> <span
@@ -314,9 +319,19 @@
 		}).done(function() {
 			console.log("done")
 		});
-
+		
+		var featureId = 11;
 		populateCountries("country");
-
+		
+		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].state).text(data[i].interp)
+				.appendTo('#status');
+			}
+		});
+		
+	
+		
 		function registerTAC() {
 			var trademark = $('#trademark').val();
 			var productName = $('#productname').val();
@@ -354,12 +369,14 @@
 			var multirequest={
 					"attachedFiles":fileInfo,
 					"trademark" : $('#trademark').val(),
-					"productName" : $('#productname').val(),
-		 			"modelNumber" : $('#modelNumber').val(),
+					"productName" : parseInt($('#productname').val()),
+		 			"modelNumber" : parseInt($('#modelNumber').val()),
 					"manufacturerCountry" : $('#country').val(),
 		 			"frequencyRange" : $('#frequencyrange').val(),
 					"tac" : $('#tac').val(),
-			 		"userId" : $("body").attr("data-userID")
+			 		"userId" : $("body").attr("data-userID"),
+			 		"featureId" : featureId,
+			 		"approveStatus" : parseInt($("#status option:eq(2)").val())
 				}
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -387,7 +404,7 @@
 
 		}
 
-		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i].interp);
@@ -431,7 +448,7 @@
 														+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
 
-							$.getJSON('./getDropdownList/DOC_TYPE', function(
+							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(
 									data) {
 
 								for (i = 0; i < data.length; i++) {

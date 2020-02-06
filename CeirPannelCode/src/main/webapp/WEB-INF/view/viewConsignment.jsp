@@ -800,6 +800,8 @@
 <%
         }
         else{
+         //  	%> <script language="javascript"> alert("Deletion successful"); </script> <%
+            
         	request.setAttribute("msg", "  *Please login first");
         request.getRequestDispatcher("./login.jsp").forward(request, response);
         	

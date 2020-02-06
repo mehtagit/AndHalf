@@ -256,7 +256,7 @@
     <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
         <div class="footer-copyright">
             <div class="container">
-                <span class="right"><spring:message code="registration.copyright2018sterlitereserved" /></span>
+                <span class="right"><spring:message code="registration.copyright@" /></span>
             </div>
         </div>
     </footer>

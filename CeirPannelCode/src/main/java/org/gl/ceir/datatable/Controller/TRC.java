@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
@@ -94,6 +95,15 @@ public class TRC implements CRUD{
 				if("CEIRAdmin".equals(userType)){
 					log.info("--------in Admin Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						log.info("inside Trc File Name" +trcContentModelList.getAttachedFiles());
+						String fileName1="";
+						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
+						for(AttachedFile fileList :list)
+						{
+							fileName1= fileList.getFileName();
+							
+						}
+						
 						String createdOn = trcContentModelList.getCreatedOn();
 						String requestedDate = trcContentModelList.getRequestDate();
 						String manufacturerName = trcContentModelList.getManufacturerName();
@@ -104,7 +114,7 @@ public class TRC implements CRUD{
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String adminState = trcContentModelList.getAdminStateInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName1= trcContentModelList.getFileName();
+					
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
@@ -116,16 +126,16 @@ public class TRC implements CRUD{
 					log.info("--------in Importal Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
 						String trademark = trcContentModelList.getTrademark();
-						String productName = trcContentModelList.getProductName();
+						String productName = trcContentModelList.getProductNameInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String modelNumber = trcContentModelList.getModelNumber();
+						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						String status = trcContentModelList.getStateInterp();
 						String fileName1= trcContentModelList.getFileName();
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.importalTrcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
-						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,action};
+						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -133,6 +143,12 @@ public class TRC implements CRUD{
 				}else if("TRC".equals(userType)) {
 					log.info("--------in TRC Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String FileName="";
+						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
+						for(AttachedFile fileList :list)
+						{
+							FileName= fileList.getFileName();
+						}
 						String createdOn = trcContentModelList.getCreatedOn();
 						String requestedDate = trcContentModelList.getRequestDate();
 						String manufacturerName = trcContentModelList.getManufacturerName();
@@ -142,9 +158,8 @@ public class TRC implements CRUD{
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName1= trcContentModelList.getFileName();
-						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--FileName------->"+FileName+"--txnId------>"+txnId);
+						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),FileName,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);

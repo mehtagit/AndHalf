@@ -8,7 +8,8 @@ public class AttachedFile {
 	private String docType;
 	private String docTypeInterp;
 	private String fileName;
-	private String txnId;
+	private Long id;
+	private String TxnId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public String getDocType() {
 		return docType;
@@ -28,11 +29,17 @@ public class AttachedFile {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTxnId() {
-		return txnId;
+		return TxnId;
 	}
 	public void setTxnId(String txnId) {
-		this.txnId = txnId;
+		TxnId = txnId;
 	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
@@ -43,9 +50,8 @@ public class AttachedFile {
 	@Override
 	public String toString() {
 		return "AttachedFile [docType=" + docType + ", docTypeInterp=" + docTypeInterp + ", fileName=" + fileName
-				+ ", txnId=" + txnId + ", additionalProperties=" + additionalProperties + "]";
+				+ ", id=" + id + ", TxnId=" + TxnId + ", additionalProperties=" + additionalProperties + "]";
 	}
-	
 	
 	
 }

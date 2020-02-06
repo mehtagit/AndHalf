@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Registration {
+public class Registration extends UserHeader{
 	private long id;
 	private String firstName;
 	private String middleName;
@@ -17,7 +17,7 @@ public class Registration {
 	private String locality;
 	private String district;
 	private String commune;
-	private Integer postalCode;
+	private String postalCode;
 	private String province;
 	private String country; 
 	private Integer type;
@@ -134,10 +134,10 @@ public class Registration {
 	public void setCommune(String commune) {
 		this.commune = commune;
 	}
-	public Integer getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 	public String getProvince() {
@@ -341,15 +341,15 @@ public class Registration {
 				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
 				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
-				+ ", roles=" + Arrays.toString(roles) + ", captcha=" + captcha + ", usertypeName=" + usertypeName
-				+ ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation="
-				+ designation + ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail
-				+ ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + ", nidFilename=" + nidFilename + ", photoFilename="
-				+ photoFilename + ", idCardFilename=" + idCardFilename + ", arrivalPort=" + arrivalPort
-				+ ", arrivalPortName=" + arrivalPortName + ", vatFilename=" + vatFilename + ", userLanguage="
-				+ userLanguage + ", nidFilePath=" + nidFilePath + ", photoFilePath=" + photoFilePath
-				+ ", idCardFilePath=" + idCardFilePath + ", vatFilePath=" + vatFilePath + "]";
+				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeName=" + usertypeName + ", employeeId="
+				+ employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation
+				+ ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo="
+				+ authorityPhoneNo + ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId
+				+ ", nidFilename=" + nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename="
+				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
+				+ ", vatFilename=" + vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath
+				+ ", photoFilePath=" + photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath="
+				+ vatFilePath + "]";
 	}
     
     

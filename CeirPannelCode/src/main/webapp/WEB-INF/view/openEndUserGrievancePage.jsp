@@ -41,7 +41,8 @@
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
+   <link rel="stylesheet"
+	href="${context}/resources/project_css/iconStates.css">
     <style>
  /*        ul li {
             display: inline-flex;

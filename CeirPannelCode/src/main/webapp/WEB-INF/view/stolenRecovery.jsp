@@ -975,8 +975,8 @@
                                                    
 
 
-                                                    <div class="input-field col s12 center">
-                                                        <button type="button" class="modal-close btn"><spring:message code="modal.ok" /></button>
+                                                    <div class="button-div col s12 center">
+                                                        <button type="button" class="modal-close btn"><spring:message code="modal.close" /></button>
                                                         
                                                     </div>
                                                 </form>

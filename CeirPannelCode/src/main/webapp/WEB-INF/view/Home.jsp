@@ -47,6 +47,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
   <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
  
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
+<link rel="stylesheet"
+	href="${context}/resources/project_css/iconStates.css">
 <style type="text/css">
   .dataTables_info {
         display: none;

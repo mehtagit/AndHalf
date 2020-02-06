@@ -1,7 +1,7 @@
-				window.parent.$('#langlist').on('change', function() {
+			/*	window.parent.$('#langlist').on('change', function() {
 						var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 						window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
-					}); 
+					}); */
 					
 					var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					$.i18n().locale = langParam;
@@ -12,8 +12,7 @@
 					} ).done( function() { 
 						successMsg=$.i18n('successMsg');
 					});
-					
-				
+									
 					function registerConsignment() {
 							var supplierId = $('#supplierId').val();
 							var supplierName = $('#supplierName').val();

@@ -11,10 +11,10 @@
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-		window.parent.$('#langlist').on('change', function() {
+	/*	window.parent.$('#langlist').on('change', function() {
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-			window.location.assign("./Consignment/viewConsignment?lang="+lang);				
-		}); 
+			window.location.replace("./Consignment/viewConsignment?lang="+lang);				
+		}); */
 
 		$.i18n().locale = lang;	
 		
@@ -331,7 +331,6 @@
 								d.filter = JSON.stringify(filterRequest); 
 
 							}
-
 						},
 						"columns": result
 					});

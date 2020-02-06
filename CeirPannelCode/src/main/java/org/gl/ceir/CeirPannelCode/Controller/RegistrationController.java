@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -46,7 +47,7 @@ public class RegistrationController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
-	public ModelAndView index(){
+	public ModelAndView index(HttpServletRequest request){
 		log.info("inside index controller ");
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
@@ -108,8 +109,8 @@ public class RegistrationController {
 			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
 			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
 			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
-			HttpSession session) throws IOException{
-		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session);  
+			HttpSession session,HttpServletRequest request) throws IOException{
+		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session,request);  
 		return response;             
 	}
 
@@ -132,8 +133,8 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/verifyOtp",method = {RequestMethod.POST})
 	@ResponseBody
-	public HttpResponse verifyOtp(@RequestBody Otp otp){
-		HttpResponse response =registrationService.verifyOtp(otp);
+	public HttpResponse verifyOtp(@RequestBody Otp otp,HttpServletRequest request){
+		HttpResponse response =registrationService.verifyOtp(otp,request);
 		return response;       
 	}
 
@@ -141,8 +142,8 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/resendOtp/{userid}",method = {RequestMethod.POST})
 	@ResponseBody
-	public HttpResponse resendOtp(@PathVariable Integer userid){
-		HttpResponse response =registrationService.resendOtp(userid);
+	public HttpResponse resendOtp(@PathVariable Integer userid,HttpServletRequest request){
+		HttpResponse response =registrationService.resendOtp(userid,request);
 		return response;                 
 	}  
 

@@ -25,9 +25,9 @@ public class TRCRegisteration {
 	private String manufacturerCountry;
 	private String manufacturerId;
 	private String manufacturerName;
-	private String modelNumber;
+	private long modelNumber;
 	private String modifiedOn;
-	private String productName;
+	private long productName;
 	private String remark;
 	private String requestDate;
 	private String stateInterp;
@@ -36,7 +36,9 @@ public class TRCRegisteration {
 	private String txnId;
 	private Integer userId;
 	private String userType;
-	
+	private String productNameInterp;
+	private String modelNumberInterp;
+	private Integer featureId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getAdminApproveStatus() {
 		return adminApproveStatus;
@@ -134,10 +136,10 @@ public class TRCRegisteration {
 	public void setManufacturerName(String manufacturerName) {
 		this.manufacturerName = manufacturerName;
 	}
-	public String getModelNumber() {
+	public long getModelNumber() {
 		return modelNumber;
 	}
-	public void setModelNumber(String modelNumber) {
+	public void setModelNumber(long modelNumber) {
 		this.modelNumber = modelNumber;
 	}
 	public String getModifiedOn() {
@@ -146,10 +148,10 @@ public class TRCRegisteration {
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	public String getProductName() {
+	public long getProductName() {
 		return productName;
 	}
-	public void setProductName(String productName) {
+	public void setProductName(long productName) {
 		this.productName = productName;
 	}
 	public String getRemark() {
@@ -200,6 +202,24 @@ public class TRCRegisteration {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	public String getProductNameInterp() {
+		return productNameInterp;
+	}
+	public void setProductNameInterp(String productNameInterp) {
+		this.productNameInterp = productNameInterp;
+	}
+	public String getModelNumberInterp() {
+		return modelNumberInterp;
+	}
+	public void setModelNumberInterp(String modelNumberInterp) {
+		this.modelNumberInterp = modelNumberInterp;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -217,11 +237,8 @@ public class TRCRegisteration {
 				+ ", manufacturerName=" + manufacturerName + ", modelNumber=" + modelNumber + ", modifiedOn="
 				+ modifiedOn + ", productName=" + productName + ", remark=" + remark + ", requestDate=" + requestDate
 				+ ", stateInterp=" + stateInterp + ", tac=" + tac + ", trademark=" + trademark + ", txnId=" + txnId
-				+ ", userId=" + userId + ", userType=" + userType + ", additionalProperties=" + additionalProperties
-				+ "]";
+				+ ", userId=" + userId + ", userType=" + userType + ", productNameInterp=" + productNameInterp
+				+ ", modelNumberInterp=" + modelNumberInterp + ", featureId=" + featureId + ", additionalProperties="
+				+ additionalProperties + "]";
 	}
-	
-	
-	
-	
 }

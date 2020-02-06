@@ -430,8 +430,11 @@ public class IconsState {
 	public String adminState(String fileName,String txnId ,String status,String userStatus,String companyName) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
-		String approveAction = "openApprovePopUp('" + txnId + "','"+companyName.replaceAll( " ", "+20")+ "')";
+		String viewAction="viewConsignmentDetails('"+txnId+"')";
+		if(companyName == null) {
+			companyName= " ";
+		}
+		String approveAction = "openApprovePopUp('" + txnId+ "','"+companyName.replaceAll( " ", "+20")+ "')";
 		//String approveAction = "openApprovePopUp('"+txnId+"')";
 		String rejectAction = "openDisapprovePopup('"+txnId+"','"+companyName.replaceAll( " ", "+20")+"')";
 
@@ -592,14 +595,15 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-
+		log.info("status Admin Grievance---->" +status);	
 
 		//Disable reply
-		if( "2".equals(status) || "3".equals(status)) {
-
-		}else if("0".equals(status)) {
+		if( "2".equals(status)) {
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
 
 		}
+		
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
@@ -659,18 +663,36 @@ public class IconsState {
 
 
 
-		if(("1".equals(status) || "3".equals(status) || "6".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+		if(("1".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
-
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
 		}
+		
+		if("7".equals(status)) {
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+			
+		}
+		
 
 
-		else if(("3".equals(status) || "5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
+		else if(("5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
@@ -764,8 +786,16 @@ public class IconsState {
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
-		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view=null;
+		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
+		view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
+		}
+		else {
+			
+			view="<a href="+viewAction+" class="+disableIconClass+"><i  class="+disableViewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
+		}
 		String action=view;		  
 		return action;
 
@@ -1258,7 +1288,7 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 		String action = view.concat(edit);
 		return action;
 	}
-public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId) {
+public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId,String StatusofGrievance) {
 		
 		log.info(" entry in set view in data table.....");
 		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
@@ -1270,8 +1300,14 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		log.info("set view in data table.....");
+		log.info("set StatusofGrievance....." +StatusofGrievance);
+		
+		//Disable reply
+				if( "0".equals(StatusofGrievance)) {
+					reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+							+replyIconTitle+" ></i></a>";
 
+				}
 		/*
 		 * //Disable reply if( "0".equals(status) || "1".equals(status) ||
 		 * "3".equals(status)) { reply =
@@ -1304,7 +1340,7 @@ public String importalTrcManageIcons(String status,Integer id,String fileName,St
 	// URL link 
 	//String downloadURL = "JavaScript:void(0)";
 
-	String viewAction="ImporterviewByID("+id+",'view')";
+	String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
 	String editAction= "ImporterviewByID("+id+",'edit')";
 	String deleteAction = "JavaScript:void(0);";
 	// state related Code 

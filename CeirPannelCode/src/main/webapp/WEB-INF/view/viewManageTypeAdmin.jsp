@@ -757,7 +757,7 @@ textarea {
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>	
+		src="${context}/resources/project_js/ViewManageTypeAdmin.js"></script>	
 
 </body>
 </html>

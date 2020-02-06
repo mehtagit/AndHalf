@@ -8030,7 +8030,7 @@
     position: fixed;
   }
 
-  @media only screen and (min-width: 601px) {
+  @media only screen and (max-width: 660px) {
 
     nav,
     nav .nav-wrapper i,
@@ -8041,11 +8041,69 @@
     }
 
     .navbar-fixed {
-      height: 64px;
+     height: 120px;
     }
   }
 
-  @media only screen and (max-width: 425px) {
+
+@media only screen and(min-width:661px){
+    a.btn-flat.dropdown-button.waves-effect.waves-light.white-text.profile-btn {
+    margin-top: 10px;
+   
+}
+}
+
+
+@media only screen and(max-width: 660px) and(min-width:480px){
+a.btn-flat.dropdown-button.waves-effect.waves-light.white-text.profile-btn {
+    height: 64px;
+}
+}
+
+@media only screen and (max-width: 660px){
+img.darken-1.my-2 {
+    margin-left: 0 !important 
+    width: 100%;
+}
+}
+
+
+@media only screen and(max-width: 660px){
+#chat-out.right {
+    padding-top: 64px;
+}
+}
+
+
+@media only screen and (max-width: 992px)and(min-width:661px){
+img.darken-1.my-2 {
+margin-left: 50px;
+width: 69%;
+}
+}
+
+@media only screen and (min-width: 993px){
+  img.darken-1.my-2 {
+    width: 90%;
+}
+
+@media only screen and (max-width: 992px){
+ header .brand-logo {
+
+padding: 14px 20px;
+}
+}
+
+}
+
+  @media only screen and (max-width: 660px){
+nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+    height: 120px;
+    line-height: 62px;
+}
+  }
+
+  /* @media only screen and (max-width: 425px) {
 
     nav,
     nav .nav-wrapper i,
@@ -8058,7 +8116,7 @@
     .navbar-fixed {
       height: 64px;
     }
-  }
+  } */
 
   @font-face {
     font-family: "Roboto";
@@ -8601,11 +8659,11 @@
     line-height: 37px;
   }
 
-@media only screen and (max-width: 991px) and (min-width: 526px){
+/* @media only screen and (max-width: 991px) and (min-width: 526px){
 	.btn-floating i {
     margin-top: -14px;
   }
-}
+} */
 
   .btn-floating:before {
     border-radius: 0;
@@ -9291,10 +9349,10 @@ select:focus {
     background-color: #ff548e;
   }
 
-  label {
-    font-size: 1rem;
-    color: #9e9e9e;
-  }
+label {
+font-size: 0.8rem;
+color: #444;
+}
 
   .fa-calendar {
     float: right;
@@ -9663,18 +9721,22 @@ select:focus {
   }
 
   .input-field label {
-    color: #444;
-    position: absolute;
-    top: 0.4rem;
-    left: 0.75rem;
-    font-size: 1rem;
-    cursor: text;
-    -webkit-transition: 0.2s ease-out;
-    -moz-transition: 0.2s ease-out;
-    -o-transition: 0.2s ease-out;
-    -ms-transition: 0.2s ease-out;
-    transition: 0.2s ease-out;
-  }
+color: #444;
+position: absolute;
+top: 0.4rem;
+left: 0.55rem;
+font-size: 1rem;
+cursor: text;
+-webkit-transition: 0.2s ease-out;
+-moz-transition: 0.2s ease-out;
+-o-transition: 0.2s ease-out;
+-ms-transition: 0.2s ease-out;
+transition: 0.2s ease-out;
+}
+
+
+
+
 
   @media screen and (max-width: 50em) {
     .input-field label {
