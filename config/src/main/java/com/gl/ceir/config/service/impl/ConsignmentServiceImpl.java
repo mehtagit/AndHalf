@@ -46,6 +46,7 @@ import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
@@ -64,8 +65,6 @@ import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.service.businesslogic.StateMachine;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder2;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -363,7 +362,14 @@ public class ConsignmentServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(userType))
 				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_CEIR.getCode());
 			else if("IMPORTER".equalsIgnoreCase(userType))
-				consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());
+				// Check status must be Init or Rejected by system.
+				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
+						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode()) {
+					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());	
+				}else {
+					return new GenricResponse(5, GenericMessageTags.INVALID_STATE_TRANSTION.getTag(), GenericMessageTags.INVALID_STATE_TRANSTION.getMessage(), consignmentRequest.getTxnId());
+				}
+				
 			else {
 				logger.info("UserType is invalid." + consignmentRequest.getTxnId());
 				return new GenricResponse(1, "UserType is invalid.", consignmentRequest.getTxnId());

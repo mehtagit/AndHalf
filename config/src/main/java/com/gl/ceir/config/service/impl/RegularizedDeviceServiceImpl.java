@@ -396,13 +396,15 @@ public class RegularizedDeviceServiceImpl {
 			List<RawMail> rawMails = new ArrayList<>();
 			Map<String, String> placeholders = new HashMap<>();
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
-
+			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
+			
 			if(Objects.nonNull(userCustomDbDetails)) {
 
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
 				regularizedDeviceDbRepository.save(userCustomDbDetails);
 
-				placeholders.put("<device>", Long.toString(regularizeDeviceDb.getFirstImei()));
+				placeholders.put("<FIRST_NAME>", ceirAdminProfile.getFirstName());
+				placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
 
 				// Send Notifications
 				if(regularizeDeviceDb.getTaxPaidStatus() == 0) {
@@ -412,7 +414,7 @@ public class RegularizedDeviceServiceImpl {
 					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID";	
 				}
 				rawMails.add(new RawMail(tag, 
-						userStaticServiceImpl.getCeirAdmin().getUserProfile(), 
+						ceirAdminProfile, 
 						4, 
 						Features.REGISTER_DEVICE, 
 						SubFeatures.REGISTER, 
