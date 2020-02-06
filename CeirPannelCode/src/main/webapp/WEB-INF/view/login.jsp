@@ -337,6 +337,7 @@ a#newUserLink {
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

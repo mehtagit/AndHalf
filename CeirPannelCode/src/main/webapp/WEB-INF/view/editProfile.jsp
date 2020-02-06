@@ -92,6 +92,11 @@
         [type="radio"]:checked {
             opacity: 0;
         }
+        .fa-eye-slash, .fa-eye {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
     </style>
 
 
@@ -112,8 +117,10 @@ var contextpath = "${context}";
     <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
   <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
        <!-- ajax js -->
+  
     <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
       <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
+       	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>   
     <!--materialize js-->
     <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
@@ -242,8 +249,9 @@ var contextpath = "${context}";
 								</div> -->
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email"  placeholder="" name="email" maxlength="320"
+									<input type="text"  placeholder="" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
+										title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
 										 required="required"> <label for="email"> <spring:message code="input.email" /><span
 										class="star">*</span></label>
 								</div>
@@ -763,7 +771,11 @@ var contextpath = "${context}";
                            <div class="input-field col s12">
 
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
-                                <input required="required"  type="password" class="" id="confirmPassword" maxlength="10">
+                                <input required="required"  type="password" class="password" id="confirmPassword" maxlength="10">
+                                	<div class="input-field-addon">
+							<a href="#"><i class="fa fa-eye-slash toggle-password"
+								aria-hidden="true"></i></a>
+						</div>
                             </div>
                         
                     </div>

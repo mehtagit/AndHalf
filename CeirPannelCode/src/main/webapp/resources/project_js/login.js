@@ -14,28 +14,7 @@ $('#langlist').on('change', function() {
 		});
 
 		
-		$(document).on('click', '.toggle-password', function() {
-
-		    $(this).toggleClass("fa-eye fa-eye-slash");
-		    
-		    var input = $(".password");
-		    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
-		});
-		
-		$(document).on('click', '.toggle-password2', function() {
-
-		    $(this).toggleClass("fa-eye fa-eye-slash");
-		    
-		    var input = $(".oldPassword");
-		    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
-		});
-		$(document).on('click', '.toggle-password3', function() {
-
-		    $(this).toggleClass("fa-eye fa-eye-slash");
-		    
-		    var input = $(".newPassword");
-		    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
-		});
+	
 		
 		
 		

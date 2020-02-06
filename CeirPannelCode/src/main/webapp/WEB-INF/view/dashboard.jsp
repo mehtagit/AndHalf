@@ -368,7 +368,7 @@ var contextpath = "${context}";
 					</div>
 
 					<div class="input-field col s11">
-						<input type="password" id="oldPassword" class="oldPassword"
+						<input type="password" id="oldPassword" class="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
@@ -377,9 +377,8 @@ var contextpath = "${context}";
 							class="center-align" style="color: #000; font-size: 12px;">
 							<spring:message code="registration.oldpassword" />
 						</label>
-						<div class="password"></div>
 						<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password2"
+							<a href="#"><i class="fa fa-eye-slash toggle-password"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -398,9 +397,9 @@ var contextpath = "${context}";
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="newPassword" />
+							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password3"
+							<a href="#"><i class="fa fa-eye-slash toggle-password2"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -414,13 +413,13 @@ var contextpath = "${context}";
 						<label for="confirm_password"
 							style="color: #000; font-size: 12px;"><spring:message
 								code="registration.confirmpassword" /></label> <input type="password"
-							class="password" id="confirm_password"
+							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password"
+							<a href="#"><i class="fa fa-eye-slash toggle-password3"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -557,8 +556,8 @@ data-dismiss="modal">&times;</button> -->
 	<!-- ajax js -->
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
-	      <script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
-	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+
+		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
