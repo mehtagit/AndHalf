@@ -558,6 +558,7 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/ajax/Profile.js"></script>
 
 		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
