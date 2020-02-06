@@ -65,7 +65,7 @@ public class AdminRegistrationRequest {
 			log.info("-------------------->3");
 			mv.setViewName("viewCustom");
 			
-		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType)){
+		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType) || "Organization".equals(asType)){
 			log.info("-------------------->4");
 			mv.setViewName("viewCompany");
 			

@@ -117,7 +117,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
            <div class="modal-content">
             <div class="row">
                 <form action="">
-                 	<h6> <spring:message code="registration.Thetransactionid" /><span id="registrationTxnId"> </span> <spring:message code="registration.pendingforapproval" /></h6>
+                 	<h6> <spring:message code="registration.thetransactionid" /><span id="registrationTxnId"> </span> <spring:message code="registration.pendingforapproval" /></h6>
                     <p><spring:message code="registration.dorequest" /></p>
                 </form>
             </div>

@@ -685,7 +685,7 @@
 											<div class="input-field col s12 center">
 												<button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
 												<a href="./stolenRecovery" class="btn modal-trigger"
-													style="margin-left: 10px;">Cancel<spring:message code="button.cancel" /></a>
+													style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 											</div>
 										</form>
 									</div>

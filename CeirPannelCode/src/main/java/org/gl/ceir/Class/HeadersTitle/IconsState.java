@@ -1303,7 +1303,7 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 		log.info("set StatusofGrievance....." +StatusofGrievance);
 		
 		//Disable reply
-				if( "0".equals(StatusofGrievance)) {
+				if( "0".equals(StatusofGrievance) || "3".equals(StatusofGrievance)) {
 					reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 							+replyIconTitle+" ></i></a>";
 

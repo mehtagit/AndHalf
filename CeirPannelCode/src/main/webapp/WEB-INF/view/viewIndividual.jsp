@@ -71,7 +71,7 @@
                 <form id="registrationForm">
                     <div class="card-panel registration-form">
                         <div class="row">
-                            <h5>View Individual Information<spring:message code="input.ViewIndividual" /></h5>
+                         <h5><spring:message code="input.ViewIndividual" /></h5>
                             <hr>
                             <div class="row" style="margin-top: 10px;">
                                 <div class="input-field col s12 m4 l4">

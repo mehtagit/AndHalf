@@ -18,6 +18,9 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
+        
+     <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+	<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>   
 
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
@@ -102,24 +105,7 @@
 
 <body>
 
-    <!-- START HEADER -->
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><spring:message code="registration.ceir" /> </a> <span
-                                    class="logo-text"><spring:message code="registration.materialize" /></span></h1>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-    <!-- END HEADER -->
+ 
 
     <!-- START MAIN -->
     <div id="">
@@ -131,16 +117,21 @@
                 <div class="container" style="margin-top: 10vh;">
                     <div class="section">
                         <div class="row card-panel login-card-panel">
-                            <div class="row" id="singleInput">
-                            <h6 class="fixPage-modal-header "> <spring:message code="registration.checkdevice" /></h6>
+                          
+                           <form action="" onsubmit="return DeviceDetails()" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="fixPage-modal-header "> <spring:message code="registration.checkdevice" /></h6>
                                 <div class="col s12 m12 l12">
+                                 
+								   
                                    <div class="row">
                                             <div class="input-field col s6 m5">
                                                 <label for="Category"> <spring:message code="select.deviceIDType" /><span class="star">*</span></label>
                                             </div>
                                             <div class="col s6 m7 selectDropdwn">
-                                                <select class="browser-default" id = "deviceIdType">
-                                                    <option value="-1" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
+                                                <select class="browser-default" id = "deviceIdType" required>
+                                                    <option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
                                            	</select>
                                             </div>
                                             <div class="input-field col s6 m5">
@@ -148,23 +139,25 @@
                                                     :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <input type="text" id="DeviceID" name="DeviceID"
+                                                <input type="text" id="DeviceID" 
                                                     pattern=[A-Za-z0-9]{3,12}
-                                                    title="Please enter maximum 12 characters only" maxlength="12">
+                                                    title="Please enter maximum 12 characters only" maxlength="12" required>
                                             </div>
                                         </div>
+                                 
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                <a class="btn"
-                                                    onclick="DeviceDetails()"><spring:message code="button.submit" /></a>
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
                                                 <a href="./homePage" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                             </div>
 
-
                                         </div>
+                                      
+									
                                     </div>
-                                    </div>
+                                   </div></form>
+                               
                                   <div class="row" id="validDetails" style="display: none;">
                                         <h6 class="fixPage-modal-header "><spring:message code="registration.checkimeistatus" /></h6>
                                     <div class="col s12 m12 l12">
@@ -245,22 +238,29 @@
 
         </div>
         <!-- END WRAPPER -->
-
-    </div>
+</div>
     <!-- END MAIN -->
 
-
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START FOOTER -->
-    <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
-        <div class="footer-copyright">
-            <div class="container">
-                <span class="right"><spring:message code="registration.copyright@" /></span>
+  
+  <div id="errorModal" class="modal">
+         <h6 class="modal-header"><spring:message code="input.CheckDevice" /></h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6 id=""><spring:message code="input.notDeviceId" />
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <!-- <a href="homePage" class="btn">Yes</a> -->
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
-    <!-- END FOOTER -->
+    </div>
+
 
 
 
@@ -303,7 +303,7 @@
     </div>
     <!-- Submit Modal End -->
 
-  
+
 
 
     <!-- ================================================
@@ -313,7 +313,7 @@
 
 
     <script>
-        function hide() {
+       /*  function hide() {
             var In = $('#DeviceID').val()
             if (In == "black") {
 
@@ -324,7 +324,7 @@
                 $("#inputDetails").css("display", "none");
                 $("#singleInput").css("display", "block");
             }
-        }
+        } */
     </script>
 
     <!-- jQuery Library -->

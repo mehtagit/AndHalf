@@ -153,7 +153,7 @@ section {
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierName" id="supplierName"
-												pattern="[A-Za-z  ]{0,50}"
+												pattern="[A-Za-z  ]{0,50}"  oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												title="<spring:message code="validation.50character" />"
 												maxlength="50" required /> <label for="supplierName"
 												class="center-align"><spring:message code="input.suppliername"/> <span
@@ -171,7 +171,7 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="expectedDispatcheDate"
 												id='expectedDispatcheDate' class='form-control datepick'
-												autocomplete='off' required="required" oninvalid="this.setCustomValidity(<spring:message code="validation.requiredMsg" />)"> <label
+												autocomplete='off' required="required"  oninvalid="setCustomValidity('<spring:message code="validation.requiredMsg" />')"> <label
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -179,10 +179,11 @@ section {
 									</div>
 
 									<div class="row myRow">
-										<div class="input-field col s12 m6">
-											<select id="country" name="organisationcountry"
+										<div class=" col s12 m6">
+										<p style="margin: 0;font-size: 12px;"><spring:message code="input.country" /> <span class="star">*</span></p>
+											<select id="country" name="organisationcountry" 
 												required="required" class="browser-default" class="mySelect"
-												style="padding-left: 0;" required></select>
+												style="padding-left: 0;" oninvalid="setCustomValidity('<spring:message code="validatio.selectFieldMsg" />')" required></select>
 										</div>
 
 
@@ -225,8 +226,7 @@ section {
 
 										<div class="col s12 m6" id="currencyDiv">
 											<label for="currency"><spring:message code="input.currency" /></label>
-											<select id="currency" class="browser-default"
-												>
+											<select id="currency" class="browser-default">
 												<option value=""  selected><spring:message code="input.currency" /></option>
 									
 											</select>
@@ -384,6 +384,8 @@ section {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/htmlValidationi18n.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/registerConsignment.js"></script>
 
