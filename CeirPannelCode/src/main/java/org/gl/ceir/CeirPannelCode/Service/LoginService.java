@@ -80,7 +80,7 @@ public class LoginService {
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
-				session.setAttribute("language",response.getUserLanguage());
+				session.setAttribute("language",response.getUserLanguage()); 
 				return response;      
 			}       
 			else {

@@ -1,4 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<% 
+  		response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+		if(session.getAttribute("usertype") !=null){ 
+		
+%>
+        <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -115,10 +123,10 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="#goToHome" id="newUserLink"
-							class="modal-trigger" style="color: white;"><spring:message
+						<li><a  data-target="goToHome" class="modal-trigger"
+							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
-						<li class="profileInfo"><a id="openUl"
+						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
 							href="#" data-activates="profile-dropdown" style="height: 40px;"><i
 								class="mdi-action-account-circle"
@@ -606,28 +614,17 @@ data-dismiss="modal">&times;</button> -->
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
+	<%-- 	<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript">
-
 $(document).ready(function () {
 <%String lang=(String)session.getAttribute("language");%>
 <%if(lang!=null){%>
-console.log("language="+"<%=lang%>");
- $("#langlist").val("<%=lang%>"); 
+<%-- console.log("language="+"<%=lang%>"); --%>
+<%--  $("#langlist").val("<%=lang%>");  --%>
 <%-- document.getElementById("langlist").value="<%=lang%>"; --%>
 <%}%>
 });
-$('html').click(function() {
-    $('#profile-dropdown').hide();
- })
-
- $('.profileInfo').click(function(e){
-     e.stopPropagation();
- });
-
-$('#openUl').click(function(e) {
- $('#profile-dropdown').toggle();
- });
-
 </script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>
@@ -635,3 +632,10 @@ $('#openUl').click(function(e) {
 </body>
 
 </html>
+<%
+        }
+        else{            
+        request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);      	
+        }
+%>

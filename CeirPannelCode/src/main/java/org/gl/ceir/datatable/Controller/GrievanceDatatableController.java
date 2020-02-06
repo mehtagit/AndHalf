@@ -151,7 +151,7 @@ public class GrievanceDatatableController {
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
@@ -170,7 +170,7 @@ public class GrievanceDatatableController {
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+						String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 								StatusofGrievance, userStatus, userId);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
@@ -189,7 +189,7 @@ public class GrievanceDatatableController {
 					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 					String grievanceStatus = dataInsideList.getStateInterp();
 					String userStatus = (String) session.getAttribute("userStatus");
-					String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
+					String action = iconState.grievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 					StatusofGrievance, userStatus, userId);
 					Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
@@ -244,7 +244,7 @@ public class GrievanceDatatableController {
 						String grievanceStatus = dataInsideList.getStateInterp();
 						Integer endUserId=dataInsideList.getUserId();
 						log.info("**********createdOn=="+createdOn+"  modifiedOn=="+modifiedOn+" txnId=="+txnId+"grievanceId=="+grievanceId+"StatusofGrievance=="+StatusofGrievance);
-						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,endUserId);
+						String action = iconState.endUserGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,endUserId,StatusofGrievance);
 						log.info("--------------response*******"+action);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));

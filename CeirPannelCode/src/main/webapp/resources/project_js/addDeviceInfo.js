@@ -1,11 +1,11 @@
 
 	 var nationalID = $("body").attr("session-value");
 	
-	 window.parent.$('#langlist').on('change', function() {
+	/* window.parent.$('#langlist').on('change', function() {
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.location.assign("./uploadPaidStatus?via=other&NID="+nationalID+"&lang="+lang);
 	}); 
-	
+	*/
 var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	$.i18n().locale = lang_param;
 	var successMsg;

@@ -76,6 +76,12 @@
             <nav class="navbar-color">
                 <div class="nav-wrapper">
                     <ul class="left">
+                    	<li>
+					<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
+            					<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
+                				<img src="./resources/images/dmc_gl.png" class="darken-1 my-2" style="height:56px;"></a>
+        					</div>
+        				</li>
                         <li>
                             <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR</a> <span class="logo-text">Materialize</span></h1>
                         </li>
@@ -87,6 +93,7 @@
                                 <option value="Khmer">Khmer</option>
                             </select>
                         </li>
+                        <li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>
                      <!--    <li>
                             <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                                 data-activates="profile-dropdown" style="height: 64px;"><i
@@ -115,8 +122,28 @@
                 </div>
             </nav>
         </div>
+ 
         <!-- end header nav-->
     </header>
+
+       <div id="goToHome" class="modal modal-small" style="width: 40%;">
+<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button> -->
+<h6 class="modal-header"><spring:message code="registration.homepage" /></h6>
+<div class="modal-content">
+<div class="row">
+<h6><spring:message code="registration.pagewillredirectpanel" /></h6>
+</div>
+<div class="input-field col s12 center">
+<div class="input-field col s12 center">
+<a href="./homePage" class="btn" type="submit" name="add_user" id="add_user"><spring:message code="modal.yes" /></a>
+<a href="#" class="modal-close btn"
+style="margin-left: 10px;"><spring:message code="modal.no" /></a>
+</div>
+</div>
+</div>
+</div>
+
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

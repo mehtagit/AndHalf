@@ -11,11 +11,11 @@ if(userType == "Operator" || userType == "CEIRAdmin" ){
 	var featureId="5"; //this check is for stolen & recovery
 }
 
-window.parent.$('#langlist').on('change', function() {
+/*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./stolenRecovery?lang="+lang);				
 }); 
-
+*/
 $.i18n().locale = lang;	
 
 $.i18n().load( {

@@ -1,3 +1,25 @@
+/*window.parent.$('#langlist').on('change', function() {
+			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+			alert(lang)
+			window.location.replace("./Consignment/viewConsignment?lang="+lang);				
+		});*/ 
+
+
+$(document).ready(function () {
+      
+        if($('#pageTypeValue').val()==0)
+        	{
+        	$('#uploadPaidStatusDiv').css("display", "block");
+        	$('#checkUploadStatusDiv').css("display", "none");
+        	}
+        else
+        {
+        	$('#uploadPaidStatusDiv').css("display", "none");
+        	$('#checkUploadStatusDiv').css("display", "block");
+        }
+            $('.modal').modal();
+        });
+    
 function uploadEndUserStock()
 {
 	var formData= new FormData();
@@ -95,6 +117,12 @@ function setViewPopupData(data){
 		$('#updateEndUserStockOK').css("display", "block");
 		$('#updateEndUserStock').css("display", "none");
 	}
+	
+	if(data.stockStatus==7)
+		{
+		$('#stockRemarkDivId').css("display", "block");
+		$("#stockRemark").val(data.remarks);
+		}
 }
 
 function endUserStockFileDownload(){

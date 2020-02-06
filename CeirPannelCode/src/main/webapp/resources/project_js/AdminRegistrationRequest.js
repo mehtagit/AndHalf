@@ -8,16 +8,15 @@
 
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-
+/*
 	window.parent.$('#langlist').on('change', function() {
 		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		var id= $("#mainArea").contents().find("body").html();
 		var roles= $("#mainArea").contents().find("body").attr("data-session-roles");
 		var type= $("#mainArea").contents().find("body").attr("data-session-type");
-
-		window.location.assign("trcInformation?id="+id+"&roles="+roles+"&type="+type+"&lang="+langParam);	
+		window.location.reload(true);
 			
-	}); 
+	}); */
 
 	$.i18n().locale = lang;	
 

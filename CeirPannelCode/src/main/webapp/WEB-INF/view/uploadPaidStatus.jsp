@@ -195,10 +195,10 @@ input[type='search'] {
 												</div>
 
 													<div class="col s12 m4">
-															<label for="deviceType">Document type <span
+															<label for="deviceType"><spring:message code="input.documenttype" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																id="doc_type" required="required">
-																<option value="" disabled selected>Select Document type</option>
+																<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 				
 
 															</select>

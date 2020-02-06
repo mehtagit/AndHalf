@@ -78,13 +78,10 @@
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel update-visa-responsive-page" style="width:50%; margin:auto;margin-bottom: 50px;margin-top: 20px;">
-                           
+                           <h6 class="fixPage-modal-header ">Update Visa Validity</h6>
                                 <div class="col s12 m12 l12">
                                     <div class="row">
-                                        <h5>Update Visa Validity</h5>
-                                        <hr style="margin-bottom: 0px;">
-                                         
-                                        <div class="row">
+                                      <div class="row">
                        					  <form id="" onsubmit="return findEndUserByNid()" method="POST" enctype="multipart/form-data" >
                                             <div id="submitbtn">
                                              <div class="input-field col s12 m1 l1">
@@ -200,7 +197,7 @@
                                                         style="padding-left: 0;" required></select>
                                                 </div>
 
-                                                <div class="input-field col s12 m6 l6">
+                                                <div class="input-field col s12 m6 l6" style="margin-bottom: 5px;">
                                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
                                                         Province
                                                         <span class="star">*</span></p>
@@ -208,7 +205,7 @@
                                                         style="padding-left: 0;" required></select>
                                                 </div>
 
-                                                <div class="input-field col s12 m6">
+                                                <div class="input-field col s12 m6" style="    margin-top: 0;">
                                                     <p class="contact-label">Contact Number <span class="star">*</span>
                                                     </p>
                                                     <input type="tel" required="required" placeholder=""  id="phone" maxlength="15">

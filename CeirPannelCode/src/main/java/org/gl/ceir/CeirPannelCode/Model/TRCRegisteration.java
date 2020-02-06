@@ -38,6 +38,7 @@ public class TRCRegisteration {
 	private String userType;
 	private String productNameInterp;
 	private String modelNumberInterp;
+	private Integer featureId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getAdminApproveStatus() {
 		return adminApproveStatus;
@@ -213,6 +214,12 @@ public class TRCRegisteration {
 	public void setModelNumberInterp(String modelNumberInterp) {
 		this.modelNumberInterp = modelNumberInterp;
 	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -231,9 +238,7 @@ public class TRCRegisteration {
 				+ modifiedOn + ", productName=" + productName + ", remark=" + remark + ", requestDate=" + requestDate
 				+ ", stateInterp=" + stateInterp + ", tac=" + tac + ", trademark=" + trademark + ", txnId=" + txnId
 				+ ", userId=" + userId + ", userType=" + userType + ", productNameInterp=" + productNameInterp
-				+ ", modelNumberInterp=" + modelNumberInterp + ", additionalProperties=" + additionalProperties + "]";
+				+ ", modelNumberInterp=" + modelNumberInterp + ", featureId=" + featureId + ", additionalProperties="
+				+ additionalProperties + "]";
 	}
-
-	
-	
 }
