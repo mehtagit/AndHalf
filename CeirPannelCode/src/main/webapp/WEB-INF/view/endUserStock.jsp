@@ -168,7 +168,8 @@ var contextpath = "${context}";
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
-                                                <input type="email" id="endUseremail" maxlength="30" name="email"/>
+                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
+                                                 maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">

@@ -191,7 +191,7 @@ var contextpath = "${context}";
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="email" id="emailID" name="emailID"
+                                            <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="please enter valid email formate "
                                                 maxlength="30" />
                                             <label for="emailID"><spring:message code="input.EmailID" /></label>
                                         </div>
@@ -412,7 +412,7 @@ var contextpath = "${context}";
  
                <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
+                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" placeholder="" required="required"></textarea>
                     <input type="text" style="display: none" id="grievanceUserid">
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
                 </div>

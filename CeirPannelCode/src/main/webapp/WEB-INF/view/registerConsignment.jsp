@@ -179,7 +179,9 @@ section {
 									</div>
 
 									<div class="row myRow">
-										<div class="input-field col s12 m6">
+										<div class=" col s12 m6">
+										<p style="margin: 0;font-size: 12px;">
+                                                                 <spring:message code="input.country" /> <span class="star">*</span></p>
 											<select id="country" name="organisationcountry"
 												required="required" class="browser-default" class="mySelect"
 												style="padding-left: 0;" required></select>
