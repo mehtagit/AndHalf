@@ -442,7 +442,7 @@ String userType=request.getParameter("type");
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -457,7 +457,7 @@ String userType=request.getParameter("type");
 											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -730,7 +730,7 @@ String userType=request.getParameter("type");
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

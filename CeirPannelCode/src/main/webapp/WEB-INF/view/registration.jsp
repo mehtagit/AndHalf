@@ -374,7 +374,7 @@ String usertypeId="${usertypeId}";
 										</div>
 										<br> <br>
 									</div>
-									<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
+									<!-- <p style="margin-left: 15px;"><a javascript:void(0)>Download Sample Format</a></p> -->
 								</div>
 
 
@@ -607,7 +607,7 @@ String usertypeId="${usertypeId}";
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -623,7 +623,7 @@ String usertypeId="${usertypeId}";
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -933,7 +933,7 @@ String usertypeId="${usertypeId}";
 							id="phoneOtp" placeholder="" />
 					</div>
 				</div>
-				<a href="#"
+				<a href="javascript:void(0)"
 					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
 					class="right"><spring:message code="registration.resendotp" /></a>
 				<button type="submit" id="otpVerifyBtn" class="btn"
