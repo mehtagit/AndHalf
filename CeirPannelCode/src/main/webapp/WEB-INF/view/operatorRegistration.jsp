@@ -100,6 +100,11 @@ label {
 	margin-top: -17px;
 	border-bottom: none;
 }
+.fa-eye-slash, .fa-eye {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -142,7 +147,7 @@ String userType=request.getParameter("type");
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
+<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
 	<!--custom-script.js - Add your own theme custom JS-->
@@ -156,7 +161,7 @@ String userType=request.getParameter("type");
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<form id="registrationForm"
+				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 					<div class="card-panel registration-form">
 						<div class="row">
@@ -358,7 +363,7 @@ String userType=request.getParameter("type");
 								</div>
 
 								<div class="col s12 m6 l6">
-									<label><spring:message code="operator.natureofemp" />
+									<label><spring:message code="registration.natureofemployment" />
 										<span class="star">*</span></label> <select id="natureOfEmployment"
 										class="browser-default" required>
 										<option value="" disabled selected><spring:message
@@ -388,8 +393,9 @@ String userType=request.getParameter("type");
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail" maxlength="320"
-										class="form-control boxBorder boxHeight" id="authorityEmail">
+									<input type="text" name="authorityEmail" maxlength="320"
+										class="form-control boxBorder boxHeight" id="authorityEmail"
+																	title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 									<label for="authorityEmail"><spring:message
 											code="registration.reportingAuthorityEmailid" /></label>
 								</div>
@@ -402,9 +408,10 @@ String userType=request.getParameter("type");
 											code="registration.reportingauthoritycontactnumber" /></label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
-									<input type="email" name="email" required="required" id="email"
-										maxlength="320"> <label for="email"><spring:message
+																<div class="input-field col s12 m6 l6">
+									<input type="text" name="email" required="required" id="email"
+										maxlength="320" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
+										 <label for="email"><spring:message
 											code="input.email" /><span class="star">*</span></label>
 								</div>
 
@@ -427,24 +434,32 @@ String userType=request.getParameter("type");
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password"
-										class="form-control boxBorder boxHeight" id="password"
+										class="form-control boxBorder boxHeight password" id="password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
 										required="required"> <label for="password"><spring:message
 											code="registration.password" /> <span class="star">*</span>
 									</label>
+									<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
+											aria-hidden="true"></i></a>
+									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="rePassword"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
-										class="form-control boxBorder boxHeight" id="confirm_password"
+										class="form-control boxBorder boxHeight password2" id="confirm_password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"><spring:message
 											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
+									<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
+											aria-hidden="true"></i></a>
+									</div>
 								</div>
 							</div>
 
@@ -715,7 +730,7 @@ String userType=request.getParameter("type");
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

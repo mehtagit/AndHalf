@@ -18,5 +18,9 @@
 "documenttype":"ប្រភេទ​ឯកសារ",
 "selectfile":"ជ្រើសឯកសារ",
 "selectDocumentType":"ជ្រើសរើសប្រភេទឯកសារ",
-"selectCategory":"ជ្រើសរើសប្រភេទ"
+"selectCategory":"ជ្រើសរើសប្រភេទ",
+"editBlockDevice":"កែសម្រួលឧបករណ៍ប្លុក",
+"editStolenDevice ":"កែឧបករណ៍មិនភ្ជាប់",
+"viewBlockDevice":"មើលឧបករណ៍រារាំង",
+"viewBulkUnblock":"កែឧបករណ៍មិនភ្ជាប់"
 }

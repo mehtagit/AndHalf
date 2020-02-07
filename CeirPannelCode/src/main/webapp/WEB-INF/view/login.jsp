@@ -169,7 +169,7 @@ a#newUserLink {
 												for="password"> <spring:message
 													code="registration.password" /></label>
 											<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
 											</div>
 
 										</div>
@@ -212,15 +212,9 @@ a#newUserLink {
 										<a href="${context}/forgotPassword"
 											class="right forgotPassword"><spring:message
 												code="registration.forgotpassword" /></a> <span><a
-											href="#" id="newUserLink" class="right"><spring:message
+											href="javascript:void(0)" id="newUserLink" class="right"><spring:message
 													code="registration.newUser" /></a></span>
-
-
 									</div>
-
-
-
-
 								</div>
 							</form>
 						</div>
@@ -265,14 +259,16 @@ a#newUserLink {
 							style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
 					</div>
 					<div class="input-field col s11">
-						<input type="password" id="oldPassword" class="validate"
+						<input type="password" id="oldPassword" class="password2"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" /> <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
 							 <spring:message code="registration.oldpassword" /></label>
-						<div class="password"></div>
+							<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+											</div>
 					</div>
 
 					<div class="col s1">
@@ -288,7 +284,10 @@ a#newUserLink {
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="" />
+							required="required" id="password" class="password3" />
+				<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password3" aria-hidden="true"></i></a>
+											</div>				
 					</div>
 
 					<div class="col s1">
@@ -299,11 +298,14 @@ a#newUserLink {
 
 						<label for="confirm_password"
 							style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input
-							type="password" class="" id="confirm_password"
+							type="password" class="password4" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-							maxlength="10" min="8"
+							maxlength="10" min="8" 
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
+						<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password4" aria-hidden="true"></i></a>
+											</div>		
 					</div>
 				</div>
 				<div class="row" style="margin-top: 30px;">
@@ -337,6 +339,7 @@ a#newUserLink {
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
