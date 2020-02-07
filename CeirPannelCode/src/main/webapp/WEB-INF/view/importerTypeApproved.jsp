@@ -199,7 +199,7 @@
 											type="submit">
 											<spring:message code="button.submit" />
 										</button>
-										<a href="./manageTypeDevices" class="btn" id="Cancel"
+										<a href="./manageTypeDevices2" class="btn" id="Cancel"
 											style="margin-left: 10px;"><spring:message
 												code="button.cancel" /></a>
 									</div>
@@ -226,7 +226,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./manageTypeDevices" class="btn">ok</a>
+                    <a href="./manageTypeDevices2" class="btn">ok</a>
                 </div>
             </div>
         </div>
@@ -320,7 +320,7 @@
 			console.log("done")
 		});
 		
-		var featureId = 11;
+		var featureId = 21;
 		populateCountries("country");
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {

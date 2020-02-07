@@ -126,6 +126,11 @@ label {
     margin-top: -17px;
     border-bottom: none;
 }
+.fa-eye-slash, .fa-eye {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -148,6 +153,7 @@ var contextpath = "${context}";
 		src="${context}/resources/ajax/Registration.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
 	<!-- Compiled and minified JavaScript -->
@@ -184,7 +190,7 @@ var contextpath = "${context}";
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<form id="registrationForm"
+				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 
 					<div class="card-panel registration-form">
@@ -198,7 +204,10 @@ var contextpath = "${context}";
 <option value="km">Khmer</option>
 </select>
 </div>
-<div class="col s12 m12"><h5><%=name%> Registration</h5>
+<div class="col s12 m12"><h5>
+<%=name%> 
+<spring:message code="welcome.message" />
+</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr></div>
 							
@@ -422,8 +431,9 @@ title="Please enter number upto 30 characters only">
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail" maxlength="320"
-										class="form-control boxBorder boxHeight" id="authorityEmail">
+									<input type="text" name="authorityEmail" maxlength="320"
+										class="form-control boxBorder boxHeight" id="authorityEmail"
+										title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 									<label for="authorityEmail">
 										<spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
@@ -437,8 +447,9 @@ title="Please enter number upto 30 characters only">
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="email" required="required" id="email"
-										maxlength="320"> <label for="email"><spring:message code="input.email" /> <span
+									<input type="text" name="email" required="required" id="email" 
+										maxlength="320" 		title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"> 
+										<label for="email"><spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
 
@@ -462,24 +473,32 @@ title="Please enter number upto 30 characters only">
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password"
-										class="form-control boxBorder boxHeight" id="password"
+										class="form-control boxBorder boxHeight password" id="password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
 										required="required"> <label for="password"><spring:message code="registration.password" />
 										<span class="star">*</span>
 									</label>
+								<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
+											aria-hidden="true"></i></a>
+									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="rePassword"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
-										class="form-control boxBorder boxHeight" id="confirm_password"
+										class="form-control boxBorder boxHeight password2" id="confirm_password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"><spring:message code="registration.retypepassword" /> <span
 										class="star">*</span>
 									</label>
+								<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
+											aria-hidden="true"></i></a>
+									</div>
 								</div>
 							</div>
 
@@ -784,7 +803,7 @@ title="Please enter number upto 30 characters only">
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

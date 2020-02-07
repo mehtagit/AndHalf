@@ -66,7 +66,8 @@
 <body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
-	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"	
+		 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -207,7 +208,7 @@
 		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
 		<div class="modal-content">
 	<div class="row">
-				<h6><spring:message code="modal.withdraw.message" /> ( <span id="transID"></span>)
+				<h6><spring:message code="modal.withdraw.messageforStolen" /> ( <span id="transID"></span>)
 				</h6>
 				<span id="setStolenRecoveyRowId" style="display: none;"></span>
 			</div>
@@ -255,7 +256,7 @@
 	<!-- Delete confirmation Modal start   -->
 
 	<div id="confirmDeleteConsignment" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deleteConsignment" /></h6>
+		<h6 class="modal-header"><spring:message code="modal.header.deleteStolen" /></h6>
 		<div class="modal-content">
 
 			

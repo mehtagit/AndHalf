@@ -1,4 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<% 
+  		response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+		if(session.getAttribute("usertype") !=null){ 
+		
+%>
+        <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -59,7 +67,7 @@ var contextpath = "${context}";
 <body data-lang="${language}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
-		<div id="loader"></div>
+	<div id="initialloader"></div>
 		<div class="loader-section section-left"></div>
 		<div class="loader-section section-right"></div>
 	</div>
@@ -115,8 +123,8 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="#goToHome" id="newUserLink"
-							class="modal-trigger" style="color: white;"><spring:message
+						<li><a  data-target="goToHome" class="modal-trigger"
+							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
@@ -360,7 +368,7 @@ var contextpath = "${context}";
 					</div>
 
 					<div class="input-field col s11">
-						<input type="password" id="oldPassword" class="oldPassword"
+						<input type="password" id="oldPassword" class="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
@@ -369,9 +377,8 @@ var contextpath = "${context}";
 							class="center-align" style="color: #000; font-size: 12px;">
 							<spring:message code="registration.oldpassword" />
 						</label>
-						<div class="password"></div>
 						<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password2"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -390,9 +397,9 @@ var contextpath = "${context}";
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="newPassword" />
+							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password3"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -406,13 +413,13 @@ var contextpath = "${context}";
 						<label for="confirm_password"
 							style="color: #000; font-size: 12px;"><spring:message
 								code="registration.confirmpassword" /></label> <input type="password"
-							class="password" id="confirm_password"
+							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -549,8 +556,8 @@ data-dismiss="modal">&times;</button> -->
 	<!-- ajax js -->
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
-	      <script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
-	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+
+		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -603,11 +610,12 @@ data-dismiss="modal">&times;</button> -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
+	<%-- 	<script type="text/javascript"
+		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript">
-
 $(document).ready(function () {
 <%String lang=(String)session.getAttribute("language");%>
 <%if(lang!=null){%>
@@ -623,3 +631,10 @@ $(document).ready(function () {
 </body>
 
 </html>
+<%
+        }
+        else{            
+        request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);      	
+        }
+%>

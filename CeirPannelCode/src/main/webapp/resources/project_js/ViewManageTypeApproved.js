@@ -370,6 +370,7 @@ function setImporterEditPopupData(data){
 		$("#editmanufacturercountry").val(data.manufacturerCountry);
 		$('#editfrequency').val(data.frequencyRange)
 		$("#editImportertac").val(data.tac);
+		$("#importerColumnid").val(data.id);
 		//$("#editImporterFileName").val(data.attachedFiles[0].fileName);
 		//$("#docTypetag1").val(data.attachedFiles[0].docType);
 }
@@ -386,24 +387,8 @@ populateCountries
 
 function updateReportTypeDevice()
 {
-	var trademark = $('#trademark').val();
-	var productName = $('#productname').val();
-	var modelNumber = $('#modelNumber').val();
-	var manufacturerCountry = $('#country').val();
-	var frequencyRange = $('#frequencyrange').val();
-	var tac = $('#tac').val();
 	var userId = $("body").attr("data-userID");
-	var manufacturerId=$("#editmanufacturerId").val();
-	var manufacturerName=$("#editmanufacturerName").val();
-	 var country=$("#editcountry").val();
-	 var tac=$("#edittac").val();
-	 var approveStatus=$("#editdeviceType").val();
-	 var requestDate=$('#editRequestDate').val()
-	 var approveDisapproveDate=$("#editApproveRejectionDate").val();
-	 var remark =$("#editRemark").val();
-	 var file=$("#editFileName").val();
-	 var txnid=$("#editImportertransactionid").val();
-	 var id=$("#columnid").val();
+	var id=$("#columnid").val();
 	 
 		var fieldId=1;
 		var fileInfo =[];
@@ -430,17 +415,23 @@ function updateReportTypeDevice()
 			i++;
 		});
 		
-		var multirequest={
-				"attachedFiles":fileInfo,
-				"trademark" : $('#editTradmark').val(),
-				"productName" : $('#productname').val(),
-	 			"modelNumber" : $('#modelNumber').val(),
-				"manufacturerCountry" : $('#editmanufacturercountry').val(),
-	 			"frequencyRange" : $('#editfrequency').val(),
-				"tac" : $('#editImportertac').val(),
-				"txnId": $("#editImportertransactionid").val(),
-				"userId" : $("body").attr("data-userID")
-			}
+		
+			var multirequest={
+					"attachedFiles":fileInfo,
+					"manufacturerId" : $('#editmanufacturerId').val(),
+					"manufacturerName" : $('#editmanufacturerName').val(),
+					"country" : $('#editcountry').val(),
+					"approveDisapproveDate" : $('#editApproveRejectionDate').val(),
+					"requestDate" : $('#editRequestDate').val(),
+					"tac" : $('#edittac').val(),
+					"approveStatus" : parseInt($("#editdeviceType").val()),
+					"remark" : $('#editRemark').val(),
+					"txnId": $("#transactionid").val(),
+					"userId" : $("body").attr("data-userID"),
+					"featureId" : parseInt(featureId),
+					"id": parseInt($("#columnid").val())
+				}
+	
 		
 		
 		

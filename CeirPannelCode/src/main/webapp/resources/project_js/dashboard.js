@@ -1,4 +1,3 @@
-var DB_LANG_VALUE; 
 $('#langlist').on('change', function() {
 	var lang=$('#langlist').val(); 
 	sessionStorage.setItem("sessionLang", lang);
@@ -15,12 +14,15 @@ $('#langlist').on('change', function() {
 
 var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
 $(document).ready(function () {
-	var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
+	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
 	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
-	window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
-	window.parent.$('#langlist').val(DB_LANG_VALUE); 
+	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
+	var url = new URL(window.location.href);
+    var langParameter = url.searchParams.get("lang")== null ? sessionStorage.getItem("sessionLang") : url.searchParams.get("lang");
+    window.parent.$('#langlist').val(langParameter); 
 	dataByTag("copyright_footer","copyrightText",2);
 	sessionStorage.removeItem("a");
+	$('div#initialloader').delay(300).fadeOut('slow');
 });   
 
 

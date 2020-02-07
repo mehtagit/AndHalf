@@ -67,9 +67,14 @@
         } */
 
         input[type=text] {
-            height: 35px;
+            /* height: 35px; */
             margin: 0 0 5px 0;
         }
+        .fa-eye-slash, .fa-eye {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+}
     </style>
 <script type="text/javascript">
 var contextpath='${context}';
@@ -206,10 +211,13 @@ var contextpath='${context}';
 				<div class="input-field col s11">
                     <input type="hidden" id="usernamedata">
 					<label for="password" style="color: #000; font-size: 12px;">
-						<spring:message code="registration.newpassword" /></label> <input type="password" id="password" class=""
+						<spring:message code="registration.newpassword" /></label> <input type="password" id="password" class="password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
+				<div class="input-field-addon">
+												<a href="#"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+											</div>					
 				</div>           
 
 				<div class="col s1">
@@ -218,10 +226,13 @@ var contextpath='${context}';
 				</div>   
 				<div class="input-field col s11">
 					<label for="confirm_password" style="color: #000; font-size: 12px;">
-						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="" id="confirm_password"
+						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="password2" id="confirm_password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
+				<div class="input-field-addon">
+												<a href="#"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+											</div>					
 				</div>
 			</div>  
 			<div class="row" style="margin-top: 30px;">
@@ -280,7 +291,7 @@ var contextpath='${context}';
        <!-- ajax js -->
     <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
     <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
- 
+ 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
     <!--prism

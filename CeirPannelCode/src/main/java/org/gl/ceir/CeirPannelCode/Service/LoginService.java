@@ -66,7 +66,6 @@ public class LoginService {
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
 			log.info("if captcha match");
-			ModelAndView mv=new ModelAndView();
 			LoginResponse response=new LoginResponse();
 			response=userLoginFeignImpl.checkUser(user);
 			log.info("login response:  "+response); 
@@ -81,8 +80,7 @@ public class LoginService {
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
-				session.setAttribute("language",response.getUserLanguage());
-				mv.setViewName("redirect:/importerDashboard");  
+				session.setAttribute("language",response.getUserLanguage()); 
 				return response;      
 			}       
 			else {
@@ -228,7 +226,7 @@ public class LoginService {
 		log.info("password data is :  "+password);                 
 		if(password.getPassword().equals(password.getConfirmPassword())) {
 			HttpResponse response=new HttpResponse();             
-			response=userProfileFeignImpl.changePassword(password);
+			response=userProfileFeignImpl.updateExpirePassword(password);
 			log.info("response got:  "+response);
 			return response; 	
 		}

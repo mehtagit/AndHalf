@@ -101,11 +101,54 @@ input[type=text], input[type=password], input[type=email], input[type=url],
 	transition: all .3s !important;
 }
 
-input[type=text]:focus:not ([readonly] ) {
-	border-bottom: 1px solid #ff4081 !important;
-	box-shadow: 0 1px 0 0 #ff4081 !important;
-}
+input
+[
+type
+=
+text
+]
+:focus
+:not
+ 
+(
+[
+readonly
+]
+ 
+)
+{
+border-bottom
+:
+ 
+1
+px
+ 
+solid
+ 
+#ff4081
+ 
+!
+important
+;
 
+	
+box-shadow
+:
+ 
+0
+1
+px
+ 
+0
+0
+#ff4081
+ 
+!
+important
+;
+
+
+}
 input[type=text]:focus:not ([readonly] )+label {
 	color: #ff4081 !important;
 	background-color: transparent !important;
@@ -143,7 +186,7 @@ select {
 }
 
 [type="checkbox"]+span:not (.lever ):before, [type="checkbox"]:not (.filled-in
-	)+span:not (.lever ):after {
+	 )+span:not (.lever ):after {
 	display: none;
 }
 
@@ -154,6 +197,11 @@ input[type="checkbox"] {
 [type="checkbox"]:not (:checked ), [type="checkbox"]:checked {
 	float: left;
 	margin-top: 5px;
+}
+.fa-eye-slash, .fa-eye {
+	position: absolute;
+	right: 10px;
+	top: 10px;
 }
 </style>
 <script>
@@ -178,6 +226,8 @@ String usertypeId="${usertypeId}";
 		src="${context}/resources/ajax/Registration.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<!--<script type="text/javascript" src="js/materialize.js"></script>-->
 	<!-- Compiled and minified JavaScript -->
@@ -214,7 +264,7 @@ String usertypeId="${usertypeId}";
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<form id="registrationForm" onsubmit="return saveRegistration()">
+				<form id="registrationForm" autocomplete="off" onsubmit="return saveRegistration()">
 					<div class="card-panel registration-form">
 						<%-- <a href="${context}/"
 							style="float: right; margin: -10px; margin-right: -20px;"><i
@@ -230,15 +280,16 @@ String usertypeId="${usertypeId}";
 								</select>
 							</div>
 							<div class="col s12 m11">
-								<h5><%=request.getParameter("type") %>
-									Registration
+								<h5>
+								<%=request.getParameter("type") %>
+									<spring:message code="welcome.message" />
 								</h5>
 								<hr>
 								<span id="msg" style="color: red;">${msg}</span>
 							</div>
 
-							<input type="hidden" id="usertypeId" value="${usertypeId}"> <input
-								type="hidden" id="usertypeName" value="<%=userType%>">
+							<input type="hidden" id="usertypeId" value="${usertypeId}">
+							<input type="hidden" id="usertypeName" value="<%=userType%>">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="firstName" id="firstName"
@@ -324,7 +375,7 @@ String usertypeId="${usertypeId}";
 										</div>
 										<br> <br>
 									</div>
-									<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
+									<!-- <p style="margin-left: 15px;"><a javascript:void(0)>Download Sample Format</a></p> -->
 								</div>
 
 
@@ -339,9 +390,10 @@ String usertypeId="${usertypeId}";
 								</div> -->
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="email" maxlength="320"
+									<input type="text" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
-										required="required"> <label for="email"><spring:message
+										required="required" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" >
+										 <label for="email"><spring:message                        
 											code="input.email" /> <span class="star">*</span> </label>
 								</div>
 
@@ -351,8 +403,7 @@ String usertypeId="${usertypeId}";
 										pattern="[0-9]{8,20}"
 										title="Please enter phone number between 8 to 20 characters only"
 										required="required"> <label for="phoneNo"><spring:message
-											code="registration.phone" /> <span class="star">*</span>
-									</label>
+											code="registration.phone" /> <span class="star">*</span> </label>
 								</div>
 
 								<!-- <div class="input-field col s12 m6 l6">
@@ -421,9 +472,9 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="postalCode" maxlength="30"
 										class="form-control boxBorder boxHeight" id="postalCode"
-								pattern="[0-9]{0,30}"
-title="Please enter number upto 30 characters only">
-									<label for="postalCode"><spring:message
+										pattern="[0-9]{0,30}"
+										title="Please enter number upto 30 characters only"> <label
+										for="postalCode"><spring:message
 											code="registration.postalcode" /></label>
 								</div>
 
@@ -548,24 +599,34 @@ title="Please enter number upto 30 characters only">
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password"
-										class="form-control boxBorder boxHeight" id="password"
+										class="form-control boxBorder boxHeight password"
+										id="password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
 										required="required"> <label for="password"><spring:message
 											code="registration.password" /> <span class="star">*</span>
 									</label>
+									<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
+											aria-hidden="true"></i></a>
+									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="rePassword"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
-										class="form-control boxBorder boxHeight" id="confirm_password"
+										class="form-control boxBorder boxHeight password2"
+										id="confirm_password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"> <spring:message
 											code="registration.password" /> <span class="star">*</span>
 									</label>
+									<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
+											aria-hidden="true"></i></a>
+									</div>
 								</div>
 							</div>
 							<div class="row securityQuestionDiv">
@@ -849,34 +910,40 @@ title="Please enter number upto 30 characters only">
 
 
 
-<!-- modal start -->
+	<!-- modal start -->
 
-<div id="otpVerification" class="modal" style="width: 40%;">
-        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+	<div id="otpVerification" class="modal" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-               <h6 class="modal-header">Enter OTP</h6>
-        <div class="modal-content">  
-                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-             <p class="center" id="verifyOtpResp"></p>
-                        <input type="hidden" id="userid"  name="userid" value="${userId}">
-                        <div class="row">          
-                            <div class="input-field col s12 m12">
-                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
-                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
-										title="Please enter 6 digit number" placeholder=""/>
-                            </div> 
-                            <div class="input-field col s12 m12">
-                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
-										pattern="[0-9]{0,6}"
-										title="Please enter 6 digit number" 
-                                required="required" id="phoneOtp" placeholder=""/>
-                            </div>
-                        </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
-                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
-                    </form>
-        </div>
-    </div>
+		<h6 class="modal-header">Enter OTP</h6>
+		<div class="modal-content">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
+				<p class="center" id="verifyOtpResp"></p>
+				<input type="hidden" id="userid" name="userid" value="${userId}">
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<input type="text" placeholder="Enter OTP of Email"
+							name="emailOtp" maxlength="6" required="required" id="emailOtp"
+							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
+							placeholder="" />
+					</div>
+					<div class="input-field col s12 m12">
+						<input placeholder="Enter OTP of Phone" type="text"
+							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							title="Please enter 6 digit number" required="required"
+							id="phoneOtp" placeholder="" />
+					</div>
+				</div>
+				<a href="javascript:void(0)"
+					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
+					class="right"><spring:message code="registration.resendotp" /></a>
+				<button type="submit" id="otpVerifyBtn" class="btn"
+					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
+					<spring:message code="registration.done" />
+				</button>
+			</form>
+		</div>
+	</div>
 
 	<!-- Modal End -->
 
