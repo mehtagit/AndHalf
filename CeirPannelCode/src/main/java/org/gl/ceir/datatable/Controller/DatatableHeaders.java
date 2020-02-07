@@ -301,6 +301,18 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			
+			//AdminImprtertrcManageType Headers 
+			
+			else if("AdminImportertrcManageType".equals(role)) {
+				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.Trademark","table.CountryofManufacture","table.TAC","table.TRCStatus","table.Approve/RejectionDate","table.CEIRAdminStatus","table.action"};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		

@@ -720,10 +720,10 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id) {
+	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username) {
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"')";
+		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"')";
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
@@ -899,7 +899,7 @@ public class IconsState {
 
 	/********************************** Icons for Stolen **********************************/ 
 
-	public String blockUnblockState(List<ActionModel> actionResponse,String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
@@ -908,18 +908,9 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 
-		if(source.equals("3")) {
-			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
-			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
-
-		}
-		else if(source.equals("4")) {
-			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
-			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
-
-		}
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
@@ -930,54 +921,75 @@ public class IconsState {
 				+editIconTitle+"></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-
-
-		for (ActionModel actionModel : actionResponse) {
-
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>";
+		
+		if(source.equals("3") && status.equals("0")) {
+			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
 			
-			switch(actionModel.getState()) {
-			case 0:
-				error=disableHandling(actionModel, errorURL);
-				log.info("------------------ case 0");
-				break;
-			case 1:
-				error=disableHandling(actionModel, errorURL);
-				log.info("------------------ case 1");
-				break;
-			case 2:
-				error=disableHandling(actionModel, errorURL);
-				log.info("------------------ case 2");
-				break;
-			case 3:
-				error=enableHandling(actionModel,errorURL);
-				log.info("------------------ case 3");
-				break;
-			case 4:
-				error=disableHandling(actionModel, errorURL);
-				log.info("------------------ case 4");
-				break;
-			case 5:
-				error=disableHandling(actionModel, errorURL);
-				log.info("------------------ case 5");
-				break;
-				}
-	}
+		}
+		else if(source.equals("4") && status.equals("0")) {
+			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
+		}else if(status.equals("0")) {
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+		}
+		
+		
+		
+		
 
-		String action=error.concat(download).concat(view).concat(edit);	
+		/*
+		 * for (ActionModel actionModel : actionResponse) {
+		 * 
+		 * 
+		 * switch(actionModel.getState()) { case 0: error=disableHandling(actionModel,
+		 * errorURL); log.info("------------------ case 0"); break; case 1:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 1"); break; case 2:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 2"); break; case 3:
+		 * error=enableHandling(actionModel,errorURL);
+		 * log.info("------------------ case 3"); break; case 4:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 4"); break; case 5:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 5"); break; } }
+		 */
+		
+		
+		String action=error.concat(download).concat(view).concat(edit).concat(delete);	
 		return action;
 
 	}
 
-private String enableHandling(ActionModel actionModel,String errorURL) {
-		//log.info("in Action enableHandling--->" +actionModel.getState());
-		return "<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="+errorIconTitle+" ></i></a>";
-}
+	/*
+	 * private String enableHandling(ActionModel actionModel,String errorURL) {
+	 * //log.info("in Action enableHandling--->" +actionModel.getState()); return
+	 * "<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+	 * +errorIconTitle+" ></i></a>"; }
+	 */
 
 
-private String disableHandling(ActionModel actionModel,String errorURL) {
-	//log.info("in Action disableHandling--->" +actionModel.getState());
-	return "<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="+errorIconTitle+"  ></i></a>";
-}
+	/*
+	 * private String disableHandling(ActionModel actionModel,String errorURL) {
+	 * //log.info("in Action disableHandling--->" +actionModel.getState()); return
+	 * "<a href="+errorURL+" class="+disableIconClass+"><i class="
+	 * +disableErrorIcon+" aria-hidden=\"true\" title="+errorIconTitle+"  ></i></a>"
+	 * ; }
+	 */
 
 
 
@@ -1079,7 +1091,7 @@ private String disableHandling(ActionModel actionModel,String errorURL) {
 
 
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
-		String viewAction="viewByID("+id+",'view')";
+		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
@@ -1303,7 +1315,7 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 		log.info("set StatusofGrievance....." +StatusofGrievance);
 		
 		//Disable reply
-				if( "0".equals(StatusofGrievance)) {
+				if( "0".equals(StatusofGrievance) || "3".equals(StatusofGrievance)) {
 					reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 							+replyIconTitle+" ></i></a>";
 
@@ -1400,5 +1412,39 @@ public String manageUserIcons(String id) {
 	return action;
 
 }
+
+
+
+/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
+
+
+public String trcAdminImporterManageIcons(String status,Integer id,String fileName,String txnId) {	
+	String viewAction="viewByID("+id+",'view')";
+	String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+	String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+	String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+
+	String download="<a href="+downloadURL+" download=\"download\"><i class="
+			+downloadIcon+" aria-hidden=\"true\" title="
+			+downloadIconTitle+" download=\"download\"></i></a>";
+	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+			+approveIconTitle+" ></i></a>";   
+	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+			+rejectIconTitle+" ></i></a>";
+
+	
+	
+	
+
+	String action = view.concat(download).concat(approve).concat(reject);
+	return action;
+
+}
+	
+
 
 }
