@@ -41,7 +41,8 @@ import com.google.gson.Gson;
 @RestController
 @CrossOrigin
 public class TRC implements CRUD{
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;	
 	@Autowired

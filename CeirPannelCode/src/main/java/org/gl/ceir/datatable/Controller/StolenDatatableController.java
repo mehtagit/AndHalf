@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 @RestController
 public class StolenDatatableController {
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired

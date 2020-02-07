@@ -1,14 +1,21 @@
 package org.gl.ceir.Class.HeadersTitle;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
+import org.gl.ceir.configuration.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import java.net.URLEncoder;
-import java.util.List;
 @Component
 public class IconsState {
+	@Autowired
+	Translator Translator;
+
 	@Value ("${projectPath}")
 	String projectPath;
 
@@ -28,19 +35,19 @@ public class IconsState {
 	String payTaxIcon = "\"fa fa-money pay-tax-icon\"";
 	String ListIcon =  "\"fa fa-list list-icon\"";
 	String plusIcon = "\"fa fa-plus-square download-icon\"";
-	
+
 	// icon title  
-	String errorIconTitle="Error-File";
-	String downloadIconTitle="Download"; 
-	String viewIconTitle="View"; 
-	String editIconTitle="Edit"; 
-	String deleteIconTitle="Delete"; 
-	String replyIconTitle="Reply";
-	String approveIconTitle="Approve";
-	String rejectIconTitle="Reject";
-	String payTaxIconTitle ="Pay Tax";
-	String ListIconTittle = "List";
-	String plusIconTittle = "Add device";
+	String errorIconTitle= null;
+	String downloadIconTitle=null;
+	String viewIconTitle=null;
+	String editIconTitle=null;
+	String deleteIconTitle=null; 
+	String replyIconTitle=null;
+	String approveIconTitle=null;
+	String rejectIconTitle=null;
+	String payTaxIconTitle =null;
+	String ListIconTittle = null;
+	String plusIconTittle = null;
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
@@ -55,7 +62,7 @@ public class IconsState {
 
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link
-
+		executePostConstruct();
 		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		log.info("downloadURL::::::::::::::"+downloadURL);
@@ -140,6 +147,7 @@ public class IconsState {
 
 	public String stockState(String fileName,String txnId,String status,String userStatus) {
 		// URL link 
+		executePostConstruct();
 		String emptyURL="JavaScript:void(0);"; 
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";	
@@ -214,6 +222,7 @@ public class IconsState {
 	/********************************** Icons for custom Stock  **********************************/ 
 
 	public String customStockState(String fileName,String txnId,String status,String userStatus) {
+		executePostConstruct();
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
@@ -300,6 +309,7 @@ public class IconsState {
 	/********************************** Icons for Stolen **********************************/ 
 
 	public String stolenState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty) {
+		executePostConstruct();
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 		String emptyURL="JavaScript:void(0);"; 
@@ -372,8 +382,10 @@ public class IconsState {
 	/********************************** Icons for custom **********************************/ 
 
 	public String customState(String fileName,String txnId ,String status,String userStatus,String displayName) {
+		
 		// URL link 
-
+		// call post construct
+		executePostConstruct();
 		String emptyURL="JavaScript:void(0);"; 
 		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
@@ -428,6 +440,7 @@ public class IconsState {
 	/********************************** Icons for Admin Consignment **********************************/ 
 
 	public String adminState(String fileName,String txnId ,String status,String userStatus,String companyName) {
+		executePostConstruct();
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String viewAction="viewConsignmentDetails('"+txnId+"')";
@@ -509,6 +522,7 @@ public class IconsState {
 	/********************************** Icons for Grievance **********************************/ 
 
 	public String grievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+		executePostConstruct();
 		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
 
@@ -542,12 +556,13 @@ public class IconsState {
 		String action=reply.concat(view);
 		return action;
 	}
-	
-	
+
+
 
 	/********************************** Icons for Custom Grievance **********************************/ 
 
 	public String customGrievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+		executePostConstruct();
 		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
 
@@ -586,6 +601,7 @@ public class IconsState {
 	/********************************* Icons for Admin Grievance *********************************/ 
 
 	public String adminGrievanceState(String fileName,String txnId ,String grievanceId,String status,String userStatus,int userId) {
+		executePostConstruct();
 		String replyAction = "grievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
 
@@ -603,7 +619,7 @@ public class IconsState {
 					+replyIconTitle+" ></i></a>";
 
 		}
-		
+
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
@@ -626,6 +642,7 @@ public class IconsState {
 	/********************************* Icons for Admin *********************************/ 
 
 	public String adminStockState(String fileName,String txnId ,String status,String userStatus) {
+		executePostConstruct();
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
@@ -675,7 +692,7 @@ public class IconsState {
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
 		}
-		
+
 		if("7".equals(status)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
@@ -687,9 +704,9 @@ public class IconsState {
 			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" download=\"download\"></i></a>"; 
-			
+
 		}
-		
+
 
 
 		else if(("5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
@@ -721,6 +738,7 @@ public class IconsState {
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
 	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username) {
+		executePostConstruct();
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"')";
@@ -774,6 +792,7 @@ public class IconsState {
 
 
 	public String dashboardIcon(String userStatus,Integer featureID,String txnID) {
+		executePostConstruct();
 		// URL link 
 		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
 			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
@@ -788,11 +807,11 @@ public class IconsState {
 		// state related Code 
 		String view=null;
 		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
-		view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
-				+viewIconTitle+" ></i></a>";
+			view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
+					+viewIconTitle+" ></i></a>";
 		}
 		else {
-			
+
 			view="<a href="+viewAction+" class="+disableIconClass+"><i  class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
@@ -898,93 +917,93 @@ public class IconsState {
 
 
 
-/********************************* Icons for Stolen *********************************/
+	/********************************* Icons for Stolen *********************************/
 
-public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
-// URL link
-String file = fileName == null ? null : fileName.replace(" ", "%20");
+	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+		// URL link
+		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
-String viewAction="";
-String editAction="";
-String emptyURL="JavaScript:void(0);";
-String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";
-String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
-String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
-
-
-if(source.equals("3") && status.equals("0")) {
-editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
-viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
-}else if(source.equals("4") && status.equals("0")) {
-editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
-viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
-}
-
-// state related Code
-String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
-+errorIconTitle+" ></i></a>";
-String download="<a href="+downloadURL+" download=\"download\"><i class="
-+downloadIcon+" aria-hidden=\"true\" title="
-+downloadIconTitle+" download=\"download\"></i></a>";
-String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\" title="
-+editIconTitle+"></i></a>";
-String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-+viewIconTitle+" ></i></a>";
-String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
-+deleteIconTitle+"></i></a>";
+		String viewAction="";
+		String editAction="";
+		String emptyURL="JavaScript:void(0);";
+		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 
+		if(source.equals("3") && status.equals("0")) {
+			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
+			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
+		}else if(source.equals("4") && status.equals("0")) {
+			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
+			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
+		}
 
-if(source.equals("3") && status.equals("0")) {
-error="<a href="+errorURL+" class="+disableIconClass+"><i class="
-+disableErrorIcon+" aria-hidden=\"true\" title="
-+errorIconTitle+" ></i></a>";
-
-}
-else if(source.equals("4") && status.equals("0")) {
-download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
-+disableDownloadIcon+" aria-hidden=\"true\" title="
-+downloadIconTitle+" download=\"download\"></i></a>";
-error="<a href="+errorURL+" class="+disableIconClass+"><i class="
-+disableErrorIcon+" aria-hidden=\"true\" title="
-+errorIconTitle+" ></i></a>";
-}else if(status.equals("0") || status.equals("3")) {
-download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
-+disableDownloadIcon+" aria-hidden=\"true\" title="
-+downloadIconTitle+" download=\"download\"></i></a>";
-}
+		// state related Code
+		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+				+errorIconTitle+" ></i></a>";
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>";
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\" title="
+				+editIconTitle+"></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
+				+deleteIconTitle+"></i></a>";
 
 
+
+		if(source.equals("3") && status.equals("0")) {
+			error="<a href="+errorURL+" class="+disableIconClass+"><i class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+
+		}
+		else if(source.equals("4") && status.equals("0")) {
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" download=\"download\"></i></a>";
+			error="<a href="+errorURL+" class="+disableIconClass+"><i class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
+		}else if(status.equals("0") || status.equals("3")) {
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" download=\"download\"></i></a>";
+		}
 
 
 
 
-/*
-* for (ActionModel actionModel : actionResponse) {
-*
-*
-* switch(actionModel.getState()) { case 0: error=disableHandling(actionModel,
-* errorURL); log.info("------------------ case 0"); break; case 1:
-* error=disableHandling(actionModel, errorURL);
-* log.info("------------------ case 1"); break; case 2:
-* error=disableHandling(actionModel, errorURL);
-* log.info("------------------ case 2"); break; case 3:
-* error=enableHandling(actionModel,errorURL);
-* log.info("------------------ case 3"); break; case 4:
-* error=disableHandling(actionModel, errorURL);
-* log.info("------------------ case 4"); break; case 5:
-* error=disableHandling(actionModel, errorURL);
-* log.info("------------------ case 5"); break; } }
-*/
 
 
-String action=error.concat(download).concat(view).concat(edit).concat(delete);
-return action;
+		/*
+		 * for (ActionModel actionModel : actionResponse) {
+		 *
+		 *
+		 * switch(actionModel.getState()) { case 0: error=disableHandling(actionModel,
+		 * errorURL); log.info("------------------ case 0"); break; case 1:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 1"); break; case 2:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 2"); break; case 3:
+		 * error=enableHandling(actionModel,errorURL);
+		 * log.info("------------------ case 3"); break; case 4:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 4"); break; case 5:
+		 * error=disableHandling(actionModel, errorURL);
+		 * log.info("------------------ case 5"); break; } }
+		 */
 
-}
+
+		String action=error.concat(download).concat(view).concat(edit).concat(delete);
+		return action;
+
+	}
 
 
-	
+
 
 
 	/********************************** Icons for Admin MEssage Management**********************************/ 
@@ -1290,8 +1309,8 @@ return action;
 		String action = view.concat(edit);
 		return action;
 	}
-public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId,String StatusofGrievance) {
-		
+	public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId,String StatusofGrievance) {
+
 		log.info(" entry in set view in data table.....");
 		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 		String viewAction = "endUserviewGrievanceHistory('"+grievanceId+"','"+projectPath+"','"+userId+"')";
@@ -1303,13 +1322,13 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 				+viewIconTitle+" ></i></a>";
 
 		log.info("set StatusofGrievance....." +StatusofGrievance);
-		
-		//Disable reply
-				if( "0".equals(StatusofGrievance) || "3".equals(StatusofGrievance)) {
-					reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
-							+replyIconTitle+" ></i></a>";
 
-				}
+		//Disable reply
+		if( "0".equals(StatusofGrievance) || "3".equals(StatusofGrievance)) {
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					+replyIconTitle+" ></i></a>";
+
+		}
 		/*
 		 * //Disable reply if( "0".equals(status) || "1".equals(status) ||
 		 * "3".equals(status)) { reply =
@@ -1335,106 +1354,121 @@ public String endUserGrievanceState(String fileName,String txnId ,String grievan
 	}
 
 
-/********************************** Icons for Importal TRC Datatable **********************************/ 
+	/********************************** Icons for Importal TRC Datatable **********************************/ 
 
 
-public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
-	// URL link 
-	//String downloadURL = "JavaScript:void(0)";
+	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
+		// URL link 
+		//String downloadURL = "JavaScript:void(0)";
 
-	String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
-	String editAction= "ImporterviewByID("+id+",'edit')";
-	String deleteAction = "JavaScript:void(0);";
-	// state related Code 
-	
-
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-			+viewIconTitle+" ></i></a>";
-
-	String edit="<a onclick="+editAction+"><i class="
-			+editIcon+" aria-hidden=\"true\"  title="
-			+editIconTitle+"></i></a>"; 
-	String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
-			+deletionIcon+" aria-hidden=\"true\"  title="
-			+deleteIconTitle+"></i></a>";
-
-	String action=view.concat(edit).concat(delete);		  
-	return action;
-
-}
-
-/********************************** Icons for Device Activation **********************************/ 	
-
-public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
-	String viewAction="viewDetails('"+imei1+"')";
-	String editAction="";
+		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
+		String editAction= "ImporterviewByID("+id+",'edit')";
+		String deleteAction = "JavaScript:void(0);";
+		// state related Code 
 
 
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-			+viewIconTitle+" ></i></a>";
-	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
-			+editIconTitle+"></i></a>"; 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>";
+
+		String action=view.concat(edit).concat(delete);		  
+		return action;
+
+	}
+
+	/********************************** Icons for Device Activation **********************************/ 	
+
+	public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
+		String viewAction="viewDetails('"+imei1+"')";
+		String editAction="";
 
 
-	String action = view.concat(edit);
-	return action;
-}
-
-/********************************** Icons for Manage Users**********************************/ 
-
-public String manageUserIcons(String id) { 
-
-	String viewAction="viewDetails('"+id+"')";
-	String editAction="";
-	String ListAction ="";
-	String AddAction = "";
-	// state related Code 
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-			+viewIconTitle+" ></i></a>";
-	String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
-			+editIconTitle+"></i></a>"; 
-	String List = "<a onclick="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
-			+ListIconTittle+"></i></a>"; 
-	String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
-			+plusIconTittle+"></i></a>"; 
-
-	String action = view.concat(edit).concat(List).concat(Add);
-	return action;
-
-}
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
 
 
+		String action = view.concat(edit);
+		return action;
+	}
 
-/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
+	/********************************** Icons for Manage Users**********************************/ 
+
+	public String manageUserIcons(String id) { 
+
+		String viewAction="viewDetails('"+id+"')";
+		String editAction="";
+		String ListAction ="";
+		String AddAction = "";
+		// state related Code 
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String List = "<a onclick="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
+				+ListIconTittle+"></i></a>"; 
+		String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
+				+plusIconTittle+"></i></a>"; 
+
+		String action = view.concat(edit).concat(List).concat(Add);
+		return action;
+
+	}
 
 
-public String trcAdminImporterManageIcons(String status,Integer id,String fileName,String txnId) {	
-	String viewAction="viewByID("+id+",'view')";
-	String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-	String approveAction = "openApproveTACPopUp('"+txnId+"','')";
-	String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+
+	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-			+viewIconTitle+" ></i></a>";
+	public String trcAdminImporterManageIcons(String status,Integer id,String fileName,String txnId) {	
+		String viewAction="viewByID("+id+",'view')";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
-	String download="<a href="+downloadURL+" download=\"download\"><i class="
-			+downloadIcon+" aria-hidden=\"true\" title="
-			+downloadIconTitle+" download=\"download\"></i></a>";
-	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
-			+approveIconTitle+" ></i></a>";   
-	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
-			+rejectIconTitle+" ></i></a>";
 
-	
-	
-	
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
 
-	String action = view.concat(download).concat(approve).concat(reject);
-	return action;
+		String download="<a href="+downloadURL+" download=\"download\"><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" download=\"download\"></i></a>";
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
 
-}
-	
+
+
+
+
+		String action = view.concat(download).concat(approve).concat(reject);
+		return action;
+
+	}
+
+	@PostConstruct
+	public void executePostConstruct() {
+		errorIconTitle=Translator.toLocale("titles.Error_File");
+		downloadIconTitle=Translator.toLocale("titles.Download");
+		viewIconTitle=Translator.toLocale("titles.View"); 
+		editIconTitle=Translator.toLocale("titles.Edit");
+		deleteIconTitle=Translator.toLocale("titles.Delete"); 
+		replyIconTitle=Translator.toLocale("titles.Reply");
+		approveIconTitle=Translator.toLocale("titles.Approve");
+		rejectIconTitle=Translator.toLocale("titles.Reject");
+		payTaxIconTitle =Translator.toLocale("titles.Pay_Tax");
+		ListIconTittle = Translator.toLocale("titles.List");
+		plusIconTittle = Translator.toLocale("titles.Add_device");
+	}
+
 
 
 }
