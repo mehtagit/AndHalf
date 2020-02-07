@@ -113,7 +113,7 @@ var contextpath = "${context}";
 
 <body>
 	<%String name=request.getParameter("type");%>
-String userType=request.getParameter("type");
+
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->

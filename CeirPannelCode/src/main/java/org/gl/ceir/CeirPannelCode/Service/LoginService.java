@@ -81,6 +81,7 @@ public class LoginService {
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
 				session.setAttribute("language",response.getUserLanguage()); 
+				session.setAttribute("period", response.getPeriod());
 				return response;      
 			}       
 			else {

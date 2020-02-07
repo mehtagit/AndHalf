@@ -203,6 +203,14 @@ input[type="checkbox"] {
 	right: 10px;
 	top: 10px;
 }
+
+.upload-file-label {
+	margin: 0;
+}
+
+.file-field .btn {
+	line-height: 2.5rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -534,7 +542,7 @@ String usertypeId="${usertypeId}";
 
 
 							<div class="row">
-								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
+								<div class="col s12 m6 l6" style="margin-bottom: 10px;">
 									<label for="vatNumber"><spring:message
 											code="registration.vatregistration" /> <span class="star">*</span></label>
 									<div class=" boxHeight">
@@ -575,13 +583,11 @@ String usertypeId="${usertypeId}";
 												code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>
 
-									<div id="vatFileDiv" class="col s12 m12" style="display: none;">
-										<h6 class="file-upload-heading">
-											<spring:message code="registration.vatfile" />
-											<span class="star">*</span>
-										</h6>
-										<div class="file-field input-field col s12 m6"
-											style="margin-top: 5px; padding-left: 0;">
+									<div id="vatFileDiv" style="display: none;">
+
+										<div class="file-field col s12 m6">
+											<p class="upload-file-label"><spring:message code="registration.vatfile" />
+												<span class="star">*</span></p>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input
 													name="file" type="file" id="vatFile" accept=".pdf">
@@ -650,7 +656,7 @@ String usertypeId="${usertypeId}";
 										pattern="[A-Za-z0-9\s]{0,50}" required="required"
 										maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
-									<label><spring:message code="registration.answer" /> <span
+									<label for="answer0"><spring:message code="registration.answer" /> <span
 										class="star">*</span> </label>
 								</div>
 							</div>
@@ -674,7 +680,7 @@ String usertypeId="${usertypeId}";
 										class="form-control boxBorder boxHeight answer" id="answer1"
 										pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only"
-										required="required"> <label><spring:message
+										required="required"> <label for="answer1"><spring:message
 											code="registration.answer" /> <span class="star">*</span> </label>
 								</div>
 							</div>
@@ -701,7 +707,7 @@ String usertypeId="${usertypeId}";
 										class="form-control boxBorder boxHeight answer" id="answer2"
 										title="Please enter alphanumeric upto 50 characters only"
 										maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
-										required="required"> <label><spring:message
+										required="required"> <label for="answer2"><spring:message
 											code="registration.answer" /> <span class="star">*</span> </label>
 								</div>
 							</div>
@@ -718,7 +724,7 @@ String usertypeId="${usertypeId}";
 									<div class="input-field col s12 m6 l12">
 										<input type="text" autocomplete="off" name="captcha"
 											class="form-control boxBorder boxHeight" id="captcha"
-											required="required"> <label for="address"> <spring:message
+											required="required"> <label for="captcha"> <spring:message
 												code="registration.enteryourcaptcha" /><span class="star">*</span>
 										</label>
 									</div>

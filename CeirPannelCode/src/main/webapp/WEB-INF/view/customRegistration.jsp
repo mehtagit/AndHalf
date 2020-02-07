@@ -597,7 +597,7 @@ title="Please enter number upto 30 characters only">
 								<div class="input-field col s12 m6 l12">
 									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
-										required="required"> <label for="address">
+										required="required"> <label for="captcha">
 										<spring:message code="registration.enteryourcaptcha" /><span class="star">*</span>
 									</label>
 								</div>
