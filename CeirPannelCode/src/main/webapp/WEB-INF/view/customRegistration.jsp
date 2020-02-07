@@ -433,7 +433,7 @@ title="Please enter number upto 30 characters only">
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="authorityEmail" maxlength="320"
 										class="form-control boxBorder boxHeight" id="authorityEmail"
-										title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+										title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 									<label for="authorityEmail">
 										<spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
@@ -447,8 +447,9 @@ title="Please enter number upto 30 characters only">
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="email" required="required" id="email"
-										maxlength="320"> <label for="email"><spring:message code="input.email" /> <span
+									<input type="text" name="email" required="required" id="email" 
+										maxlength="320" 		title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"> 
+										<label for="email"><spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
 
@@ -479,8 +480,8 @@ title="Please enter number upto 30 characters only">
 										required="required"> <label for="password"><spring:message code="registration.password" />
 										<span class="star">*</span>
 									</label>
-									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
+								<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -494,8 +495,8 @@ title="Please enter number upto 30 characters only">
 										for="confirm_password"><spring:message code="registration.retypepassword" /> <span
 										class="star">*</span>
 									</label>
-									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
+								<div class="input-field-addon">
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -802,7 +803,7 @@ title="Please enter number upto 30 characters only">
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

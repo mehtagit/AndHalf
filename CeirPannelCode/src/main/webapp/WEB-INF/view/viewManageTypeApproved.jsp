@@ -549,7 +549,7 @@ textarea {
                                                         class="star">*</span></label>
                                             </div>
                                             <input type="text" id="editImportertransactionid" style="display: none">
-                                            <input type="text" id="columnid" style="display: none">
+                                            <input type="text" id="importerColumnid" style="display: none">
                                            
                                            
                                             <%-- <div class="input-field col s12 m6 l6">

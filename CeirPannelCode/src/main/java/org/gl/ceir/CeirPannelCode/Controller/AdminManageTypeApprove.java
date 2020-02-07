@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,7 +23,7 @@ public class AdminManageTypeApprove {
 	UtilDownload utildownload;
 	
 	@RequestMapping(value=
-		{"./manageTypeDevices2"},method={org.springframework.web.bind.annotation.
+		{"/manageTypeDevices2"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
 	public ModelAndView viewManageTypeAdmin(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
@@ -31,5 +32,12 @@ public class AdminManageTypeApprove {
 		mv.setViewName("viewManageTypeAdmin");
 		log.info(" view ManageType  exit point."); 
 		return mv; 
+	}
+	
+	@GetMapping("register-form-importer")
+	public ModelAndView regiserImporterForm() {
+		ModelAndView modelAndView = new ModelAndView("importerTypeApproved");
+		return modelAndView;
+
 	}
 }

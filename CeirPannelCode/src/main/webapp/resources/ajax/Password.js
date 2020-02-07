@@ -22,3 +22,11 @@ $(document).on('click', '.toggle-password3', function() {
     var input = $(".password3");
     input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
 });
+
+$(document).on('click', '.toggle-password4', function() {
+
+    $(this).toggleClass("fa-eye fa-eye-slash");
+    
+    var input = $(".password4");
+    input.attr('type') === 'password' ? input.attr('type','text') : input.attr('type','password')
+});

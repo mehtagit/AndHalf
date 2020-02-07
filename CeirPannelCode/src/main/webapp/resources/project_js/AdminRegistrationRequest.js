@@ -275,7 +275,8 @@
 
 
 
-	function userApprovalPopup(userId,date){
+	function userApprovalPopup(userId,date,username){
+		$("#registrationTxnId").text(username);
 		$('#approveInformation').openModal();
 		$("#userId").text(userId);
 		window.userID=userId;

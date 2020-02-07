@@ -11,7 +11,8 @@
 			'en': './resources/i18n/en.json',
 			'km': './resources/i18n/km.json'
 		} ).done( function() { 
-		//	successMsg=$.i18n('successMsg');
+			editUnblock=$.i18n('editStolenDevice');
+			
 		});
 		
 
@@ -404,12 +405,24 @@ $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#editBulkBlockCategory');
-			console.log('#editBulkBlockCategory');
+			
 		}
 	});
+
+
 	if(popUpType=='view'){	
 		console.log("++++++++++"+popUpType+"requestType="+requestType);
-		
+	
+		if(requestType=="3")
+		{
+      
+		$('#viewModalHeader').text($.i18n('viewBulkUnblock'));
+		}
+		else{
+			
+		$('#viewModalHeader').text($.i18n('viewBlockDevice'));
+		}
+			
 	$("#viewBulkBlockDeviceModal").openModal();
 	$("#viewBulkBlockCategory").val(data.blockCategoryInterp);
 	$("#viewBulkBlockRemark").val(data.remark);
@@ -419,21 +432,30 @@ $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
 	}
 	else
 	{
+		if(requestType=="3")
+		{
+			  
+		$('#editblockHeading').text(editUnblock);
+		}
+		else{
+			  
+		$('#editblockHeading').text($.i18n('editBlockDevice'));
+		}
+		
 		console.log("++++++++++"+popUpType+" requestType="+requestType);
 	$("#editBulkBlockDeviceModal").openModal();
-	$("#editBulkBlockCategory").val(data.blockCategory).change();
 	$("#editBulkBlockRemark").val(data.remark);
 	$("#editBulkBlockuploadFile").val(data.fileName);
 	$("#editBulkBlockquantity").val(data.qty);
 	$("#editBulkBlockTxnId").val(data.txnId);
 	$("#editBulkBlockrequestType").val(data.requestType);
+	$("#editBulkBlockCategory").val(data.blockCategory);
+	//alert(data.blockCategory);
 	}
 }
 
 
 function updateBulkDevice(){
-
-	
 var categoryInterp=	$("#editBulkBlockCategory").val();
 var remark=	$("#editBulkBlockRemark").val();
 var fileName=$("#editBulkBlockuploadFile").val();
@@ -517,7 +539,7 @@ $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 	$("#editblockdeviceType").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#editblockdeviceType,#viewblockdeviceType');
+		.appendTo('#editblockdeviceType');
 	
 	}
 });
@@ -535,7 +557,7 @@ $.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 	$("#editblockmultipleSimStatus").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#editblockmultipleSimStatus,#viewblockmultipleSimStatus');
+		.appendTo('#editblockmultipleSimStatus');
 	
 	}
 });
@@ -544,7 +566,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 	$("#editblockdeviceIdType").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#editblockdeviceIdType,#viewblockdeviceIdType');
+		.appendTo('#editblockdeviceIdType');
 		
 	}
 });
@@ -556,6 +578,16 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 
 	if(popUpType=='view'){
+		
+		if(requestType=="3")
+		{
+          
+		$('#singleBlockUnblockHeading').text($.i18n('viewBulkUnblock'));
+		}
+		else{
+			   
+		$('#singleBlockUnblockHeading').text($.i18n('viewBlockDevice'));
+		}
 		$('#viewblockImeiDevice').openModal();
 		console.log("++++++++++"+popUpType+"requestType="+requestType);
 		for (i = 0; i < data.length; i++) {
@@ -589,9 +621,9 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		else{
 			console.log("else############")
 		}
-	$("#viewblockdeviceType").val(data[i].deviceType).change();
-	$("#viewblockdeviceIdType").val(data[i].deviceIdType).change();
-	$("#viewblockmultipleSimStatus").val(data[i].multipleSimStatus);
+	$("#viewblockdeviceType").val(data[i].deviceTypeInterp);
+	$("#viewblockdeviceIdType").val(data[i].deviceIdTypeInterp);
+	$("#viewblockmultipleSimStatus").val(data[i].multipleSimStatusInterp);
 	$("#viewsingleblockserialNumber").val(data[i].deviceSerialNumber);
 	$("#viewsingleblockremark").val(data[i].remark);
 	$("#viewsingleblockIMEI1").val(data[i].firstImei);
@@ -599,7 +631,8 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 	$("#viewsingleblockCategory").val(data[i].categoryInterp);
 	if(data[i].blockingType=='tilldate')
 		{
-		$("#viewsingleblockingType").val(data[i].blockingTimePeriod);
+		
+		$("#viewsingleblockingType").val("Later ( Block time period : " +data[i].blockingTimePeriod+" )");
 		}
 	else{
 	$("#viewsingleblockingType").val(data[i].blockingType);
@@ -612,9 +645,20 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		 $("#editblockmultipleSimStatus option").remove();
 		 $("#editblockdeviceIdType option").remove();
 		 $("#editbulkBlockdeviceCategory option").remove();*/
+		if(requestType=="3")
+		{
+			  
+		$('#singleBlockDeviceHeading').text(editUnblock);
+		}
+		else{
+			   
+		$('#singleBlockDeviceHeading').text($.i18n('editBlockDevice'));
+		}
+		
+		
 		console.log("++++++++++"+popUpType+" requestType="+requestType);
 	$("#editblockImeiDevice").openModal();
-
+	 
 		
 		
 		
@@ -655,7 +699,19 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		$("#editsingleblockIMEI1").val(data[i].firstImei);
 		$("#editsingleblockTxnid").val(data[i].txnId);
 		$("#editbulkBlockdeviceCategory").val(data[i].category);
-		$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingTimePeriod+']').attr('checked', true); 
+		
+		$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingType+']').attr('checked', true); 
+		
+		if(data[i].blockingType=='tilldate')
+			{
+			$("#calender").css("display", "block"); 
+			
+			$("#stolenDatePeriodedit").val(data[i].blockingTimePeriod);
+			}
+		else{
+			$("#calender").css("display", "none"); 
+		}
+		//$('input[name=editbulkBlockdeviceradio][value='+data[i].blockingTimePeriod+']').attr('checked', true); 
 		$("#editsingleblocRequestType").val(requestType);
 		}
 	}
@@ -756,6 +812,6 @@ $('#stolenDatePeriodUnblock').datepicker({
 
 function singleImeiFormClear(){
 	$('#editSingleImeiform').trigger("reset");
-	
+	//$('input[name=editbulkBlockdeviceradio]').attr('checked', false);
 }
 

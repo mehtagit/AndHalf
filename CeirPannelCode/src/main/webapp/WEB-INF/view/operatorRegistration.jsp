@@ -395,9 +395,9 @@ String userType=request.getParameter("type");
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="authorityEmail" maxlength="320"
 										class="form-control boxBorder boxHeight" id="authorityEmail"
-									title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"	>
+																	title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 									<label for="authorityEmail"><spring:message
-											code="registration.ReportingAuthorityEmailid" /></label>
+											code="registration.reportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -408,9 +408,9 @@ String userType=request.getParameter("type");
 											code="registration.reportingauthoritycontactnumber" /></label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
+																<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" required="required" id="email"
-										maxlength="320" title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+										maxlength="320" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 										 <label for="email"><spring:message
 											code="input.email" /><span class="star">*</span></label>
 								</div>
@@ -442,7 +442,7 @@ String userType=request.getParameter("type");
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -457,7 +457,7 @@ String userType=request.getParameter("type");
 											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -730,7 +730,7 @@ String userType=request.getParameter("type");
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

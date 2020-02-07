@@ -375,7 +375,7 @@ String usertypeId="${usertypeId}";
 										</div>
 										<br> <br>
 									</div>
-									<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
+									<!-- <p style="margin-left: 15px;"><a javascript:void(0)>Download Sample Format</a></p> -->
 								</div>
 
 
@@ -392,8 +392,8 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
-										required="required" title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" >
-										 <label for="email"><spring:message
+										required="required" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" >
+										 <label for="email"><spring:message                        
 											code="input.email" /> <span class="star">*</span> </label>
 								</div>
 
@@ -608,7 +608,7 @@ String usertypeId="${usertypeId}";
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -621,10 +621,10 @@ String usertypeId="${usertypeId}";
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"> <spring:message
-											code="registration.retypepassword" /> <span class="star">*</span>
+											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -934,7 +934,7 @@ String usertypeId="${usertypeId}";
 							id="phoneOtp" placeholder="" />
 					</div>
 				</div>
-				<a href="#"
+				<a href="javascript:void(0)"
 					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
 					class="right"><spring:message code="registration.resendotp" /></a>
 				<button type="submit" id="otpVerifyBtn" class="btn"

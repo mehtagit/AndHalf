@@ -18,5 +18,9 @@
 "documenttype":"Document Type",
 "selectfile":"Select File",
 "selectDocumentType":"Select Document Type",
-"selectCategory":"Select Category"
+"selectCategory":"Select Category",
+"editBlockDevice":"Edit Block Device",
+"viewBlockDevice":"View Block Device",
+"viewBulkUnblock":"View UnBlock Device",
+"editStolenDevice":"Edit UnBlock Device"
 }

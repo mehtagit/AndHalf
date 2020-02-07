@@ -378,7 +378,7 @@ var contextpath = "${context}";
 							<spring:message code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -399,7 +399,7 @@ var contextpath = "${context}";
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password2"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -419,7 +419,7 @@ var contextpath = "${context}";
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password3"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>

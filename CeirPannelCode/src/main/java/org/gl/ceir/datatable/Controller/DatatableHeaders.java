@@ -138,7 +138,7 @@ public class DatatableHeaders {
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.AsType","table.roleType","table.status","table.action"};	
+				String[] headers = {"table.RequestedOn","table.displayName","table.AsType","table.roleType","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -301,6 +301,18 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			
+			//AdminImprtertrcManageType Headers 
+			
+			else if("AdminImportertrcManageType".equals(role)) {
+				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.Trademark","table.CountryofManufacture","table.TAC","table.TRCStatus","table.Approve/RejectionDate","table.CEIRAdminStatus","table.action"};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		
