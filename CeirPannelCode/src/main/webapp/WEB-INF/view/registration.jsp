@@ -280,8 +280,9 @@ String usertypeId="${usertypeId}";
 								</select>
 							</div>
 							<div class="col s12 m11">
-								<h5><%=request.getParameter("type") %>
-									Registration
+								<h5>
+								<%=request.getParameter("type") %>
+									<spring:message code="welcome.message" />
 								</h5>
 								<hr>
 								<span id="msg" style="color: red;">${msg}</span>
@@ -620,7 +621,7 @@ String usertypeId="${usertypeId}";
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"> <spring:message
-											code="registration.password" /> <span class="star">*</span>
+											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
 										<a href="#"><i class="fa fa-eye-slash toggle-password2"

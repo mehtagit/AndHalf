@@ -93,7 +93,7 @@ padding: 0 !important;
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading"><spring:message code="operator.report" /></p>
+                                            <p class="PageHeading"><spring:message code="operator.reportUnblock " /></p>
                                         </div>
 
                                         <div class="row">

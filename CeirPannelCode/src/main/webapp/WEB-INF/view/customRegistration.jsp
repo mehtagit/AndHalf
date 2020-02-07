@@ -204,7 +204,10 @@ var contextpath = "${context}";
 <option value="km">Khmer</option>
 </select>
 </div>
-<div class="col s12 m12"><h5><%=name%> Registration</h5>
+<div class="col s12 m12"><h5>
+<%=name%> 
+<spring:message code="welcome.message" />
+</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr></div>
 							

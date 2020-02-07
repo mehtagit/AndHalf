@@ -91,6 +91,14 @@
 					},
 					"columns": result
 				});
+				$('div#initialloader').delay(300).fadeOut('slow');
+				$('#registrationLibraryTable input').unbind();
+				$('#registrationLibraryTable input').bind('keyup', function (e) {
+					if (e.keyCode == 13) {
+						table.search(this.value).draw();
+					}
+
+				});
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax");

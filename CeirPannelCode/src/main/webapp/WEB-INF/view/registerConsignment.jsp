@@ -171,7 +171,9 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="expectedDispatcheDate"
 												id='expectedDispatcheDate' class='form-control datepick'
-												autocomplete='off' required="required"  oninvalid="setCustomValidity('<spring:message code="validation.requiredMsg" />')"> <label
+												autocomplete='off' onclick="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+												title="<spring:message code="validation.requiredMsg" />"  required /> 
+												<label
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
@@ -182,15 +184,17 @@ section {
 										<div class=" col s12 m6">
 										<p style="margin: 0;font-size: 12px;"><spring:message code="input.country" /> <span class="star">*</span></p>
 											<select id="country" name="organisationcountry" 
-												required="required" class="browser-default" class="mySelect"
-												style="padding-left: 0;" oninvalid="setCustomValidity('<spring:message code="validatio.selectFieldMsg" />')" required></select>
+												required class="browser-default" class="mySelect"
+												style="padding-left: 0;" title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required ></select>
 										</div>
 
 
 										<div class="input-field col s12 m6">
 											<input name="expectedArrivaldate" id="expectedArrivaldate"
-												type="text" class='form-control datepick' autocomplete='off'
-												required="required"> <label for="expectedArrivaldate"
+												type="text" class='form-control datepick' autocomplete='off' onclick="setCustomValidity('')"  
+												oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+												title="<spring:message code="validation.requiredMsg" />"
+												required /> <label for="expectedArrivaldate"
 												class="center-align"><spring:message code="input.arrivaldate" /> <span
 												class="star">*</span></label> <span class="input-group-addon"
 												style="color: #ff4081"><i class="fa fa-calendar"
@@ -201,7 +205,7 @@ section {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,7}"
-												maxlength="7" /> <label for="totalPrice"
+												maxlength="7" title="<spring:message code="validation.7character" />" /> <label for="totalPrice"
 												class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>
 
@@ -209,7 +213,7 @@ section {
 											<input type="text" name="quantity" id="quantity"
 												pattern="[0-9]{0,7}"
 												title="<spring:message code="validation.7character" />"
-												maxlength="7" required /> <label for="quantity"
+												maxlength="7" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" required/> <label for="quantity"
 												class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label>
 										</div>
 
@@ -218,7 +222,7 @@ section {
 											
 												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /><span class="star">*</span></label>
 											<select class="browser-default" id="expectedArrivalPort"
-												required="required" name="expectedArrivalPort">
+												 name="expectedArrivalPort" title="<spring:message code="validation.selectFieldMsg" />">
 												<%-- <spring:message code="input.arrivalport" /> --%>
 												<option value="" disabled selected> <spring:message code="input.arrivalport" /></option>
 											</select>
@@ -226,7 +230,7 @@ section {
 
 										<div class="col s12 m6" id="currencyDiv">
 											<label for="currency"><spring:message code="input.currency" /></label>
-											<select id="currency" class="browser-default">
+											<select id="currency" class="browser-default" title="<spring:message code="validation.selectFieldMsg" />" >
 												<option value=""  selected><spring:message code="input.currency" /></option>
 									
 											</select>
@@ -242,7 +246,8 @@ section {
 											style="margin-top: 5px;">
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input type="file"
-													required="required" name="file" id="file" accept=".csv">
+													 name="file" id="file" accept=".csv"  title="<spring:message code="validation.file" />"
+													 oninvalid="this.setCustomValidity('<spring:message code="validation.file" />')" required />
 											</div>
 											<div class="file-path-wrapper">
 												<input class="file-path validate responsive-file-div"

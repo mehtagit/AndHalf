@@ -67,7 +67,7 @@ var contextpath = "${context}";
 <body data-lang="${language}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
-		<div id="loader"></div>
+	<div id="initialloader"></div>
 		<div class="loader-section section-left"></div>
 		<div class="loader-section section-right"></div>
 	</div>

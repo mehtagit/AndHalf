@@ -363,7 +363,7 @@ String userType=request.getParameter("type");
 								</div>
 
 								<div class="col s12 m6 l6">
-									<label><spring:message code="operator.natureofemp" />
+									<label><spring:message code="registration.natureofemployment" />
 										<span class="star">*</span></label> <select id="natureOfEmployment"
 										class="browser-default" required>
 										<option value="" disabled selected><spring:message
@@ -397,7 +397,7 @@ String userType=request.getParameter("type");
 										class="form-control boxBorder boxHeight" id="authorityEmail"
 									title="Enter a valid email id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"	>
 									<label for="authorityEmail"><spring:message
-											code="registration.reportingAuthorityEmailid" /></label>
+											code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
