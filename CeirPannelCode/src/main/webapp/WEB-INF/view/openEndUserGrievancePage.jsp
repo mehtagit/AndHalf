@@ -259,7 +259,7 @@ var contextpath = "${context}";
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="input-field col s12 m12 l12 center">
                                             <button class="btn" id="saveAnonymousGrieavance" type="submit"><spring:message code="button.submit" /></button>
-                                            <a href="#cancelMessage" class="btn modal-trigger"
+                                            <a onclick="openCancelPopUp()" class="btn"
                                                 style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                         </div>
                                     </div>
@@ -348,7 +348,7 @@ var contextpath = "${context}";
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
                         <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                        <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                     </div>
                 </div>
             </div>
@@ -785,6 +785,18 @@ $('#trackGrievanctableDiv').css("display", "none");
 }
     
   
+
+function  openCancelPopUp()
+{
+	 $('#cancelMessage').openModal(); 
+}
+
+function  closeCancelPopUp()
+{
+	 $('#cancelMessage').closeModal();
+}
+
+
   
   
    </script>

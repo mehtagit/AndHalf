@@ -249,7 +249,8 @@ public class StolenRecovery {
 					  @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="requestType",required = false) int requestType,
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) Integer id,
-					  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName)
+					  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName,
+					  @RequestParam(name="qty",required = false) Integer qty)
 			  {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
@@ -303,7 +304,7 @@ public class StolenRecovery {
 					stolenRecoveryModel.setUserId(userId);
 					stolenRecoveryModel.setRoleType(roleType);
 					stolenRecoveryModel.setTxnId(txnId);
-					
+					stolenRecoveryModel.setQty(qty);
 					//stolenRecoveryModel.setCategory(deviceCaegory);
 					stolenRecoveryModel.setBlockCategory(blockCategory);
 					stolenRecoveryModel.setRemark(remark);

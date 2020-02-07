@@ -933,7 +933,7 @@
 
 
            <div id="viewBulkBlockDeviceModal" class="modal-form" style="overflow-y: hidden;">
-		<h6 class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
+		<h6 id="viewModalHeader" class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			
                                             <form action="#" style="margin-top: 30px;">
@@ -986,7 +986,7 @@
 
 
            <div id="viewblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
-		<h6 class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
+		<h6 id="singleBlockUnblockHeading"  class="modal-header"><spring:message code="modal.header.viewBlockDevices" /></h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			   <form action=""  method="POST" enctype="multipart/form-data">
                                                     <div class="row">
@@ -994,25 +994,32 @@
                                                        		<div class="row">
                                         					<div class="col s12 m6">
                                                                 <label for="viewblockdeviceType"><spring:message code="table.devicetype" /></label>
-                                                                <select class="browser-default" id="viewblockdeviceType" required="required" disabled="disabled">
+                                                                <%-- <select class="browser-default" id="viewblockdeviceType" required="required" disabled="disabled">
                                                                     <option value="" disabled selected><spring:message code="table.devicetype" /></option> 
                                                                     
-                                                                </select>
+                                                                </select> --%>
+                                                                
+                                                                <input type="text" id="viewblockdeviceType" name="viewblockdeviceType" placeholder="" pattern="[0-9]{1,15}" required="required"
+                                                                     disabled="disabled" maxlength="15">
                                                             </div>
                                                             <div class="col s12 m6"><label for="viewblockdeviceIdType"><spring:message code="select.deviceIDType" /> </label>
-                                                                <select class="browser-default" id="viewblockdeviceIdType" disabled="disabled" required="required">
+                                                               <%--  <select class="browser-default" id="viewblockdeviceIdType" disabled="disabled" required="required">
                                                                     <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                    
-                                                                </select>
+                                                                </select> --%>
+                                                                <input type="text" id="viewblockdeviceIdType" name="viewblockdeviceIdType" placeholder="" pattern="[0-9]{1,15}" required="required"
+                                                                     disabled="disabled" maxlength="15">
                                                             </div>
                                                             </div>
                                         					<div class="row">
                                                             <div class="col s12 m6">
                                                                 <label for="viewblockmultipleSimStatus"><spring:message code="select.multiSimStatus" /></label>
-                                                                <select class="browser-default" id="viewblockmultipleSimStatus" disabled="disabled" required="required">
+                                                               <%--  <select class="browser-default" id="viewblockmultipleSimStatus" disabled="disabled" required="required">
                                                                     <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
                                                                     
-                                                                </select>
+                                                                </select> --%>
+                                                                <input type="text" id="viewblockmultipleSimStatus" name="viewblockmultipleSimStatus" placeholder="" pattern="[0-9]{1,15}" required="required"
+                                                                     disabled="disabled" maxlength="15">
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
@@ -1082,7 +1089,7 @@
             </div></div>
             
                      <div id="editblockImeiDevice" class="modal-form" style="overflow-y: hidden;">
-		<h6 class="modal-header"><spring:message code="modal.UpdateBlock" /></h6>
+		<h6 id="singleBlockDeviceHeading" class="modal-header"><spring:message code="modal.UpdateBlock" /></h6>
 		<div class="modal-content" style="margin-top: 5px;">
 			   <form action=""  method="POST" onsubmit="return updateSingleBlockDevicesRequest()" id="editSingleImeiform" enctype="multipart/form-data">
                                                     <div class="row">
@@ -1132,7 +1139,7 @@
                                                             <div class="" style="margin-left: 36%; margin-top: -25px;"><spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 					value="Immediate"
 					onchange="document.getElementById('calender').style.display = 'none';"
-					name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
+					name="stolenBlockPeriod"><spring:message code="operator.immediate" />
 				</label> <label style="margin-right: 2%;"> <input type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"
 					value="Default"
 					onchange="document.getElementById('calender').style.display = 'none';"
@@ -1218,7 +1225,7 @@
                                            
             </div></div>
             <div id="editBulkBlockDeviceModal" class="modal" style="overflow-y: hidden;">
-<h6 class="modal-header"><spring:message code="modal.EditDevice" /></h6>
+<h6 id="editblockHeading" class="modal-header"><spring:message code="modal.EditDevice" /></h6>
 <div class="modal-content" style="margin-top: 5px;">
 
 <form action="" onsubmit="return updateBulkDevice()" method="post" style="margin-top: 30px;">
@@ -1259,10 +1266,10 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 <label for="editBulkBlockRemark"><spring:message code="input.Remark" /> <span class="star">*</span> </label>
 <!-- <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
 title="" maxlength="16" value="1500" disabled> -->
+
+</div>
 <input type="text" style="display:none" id="editBulkBlockrequestType">
 <input type="text" style="display:none" id="editBulkBlockTxnId">
-</div>
-
 <!-- <div class="input-field col s12 m6" style="margin-top: 25px;">
 <input type="text" id="editBulkBlockTxnId" name="editBulkBlockTxnId" pattern="[0-9]"
 title="" maxlength="16" value="1500" disabled>
