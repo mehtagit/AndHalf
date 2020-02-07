@@ -39,6 +39,8 @@ public class SystemConfigListDb implements Serializable {
 	
 	private String interp;
 	
+	private Integer listOrder;
+	
 	@Column(length = 10)
 	private String tagId;
 	
@@ -87,6 +89,14 @@ public class SystemConfigListDb implements Serializable {
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
+	
+	public Integer getListOrder() {
+		return listOrder;
+	}
+	public void setListOrder(Integer listOrder) {
+		this.listOrder = listOrder;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -102,6 +112,8 @@ public class SystemConfigListDb implements Serializable {
 		builder.append(value);
 		builder.append(", interp=");
 		builder.append(interp);
+		builder.append(", listOrder=");
+		builder.append(listOrder);
 		builder.append(", tagId=");
 		builder.append(tagId);
 		builder.append("]");

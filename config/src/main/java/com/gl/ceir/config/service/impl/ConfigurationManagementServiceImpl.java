@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -401,7 +403,7 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tag);
 
-			return systemConfigListRepository.findByTag(tag);
+			return systemConfigListRepository.findByTag(tag, new Sort(Sort.Direction.ASC, "listOrder"));
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -414,7 +416,7 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
+			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
@@ -427,7 +429,7 @@ public class ConfigurationManagementServiceImpl {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
+			return getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
