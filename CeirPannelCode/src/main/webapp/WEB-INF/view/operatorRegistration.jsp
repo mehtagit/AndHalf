@@ -105,6 +105,13 @@ label {
 	right: 10px;
 	top: 10px;
 }
+.section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+border: solid 2px #444;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -160,7 +167,13 @@ var contextpath = "${context}";
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section">
+			<div class="section .section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+border: solid 2px #444;
+}">
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 					<div class="card-panel registration-form">

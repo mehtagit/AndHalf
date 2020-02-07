@@ -206,10 +206,19 @@ input[type="checkbox"] {
 
 .upload-file-label {
 	margin: 0;
+	
 }
 
 .file-field .btn {
-	line-height: 2.5rem;
+	line-height: 2.4rem;
+	height: 2.4rem;
+}
+.section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+border: solid 2px #444;
 }
 </style>
 <script>
@@ -271,7 +280,7 @@ String usertypeId="${usertypeId}";
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section">
+			<div class="section registration-form">
 				<form id="registrationForm" autocomplete="off" onsubmit="return saveRegistration()">
 					<div class="card-panel registration-form">
 						<%-- <a href="${context}/"
