@@ -40,8 +40,6 @@ import com.gl.ceir.config.model.SingleImeiHistoryDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
-import com.gl.ceir.config.model.StolenIndividualUserDB;
-import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -57,6 +55,7 @@ import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
+import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.ImmegreationImeiDetailsRepository;
@@ -67,7 +66,6 @@ import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -120,21 +118,24 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired
 	InterpSetter interpSetter;
 
-	public GenricResponse uploadDetails( StolenandRecoveryMgmt stolenandRecoveryDetails) {
+	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
-			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(Integer.toString(stolenandRecoveryDetails.getRequestType()));
-			webActionDb.setSubFeature("upload");
-			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
-			webActionDb.setState(0);
+			WebActionDb webActionDb = new WebActionDb(Integer.toString(stolenandRecoveryMgmt.getRequestType()), 
+					SubFeatures.REGISTER, WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
 
-			if(executeUploadDetails(stolenandRecoveryDetails, webActionDb)) {
-				logger.info("Upload Successfully." +  stolenandRecoveryDetails.getTxnId());
-				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryDetails.getTxnId());
+			if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
+				stolenandRecoveryMgmt.getStolenIndividualUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
+			} else if (Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
+				stolenandRecoveryMgmt.getStolenOrganizationUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
+			}
+			
+			if(executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
+				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
+				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
-				logger.info("Upload have been failed." + stolenandRecoveryDetails.getTxnId());
-				return new GenricResponse(1, "Upload have been failed.", stolenandRecoveryDetails.getTxnId());
+				logger.info("Upload have been failed." + stolenandRecoveryMgmt.getTxnId());
+				return new GenricResponse(1, "Upload have been failed.", stolenandRecoveryMgmt.getTxnId());
 			}
 
 		}catch (Exception e) {
@@ -146,26 +147,14 @@ public class StolenAndRecoveryServiceImpl {
 	@Transactional
 	private boolean executeUploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt, WebActionDb webActionDb) {
 		boolean status = Boolean.FALSE;
-		try {
-			StolenIndividualUserDB stolenIndividualUserDB = (StolenIndividualUserDB) stolenandRecoveryMgmt;
-			stolenAndRecoveryRepository.save(stolenIndividualUserDB);
-			logger.info("Saved in stolen_individual_user_db" + stolenIndividualUserDB);
-		}catch (ClassCastException e) {
-			try {
-				StolenOrganizationUserDB stolenOrganizationUserDB = (StolenOrganizationUserDB) stolenandRecoveryMgmt;
-				stolenAndRecoveryRepository.save(stolenOrganizationUserDB);
-				logger.info("Saved in stolen_organization_user_db" + stolenOrganizationUserDB);
-			}catch (ClassCastException e2) {
-				stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
-				logger.info("Saved in stolenand_recovery_mgmt" + stolenandRecoveryMgmt);
-			}
-		}
+
+		stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
+		logger.info("Saved in stolen_individual_user_db" + stolenandRecoveryMgmt);
 
 		webActionDbRepository.save(webActionDb);
 		logger.info("Saved in web_action_db " + stolenandRecoveryMgmt);
 
 		status = Boolean.TRUE;
-
 		return status;
 	}
 
@@ -179,11 +168,10 @@ public class StolenAndRecoveryServiceImpl {
 				singleImeiDetails.setFirstImei(stolenandRecoveryDetails.getImei());
 				singleImeiDetails.setsARm(stolenandRecoveryDetails);
 				stolenandRecoveryDetails.setSingleImeiDetails(singleImeiDetails);
-
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
-			webActionDb.setFeature(""/*stolenandRecoveryDetails.getRequestType() */);
+			webActionDb.setFeature(Features.STOLEN_RECOVERY);
 			webActionDb.setSubFeature(WebActionDbSubFeature.UPLOAD.getName());
 			webActionDb.setTxnId(stolenandRecoveryDetails.getTxnId());
 			webActionDb.setState(WebActionDbState.INIT.getCode());
@@ -490,15 +478,14 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse deleteRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
-			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo =stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
-			if(stolenandRecoveryMgmtInfo == null) {
+			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getById(stolenandRecoveryMgmt.getId());
 
+			if(Objects.isNull(stolenandRecoveryMgmtInfo)) {
 				return new GenricResponse(4,"TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
-			}
-			else {
-				StolenAndRecoveryHistoryMgmt historyMgmt = new  StolenAndRecoveryHistoryMgmt();
+			}else {
+				StolenAndRecoveryHistoryMgmt historyMgmt = new StolenAndRecoveryHistoryMgmt();
 				historyMgmt.setBlockingTimePeriod(stolenandRecoveryMgmtInfo.getBlockingTimePeriod());
-				historyMgmt.setBlockingType("" /* stolenandRecoveryMgmtInfo.getBlockingType() */);
+				historyMgmt.setBlockingType(stolenandRecoveryMgmtInfo.getBlockingType());
 				historyMgmt.setFileName(stolenandRecoveryMgmtInfo.getFileName());
 				historyMgmt.setFileStatus(stolenandRecoveryMgmtInfo.getFileStatus());
 				historyMgmt.setRequestType(stolenandRecoveryMgmtInfo.getRequestType());
@@ -564,6 +551,7 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setFileName(stolenandRecoveryMgmt.getFileName());
 				stolenandRecoveryMgmtInfo.setBlockCategory(stolenandRecoveryMgmt.getBlockCategory());
 				stolenandRecoveryMgmtInfo.setRemark(stolenandRecoveryMgmt.getRemark());
+				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);

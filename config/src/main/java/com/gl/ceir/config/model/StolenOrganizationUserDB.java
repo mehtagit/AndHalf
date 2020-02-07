@@ -5,25 +5,27 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
-public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements Serializable {
+public class StolenOrganizationUserDB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/*
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	*/
 	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
@@ -32,12 +34,14 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 
-	
 	private String username;
 	private String companyName;  
 	private String propertyLocation;
 	private String street;
 	private String locality;
+	
+	@Column(length = 50)
+	private String fileName;
 	
 	@NotNull
 	@Column(length = 50)
@@ -85,6 +89,11 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	
 	private String incidentProvince;
 	private String incidentCountry;
+	
+	@OneToOne
+	@JoinColumn(name = "stolen_id")
+	@JsonIgnore
+	StolenandRecoveryMgmt stolenandRecoveryMgmt;
 	
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
@@ -244,6 +253,19 @@ public class StolenOrganizationUserDB extends StolenandRecoveryMgmt implements S
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public StolenandRecoveryMgmt getStolenandRecoveryMgmt() {
+		return stolenandRecoveryMgmt;
+	}
+	public void setStolenandRecoveryMgmt(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		this.stolenandRecoveryMgmt = stolenandRecoveryMgmt;
 	}
 	@Override
 	public String toString() {

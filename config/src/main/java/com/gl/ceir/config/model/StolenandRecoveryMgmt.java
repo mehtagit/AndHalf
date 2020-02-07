@@ -4,13 +4,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -21,7 +20,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class StolenandRecoveryMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,18 +28,25 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Long userId;
+	
+	@Column(length = 50)
 	private String fileName;
 	private Integer fileStatus;
-	@NotNull	
+	@NotNull
 	private String txnId;
+	
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
+	
 	private Integer requestType;
 	@Transient
 	private String requestTypeInterp;
+	
 	private String roleType;
 	private String blockingType;
 	private String blockingTimePeriod;
@@ -64,8 +69,20 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Transient
 	private String blockCategoryInterp;
 	
+	@Column(length = 25)
+	private String dateOfStolen;
+	
+	@Column(length = 25)
+	private String dateOfRecovery;
+	
 	@OneToOne(mappedBy = "sARm", cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
-	SingleImeiDetails singleImeiDetails;  
+	SingleImeiDetails singleImeiDetails; 
+	
+	@OneToOne(mappedBy = "stolenandRecoveryMgmt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	StolenIndividualUserDB stolenIndividualUserDB; 
+	
+	@OneToOne(mappedBy = "stolenandRecoveryMgmt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	StolenOrganizationUserDB stolenOrganizationUserDB; 
 	
 	@Transient
 	private Long imei;
@@ -211,6 +228,19 @@ public class StolenandRecoveryMgmt implements Serializable {
 	}
 	public void setBlockCategoryInterp(String blockCategoryInterp) {
 		this.blockCategoryInterp = blockCategoryInterp;
+	}
+	
+	public StolenIndividualUserDB getStolenIndividualUserDB() {
+		return stolenIndividualUserDB;
+	}
+	public void setStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDB) {
+		this.stolenIndividualUserDB = stolenIndividualUserDB;
+	}
+	public StolenOrganizationUserDB getStolenOrganizationUserDB() {
+		return stolenOrganizationUserDB;
+	}
+	public void setStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
+		this.stolenOrganizationUserDB = stolenOrganizationUserDB;
 	}
 	@Override
 	public String toString() {

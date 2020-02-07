@@ -2,46 +2,49 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "id")
-public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Serializable {
+public class StolenIndividualUserDB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.IDENTITY) private Long id;
-	 */
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	private Long id;
+
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private LocalDateTime createdOn;
+	
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
 	private String nid;
+	
 	private String firstName;  
 	private String middleName;
 	private String lastName;
+
+	@Column(length = 50)
+	private String nidFileName;
 	
-	// user address fields.
+	// User address fields.
 	private String propertyLocation;
 	private String street;
 	private String locality;
@@ -56,7 +59,7 @@ public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Ser
 	private String village;
 	@NotNull
 	private Integer postalCode;
-	
+
 	private String province;
 	private String country;
 	private String email;
@@ -69,7 +72,7 @@ public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Ser
 	private String alternateContactNumber;
 	@Column(length = 50)
 	private String deviceBrandName;
-	
+
 	private Long imei_esn_meid;
 	private Integer deviceIdType;
 	private Integer deviceType;
@@ -80,7 +83,7 @@ public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Ser
 	private String contactNumber;
 	private Integer operator;
 	private Integer complaintType;
-	
+
 	// Place of device Stolen
 	private String deviceStolenPropertyLocation;
 	private String deviceStolenStreet;
@@ -96,13 +99,13 @@ public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Ser
 	private String deviceStolenVillage;
 	@NotNull
 	private Integer deviceStolenPostalCode;
-	
+
 	private String remark;
 	
-	/*
-	 * @OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL,fetch =
-	 * FetchType.LAZY) private List<RegularizeDeviceDb> regularizeDeviceDbs ;
-	 */
+	@OneToOne
+	@JoinColumn(name = "stolen_id")
+	@JsonIgnore
+	StolenandRecoveryMgmt stolenandRecoveryMgmt;
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
@@ -322,6 +325,19 @@ public class StolenIndividualUserDB extends StolenandRecoveryMgmt implements Ser
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public StolenandRecoveryMgmt getStolenandRecoveryMgmt() {
+		return stolenandRecoveryMgmt;
+	}
+	public void setStolenandRecoveryMgmt(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
+		this.stolenandRecoveryMgmt = stolenandRecoveryMgmt;
 	}
 	@Override
 	public String toString() {

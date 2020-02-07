@@ -148,7 +148,7 @@ public class StolenAndRecoveryController {
 	@RequestMapping(path = "/stakeholder/Delete", method = RequestMethod.DELETE)
 	public GenricResponse deleteRecord(@RequestBody StolenandRecoveryMgmt stolenandRecoveryRequest) {
 
-		logger.info("Record Delete request ="+stolenandRecoveryRequest);
+		logger.info("Record Delete request = " + stolenandRecoveryRequest);
 		GenricResponse genricResponse = stolenAndRecoveryServiceImpl.deleteRecord(stolenandRecoveryRequest);
 
 		logger.info("Response send = " + genricResponse);
