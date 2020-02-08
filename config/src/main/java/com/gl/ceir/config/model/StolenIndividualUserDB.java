@@ -82,6 +82,8 @@ public class StolenIndividualUserDB implements Serializable {
 	@Column(length = 15)
 	private String contactNumber;
 	private Integer operator;
+	private Integer multiSimStatus;
+	private Integer multiSimStatusInterp;
 	private Integer complaintType;
 
 	// Place of device Stolen
@@ -99,6 +101,9 @@ public class StolenIndividualUserDB implements Serializable {
 	private String deviceStolenVillage;
 	@NotNull
 	private Integer deviceStolenPostalCode;
+	
+	private String deviceStolenProvince;
+	private String deviceStolenCountry;
 
 	private String remark;
 	
@@ -326,7 +331,36 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
+	public String getNidFileName() {
+		return nidFileName;
+	}
+	public void setNidFileName(String nidFileName) {
+		this.nidFileName = nidFileName;
+	}
+	public Integer getMultiSimStatus() {
+		return multiSimStatus;
+	}
+	public void setMultiSimStatus(Integer multiSimStatus) {
+		this.multiSimStatus = multiSimStatus;
+	}
+	public Integer getMultiSimStatusInterp() {
+		return multiSimStatusInterp;
+	}
+	public void setMultiSimStatusInterp(Integer multiSimStatusInterp) {
+		this.multiSimStatusInterp = multiSimStatusInterp;
+	}
+	public String getDeviceStolenProvince() {
+		return deviceStolenProvince;
+	}
+	public void setDeviceStolenProvince(String deviceStolenProvince) {
+		this.deviceStolenProvince = deviceStolenProvince;
+	}
+	public String getDeviceStolenCountry() {
+		return deviceStolenCountry;
+	}
+	public void setDeviceStolenCountry(String deviceStolenCountry) {
+		this.deviceStolenCountry = deviceStolenCountry;
+	}
 	public Long getId() {
 		return id;
 	}
