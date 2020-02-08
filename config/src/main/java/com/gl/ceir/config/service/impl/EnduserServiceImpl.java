@@ -154,7 +154,7 @@ public class EnduserServiceImpl {
 					if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 						regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 					}
-					
+
 					if(Objects.isNull(regularizeDeviceDb.getStatus())) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					}
@@ -163,8 +163,13 @@ public class EnduserServiceImpl {
 				logger.info(endUserDB.getRegularizeDeviceDbs());
 			}
 
-			endUserDbRepository.save(endUserDB);
+			endUserDB = endUserDbRepository.save(endUserDB);
 			logger.info(GenericMessageTags.USER_REGISTER_SUCCESS.getMessage() + " with nid [" + endUserDB.getNid() + "]");
+
+			auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
+					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.REGISTER, ""));
+			logger.info("AUDIT : Saved request in audit.");
+
 			return new GenricResponse(0, GenericMessageTags.USER_REGISTER_SUCCESS.getTag(),GenericMessageTags.USER_REGISTER_SUCCESS.getMessage(), endUserDB.getTxnId());
 
 		}catch (Exception e) {
@@ -193,6 +198,11 @@ public class EnduserServiceImpl {
 				logger.info(GenericMessageTags.USER_UPDATE_SUCCESS.getMessage() + "of NID [" + nid +"]");
 				// TODO update fields are pending.
 				endUserDbRepository.save(endUserDB1);
+
+				auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
+						"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.UPDATE, ""));
+				logger.info("AUDIT : Saved update request in audit.");
+
 				return new GenricResponse(1, GenericMessageTags.USER_UPDATE_SUCCESS.getTag(), GenericMessageTags.USER_UPDATE_SUCCESS.getMessage(), nid);
 			}else {
 				logger.info("End User with nid [" + nid + "] does not exist.");
@@ -278,6 +288,11 @@ public class EnduserServiceImpl {
 		visaHistoryDBRepository.save(new VisaHistoryDb(visaDb.getVisaType(), visaDb.getVisaNumber(), 
 				visaDb.getVisaExpiryDate(), visaDb.getEndUserDB().getId(), visaDb.getVisaFileName()));
 		logger.info("Visa of user have been updated in history." +  visaDb);
+
+		auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 0L, 
+				"", 0L, Features.UPDATE_VISA, SubFeatures.UPDATE, ""));
+		logger.info("Consignment [" + endUserDB.getTxnId() + "] saved in audit_trail.");
+
 
 		status = Boolean.TRUE;
 		return status;
@@ -495,7 +510,7 @@ public class EnduserServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(updateRequest.getUserType())){
 				String mailTag = null;
 				String action = null;
-				
+
 				// If end user state is not pending approval on ceir admin, reject the request.
 				if(endUserDB.getStatus() != EndUserStatus.PENDING_APPROVAL_ON_CEIR_ADMIN.getCode()) {
 					logger.info(GenericMessageTags.INVALID_STATE_TRANSTION.getMessage() + " for user " + endUserDB);
