@@ -273,8 +273,11 @@ public class StockServiceImpl {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, 
-				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
+		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), userProfile.getUser().getUsername(), 
+				userProfile.getUser().getUsertype().getId(),
+				userProfile.getUser().getUsertype().getUsertypeName(), 
+				4, Features.STOCK, 
+				SubFeatures.UPLOAD, "", stockMgmt.getTxnId()));
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 
 		if(isStockAssignRequest) {
@@ -494,7 +497,15 @@ public class StockServiceImpl {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
 			}
-
+			
+			
+			auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 
+					0L,
+					"", 
+					4, Features.STOCK, 
+					SubFeatures.VIEW, "", stockMgmt.getTxnId()));
+			logger.info("Stock [ View ][" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+			
 			return stockMgmt2;
 
 		} catch (Exception e) {
