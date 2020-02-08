@@ -24,7 +24,7 @@ public class DbFunctions {
 			if(dialect.toLowerCase().contains("oracle")) {
 				dateFunction = "TO_DATE";
 			}else if (dialect.toLowerCase().contains("mysql")) {
-				dateFunction = "STR_TO_DATE";
+				dateFunction = "TO_CHAR";
 			}else {
 				dateFunction = null;
 			}
