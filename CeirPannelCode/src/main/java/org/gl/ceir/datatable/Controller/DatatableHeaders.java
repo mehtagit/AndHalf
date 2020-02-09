@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DatatableHeaders {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
 	@Autowired
 	Translator Translator;
 	@PostMapping("headers")
@@ -141,7 +140,7 @@ public class DatatableHeaders {
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-				String[] headers = {"table.RequestedOn","table.displayName","table.AsType","table.roleType","table.status","table.action"};	
+				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.displayName","table.AsType","table.roleType","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -270,7 +269,7 @@ public class DatatableHeaders {
 //auditManagement Headers 
 			
 			else if("auditManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.UserName","table.RoleType","table.feature","table.SubFeature","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.RoleType","table.feature","table.SubFeature","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -309,7 +308,7 @@ public class DatatableHeaders {
 			//AdminImprtertrcManageType Headers 
 			
 			else if("AdminImportertrcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.Trademark","table.CountryofManufacture","table.TAC","table.TRCStatus","table.Approve/RejectionDate","table.CEIRAdminStatus","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.Trademark","table.CountryofManufacture","table.TAC","table.TRCStatus","table.CEIRAdminStatus","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

@@ -87,7 +87,7 @@ public class AuditDatatableController {
 				  String subFeature = dataInsideList.getSubFeature();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);			   
-				   Object[] finalData={createdOn,modifiedOn,txnId,userName,userTypeName,featureName,subFeature,action}; 
+				   Object[] finalData={createdOn,txnId,userName,userTypeName,featureName,subFeature,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	

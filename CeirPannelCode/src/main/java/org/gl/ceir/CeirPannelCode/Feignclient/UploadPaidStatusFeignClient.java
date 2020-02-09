@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -59,4 +60,8 @@ public interface UploadPaidStatusFeignClient {
 	@PostMapping("/end-user")
 	public @ResponseBody GenricResponse RegisterEndUserDevice(EndUserVisaInfo visaInfo);
 	
+	@PostMapping("/stakeholder/Stolen")
+	public @ResponseBody GenricResponse lawfulIndivisualStolen(LawfulStolenRecovey lawfulStolen);
+	
+
 }

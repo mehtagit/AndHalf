@@ -131,6 +131,13 @@ label {
 	right: 10px;
 	top: 10px;
 }
+.section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+border: solid 2px #444;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -189,14 +196,14 @@ var contextpath = "${context}";
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section">
+			<div class="section registration-form">
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 
 					<div class="card-panel registration-form">
 						<div class="row">
 						<div class="col s10 m10 select-lang-lable">
-<label for="">Language :</label>
+<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
 </div>
 <div class="col s2 m2 right" style="padding: 0;">
 <select class="browser-default select-lang-drpdwn" id="langlist">
@@ -204,10 +211,10 @@ var contextpath = "${context}";
 <option value="km">Khmer</option>
 </select>
 </div>
-<div class="col s12 m12"><h5>
-<%=name%> 
-<spring:message code="welcome.message" />
-</h5>
+<div class="col s12 m12"><h5><%=name%> 
+Registration
+<%-- 	<spring:message code="select.registration" /> --%>
+	</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr></div>
 							
@@ -480,7 +487,7 @@ title="Please enter number upto 30 characters only">
 										required="required"> <label for="password"><spring:message code="registration.password" />
 										<span class="star">*</span>
 									</label>
-								<div class="input-field-addon">
+									<div class="input-field-addon">
 										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
@@ -495,7 +502,7 @@ title="Please enter number upto 30 characters only">
 										for="confirm_password"><spring:message code="registration.retypepassword" /> <span
 										class="star">*</span>
 									</label>
-								<div class="input-field-addon">
+									<div class="input-field-addon">
 										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
@@ -600,7 +607,7 @@ title="Please enter number upto 30 characters only">
 								<div class="input-field col s12 m6 l12">
 									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
-										required="required"> <label for="address">
+										required="required"> <label for="captcha">
 										<spring:message code="registration.enteryourcaptcha" /><span class="star">*</span>
 									</label>
 								</div>

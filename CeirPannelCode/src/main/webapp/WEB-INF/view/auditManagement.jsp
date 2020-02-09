@@ -146,7 +146,7 @@
 				
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>

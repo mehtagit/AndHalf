@@ -392,22 +392,22 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 			setViewBulkPopUp(data,popUpType,requestType);
 		},
 		error : function() {
-			alert("Failed");
+			
 		}
 	});
 }
 
-
+$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+	$('#editBulkBlockCategory').empty();
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#editBulkBlockCategory');
+		
+	}
+});
 function setViewBulkPopUp(data,popUpType,requestType){
 	
-$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
-		$('#editBulkBlockCategory').empty();
-		for (i = 0; i < data.length; i++) {
-			$('<option>').val(data[i].value).text(data[i].interp)
-			.appendTo('#editBulkBlockCategory');
-			
-		}
-	});
+
 
 
 	if(popUpType=='view'){	
@@ -450,7 +450,7 @@ $.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
 	$("#editBulkBlockTxnId").val(data.txnId);
 	$("#editBulkBlockrequestType").val(data.requestType);
 	$("#editBulkBlockCategory").val(data.blockCategory);
-	//alert(data.blockCategory);
+	
 	}
 }
 

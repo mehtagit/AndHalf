@@ -743,7 +743,7 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"')";
 
-		String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
+		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
 
 		//log.info("userId---->"+userId+"-------id---->"+id+"-------AdminCurrentStatus------>"+AdminCurrentStatus+"---createdOn--"+createdOn);
@@ -827,7 +827,7 @@ public class IconsState {
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-		String viewAction="viewByID("+id+",'view')";
+		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
 		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
 		String download="<a href="+downloadURL+" download=\"download\"><i class="
@@ -850,6 +850,7 @@ public class IconsState {
 
 	/********************************** Icons for UPS **********************************/ 	
 	public String userPaidStatusIcon(Long imei1) {
+		executePostConstruct();
 		String payTaxAction ="taxPaid('"+imei1+"')";
 		String viewAction="viewDetails('"+imei1+"')";
 		String deleteAction= "deleteByImei('"+imei1+"')";
@@ -871,6 +872,7 @@ public class IconsState {
 
 	/********************************** Icons for AdminUPS **********************************/ 	
 	public String adminUserPaidStatusIcon(Long imei1,String createdOn,String txnId) {
+		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 
 		String approveAction ="deviceApprovalPopup("+imei1+",'"+createdOn.replace(" ", "=")+"','"+txnId+"')";
@@ -893,7 +895,7 @@ public class IconsState {
 
 	/********************************** Icons for Operator **********************************/ 
 	public String greyBlackIcon(String userStatus,String fileName) {
-
+		executePostConstruct();
 		String downloadURL = "./dowloadFiles/"+fileName.replace(" ", "%20")+"/";
 
 		String download="<a href="+downloadURL+" download=\"download\"><i class="
@@ -920,6 +922,7 @@ public class IconsState {
 	/********************************* Icons for Stolen *********************************/
 
 	public String blockUnblockState(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source) {
+		executePostConstruct();
 		// URL link
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
@@ -1009,6 +1012,7 @@ public class IconsState {
 	/********************************** Icons for Admin MEssage Management**********************************/ 
 
 	public String adminMessageIcons(String userStatus, String tag) { 
+		executePostConstruct();
 		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
@@ -1037,7 +1041,7 @@ public class IconsState {
 	/********************************** Icons for AdminConfig Management**********************************/ 
 
 	public String adminConfigIcons(String userStatus, String tag) { 
-
+		executePostConstruct();
 		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
@@ -1071,7 +1075,7 @@ public class IconsState {
 	/********************************** Icons for Policy Config Management**********************************/ 
 
 	public String policyConfigIcons(String userStatus, String tag) { 
-
+		executePostConstruct();
 		String editAction="updateDetails('"+tag+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
@@ -1099,7 +1103,8 @@ public class IconsState {
 	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {	
+	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {
+		executePostConstruct();
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
@@ -1192,6 +1197,7 @@ public class IconsState {
 	/********************************** Icons for StolenlawfulAgency **********************************/ 
 
 	public String StolenlawfulAgency(String fileName,String txnId ,String status,String userStatus, String requestType,int id,Integer qty,String source, String requestTypeValue) {
+		executePostConstruct();
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
@@ -1281,7 +1287,7 @@ public class IconsState {
 	/********************************** Icons for Audit Management**********************************/ 
 
 	public String auditManagementIcons(String userStatus,String userId,String id) { 
-
+		executePostConstruct();
 		String viewAction="viewDetails('"+id+"')";
 
 		// state related Code 
@@ -1310,7 +1316,7 @@ public class IconsState {
 		return action;
 	}
 	public String endUserGrievanceState(String fileName,String txnId ,String grievanceId,Integer userId,String StatusofGrievance) {
-
+		executePostConstruct();
 		log.info(" entry in set view in data table.....");
 		String replyAction = "endUserGrievanceReply('"+userId+"','"+grievanceId+"','"+txnId+"')";
 		String viewAction = "endUserviewGrievanceHistory('"+grievanceId+"','"+projectPath+"','"+userId+"')";
@@ -1354,7 +1360,7 @@ public class IconsState {
 	}
 
 
-	/********************************** Icons for Importal TRC Datatable **********************************/ 
+	/********************************** Icons for Importer TRC Datatable **********************************/ 
 
 
 	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
@@ -1365,7 +1371,7 @@ public class IconsState {
 		String editAction= "ImporterviewByID("+id+",'edit')";
 		String deleteAction = "JavaScript:void(0);";
 		// state related Code 
-
+		
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
@@ -1385,6 +1391,7 @@ public class IconsState {
 	/********************************** Icons for Device Activation **********************************/ 	
 
 	public String deviceActivationIcon(Long imei1,String createdOn,String txnId) {
+		executePostConstruct();
 		String viewAction="viewDetails('"+imei1+"')";
 		String editAction="";
 
@@ -1402,7 +1409,7 @@ public class IconsState {
 	/********************************** Icons for Manage Users**********************************/ 
 
 	public String manageUserIcons(String id) { 
-
+		executePostConstruct();
 		String viewAction="viewDetails('"+id+"')";
 		String editAction="";
 		String ListAction ="";
@@ -1424,10 +1431,11 @@ public class IconsState {
 
 
 
-	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
+	/********************************** Icons for Importer Admin TRC Manage Type Datatable **********************************/ 
 
 
 	public String trcAdminImporterManageIcons(String status,Integer id,String fileName,String txnId) {	
+		executePostConstruct();
 		String viewAction="viewByID("+id+",'view')";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
@@ -1453,6 +1461,38 @@ public class IconsState {
 		return action;
 
 	}
+
+
+
+/********************************** Icons for Admin TRC Manage Type Admin Datatable **********************************/ 
+
+
+public String trcAdminIcons(String status,Integer id,String fileName,String txnId) {	
+	executePostConstruct();
+	String viewAction="viewByID("+id+",'view','"+projectPath+"')";
+	String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+	String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+	String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+
+	String download="<a href="+downloadURL+" download=\"download\"><i class="
+			+downloadIcon+" aria-hidden=\"true\" title="
+			+downloadIconTitle+" download=\"download\"></i></a>";
+	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+			+approveIconTitle+" ></i></a>";   
+	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+			+rejectIconTitle+" ></i></a>";
+
+
+	String action = view.concat(download).concat(approve).concat(reject);
+	return action;
+
+}
+	
+
 
 	@PostConstruct
 	public void executePostConstruct() {

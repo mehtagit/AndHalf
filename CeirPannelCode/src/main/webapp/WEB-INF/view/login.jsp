@@ -130,9 +130,8 @@ a#newUserLink {
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
 									<div class="row">
-
-										<div class="col s9 m10 select-lang-lable">
-											<label for="">Language :</label>
+<div class="col s9 m10 select-lang-lable">
+											<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
 										</div>
 										<div class="col s3 m2 right" style="padding: 0;">
 											<select class="browser-default select-lang-drpdwn"
@@ -147,6 +146,7 @@ a#newUserLink {
 											</h5>
 											<span id="errorMsg" style="color: red;">${msg}</span>
 											<hr>
+
 
 										</div>
 
