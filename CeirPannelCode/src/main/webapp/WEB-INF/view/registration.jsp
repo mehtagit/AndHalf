@@ -289,6 +289,7 @@ String usertypeId="${usertypeId}";
 						<div class="row">
 							<div class="col s10 m11 select-lang-lable">
 								<label for="" style="font-size: 1rem;">Language :</label>
+								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">

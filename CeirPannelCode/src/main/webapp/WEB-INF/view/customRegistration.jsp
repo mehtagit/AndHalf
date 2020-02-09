@@ -203,7 +203,7 @@ var contextpath = "${context}";
 					<div class="card-panel registration-form">
 						<div class="row">
 						<div class="col s10 m10 select-lang-lable">
-<label for="">Language :</label>
+<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
 </div>
 <div class="col s2 m2 right" style="padding: 0;">
 <select class="browser-default select-lang-drpdwn" id="langlist">
