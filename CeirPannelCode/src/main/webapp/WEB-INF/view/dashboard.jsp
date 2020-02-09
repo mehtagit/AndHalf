@@ -112,7 +112,7 @@ var contextpath = "${context}";
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
 								<div id="iconLable" class="darken-1">
-									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+									<i class="fa fa-globe fa-6" aria-hidden="true" style="margin-top:22px;"></i>
 								</div>
 								<div>
 									<select class="darken-1" id="langlist"

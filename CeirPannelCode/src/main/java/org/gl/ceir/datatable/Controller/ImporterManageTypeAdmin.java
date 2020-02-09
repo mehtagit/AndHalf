@@ -128,8 +128,8 @@ public class ImporterManageTypeAdmin {
 								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
 						String action = iconState.trcAdminManageIcons(adminState, trcContentModelList.getId(), fileName1,
 								txnId);
-						Object[] data = { createdOn, txnId, requestedDate, trademark, manufacturerCountry, tac, statusInterp,
-								approveRejectionDate, adminState, action };
+						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, statusInterp,
+								 adminState, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);

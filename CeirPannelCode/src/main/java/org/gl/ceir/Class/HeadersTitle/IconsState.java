@@ -725,7 +725,7 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"')";
 
-		String viewAction="trcInformation?id="+id+"&roles="+roles+"&type="+type;
+		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
 
 		//log.info("userId---->"+userId+"-------id---->"+id+"-------AdminCurrentStatus------>"+AdminCurrentStatus+"---createdOn--"+createdOn);
@@ -808,7 +808,7 @@ public class IconsState {
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-		String viewAction="viewByID("+id+",'view')";
+		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
 		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
 		String download="<a href="+downloadURL+" download=\"download\"><i class="
@@ -1429,6 +1429,33 @@ public String trcAdminImporterManageIcons(String status,Integer id,String fileNa
 	
 	
 	
+
+	String action = view.concat(download).concat(approve).concat(reject);
+	return action;
+
+}
+
+/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
+
+
+public String trcAdminIcons(String status,Integer id,String fileName,String txnId) {	
+	String viewAction="viewByID("+id+",'view','"+projectPath+"')";
+	String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+	String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+	String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+
+
+	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			+viewIconTitle+" ></i></a>";
+
+	String download="<a href="+downloadURL+" download=\"download\"><i class="
+			+downloadIcon+" aria-hidden=\"true\" title="
+			+downloadIconTitle+" download=\"download\"></i></a>";
+	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+			+approveIconTitle+" ></i></a>";   
+	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+			+rejectIconTitle+" ></i></a>";
+
 
 	String action = view.concat(download).concat(approve).concat(reject);
 	return action;
