@@ -93,7 +93,7 @@ padding: 0 !important;
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading"><spring:message code="operator.report" /></p>
+                                            <p class="PageHeading"><spring:message code="operator.reportUnblock" /></p>
                                         </div>
 
                                         <div class="row">
@@ -148,7 +148,7 @@ padding: 0 !important;
                                                         </select>
                                                     </div>
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
+                                                                <textarea id="unbockSingleRemark" required="required" class="materialize-textarea" maxlength="200"></textarea>
                                                                 <label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
                                                            
@@ -226,7 +226,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                              <form action="" id="multipleImeiUnBlockform" onsubmit="return submitUnBlockImei()" method="POST" enctype="multipart/form-data">
                                                     
                                                      <div class="col s12 m6"><label for="bulkBlockdeviceCategory"><spring:message code="operator.category" />
-                                                            <span class="star">*</span></label>
+                                                            <span class="star"> *</span></label>
                                                         <select class="browser-default" id="bulkunBlockdeviceCategory"  required="required" >
                                                             <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
@@ -236,12 +236,12 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     <div class="input-field col s12 m6 " style="margin-top: 22px;">
                                                         <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,9}" title="Please enter  numbers upto 9 characters only"
                                                          maxlength="16" required="required">
-                                                        <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
+                                                        <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
                                                     
                                                     <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
-                                                        <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star">*</span></p>
+                                                        <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>
                                                         <div class="btn">
                                                             <span>File</span>
                                                             <input type="file" id="unblockBulkFile" required="required">
@@ -252,12 +252,12 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" required="required"></textarea>
+                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" maxlength="200" required="required"></textarea>
                                                         <label for="unblockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
                                                     
                                                 <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
-                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
+                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /> <span class="star"> *</span></span>
                                                 
                                                    <div class="input-field col s12 center">
                                                 <button class="btn " id="bulkUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
@@ -440,6 +440,11 @@ src="${context}/resources/project_js/enterKey.js"></script>
 					}
 				});
 		});
+		
+		
+		 $('#stolenDatePeriodUnblock').datepicker({
+	        	dateFormat: "yy-mm-dd"
+	        	});
 		</script>
 
 </body>

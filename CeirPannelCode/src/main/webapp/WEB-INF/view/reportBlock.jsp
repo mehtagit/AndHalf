@@ -148,8 +148,8 @@
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="singleblockremark" class="materialize-textarea" required="required"></textarea>
-                                                                <label for="singleblockRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
+                                                                <textarea id="singleblockremark" class="materialize-textarea" maxlength="200" required="required"></textarea>
+                                                                <label for="singleblockRemark"><spring:message code="input.remarks" /> <span class="star"> *</span></label>
                                                             </div>
                                                               <div class="col s12 m6"><label for="singleDeviceCategory"><spring:message code="operator.category" />
                                                             <span class="star">*</span></label>
@@ -275,7 +275,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="blockbulkRemark" class="materialize-textarea" required="required"></textarea>
+                                                        <textarea id="blockbulkRemark" class="materialize-textarea" maxlength="200" required="required"></textarea>
                                                         <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
 

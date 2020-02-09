@@ -87,11 +87,20 @@
                         </li>
                     </ul>
                     <ul id="chat-out" class="right hide-on-med-and-down" style="overflow: inherit !important;">
-                        <li class="dropdown-button" style="margin-top: 10px; margin-right: 20px; background-color: #00bcd4;">
-                            <select class="browser-default" id="deviceType" style=" border-bottom: none; background-color: #00bcd4;">
-                                <option value="English">English</option>
-                                <option value="Khmer">Khmer</option>
-                            </select>
+                        <li class="dropdown-button">
+                       <div id="divLang" style="display: flex; margin: 8px 6px;"
+								class="darken-1">
+								<div id="iconLable" class="darken-1">
+									<i class="fa fa-globe fa-6" aria-hidden="true" style="margin-top: 22px;"></i>
+								</div>
+								<div>
+									<select class="darken-1" id="langlist"
+										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
+										<option value="en">English</option>
+										<option value="km">Khmer</option>
+									</select>
+								</div>
+							</div>
                         </li>
                         <li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>
                      <!--    <li>
