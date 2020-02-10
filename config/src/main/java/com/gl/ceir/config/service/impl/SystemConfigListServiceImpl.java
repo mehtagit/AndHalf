@@ -1,0 +1,192 @@
+package com.gl.ceir.config.service.impl;
+
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.configuration.FileStorageProperties;
+import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.repository.AuditTrailRepository;
+import com.gl.ceir.config.repository.SystemConfigListRepository;
+import com.gl.ceir.config.util.InterpSetter;
+import com.gl.ceir.config.util.Utility;
+
+@Service
+public class SystemConfigListServiceImpl {
+
+	private static final Logger logger = LogManager.getLogger(SystemConfigListServiceImpl.class);
+
+	@Autowired
+	FileStorageProperties fileStorageProperties;
+
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
+
+	@Autowired
+	PropertiesReader propertiesReader;
+
+	@Autowired
+	Utility utility;
+
+	@Autowired	
+	EmailUtil emailUtil;
+
+	@Autowired
+	InterpSetter interpSetter;
+	
+	@Autowired
+	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+	
+	@Autowired
+	SystemConfigListRepository systemConfigListRepository;
+	
+	public List<String> getTagsList(){
+		try {
+			return systemConfigListRepository.findDistinctTags();
+			
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	/*
+	public AuditTrail findById(long id){
+		try {
+			return auditTrailRepository.getById(id);
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	public List<AuditTrail> getAll(FilterRequest filterRequest) {
+
+		try {
+			List<AuditTrail> auditTrails = auditTrailRepository.findAll( buildSpecification(filterRequest).build());
+
+			for(AuditTrail auditTrail : auditTrails ) {
+				setInterp(auditTrail);
+			}
+
+			return auditTrails;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+
+	public Page<AuditTrail> filterAuditTrail(FilterRequest filterRequest, Integer pageNo, 
+			Integer pageSize) {
+
+		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+
+			Page<AuditTrail> page = auditTrailRepository.findAll( buildSpecification(filterRequest).build(), pageable );
+
+			for(AuditTrail auditTrail : page.getContent()) {
+				setInterp(auditTrail);
+			}
+
+			return page;
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
+	}
+
+	public FileDetails getFilteredAuditTrailInFile(FilterRequest filterRequest) {
+		String fileName = null;
+		Writer writer   = null;
+		AuditTrailFileModel atfm = null;
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_dir);
+		logger.info("CONFIG : file_audit_trail_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_link);
+		logger.info("CONFIG : file_audit_trail_download_link [" + link + "]");
+		
+		String filePath = filepath.getValue();
+		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
+		StatefulBeanToCsv<AuditTrailFileModel> csvWriter = null;
+		List< AuditTrailFileModel > fileRecords = null;
+
+		try {
+			List<AuditTrail> auditTrails = getAll(filterRequest);
+			if( !auditTrails.isEmpty() ) {
+				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+				}else {
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+				}
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+			}
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			builder = new StatefulBeanToCsvBuilder<AuditTrailFileModel>(writer);
+			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( !auditTrails.isEmpty() ) {
+				fileRecords = new ArrayList<>(); 
+
+				for(AuditTrail auditTrail : auditTrails ) {
+					atfm = new AuditTrailFileModel();
+
+					atfm.setUserId(auditTrail.getUserId());
+					atfm.setFeatureName(auditTrail.getFeatureName());
+					atfm.setSubFeatureName(auditTrail.getSubFeature());
+
+					logger.debug(atfm);
+
+					fileRecords.add(atfm);
+				}
+
+				csvWriter.write(fileRecords);
+			}
+			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+
+	private GenericSpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
+		GenericSpecificationBuilder<AuditTrail> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+
+		if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.nonNull(filterRequest.getUserId()))
+				cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+		
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("subFeature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		return cmsb;
+	}
+
+	private void setInterp(AuditTrail auditTrail) {
+		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
+			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
+		 
+	}
+*/
+
+}

@@ -172,6 +172,14 @@ public class Notification  implements Serializable{
 		this.referTable = referTable;
 	}
 
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

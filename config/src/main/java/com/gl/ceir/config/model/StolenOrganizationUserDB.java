@@ -3,12 +3,15 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
@@ -89,6 +92,10 @@ public class StolenOrganizationUserDB implements Serializable {
 	
 	private String incidentProvince;
 	private String incidentCountry;
+	
+	@Lob
+	// @Basic(fetch = FetchType.LAZY)
+	private String remark;
 	
 	@OneToOne
 	@JoinColumn(name = "stolen_id")
@@ -254,7 +261,6 @@ public class StolenOrganizationUserDB implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
 	public Long getId() {
 		return id;
 	}
@@ -267,6 +273,19 @@ public class StolenOrganizationUserDB implements Serializable {
 	public void setStolenandRecoveryMgmt(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		this.stolenandRecoveryMgmt = stolenandRecoveryMgmt;
 	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
