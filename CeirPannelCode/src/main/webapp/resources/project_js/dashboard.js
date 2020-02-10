@@ -42,8 +42,7 @@ function validatePassword(){
 }   
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
-console.log($("#cierRoletype").text());
-var cierRoletype = $("#cierRoletype").text()
+var cierRoletype = $("body").attr("data-usertype");
 sessionStorage.setItem("cierRoletype", cierRoletype);
 $(".navData li:first").addClass("active");
 $('.navData li').on('click', function() {
