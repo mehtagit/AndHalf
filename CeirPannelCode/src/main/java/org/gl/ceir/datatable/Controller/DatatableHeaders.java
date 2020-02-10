@@ -8,6 +8,7 @@ import org.gl.ceir.Class.HeadersTitle.DatatableHeaderModel;
 import org.gl.ceir.configuration.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DatatableHeaders {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+	@Autowired
+	Translator Translator;
 	@PostMapping("headers")
 	public ResponseEntity<?> headers(@RequestParam(name="type",defaultValue = "stock",required = false) String role){
 		List<DatatableHeaderModel> dataTableInputs = new ArrayList<>();

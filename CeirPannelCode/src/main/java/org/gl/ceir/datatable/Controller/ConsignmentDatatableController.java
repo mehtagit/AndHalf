@@ -36,6 +36,9 @@ public class ConsignmentDatatableController {
 	String className = "emptyClass";
 
 	@Autowired
+	Translator Translator;
+	
+	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;

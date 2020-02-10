@@ -32,7 +32,8 @@ import com.google.gson.Gson;
 
 @RestController
 public class ImporterManageTypeAdmin {
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
 	@Autowired

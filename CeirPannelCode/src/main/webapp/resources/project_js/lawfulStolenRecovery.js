@@ -372,6 +372,125 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 
 
 
+function saveIndivisualStolenRequest(){
+	var formData= new FormData();
+	
+	var singleStolenfirstName=$('#singleStolenfirstName').val();
+	var singleStolenmiddleName=$('#singleStolenmiddleName').val();
+	var singleStolenlastName=$('#singleStolenlastName').val();
+	var singleStolennIDPassportNumber=$('#singleStolennIDPassportNumber').val();
+	var singleStolenemail=$('#singleStolenemail').val();
+	var singleStolenphone1=$('#singleStolenphone1').val();
+	var singleStolenaddress=$('#singleStolenaddress').val();
+	var singleStolenstreetNumber=$('#singleStolenstreetNumber').val();
+	var singleStolenvillage=$('#singleStolenvillage').val();
+	var singleStolenlocality=$('#singleStolenlocality').val();
+	var singleStolendistrict=$('#singleStolendistrict').val();
+	var singleStolencommune=$('#singleStolencommune').val();
+	var singleStolenpin=$('#singleStolenpin').val();
+	var country=$('#singleStolenfirstName').val();
+	var state=$('#state').val();
+	var blockingTimePeriod=$('#stolenDatePeriod').val();
+	var blockingType =$('.blocktypeRadio:checked').val();
+	
+	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
+	var singleStolenimeiNumber=$('#singleStolenimeiNumber').val();
+	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
+	var singleStolendeviceType=$('#singleStolendeviceType').val();
+	var singleStolenOperator=$('#singleStolenOperator').val();
+	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
+	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
+	var singleStolenphone2 = $('#singleStolenphone2').val();
+	var singleStolenmodalNumber= $('#singleStolenmodalNumber').val();
+	
+	var singleDeviceAddress=$('#singleDeviceAddress').val();
+	var singleDevicestreetNumber=$('#singleDevicestreetNumber').val();
+	var singleDevicevillage=$('#singleDevicevillage').val();
+	var singleDevicelocality=$('#singleDevicelocality').val();
+	var singleDevicedistrict=$('#singleDevicedistrict').val();
+	var singleDevicecommune=$('#singleDevicecommune').val();
+	var singleDevicepin=$('#singleDevicepin').val();
+	var singleDevicecountry=$('#singleDevicecountry').val();
+	var singleDevicestate=$('#singleDevicestate').val();
+	var singleDeviceRemark=$('#singleDeviceRemark').val();
+	
+
+	
+	var stolenIndividualUserDB={
+			"alternateContactNumber": singleStolenphone1,
+			"commune": singleStolencommune,
+			"complaintType": singleStolenComplaintType,
+			"contactNumber": singleStolenphone2,
+			"country": country,
+			"deviceBrandName": singleStolendeviceBrandName,
+			"deviceIdType": singleStolendeviceIDType,
+			"deviceStolenCommune": singleDevicecommune,
+			"deviceStolenDistrict": singleDevicedistrict,
+			"deviceStolenLocality": singleDevicelocality,
+			"deviceStolenPostalCode": singleDevicepin,
+			"deviceStolenPropertyLocation": singleDeviceAddress,
+			"deviceStolenStreet": singleDevicestreetNumber,
+			"deviceStolenVillage": singleDevicevillage,
+			"deviceType":singleStolendeviceType,
+			"district": singleStolendistrict,
+			"email":singleStolenemail,
+			"firstName":singleStolenfirstName,
+			"imei_esn_meid": singleStolenimeiNumber,
+			"lastName": singleStolenlastName,
+			"locality": singleStolenlocality,
+			"middleName": singleStolenmiddleName,
+			"modelNumber":singleStolenmodalNumber,
+			"nid": singleStolennIDPassportNumber,
+			"operator": singleStolenOperator,
+			"phoneNo": singleStolenphone2,
+			"postalCode": singleDevicepin,
+			"propertyLocation": singleStolenaddress,
+			"province": state,
+			"remark": singleDeviceRemark,
+			"street": singleStolenstreetNumber,
+			"village":singleStolenvillage
+	}
+	
+	
+	var request={
+			"blockingTimePeriod":blockingTimePeriod,
+			"blockingType":blockingType,
+			"requestType":0,
+			"sourceType":5,
+			"stolenIndividualUserDB":stolenIndividualUserDB
+	}
+	formData.append('file', $('#singleStolenFile')[0].files[0]);
+	formData.append("request",JSON.stringify(request));
+
+	$.ajax({
+		url: './lawfulIndivisualStolen',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response, textStatus, jqXHR) {
+		console.log(response)
+		
+			if(response.errorCode==0){
+				$("#indivisualStolenButton").prop('disabled', true);
+				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenTxnId').text(response.txnId)
+			}
+			else{
+//				$('#sucessMessage').text('');
+				$('#regularisedDevice').openModal();
+				$('#dynamicTxnId').text(data.txnId);
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+
+		}
+	});
+	return false;
+	
+}
+
 
 //__________________--------------------------_______________________Edit  Pages functions___________________---------------------------------------_____________________________
 
