@@ -294,7 +294,8 @@ public class StockServiceImpl {
 					SubFeatures.ASSIGN,
 					stockMgmt.getTxnId(),
 					MailSubjects.SUBJECT,
-					placeholderMap)) {
+					placeholderMap,
+					stockMgmt.getRoleType())) {
 				logger.info("Notification have been saved.");
 			}else {
 				logger.info("Notification have been not saved.");
@@ -321,7 +322,7 @@ public class StockServiceImpl {
 
 				rawMails.add(new RawMail("MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD", userProfile, 
 						4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT,  
-						placeholderMapForAnonymousUser, ReferTable.USERS));
+						placeholderMapForAnonymousUser, ReferTable.USERS, stockMgmt.getRoleType()));
 			}
 
 			if(emailUtil.saveNotification(rawMails)) {
@@ -861,7 +862,8 @@ public class StockServiceImpl {
 							action,
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT,
-							placeholderMap);
+							placeholderMap,
+							stockMgmt.getRoleType());
 					logger.info("Notfication have been saved.");
 				}
 

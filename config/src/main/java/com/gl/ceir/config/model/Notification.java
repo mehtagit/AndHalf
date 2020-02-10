@@ -53,13 +53,17 @@ public class Notification  implements Serializable{
 	
 	@Column(length = 10)
 	private String referTable;
+	
+	@Column(length = 20)
+	private String roleType;
 
 	public Notification() {
 
 	}
 
 	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, 
-			String subFeature, String featureTxnId, String subject, Integer retryCount, String referTable) {
+			String subFeature, String featureTxnId, String subject, Integer retryCount, String referTable,
+			String roleType) {
 		this.channelType = channelType;
 		this.message = message;
 		this.userId = userId;
@@ -71,6 +75,7 @@ public class Notification  implements Serializable{
 		this.subject = subject;
 		this.retryCount = retryCount;
 		this.referTable = referTable;
+		this.roleType = roleType;
 	}
 
 	public Long getId() {

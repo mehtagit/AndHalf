@@ -91,7 +91,7 @@ public class EmailUtil {
 
 	public boolean saveNotification(@NonNull String tag, UserProfile userProfile, long featureId, 
 			String featureName, String subFeature, String featureTxnId, String subject, 
-			Map<String, String> placeholders) {
+			Map<String, String> placeholders, String roleType) {
 		try {
 			MessageConfigurationDb messageDB = messageConfigurationDbRepository.getByTagAndActive(tag, 0);
 			logger.info("Message for tag [" + tag + "] " + messageDB);
@@ -110,7 +110,8 @@ public class EmailUtil {
 			}
 			// Save email in notification table.
 			configurationManagementServiceImpl.saveNotification(ChannelType.EMAIL, message, 
-					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, subject, 0, null);
+					userProfile.getUser().getId(), featureId, featureName, subFeature, featureTxnId, 
+					subject, 0, null, roleType);
 
 			return Boolean.TRUE;
 		}catch (Exception e) {
@@ -142,7 +143,8 @@ public class EmailUtil {
 						rawMail.getFeatureTxnId(), 
 						rawMail.getSubject(), 
 						0,
-						rawMail.getReferTable()));
+						rawMail.getReferTable(),
+						rawMail.getRoleType()));
 			}
 			
 			configurationManagementServiceImpl.saveAllNotifications(notifications);

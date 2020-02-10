@@ -452,7 +452,7 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								MailSubjects.SUBJECT,
-								placeholderMap);
+								placeholderMap, null);
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -474,7 +474,8 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								MailSubjects.SUBJECT,
-								placeholderMap);
+								placeholderMap, 
+								null);
 
 					}
 				}
@@ -498,7 +499,8 @@ public class ConsignmentServiceImpl {
 							SubFeatures.REJECT,
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT,
-							placeholderMap);
+							placeholderMap, 
+							null);
 
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
@@ -519,7 +521,8 @@ public class ConsignmentServiceImpl {
 							SubFeatures.REJECT, 
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT,
-							placeholderMap);
+							placeholderMap, 
+							null);
 				}
 			}
 

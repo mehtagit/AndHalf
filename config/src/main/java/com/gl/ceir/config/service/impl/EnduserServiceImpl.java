@@ -541,7 +541,7 @@ public class EnduserServiceImpl {
 					// Mail to End user.
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(updateRequest.getFeatureId()), 
 							Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, updateRequest.getTxnId(), 
-							"SUBJECT", placeholderMap, ReferTable.END_USER));
+							"SUBJECT", placeholderMap, ReferTable.END_USER, null));
 
 					emailUtil.saveNotification(rawMails);
 				}

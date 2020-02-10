@@ -169,7 +169,7 @@ public class RegularizedDeviceServiceImpl {
 
 		List<StateMgmtDb> stateList = null;
 		SystemConfigurationDb newYearDateRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.new_year_date_register_device);
-		SystemConfigurationDb gracePeriodDorRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
+		SystemConfigurationDb gracePeriodForRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -423,7 +423,8 @@ public class RegularizedDeviceServiceImpl {
 						regularizeDeviceDb.getTxnId(), 
 						"Subject", 
 						placeholders,
-						ReferTable.USERS));
+						ReferTable.USERS,
+						null));
 
 
 				emailUtil.saveNotification(rawMails);

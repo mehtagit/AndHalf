@@ -683,6 +683,7 @@ public class StolenAndRecoveryServiceImpl {
 							action,
 							consignmentUpdateRequest.getTxnId(),
 							MailSubjects.SUBJECT,
+							null,
 							null);
 					logger.info("Notfication have been saved.");
 				}
