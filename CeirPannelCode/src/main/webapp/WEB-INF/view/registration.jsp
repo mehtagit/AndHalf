@@ -334,7 +334,7 @@ String usertypeId="${usertypeId}";
 										required="required"
 										title="Please enter alphabets upto 20 characters only">
 									<label for="lastName"> <spring:message
-											code="input.lastName" /><span class="star">*</span>
+											code="input.lastName" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -369,7 +369,7 @@ String usertypeId="${usertypeId}";
 										pattern="[A-Za-z\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
 									<label for="companyName"><spring:message
-											code="registration.Company Name" /><span class="star">*</span></label>
+											code="registration.Company Name" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="row myRow" style="display: none;" id="uploadFile">
@@ -442,7 +442,7 @@ String usertypeId="${usertypeId}";
 										title="Please enter alphanumeric with special character upto 200 characters only"
 										id="propertyLocation" required="required"> <label
 										for="propertyLocation"> <spring:message
-											code="input.address" /><span class="star">*</span></label>
+											code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -735,7 +735,7 @@ String usertypeId="${usertypeId}";
 										<input type="text" autocomplete="off" name="captcha"
 											class="form-control boxBorder boxHeight" id="captcha"
 											required="required"> <label for="captcha"> <spring:message
-												code="registration.enteryourcaptcha" /><span class="star">*</span>
+												code="registration.enteryourcaptcha" /> <span class="star">*</span>
 										</label>
 									</div>
 
