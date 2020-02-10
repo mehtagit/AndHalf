@@ -297,7 +297,7 @@ String usertypeId="${usertypeId}";
 									<option value="km">Khmer</option>
 								</select>
 							</div>
-							<div class="col s12 m11">
+							<div class="col s12 m12">
 								<h5><%=request.getParameter("type") %>
 									Registration
 								</h5>
