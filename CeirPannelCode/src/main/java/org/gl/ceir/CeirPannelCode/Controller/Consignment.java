@@ -73,9 +73,6 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 ModelAndView mv = new ModelAndView();
-
-
-
 log.info(" view consignment entry point................."); 
 mv.setViewName("viewConsignment");
 log.info(" view consignment exit point."); 
