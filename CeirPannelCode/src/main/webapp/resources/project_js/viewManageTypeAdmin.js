@@ -485,7 +485,7 @@ $(".add_field_button")
 										'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
 												+ $
 														.i18n('documenttype')
-												+ ' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
+												+ ' </label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
 												+ $
 														.i18n('selectDocumentType')
 												+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
@@ -618,4 +618,54 @@ function rejectSubmit(actiontype){
 			alert("Failed");
 		}
 	});
+}
+
+
+
+function DeleteTacRecord(txnId, id){
+	$("#DeleteTacConfirmationModal").openModal();
+	$("#tacdeleteTxnId").text(txnId);
+	$("#deleteTacId").val(id);
+}
+
+function confirmantiondelete(){
+	var txnId= $("#tacdeleteTxnId").text();
+	var tacRemark= $("#deleteTacRemark").val();
+	var id =  $("#deleteTacId").val();
+	
+	console.log("userType=="+userType+" ==remarks=="+tacRemark+"===id===" +id);
+	
+	/*var obj ={
+			"txnId" : txnId,
+			"userType": $("body").attr("data-roleType"),
+			"remark" : tacRemark
+	}*/
+
+	$.ajax({
+		url : './importerTacDelete?id='+id,
+		//data : JSON.stringify(obj),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data, textStatus, xhr) {
+			console.log(data);
+
+			//$("#stockModalText").text(data.message);
+			$("#DeleteTacConfirmationModal").closeModal();
+
+			$("#closeDeleteModal").openModal();
+			if(data.errorCode == 0){
+				$("#tacModalText").text(stockDeleted);
+			}
+			else{	$("#TacModalText").text(data.message);}
+			$("#materialize-lean-overlay-3").css("display","none");
+		},
+		error : function() {
+			console.log("Error");
+		}
+	});
+	
+	/* 
+$(".lean-overlay").remove(); */ 
+
 }
