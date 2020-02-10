@@ -92,11 +92,15 @@ var contextpath = "${context}";
 						</li>
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="#" class="brand-logo darken-1">CEIR - <span
-									id="cierRoletype"><%=usertype%></span> Portal <%
+								<a href="#" class="brand-logo darken-1">
+								<spring:message code="page.ceir" /> 
+								 <span
+									id="cierRoletype">
+									<spring:message code="roletype.${sessionScope.usertype}" />
+									</span> <spring:message code="page.portal" /> <%
 									if ("Operator".equalsIgnoreCase(usertype)) {
 								%>
-									- <%=session.getAttribute("operatorTypeName")%> <%
+									- <spring:message code="roletype.${sessionScope.operatorTypeName}" /> <%
  	} else {
  	}
  %>
@@ -123,7 +127,7 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="javascript:void(0)" data-target="goToHome" class="modal-trigger"
+						<li><a data-target="goToHome" class="modal-trigger"
 							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -180,8 +184,8 @@ var contextpath = "${context}";
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
-									Welcome
-									<%=(String) session.getAttribute("name")%>
+									<spring:message code="page.welcome" />
+									<spring:message code="roletype.${sessionScope.usertype}" />
 									(<%=(String) session.getAttribute("username")%>)
 								</p>
 							</div>
@@ -251,8 +255,8 @@ var contextpath = "${context}";
 		<div class="footer-copyright">
 			<div class="container">
 
-				<span id="copyrightText"><spring:message
-						code="registration.copyright2020" /></span>
+				<span class="right" id="copyrightText"><spring:message
+						code="registration.copyright@" /></span>
 
 			</div>
 		</div>

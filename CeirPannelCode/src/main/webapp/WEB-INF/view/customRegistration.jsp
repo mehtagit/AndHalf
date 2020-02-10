@@ -136,7 +136,7 @@ padding-top: 1rem;
 padding-bottom: 1rem;
 width: 90%;
 margin: auto;
-border: solid 2px #444;
+/* border: solid 2px #444; */
 }
 </style>
 <script>
@@ -203,7 +203,7 @@ var contextpath = "${context}";
 					<div class="card-panel registration-form">
 						<div class="row">
 						<div class="col s10 m10 select-lang-lable">
-<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 </div>
 <div class="col s2 m2 right" style="padding: 0;">
 <select class="browser-default select-lang-drpdwn" id="langlist">
@@ -211,9 +211,8 @@ var contextpath = "${context}";
 <option value="km">Khmer</option>
 </select>
 </div>
-<div class="col s12 m12"><h5><%=name%> 
-Registration
-<%-- 	<spring:message code="select.registration" /> --%>
+<div class="col s12 m12"><h5>
+<spring:message code="roletype.${param.type}" /><spring:message code="select.registration" /> 
 	</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr></div>

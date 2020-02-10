@@ -20,7 +20,7 @@ $(document).ready(function () {
 	var url = new URL(window.location.href);
     var langParameter = url.searchParams.get("lang")== null ? sessionStorage.getItem("sessionLang") : url.searchParams.get("lang");
     window.parent.$('#langlist').val(langParameter); 
-	dataByTag("copyright_footer","copyrightText",2);
+	//dataByTag("copyright_footer","copyrightText",2);
 	sessionStorage.removeItem("a");
 	$('div#initialloader').delay(300).fadeOut('slow');
 });   

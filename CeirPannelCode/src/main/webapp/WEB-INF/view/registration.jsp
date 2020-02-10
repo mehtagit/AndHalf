@@ -218,7 +218,7 @@ padding-top: 1rem;
 padding-bottom: 1rem;
 width: 90%;
 margin: auto;
-border: solid 2px #444;
+/* border: solid 2px #444; */
 }
 </style>
 <script>
@@ -288,7 +288,7 @@ String usertypeId="${usertypeId}";
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
 							<div class="col s10 m11 select-lang-lable">
-								<label for="" style="font-size: 1rem;">Language :</label>
+								
 								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
@@ -298,10 +298,11 @@ String usertypeId="${usertypeId}";
 								</select>
 							</div>
 							<div class="col s12 m11">
-								<h5><%=request.getParameter("type") %>
-									Registration
-								<%-- 		<spring:message code="select.registration" /> --%>
+								<h5>
+								<spring:message code="roletype.${param.type}" />
+										<spring:message code="select.registration" /> 
 								</h5>
+
 								<hr>
 								<span id="msg" style="color: red;">${msg}</span>
 							</div>
