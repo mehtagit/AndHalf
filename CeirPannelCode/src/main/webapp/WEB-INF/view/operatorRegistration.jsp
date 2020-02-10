@@ -105,6 +105,13 @@ label {
 	right: 10px;
 	top: 10px;
 }
+.section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+border: solid 2px #444;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -113,7 +120,7 @@ var contextpath = "${context}";
 
 <body>
 	<%String name=request.getParameter("type");%>
-String userType=request.getParameter("type");
+
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
@@ -160,13 +167,19 @@ String userType=request.getParameter("type");
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section">
+			<div class="section .section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+border: solid 2px #444;
+}">
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 					<div class="card-panel registration-form">
 						<div class="row">
 							<div class="col s10 m10 select-lang-lable">
-								<label for="">Language :</label>
+<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
@@ -395,9 +408,9 @@ String userType=request.getParameter("type");
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="authorityEmail" maxlength="320"
 										class="form-control boxBorder boxHeight" id="authorityEmail"
-																	title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
+									title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 									<label for="authorityEmail"><spring:message
-											code="registration.reportingAuthorityEmailid" /></label>
+											code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -408,7 +421,7 @@ String userType=request.getParameter("type");
 											code="registration.reportingauthoritycontactnumber" /></label>
 								</div>
 
-																<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" required="required" id="email"
 										maxlength="320" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 										 <label for="email"><spring:message

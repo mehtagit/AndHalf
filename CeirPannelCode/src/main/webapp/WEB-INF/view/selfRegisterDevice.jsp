@@ -85,7 +85,7 @@
 			<div class="section">
 				<div class="row card-panel register-device-responsive-page"
 					style="margin: auto;margin-top: 5vh;">
-					<h6 class="fixPage-modal-header ">Register Device</h6>
+					<h6 class="fixPage-modal-header "> <spring:message code="modal.header.registerdevice" /></h6>
 					<form action="" onsubmit="return submitEndUserDeviceInfo()"
 						method="POST" enctype="multipart/form-data">
 						<div class="col s12 m12 l12">
@@ -93,7 +93,7 @@
 								<div class="row">
 								
 								<div >
-													<h5>Personal Information</h5>
+													<h5><spring:message code="input.personalInformation" /></h5>
 													<hr>
 												</div>
 									<div class="col s12 m12">
@@ -126,7 +126,7 @@
 											</div>
 											<div class="file-path-wrapper">
 												<input class="file-path validate" type="text"
-													id="nidPlaceHolder" placeholder="Upload Nid Image" value="">
+													id="nidPlaceHolder" placeholder="Upload NID Image" value="">
 											</div>
 										</div>
 
@@ -356,7 +356,7 @@
 										</div>
 										<div class="row">
 										<div class="col s12 m12" style="margin-top: 30px;">
-															<h5>Device Information</h5>
+															<h5><spring:message code="modal.deviceInfo" /></h5>
 															<hr>
 														</div>
 											<div id="mainDeviceInformation" class="mainDeviceInformation">

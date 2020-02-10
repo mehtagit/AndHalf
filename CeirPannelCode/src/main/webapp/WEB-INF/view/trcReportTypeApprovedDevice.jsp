@@ -185,7 +185,7 @@
 											<div id="filediv" class="fileDiv">
 												<div class="row">
 													<div class="col s12 m6 l6" style="margin-top: 8px;">
-														<label for="Category"><spring:message code="input.documenttype"/></label> <select
+														<label for="Category"><spring:message code="input.documenttype"/><span class="star">*</span></label> <select
 															class="browser-default" id="docTypetag1">
 															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
 														
@@ -200,6 +200,7 @@
 													<div class="file-field col s12 m6">
 														<h6 style="color: #000;">
 															<spring:message code="input.supportingdocument" />
+															<span class="star">*</span>
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
@@ -236,7 +237,24 @@
 		</div>
 		</div>
 		</div>
-		  <div id="RegisterManageTypeDevice" class="modal">
+
+	<div id="RegisterManageTypeDevice" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.submitTypeApprove" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/><span id="transactionId"> </span></h6>
+				<input type="text" style="display: none" id="errorCode">
+			</div>
+			 <div class="row">
+				<div class="input-field col s12 center">
+                    <a href="./manageTypeDevices" class="btn">ok</a>
+                </div>
+			</div> 
+		</div>
+	</div>
+
+
+<%-- <div id="RegisterManageTypeDevice" class="modal">
      <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
         <div class="modal-content">
             
@@ -250,7 +268,7 @@
             </div>
         </div>
     </div>
-		<!--end container-->
+ --%>		<!--end container-->
 	</section>
 	<!--materialize js-->
 	<script type="text/javascript"
@@ -351,9 +369,11 @@ var featureId = 11;
 				contentType : false, 
 				async:false,
 				success : function(data, textStatus, jqXHR) {
-						console.log("-----success"+data);
+						var result =  JSON.parse(data)
+						console.log("-----success"+result);
 						$("#trcSubmitButton").prop('disabled', true);
-					  $('#RegisterManageTypeDevice').openModal();
+						  $('#RegisterManageTypeDevice').openModal();
+						  $('#transactionId').text(result.txnId);
 					  /*if(data.errorCode=="0")
 					 {
 					 console.log("status code = 0");

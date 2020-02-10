@@ -335,6 +335,18 @@ function setImporterEditPopupData(data){
 	$('#editfrequency').val(data.frequencyRange)
 	$("#editImportertac").val(data.tac);
 	$("#importerColumnid").val(data.id);
+	$("#approveStatus").val(data.approveStatus);
+	
+	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function( //same values to be configure for featureId 21
+			data) {
+		$("#docTypetag1").empty();
+		for (i = 0; i < data.length; i++) {
+			console.log(data[i].interp);
+			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+					'#docTypetag1');
+		}
+	});
+
 	//$("#editImporterFileName").val(data.attachedFiles[0].fileName);
 	//$("#docTypetag1").val(data.attachedFiles[0].docType);
 }
@@ -385,6 +397,7 @@ function updateImporterTypeDevice()
 					"txnId": $("#editImportertransactionid").val(),
 					"userId" : $("body").attr("data-userID"),
 					"featureId" : parseInt(featureId),
+					"approveStatus" :  $("#approveStatus").val(),
 					"id": parseInt($("#importerColumnid").val())
 				}
 			
@@ -483,7 +496,7 @@ $(".add_field_button")
 												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 					}
 
-					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId+'', function(
+					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(
 							data) {
 
 						for (i = 0; i < data.length; i++) {

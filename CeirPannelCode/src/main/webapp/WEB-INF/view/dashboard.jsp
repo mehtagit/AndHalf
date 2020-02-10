@@ -123,7 +123,7 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a  data-target="goToHome" class="modal-trigger"
+						<li><a href="javascript:void(0)" data-target="goToHome" class="modal-trigger"
 							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -558,6 +558,7 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/ajax/Profile.js"></script>
 
 		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -610,7 +611,7 @@ data-dismiss="modal">&times;</button> -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<%-- 	<script type="text/javascript"

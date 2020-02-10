@@ -225,9 +225,9 @@ if(userType=="CEIRAdmin"){
 	$("#btnLink").css({display: "none"});
 	}
 
-function viewByID(id,actionType){
+function viewByID(id,actionType,projectPath){
 	
-	
+	window.projectPath = projectPath;
 	
 	$.ajax({
 		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
@@ -240,7 +240,7 @@ function viewByID(id,actionType){
 				{
 				$("#viewModal").openModal();
 				console.log("222222222");
-				setViewPopupData(data);
+				setViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
@@ -293,7 +293,7 @@ function ImporterviewByID(id,actionType,projectPath){
 }
 
 
-function setViewPopupData(data){
+function setViewPopupData(data,projectPath){
 	$("#viewmanufacturerId").val(data.manufacturerId);
 	$("#viewmanufacturerName").val(data.manufacturerName);
 	$("#viewcountry").val(data.country);
@@ -302,6 +302,20 @@ function setViewPopupData(data){
 	$('#viewrequestDate').val(data.requestDate)
 	$("#viewapproveDisapproveDate").val(data.approveDisapproveDate);
 	$("#viewremark").val(data.remark);
+	
+	var result= data;
+	var importerViewResponse = [];
+	importerViewResponse.push(result);
+	
+	$('#chatMsg').empty();
+	var projectpath=path+"/Consignment/dowloadFiles/actual";
+	for(var i=0; i< importerViewResponse.length; i++)
+	{
+		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++)
+			{
+				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+			}
+	}
 	
 }
 
@@ -444,8 +458,10 @@ function updateReportTypeDevice()
 			url : './update-register-approved-device',
 			type : 'POST',
 			data : formData,
+			//mimeType: 'multipart/form-data',
 			processData : false,
-			contentType : false,
+			contentType : false, 
+			async:false,
 			success : function(data, textStatus, jqXHR) {
 			
 				console.log(data);
@@ -616,44 +632,14 @@ return true;
 }
 
 function setAllDropdown(){
-$.getJSON('./productList', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].id).text(data[i].brand_name)
-				.appendTo('#productname');
-	}
-});
-
-$('#productname').on(
-		'change',
-		function() {
-			var brand_id = $('#productname').val();
-			$.getJSON('./productModelList?brand_id=' + brand_id,
-					function(data) {
-						$("#modelNumber").empty();
-						for (i = 0; i < data.length; i++) {
-							$('<option>').val(data[i].id).text(
-									data[i].modelName).appendTo(
-									'#modelNumber');
-						}
-					});
-		});
-
-
-/*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		console.log(data[i].interp);
-		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
-				'#docTypetag1');
-	}
-});*/
-
-$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId+'', function(data) {
+$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
 		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
 				'#docTypetag1');
 	}
 });
+
 
 }
 
@@ -685,7 +671,7 @@ $(".add_field_button")
 												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 					}
 
-					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId+'', function(
+					$.getJSON('./getSourceTypeDropdown/DOC_TYPE', function(
 							data) {
 
 						for (i = 0; i < data.length; i++) {

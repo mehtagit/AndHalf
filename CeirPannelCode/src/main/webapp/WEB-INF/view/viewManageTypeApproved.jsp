@@ -200,7 +200,19 @@ textarea {
 						<label for="Remark" class="active"><spring:message code="input.Remark" /></label>
 					</div>
 					</div>
-			
+					<div class="modal-content">
+<div id="live-chat">
+<div class="chat">
+<div class="chat-history">
+<div class="chat-message clearfix" id="chatMsg">
+
+</div> <!-- end chat-message -->
+
+
+</div>
+</div>
+</div>
+</div>
 									
 									
 
@@ -301,7 +313,7 @@ textarea {
                                             </div>
                                         </div>
 
-                                        <div class="row">
+                        		 	<%-- <div class="row">
                                             <h6 style="color: #000; margin-left: 10px;"><spring:message code="input.supportingdocument" /> <span
                                                     class="star">*</span></h6>
                                             <div class="file-field col s12 m6">
@@ -317,7 +329,47 @@ textarea {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --%>
+                                        
+                                       <div id="mainDiv" class="mainDiv">
+											<div id="filediv" class="fileDiv">
+												<div class="row">
+													<div class="col s12 m6 l6" style="margin-top: 8px;">
+														<label for="Category"><spring:message code="input.documenttype"/></label> <select
+															class="browser-default" id="docTypetag1">
+															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
+														
+														<select class="browser-default" id="docTypetagValue1"
+															style="display: none;">
+															<option value="" disabled selected><spring:message
+																	code="select.documenttype" /></option>
+
+														</select>
+													</div>
+
+													<div class="file-field col s12 m6">
+														<h6 style="color: #000;">
+															<spring:message code="input.supportingdocument" />
+															<span class="star">*</span></h6>
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span>
+															<input type="file" name="files[]" id="docTypeFile1">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text"
+																placeholder="Upload one or more files">
+															<div>
+																<p id="myFiles"></p>
+															</div>
+														</div>
+													</div>
+												</div>
+
+
+											</div>
+									</div> 
+                               
                                         <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
                                                 class="star">*</span></span>
                                             <div class="center" >
@@ -534,157 +586,7 @@ textarea {
 		</div>
 		
 		
-		
-		<div id="importereditModal" class="modal">
-		<h6 class="modal-header" > <spring:message code="modal.UpdateDevices" /></h6>
-		<div class="modal-content">
-                                    
-<form action="" onsubmit="return updateReportTypeDevice()" method="post" style="margin-top: 30px;">
-                                   
-                                        <div class="row" style="margin-top: 10px;">
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editTradmark" name="trademarkName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
-                                                    required="required" placeholder="" />
-                                                <label for="editTradmark"><spring:message code="input.Trademark" /> <span
-                                                        class="star">*</span></label>
-                                            </div>
-                                            <input type="text" id="editImportertransactionid" style="display: none">
-                                            <input type="text" id="importerColumnid" style="display: none">
-                                           
-                                           
-                                            <%-- <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editmodelName" name="ModelName" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
-                                                    required="required" placeholder=""/>
-                                                <label for="editmodelName"><spring:message code="input.modelName" /> <span
-                                                        class="star">*</span></label>
-                                            </div>
-                                             --%>
-                                             
-                                             <div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label for="productName"><spring:message
-													code="registration.productname" /> <span class="star">*</span></label>
-											<select id="productname" class="browser-default">
-												<option value="" disabled selected><spring:message
-														code="registration.selectproduct" />
-												</option>
-											</select>
-											</div>
-                                             
-                                            
-                                            <div class="col s12 m6 l6">
-												<label for="modalNumber"><spring:message
-														code="registration.modelnumber" /> <span class="star">*</span></label>
-												<select id="modelNumber" class="browser-default">
-													<option value="" disabled selected>
-														<spring:message code="registration.selectmodelnumber" /></option>
 
-												</select>
-											</div>
-                                             
-                                            <%-- <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editmodelNumber" name="ModelNumber" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160"
-                                                    required="required" placeholder="" />
-                                                <label for="editmodelNumber"><spring:message code="input.modelNumber" /> <span
-                                                        class="star">*</span></label>
-                                            </div>
-								 --%>
-                                            <div class="col s12 m6 l6">
-                                                <label for="country"><spring:message code="input.manufacturerCountry" /> <span class="star">*</span></label>
-                                                <select id="editmanufacturercountry"  required="required" class="browser-default" class="mySelect"
-                                                    required></select>
-                                            </div>
-                                           
-									</div>
-
-                                        <div class="row" style="margin-top: 5px;">
-                                            <!-- <div class="col s12 m6 l6">
-                                                <label for="deviceType">Device ID Type </label>
-                                                <select class="browser-default" id="deviceType">
-                                                    <option value="" disabled selected>Select Device ID Type</option>
-                                                    <option value="IMEI">IMEI</option>
-                                                    <option value="ESN">ESN</option>
-                                                    <option value="MEID">MEID</option>
-                                                </select>
-                                            </div> -->
-										
-										 <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editfrequency" name="frequency" placeholder="" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="160" required="required" />
-                                                <label for="editfrequency"><spring:message code="input.frequency" /> <span class="star">*</span></label>
-                                            </div>
-											
-
-
-                                            <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editImportertac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required" />
-                                                <label for="tac"><spring:message code="input.TAC" /> <span class="star">*</span></label>
-                                            </div>
-
-                                            
-                                        </div>
-
-									
-										<div id="mainDiv" class="col s12 m12 mainDiv">
-											<div id="filediv" class="fileDiv">
-												<div class="row">
-													<div class="col s12 m6 l6" style="margin-top: 8px;">
-														<label for="Category"><spring:message
-																code="input.documenttype" /></label> <select
-															class="browser-default" id="docTypetag1">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" />
-															</option>
-
-														</select> <select class="browser-default" id="docTypetagValue1"
-															style="display: none;">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" /></option>
-
-														</select>
-													</div>
-
-													<div class="file-field col s12 m6">
-														<h6 style="color: #000;">
-															<spring:message code="input.supportingdocument" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text"
-																placeholder="Upload one or more files">
-															<div>
-																<p id="myFiles"></p>
-															</div>
-														</div>
-													</div>
-												</div>
-
-
-											</div>
-
-										</div>
-										<div class="row">
-										<div class="col s12 m12 right">
-										<span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
-                                                class="star">*</span></span>
-											<button class="btn right add_field_button">
-												<span style="font-size: 20px;">+</span>
-												<spring:message code="input.addmorefile" />
-											</button>
-										</div>
-                                        
-                                            <div class="col s12 m12 center" >
-                                                <button class="btn " type="submit"><spring:message code="button.update" /></button>
-                                                <!-- <a href="manageTypeDevices.html" class="btn" id="Cancel"
-                                                    style="margin-left: 10px;">Cancel</a> -->
-                                                    <button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
-                                            </div>
-										</div>
-                                            </form>
-                                    </div>
-                                    
-                                </div>	
 
 
 

@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.gl.ceir</groupId>
-	<artifactId>jiten</artifactId>
+	<artifactId>CeirPanelCode</artifactId>
 	<!-- <artifactId>jiten</artifactId> -->
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Ceir7feb</name>
+	<name>Ceir10feb</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
