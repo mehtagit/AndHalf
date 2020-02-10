@@ -167,7 +167,7 @@ public class EnduserServiceImpl {
 			logger.info(GenericMessageTags.USER_REGISTER_SUCCESS.getMessage() + " with nid [" + endUserDB.getNid() + "]");
 
 			auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
-					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.REGISTER, ""));
+					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
 			logger.info("AUDIT : Saved request in audit.");
 
 			return new GenricResponse(0, GenericMessageTags.USER_REGISTER_SUCCESS.getTag(),GenericMessageTags.USER_REGISTER_SUCCESS.getMessage(), endUserDB.getTxnId());
