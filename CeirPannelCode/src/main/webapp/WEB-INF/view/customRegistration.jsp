@@ -136,7 +136,7 @@ padding-top: 1rem;
 padding-bottom: 1rem;
 width: 90%;
 margin: auto;
-border: solid 2px #444;
+/* border: solid 2px #444; */
 }
 </style>
 <script>
@@ -203,7 +203,7 @@ var contextpath = "${context}";
 					<div class="card-panel registration-form">
 						<div class="row">
 						<div class="col s10 m10 select-lang-lable">
-<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 </div>
 <div class="col s2 m2 right" style="padding: 0;">
 <select class="browser-default select-lang-drpdwn" id="langlist">
@@ -211,9 +211,8 @@ var contextpath = "${context}";
 <option value="km">Khmer</option>
 </select>
 </div>
-<div class="col s12 m12"><h5><%=name%> 
-Registration
-<%-- 	<spring:message code="select.registration" /> --%>
+<div class="col s12 m12"><h5>
+<spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /> 
 	</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr></div>
@@ -249,7 +248,7 @@ Registration
 										title="Please enter alphabets upto 20 characters only"
 										required="required"
 										title="Please enter alphabets upto 20 characters only">
-									<label for="lastName"> <spring:message code="input.lastName" /><span class="star">*</span>
+									<label for="lastName"> <spring:message code="input.lastName" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -279,7 +278,7 @@ Registration
 										class="form-control boxBorder boxHeight" id="village"
 										pattern="[A-Za-z0-9\s]{0,30}" required="required"
 										title="Please enter alphanumeric with special character upto 30 characters only">
-									<label for="village"> <spring:message code="input.village" /><span class="star">*</span>
+									<label for="village"> <spring:message code="input.village" /> <span class="star">*</span>
 									</label>
 								</div>
 								<div class="input-field col s12 m6 l6">
@@ -337,7 +336,7 @@ title="Please enter number upto 30 characters only">
 								
 								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
-									<label><spring:message code="input.arrivalport" /><span class="star">*</span></label>
+									<label><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
 									<select id="arrivalPort" class="browser-default"
 										required>
 										<option value="" disabled selected><spring:message code="input.arrivalport" /></option>
@@ -369,7 +368,7 @@ title="Please enter number upto 30 characters only">
 								</div> -->
 								
 								<div class="file-field col s12 m6 l6">
-<h6 class="file-label"><spring:message code="registration.uploadnationalid" /><span class="star">*</span></h6>
+<h6 class="file-label"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
 <input type="file" id="NationalIdImage" placeholder="Upload National ID Image">
@@ -410,7 +409,7 @@ title="Please enter number upto 30 characters only">
 								</div>
 
 								<div class="col s12 m6 l6">
-									<label> <spring:message code="registration.natureofemployment" /><span class="star">*</span></label>
+									<label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
 									<select id="natureOfEmployment" class="browser-default"
 										required>
 										<option value="" disabled selected>
@@ -466,7 +465,7 @@ title="Please enter number upto 30 characters only">
 										pattern="[0-9]{8,20}"
 										title="Please enter phone number between 8 to 20 characters only"
 										required="required"> <label for="phoneNo">
-										 <spring:message code="input.contactNum" /><span class="star">*</span>
+										 <spring:message code="input.contactNum" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -514,7 +513,7 @@ title="Please enter number upto 30 characters only">
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										 <spring:message code="registration.securityQuestion1" /><span class="star">*</span>
+										 <spring:message code="registration.securityQuestion1" /> <span class="star">*</span>
 									</p>
 									<input type="hidden" class="id" id="id0"> <select
 										class="browser-default questionId" id="questionId0"
@@ -563,7 +562,7 @@ title="Please enter number upto 30 characters only">
 										class="form-control boxBorder boxHeight answer" id="answer1"
 										pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only"
-										required="required"> <label> <spring:message code="registration.answer" /><span
+										required="required"> <label> <spring:message code="registration.answer" /> <span
 										class="star">*</span>
 									</label>
 								</div>
@@ -574,7 +573,7 @@ title="Please enter number upto 30 characters only">
 
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										<spring:message code="registration.securityQuestion3" /><span class="star">*</span>
+										<spring:message code="registration.securityQuestion3" /> <span class="star">*</span>
 									</p>
 									<input type="hidden" class="id" id="id2" /> <select
 										name="questionId" id="questionId2"
@@ -608,7 +607,7 @@ title="Please enter number upto 30 characters only">
 									<input type="text"  autocomplete="off" name="captcha"
 										class="form-control boxBorder boxHeight" id="captcha"
 										required="required"> <label for="captcha">
-										<spring:message code="registration.enteryourcaptcha" /><span class="star">*</span>
+										<spring:message code="registration.enteryourcaptcha" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -617,7 +616,7 @@ title="Please enter number upto 30 characters only">
 	<p>
       <label style="color: black!important;">
         <input name="disclamer" type="checkbox" required="required" />
-        <span> <span class="star">*</span><spring:message code="registration.certifyMsg" /></span>
+        <span> <span class="star">*</span> <spring:message code="registration.certifyMsg" /></span>
       </label>
     </p>
    					

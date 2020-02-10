@@ -218,7 +218,7 @@ padding-top: 1rem;
 padding-bottom: 1rem;
 width: 90%;
 margin: auto;
-border: solid 2px #444;
+/* border: solid 2px #444; */
 }
 </style>
 <script>
@@ -288,7 +288,7 @@ String usertypeId="${usertypeId}";
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
 							<div class="col s10 m11 select-lang-lable">
-								<label for="" style="font-size: 1rem;">Language :</label>
+								
 								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
@@ -297,11 +297,12 @@ String usertypeId="${usertypeId}";
 									<option value="km">Khmer</option>
 								</select>
 							</div>
-							<div class="col s12 m11">
-								<h5><%=request.getParameter("type") %>
-									Registration
-								<%-- 		<spring:message code="select.registration" /> --%>
+							<div class="col s12 m12">
+								<h5>
+								<spring:message code="roletype.${param.type}" />
+										<spring:message code="select.registration" /> 
 								</h5>
+
 								<hr>
 								<span id="msg" style="color: red;">${msg}</span>
 							</div>
@@ -335,7 +336,7 @@ String usertypeId="${usertypeId}";
 										required="required"
 										title="Please enter alphabets upto 20 characters only">
 									<label for="lastName"> <spring:message
-											code="input.lastName" /><span class="star">*</span>
+											code="input.lastName" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -343,7 +344,7 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										AsType <span class="star">*</span>
+										Type <span class="star">*</span>
 									</p>
 									<select name="type" class="browser-default" id="type"
 										onchange="myFunction()" required>
@@ -370,14 +371,14 @@ String usertypeId="${usertypeId}";
 										pattern="[A-Za-z\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
 									<label for="companyName"><spring:message
-											code="registration.Company Name" /><span class="star">*</span></label>
+											code="registration.Company Name" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="row myRow" style="display: none;" id="uploadFile">
 									<div class="col s12 m12">
 										<h6 class="file-upload-heading">
 											<spring:message
-												code="registration.UploadNationalityInformation" />
+												code="registration.UploadNationalityInformation" /> 
 											<span class="star">*</span>
 										</h6>
 										<div class="file-field input-field col s12 m6"
@@ -443,7 +444,7 @@ String usertypeId="${usertypeId}";
 										title="Please enter alphanumeric with special character upto 200 characters only"
 										id="propertyLocation" required="required"> <label
 										for="propertyLocation"> <spring:message
-											code="input.address" /><span class="star">*</span></label>
+											code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">

@@ -20,7 +20,7 @@ $(document).ready(function () {
 	var url = new URL(window.location.href);
     var langParameter = url.searchParams.get("lang")== null ? sessionStorage.getItem("sessionLang") : url.searchParams.get("lang");
     window.parent.$('#langlist').val(langParameter); 
-	dataByTag("copyright_footer","copyrightText",2);
+	//dataByTag("copyright_footer","copyrightText",2);
 	sessionStorage.removeItem("a");
 	$('div#initialloader').delay(300).fadeOut('slow');
 });   
@@ -42,8 +42,7 @@ function validatePassword(){
 }   
 password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
-console.log($("#cierRoletype").text());
-var cierRoletype = $("#cierRoletype").text()
+var cierRoletype = $("body").attr("data-usertype");
 sessionStorage.setItem("cierRoletype", cierRoletype);
 $(".navData li:first").addClass("active");
 $('.navData li').on('click', function() {

@@ -77,13 +77,8 @@
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
-	session-value="en" 
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-value="en" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
-<%-- <%
-  out.println(session.getAttribute("usertype"));
-%>
- --%>
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
 	<!-- START CONTENT -->
