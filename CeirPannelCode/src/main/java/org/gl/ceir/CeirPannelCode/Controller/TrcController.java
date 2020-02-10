@@ -82,14 +82,6 @@ public class TrcController {
 
 	}
 	
-	@GetMapping("register-form-importer")
-	public ModelAndView regiserImporterForm() {
-		ModelAndView modelAndView = new ModelAndView("importerTypeApproved");
-		return modelAndView;
-
-	}
-
-	
 	@RequestMapping(value= {"/register-approved-device"},method= RequestMethod.POST,consumes = "multipart/form-data") 
 	public @ResponseBody GenricResponse registerTypeApprove(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
 		

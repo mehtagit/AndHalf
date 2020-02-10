@@ -182,7 +182,7 @@ var contextpath = "${context}";
 									<input type="text" name="lastName" placeholder=""
 										class="form-control boxBorder boxHeight" id="lastName"
 										pattern="[A-Za-z]{0,20}" maxlength="20" title="Please enter alphabets upto 20 characters only" required="required" title="Please enter alphabets upto 20 characters only"> <label>
-										<spring:message code="input.lastName" /> <span class="star">*</span>
+										<spring:message code="input.lastName" />  <span class="star">*</span>
 									</label>
 								</div>
 
@@ -234,7 +234,7 @@ var contextpath = "${context}";
                                             </div>
                                         </div><br><br>
                                     </div>
-                                    <!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
+                                    <!-- <p style="margin-left: 15px;"><a href="javascript:void(0)">Download Sample Format</a></p> -->
                                 </div>
                                 
                                 
@@ -473,7 +473,7 @@ var contextpath = "${context}";
 									</div>
 								</div>
 								<br> <br>
-								<p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p>
+								<p style="margin-left: 15px;"><a href="javascript:void(0)">Download Sample Format</a></p>
 							</div> -->
 
 							<!-- <div class="row">
@@ -755,7 +755,7 @@ var contextpath = "${context}";
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>
@@ -773,7 +773,7 @@ var contextpath = "${context}";
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
                                 <input required="required"  type="password" class="password" id="confirmPassword" maxlength="10">
                                 	<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 								aria-hidden="true"></i></a>
 						</div>
                             </div>

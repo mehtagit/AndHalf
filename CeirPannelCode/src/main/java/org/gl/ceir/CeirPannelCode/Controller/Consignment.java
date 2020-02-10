@@ -442,6 +442,7 @@ log.info("inside file download method");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
 FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
+log.info("redirect:"+response.getUrl());
 return "redirect:"+response.getUrl();
 }
 

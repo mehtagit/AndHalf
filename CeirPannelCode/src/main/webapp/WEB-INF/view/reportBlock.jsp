@@ -117,8 +117,8 @@
                                                         <div class="row">
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="blockdeviceType"><spring:message code="operator.devicetype" /><span class="star">*</span></label>
-                                                                <select class="browser-default" id="blockdeviceType" required="required">
+                                                                <label for="blockdeviceType"><spring:message code="operator.devicetype" /></label>
+                                                                <select class="browser-default" id="blockdeviceType" >
                                                                     <option value="" disabled selected><spring:message code="operator.devicetype1"/></option> 
                                                                     
                                                                 </select>
@@ -134,22 +134,22 @@
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="blockmultipleSimStatus"><spring:message code="operator.multiplesim" /> <span class="star">*</span></label>
-                                                                <select class="browser-default" id="blockmultipleSimStatus" required="required">
+                                                                <label for="blockmultipleSimStatus"><spring:message code="operator.multiplesim" /></label>
+                                                                <select class="browser-default" id="blockmultipleSimStatus">
                                                                     <option value="" disabled selected><spring:message code="operator.multiplestatus" /></option>
                                                                     
                                                                 </select>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" required="required"
+                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" 
                                                                     title="Please enter your device serial number first" maxlength="15">
-                                                                        <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /> <span class="star">*</span></label>
+                                                                        <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="singleblockremark" class="materialize-textarea" required="required"></textarea>
-                                                                <label for="singleblockRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
+                                                                <textarea id="singleblockremark" class="materialize-textarea" maxlength="200" required="required"></textarea>
+                                                                <label for="singleblockRemark"><spring:message code="input.remarks" /> <span class="star"> *</span></label>
                                                             </div>
                                                               <div class="col s12 m6"><label for="singleDeviceCategory"><spring:message code="operator.category" />
                                                             <span class="star">*</span></label>
@@ -275,7 +275,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="blockbulkRemark" class="materialize-textarea" required="required"></textarea>
+                                                        <textarea id="blockbulkRemark" class="materialize-textarea" maxlength="200" required="required"></textarea>
                                                         <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
 

@@ -199,7 +199,7 @@
 											type="submit">
 											<spring:message code="button.submit" />
 										</button>
-										<a href="./manageTypeDevices" class="btn" id="Cancel"
+										<a href="./manageTypeDevices2" class="btn" id="Cancel"
 											style="margin-left: 10px;"><spring:message
 												code="button.cancel" /></a>
 									</div>
@@ -215,9 +215,24 @@
 		<!--end container-->
 	</section>
 
+	
+	<div id="RegisterManageTypeDevice" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.submitTypeApprove" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/><span id="transactionId"> </span></h6>
+				<input type="text" style="display: none" id="errorCode">
+			</div>
+			 <div class="row">
+				<div class="input-field col s12 center">
+                    <a href="./manageTypeDevices2" class="btn">ok</a>
+                </div>
+			</div> 
+		</div>
+	</div>
+	
 
-
-  <div id="RegisterManageTypeDevice" class="modal">
+ <!--  <div id="RegisterManageTypeDevice" class="modal">
      <h6 class="modal-header" style="margin:0px;">Update</h6>
         <div class="modal-content">
             
@@ -226,11 +241,11 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./manageTypeDevices" class="btn">ok</a>
+                    <a href="./manageTypeDevices2" class="btn">ok</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 
 
@@ -320,7 +335,7 @@
 			console.log("done")
 		});
 		
-		var featureId = 11;
+		var featureId = 21;
 		populateCountries("country");
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
@@ -391,9 +406,11 @@
 				contentType : false, 
 				async:false,
 				success : function(data, textStatus, jqXHR) {
-						console.log("-----success"+data);
+						var result =  JSON.parse(data)
+						console.log("successdata-----" +result);
 						$("#trcSubmitButton").prop('disabled', true);
 						$('#RegisterManageTypeDevice').openModal();
+						$('#transactionId').text(result.txnId);
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")

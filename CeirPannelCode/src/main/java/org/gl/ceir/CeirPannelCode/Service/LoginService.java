@@ -81,6 +81,7 @@ public class LoginService {
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
 				session.setAttribute("language",response.getUserLanguage()); 
+				session.setAttribute("period", response.getPeriod());
 				return response;      
 			}       
 			else {
@@ -226,7 +227,7 @@ public class LoginService {
 		log.info("password data is :  "+password);                 
 		if(password.getPassword().equals(password.getConfirmPassword())) {
 			HttpResponse response=new HttpResponse();             
-			response=userProfileFeignImpl.changePassword(password);
+			response=userProfileFeignImpl.updateExpirePassword(password);
 			log.info("response got:  "+response);
 			return response; 	
 		}

@@ -86,7 +86,8 @@
 <body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
+	 data-period="${period}">
 
 
 	<!-- START CONTENT -->
@@ -182,20 +183,14 @@
 							for="InvoiceNumber" class="center-align"><spring:message code="input.invoiceNumber" /></label>
 					</div>
 
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
 						<input type="text" name="TransactionId" id="editTransactionId"
 							placeholder="" disabled maxlength="15" /> <label
 							for="TransactionId" class="center-align"><spring:message code="input.transactionID" /></label>
 					</div>
-				</div>
-
-
-				<div class="row myRow">
-					<h6 style="color: #000; margin-left: 10px; font-size: 16px;">
-						<spring:message code="modal.header.uploadBlockStock" /><span class="star">*</span>
-					</h6>
-					<div class="file-field input-field col s12 m6"
-						style="margin-top: 5px;">
+					
+					<div class="file-field col s12 m6">
+					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /><span class="star">*</span></p>
 						<div class="btn">
 							<span><spring:message code="input.selectfile" /></span> <input type="file"
 								id="editcsvUploadFile" accept=".csv">
@@ -205,14 +200,17 @@
 								id="editcsvUploadFileName" type="text">
 						</div>
 					</div>
-					<br>
-					<br>
+				</div>
+
+
+				<div class="row myRow">
 					<p style="margin-left: 10px;">
 						<a href="./Consignment/sampleFileDownload/4"><spring:message code="input.downlaod.sample" /></a>
 					</p>
+					<p style="margin-left: 10px;"><spring:message code="input.requiredfields" /><span class="star">*</span></p>
 				</div>
 
-				<span><spring:message code="input.requiredfields" /><span class="star">*</span></span>
+				
 
 
 				<div class="row">
@@ -268,30 +266,16 @@
 							disabled placeholder="" maxlength="15" /> <label
 							for="TransactionId" class="center-align"><spring:message code="input.transactionID" /></label>
 					</div>
-				</div>
-
-				<div class="row myRow">
-					<h6 style="color: #000; margin-left: 10px; font-size: 16px;">
-						<spring:message code="modal.header.uploadBlockStock" />
-					</h6>
-					<div class="file-field input-field col s12 m6"
-						style="margin-top: 5px;">
-						<!-- <div class="btn">
-							<span>Select File</span> <input type="file" id="csvUploadFile"
-								accept=".csv" disabled>
-						</div> -->
-						<div class="file-path-wrapper">
-							<input class="file-path validate responsive-file-div"
+					
+					<div class="input-field col s12 m6">
+						<label><spring:message code="modal.header.uploadBlockStock" /></label>
+							<input 
 								placeholder="" id="csvUploadFileName" type="text"
 								disabled>
-						</div>
 					</div>
-					<br>
-					<br>
-					
 				</div>
 
-				<div class="row center">
+				<div class="row center" style="margin-top: 20px;">
 
 					<a onclick="closeViewModal()" class="btn" type="cancel"><spring:message code="modal.close" /></a>
 				</div>

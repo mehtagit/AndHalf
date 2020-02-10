@@ -35,6 +35,8 @@ import com.google.gson.Gson;
 public class ManageUserDatatable {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
+	Translator Translator;
+	@Autowired
 	IconsState iconState;
 	@Autowired
 	PageElement pageElement;

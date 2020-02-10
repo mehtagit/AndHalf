@@ -100,10 +100,19 @@ label {
 	margin-top: -17px;
 	border-bottom: none;
 }
+
 .fa-eye-slash, .fa-eye {
 	position: absolute;
 	right: 10px;
 	top: 10px;
+}
+
+.section .registration-form {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	width: 90%;
+	margin: auto;
+	/* border: solid 2px #444; */
 }
 </style>
 <script>
@@ -113,6 +122,7 @@ var contextpath = "${context}";
 
 <body>
 	<%String name=request.getParameter("type");%>
+
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
@@ -146,7 +156,8 @@ var contextpath = "${context}";
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js"></script>
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<!--<script type="text/javascript" src="js/plugins.js"></script>-->
 	<!--custom-script.js - Add your own theme custom JS-->
@@ -159,13 +170,14 @@ var contextpath = "${context}";
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section">
+			<div
+				class="section">
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 					<div class="card-panel registration-form">
 						<div class="row">
 							<div class="col s10 m10 select-lang-lable">
-								<label for="">Language :</label>
+								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
@@ -327,7 +339,8 @@ var contextpath = "${context}";
 								<div class="file-field input-field col s12 m6 l6">
 									<div class="btn">
 										<span><spring:message
-												code="registration.uploadnationalid" /></span><input type="file" id="NationalIdImage" placeholder="Upload National ID Image">
+												code="registration.uploadnationalid" /></span><input type="file"
+											id="NationalIdImage" placeholder="Upload National ID Image">
 									</div>
 									<div class="file-path-wrapper">
 										<input class="file-path validate" type="text" placeholder="">
@@ -362,9 +375,10 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="col s12 m6 l6">
-									<label><spring:message code="operator.natureofemp" />
-										<span class="star">*</span></label> <select id="natureOfEmployment"
-										class="browser-default" required>
+									<label><spring:message
+											code="registration.natureofemployment" /> <span class="star">*</span></label>
+									<select id="natureOfEmployment" class="browser-default"
+										required>
 										<option value="" disabled selected><spring:message
 												code="registration.natureofemployment" /></option>
 										<option value="Permanent">Permanent</option>
@@ -394,9 +408,10 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="authorityEmail" maxlength="320"
 										class="form-control boxBorder boxHeight" id="authorityEmail"
-									title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
-									<label for="authorityEmail"><spring:message
-											code="registration.reportingAuthorityEmailid" /></label>
+										title="Enter a valid email id"
+										pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"> <label
+										for="authorityEmail"><spring:message
+											code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -409,9 +424,10 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="email" required="required" id="email"
-										maxlength="320" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
-										 <label for="email"><spring:message
-											code="input.email" /> <span class="star">*</span></label>
+										maxlength="320" title="Enter a valid email id"
+										pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"> <label
+										for="email"><spring:message code="input.email" /> <span
+										class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -433,7 +449,8 @@ var contextpath = "${context}";
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password"
-										class="form-control boxBorder boxHeight password" id="password"
+										class="form-control boxBorder boxHeight password"
+										id="password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
@@ -441,23 +458,24 @@ var contextpath = "${context}";
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
-											aria-hidden="true"></i></a>
+										<a href="javascript:void(0)"><i
+											class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
 									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="rePassword"
 										title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 and maximum of 10 length"
-										class="form-control boxBorder boxHeight password2" id="confirm_password"
+										class="form-control boxBorder boxHeight password2"
+										id="confirm_password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"><spring:message
 											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
-											aria-hidden="true"></i></a>
+										<a href="javascript:void(0)"><i
+											class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
 									</div>
 								</div>
 							</div>
@@ -572,8 +590,8 @@ var contextpath = "${context}";
 							<p>
 								<label style="color: black !important;"> <input
 									name="disclamer" type="checkbox" required="required" /> <span>
-										<span class="star">*</span>
-									<spring:message code="registration.certifyMsg" />
+										<span class="star">*</span> <spring:message
+											code="registration.certifyMsg" />
 								</span>
 								</label>
 							</p>
@@ -708,32 +726,38 @@ var contextpath = "${context}";
 
 	<!-- modal start -->
 
-<div id="otpVerification" class="modal" style="width: 40%;">
-        <!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+	<div id="otpVerification" class="modal" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
             data-dismiss="modal">&times;</button> -->
-               <h6 class="modal-header">Enter OTP</h6>
-        <div class="modal-content">  
-                <form id="verifyOtpForm" onsubmit="return verifyOtp()">
-             <p class="center" id="verifyOtpResp"></p>
-                        <input type="hidden" id="userid"  name="userid" value="${userId}">
-                        <div class="row">          
-                            <div class="input-field col s12 m12">
-                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
-                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
-										title="Please enter 6 digit number" placeholder=""/>
-                            </div> 
-                            <div class="input-field col s12 m12">
-                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
-										pattern="[0-9]{0,6}"
-										title="Please enter 6 digit number" 
-                                required="required" id="phoneOtp" placeholder=""/>
-                            </div>
-                        </div>
-                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
-                        <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
-                    </form>
-        </div>
-    </div>
+		<h6 class="modal-header">Enter OTP</h6>
+		<div class="modal-content">
+			<form id="verifyOtpForm" onsubmit="return verifyOtp()">
+				<p class="center" id="verifyOtpResp"></p>
+				<input type="hidden" id="userid" name="userid" value="${userId}">
+				<div class="row">
+					<div class="input-field col s12 m12">
+						<input type="text" placeholder="Enter OTP of Email"
+							name="emailOtp" maxlength="6" required="required" id="emailOtp"
+							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
+							placeholder="" />
+					</div>
+					<div class="input-field col s12 m12">
+						<input placeholder="Enter OTP of Phone" type="text"
+							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							title="Please enter 6 digit number" required="required"
+							id="phoneOtp" placeholder="" />
+					</div>
+				</div>
+				<a href="javascript:void(0)"
+					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
+					class="right"><spring:message code="registration.resendotp" /></a>
+				<button type="submit" id="otpVerifyBtn" class="btn"
+					style="width: 100%; margin-top: 20px; margin-bottom: 20px;">
+					<spring:message code="registration.done" />
+				</button>
+			</form>
+		</div>
+	</div>
 
 	<!-- Modal End -->
 	<!-- ================================================

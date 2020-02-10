@@ -32,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 @RestController
 public class StolenDatatableController {
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
@@ -109,9 +110,9 @@ public class StolenDatatableController {
 					}
 				}else if("Operator".equals(userType)) {
 					log.info("in Opertator Controler-----" +userType);
-					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
-					Gson JsonObj = new Gson();
-					log.info("actionResponse CEIRAdmin::::::::::::"+JsonObj.toJson(actionResponse));
+					//List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
+					//Gson JsonObj = new Gson();
+					//log.info("actionResponse CEIRAdmin::::::::::::"+JsonObj.toJson(actionResponse));
 				
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
@@ -125,7 +126,7 @@ public class StolenDatatableController {
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.blockUnblockState(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
+						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
 						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
@@ -259,7 +260,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", ""};
+			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -292,7 +293,7 @@ public class StolenDatatableController {
 				
 			}else {
 				String[] selectParam = { "select", Translator.toLocale("table.requestType"), "requestType", "", "select",
-						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""};	
 				for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);

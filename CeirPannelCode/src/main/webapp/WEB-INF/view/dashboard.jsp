@@ -67,7 +67,7 @@ var contextpath = "${context}";
 <body data-lang="${language}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
-		<div id="loader"></div>
+	<div id="initialloader"></div>
 		<div class="loader-section section-left"></div>
 		<div class="loader-section section-right"></div>
 	</div>
@@ -92,11 +92,15 @@ var contextpath = "${context}";
 						</li>
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="#" class="brand-logo darken-1">CEIR - <span
-									id="cierRoletype"><%=usertype%></span> Portal <%
+								<a href="#" class="brand-logo darken-1">
+								<spring:message code="page.ceir" /> 
+								 <span
+									id="cierRoletype">
+									<spring:message code="roletype.${sessionScope.usertype}" />
+									</span> <spring:message code="page.portal" /> <%
 									if ("Operator".equalsIgnoreCase(usertype)) {
 								%>
-									- <%=session.getAttribute("operatorTypeName")%> <%
+									- <spring:message code="roletype.${sessionScope.operatorTypeName}" /> <%
  	} else {
  	}
  %>
@@ -123,7 +127,7 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="javascript"  data-target="goToHome" class="modal-trigger"
+						<li><a data-target="goToHome" class="modal-trigger"
 							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -180,8 +184,8 @@ var contextpath = "${context}";
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
-									Welcome
-									<%=(String) session.getAttribute("name")%>
+									<spring:message code="page.welcome" />
+									<spring:message code="roletype.${sessionScope.usertype}" />
 									(<%=(String) session.getAttribute("username")%>)
 								</p>
 							</div>
@@ -251,8 +255,8 @@ var contextpath = "${context}";
 		<div class="footer-copyright">
 			<div class="container">
 
-				<span id="copyrightText"><spring:message
-						code="registration.copyright2020" /></span>
+				<span class="right" id="copyrightText"><spring:message
+						code="registration.copyright@" /></span>
 
 			</div>
 		</div>
@@ -378,7 +382,7 @@ var contextpath = "${context}";
 							<spring:message code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -399,7 +403,7 @@ var contextpath = "${context}";
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password2"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -419,7 +423,7 @@ var contextpath = "${context}";
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="#"><i class="fa fa-eye-slash toggle-password3"
+							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -558,6 +562,7 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/ajax/Profile.js"></script>
 
 		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -610,7 +615,7 @@ data-dismiss="modal">&times;</button> -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<%-- 	<script type="text/javascript"

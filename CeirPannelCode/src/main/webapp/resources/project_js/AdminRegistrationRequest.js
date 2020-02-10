@@ -91,6 +91,14 @@
 					},
 					"columns": result
 				});
+				$('div#initialloader').delay(300).fadeOut('slow');
+				$('#registrationLibraryTable input').unbind();
+				$('#registrationLibraryTable input').bind('keyup', function (e) {
+					if (e.keyCode == 13) {
+						table.search(this.value).draw();
+					}
+
+				});
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax");
@@ -267,7 +275,8 @@
 
 
 
-	function userApprovalPopup(userId,date){
+	function userApprovalPopup(userId,date,username){
+		$("#registrationTxnId").text(username);
 		$('#approveInformation').openModal();
 		$("#userId").text(userId);
 		window.userID=userId;

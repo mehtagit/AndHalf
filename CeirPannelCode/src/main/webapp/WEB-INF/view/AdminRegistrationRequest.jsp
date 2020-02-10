@@ -79,6 +79,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 	<!-- START CONTENT -->
 	<section id="content">
 		<!--start container-->
+			<div id="initialloader"></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">

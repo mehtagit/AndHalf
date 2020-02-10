@@ -203,6 +203,23 @@ input[type="checkbox"] {
 	right: 10px;
 	top: 10px;
 }
+
+.upload-file-label {
+	margin: 0;
+	
+}
+
+.file-field .btn {
+	line-height: 2.4rem;
+	height: 2.4rem;
+}
+.section .registration-form {
+padding-top: 1rem;
+padding-bottom: 1rem;
+width: 90%;
+margin: auto;
+/* border: solid 2px #444; */
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -263,7 +280,7 @@ String usertypeId="${usertypeId}";
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section">
+			<div class="section registration-form">
 				<form id="registrationForm" autocomplete="off" onsubmit="return saveRegistration()">
 					<div class="card-panel registration-form">
 						<%-- <a href="${context}/"
@@ -271,7 +288,8 @@ String usertypeId="${usertypeId}";
 							class="fa fa-times boton" aria-hidden="true"></i></a> --%>
 						<div class="row">
 							<div class="col s10 m11 select-lang-lable">
-								<label for="" style="font-size: 1rem;">Language :</label>
+								
+								<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
@@ -280,9 +298,11 @@ String usertypeId="${usertypeId}";
 								</select>
 							</div>
 							<div class="col s12 m12">
-								<h5><%=request.getParameter("type") %>
-									Registration
+								<h5>
+								<spring:message code="roletype.${param.type}" />
+										<spring:message code="select.registration" /> 
 								</h5>
+
 								<hr>
 								<span id="msg" style="color: red;">${msg}</span>
 							</div>
@@ -358,7 +378,7 @@ String usertypeId="${usertypeId}";
 									<div class="col s12 m12">
 										<h6 class="file-upload-heading">
 											<spring:message
-												code="registration.UploadNationalityInformation" />
+												code="registration.UploadNationalityInformation" /> 
 											<span class="star">*</span>
 										</h6>
 										<div class="file-field input-field col s12 m6"
@@ -374,7 +394,7 @@ String usertypeId="${usertypeId}";
 										</div>
 										<br> <br>
 									</div>
-									<!-- <p style="margin-left: 15px;"><a href="#">Download Sample Format</a></p> -->
+									<!-- <p style="margin-left: 15px;"><a javascript:void(0)>Download Sample Format</a></p> -->
 								</div>
 
 
@@ -534,7 +554,7 @@ String usertypeId="${usertypeId}";
 
 
 							<div class="row">
-								<div class="col s12 m6 l6" style="margin-bottom: 20px;">
+								<div class="col s12 m6 l6" style="margin-bottom: 10px;">
 									<label for="vatNumber"><spring:message
 											code="registration.vatregistration" /> <span class="star">*</span></label>
 									<div class=" boxHeight">
@@ -575,13 +595,11 @@ String usertypeId="${usertypeId}";
 												code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>
 
-									<div id="vatFileDiv" class="col s12 m12" style="display: none;">
-										<h6 class="file-upload-heading">
-											<spring:message code="registration.vatfile" />
-											<span class="star">*</span>
-										</h6>
-										<div class="file-field input-field col s12 m6"
-											style="margin-top: 5px; padding-left: 0;">
+									<div id="vatFileDiv" style="display: none;">
+
+										<div class="file-field col s12 m6">
+											<p class="upload-file-label"><spring:message code="registration.vatfile" />
+												<span class="star">*</span></p>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input
 													name="file" type="file" id="vatFile" accept=".pdf">
@@ -607,7 +625,7 @@ String usertypeId="${usertypeId}";
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -620,10 +638,10 @@ String usertypeId="${usertypeId}";
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" required="required"> <label
 										for="confirm_password"> <spring:message
-											code="registration.password" /> <span class="star">*</span>
+											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="#"><i class="fa fa-eye-slash toggle-password2"
+										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -650,7 +668,7 @@ String usertypeId="${usertypeId}";
 										pattern="[A-Za-z0-9\s]{0,50}" required="required"
 										maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
-									<label><spring:message code="registration.answer" /> <span
+									<label for="answer0"><spring:message code="registration.answer" /> <span
 										class="star">*</span> </label>
 								</div>
 							</div>
@@ -674,7 +692,7 @@ String usertypeId="${usertypeId}";
 										class="form-control boxBorder boxHeight answer" id="answer1"
 										pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only"
-										required="required"> <label><spring:message
+										required="required"> <label for="answer1"><spring:message
 											code="registration.answer" /> <span class="star">*</span> </label>
 								</div>
 							</div>
@@ -701,7 +719,7 @@ String usertypeId="${usertypeId}";
 										class="form-control boxBorder boxHeight answer" id="answer2"
 										title="Please enter alphanumeric upto 50 characters only"
 										maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
-										required="required"> <label><spring:message
+										required="required"> <label for="answer2"><spring:message
 											code="registration.answer" /> <span class="star">*</span> </label>
 								</div>
 							</div>
@@ -718,8 +736,8 @@ String usertypeId="${usertypeId}";
 									<div class="input-field col s12 m6 l12">
 										<input type="text" autocomplete="off" name="captcha"
 											class="form-control boxBorder boxHeight" id="captcha"
-											required="required"> <label for="address"> <spring:message
-												code="registration.enteryourcaptcha" /> <span class="star">*</span>
+											required="required"> <label for="captcha"> <spring:message
+												code="registration.enteryourcaptcha" /><span class="star">*</span>
 										</label>
 									</div>
 
@@ -933,7 +951,7 @@ String usertypeId="${usertypeId}";
 							id="phoneOtp" placeholder="" />
 					</div>
 				</div>
-				<a href="#"
+				<a href="javascript:void(0)"
 					onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';"
 					class="right"><spring:message code="registration.resendotp" /></a>
 				<button type="submit" id="otpVerifyBtn" class="btn"

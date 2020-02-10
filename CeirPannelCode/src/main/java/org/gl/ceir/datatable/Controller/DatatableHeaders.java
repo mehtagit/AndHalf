@@ -8,6 +8,7 @@ import org.gl.ceir.Class.HeadersTitle.DatatableHeaderModel;
 import org.gl.ceir.configuration.Translator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DatatableHeaders {
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	
+	@Autowired
+	Translator Translator;
 	@PostMapping("headers")
 	public ResponseEntity<?> headers(@RequestParam(name="type",defaultValue = "stock",required = false) String role){
 		List<DatatableHeaderModel> dataTableInputs = new ArrayList<>();
@@ -267,7 +269,7 @@ public class DatatableHeaders {
 //auditManagement Headers 
 			
 			else if("auditManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.UserName","table.RoleType","table.feature","table.SubFeature","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.RoleType","table.feature","table.SubFeature","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -301,6 +303,18 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
+			
+			
+			//AdminImprtertrcManageType Headers 
+			
+			else if("AdminImportertrcManageType".equals(role)) {
+				String[] headers = {"table.creationDate","table.transactionID","table.Trademark","table.CountryofManufacture","table.TAC","table.TRCStatus","table.CEIRAdminStatus","table.action"};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
+			
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		

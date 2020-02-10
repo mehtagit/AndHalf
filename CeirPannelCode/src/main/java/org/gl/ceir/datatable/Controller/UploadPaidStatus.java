@@ -41,7 +41,8 @@ import com.google.gson.Gson;
 @CrossOrigin
 @RestController
 public class UploadPaidStatus {
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
 

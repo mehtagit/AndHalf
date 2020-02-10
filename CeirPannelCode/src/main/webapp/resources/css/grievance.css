@@ -101,6 +101,7 @@ p#messageHistory{
 
 #live-chat h5 {
     font-size: 15px;
+    font-weight: bold;
 }
 
 #live-chat form {

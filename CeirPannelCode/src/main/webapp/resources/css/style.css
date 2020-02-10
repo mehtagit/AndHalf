@@ -2906,6 +2906,7 @@ div#viewuplodedModel {
 	.upload-file-label{
        color: #000;
     margin-top: 0;
+    font-size: 0.9rem;
 }
 .endUser_remove_field.btn.right.btn-info {
 cursor: pointer;
