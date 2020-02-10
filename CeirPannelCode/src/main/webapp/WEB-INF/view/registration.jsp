@@ -344,7 +344,7 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										AsType <span class="star">*</span>
+										Type <span class="star">*</span>
 									</p>
 									<select name="type" class="browser-default" id="type"
 										onchange="myFunction()" required>

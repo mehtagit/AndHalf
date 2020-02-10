@@ -212,7 +212,7 @@ var contextpath = "${context}";
 </select>
 </div>
 <div class="col s12 m12"><h5>
-<spring:message code="roletype.${param.type}" /><spring:message code="select.registration" /> 
+<spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /> 
 	</h5>
 							<span id="msg" style="color: red;">${msg}</span>
 							<hr></div>

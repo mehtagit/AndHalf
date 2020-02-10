@@ -64,7 +64,7 @@ var contextpath = "${context}";
 }
 
 </style>
-<body data-lang="${language}">
+<body data-lang="${language}" data-usertype="${usertype}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 	<div id="initialloader"></div>
@@ -92,15 +92,11 @@ var contextpath = "${context}";
 						</li>
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="#" class="brand-logo darken-1">
-								<spring:message code="page.ceir" /> 
-								 <span
-									id="cierRoletype">
-									<spring:message code="roletype.${sessionScope.usertype}" />
-									</span> <spring:message code="page.portal" /> <%
+								<a href="#" class="brand-logo darken-1"><spring:message code="page.ceir" /> <span
+									id="cierRoletype"><spring:message code="roletype.${sessionScope.usertype}" /></span> <spring:message code="page.portal" /> <%
 									if ("Operator".equalsIgnoreCase(usertype)) {
 								%>
-									- <spring:message code="roletype.${sessionScope.operatorTypeName}" /> <%
+									- <%=session.getAttribute("operatorTypeName")%> <%
  	} else {
  	}
  %>
@@ -127,8 +123,8 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a data-target="goToHome" class="modal-trigger"
-							 style="color: white;"><spring:message
+						<li><a   data-target="goToHome" class="modal-trigger"
+							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
@@ -255,8 +251,8 @@ var contextpath = "${context}";
 		<div class="footer-copyright">
 			<div class="container">
 
-				<span class="right" id="copyrightText"><spring:message
-						code="registration.copyright@" /></span>
+				<span id="copyrightText" class="right"><spring:message
+						code="registration.copyright" /></span>
 
 			</div>
 		</div>

@@ -437,7 +437,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				}
 
 				sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-			/*	|| currentRoleType=="Importer"*/
+			
 				if(currentRoleType=="CEIRAdmin" || (period == 'POST_GRACE' && role=='Importer')){
 					$("#btnLink").css({display: "none"});
 				}

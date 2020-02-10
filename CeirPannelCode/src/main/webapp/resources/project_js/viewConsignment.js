@@ -1,4 +1,4 @@
-		var cierRoletype = sessionStorage.getItem("cierRoletype");
+		var cierRoletype =$("body").attr("data-roleType");	
 		var startdate=$('#startDate').val(); 
 		var endDate=$('#endDate').val();
 		var taxStatus=$('#taxPaidStatus').val();
@@ -11,10 +11,6 @@
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-	/*	window.parent.$('#langlist').on('change', function() {
-			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-			window.location.replace("./Consignment/viewConsignment?lang="+lang);				
-		}); */
 
 		$.i18n().locale = lang;	
 		
