@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,12 +33,19 @@ public class SystemConfigurationDb implements Serializable {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;
 	
+	@NotNull
+	@NotBlank
 	private String tag;
 	
+	@NotNull
+	@NotBlank
 	private String value;
 	
+	@NotNull
+	@NotBlank
 	private String description;
 	
+	@NotNull
 	private Integer type; // have two values USER/SYSTEM.
 	@Transient
 	private String typeInterp;

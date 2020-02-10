@@ -33,6 +33,7 @@ import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
+import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -176,8 +177,8 @@ public class AuditTrailServiceImpl {
 		}
 	}
 
-	private SpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
-		SpecificationBuilder<AuditTrail> cmsb = new SpecificationBuilder<>(propertiesReader.dialect);
+	private GenericSpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
+		GenericSpecificationBuilder<AuditTrail> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))

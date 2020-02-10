@@ -315,7 +315,9 @@ public class RegularizedDeviceServiceImpl {
 						if(Objects.isNull(regularizeDeviceDb.getStatus())) {
 							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 						}
-
+						
+						regularizeDeviceDb.setTxnId(endUserDB.getTxnId());
+						
 						// Add in web action list.
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
 								regularizeDeviceDb.getTxnId()));

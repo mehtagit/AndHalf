@@ -498,13 +498,16 @@ public class StockServiceImpl {
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
 			}
 			
-			
-			auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 
+			// User user = userRepository.getById(stockMgmt.getUserId());
+	
+			auditTrailRepository.save(new AuditTrail(stockMgmt.getUserId(), "", 
 					0L,
 					"", 
 					4, Features.STOCK, 
 					SubFeatures.VIEW, "", stockMgmt.getTxnId()));
 			logger.info("Stock [ View ][" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+			
+			
 			
 			return stockMgmt2;
 
