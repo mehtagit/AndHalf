@@ -191,3 +191,16 @@ function updateFile()
 	});
 return false;
 }
+
+
+
+
+function  openCancelPopUp()
+{
+	 $('#cancelStock').openModal(); 
+}
+
+function  closeCancelPopUp()
+{
+	 $('#cancelStock').closeModal();
+}

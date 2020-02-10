@@ -168,7 +168,8 @@ var contextpath = "${context}";
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
-                                                <input type="email" id="endUseremail" maxlength="30" name="email"/>
+                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
+                                                 maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
@@ -207,7 +208,7 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m12 l12 center">
                                             <!-- <a href="#submitStock" class="btn modal-trigger">Submit</a> -->
                                             <button class=" btn" id="endUserStock" type="submit"><spring:message code="button.submit" /></button>
-                                            <a href="#cancelStock" class="btn modal-trigger"
+                                            <a  class="btn" onclick="openCancelPopUp()"
                                                 style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                         </div>
                                     </div>
@@ -418,7 +419,7 @@ var contextpath = "${context}";
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
                         <a href="./redirectToHomePage" class="btn"><spring:message code="modal.yes" /></a>
-                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                        <button class="btn" onclick="closeCancelPopUp()" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                     </div>
                 </div>
             </div>

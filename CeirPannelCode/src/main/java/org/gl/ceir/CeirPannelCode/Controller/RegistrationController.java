@@ -61,6 +61,8 @@ public class RegistrationController {
 		return dropdown;
 	}
 	
+	
+	
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> usertypeList(){ 

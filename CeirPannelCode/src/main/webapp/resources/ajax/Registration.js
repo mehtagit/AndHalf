@@ -182,7 +182,7 @@ function reg(){
 function asTypeData(){ 
 	$.ajax({
 		type : 'GET',
-		url : contextpath + '/getSourceTypeDropdown/AS_TYPE/22',
+		url : contextpath + '/asTypeData/AS_TYPE',
 		contentType : "application/json",
 		dataType : 'html',
 		async:false,

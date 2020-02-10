@@ -105,13 +105,6 @@ label {
 	right: 10px;
 	top: 10px;
 }
-.section .registration-form {
-padding-top: 1rem;
-padding-bottom: 1rem;
-width: 90%;
-margin: auto;
-border: solid 2px #444;
-}
 </style>
 <script>
 var contextpath = "${context}";
@@ -120,7 +113,6 @@ var contextpath = "${context}";
 
 <body>
 	<%String name=request.getParameter("type");%>
-
 	<!--  Scripts
     ================================================ -->
 	<!-- jQuery Library -->
@@ -167,19 +159,13 @@ var contextpath = "${context}";
 	<section id="content" id="mainPage">
 		<!--start container-->
 		<div class="container">
-			<div class="section .section .registration-form {
-padding-top: 1rem;
-padding-bottom: 1rem;
-width: 90%;
-margin: auto;
-border: solid 2px #444;
-}">
+			<div class="section">
 				<form id="registrationForm" autocomplete="off"
 					onsubmit="return saveOperatorRegistration()">
 					<div class="card-panel registration-form">
 						<div class="row">
 							<div class="col s10 m10 select-lang-lable">
-<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
+								<label for="">Language :</label>
 							</div>
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
@@ -425,7 +411,7 @@ border: solid 2px #444;
 									<input type="text" name="email" required="required" id="email"
 										maxlength="320" title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}">
 										 <label for="email"><spring:message
-											code="input.email" /><span class="star">*</span></label>
+											code="input.email" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
@@ -455,7 +441,7 @@ border: solid 2px #444;
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
+										<a href="#"><i class="fa fa-eye-slash toggle-password"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -470,7 +456,7 @@ border: solid 2px #444;
 											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
+										<a href="#"><i class="fa fa-eye-slash toggle-password2"
 											aria-hidden="true"></i></a>
 									</div>
 								</div>
@@ -743,7 +729,7 @@ border: solid 2px #444;
                                 required="required" id="phoneOtp" placeholder=""/>
                             </div>
                         </div>
-                        <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
+                        <a href="#" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
                         <button type="submit" id="otpVerifyBtn"  class="btn" style="width: 100%; margin-top: 20px; margin-bottom: 20px;"><spring:message code="registration.done" /></button>
                     </form>
         </div>

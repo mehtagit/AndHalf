@@ -2,7 +2,14 @@
 						var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 						window.location.assign("Consignment/openRegisterConsignmentForm?reqType=formPage&lang="+lang);
 					}); */
-					
+	
+window.parent.$('#langlist').on('change', function() {
+			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+        translateValidationMessages(lang);
+        alert("Setting language to " + lang);
+      });
+					 
+					 
 					var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					$.i18n().locale = langParam;
 					var successMsg;

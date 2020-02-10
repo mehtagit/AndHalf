@@ -22,10 +22,6 @@ public interface UserProfileFeignImpl {
 
 	@PostMapping("/userProfile/changePassword")
 	public HttpResponse changePassword(Password password);
-	
-	@PostMapping("/userProfile/updateExpirePassword")
-	public HttpResponse updateExpirePassword(Password password);
-	
 
 	@PostMapping("/userProfile/updateUserStatus")
 	public HttpResponse updateUserStatus(UserStatus userStatus);

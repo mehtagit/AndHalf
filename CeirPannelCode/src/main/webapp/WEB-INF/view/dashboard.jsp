@@ -123,7 +123,7 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="javascript:void(0)" data-target="goToHome" class="modal-trigger"
+						<li><a href="javascript"  data-target="goToHome" class="modal-trigger"
 							 style="color: white;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -378,7 +378,7 @@ var contextpath = "${context}";
 							<spring:message code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
+							<a href="#"><i class="fa fa-eye-slash toggle-password"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -399,7 +399,7 @@ var contextpath = "${context}";
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
+							<a href="#"><i class="fa fa-eye-slash toggle-password2"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -419,7 +419,7 @@ var contextpath = "${context}";
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
+							<a href="#"><i class="fa fa-eye-slash toggle-password3"
 								aria-hidden="true"></i></a>
 						</div>
 					</div>
@@ -558,7 +558,6 @@ data-dismiss="modal">&times;</button> -->
 		src="${context}/resources/ajax/Profile.js"></script>
 
 		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
-			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -611,7 +610,7 @@ data-dismiss="modal">&times;</button> -->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<%-- 	<script type="text/javascript"

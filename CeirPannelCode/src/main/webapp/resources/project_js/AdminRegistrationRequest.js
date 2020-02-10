@@ -187,12 +187,12 @@
 		});
 		
 		
-		$.getJSON('./getTypeDropdownList/AS_TYPE/'+$("body").attr("data-userTypeID"), function(data) {
+		$.getJSON('./getSourceTypeDropdown/AS_TYPE/'+featureId+'', function(data) {
 			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#asType');
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#asType');
 			}
-		});
+			});
 		
 	};
 
