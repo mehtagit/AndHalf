@@ -46,19 +46,15 @@ public class StolenOrganizationUserDB implements Serializable {
 	@Column(length = 50)
 	private String fileName;
 	
-	@NotNull
 	@Column(length = 50)
 	private String district;
 	
-	@NotNull
 	@Column(length = 50)
 	private String commune;
 	
-	@NotNull
 	@Column(length = 50)
 	private String village;
 	
-	@NotNull
 	private Integer postalCode;
 	
 	private String province;

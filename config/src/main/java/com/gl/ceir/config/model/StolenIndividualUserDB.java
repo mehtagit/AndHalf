@@ -51,16 +51,16 @@ public class StolenIndividualUserDB implements Serializable {
 	private String propertyLocation;
 	private String street;
 	private String locality;
-	@NotNull
+	
 	@Column(length = 50)
 	private String district;
-	@NotNull
+
 	@Column(length = 50)
 	private String commune;
-	@NotNull
+
 	@Column(length = 50)
 	private String village;
-	@NotNull
+
 	private Integer postalCode;
 
 	private String province;
@@ -71,6 +71,7 @@ public class StolenIndividualUserDB implements Serializable {
 	private Integer docType;
 	@Transient
 	private Integer docTypeInterp;
+	
 	@Column(length = 15)
 	private String alternateContactNumber;
 	@Column(length = 50)
@@ -81,7 +82,7 @@ public class StolenIndividualUserDB implements Serializable {
 	private Integer deviceType;
 	@Column(length = 50)
 	private String modelNumber;
-	@NotNull
+	
 	@Column(length = 15)
 	private String contactNumber;
 	private Integer operator;
