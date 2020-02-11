@@ -22,9 +22,9 @@ public class DbFunctions {
 		
 		if(Objects.isNull(dateFunction)) {
 			if(dialect.toLowerCase().contains("oracle")) {
-				dateFunction = "TO_DATE";
-			}else if (dialect.toLowerCase().contains("mysql")) {
 				dateFunction = "TO_CHAR";
+			}else if (dialect.toLowerCase().contains("mysql")) {
+				dateFunction = "STR_TO_DATE";
 			}else {
 				dateFunction = null;
 			}
