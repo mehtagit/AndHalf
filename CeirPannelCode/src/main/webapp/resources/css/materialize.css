@@ -9447,6 +9447,11 @@ color: #444;
     transition: all .3s;
   }
 
+textarea.materialize-textarea {
+  
+    height: fit-content !important;
+  }
+
   @media only screen and (max-width: 768px) {
 
     input[type=text],

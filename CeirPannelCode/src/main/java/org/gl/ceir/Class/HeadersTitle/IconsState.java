@@ -26,7 +26,7 @@ public class IconsState {
 	// fa fa icons
 	String errorIcon="\"fa fa-exclamation-circle  error-icon\"";
 	String downloadIcon="\"fa fa-download download-icon\""; 
-	String viewIcon="\"fa fa-eye teal-text view-icon\"";
+	String viewIcon="\"fa fa-eye view-icon\"";
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
 	String replyIcon="\"fa fa-reply reply-icon\""; 
@@ -800,11 +800,11 @@ public class IconsState {
 	/********************************** Icons for DashBoard Notification **********************************/ 
 
 
-	public String dashboardIcon(String userStatus,Integer featureID,String txnID) {
+	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
 		executePostConstruct();
 		// URL link 
 		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
-			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
+			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"": 
 				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
 					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
 						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
@@ -815,7 +815,6 @@ public class IconsState {
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
 		String view=null;
-		
 		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
 			view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
