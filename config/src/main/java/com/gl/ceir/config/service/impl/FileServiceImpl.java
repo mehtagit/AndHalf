@@ -83,10 +83,15 @@ public class FileServiceImpl {
 		String fileLink = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.upload_file_link);
 
-		if("DEFAULT".equalsIgnoreCase(tag)) {
-			fileLink = systemConfigurationDb.getValue() + txnId + "/" + fileName;
-		}else {	
-			fileLink = systemConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;
+		if("actual".equalsIgnoreCase(fileType)) {
+			if("DEFAULT".equalsIgnoreCase(tag)) {
+				fileLink = systemConfigurationDb.getValue() + txnId + "/" + fileName;
+			}else {	
+				fileLink = systemConfigurationDb.getValue() + txnId + "/" + tag + "/" + fileName;
+			}
+		}else if("error".equalsIgnoreCase(fileType)) {
+			systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.system_error_file_link);
+			fileLink = systemConfigurationDb.getValue() + txnId + "/" + txnId + "_error.csv";
 		}
 
 		return new FileDetails("", "", fileLink);

@@ -10,4 +10,5 @@ public interface Features {
 	String BLOCK_UNBLOCK = "Block/Unblock";
 	String MANAGE_USER = "Manage User";
 	String UPDATE_VISA = "Update Visa";
+	String CONFIG_LIST = "Config List";
 }

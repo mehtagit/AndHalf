@@ -1,20 +1,53 @@
 package com.gl.ceir.config.service.impl;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.FilterRequest;
+import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.SearchCriteria;
+import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.User;
+import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.model.constants.Usertype;
+import com.gl.ceir.config.model.file.SystemConfigListFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.SystemConfigListRepository;
+import com.gl.ceir.config.repository.UserRepository;
+import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
 
 @Service
 public class SystemConfigListServiceImpl {
@@ -33,48 +66,71 @@ public class SystemConfigListServiceImpl {
 	@Autowired
 	Utility utility;
 
-	@Autowired	
-	EmailUtil emailUtil;
-
 	@Autowired
 	InterpSetter interpSetter;
-	
+
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
-	
+
 	@Autowired
 	SystemConfigListRepository systemConfigListRepository;
-	
-	public List<String> getTagsList(){
-		try {
-			return systemConfigListRepository.findDistinctTags();
-			
-		} catch (Exception e) {
-			logger.info(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
-	
-	/*
-	public AuditTrail findById(long id){
-		try {
-			return auditTrailRepository.getById(id);
-		} catch (Exception e) {
-			logger.info(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}
-	}
 
-	public List<AuditTrail> getAll(FilterRequest filterRequest) {
+	@Autowired
+	UserRepository userRepository;
 
+	public GenricResponse getTagsList(FilterRequest filterRequest){
 		try {
-			List<AuditTrail> auditTrails = auditTrailRepository.findAll( buildSpecification(filterRequest).build());
-
-			for(AuditTrail auditTrail : auditTrails ) {
-				setInterp(auditTrail);
+			if(Objects.isNull(filterRequest.getUserId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
+			User user = userRepository.getById(filterRequest.getUserId());
 
-			return auditTrails;
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
+					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
+
+			systemConfigListRepository.findDistinctTags();
+
+			return new GenricResponse(0, "Sucess", "", systemConfigListRepository.findDistinctTags());
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	public GenricResponse findById(FilterRequest filterRequest){
+		try {
+			if(Objects.isNull(filterRequest.getUserId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), null);
+			}
+			User user = userRepository.getById(filterRequest.getUserId());
+
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(),
+					Usertype.SYSTEM_ADMIN.getCode(), 
+					Usertype.SYSTEM_ADMIN.getName(),
+					0L, 
+					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			logger.info("AUDIT :  findById saved in audit_trail.");
+
+			SystemConfigListDb systemConfigListDb = systemConfigListRepository.getById(filterRequest.getId());
+			return new GenricResponse(0, "SUCCESS", "SUCCESS", systemConfigListDb);
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+
+	public List<SystemConfigListDb> getAll(FilterRequest filterRequest) {
+
+		try {
+			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findAll( buildSpecification(filterRequest).build());
+
+			return systemConfigListDbs;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -83,17 +139,13 @@ public class SystemConfigListServiceImpl {
 
 	}
 
-	public Page<AuditTrail> filterAuditTrail(FilterRequest filterRequest, Integer pageNo, 
+	public Page<SystemConfigListDb> filter(FilterRequest filterRequest, Integer pageNo, 
 			Integer pageSize) {
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			Page<AuditTrail> page = auditTrailRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-
-			for(AuditTrail auditTrail : page.getContent()) {
-				setInterp(auditTrail);
-			}
+			Page<SystemConfigListDb> page = systemConfigListRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 
 			return page;
 
@@ -107,51 +159,54 @@ public class SystemConfigListServiceImpl {
 	public FileDetails getFilteredAuditTrailInFile(FilterRequest filterRequest) {
 		String fileName = null;
 		Writer writer   = null;
-		AuditTrailFileModel atfm = null;
+		SystemConfigListFileModel fileModel = null;
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_dir);
-		logger.info("CONFIG : file_audit_trail_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_audit_trail_download_link);
-		logger.info("CONFIG : file_audit_trail_download_link [" + link + "]");
-		
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_system_config_list_download_dir);
+		logger.info("CONFIG : file_system_config_list_download_dir [" + filepath + "]");
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_system_config_list_download_link);
+		logger.info("CONFIG : file_system_config_list_download_link [" + link + "]");
+
+		if(Objects.isNull(filepath) || Objects.isNull(link)) {
+			logger.info("CONFIG: MISSING : file_system_config_list_download_dir or file_system_config_list_download_link not found.");
+			return null;
+		}
 		String filePath = filepath.getValue();
-		StatefulBeanToCsvBuilder<AuditTrailFileModel> builder = null;
-		StatefulBeanToCsv<AuditTrailFileModel> csvWriter = null;
-		List< AuditTrailFileModel > fileRecords = null;
+		StatefulBeanToCsvBuilder<SystemConfigListFileModel> builder = null;
+		StatefulBeanToCsv<SystemConfigListFileModel> csvWriter = null;
+		List< SystemConfigListFileModel > fileRecords = null;
 
 		try {
-			List<AuditTrail> auditTrails = getAll(filterRequest);
-			if( !auditTrails.isEmpty() ) {
+			List<SystemConfigListDb> configListDbs = getAll(filterRequest);
+			if( !configListDbs.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Config_Tag.csv";
 				}else {
-					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+					fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_ConfigTag.csv";
 				}
 			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_AuditTrails.csv";
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Configtag.csv";
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<AuditTrailFileModel>(writer);
+			builder = new StatefulBeanToCsvBuilder<SystemConfigListFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
-			if( !auditTrails.isEmpty() ) {
+			if( !configListDbs.isEmpty() ) {
 				fileRecords = new ArrayList<>(); 
 
-				for(AuditTrail auditTrail : auditTrails ) {
-					atfm = new AuditTrailFileModel();
+				for(SystemConfigListDb systemConfigListDb : configListDbs ) {
+					fileModel = new SystemConfigListFileModel();
 
-					atfm.setUserId(auditTrail.getUserId());
-					atfm.setFeatureName(auditTrail.getFeatureName());
-					atfm.setSubFeatureName(auditTrail.getSubFeature());
-
-					logger.debug(atfm);
-
-					fileRecords.add(atfm);
+					// fileModel.setUserId(auditTrail.getUserId());
+					
+					logger.debug(fileModel);
+					fileRecords.add(fileModel);
 				}
 
 				csvWriter.write(fileRecords);
+			}else {
+				csvWriter.write(new SystemConfigListFileModel());
 			}
 			return new FileDetails( fileName, filePath, link.getValue() + fileName ); 
 
@@ -166,27 +221,26 @@ public class SystemConfigListServiceImpl {
 		}
 	}
 
-	private GenericSpecificationBuilder<AuditTrail> buildSpecification(FilterRequest filterRequest){
-		GenericSpecificationBuilder<AuditTrail> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+	private GenericSpecificationBuilder<SystemConfigListDb> buildSpecification(FilterRequest filterRequest){
+		GenericSpecificationBuilder<SystemConfigListDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		if (!"SystemAdmin".equalsIgnoreCase(filterRequest.getUserType())) {
-			if(Objects.nonNull(filterRequest.getUserId()))
-				cmsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-		}
-		
+		if(Objects.nonNull(filterRequest.getUserId()))
+			cmsb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("subFeature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			// cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
+
 		return cmsb;
 	}
 
+	/*
 	private void setInterp(AuditTrail auditTrail) {
 		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
 			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
-		 
+
 	}
-*/
+	 */
 
 }

@@ -292,6 +292,7 @@ public class RegularizedDeviceServiceImpl {
 	@Transactional
 	public GenricResponse saveDevices(EndUserDB endUserDB) {
 		try {
+			String txnId = null;
 			List<WebActionDb> webActionDbs = new ArrayList<>();
 			String nid = endUserDB.getNid();
 
@@ -311,13 +312,20 @@ public class RegularizedDeviceServiceImpl {
 						if(Objects.isNull(regularizeDeviceDb.getTaxPaidStatus())) {
 							regularizeDeviceDb.setTaxPaidStatus(TaxStatus.TAX_NOT_PAID.getCode());
 						}
-						
+
 						if(Objects.isNull(regularizeDeviceDb.getStatus())) {
 							regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 						}
-						
-						regularizeDeviceDb.setTxnId(endUserDB.getTxnId());
-						
+
+						if(Objects.isNull(regularizeDeviceDb.getTxnId())) {
+							regularizeDeviceDb.setTxnId(endUserDB.getTxnId());
+							txnId = endUserDB.getTxnId();
+						}
+						else {
+							endUserDB.setTxnId(regularizeDeviceDb.getTxnId());
+							txnId = regularizeDeviceDb.getTxnId();
+						}
+
 						// Add in web action list.
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
 								regularizeDeviceDb.getTxnId()));
@@ -346,7 +354,7 @@ public class RegularizedDeviceServiceImpl {
 						auditTrailRepository.save(auditTrail);
 						logger.info("AUDIT : Saved in audit_trail. " + auditTrail);
 
-						return new GenricResponse(0, "End user device registration is sucessful.", "");
+						return new GenricResponse(0, "End user device registration is sucessful.", txnId);
 					}else {
 						logger.info("End user device registration have been failed" + endUserDB);
 						return new GenricResponse(2, "End user device registration have been failed.", "");
@@ -399,7 +407,7 @@ public class RegularizedDeviceServiceImpl {
 			Map<String, String> placeholders = new HashMap<>();
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
 			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
-			
+
 			if(Objects.nonNull(userCustomDbDetails)) {
 
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
@@ -428,14 +436,14 @@ public class RegularizedDeviceServiceImpl {
 
 
 				emailUtil.saveNotification(rawMails);
-				
+
 				// Save in audit.
 				AuditTrail auditTrail = new AuditTrail(0, "", 0L, 
 						"", 12, Features.REGISTER_DEVICE, 
 						SubFeatures.UPDATE, "");
 				auditTrailRepository.save(auditTrail);
 				logger.info("AUDIT : update in audit_trail. " + auditTrail);
-				
+
 				return new GenricResponse(0, "Update Successfully.", Long.toString(userCustomDbDetails.getFirstImei()));
 
 			}else {

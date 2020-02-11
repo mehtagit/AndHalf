@@ -2,6 +2,7 @@ package com.gl.ceir.config.model;
 
 public class FilterRequest {
 
+	public Long id;
 	public Integer userId;
 	public String nid;
 	private String txnId;
@@ -28,6 +29,12 @@ public class FilterRequest {
 	private Integer operatorTypeId;
 	private String origin;
 
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public Integer getUserId() {
 		return userId;
 	}

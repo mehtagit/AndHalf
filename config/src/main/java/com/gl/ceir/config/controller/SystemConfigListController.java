@@ -1,14 +1,19 @@
 package com.gl.ceir.config.controller;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.FileDetails;
+import com.gl.ceir.config.model.FilterRequest;
+import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.service.impl.SystemConfigListServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -21,8 +26,7 @@ public class SystemConfigListController {
 	@Autowired
 	SystemConfigListServiceImpl systemConfigListServiceImpl;
 	
-	/*
-	@ApiOperation(value = "pagination View filtered system-config-list", response = ConsignmentMgmt.class)
+	@ApiOperation(value = "pagination View filtered system-config-list", response = SystemConfigListDb.class)
 	@PostMapping("/filter/audit-trail")
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
@@ -32,11 +36,11 @@ public class SystemConfigListController {
 		MappingJacksonValue mapping = null;
 		if(file == 0) {
 			logger.info("Request to view filtered audit trail = " + filterRequest);
-			Page<AuditTrail> auditTrail =  auditTrailServiceImpl.filterAuditTrail(filterRequest, pageNo, pageSize);
+			Page<SystemConfigListDb> auditTrail =  systemConfigListServiceImpl.filter(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(auditTrail);
 		}else {
 			logger.info("Request to export filtered audit trail = " + filterRequest);
-			FileDetails fileDetails = auditTrailServiceImpl.getFilteredAuditTrailInFile(filterRequest);
+			FileDetails fileDetails = systemConfigListServiceImpl.getFilteredAuditTrailInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
 
@@ -45,33 +49,32 @@ public class SystemConfigListController {
 		return mapping;
 	}
 	
-	@ApiOperation(value = "View By Id || Audit Trail", response = SystemConfigurationDb.class)
-	@GetMapping("/audit-trail/{id}")
-	public MappingJacksonValue findAuditTrailById(@PathVariable long id) {
+	@ApiOperation(value = "View By Id || system-config-list", response = SystemConfigListDb.class)
+	@PostMapping("/get/system-config-list/")
+	public MappingJacksonValue findAuditTrailById(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("Get audit trail by id [" + id + "]");
+		logger.info("Get system-config-list request [" + filterRequest + "]");
 
-		AuditTrail auditTrail = auditTrailServiceImpl.findById(id);
+		GenricResponse systemConfigListDb = systemConfigListServiceImpl.findById(filterRequest);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(auditTrail);
+		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
 
-		logger.info("Response to send= " + mapping);
+		logger.info("Response to send on system-config-list [ " + filterRequest + "] = " + mapping);
 
 		return mapping;
 	}
-	*/
 	
 	@ApiOperation(value = "All tags list || system-config-list", response = String.class)
-	@GetMapping("/tags/system-config-list")
-	public MappingJacksonValue getTagsList() {
+	@PostMapping("/tags/system-config-list")
+	public MappingJacksonValue getTagsList(@RequestBody FilterRequest filterRequest) {
 
 		logger.info("Get system-config-list.");
 
-		List<String> tags = systemConfigListServiceImpl.getTagsList();
+		GenricResponse uniqueTags = systemConfigListServiceImpl.getTagsList(filterRequest);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(tags);
+		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 
-		logger.info("Response to send for all tags of system-config-list= " + mapping);
+		logger.info("Response to send for all tags of system-config-list = " + mapping);
 
 		return mapping;
 	}
