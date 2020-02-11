@@ -123,7 +123,8 @@ public class StolenAndRecoveryServiceImpl {
 		try {
 			WebActionDb webActionDb = new WebActionDb(Integer.toString(stolenandRecoveryMgmt.getRequestType()), 
 					SubFeatures.REGISTER, WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
-
+			
+			stolenandRecoveryMgmt.setFileStatus(StolenStatus.INIT.getCode());
 			if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 				stolenandRecoveryMgmt.getStolenIndividualUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
 			} else if (Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
