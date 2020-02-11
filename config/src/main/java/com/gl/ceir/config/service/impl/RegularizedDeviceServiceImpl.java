@@ -325,6 +325,10 @@ public class RegularizedDeviceServiceImpl {
 							endUserDB.setTxnId(regularizeDeviceDb.getTxnId());
 							txnId = regularizeDeviceDb.getTxnId();
 						}
+						
+						if(Objects.isNull(endUserDB.getOrigin())) {
+							endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
+						}
 
 						// Add in web action list.
 						webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 

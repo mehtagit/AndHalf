@@ -158,6 +158,10 @@ public class EnduserServiceImpl {
 					if(Objects.isNull(regularizeDeviceDb.getStatus())) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					}
+					
+					if(Objects.isNull(endUserDB.getOrigin())) {
+						endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
+					}
 				}
 
 				logger.info(endUserDB.getRegularizeDeviceDbs());

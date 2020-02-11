@@ -106,6 +106,10 @@ public class EndUserDB implements Serializable {
 	private Integer status;
 	
 	private String remarks;
+	
+	@NotNull
+	@Column(length = 20)
+	private String origin;
 
 	public Long getId() {
 		return id;
@@ -299,6 +303,12 @@ public class EndUserDB implements Serializable {
 	}
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
+	}
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
 	}
 	
 	@Override
