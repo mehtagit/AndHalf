@@ -676,7 +676,8 @@ function submitDeviceInfo(){
 			else{
 //				$('#sucessMessage').text('');
 				$('#regularisedDevice').openModal();
-				$('#dynamicTxnId').text(data.txnId);
+				$('#sucessMessage').text('');
+				$('#sucessMessage').text("");
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {

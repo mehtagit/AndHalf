@@ -142,4 +142,58 @@ public class LawfulFormController
 		}
 		return response;
 	}
+	
+	
+	@PostMapping("lawfulOraganisationStolen")
+	public @ResponseBody GenricResponse lawfulOraganisationStolen(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
+		String userName=session.getAttribute("username").toString();
+		Integer userId= (Integer) session.getAttribute("userid");
+		String roletype=session.getAttribute("usertype").toString();
+		String name=session.getAttribute("name").toString();
+		String txnNumber="L" + utildownload.getTxnId();
+		log.info("Random transaction id number="+txnNumber);
+		String filter = request.getParameter("request");
+		
+		Gson gson= new Gson(); 
+        log.info("*********"+filter);
+        LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
+        log.info(""+lawfulIndivisualStolen.toString());
+        lawfulIndivisualStolen.setTxnId(txnNumber);
+        lawfulIndivisualStolen.setUserId(userId);
+        lawfulIndivisualStolen.setRoleType(roletype);
+        lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+        
+		try {
+			byte[] bytes = file.getBytes();
+		String rootPath =filePathforUploadFile+txnNumber+"/"; 
+		File dir = new File(rootPath + File.separator);
+
+		if (!dir.exists()) dir.mkdirs();
+		// Create the file on server 
+		File serverFile = new File(rootPath+file.getOriginalFilename());
+		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		stream.write(bytes); 
+		stream.close();
+		} 
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		log.info("request passed to the report Indivisual and comapny api"+lawfulIndivisualStolen);
+		GenricResponse response = null;
+		try {
+			response = uploadPaidStatusFeignClient.lawfulIndivisualStolen(lawfulIndivisualStolen);
+			//GenricResponse response = null;
+			log.info("---------response  from Indivisual and comapny api "+response);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			log.info("exception in upload paid stat error"+e);
+			e.printStackTrace();
+
+		}
+		return response;
+	}
 }

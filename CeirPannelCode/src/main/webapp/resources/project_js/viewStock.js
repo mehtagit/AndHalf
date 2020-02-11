@@ -62,7 +62,7 @@
 				setViewPopupData(data);
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 	}
@@ -100,7 +100,7 @@
 				setEditPopupData(data) 
 			},
 			error : function() {
-				alert("Failed");
+			//	alert("Failed");
 			}
 		});
 
