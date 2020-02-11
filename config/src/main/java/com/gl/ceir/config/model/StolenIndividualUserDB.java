@@ -107,6 +107,7 @@ public class StolenIndividualUserDB implements Serializable {
 	
 	private String deviceStolenProvince;
 	private String deviceStolenCountry;
+	private String deviceSerialNumber;
 
 	@Lob
 	//@Basic(fetch = FetchType.LAZY)
@@ -117,6 +118,12 @@ public class StolenIndividualUserDB implements Serializable {
 	@JsonIgnore
 	StolenandRecoveryMgmt stolenandRecoveryMgmt;
 
+	public String getDeviceSerialNumber() {
+		return deviceSerialNumber;
+	}
+	public void setDeviceSerialNumber(String deviceSerialNumber) {
+		this.deviceSerialNumber = deviceSerialNumber;
+	}
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}

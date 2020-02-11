@@ -27,7 +27,7 @@ public class SystemConfigListController {
 	SystemConfigListServiceImpl systemConfigListServiceImpl;
 	
 	@ApiOperation(value = "pagination View filtered system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/filter/audit-trail")
+	@PostMapping("/filter/system-config-list")
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
@@ -50,7 +50,7 @@ public class SystemConfigListController {
 	}
 	
 	@ApiOperation(value = "View By Id || system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/get/system-config-list/")
+	@PostMapping("/get/system-config-list")
 	public MappingJacksonValue findAuditTrailById(@RequestBody FilterRequest filterRequest) {
 
 		logger.info("Get system-config-list request [" + filterRequest + "]");

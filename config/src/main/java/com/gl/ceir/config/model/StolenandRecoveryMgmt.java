@@ -242,6 +242,19 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
 		this.stolenOrganizationUserDB = stolenOrganizationUserDB;
 	}
+	
+	public String getDateOfStolen() {
+		return dateOfStolen;
+	}
+	public void setDateOfStolen(String dateOfStolen) {
+		this.dateOfStolen = dateOfStolen;
+	}
+	public String getDateOfRecovery() {
+		return dateOfRecovery;
+	}
+	public void setDateOfRecovery(String dateOfRecovery) {
+		this.dateOfRecovery = dateOfRecovery;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
