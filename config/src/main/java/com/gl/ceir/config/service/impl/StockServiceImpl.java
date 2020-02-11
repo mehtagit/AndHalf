@@ -147,6 +147,7 @@ public class StockServiceImpl {
 			stockMgmt.setStockStatus(StockStatus.UPLOADING.getCode());
 
 			if("Custom".equalsIgnoreCase(stockMgmt.getUserType())) {
+				String secondaryRoleType = null;
 				user =	userRepository.getByUsername(stockMgmt.getSupplierId());
 				logger.info(user);
 
@@ -167,14 +168,16 @@ public class StockServiceImpl {
 					return new GenricResponse(4, "No role assigned to the user.", "");
 				}
 
-				if(!isUserRetailerOrDistributor(userRoles)) {
+				secondaryRoleType = getSecondaryRoleType(userRoles);
+				
+				if(Objects.isNull(secondaryRoleType)) {
 					logger.info("User is not a distributer or retailer to assign a stock.");
 					return new GenricResponse(5, "User is not a distributer or retailer to assign a stock.", "");
 				}
 
 				stockMgmt.setUserId(new Long(user.getId()));
 				stockMgmt.setUser(user);
-				stockMgmt.setRoleType(user.getUsertype().getUsertypeName());
+				stockMgmt.setRoleType(secondaryRoleType);
 				isStockAssignRequest = Boolean.TRUE;
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
@@ -909,7 +912,12 @@ public class StockServiceImpl {
 		return Boolean.FALSE;
 	}
 
-	private boolean isUserRetailerOrDistributor(List<String> userRoles) {
-		return userRoles.contains("Distributor") || userRoles.contains("Retailer");
+	private String getSecondaryRoleType(List<String> userRoles) {
+		if(userRoles.contains(com.gl.ceir.config.model.constants.Usertype.DISTRIBUTOR.getName()))
+			return com.gl.ceir.config.model.constants.Usertype.DISTRIBUTOR.getName();
+		else if (userRoles.contains(com.gl.ceir.config.model.constants.Usertype.RETAILER.getName()))
+			return com.gl.ceir.config.model.constants.Usertype.RETAILER.getName();
+		else
+			return null;
 	}
 }

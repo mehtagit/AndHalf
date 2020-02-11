@@ -15,10 +15,13 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Audited
 public class ConsignmentMgmt implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -88,6 +91,7 @@ public class ConsignmentMgmt implements Serializable {
 	private String taxInterp;
 
 	// @NotNull
+	@NotAudited
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;

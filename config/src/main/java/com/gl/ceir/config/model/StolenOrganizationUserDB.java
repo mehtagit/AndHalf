@@ -68,6 +68,7 @@ public class StolenOrganizationUserDB implements Serializable {
 	private String phoneNo;
 	
 	// Place of device stolen.
+	private String incidentPropertyLocation;
 	private String incidentStreet;
 	private String incidentLocality;
 	
@@ -282,6 +283,12 @@ public class StolenOrganizationUserDB implements Serializable {
 		this.remark = remark;
 	}
 	
+	public String getIncidentPropertyLocation() {
+		return incidentPropertyLocation;
+	}
+	public void setIncidentPropertyLocation(String incidentPropertyLocation) {
+		this.incidentPropertyLocation = incidentPropertyLocation;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
