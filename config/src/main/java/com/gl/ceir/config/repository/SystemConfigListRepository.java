@@ -19,4 +19,5 @@ JpaRepository<SystemConfigListDb, Long>, JpaSpecificationExecutor<SystemConfigLi
 	List<String> findDistinctTags(); 
 	
 	public SystemConfigListDb getById(long id);
+	
 }

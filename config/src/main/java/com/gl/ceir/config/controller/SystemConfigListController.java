@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,37 @@ public class SystemConfigListController {
 
 	@Autowired
 	SystemConfigListServiceImpl systemConfigListServiceImpl;
+
+	@ApiOperation(value = "Save || system-config-list", response = SystemConfigListDb.class)
+	@PostMapping("/save/system-config-list")
+	public MappingJacksonValue save(@RequestBody SystemConfigListDb systemConfigListDb) {
+
+		logger.info("Get system-config-list request [" + systemConfigListDb + "]");
+
+		GenricResponse genricResponse = systemConfigListServiceImpl.saveSystemConfigList(systemConfigListDb);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
+
+		logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "View By Id || system-config-list", response = SystemConfigListDb.class)
+	@PutMapping("/system-config-list")
+	public MappingJacksonValue update(@RequestBody SystemConfigListDb systemConfigListDb) {
+
+		logger.info("Get system-config-list request [" + systemConfigListDb + "]");
+
+		GenricResponse genricResponse = systemConfigListServiceImpl.updateSystemConfigList(systemConfigListDb);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
+
+		logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
+
+		return mapping;
+	}
+
 	
 	@ApiOperation(value = "pagination View filtered system-config-list", response = SystemConfigListDb.class)
 	@PostMapping("/filter/system-config-list")

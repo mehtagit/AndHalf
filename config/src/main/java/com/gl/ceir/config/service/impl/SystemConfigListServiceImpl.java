@@ -77,6 +77,42 @@ public class SystemConfigListServiceImpl {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	public GenricResponse saveSystemConfigList(SystemConfigListDb systemConfigListDb){
+		try {
+			if(Objects.isNull(systemConfigListDb.getTag())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), null);
+			}
+
+			systemConfigListDb.setListOrder(0);
+			
+			systemConfigListRepository.save(systemConfigListDb);
+			return new GenricResponse(0);
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public GenricResponse updateSystemConfigList(SystemConfigListDb systemConfigListDb){
+		try {
+			if(Objects.isNull(systemConfigListDb.getId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), null);
+			}
+			
+			SystemConfigListDb systemConfigListDb2 = systemConfigListRepository.getById(systemConfigListDb.getId());
+			
+			systemConfigListRepository.save(systemConfigListDb2);
+			return new GenricResponse(0);
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
 
 	public GenricResponse getTagsList(FilterRequest filterRequest){
 		try {
@@ -123,7 +159,6 @@ public class SystemConfigListServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-
 
 	public List<SystemConfigListDb> getAll(FilterRequest filterRequest) {
 
