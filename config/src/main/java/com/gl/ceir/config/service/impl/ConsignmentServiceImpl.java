@@ -743,4 +743,6 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			consignmentMgmt.setTaxInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_TAX_STATUS, consignmentMgmt.getTaxPaidStatus()));
 	}
+
+	
 }

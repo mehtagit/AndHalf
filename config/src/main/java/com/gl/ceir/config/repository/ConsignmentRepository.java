@@ -34,4 +34,5 @@ public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Lo
 			+ "where c.consignmentStatus in (:consignmentStatus)")
 	public ResponseCountAndQuantity getConsignmentCountAndQuantity( @Param("consignmentStatus") List< Integer > consignmentStatus);
 
+
 }

@@ -53,6 +53,8 @@ public class ConsignmentMgmt implements Serializable {
 	private String txnId;
 
 	private String fileName;
+	
+	
 
 	@Column(length = 3)
 	private int consignmentStatus;
