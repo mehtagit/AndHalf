@@ -22,5 +22,19 @@
 "editBlockDevice":"កែសម្រួលឧបករណ៍ប្លុក",
 "editStolenDevice ":"កែឧបករណ៍មិនភ្ជាប់",
 "viewBlockDevice":"មើលឧបករណ៍រារាំង",
-"viewBulkUnblock":"កែឧបករណ៍មិនភ្ជាប់"
+"viewBulkUnblock":"កែឧបករណ៍មិនភ្ជាប់",
+"editStolenDevice":"កែឧបករណ៍មិនភ្ជាប់",
+"deviceType":"ប្រភេទឧបករណ៍",
+"deviceIDType":"ប្រភេទលេខសម្គាល់ឧបករណ៍",
+"selectDeviceIDType":"ជ្រើសរើសប្រភេទលេខសម្គាល់ឧបករណ៍",
+"multipleSimStatus":"ស្ថានភាពស៊ីមច្រើន",
+"countryBoughtFrom":"ប្រទេសបានទិញពី",
+"deviceSerialNumber":"លេខស៊េរីឧបករណ៍",
+"taxPaidStatus":"ស្ថានភាពបង់ពន្ធ",
+"deviceStatus":"ស្ថានភាពឧបករណ៍",
+"selectDeviceStatus":"ជ្រើសរើសស្ថានភាពឧបករណ៍",
+"price":"តម្លៃ",
+"currency":"រូបិយប័ណ្ណ",
+"selectCurrency":"ជ្រើសរើសរូបិយប័ណ្ណ",
+"remove":"យកចេញ"
 }

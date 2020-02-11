@@ -1,4 +1,5 @@
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+var period= $("body").attr("data-period");	
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 /*		window.parent.$('#langlist').on('change', function() {
 		 var roleType = $("body").attr("data-roleType");
 	 var userId = $("body").attr("data-userID");
@@ -100,7 +101,7 @@
 				setEditPopupData(data) 
 			},
 			error : function() {
-			//	alert("Failed");
+				//alert("Failed");
 			}
 		});
 
@@ -436,8 +437,8 @@
 				}
 
 				sourceType=="viaStock"? $("#btnLink").css({display: "none"}) : $("#btnLink").css({display: "block"});
-			/*	|| currentRoleType=="Importer"*/
-				if(currentRoleType=="CEIRAdmin" ){
+			
+				if(currentRoleType=="CEIRAdmin" || (period == 'POST_GRACE' && role=='Importer')){
 					$("#btnLink").css({display: "none"});
 				}
 				

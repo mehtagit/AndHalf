@@ -22,5 +22,18 @@
 "editBlockDevice":"Edit Block Device",
 "viewBlockDevice":"View Block Device",
 "viewBulkUnblock":"View UnBlock Device",
-"editStolenDevice":"Edit UnBlock Device"
+"editStolenDevice":"Edit UnBlock Device",
+"deviceType":"Device Type",
+"deviceIDType":"Device ID Type",
+"selectDeviceIDType":"Select Device ID Type",
+"multipleSimStatus":"Multiple Sim Status",
+"countryBoughtFrom":"Country bought From",
+"deviceSerialNumber":"Device Serial Number",
+"taxPaidStatus":"Tax paid Status",
+"deviceStatus":"Device Status",
+"selectDeviceStatus":"Select Device Status",
+"price":"Price",
+"currency":"Currency",
+"selectCurrency":"Select Currency",
+"remove":"Remove"
 }

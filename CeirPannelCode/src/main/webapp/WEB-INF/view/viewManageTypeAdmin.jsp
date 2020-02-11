@@ -234,7 +234,7 @@ textarea {
                                              <div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="productName"><spring:message
 													code="registration.productname" /> <span class="star">*</span></label>
-											<select id="productname" class="browser-default">
+											<select id="productname" class="browser-default" required>
 												<option value="" disabled selected><spring:message
 														code="registration.selectproduct" />
 												</option>
@@ -245,7 +245,7 @@ textarea {
                                             <div class="col s12 m6 l6">
 												<label for="modalNumber"><spring:message
 														code="registration.modelnumber" /> <span class="star">*</span></label>
-												<select id="modelNumber" class="browser-default">
+												<select id="modelNumber" class="browser-default" required>
 													<option value="" disabled selected>
 														<spring:message code="registration.selectmodelnumber" /></option>
 
@@ -286,7 +286,7 @@ textarea {
 
 
                                             <div class="input-field col s12 m6 l6">
-                                                <input type="text" id="editImportertac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 7 digits tac number"  maxlength="8" required="required" />
+                                                <input type="text" id="editImportertac" name="tac" placeholder="" pattern="[0-9]{8,8}" title="Please enter 8 digits tac number"  maxlength="8" required="required" />
                                                 <label for="tac"><spring:message code="input.TAC" /> <span class="star">*</span></label>
                                             </div>
 
@@ -301,9 +301,11 @@ textarea {
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
 															class="browser-default" id="docTypetag1">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" />
+															
+															<option value="" disabled selected>Select Document Type
 															</option>
+															<%-- <option value="" disabled selected><spring:message
+																	code="select.documenttype" /></option> --%>
 
 														</select> <select class="browser-default" id="docTypetagValue1"
 															style="display: none;">
@@ -463,7 +465,60 @@ textarea {
             </div>
         </div>
     </div>
+    
+    
+    <!-- --------------------------------------------------------------Delete TAC Modal Start --------------------------------------------------------------->
 
+
+	<div id="DeleteTacConfirmationModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteTac" /></h6>
+		<div class="modal-content">
+
+			
+			
+
+		<div class="row">
+				<h6><spring:message code="modal.message.tac.widthdraw" /><span id="tacdeleteTxnId"></span></h6>
+			</div> 
+			<div class="row">
+				<div class="input-field col s12 m12">
+					<textarea id="deleteTacRemark" class="materialize-textarea"></textarea>
+					<label for="textarea1" class=""><spring:message code="input.remarks" /></label>
+				</div>
+			</div>
+			<input type="text" id="popupTransactionId" maxlength="15" hidden />
+			<input type="text" id="deleteTacId" hidden>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="confirmantiondelete()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deleteTac" /></h6>
+			<div class="modal-content">
+		
+			
+			<div class="row">
+
+				<h6 id="tacModalText"><spring:message code="modal.message.tacDeleted" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

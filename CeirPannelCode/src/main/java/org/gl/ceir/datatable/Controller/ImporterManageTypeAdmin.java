@@ -89,17 +89,19 @@ public class ImporterManageTypeAdmin {
 				if("Importer".equals(userType)){
 					log.info("--------in Importal Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String createdOn = trcContentModelList.getCreatedOn();
 						String trademark = trcContentModelList.getTrademark();
 						String productName = trcContentModelList.getProductNameInterp();
 						String txnId= trcContentModelList.getTxnId();
 						String modelNumber = trcContentModelList.getModelNumberInterp();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
-						String status = trcContentModelList.getStateInterp();
+						/* String status = trcContentModelList.getStateInterp(); */
+						String status = trcContentModelList.getAdminStateInterp();
 						String fileName1= trcContentModelList.getFileName();
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.importalTrcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
-						Object[] data = {trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
+						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -124,13 +126,14 @@ public class ImporterManageTypeAdmin {
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String adminState = trcContentModelList.getAdminStateInterp();	
 						String txnId = trcContentModelList.getTxnId();
+						
+						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
 
 						log.info("status----->" + status + "adminState-------->"+ adminState+"--Id--------->" + trcContentModelList.getId()
 								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
 						String action = iconState.trcAdminManageIcons(adminState, trcContentModelList.getId(), fileName1,
-								txnId);
-						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, statusInterp,
-								 adminState, action };
+								txnId,adminApproveStatus);
+						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, adminState, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);

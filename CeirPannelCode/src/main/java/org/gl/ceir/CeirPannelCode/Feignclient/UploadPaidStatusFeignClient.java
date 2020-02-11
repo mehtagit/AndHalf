@@ -63,7 +63,6 @@ public interface UploadPaidStatusFeignClient {
 	@PostMapping("/stakeholder/Stolen")
 	public @ResponseBody GenricResponse lawfulIndivisualStolen(LawfulStolenRecovey lawfulStolen);
 	
-
 	@PostMapping("/stakeholder/Recovery")
 	public @ResponseBody GenricResponse lawfulIndivisualRecovery(LawfulStolenRecovey lawfulStolen);
 	

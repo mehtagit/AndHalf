@@ -188,7 +188,7 @@ var contextpath = "${context}";
 
 
 <div class="input-field col s12 m6 l6">
-                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="registration.astype" /><span
+                                    <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="registration.astype" /> <span
                                             class="star">*</span></p>
                                         <input type="text" readonly="readonly" id="asTypeName" name="type"  />
                                         <input type="hidden"  id="type" name="type"  />                         
@@ -221,7 +221,7 @@ var contextpath = "${context}";
                                 <div class="row myRow" style="display: none;" id="uploadFile">
                                     <div class="col s12 m12">
                                         <h6 class="file-upload-heading">
-                                            <spring:message code="registration.uploadNationalityInformation" /><span class="star">*</span></h6>
+                                            <spring:message code="registration.uploadNationalityInformation" /> <span class="star">*</span></h6>
                                         <div class="file-field input-field col s12 m6"
                                             style="margin-top: 5px; padding-left:0;">
                                             <div class="btn">
@@ -252,7 +252,7 @@ var contextpath = "${context}";
 									<input type="text"  placeholder="" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
 										title="Enter a valid email id" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
-										 required="required"> <label for="email"> <spring:message code="input.email" /><span
+										 required="required"> <label for="email"> <spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
 
@@ -348,7 +348,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										 <spring:message code="input.province" /><span class="star">*</span>
+										 <spring:message code="input.province" /> <span class="star">*</span>
 									</p>
 									<select id="state" class="browser-default" class="mySelect"
 										style="padding-left: 0;" required></select>
@@ -576,7 +576,7 @@ var contextpath = "${context}";
 								
 								<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										<spring:message code="registration.securityQuestion2" /><span class="star">*</span>
+										<spring:message code="registration.securityQuestion2" /> <span class="star">*</span>
 									</p>
 								     <input type="hidden"  class="id" id="id2" />
 									<select name="questionId" id="questionId2" class="browser-default questionId" required>
