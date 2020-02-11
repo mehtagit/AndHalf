@@ -1,15 +1,5 @@
 var period= $("body").attr("data-period");	
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-/*		window.parent.$('#langlist').on('change', function() {
-		 var roleType = $("body").attr("data-roleType");
-	 var userId = $("body").attr("data-userID");
-	 var currentRoleType = $("body").attr("data-selected-roleType"); 
-	 var role = currentRoleType == null ? roleType : currentRoleType;
-	
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-			window.location.assign("./assignDistributor?userTypeId="+role+"&lang="+lang);
-		});*/
-
 
 		$.i18n().locale = lang;
 		var stockRejected,stockApproved,stockTxn,errorOccured,operationNotAllowed,stockDeleted,updateMsg,hasBeenUpdated;
@@ -63,7 +53,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				setViewPopupData(data);
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 	}
@@ -101,7 +91,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				setEditPopupData(data) 
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 

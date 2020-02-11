@@ -49,7 +49,10 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <script>
 var contextpath = "${context}";
-<%String usertype = (String) session.getAttribute("usertype");%>
+<%
+String usertype = (String) session.getAttribute("usertype");
+String name = (String) session.getAttribute("name");
+%>
 
 </script>
 <script
@@ -93,7 +96,9 @@ var contextpath = "${context}";
 						<li>
 							<h1 class="logo-wrapper">
 								<a href="#" class="brand-logo darken-1"><spring:message code="page.ceir" /> <span
-									id="cierRoletype"><spring:message code="roletype.${sessionScope.usertype}" /></span> <spring:message code="page.portal" /> <%
+									id="cierRoletype">
+									<spring:message code="roletype.${fn:replace(sessionScope.usertype, ' ', '_')}" />
+									</span> <spring:message code="page.portal" /> <%
 									if ("Operator".equalsIgnoreCase(usertype)) {
 								%>
 									- <%=session.getAttribute("operatorTypeName")%> <%
@@ -181,7 +186,7 @@ var contextpath = "${context}";
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
 									<spring:message code="page.welcome" />
-									<spring:message code="roletype.${sessionScope.usertype}" />
+									<%=name %>
 									(<%=(String) session.getAttribute("username")%>)
 								</p>
 							</div>

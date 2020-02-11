@@ -35,5 +35,10 @@
 "price":"Price",
 "currency":"Currency",
 "selectCurrency":"Select Currency",
-"remove":"Remove"
+"remove":"Remove",
+"Consignment":"Consignment",
+"Total Device in Transit":"Total Device in Transit",
+"Stock":"Stock",
+"Total Device Waiting For Upload":"Total Device Waiting For Upload",
+"Grievance":"Grievance"
 }

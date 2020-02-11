@@ -221,7 +221,7 @@ section {
 										<div class=" col s12 m6">
 											
 												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /><span class="star">*</span></label>
-											<select class="browser-default" id="expectedArrivalPort"
+											<select class="browser-default" id="expectedArrivalPort" required
 												 name="expectedArrivalPort" title="<spring:message code="validation.selectFieldMsg" />">
 												<%-- <spring:message code="input.arrivalport" /> --%>
 												<option value="" disabled selected> <spring:message code="input.arrivalport" /></option>
@@ -247,7 +247,7 @@ section {
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input type="file"
 													 name="file" id="file" accept=".csv"  title="<spring:message code="validation.file" />"
-													 oninvalid="this.setCustomValidity('<spring:message code="validation.file" />')" required />
+													 oninvalid="this.setCustomValidity('<spring:message code="validation.file" />')"  onselect="setCustomValidity('')" required />
 											</div>
 											<div class="file-path-wrapper">
 												<input class="file-path validate responsive-file-div"

@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -148,7 +149,7 @@ public class RegistrationReqDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable()","submitFilter"};
+			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable("+ConfigParameters.languageParam+")","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

@@ -26,7 +26,7 @@ public class IconsState {
 	// fa fa icons
 	String errorIcon="\"fa fa-exclamation-circle  error-icon\"";
 	String downloadIcon="\"fa fa-download download-icon\""; 
-	String viewIcon="\"fa fa-eye teal-text view-icon\"";
+	String viewIcon="\"fa fa-eye view-icon\"";
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
 	String replyIcon="\"fa fa-reply reply-icon\""; 
@@ -797,35 +797,35 @@ public class IconsState {
 
 
 
-	/********************************** Icons for DashBoard Notification **********************************/ 
+	/********************************* Icons for DashBoard Notification *********************************/
 
 
-	public String dashboardIcon(String userStatus,Integer featureID,String txnID) {
-		executePostConstruct();
-		// URL link 
-		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
-			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
-				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
-					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
-						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
-							featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
-								featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
-									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
-										"JavaScript:void(0);";
-		//System.out.println("featureID::::::::::"+featureID);
-		// state related Code 
-		String view=null;
-		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
-			view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
-		}
-		else {
+	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
+	executePostConstruct();
+	// URL link
+	String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
+	featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"":
+	featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
+	featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
+	featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
+	featureID == 8 ? "./registrationRequest?txnID="+txnID+"" :
+	featureID == 11 ? "./manageTypeDevices?txnID="+txnID+"":
+	featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
+	"JavaScript:void(0);";
+	//System.out.println("featureID::::::::::"+featureID);
+	// state related Code
+	String view=null;
+	if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
+	view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+	+viewIconTitle+" ></i></a>";
+	}
+	else {
 
-			view="<a href="+viewAction+" class="+disableIconClass+"><i  class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
-		}
-		String action=view;		  
-		return action;
+	view="<a href="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+	+viewIconTitle+" ></i></a>";
+	}
+	String action=view;
+	return action;
 
 	}
 
@@ -1406,8 +1406,6 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
-		
-
 		if("8".equals(status)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
@@ -1523,12 +1521,12 @@ public String trcAdminIcons(String status,Integer id,String fileName,String txnI
 			+approveIconTitle+" ></i></a>";   
 	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 			+rejectIconTitle+" ></i></a>";
+
 	
-	
-	if("0".equals(status)) {
+	if("0".equals(adminApproveStatus)) {
 		approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 				+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
-	}else if("1".equals(status)) {
+	}else if("1".equals(adminApproveStatus)) {
 		reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 				+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 		download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon

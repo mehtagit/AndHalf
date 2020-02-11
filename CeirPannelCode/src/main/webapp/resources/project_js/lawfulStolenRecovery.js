@@ -35,11 +35,6 @@ $('.datepicker').on('mousedown',function(event){
 	event.preventDefault();
 });
 
-populateCountries
-(   
-		"country"
-);
-
 var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
@@ -498,7 +493,113 @@ function saveIndivisualStolenRequest(){
 
 
 
+function saveCompanyStolenRequest(){
+	var formData= new FormData();
+	
+	var bulkStolencompanyName=$('#bulkStolencompanyName').val();
+	var bulkStolenaddress=$('#bulkStolenaddress').val();
+	var bulkStolenstreetNumber=$('#bulkStolenstreetNumber').val();
+	var bulkStolenvillage=$('#bulkStolenvillage').val();
+	var bulkStolenlocality=$('#bulkStolenlocality').val();
+	var bulkStolendistrict=$('#bulkStolendistrict').val();
+	var bulkStolencommune=$('#bulkStolencommune').val();
+	var bulkStolenpin=$('#bulkStolenpin').val();
+	var country2=$('#country2').val();
+	var state2=$('#state2').val();
+	
+	var blockingTimePeriod=$('#stolenBulkDatePeriod').val();
+	var blockingType =$('.stolenBulkBlockPeriod:checked').val();
+	
+	
+	var firstName=$('#firstName').val();
+	var bulkStolenmiddleName=$('#bulkStolenmiddleName').val();
+	var bulkStolenlastName=$('#bulkStolenlastName').val();
+	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
+	var bulkStolenContact=$('#bulkStolenContact').val();
 
+	
+	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
+	var deviceBulkStolenstreetNumber=$('#deviceBulkStolenstreetNumber').val();
+	var deviceBulkStolenvillage=$('#deviceBulkStolenvillage').val();
+	var deviceBulkStolenlocality=$('#deviceBulkStolenlocality').val();
+	var deviceBulkStolendistrict=$('#deviceBulkStolendistrict').val();
+	var deviceBulkStolencommune=$('#deviceBulkStolencommune').val();
+	var deviceBulkStolenpin=$('#deviceBulkStolenpin').val();
+	var country3 = $('#country3').val();
+	var state3= $('#state3').val();
+	var deviceBulkStolenComplaint=$('#deviceBulkStolenComplaint').val();
+	var deviceBulkStolenquantity=$('#deviceBulkStolenquantity').val();
+	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
+	
+	
+
+	
+	var stolenOrganizationUserDB= {
+    "commune": bulkStolencommune,
+    "companyName": bulkStolencompanyName,
+    "country": country2,
+    "district": bulkStolendistrict,
+    "email": bulkStolenofficeEmail,
+    "incidentCommune": deviceBulkStolencommune,
+    "incidentCountry": country3,
+    "incidentDistrict": deviceBulkStolendistrict,
+    "incidentLocality": deviceBulkStolenlocality,
+    "incidentPostalCode": deviceBulkStolenpin,
+    "incidentProvince": state3,
+    "incidentStreet": deviceBulkStolenstreetNumber,
+    "incidentVillage": deviceBulkStolenvillage,
+    "locality": deviceBulkStolenlocality ,
+    "personnelFirstName": firstName,
+    "personnelLastName": bulkStolenmiddleName,
+    "personnelMiddleName": bulkStolenlastName,
+    "phoneNo": bulkStolenContact,
+    "postalCode": bulkStolenpin,
+    "propertyLocation": bulkStolenaddress,
+    "province": state2,
+    "street": bulkStolenstreetNumber,
+    "village": bulkStolenvillage
+  }
+	
+	
+	var request={
+			"blockingTimePeriod":blockingTimePeriod,
+			"blockingType":blockingType,
+			"requestType":0,
+			"sourceType":6,
+			"stolenOrganizationUserDB":stolenOrganizationUserDB
+	}
+	formData.append('file', $('#deviceBulkStolenFile')[0].files[0]);
+	formData.append("request",JSON.stringify(request));
+
+	$.ajax({
+		url: './lawfulOraganisationStolen',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response, textStatus, jqXHR) {
+		console.log(response)
+		
+			if(response.errorCode==0){
+				$("#bulkStolenButton").prop('disabled', true);
+				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenTxnId').text(response.txnId)
+			}
+			else{
+//				$('#sucessMessage').text('');
+				$('#regularisedDevice').openModal();
+				$('#dynamicTxnId').text(data.txnId);
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+
+		}
+	});
+	return false;
+	
+	
+}
 
 
 

@@ -341,7 +341,7 @@ function setImporterEditPopupData(data){
 	$("#importerColumnid").val(data.id);
 	$("#approveStatus").val(data.approveStatus);
 	
-	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function( //same values to be configure for featureId 21
+	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function( //same values to be configure for featureId 21
 			data) {
 		$("#docTypetag1").empty();
 		for (i = 0; i < data.length; i++) {
@@ -500,7 +500,7 @@ $(".add_field_button")
 												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 					}
 
-					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(
+					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
 
 						for (i = 0; i < data.length; i++) {
