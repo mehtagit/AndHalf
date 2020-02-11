@@ -103,7 +103,7 @@ public class UploadPaidStatusView {
 		log.info("*********"+filter);
 
 		Register_UploadPaidStatus regularizeDeviceDbs  = gson.fromJson(filter, Register_UploadPaidStatus.class);
-
+		regularizeDeviceDbs.setNationality("Cambodian");
 		for(int i =0; i<regularizeDeviceDbs.getRegularizeDeviceDbs().size();i++) {
 			regularizeDeviceDbs.getRegularizeDeviceDbs().get(i).setTxnId(txnNumber);
 		}

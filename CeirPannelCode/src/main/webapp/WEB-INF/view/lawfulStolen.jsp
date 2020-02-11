@@ -87,6 +87,11 @@
 	margin-bottom: 0;
 	font-size: 0.8rem;
 }
+
+.blockingType {
+height: 4.6rem;
+margin-bottom: 5px;
+}
 </style>
 
 
@@ -507,18 +512,18 @@ onclick="_Services._selectstartDate()"></i></span>
 
 
 									<div id="Bulkform" class="col s12" style="display: none">
-										<form action="#" style="margin-top: 30px;" id="bulkFormSubmit">
+										<form action="" id="SingleImeiBlockform" onsubmit="return saveCompanyStolenRequest()" method="POST" enctype="multipart/form-data">
 											<div class="input-field col s12 m6">
-												<input type="text" name="companyName"
+												<input type="text" name="companyName" pattern=[A-Za-z]{1,50} maxlength="50" required  title="Please enter alphabets and numbers upto 50 characters only"
 													id="bulkStolencompanyName"> <label
-													for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
+													for="companyName"><spring:message code="registration.companyName" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<input type="text" name="address"
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenaddress" pattern=[A-Za-z]
-													title="Please enter your address"> <label
+													id="bulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" 
+													maxlength="200" required="required"> <label
 													for="address"><spring:message code="input.address" /> <span
 													class="star">*</span></label>
 											</div>
@@ -526,57 +531,60 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="streetNumber"
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenstreetNumber" maxlength="30"
-													pattern=[A-Za-z0-9] title="Please enter street number">
+													id="bulkStolenstreetNumber" pattern="[^[a-zA-Z0-9\s,'50" title="Please enter alphabets and numbers upto 50 characters only"
+													 maxlength="50" required="required" title="Please enter street number">
 												<label for="streetNumber"><spring:message code="input.streetNumber" /><span
-													class="star">*</span></label>
+													class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="village" id="bulkStolenvillage"
-													maxlength="20"> <label for="village"><spring:message code="input.village" />
-													<span class="star">*</span>
+												<input type="text" name="village" id="bulkStolenvillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												 maxlength="50" required="required">
+												
+												 <label for="village"><spring:message code="input.village" />
+													<span class="star"> *</span>
 												</label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="locality"
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenlocality" maxlength="20" pattern=[A-Za-z0-9]
+													id="bulkStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+													 maxlength="50" required="required"
 													title="Please enter your locality"> <label
-													for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+													for="locality"><spring:message code="input.locality" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="district" id="bulkStolendistrict"
-													maxlength="20"> <label for="district"><spring:message code="input.district" />
-													<span class="star">*</span>
+												<input type="text" name="district" id="bulkStolendistrict"pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												 maxlength="50" required="required"> <label for="district"><spring:message code="input.district" />
+													<span class="star"> *</span>
 												</label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune" id="bulkStolencommune"
 													maxlength="20"> <label for="commune"><spring:message code="input.commune" />
-													<span class="star">*</span>
+													<span class="star"> *</span>
 												</label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
-													class="form-control boxBorder boxHeight" id="bulkStolenpin"
+													class="form-control boxBorder boxHeight" id="bulkStolenpin" pattern="[0-9]{0,20}" title="Please enter numbers upto 20 characters only"  required="required"
 													maxlength="20"> <label for="pin"><spring:message code="registration.postalcode" />
-													<span class="star">*</span>
+													<span class="star"> *</span>
 												</label>
 											</div>
 
 											<div class="col s12 m6 l6">
-												<label><spring:message code="input.Country" /><span class="star">*</span></label> <select
+												<label><spring:message code="input.Country" /><span class="star"> *</span></label> <select
 													id="country2" class="browser-default" class="mySelect"
 													style="padding-left: 0;" required></select>
 											</div>
 
 											<div class="col s12 m6 l6">
-												<label><spring:message code="input.province" /> <span class="star">*</span></label> <select
+												<label><spring:message code="input.province" /> <span class="star"> *</span></label> <select
 													id="state2" class="browser-default" class="mySelect"
 													style="padding-left: 0;" required></select>
 											</div>
@@ -590,30 +598,31 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div> -->
 
 											<div class="input-field col s12 m4">
-												<input type="text" name="bulkStolenfirstName" id="firstName">
-												<label for="firstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
+												<input type="text" name="bulkStolenfirstName" id="firstName" pattern="[a-zA-Z ]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" required="required">
+												<label for="firstName"><spring:message code="input.firstName" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m4">
-												<input type="text" name="middleName"
+												<input type="text" name="middleName" pattern="[a-zA-Z ]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20"
 													id="bulkStolenmiddleName"> <label for="middleName"><spring:message code="input.middleName" /></label>
 											</div>
 
 											<div class="input-field col s12 m4">
-												<input type="text" name="lastName" id="bulkStolenlastName">
-												<label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
+												<input type="text" name="lastName" id="bulkStolenlastName" pattern="[a-zA-Z ]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" required="required">
+												<label for="lastName"><spring:message code="input.lastName" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
-												<input type="text" name="officeEmail"
-													id="bulkStolenofficeEmail"> <label
+												<input type="email" name="officeEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+												 title="Please enter valid email formate " maxlength="30" id="bulkStolenofficeEmail">
+													 <label
 													for="officeEmail"><spring:message code="registration.officialemailid" /></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
-												<input type="tel" name="phone" id="bulkStolenContact"
-													maxlength="15"> <label for="phone2"><spring:message code="input.contactNum" /></label>
+												<input type="tel" name="phone" id="bulkStolenContact" required pattern="[0-9]{1,12}" title="Please enter 12 digits contact number" 
+													maxlength="12"> <label for="phone2"><spring:message code="input.contactNum" /></label>
 											</div>
 
 											<!-- <div class="input-field col s12 m6">
@@ -631,69 +640,68 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m12">
 												<input type="text" name="address"
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenaddress" pattern=[A-Za-z]
-													title="Please enter your address"> <label
+													id="deviceBulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" 
+													maxlength="200" required="required"> <label
 													for="address"><spring:message code="input.address" /> <span
-													class="star">*</span></label>
+													class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="streetNumber"
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenstreetNumber" maxlength="30"
-													pattern=[A-Za-z0-9] title="Please enter street number">
+													id="deviceBulkStolenstreetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+													 maxlength="50" required="required">
 												<label for="streetNumber"><spring:message code="input.streetNumber" /> <span
-													class="star">*</span></label>
+													class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="village"
-													id="deviceBulkStolenvillage" maxlength="20"> <label
-													for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
+													id="deviceBulkStolenvillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" maxlength="50" required="required"> <label
+													for="village"><spring:message code="input.village" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="locality"
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenlocality" maxlength="20"
-													pattern=[A-Za-z0-9]{1,20} title="Please enter your locality">
-												<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
+													id="deviceBulkStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" maxlength="50" required="required">
+												<label for="locality"><spring:message code="input.locality" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="district"
-													id="deviceBulkStolendistrict" maxlength="20"> <label
-													for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
+													id="deviceBulkStolendistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" maxlength="50" required="required"> <label
+													for="district"><spring:message code="input.district" /> <span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune"
-													id="deviceBulkStolencommune" maxlength="20"> <label
-													for="commune"><spring:message code="input.commune" /><span class="star">*</span></label>
+													id="deviceBulkStolencommune" pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets  upto 20 characters only" maxlength="20" required="required"> <label
+													for="commune"><spring:message code="input.commune" /><span class="star"> *</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenpin" maxlength="20"> <label
-													for="pin"><spring:message code="registration.postalcode" /><span class="star">*</span></label>
+													id="deviceBulkStolenpin" pattern="[0-9]{0,20}" title="Please enter  numbers upto 20 characters only" maxlength="20" required="required"> <label
+													for="pin"><spring:message code="registration.postalcode" /><span class="star"> *</span></label>
 											</div>
 
 											<div class="col s12 m6 l6">
-												<label><spring:message code="input.Country" /><span class="star">*</span></label> <select
+												<label><spring:message code="input.Country" /><span class="star"> *</span></label> <select
 													id="country3" class="browser-default" class="mySelect"
 													style="padding-left: 0;" required></select>
 											</div>
 
 											<div class="col s12 m6 l6">
-												<label><spring:message code="input.province" /> <span class="star">*</span></label> <select
+												<label><spring:message code="input.province" /> <span class="star"> *</span></label> <select
 													id="state3" class="browser-default" class="mySelect"
 													style="padding-left: 0;" required></select>
 											</div>
 
 											<div class="col s12 m6 l6">
-												<label><spring:message code="registration.complainttype" /><span class="star">*</span></label> <select
-													class="browser-default" id="deviceBulkStolenComplaint">
+												<label><spring:message code="registration.complainttype" /><span class="star"> *</span></label> <select
+													class="browser-default" id="deviceBulkStolenComplaint" required>
 													<option value="" disabled selected><spring:message code="registration.selectcomplainttype" /></option>
 
 												</select>
@@ -702,29 +710,73 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6"
 												style="margin-top: 22px;">
 												<input type="text" name="quantity"
-													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenquantity" maxlength="10" pattern=[0-9]
+													class="form-control boxBorder boxHeight" required
+													id="deviceBulkStolenquantity" maxlength="7" pattern=[0-9]{1,7}
 													title="Please enter your locality"> <label
-													for="quantity"><spring:message code="input.quantity" /><span class="star">*</span></label>
+													for="quantity"><spring:message code="input.quantity" /><span class="star"> *</span></label>
 											</div>
-
+											
+											
 											<div class="file-field col s12 m6">
 												<h6 class="file-label">
-													 <spring:message code="registration.uploaddevicelist" /><span class="star">*</span>
+													 <spring:message code="registration.uploaddevicelist" /><span class="star"> *</span>
 												</h6>
 												<div class="btn">
 													<span><spring:message code="input.selectfile" /></span> <input type="file"
-														id="deviceBulkStolenFile" placeholder="Upload Photo">
+														id="deviceBulkStolenFile" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"
 														placeholder="Upload Device List"
-														title="Please upload your photo">
+													>
 												</div>
 											</div>
 
+
+										 <div class="col s12 m6 blockingType" >
+<p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
+<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+value="Immediate"
+onclick="document.getElementById('stolenCalender').style.display = 'none';"
+name="stolenBulkBlockPeriod" checked><spring:message code="operator.immediate" />
+</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+value="Default"
+onclick="document.getElementById('stolenCalender').style.display = 'none';"
+name="stolenBulkBlockPeriod"><spring:message code="operator.default" />
+</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+onclick="document.getElementById('stolenCalender').style.display = 'block';"
+name="stolenBulkBlockPeriod"><spring:message code="operator.later" />
+</label>
+<div class="col s6 m2 responsiveDiv"
+style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px" id="stolenCalender">
+<div id="Stolenstartdatepicker" class="input-group date">
+<input type="text" id="stolenBulkDatePeriod"
+style="margin-top: -9px" /> <span class="input-group-addon"
+style="color: #ff4081"><i class="fa fa-calendar"
+aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+
+</div>
+
+
+<div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
+id="stolenDate">
+
+<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
+<div id="Stolenstartdatepicker" class="input-group" style="margin-top: 10px;">
+
+<input class="form-control" name="inputsaves" type="text"
+id="startDateFilter" readonly /> <span class="input-group-addon"
+style="color: #ff4081"><i
+class="glyphicon glyphicon-calendar"
+onclick="_Services._selectstartDate()"></i></span>
+</div>
+</div>
+</div>
+
+
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
-												<textarea id="deviceBulkStolenRemark"
+												<textarea id="deviceBulkStolenRemark" maxlength="200"
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.Remark" /></label>
 											</div>
@@ -734,7 +786,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											</div>
 
 											<div class="input-field col s12 center">
-												<button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
+												<button class="btn" type="submit" id="bulkStolenButton" ><spring:message code="button.submit" /></button>
 												<a href="./stolenRecovery" class="btn modal-trigger"
 													style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 											</div>
@@ -747,14 +799,16 @@ onclick="_Services._selectstartDate()"></i></span>
 				</div>
 					<div class="modal" id="IndivisualStolenSucessPopup">
             <h6 class="modal-header">Stolen/Recovery</h6>
-            <div class="row" style="margin-top: 30px;">
-                <h6>Thank You for registering the complaint. Please note the transaction ID ( <span id="IndivisualStolenTxnId"></span> ) this will be
+            <div class="row" style="margin-top: 30px; padding: 0 20px;">
+               <div col s12 m12>
+               	 <h6>Thank You for registering the complaint. Please note the transaction ID ( <span id="IndivisualStolenTxnId"></span> ) this will be
                     used for
                     future reference of the complaint. The same has been sent to your registered mail ID and
                     alternate contact no. </h6>
-                <div class="input-field col s12 center">
-                    <a href="./stolenRecovery" class="btn">ok</a>
+                <div class="input-field col s12 center" style="margin:20px 0;">
+                    <a href="./stolenRecovery" class="btn" style="margin:20px 0;">ok</a>
                 </div>
+               </div>
             </div>
         </div>
 			</div>
@@ -873,6 +927,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 			            "state3"
 			        );
 		 
+			        populateCountries
+			        (   
+			        		"country"
+			        );
+
+
         var input2 = document.querySelector("#singleStolenphone2");
         window.intlTelInput(input2, {
             utilsScript: "${context}/resources/js/utils.js",
@@ -882,8 +942,19 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             utilsScript: "${context}/resources/js/utils.js",
         });
         
-        
         $('#stolenDatePeriod').datepicker({
+        	dateFormat: "yy-mm-dd"
+        	});
+
+        $('#stolenDatePeriodedit').datepicker({
+        	dateFormat: "yy-mm-dd"
+        	});
+
+        $('#stolenDatePeriodUnblock').datepicker({
+        	dateFormat: "yy-mm-dd"
+        	});
+        
+        $('#stolenBulkDatePeriod').datepicker({
         	dateFormat: "yy-mm-dd"
         	});
 

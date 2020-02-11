@@ -63,7 +63,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				setViewPopupData(data);
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 	}
@@ -101,7 +101,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				setEditPopupData(data) 
 			},
 			error : function() {
-				alert("Failed");
+				//alert("Failed");
 			}
 		});
 
