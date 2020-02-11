@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -244,7 +245,7 @@ public class StolenDatatableController {
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType)) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
-					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen()", "submitFilter" };
+					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
@@ -315,7 +316,7 @@ public class StolenDatatableController {
 			//This Block is for all other Stolen Upper Filter/Button Forms------------------------------------------------
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.repoertStolen/Recovery"), "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen()", "submitFilter" };
+					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
