@@ -85,8 +85,8 @@
 
 										<div class="input-field col s12 m6 l6"
 											style="margin-top: 22px">
-											<input type="text" id="trademark" name="trademark" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 50 characters only" 
-												maxlength="15" required> <label for="trademark"><spring:message
+											<input type="text" id="trademark" name="trademark" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 30 characters only" 
+												maxlength="30" required> <label for="trademark"><spring:message
 													code="registration.trademark" /> <span class="star">*</span></label>
 										</div>
 
@@ -132,7 +132,7 @@
 										<div class="row" style="margin-top: 10px;">
 											<div class="input-field col s12 m6 l6">
 												<input type="text" id="frequencyrange" 
-												title="Please enter alphabets and numbers upto 15 characters only"	maxlength="15" required> <label for="frequencyrange"><spring:message
+												title="Please enter alphabets and numbers upto 30 characters only"	maxlength="30" required> <label for="frequencyrange"><spring:message
 														code="registration.frequencyrange" /> <span class="star">*</span></label>
 											</div>
 											<div class="input-field col s12 m6 l6">
@@ -421,7 +421,7 @@
 
 		}
 
-		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(data) {
+		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i].interp);
@@ -465,7 +465,7 @@
 														+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 							}
 
-							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(
+							$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 									data) {
 
 								for (i = 0; i < data.length; i++) {

@@ -5,15 +5,13 @@
 	var requestType="0";
 
 	var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
-/*	window.parent.$('#langlist').on('change', function() {
-		var langValue=$("#langlist option:selected").val();
-		var lang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
-
-		changeLanguage(lang);
-	window.location.assign("./Home?lang="+lang);	
-		});*/
-
-
+	$.i18n().locale = sessionLang;	
+	
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+	});
 	
 
 	$(document).ready(function(){
@@ -28,7 +26,7 @@
 					var id=data[i].name;
 					/*var finalID=id.replace (/\//g, "");*/
 					url= data[i].url.split("?"); 
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+data[i].name+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+$.i18n(data[i].name)+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"' class=''><i class='fa fa-eye teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
 					var finalID = data[i].id;
 					var outParam = data[i].outParam;
 					if(userTypeId == 8){

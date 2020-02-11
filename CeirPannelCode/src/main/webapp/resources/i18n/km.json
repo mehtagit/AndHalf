@@ -36,5 +36,10 @@
 "price":"តម្លៃ",
 "currency":"រូបិយប័ណ្ណ",
 "selectCurrency":"ជ្រើសរើសរូបិយប័ណ្ណ",
-"remove":"យកចេញ"
+"remove":"យកចេញ",
+"Consignment":"ការយល់ព្រម",
+"Total Device in Transit":"ឧបករណ៍សរុបក្នុងការឆ្លងកាត់",
+"Stock":"ស្តុក",
+"Total Device Waiting For Upload":"ឧបករណ៍រង់ចាំសរុបសម្រាប់ផ្ទុកឡើង",
+"Grievance":"ការតវ៉ា"
 }

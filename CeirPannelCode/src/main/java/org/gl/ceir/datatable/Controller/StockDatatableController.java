@@ -12,6 +12,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -242,7 +243,7 @@ public class StockDatatableController {
 
 		if("viaStock".equals(sourceType)){
 			log.info("sourceType render---1------" +sourceType);	
-			String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter()","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
@@ -299,7 +300,7 @@ public class StockDatatableController {
 		}else {
 			log.info("sourceType render---2------" +sourceType);	
 			if("Custom".equals(userType)) {
-				String[] names= {"HeaderButton",Translator.toLocale("button.assignStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("button.assignStock"),"./openUploadStock?reqType=formPage","btnLink", "FilterButton",Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
@@ -313,7 +314,7 @@ public class StockDatatableController {
 					buttonList.add(button);
 				}
 			}else{
-				String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("button.uploadStock"),"./openUploadStock?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);

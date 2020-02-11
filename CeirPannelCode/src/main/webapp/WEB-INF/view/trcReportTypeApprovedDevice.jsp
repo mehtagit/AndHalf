@@ -401,7 +401,7 @@ var featureId = 11;
 
 		}
 		
-		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i].interp);
@@ -409,7 +409,15 @@ var featureId = 11;
 						'#docTypetag1');
 			}
 		});
-		
+		 */
+		 
+		 $.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
+				for (i = 0; i < data.length; i++) {
+					console.log(data[i].interp);
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+							'#docTypetag1');
+				}
+			});
 		
 
 		$('#approveDisapproveDate,#requestDate').datepicker({
