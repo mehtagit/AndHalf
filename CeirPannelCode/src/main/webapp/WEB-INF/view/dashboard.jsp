@@ -93,7 +93,7 @@ var contextpath = "${context}";
 						<li>
 							<h1 class="logo-wrapper">
 								<a href="#" class="brand-logo darken-1"><spring:message code="page.ceir" /> <span
-									id="cierRoletype"><spring:message code="roletype.${fn:replace(sessionScope.usertype, ' ', '_')}" /></span> <spring:message code="page.portal" /> <%
+									id="cierRoletype"><%=usertype%></span> <spring:message code="page.portal" /> <%
 									if ("Operator".equalsIgnoreCase(usertype)) {
 								%>
 									- <%=session.getAttribute("operatorTypeName")%> <%
