@@ -815,6 +815,7 @@ public class IconsState {
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code 
 		String view=null;
+		
 		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
 			view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";

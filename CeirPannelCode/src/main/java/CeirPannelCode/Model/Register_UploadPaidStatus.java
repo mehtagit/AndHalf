@@ -14,20 +14,31 @@ public class Register_UploadPaidStatus {
 	private String street;
 	private String locality;
 	private String province;
-	private String country,district,commune,village;
+	private String country,district,commune,village, nationality;
 	
-	private List<UplodPaidStatusModel> regularizeDeviceDbs;
-	private Long firstImei;
-	private Integer taxPaidStatus,postalCode;
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName="
 				+ lastName + ", passportNo=" + passportNo + ", email=" + email + ", phoneNo=" + phoneNo + ", nid=" + nid
 				+ ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
 				+ ", province=" + province + ", country=" + country + ", district=" + district + ", commune=" + commune
-				+ ", village=" + village + ", regularizeDeviceDbs=" + regularizeDeviceDbs + ", firstImei=" + firstImei
-				+ ", taxPaidStatus=" + taxPaidStatus + ", postalCode=" + postalCode + "]";
+				+ ", village=" + village + ", nationality=" + nationality + ", regularizeDeviceDbs="
+				+ regularizeDeviceDbs + ", firstImei=" + firstImei + ", taxPaidStatus=" + taxPaidStatus
+				+ ", postalCode=" + postalCode + "]";
 	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+	private List<UplodPaidStatusModel> regularizeDeviceDbs;
+	private Long firstImei;
+	private Integer taxPaidStatus,postalCode;
+	
 	public String getFirstName() {
 		return firstName;
 	}
