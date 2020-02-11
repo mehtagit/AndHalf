@@ -297,7 +297,7 @@ String usertypeId="${usertypeId}";
 									<option value="km">Khmer</option>
 								</select>
 							</div>
-							<div class="col s12 m11">
+							<div class="col s12 m12">
 								<h5>
 								<spring:message code="roletype.${param.type}" />
 										<spring:message code="select.registration" /> 
@@ -336,7 +336,7 @@ String usertypeId="${usertypeId}";
 										required="required"
 										title="Please enter alphabets upto 20 characters only">
 									<label for="lastName"> <spring:message
-											code="input.lastName" /><span class="star">*</span>
+											code="input.lastName" /> <span class="star">*</span>
 									</label>
 								</div>
 
@@ -344,7 +344,7 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6">
 									<p
 										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										AsType <span class="star">*</span>
+										Type <span class="star">*</span>
 									</p>
 									<select name="type" class="browser-default" id="type"
 										onchange="myFunction()" required>
@@ -371,14 +371,14 @@ String usertypeId="${usertypeId}";
 										pattern="[A-Za-z\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
 									<label for="companyName"><spring:message
-											code="registration.Company Name" /><span class="star">*</span></label>
+											code="registration.Company Name" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="row myRow" style="display: none;" id="uploadFile">
 									<div class="col s12 m12">
 										<h6 class="file-upload-heading">
 											<spring:message
-												code="registration.UploadNationalityInformation" />
+												code="registration.UploadNationalityInformation" /> 
 											<span class="star">*</span>
 										</h6>
 										<div class="file-field input-field col s12 m6"
@@ -444,7 +444,7 @@ String usertypeId="${usertypeId}";
 										title="Please enter alphanumeric with special character upto 200 characters only"
 										id="propertyLocation" required="required"> <label
 										for="propertyLocation"> <spring:message
-											code="input.address" /><span class="star">*</span></label>
+											code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">

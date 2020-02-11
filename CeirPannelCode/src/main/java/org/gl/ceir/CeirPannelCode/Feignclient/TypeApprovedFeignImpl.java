@@ -42,5 +42,8 @@ public interface TypeApprovedFeignImpl {
 
 	@PostMapping("/TypeApproved/approveReject") 
 	public GenricResponse TypeApproveReject(@RequestBody TypeApprovedStatusModel model) ;
-	
+
+	@PostMapping("/TypeApproved/delete") 
+	public GenricResponse TypeApproveDelete(@RequestParam(name="id",required = false ) Integer id) ;
+
 }

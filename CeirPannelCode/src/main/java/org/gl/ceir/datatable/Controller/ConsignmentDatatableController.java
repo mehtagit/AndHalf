@@ -36,6 +36,9 @@ public class ConsignmentDatatableController {
 	String className = "emptyClass";
 
 	@Autowired
+	Translator Translator;
+	
+	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
@@ -52,8 +55,6 @@ public class ConsignmentDatatableController {
 	@Autowired
 	UserProfileModel userprofileModel;	
 
-	@Autowired
-	Translator Translator;
 	/*
 	 * @Autowired ConsignmentService consignmentService;
 	 */

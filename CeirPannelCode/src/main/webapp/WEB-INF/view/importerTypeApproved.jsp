@@ -85,8 +85,8 @@
 
 										<div class="input-field col s12 m6 l6"
 											style="margin-top: 22px">
-											<input type="text" id="trademark" name="trademark"
-												maxlength="50"> <label for="trademark"><spring:message
+											<input type="text" id="trademark" name="trademark" pattern="[A-Za-z0-9 \s]{0,160}" title="Please enter alphabets and numbers upto 50 characters only" 
+												maxlength="15" required> <label for="trademark"><spring:message
 													code="registration.trademark" /> <span class="star">*</span></label>
 										</div>
 
@@ -94,7 +94,7 @@
 										<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="productName"><spring:message
 													code="registration.productname" /> <span class="star">*</span></label>
-											<select id="productname" class="browser-default">
+											<select id="productname" class="browser-default" required>
 												<option value="" disabled selected><spring:message
 														code="registration.selectproduct" />
 												</option>
@@ -106,7 +106,7 @@
 											<div class="col s12 m6 l6">
 												<label for="modalNumber"><spring:message
 														code="registration.modelnumber" /> <span class="star">*</span></label>
-												<select id="modelNumber" class="browser-default">
+												<select id="modelNumber" class="browser-default" required>
 													<option value="" disabled selected>
 														<spring:message code="registration.selectmodelnumber" /></option>
 
@@ -123,7 +123,7 @@
 														code="registration.countrymanufacture" /> <span
 													class="star">*</span></label> <select id="country"
 													class="browser-default" class="mySelect"
-													style="padding-left: 0;" required></select>
+													style="padding-left: 0;" required="required"></select>
 											</div>
 
 
@@ -132,11 +132,11 @@
 										<div class="row" style="margin-top: 10px;">
 											<div class="input-field col s12 m6 l6">
 												<input type="text" id="frequencyrange" 
-													maxlength="50"> <label for="frequencyrange"><spring:message
+												title="Please enter alphabets and numbers upto 15 characters only"	maxlength="15" required> <label for="frequencyrange"><spring:message
 														code="registration.frequencyrange" /> <span class="star">*</span></label>
 											</div>
 											<div class="input-field col s12 m6 l6">
-												<input type="text" id="tac" name="tac" maxlength="8">
+												<input type="text" id="tac" pattern="[0-9]{8,8}" title="Please enter 8 digits tac number" name="tac" maxlength="8" required="required">
 												<label for="tac"><spring:message
 														code="registration.tac" /> <span class="star">*</span></label>
 											</div>
@@ -454,7 +454,7 @@
 												'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
 														+ $
 																.i18n('documenttype')
-														+ ' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
+														+ '</label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
 														+ $
 																.i18n('selectDocumentType')
 														+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'

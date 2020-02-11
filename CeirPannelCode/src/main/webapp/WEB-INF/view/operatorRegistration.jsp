@@ -426,7 +426,7 @@ var contextpath = "${context}";
 									<input type="text" name="email" required="required" id="email"
 										maxlength="320" title="Enter a valid email id"
 										pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"> <label
-										for="email"><spring:message code="input.email" /><span
+										for="email"><spring:message code="input.email" /> <span
 										class="star">*</span></label>
 								</div>
 

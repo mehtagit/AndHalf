@@ -199,6 +199,15 @@ public class IconsState {
 					+disableEditIcon+" aria-hidden=\"true\" title="
 					+editIconTitle+"></i></a>"; 
 		}
+		else if("6".equals(status) || "7".equals(status) && "Approved".equals(userStatus)) {
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>";	
+			
+		}
 
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
@@ -1103,7 +1112,7 @@ public class IconsState {
 	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId) {
+	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus) {
 		executePostConstruct();
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
@@ -1121,6 +1130,16 @@ public class IconsState {
 				+approveIconTitle+" ></i></a>";   
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
+		
+		if("0".equals(adminApproveStatus)) {
+			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
+					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
+		}else if("1".equals(adminApproveStatus)) {
+			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
+					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
+			download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
+					+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
+		}
 
 
 		String action = view.concat(download).concat(approve).concat(reject);
@@ -1369,7 +1388,7 @@ public class IconsState {
 
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
 		String editAction= "ImporterviewByID("+id+",'edit')";
-		String deleteAction = "JavaScript:void(0);";
+		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
 		// state related Code 
 		
 
@@ -1467,7 +1486,7 @@ public class IconsState {
 /********************************** Icons for Admin TRC Manage Type Admin Datatable **********************************/ 
 
 
-public String trcAdminIcons(String status,Integer id,String fileName,String txnId) {	
+public String trcAdminIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus) {	
 	executePostConstruct();
 	String viewAction="viewByID("+id+",'view','"+projectPath+"')";
 	String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
@@ -1486,7 +1505,17 @@ public String trcAdminIcons(String status,Integer id,String fileName,String txnI
 	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 			+rejectIconTitle+" ></i></a>";
 
-
+	
+	if("0".equals(adminApproveStatus)) {
+		approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
+				+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
+	}else if("1".equals(adminApproveStatus)) {
+		reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
+				+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
+		download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
+				+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
+	}
+	
 	String action = view.concat(download).concat(approve).concat(reject);
 	return action;
 

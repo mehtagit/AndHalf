@@ -20,6 +20,7 @@ public class Translator {
 
 	public  String toLocale(String msgCode) {
 		Locale locale = LocaleContextHolder.getLocale(); 
+		System.out.println("lang----"+locale+"------msgCode"+msgCode);
 		return messageSource.getMessage(msgCode, null, locale);
 	}
 }

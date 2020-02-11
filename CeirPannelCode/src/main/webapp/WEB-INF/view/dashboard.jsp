@@ -123,8 +123,8 @@ var contextpath = "${context}";
 								</div>
 							</div>
 						</li>
-						<li><a href="javascript:void(0)" data-target="goToHome" class="modal-trigger"
-							 style="color: white;"><spring:message
+						<li><a   data-target="goToHome" class="modal-trigger"
+							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
 							class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn"
