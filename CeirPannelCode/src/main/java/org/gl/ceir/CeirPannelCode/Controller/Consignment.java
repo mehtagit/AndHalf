@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,15 +70,13 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 
 @RequestMapping(value=
 {"/viewConsignment"},method={org.springframework.web.bind.annotation.
-RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-)
-public ModelAndView viewConsignment(HttpSession session) {
+RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 ModelAndView mv = new ModelAndView();
 
 
 
 log.info(" view consignment entry point................."); 
- 
 mv.setViewName("viewConsignment");
 log.info(" view consignment exit point."); 
 return mv; 
@@ -172,7 +171,16 @@ public @ResponseBody GenricResponse registerConsignment(@RequestParam(name="supp
 ,@RequestParam(name="consignmentNumber",required = false) String consignmentNumber,@RequestParam(name="expectedArrivaldate",required = false) String expectedArrivalDate,
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity,
-@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) int currency) {
+@RequestParam(name="file",required = false) MultipartFile file,HttpSession session,@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency,HttpServletRequest request) {
+
+	log.info("headers request="+request.getHeaderNames());
+	log.info("user-agent"+request.getHeader("user-agent"));
+	  Enumeration headerNames = request.getHeaderNames();
+      while (headerNames.hasMoreElements()) {
+          String key = (String) headerNames.nextElement();
+          String value = request.getHeader(key);
+          log.info("request headers value="+key+" : "+value);
+      }
 
 String userName=session.getAttribute("username").toString();
 String userId= session.getAttribute("userid").toString();
@@ -236,7 +244,7 @@ public @ResponseBody GenricResponse openconsignmentRecordPage(@RequestParam(name
 @RequestParam(name="organisationcountry",required = false) String organisationcountry,@RequestParam(name="expectedDispatcheDate",required = false) String expectedDispatcheDate,
 @RequestParam(name="expectedArrivalPort",required = false) Integer expectedArrivalPort,@RequestParam(name="quantity",required = false) String quantity, HttpSession session,
 @RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="filename",required = false) String filename,@RequestParam(name="txnId",required = false) String txnId,
-@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) int currency) 
+@RequestParam(name="totalPrice",required = false) String totalPrice,@RequestParam(name="currency",required = false) Integer currency) 
 {
 ConsignmentModel consignment = new ConsignmentModel();
 
@@ -434,6 +442,7 @@ log.info("inside file download method");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
 FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
+log.info("redirect:"+response.getUrl());
 return "redirect:"+response.getUrl();
 }
 
@@ -483,6 +492,7 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	filterRequest.setUserId(userId);
 	filterRequest.setUserType(userType);
 	filterRequest.setUserTypeId(usertypeId);
+	filterRequest.setFeatureId(3);
 	log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 	Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file);
 

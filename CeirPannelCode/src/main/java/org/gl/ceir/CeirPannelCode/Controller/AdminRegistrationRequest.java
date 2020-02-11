@@ -28,7 +28,7 @@ public class AdminRegistrationRequest {
 		{"/registrationRequest"},method={org.springframework.web.bind.annotation.
 				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewConsignment(HttpSession session) {
+	    public ModelAndView viewConsignment(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
 		 log.info(" view Admin Registration entry point."); 
 		 mv.setViewName("AdminRegistrationRequest");
@@ -46,6 +46,8 @@ public class AdminRegistrationRequest {
 		
 		log.info("ID------------>"+id+"--------- Roles------------->"+roles+"--------type------>"+asType);
 		
+		roles = roles.replace("=", " ");
+		
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id);
 		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
@@ -61,11 +63,11 @@ public class AdminRegistrationRequest {
 			log.info("-------------------->2");
 			mv.setViewName("viewOperator");
 		
-		}else if("Custom".equals(roles)){
+		}else if("Custom".equals(roles) || roles.equals("Lawful Agency")){
 			log.info("-------------------->3");
-			mv.setViewName("viewCustom");
+			mv.setViewName("viewCustom"); 	
 			
-		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType)){
+		}else if(("Importer".equals(roles) || "Distributor".equals(roles) || "Retailer".equals(roles)) && "Company".equals(asType) || "Organization".equals(asType)){
 			log.info("-------------------->4");
 			mv.setViewName("viewCompany");
 			

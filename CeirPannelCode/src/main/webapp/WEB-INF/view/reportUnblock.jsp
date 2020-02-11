@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -91,15 +93,15 @@ padding: 0 !important;
                                 <div class="row card-panel">
                                     <div id="reportBlockUnblock">
                                         <div class="container-fluid pageHeader">
-                                            <p class="PageHeading">Report Unblock</p>
+                                            <p class="PageHeading"><spring:message code="operator.reportUnblock" /></p>
                                         </div>
 
                                         <div class="row">
                                             <div class="col s12">
                                                 <ul class="tabs">
-                                                    <li class="tab col s3"><a class="active" onclick="showSingleImeiUnBlock()">Single</a>
+                                                    <li class="tab col s3"><a class="active" onclick="showSingleImeiUnBlock()"><spring:message code="operator.single" /></a>
                                                     </li>
-                                                    <li class="tab col s3"><a onclick="showMultipleImeiUnBlock()">Bulk</a></li>
+                                                    <li class="tab col s3"><a onclick="showMultipleImeiUnBlock()"><spring:message code="operator.bulk" /></a></li>
                                                 </ul>
                                             </div>
                                             <div id="SingleImeiUnBlock" class="col s12" style="margin-top: 30px;display: block">
@@ -108,63 +110,63 @@ padding: 0 !important;
                                                         <div class="row">
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="deviceType">Device Type <span class="star">*</span></label>
-                                                                <select class="browser-default" id="unbockSingledeviceType" required="required">
-                                                                    <option value="" disabled selected>Device Type</option> 
+                                                                <label for="deviceType"><spring:message code="operator.devicetype" /></label>
+                                                                <select class="browser-default" id="unbockSingledeviceType">
+                                                                    <option value="" disabled selected><spring:message code="operator.devicetype" /></option> 
                                                                 </select>
                                                             </div>
-                                                             <div class="col s12 m6"><label for="UnblockdeviceIdType">Device ID
-                                                                    Type <span class="star">*</span></label>
+                                                             <div class="col s12 m6"><label for="UnblockdeviceIdType">
+                                                                    <spring:message code="operator.deviceidtype" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="UnblockdeviceIdType" required="required">
-                                                                    <option value="" disabled selected>Select Device ID
-                                                                        Type
+                                                                    <option value="" disabled selected>
+                                                                        <spring:message code="operator.selectdeviceidtype" />
                                                                     </option>
                                                                    
                                                                 </select>
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="deviceType">Multiple Sim Status <span class="star">*</span></label>
-                                                                <select class="browser-default" id="unbockSingleMultipleSimStatus" required="required">
-                                                                    <option value="" disabled selected>Multiple Sim Status</option>
+                                                                <label for="deviceType"><spring:message code="operator.multiplesim" /></label>
+                                                                <select class="browser-default" id="unbockSingleMultipleSimStatus">
+                                                                    <option value="" disabled selected><spring:message code="operator.multiplesim" /></option>
                                                                    
                                                                 </select>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,15}"
-                                                                    required="required" title="Please enter your device serial number first" maxlength="15">
-                                                                <label for="serialNumber">Device Serial Number <span class="star">*</span></label>
+                                                                    title="Please enter your device serial number first" maxlength="15">
+                                                                <label for="serialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
                                                             
-                                                              <div class="col s12 m6"><label for="singleDeviceUnblock">Category
+                                                              <div class="col s12 m6"><label for="singleDeviceUnblock"><spring:message code="operator.category" />
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="singleDeviceUnblock"  required="required" >
-                                                            <option value="" disabled selected>Select Category
+                                                            <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
                                                           
                                                         </select>
                                                     </div>
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="unbockSingleRemark" required="required" class="materialize-textarea"></textarea>
-                                                                <label for="Remark">Remark <span class="star">*</span></label>
+                                                                <textarea id="unbockSingleRemark" required="required" class="materialize-textarea" maxlength="200"></textarea>
+                                                                <label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
-                                                            
+                                                           
                                                         <div class="row input_fields_wrap">
                                                         <div class="col s12 m12">
                                                         <div class="col s12 m6">
-<p style="margin-top: 3px; margin-bottom: 5px;">BlockingType</p>
+<p style="margin-top: 3px; margin-bottom: 5px;"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
 onclick="document.getElementById('calender').style.display = 'none';"
-name="stolenBlockPeriod" checked> Immediate
+name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
 </label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
 value="Default"
 onclick="document.getElementById('calender').style.display = 'none';"
-name="stolenBlockPeriod"> Default
+name="stolenBlockPeriod"><spring:message code="operator.default" />
 </label> <label> <input type="radio" value="tilldate" class="blocktypeRadio"
 onclick="document.getElementById('calender').style.display = 'block';"
-name="stolenBlockPeriod"> Later
+name="stolenBlockPeriod"><spring:message code="operator.later" />
 </label>
 <div class="col s6 m2 responsiveDiv"
 style="display: none; width: 30%; float: right; margin-right: 30%; margin-top: -15px;" id="calender">
@@ -174,39 +176,37 @@ style="margin-top: -9px" /> <span class="input-group-addon"
 style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
-
 </div>
                                                         </div>
                                                             <div class="col s12 m12">
-                                                                <p style="margin-bottom: 0;">IMEI/MEID/ESN</p>
+                                                                <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /> </p>
                                                             </div>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI1" required="required" name="IMEI1" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="IMEI1">1 <span class="star">*</span></label>
+                                                                <label for="IMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
-                                                                <label for="IMEI2">2</label>
+                                                                <label for="IMEI2"><spring:message code="title.two" /></label>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="IMEI3">3</label>
+                                                                <label for="IMEI3"><spring:message code="title.three" /></label>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                     title="Please enter minimum 15 and maximum 16 digit only"
                                                                     maxlength="16">
-                                                                <label for="IMEI4">4</label>
+                                                                <label for="IMEI4"><spring:message code="title.four" /></label>
                                                             </div>
-                                                        	
-                                                        	<div class="col s12 m12"><span> Required Field are marked with <span class="star">*</span></span></div>
+                                                        	<div class="col s12 m12"><span><spring:message code="input.requiredfields" /> <span class="star">*</span></span></div>
                                                          </div>
                                                         </div>
                                                         
@@ -216,18 +216,19 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn" id="singleUnblockSubmitButton" type="submit">Submit</button>
-                                                        <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;">Cancel</a>
-                                                    </div>
+                                                      <button class="btn" id="singleUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
+                                                        <a href="./blockUnblockDevices" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                 
+                                                                 </div>
                                                 </form>
                                             </div>
                                             <div id="multipleImeiUnBlock" class="col s12" style="display: none">
                                              <form action="" id="multipleImeiUnBlockform" onsubmit="return submitUnBlockImei()" method="POST" enctype="multipart/form-data">
                                                     
-                                                     <div class="col s12 m6"><label for="bulkBlockdeviceCategory">Category
-                                                            <span class="star">*</span></label>
+                                                     <div class="col s12 m6"><label for="bulkBlockdeviceCategory"><spring:message code="operator.category" />
+                                                            <span class="star"> *</span></label>
                                                         <select class="browser-default" id="bulkunBlockdeviceCategory"  required="required" >
-                                                            <option value="" disabled selected>Select Category
+                                                            <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
                                                           
                                                         </select>
@@ -235,12 +236,12 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     <div class="input-field col s12 m6 " style="margin-top: 22px;">
                                                         <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,9}" title="Please enter  numbers upto 9 characters only"
                                                          maxlength="16" required="required">
-                                                        <label for="unblockbulkquantity">Quantity <span class="star">*</span></label>
+                                                        <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
                                                     
                                                     <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
-                                                        <p style="color: #000;">Upload Bulk Devices <span class="star">*</span></p>
+                                                        <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>
                                                         <div class="btn">
                                                             <span>File</span>
                                                             <input type="file" id="unblockBulkFile" required="required">
@@ -251,17 +252,18 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" required="required"></textarea>
-                                                        <label for="unblockbulkRemark">Remark <span class="star">*</span></label>
+                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" maxlength="200" required="required"></textarea>
+                                                        <label for="unblockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
                                                     
-                                                    <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7">Download Sample Format</a></p>
-                                                    <span style="margin-left: 5px;"> Required Field are marked with <span class="star">*</span></span>
-
+                                                <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
+                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /> <span class="star"> *</span></span>
+                                                
                                                    <div class="input-field col s12 center">
-                                                        <button class="btn " id="bulkUnblockSubmitButton" type="submit">Submit</button>
-                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;">Cancel</a>
-                                                    </div>
+                                                <button class="btn " id="bulkUnblockSubmitButton" type="submit"><spring:message code="button.submit" /></button>
+                                                        <a href="./stolenRecovery" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                                    
+                                                           </div>
                                                 </form>
                                             </div>
                                         </div>
@@ -276,14 +278,14 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 
 
     <div id="markAsUnblock" class="modal">
-            <h6 class="modal-header">Mark As Unblock</h6>
+            <h6 class="modal-header"><spring:message code="operator.markunblock" /></h6>
         <div class="modal-content">
          <div class="row">
-                <h6>This device has been marked as unblock.The Transaction ID for future reference is : <span id="txnIdblocksingleDevice"></span></h6>
+                <h6><spring:message code="operator.markedwith" /> <span id="txnIdblocksingleDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./stolenRecovery" class="btn">ok</a>
+                    <a href="./stolenRecovery" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -291,14 +293,14 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
     
     
     <div id="markBulkAsUnblock" class="modal">
-        <h6 class="modal-header">Mark As Unblock</h6>
+        <h6 class="modal-header"><spring:message code="operator.markunblock" /></h6>
         <div class="modal-content">
          <div class="row">
-                <h6>This file has been marked as unblock. The Transaction ID for future reference is : <span id="txnIdUnblocksingleDevice"></span></h6>
+                <h6><spring:message code="operator.markedwith" /> <span id="txnIdUnblocksingleDevice"></span></h6>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./stolenRecovery" class="btn">ok</a>
+                    <a href="./stolenRecovery" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -337,8 +339,65 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 		src="${context}/resources/project_js/reportBlock.js"></script>
 
 
-		<script type="text/javascript">
+<!-- i18n library -->
+<script type="text/javascript"
+src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+src="${context}/resources/project_js/backbutton.js"></script>
+<script type="text/javascript"
+src="${context}/resources/project_js/dragableModal.js"></script>	
+<script type="text/javascript"
+src="${context}/resources/project_js/enterKey.js"></script>
+
+
+
+		<script type="text/javascript">
+		window.parent.$('#langlist').on('change', function() {
+			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+			
+			window.location.assign("openBlockUnblockPage?pageType=block&lang="+lang);
+		}); 
+		
+		var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+		$.i18n().locale = langParam;
+		var successMsg;
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		} ).done( function() { 
+		//	successMsg=$.i18n('successMsg');
+		});
+
+		
+		
 		$(document).ready(function () {
 			
 			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
@@ -381,6 +440,11 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 					}
 				});
 		});
+		
+		
+		 $('#stolenDatePeriodUnblock').datepicker({
+	        	dateFormat: "yy-mm-dd"
+	        	});
 		</script>
 
 </body>

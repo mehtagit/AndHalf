@@ -97,7 +97,11 @@ function login(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				window.location.href="./importerDashboard";
+				window.location.href="./importerDashboard?lang="+resp.userLanguage;
+			}
+			else if(resp.statusCode=='401'){
+				$("#userId").val(resp.userId);
+				$('#changePassword').openModal();
 			}
 			else{
 				$("#errorMsg").text(resp.response);
@@ -133,3 +137,49 @@ function dataByTag(tag,divId,input){
 		}
 	});
 }
+
+
+
+
+function changeExpiryPassword(){
+	$("#changePassBtn").prop('disabled', true);
+	var obj="";
+	$("#changePassword").each(function(key, val){
+		val = $(this);
+		if(val.html() !== "") {
+			obj =  
+			{  
+					oldPassword:val.find('#oldPassword').val(),
+					password:val.find('#password').val(),
+					confirmPassword: val.find('#confirm_password').val(),
+					userid:val.find("#userId").val()
+			}    
+		}
+	});
+	$.ajax({
+		type : 'POST',
+		url : contextpath + '/changeExpirePassword',
+		data : JSON.stringify(obj),
+		contentType : "application/json",
+		dataType : 'html', 
+		success : function(data) {
+			var resp=JSON.parse(data);
+			if(resp.statusCode=='200'){
+				$("#changePasswordMessage #cPassSucessMsg").text(resp.response);
+				$("#changePasswordMessage").openModal();   
+			}
+			else{
+				$("#changePassword #errorMsg").text(resp.response);
+			}
+			$("#changePassBtn").prop('disabled', false);
+		},  
+		error: function (xhr, ajaxOptions, thrownError) {
+			$("#changePassBtn").prop('disabled', false);
+		} 
+
+	});
+	return false;
+}
+
+
+

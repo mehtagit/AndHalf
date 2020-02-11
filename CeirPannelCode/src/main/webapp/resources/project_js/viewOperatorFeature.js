@@ -2,11 +2,28 @@ var cierRoletype = sessionStorage.getItem("cierRoletype");
 var roleType = $("body").attr("data-roleType");
 var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-selected-roleType"); 
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
+/*window.parent.$('#langlist').on('change', function() {
+	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type_val = url.searchParams.get("type"); 
+	window.location.assign("./greyList?type="+type_val+"&lang="+lang);				
+}); */
+
+$.i18n().locale = lang;	
+
+$.i18n().load( {
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() { 
+});
 
 
 $(document).ready(function(){
-	operatorDatatable();
-	pagetitle();
+	operatorDatatable(lang);
+	pagetitle(lang);
 	
 });
 
@@ -22,7 +39,7 @@ if(window.location.search == "?type=greyList"){
 
 //**************************************************Registration table**********************************************
 
-function operatorDatatable(){
+function operatorDatatable(lang){
 
 	var fileType = $("#fileType").val();
 	var filterRequest={
@@ -35,8 +52,12 @@ function operatorDatatable(){
 			"fileType" : parseInt(fileType)
 		}
 	
+		if(lang=='km'){
+				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			}
+
 	$.ajax({
-		url: 'headers?type=greyBlackList',
+		url: 'headers?type=greyBlackList&lang='+lang,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -50,6 +71,9 @@ function operatorDatatable(){
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
+				"oLanguage": {  
+							"sUrl": langFile  
+						},
 				ajax: {
 					url : 'operatorData',
 					type: 'POST',
@@ -77,12 +101,12 @@ function operatorDatatable(){
 	});
 }
 
-function pagetitle(){
-	if(window.location.search == "?type=greyList"){
-			pageRendering("operator/pageRendering?featureType=greyList")
-	}else if(window.location.search == "?type=blackList"){
-			pageRendering("operator/pageRendering?featureType=blackList")
-	}
+function pagetitle(lang){
+var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+pageRendering("operator/pageRendering?featureType="+type+"&lang="+lang);
+	
 }
 
 
@@ -104,15 +128,16 @@ function pageRendering(URL){
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-				$("#operatorTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
-						"<div id='enddatepicker' class='input-group date'>"+
-						"<label for='TotalPrice'>"+date[i].title
-						+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
-						"<span	class='input-group-addon' style='color: #ff4081'>"+
-						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-				}
+				$("#operatorTableDiv").append("<div class='input-field col s6 m2'>"+
+									"<div id='enddatepicker' class='input-group'>"+
+									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+									"<label for="+date[i].id+">"+date[i].title
+									+"</label>"+
+									"<span	class='input-group-addon' style='color: #ff4081'>"+
+									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+		}
 				else if(date[i].type === "select"){
-					$("#operatorTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='15' /><label for='TransactionID' class='center-align'>"+date[i].title+"</label></div>");
+					$("#operatorTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 					
 				}
 				
@@ -122,22 +147,22 @@ function pageRendering(URL){
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
-					$("#operatorTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
-							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-							"<span class='caret'>"+"</span>"+
-							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+					$("#operatorTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+								
+									"<div class='select-wrapper select2  initialized'>"+
+									"<span class='caret'>"+"</span>"+
+									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='-1'>"+dropdown[i].title+
-							"</option>"+
-							"</select>"+
-							"</div>"+
-					"</div>");
+									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
+									"<option value='-1'>"+dropdown[i].title+
+									"</option>"+
+									"</select>"+
+									"</div>"+
+							"</div>");
 			}
 			
-			$("#operatorTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#operatorTableDiv").append("<div class='col s12 m4'><a onclick='exportButton()' type='button' class='export-to-excel right'>Export <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#operatorTableDiv").append("<div class=' col s3 m2 l1'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#operatorTableDiv").append("<div class=' col s3 m2 l1'><a onclick='exportButton()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -243,7 +268,7 @@ function exportButton(){
 	var userTypeId= parseInt($("body").attr("data-userTypeID"));
 	var userType=$("body").attr("data-roleType");
 	var serviceDump= window.serviceDump;
-	var fileType= parseInt($("#fileType").val());
+	var fileType= $("#fileType").val();
 
 	
 	var table = $('#operatorLibraryTable').DataTable();

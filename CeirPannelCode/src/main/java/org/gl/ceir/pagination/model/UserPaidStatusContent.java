@@ -32,6 +32,7 @@ public class UserPaidStatusContent {
 	private Long thirdImei;
 	private Long fourthImei;
 	private Object endUserDB;
+	private String origin;
 	public Integer getId() {
 		return id;
 	}
@@ -188,6 +189,12 @@ public class UserPaidStatusContent {
 	public void setEndUserDB(Object endUserDB) {
 		this.endUserDB = endUserDB;
 	}
+	public String getOrigin() {
+		return origin;
+	}
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
 	@Override
 	public String toString() {
 		return "UserPaidStatusContent [id=" + id + ", status=" + status + ", stateInterp=" + stateInterp
@@ -198,10 +205,9 @@ public class UserPaidStatusContent {
 				+ ", country=" + country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId
 				+ ", deviceStatusInterp=" + deviceStatusInterp + ", price=" + price + ", currency=" + currency
 				+ ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei + ", secondImei=" + secondImei
-				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + "]";
+				+ ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", endUserDB=" + endUserDB + ", origin="
+				+ origin + "]";
 	}
-	
-	
-	
+
 	
 }

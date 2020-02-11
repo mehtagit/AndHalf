@@ -3,6 +3,7 @@ import java.util.List;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.ResendOtp;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -20,6 +21,9 @@ public interface UserRegistrationFeignImpl {
   
 	@PostMapping("/userRegistration/getUsertypes")
 	public List<Usertype> userypeList();
+	
+	@PostMapping("/userRegistration/usertypeIdByName/{usertype}")
+	public Usertype userypeDataByName(@PathVariable("usertype")String usertype);
 	                                  
 	@PostMapping("/userRegistration/getSecurityQuestion")
 	public List<SecurityQuestion> securityQuestionList();
@@ -30,8 +34,8 @@ public interface UserRegistrationFeignImpl {
 	@PostMapping("/userRegistration/validate")
 	public HttpResponse  otpValidate(@RequestBody Otp otp);
 	
-	@PostMapping("/userRegistration/resendOtp/{userid}")                                                                                         
-	public HttpResponse otpResend(@PathVariable("userid") Integer userid); 
+	@PostMapping("/userRegistration/resendOtp")                                                                                         
+	public HttpResponse otpResend(@RequestBody ResendOtp otp); 
 	
 	@PostMapping("/userRegistration/getUsertypes")                                                                                         
 	public List<Usertype> userRegistrationDropdown(); 

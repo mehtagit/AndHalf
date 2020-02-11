@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -106,7 +107,7 @@
 	<!-- Modal 2 start   -->
 
 	<div id="viewMessageModel" class="modal">
-		<h6 class="modal-header">View Message Management</h6>
+		<h6 class="modal-header"><spring:message code="registration.viewmessagemanagement" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
@@ -114,21 +115,21 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="viewTag"
 							placeholder="tag" disabled
-							style="height: 28px;"> <label for="tag">Tag</label>
+							style="height: 28px;"> <label for="tag"><spring:message code="registration.tag" /></label>
 					</div>
 
 					
 					
 					<div class="input-field col s12 m6"  style="margin-top: -9px">
 					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
-					<label for="viewValue" class="">Value</label>
+					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
 					<textarea id="description" class="materialize-textarea" style="height: 22px;" readonly="readonly"></textarea>
-					<label for="description" class="">Description</label>
+					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
 
@@ -140,7 +141,7 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
@@ -153,7 +154,7 @@
 	<!-- Modal 3 start   -->
 
 	<div id="editMessageModel" class="modal">
-		<h6 class="modal-header">Edit Message Management</h6>
+		<h6 class="modal-header"><spring:message code="registration.editmessagemanagement" /></h6>
 		<div class="modal-content">
 
 			<div class="row">
@@ -175,20 +176,20 @@
 					
 					<div class="input-field col s12 m6">
 					<textarea id="editValue" class="materialize-textarea" style="height: 22px;" placeholder="" ></textarea>
-					<label for="editValue" class="">Value</label>
+					<label for="editValue" class=""><spring:message code="registration.value" /></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
 					<textarea id="editdescription" class="materialize-textarea" placeholder="" style="height: 22px;" disabled></textarea>
-					<label for="editdescription" class="">Description</label>
+					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
 
 					</div>
 					
 					<div class="input-field col s12 m6">
 					<textarea id="editChannel" class="materialize-textarea" style="height: 22px;" placeholder="Channel" disabled></textarea>
-					<label for="editChannel" class="">Channel</label>
+					<label for="editChannel" class=""><spring:message code="registration.channel" /></label>
 
 					</div>
 					
@@ -199,8 +200,8 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updateMessage()">Update</button>
-					<button class="btn modal-close" style="margin-left: 10px;">Cancel</button>
+					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updateMessage()"><spring:message code="button.update" /></button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
@@ -212,17 +213,17 @@
    		<!-- Modal 3 start   -->
 
 	<div id="confirmedUpdatedMessage" class="modal">
-		<h6 class="modal-header">Update Message Management</h6>
+		<h6 class="modal-header"><spring:message code="registration.updatemessagemanagement" /></h6>
 		<div class="modal-content">
 
 
 
 			<div class="row">
-				<h6 id="sucessMessage">Message updated Successfully</h6>
+				<h6 id="sucessMessage"><spring:message code="registration.messageupdatedsuccessfully" /></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a href="${context}/messageManagement" class="btn">ok</a>
+					<a href="${context}/messageManagement" class="btn"><spring:message code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>

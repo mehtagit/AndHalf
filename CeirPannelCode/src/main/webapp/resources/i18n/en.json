@@ -1,5 +1,5 @@
 {
-"button.export":"Export",
+"Export":"Export",
 "successMsg":"Your form has been successfully submitted. The Transaction ID for future reference is ",
 "rejectedMsg":"The consignment has been marked as rejected.",
 "consignmentApproved":"The consignment has been successfully approved.",
@@ -18,5 +18,9 @@
 "documenttype":"Document Type",
 "selectfile":"Select File",
 "selectDocumentType":"Select Document Type",
-"selectCategory":"Select Category"
+"selectCategory":"Select Category",
+"editBlockDevice":"Edit Block Device",
+"viewBlockDevice":"View Block Device",
+"viewBulkUnblock":"View UnBlock Device",
+"editStolenDevice":"Edit UnBlock Device"
 }

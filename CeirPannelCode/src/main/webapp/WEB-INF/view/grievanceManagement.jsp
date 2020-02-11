@@ -67,12 +67,15 @@ var path="${context}";
   <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  
+
+
  
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-grievanceStatus="${grievanceStatus}" >
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -128,12 +131,13 @@ var path="${context}";
                         <span style="float:right;"></span> -->
                 </div>
                
- 
-               <div class="col s12 m12">
+ <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     <textarea id="replyRemark" class="materialize-textarea" placeholder="" required="required"></textarea>
+                    <input type="text" style="display: none" id="grievanceUserid">
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
-                </div>
+ 
+                 </div>
                <!--   <div class="file-field col s12 m12">
                     <div class="btn"><span>Select File</span><input id="replyFile" type="file" accept=".csv" ></div>
                     <div class="file-path-wrapper"><input class="file-path validate" type="text"
@@ -162,7 +166,7 @@ placeholder="Upload one or more files">
 </div>
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
+<label for="Category"><spring:message code="input.documenttype" /></label>
 <select class="browser-default" id="docTypetag1" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
@@ -180,16 +184,16 @@ placeholder="Upload one or more files">
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
-              <p id="closeTicketCheckbox" style="float: left; display: none;">
+              <p id="closeTicketCheckbox">
                         <label>
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
                             <input type="checkbox" id="closeTicketCheck" />
+                            <span><spring:message code="modal.message.griev.closeticket" /></span>
                         </label>
-                    </p> <br>
+                    </p>
 				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
 			
 
-			<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
+			<p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
 			
                 </div>
                 <div class="col s12 m12 center">
@@ -303,10 +307,12 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/grievanceManagement.js"></script>
-	<script type="text/javascript"
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/grievanceManagement.js"></script>
+		<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 		
 	
 </body>

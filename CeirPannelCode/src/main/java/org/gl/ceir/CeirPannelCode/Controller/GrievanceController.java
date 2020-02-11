@@ -56,15 +56,24 @@ public class GrievanceController {
 	GenricResponse response = new GenricResponse();
 	
 	@RequestMapping(value=
-		{"grievanceManagement"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
+		{"grievanceManagement"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
 			)
-	    public ModelAndView viewGrievance(HttpSession session) {
+	    public ModelAndView viewGrievance(HttpSession session,@RequestParam(name="txnID",required = false) String txnID) {
 		ModelAndView mv = new ModelAndView();
-		 
 		log.info(" view Grievance entry point."); 
-	    mv.setViewName("grievanceManagement");
-		log.info(" view Grievance exit point."); 
+		
+		if(session.getAttribute("")!=null)
+		{
+			log.info(" user type is not blank"); 
+			mv.setViewName("grievanceManagement");
+			log.info(" view Grievance exit point."); 
+		}
+		else {
+			log.info(" user type isblank");
+			mv.setViewName("grievanceManagement");
+			log.info(" view Grievance exit point."); 
+		}
+	    
 		return mv; 
 	}
 	
@@ -170,6 +179,19 @@ public class GrievanceController {
 			return grievanceModel;
 	}
 		
+		//***************************************** end  view Grievance controller *********************************
+				@RequestMapping(value="/endUserViewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+				public @ResponseBody List<GrievanceModel> EndUserviewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,@RequestParam(name="userId") Integer userId )
+				{
+					log.info("entery point in end user view grievance.");
+		/* int userId= (int) session.getAttribute("userid"); */
+					List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
+					log.info("Request pass to the end view grievance api ="+grievanceId+"  userId= "+userId);
+					grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
+					log.info("Response from  end view grievance api = "+grievanceModel);
+					return grievanceModel;
+			}
+		
 		
 		
 		//***************************************** view Grievance controller *********************************
@@ -179,16 +201,18 @@ public class GrievanceController {
 				
 
 				//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
-					int userId= (int) session.getAttribute("userid"); 
-					String roletype=(String) session.getAttribute("usertype");
-				    log.info("userid=="+userId+" roletype="+roletype);
-				    
+	
+					//int userId= (int) session.getAttribute("userid"); 
+		/*
+		 * String roletype=(String) session.getAttribute("usertype");
+		 * log.info("+ roletype="+roletype);
+		 */ 
 				    String grievanceDetails=request.getParameter("multirequest");
 					log.info("grievanceDetails------"+grievanceDetails);
 					Gson gson= new Gson(); 	
 					GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
-					grievanceRequest.setUserId(userId);
-					grievanceRequest.setUserType(roletype);
+					//grievanceRequest.setUserId(userId);
+					//grievanceRequest.setUserType(roletype);
 					int i=0;
 					for( MultipartFile file : fileUpload) {
 						String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
@@ -236,6 +260,70 @@ public class GrievanceController {
 				return response;
 			}
 
+				
+
+				//***************************************** view Grievance controller *********************************
+						@RequestMapping(value="/saveEndUserGrievanceReply",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
+						public @ResponseBody GenricResponse saveEndUserGrievanceReply(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session)
+						{
+						
+
+						//	log.info("grievanceId=="+grievanceId+ " remark ="+remark+" txnId="+txnId+" file name=="+file.getOriginalFilename());
+							//int userId= (int) session.getAttribute("userid"); 
+							String roletype="End User";
+						    log.info("+ roletype="+roletype);
+						    String grievanceDetails=request.getParameter("multirequest");
+							log.info("grievanceDetails------"+grievanceDetails);
+							Gson gson= new Gson(); 	
+							GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+							//grievanceRequest.setUserId(userId);
+							grievanceRequest.setUserType(roletype);
+							int i=0;
+							for( MultipartFile file : fileUpload) {
+								String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
+							try {
+								if(fileUpload==null)
+								{
+									grievanceRequest.getAttachedFiles().get(i).setFileName("");
+								}
+								else {
+								byte[] bytes = file.getBytes();
+								String rootPath = filePathforUploadFile+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
+								File dir = new File(rootPath + File.separator);
+
+								if (!dir.exists()) 
+									dir.mkdirs();
+								// Create the file on server
+								// Calendar now = Calendar.getInstance();
+
+								File serverFile = new File(rootPath+file.getOriginalFilename());
+								log.info("uploaded file path on server" + serverFile);
+								BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+								stream.write(bytes);
+								stream.close();
+								}
+								
+								
+							}
+							catch (Exception e) {
+								// TODO: handle exception
+								e.printStackTrace();
+							}
+							i++;
+							}
+				/*
+				 * grievanceModel.setTxnId(txnId); grievanceModel.setReply(remark);
+				 * grievanceModel.setGrievanceId(grievanceId); grievanceModel.setUserId(userId);
+				 * grievanceModel.setUserType(roletype);
+				 * grievanceModel.setGrievanceStatus(grievanceTicketStatus);
+				 */
+						
+						log.info("request passed to the save grievance method="+grievanceRequest);
+						response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
+						log.info("response  from   save grievance method="+response);	
+						response.setTxnId(grievanceRequest.getGrievanceId());
+						return response;
+					}
 				//***************************************** Export Grievance controller *********************************
 						@RequestMapping(value="/exportGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 						public String exportToExcel(@RequestParam(name="grievanceStartDate",required = false) String grievanceStartDate,@RequestParam(name="grievanceEndDate",required = false) String grievanceEndDate,
@@ -257,6 +345,7 @@ public class GrievanceController {
 							filterRequest.setUserId(userId);
 							filterRequest.setUserType(userType);
 							filterRequest.setUserTypeId(usertypeId);
+							filterRequest.setFeatureId(6);
 							log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 						Object	response= grievanceFeignClient.grievanceFilter(filterRequest,pageNo,pageSize,file);
 						
@@ -268,16 +357,91 @@ public class GrievanceController {
 							return "redirect:"+fileExportResponse.getUrl();
 					}
 
-						@RequestMapping(value={"/openEndUserGrievancePage"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-						    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
-						{
-							ModelAndView mv = new ModelAndView();
-							 
-							log.info(" view End user Grievance entry point."+reportType); 
-						    mv.setViewName("openEndUserGrievancePage");
-							log.info(" view End user Grievance exit point."); 
-							return mv; 
+						@RequestMapping(value={"/raiseAgrievance"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+					    public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
+					{
+						ModelAndView mv = new ModelAndView();
+						log.info(" view End user Grievance entry point."+reportType);
+						mv.addObject("reportType", reportType);
+					    mv.setViewName("openEndUserGrievancePage");
+						log.info(" view End user Grievance exit point."); 
+						return mv; 
+					}
+
+
+					@RequestMapping(value= {"/saveEndUserGrievance"},method= RequestMethod.POST,consumes = "multipart/form-data") 
+					public @ResponseBody GenricResponse saveEndUserGrievance(@RequestParam(name="files[]") MultipartFile[] fileUpload,HttpServletRequest request,HttpSession session) {
+
+
+						//int userId= (int) session.getAttribute("userid");
+					//	String roletype=(String) session.getAttribute("usertype");
+
+						String grevnceId=utildownload.getTxnId();
+						grevnceId = "G"+grevnceId;
+						Gson gson= new Gson(); 
+						String grievanceDetails=request.getParameter("multirequest");
+						log.info("grievanceDetails------"+grievanceDetails);
+
+						GrievanceModel grievanceRequest  = gson.fromJson(grievanceDetails, GrievanceModel.class);
+						//grievanceRequest.setUserId(userId);
+						grievanceRequest.setUserType("End User");
+						grievanceRequest.setGrievanceId(grevnceId);
+
+						for (int i=0;i<grievanceRequest.getAttachedFiles().size();i++) {
+							grievanceRequest.getAttachedFiles().get(i).setGrievanceId(grevnceId);
+							//grievanceRequest.getMultifile().get(i).getDocType();
 						}
+
+						log.info("Random  genrated transaction number ="+grevnceId);
+						int i=0;
+						for( MultipartFile file : fileUpload) {
+
+							log.info("-----"+ file.getOriginalFilename());
+							log.info("++++"+ file);
+						
+							String tagName=grievanceRequest.getAttachedFiles().get(i).getDocType();
+							log.info("doctype Name==="+tagName+"value of index="+i);
+							
+
+							try {
+								byte[] bytes =
+										file.getBytes(); String rootPath = filePathforUploadFile+grevnceId+"/"+tagName+"/"; 
+										File dir =   new File(rootPath + File.separator);
+										if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+										File serverFile = new File(rootPath+file.getOriginalFilename());
+										log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+										stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+										stream.write(bytes); stream.close(); 
+										//  grievanceRequest.setFileName(file.getOriginalFilename());
+
+							}
+							catch (Exception e) { //
+								// TODO: handle exception e.printStackTrace(); }
+
+								// set reaquest parameters into model class
+
+							}
+							i++;
+
+
+						}
+						/*
+						 * grievance.setCategoryId(categoryId); grievance.setRemarks(remarks);
+						 * grievance.setTxnId(txnId);
+						 */
+						/*
+						 * grievance.setUserId(userId); grievance.setUserType(roletype);
+						 * grievance.setGrievanceId(grevnceId);
+						 * 
+						 */
+						log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
+						 response = grievanceFeignClient.saveEndUserGrievance(grievanceRequest);
+						 response.setTxnId(grevnceId);
+
+						 log.info("response from save grievance api"+response);
+						 log.info("save grievance  exit point.");
+						 return response;
+					}
 
 }
 

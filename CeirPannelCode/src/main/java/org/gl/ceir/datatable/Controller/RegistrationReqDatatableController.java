@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -34,6 +35,8 @@ import com.google.gson.Gson;
 public class RegistrationReqDatatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
+	@Autowired
+	Translator Translator;
 	@Autowired
 	DatatableResponseModel datatableResponseModel;
 	@Autowired
@@ -69,6 +72,7 @@ public class RegistrationReqDatatableController {
 		
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		
 		
@@ -77,33 +81,34 @@ public class RegistrationReqDatatableController {
 			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
-			log.info("convert to JSON-------");
+			
 			String apiResponse = gson.toJson(response);
-			log.info("convert to apiResponse-----" +apiResponse);
+		
 			registrationpaginationmodel = gson.fromJson(apiResponse, RegistrationPaginationModel.class);
-			log.info("after to registrationpaginationmodel-----");
+			
 			List<RegistrationContentModel> paginationContentList = registrationpaginationmodel.getContent();
-			log.info("after to paginationContentList--------");
+			
 			if(paginationContentList.isEmpty()) {
-				log.info("inside if------------------------");
+				
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else {
-				log.info("inside else------------------------");
-				for(RegistrationContentModel dataInsideList : paginationContentList) 
+			for(RegistrationContentModel dataInsideList : paginationContentList) 
 				{
 				   String createdOn = (String) dataInsideList.getUser().getCreatedOn();
+				   String modifiedOn = (String) dataInsideList.getUser().getModifiedOn();
 				   String Id =   String.valueOf(dataInsideList.getUser().getId());
 				   String username =  dataInsideList.getUser().getUsername();
 				   String id =  String.valueOf(dataInsideList.getId());
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
-				   String userStatus = (String) session.getAttribute("userStatus");
+				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id);			   
-				   Object[] finalData={createdOn,username,type,roles,StatusName,action}; 
-					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
+				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username);			   
+				   Object[] finalData={createdOn,modifiedOn,username,type,roles,StatusName,action}; 
+
+				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
 					
@@ -134,7 +139,7 @@ public class RegistrationReqDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("Registration Request");
+		pageElement.setPageTitle(Translator.toLocale("table.RegistrationRequest"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -143,7 +148,7 @@ public class RegistrationReqDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", "filter","registrationDatatable()","submitFilter"};
+			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable()","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -158,7 +163,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//Dropdown items			
-			String[] selectParam= {"select","As Type ","asType","","select","Role","role","","select","Status","recentStatus",""};
+			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("table.Role"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -173,7 +178,7 @@ public class RegistrationReqDatatableController {
 			pageElement.setDropdownList(dropdownList);
 			
 			//input type date list		
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","", "text","Transaction ID","transactionID","","text","Grievance ID","grievanceID","" };
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","", "text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.grievID"),"grievanceID","" };
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

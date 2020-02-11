@@ -60,12 +60,13 @@ public class Stock {
 	
 	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
-	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId ) {
+	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId,@RequestParam(name="selectedRoleTypeId",required=false) Integer selectedRoleTypeId 
+			,@RequestParam(name="txnID",required = false) String txnID) {
 ModelAndView mv = new ModelAndView();
 
 
 
-log.info("stock page entry point."); 
+log.info("stock page entry point."+selectedRoleTypeId); 
 if(selectedUserTypeId==null)
 {
 List<Usertype> userTypelist=(List<Usertype>) session.getAttribute("usertypeList");
@@ -81,12 +82,14 @@ else if(userTypelist.size()==1)
 {
 
 session.setAttribute("selectedUserTypeId", session.getAttribute("usertype"));
+session.setAttribute("selectedRoleTypeId", session.getAttribute("usertypeId"));
 mv.setViewName("ViewStock");
 }
 }
 else {
 	
 	session.setAttribute("selectedUserTypeId", selectedUserTypeId);
+	session.setAttribute("selectedRoleTypeId", selectedRoleTypeId);
 	mv.setViewName("ViewStock");
 
 }
@@ -374,6 +377,7 @@ else {
 		filterRequest.setRoleType(roleType);
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(userTypeId);
+		filterRequest.setFeatureId(4);
 		
 		
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
@@ -389,7 +393,7 @@ else {
 
 	
 	
-	@RequestMapping(value={"/openEndUserStockPage"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
+	@RequestMapping(value={"/uploadAstock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
     public  ModelAndView openEndUserGrievancePage(@RequestParam(name="reportType") Integer reportType) 
 {
 	ModelAndView mv = new ModelAndView();
@@ -456,7 +460,7 @@ else {
 	
 
 	// *********************************************** open register page or edit popup ******************************
-		@RequestMapping(value="/openEndUserStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
+		@RequestMapping(value="/fetchUploadAstock",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
 		public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId)
 		{
 			log.info("entry point of  fetch end user stock in the bases of transaction id .");
@@ -464,6 +468,7 @@ else {
 			StockUploadModel stockUploadModelResponse;
 			stockUploadModel.setTxnId(txnId);
 			log.info("response from fetch stock api="+stockUploadModel);
+			stockUploadModel.setUserType("End User");
 				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
 				log.info("response from fetch stock api="+stockUploadModelResponse);
 				log.info("exit point of  fetch stock api.");
@@ -472,14 +477,14 @@ else {
 			
 		}
 
-		@RequestMapping(value= {"/updateEndUserUploadedStock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+		@RequestMapping(value= {"/updateUploadedAstock"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
 		public @ResponseBody GenricResponse updateEndUserUploadedStock(@RequestParam(name="file") MultipartFile file,@RequestParam(name="txnId",required = false) String txnId) {
 		log.info("entry point in end user update Stock * *.");
 		StockUploadModel stockUpload= new StockUploadModel();
 
 
 		GenricResponse response= new GenricResponse();
-	
+		stockUpload.setUserType("End User");
 		
 		try {
 			log.info("file is not blank");

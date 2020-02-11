@@ -93,5 +93,9 @@ public interface GrievanceFeignClient {
 	public List<SingleImeiDetailsModel> fetchSingleDevicebyTxnId(@RequestParam("txnId") String txnId );
 
 
+	// ******************************************** save 	grievance api ********************************************************************************
+		@RequestMapping(value="/grievance/endUserSave" ,method=RequestMethod.POST) 
+		public GenricResponse saveEndUserGrievance(@RequestBody GrievanceModel greGrievanceModel) ;
+
 
 }

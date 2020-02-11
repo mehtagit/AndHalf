@@ -1,7 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Model;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class Registration {
+public class Registration extends UserHeader{
 	private long id;
 	private String firstName;
 	private String middleName;
@@ -16,7 +17,7 @@ public class Registration {
 	private String locality;
 	private String district;
 	private String commune;
-	private Integer postalCode;
+	private String postalCode;
 	private String province;
 	private String country; 
 	private Integer type;
@@ -29,7 +30,7 @@ public class Registration {
 	private String username;
 	private Long[] roles;
 	private String captcha;
-	private long usertypeId;
+	private String usertypeName;
 	private String employeeId;
 	private String natureOfEmployment;
 	private String designation;
@@ -44,31 +45,17 @@ public class Registration {
 	private Integer arrivalPort;
 	private String arrivalPortName;
     private String vatFilename;
-	public Registration() {};
-	public ArrayList<QuestionPair> getQuestionList() {
-		return questionList;
+    private String userLanguage;
+    private String nidFilePath;
+    private String photoFilePath;
+    private String idCardFilePath;
+    private String vatFilePath;
+	public long getId() {
+		return id;
 	}
-	public void setQuestionList(ArrayList<QuestionPair> questionList) {
-		this.questionList = questionList;
+	public void setId(long id) {
+		this.id = id;
 	}
-
-	/*
-	 * public class QuestionPair{ private Integer question; private String answer;
-	 * public QuestionPair(){};
-	 * 
-	 * public Integer getQuestion() { return question; }
-	 * 
-	 * public void setQuestion(Integer question) { this.question = question; }
-	 * 
-	 * public String getAnswer() { return answer; }
-	 * 
-	 * public void setAnswer(String answer) { this.answer = answer; }
-	 * 
-	 * @Override public String toString() { return "QuestionPair [question=" +
-	 * question + ", answer=" + answer + "]"; }
-	 * 
-	 * }
-	 */
 	public String getFirstName() {
 		return firstName;
 	}
@@ -87,11 +74,83 @@ public class Registration {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	public String getPassportNo() {
+		return passportNo;
+	}
+	public void setPassportNo(String passportNo) {
+		this.passportNo = passportNo;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPhoneNo() {
+		return phoneNo;
+	}
+	public void setPhoneNo(String phoneNo) {
+		this.phoneNo = phoneNo;
+	}
 	public String getCompanyName() {
 		return companyName;
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
+	}
+	public String getPropertyLocation() {
+		return propertyLocation;
+	}
+	public void setPropertyLocation(String propertyLocation) {
+		this.propertyLocation = propertyLocation;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
+	public String getLocality() {
+		return locality;
+	}
+	public void setLocality(String locality) {
+		this.locality = locality;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+	public String getPostalCode() {
+		return postalCode;
+	}
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	public Integer getType() {
 		return type;
@@ -117,62 +176,17 @@ public class Registration {
 	public void setVatNo(String vatNo) {
 		this.vatNo = vatNo;
 	}
-	public String getPropertyLocation() {
-		return propertyLocation;
+	public ArrayList<QuestionPair> getQuestionList() {
+		return questionList;
 	}
-	public void setPropertyLocation(String propertyLocation) {
-		this.propertyLocation = propertyLocation;
+	public void setQuestionList(ArrayList<QuestionPair> questionList) {
+		this.questionList = questionList;
 	}
-	public String getStreet() {
-		return street;
-	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	public String getLocality() {
-		return locality;
-	}
-	public void setLocality(String locality) {
-		this.locality = locality;
-	}
-	public String getProvince() {
-		return province;
-	}
-	public void setProvince(String province) {
-		this.province = province;
-	}
-	public String getCountry() {
-		return country;
-	}
-	public void setCountry(String country) {
-		this.country = country;
-	}
-	public String getPassportNo() {
-		return passportNo;
-	}
-	public void setPassportNo(String passportNo) {
-		this.passportNo = passportNo;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-
-	public Long[] getRoles() {
-		return roles;
-	}
-	public void setRoles(Long[] roles) {
-		this.roles = roles;
 	}
 	public String getRePassword() {
 		return rePassword;
@@ -180,18 +194,17 @@ public class Registration {
 	public void setRePassword(String rePassword) {
 		this.rePassword = rePassword;
 	}
-	public String getPhoneNo() {
-		return phoneNo;
-	}
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
-
 	public String getUsername() {
 		return username;
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public Long[] getRoles() {
+		return roles;
+	}
+	public void setRoles(Long[] roles) {
+		this.roles = roles;
 	}
 	public String getCaptcha() {
 		return captcha;
@@ -199,11 +212,11 @@ public class Registration {
 	public void setCaptcha(String captcha) {
 		this.captcha = captcha;
 	}
-	public long getId() {
-		return id;
+	public String getUsertypeName() {
+		return usertypeName;
 	}
-	public void setId(long id) {
-		this.id = id;
+	public void setUsertypeName(String usertypeName) {
+		this.usertypeName = usertypeName;
 	}
 	public String getEmployeeId() {
 		return employeeId;
@@ -241,8 +254,6 @@ public class Registration {
 	public void setAuthorityPhoneNo(String authorityPhoneNo) {
 		this.authorityPhoneNo = authorityPhoneNo;
 	}
-	
-
 	public String getOperatorTypeName() {
 		return operatorTypeName;
 	}
@@ -255,13 +266,6 @@ public class Registration {
 	public void setOperatorTypeId(Integer operatorTypeId) {
 		this.operatorTypeId = operatorTypeId;
 	}
-	public long getUsertypeId() {
-		return usertypeId;
-	}
-	public void setUsertypeId(long usertypeId) {
-		this.usertypeId = usertypeId;
-	}
-
 	public String getNidFilename() {
 		return nidFilename;
 	}
@@ -279,31 +283,6 @@ public class Registration {
 	}
 	public void setIdCardFilename(String idCardFilename) {
 		this.idCardFilename = idCardFilename;
-	}
-	
-	public String getVillage() {
-		return village;
-	}
-	public void setVillage(String village) {
-		this.village = village;
-	}
-	public String getDistrict() {
-		return district;
-	}
-	public void setDistrict(String district) {
-		this.district = district;
-	}
-	public String getCommune() {
-		return commune;
-	}
-	public void setCommune(String commune) {
-		this.commune = commune;
-	}
-	public Integer getPostalCode() {
-		return postalCode;
-	}
-	public void setPostalCode(Integer postalCode) {
-		this.postalCode = postalCode;
 	}
 	public Integer getArrivalPort() {
 		return arrivalPort;
@@ -323,6 +302,36 @@ public class Registration {
 	public void setVatFilename(String vatFilename) {
 		this.vatFilename = vatFilename;
 	}
+	public String getUserLanguage() {
+		return userLanguage;
+	}
+	public void setUserLanguage(String userLanguage) {
+		this.userLanguage = userLanguage;
+	}
+	public String getNidFilePath() {
+		return nidFilePath;
+	}
+	public void setNidFilePath(String nidFilePath) {
+		this.nidFilePath = nidFilePath;
+	}
+	public String getPhotoFilePath() {
+		return photoFilePath;
+	}
+	public void setPhotoFilePath(String photoFilePath) {
+		this.photoFilePath = photoFilePath;
+	}
+	public String getIdCardFilePath() {
+		return idCardFilePath;
+	}
+	public void setIdCardFilePath(String idCardFilePath) {
+		this.idCardFilePath = idCardFilePath;
+	}
+	public String getVatFilePath() {
+		return vatFilePath;
+	}
+	public void setVatFilePath(String vatFilePath) {
+		this.vatFilePath = vatFilePath;
+	}
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -332,15 +341,19 @@ public class Registration {
 				+ ", postalCode=" + postalCode + ", province=" + province + ", country=" + country + ", type=" + type
 				+ ", asTypeName=" + asTypeName + ", vatStatus=" + vatStatus + ", vatNo=" + vatNo + ", questionList="
 				+ questionList + ", password=" + password + ", rePassword=" + rePassword + ", username=" + username
-				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeId=" + usertypeId + ", employeeId="
+				+ ", roles=" + roles + ", captcha=" + captcha + ", usertypeName=" + usertypeName + ", employeeId="
 				+ employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation=" + designation
 				+ ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail + ", authorityPhoneNo="
 				+ authorityPhoneNo + ", operatorTypeName=" + operatorTypeName + ", operatorTypeId=" + operatorTypeId
 				+ ", nidFilename=" + nidFilename + ", photoFilename=" + photoFilename + ", idCardFilename="
 				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
-				+ ", vatFilename=" + vatFilename + "]";
+				+ ", vatFilename=" + vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath
+				+ ", photoFilePath=" + photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath="
+				+ vatFilePath + "]";
 	}
-	
-
-
+    
+    
+    
+    
+   
 }

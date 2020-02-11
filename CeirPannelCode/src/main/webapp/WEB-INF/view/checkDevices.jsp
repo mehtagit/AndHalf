@@ -18,6 +18,9 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
+        
+     <jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+	<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>   
 
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
@@ -102,24 +105,7 @@
 
 <body>
 
-    <!-- START HEADER -->
-    <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1">CEIR </a> <span
-                                    class="logo-text">Materialize</span></h1>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-    <!-- END HEADER -->
+ 
 
     <!-- START MAIN -->
     <div id="">
@@ -131,49 +117,56 @@
                 <div class="container" style="margin-top: 10vh;">
                     <div class="section">
                         <div class="row card-panel login-card-panel">
-                            <div class="row" id="singleInput">
-                            <h6 class="fixPage-modal-header ">Check Device</h6>
+                          
+                           <form action="" onsubmit="return DeviceDetails()" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="fixPage-modal-header "> <spring:message code="registration.checkdevice" /></h6>
                                 <div class="col s12 m12 l12">
+                                 
+								   
                                    <div class="row">
                                             <div class="input-field col s6 m5">
-                                                <label for="Category">Device ID Type <span class="star">*</span></label>
+                                                <label for="Category"> <spring:message code="select.deviceIDType" /><span class="star">*</span></label>
                                             </div>
                                             <div class="col s6 m7 selectDropdwn">
-                                                <select class="browser-default" id = "deviceIdType">
-                                                    <option value="-1" disabled selected>Select Device ID Type</option>
+                                                <select class="browser-default" id = "deviceIdType" required>
+                                                    <option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
                                            	</select>
                                             </div>
                                             <div class="input-field col s6 m5">
-                                                <label for="DeviceID">Please Enter Device ID <span class="star">*</span>
+                                                <label for="DeviceID"><spring:message code="registration.pleaseenterdeviceid" /> <span class="star">*</span>
                                                     :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <input type="text" id="DeviceID" name="DeviceID"
+                                                <input type="text" id="DeviceID" 
                                                     pattern=[A-Za-z0-9]{3,12}
-                                                    title="Please enter maximum 12 characters only" maxlength="12">
+                                                    title="Please enter maximum 12 characters only" maxlength="12" required>
                                             </div>
                                         </div>
+                                 
                                         <div class="row" style="margin-top: 20px;">
                                             <div class="input-field col s12 center">
                                                 <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                <a class="btn"
-                                                    onclick="DeviceDetails()">Submit</a>
-                                                <a href="./homePage" class="btn" style="margin-left: 10px;">Cancel</a>
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                                <a href="./homePage" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
                                             </div>
 
-
                                         </div>
+                                      
+									
                                     </div>
-                                    </div>
+                                   </div></form>
+                               
                                   <div class="row" id="validDetails" style="display: none;">
-                                        <h6 class="fixPage-modal-header ">Check IMEI Status</h6>
+                                        <h6 class="fixPage-modal-header "><spring:message code="registration.checkimeistatus" /></h6>
                                     <div class="col s12 m12 l12">
 
                                         
-                                            <p style="margin-left: 10px;">The IMEI number <span id ="validImeiNumber"> </span> is
-                                                valid.</p>
+                                            <p style="margin-left: 10px;"><spring:message code="registration.theimeinumber" /> <span id ="validImeiNumber"> </span> is
+                                                <spring:message code="registration.valid" /></p>
                                             <div class="input-field col s6 m4">
-                                                <label for="validTac">TAC Number is :</label>
+                                                <label for="validTac"><spring:message code="registration.tacnumberis" /></label>
                                             </div>
                                             <div class="input-field col s6 m8">
                                                 <input type="text" id="validTac" name="Tac"
@@ -181,7 +174,7 @@
                                             </div>
 
                                             <div class="input-field col s6 m4">
-                                                <label for="validbrandName">Brand Name :</label>
+                                                <label for="validbrandName"><spring:message code="registration.brandname" /></label>
                                             </div>
                                             <div class="input-field col s6 m8">
                                                 <input type="text" id="validbrandName" name="validbrandName" placeholder=""
@@ -189,7 +182,7 @@
                                             </div>
 
                                             <div class="input-field col s6 m4">
-                                                <label for="validModelName">Model Name :</label>
+                                                <label for="validModelName"><spring:message code="registration.modelname" /></label>
                                             </div>
                                             <div class="input-field col s6 m8">
                                                 <input type="text" id="validModelName" name="ModelName"
@@ -199,21 +192,21 @@
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <div class="input-field col s12 center">
-                                                    <a href="./homePage" class="btn" style="width: 100%;">ok</a>
+                                                    <a href="./homePage" class="btn" style="width: 100%;"><spring:message code="modal.ok" /></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                             <div class="row" id="invalidDetails" style="display: none;">
-                                        <h6 class="fixPage-modal-header ">Check IMEI Status</h6>
+                                        <h6 class="fixPage-modal-header "><spring:message code="registration.checkimeistatus" /></h6>
                                     <div class="col s12 m12 l12">
 
                                         
-                                            <p style="margin-left: 10px;">The IMEI number<span id ="InvalidImeiNumber"> </span> is
-                                                Invalid.</p>
+                                            <p style="margin-left: 10px;"><spring:message code="registration.theimeinumber" /><span id ="InvalidImeiNumber"> </span> is
+                                               <spring:message code="registration.invalid" /></p>
                                             <div class="input-field col s6 m4">
-                                                <label for="invalidTac">TAC Number is :</label>
+                                                <label for="invalidTac"><spring:message code="registration.tacnumberis" /></label>
                                             </div>
                                             <div class="input-field col s6 m8">
                                                 <input type="text" id="invalidTac" name="TAC"
@@ -221,7 +214,7 @@
                                             </div>
 
                                             <div class="input-field col s6 m4">
-                                                <label for="invalidRemark">Remark :</label>
+                                                <label for="invalidRemark"> :<spring:message code="input.remarks" /></label>
                                             </div>
                                             <div class="input-field col s6 m8">
                                              	<textarea id="invalidRemark" class="materialize-textarea" style="height: 22px;" placeholder="" disabled></textarea>
@@ -230,7 +223,7 @@
                                         <div class="row">
                                             <div class="input-field col s12 center">
                                                 <div class="input-field col s12 center">
-                                                    <a href="./homePage" class="btn" style="width: 100%;">ok</a>
+                                                    <a href="./homePage" class="btn" style="width: 100%;"><spring:message code="modal.ok" /></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,22 +238,29 @@
 
         </div>
         <!-- END WRAPPER -->
-
-    </div>
+</div>
     <!-- END MAIN -->
 
-
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START FOOTER -->
-    <footer class="page-footer" style="position: fixed; bottom: 0; width: 100%;">
-        <div class="footer-copyright">
-            <div class="container">
-                <span class="right">Copyright © 2018 Sterlite Technologies Ltd, All rights reserved.</span>
+  
+  <div id="errorModal" class="modal">
+         <h6 class="modal-header"><spring:message code="input.CheckDevice" /></h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6 id=""><spring:message code="input.notDeviceId" />
+                </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <!-- <a href="homePage" class="btn">Yes</a> -->
+                        <button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
-    <!-- END FOOTER -->
+    </div>
+
 
 
 
@@ -271,21 +271,21 @@
 
     <div id="submitIMEI" class="modal">
         <div class="modal-content">
-            <h6>Submit IMEI</h6>
+            <h6><spring:message code="registration.submitimei" /></h6>
             <hr>
             <div class="row">
-                <h6>The IMEI number ____________ is valid.
+                <h6><spring:message code="registration.Theimeivalid" />
                 </h6>
                 <form action="">
                     <div class="input-field col s6 m4">
-                        <label for="transactionID">TAC Number is :</label>
+                        <label for="transactionID"><spring:message code="registration.tacnumberis" /></label>
                     </div>
                     <div class="input-field col s6 m8">
                         <input type="text" id="transactionID" name="transactionID" placeholder="TAC12345678" disabled>
                     </div>
 
                     <div class="input-field col s6 m4">
-                        <label for="transactionID">Modal Type :</label>
+                        <label for="transactionID"><spring:message code="registration.modaltype" /></label>
                     </div>
                     <div class="input-field col s6 m8">
                         <input type="text" id="transactionID" name="transactionID" placeholder="ABC Modal" disabled>
@@ -295,7 +295,7 @@
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="index.html" class="btn">ok</a>
+                        <a href="index.html" class="btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -303,7 +303,7 @@
     </div>
     <!-- Submit Modal End -->
 
-  
+
 
 
     <!-- ================================================
@@ -313,7 +313,7 @@
 
 
     <script>
-        function hide() {
+       /*  function hide() {
             var In = $('#DeviceID').val()
             if (In == "black") {
 
@@ -324,7 +324,7 @@
                 $("#inputDetails").css("display", "none");
                 $("#singleInput").css("display", "block");
             }
-        }
+        } */
     </script>
 
     <!-- jQuery Library -->

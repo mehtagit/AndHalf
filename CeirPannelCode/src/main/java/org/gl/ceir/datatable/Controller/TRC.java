@@ -10,11 +10,13 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.interfacepackage.CRUD;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -39,7 +41,8 @@ import com.google.gson.Gson;
 @RestController
 @CrossOrigin
 public class TRC implements CRUD{
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;	
 	@Autowired
@@ -91,7 +94,17 @@ public class TRC implements CRUD{
 			}
 			else {
 				if("CEIRAdmin".equals(userType)){
+					log.info("--------in Admin Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						log.info("inside Trc File Name" +trcContentModelList.getAttachedFiles());
+						String fileName1="";
+						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
+						for(AttachedFile fileList :list)
+						{
+							fileName1= fileList.getFileName();
+							
+						}
+						
 						String createdOn = trcContentModelList.getCreatedOn();
 						String requestedDate = trcContentModelList.getRequestDate();
 						String manufacturerName = trcContentModelList.getManufacturerName();
@@ -100,18 +113,25 @@ public class TRC implements CRUD{
 						String status = trcContentModelList.getStateInterp();
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-						String adminState = (String) trcContentModelList.getAdminStateInterp();
+						String adminState = trcContentModelList.getAdminStateInterp();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName1=(String) trcContentModelList.getFileName();
+					
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.trcAdminManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
+						String action = iconState.trcAdminIcons(status,trcContentModelList.getId(),fileName1,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
 					}
-				}else {
+				}else if("TRC".equals(userType)) {
+					log.info("--------in TRC Controller");
 					for(TrcContentModel trcContentModelList :trcPaginationModel.getContent()) {
+						String FileName="";
+						List<AttachedFile> list = trcContentModelList.getAttachedFiles();
+						for(AttachedFile fileList :list)
+						{
+							FileName= fileList.getFileName();
+						}
 						String createdOn = trcContentModelList.getCreatedOn();
 						String requestedDate = trcContentModelList.getRequestDate();
 						String manufacturerName = trcContentModelList.getManufacturerName();
@@ -121,15 +141,15 @@ public class TRC implements CRUD{
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String txnId= trcContentModelList.getTxnId();
-						String fileName1=(String) trcContentModelList.getFileName();
-						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
+						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--FileName------->"+FileName+"--txnId------>"+txnId);
+						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),FileName,txnId);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
 					}
 				}
+
 				
 		}
 			datatableResponseModel.setRecordsTotal(trcPaginationModel.getNumberOfElements());
@@ -158,7 +178,8 @@ public class TRC implements CRUD{
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle("Manage Type-Approved");
+		
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Manage_Type-Approved"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -167,19 +188,39 @@ public class TRC implements CRUD{
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"HeaderButton","Report Type-Approved Devices","./register-form","btnLink","FilterButton", "filter","typeApprovedDataTable()","submitFilter"};
-			for(int i=0; i< names.length ; i++) {
-				button = new Button();
-				button.setType(names[i]);
-				i++;
-				button.setButtonTitle(names[i]);
-				i++;
-				button.setButtonURL(names[i]);
-				i++;
-				button.setId(names[i]);
-				buttonList.add(button);
-			}			
-			pageElement.setButtonList(buttonList);
+			
+			
+			if("Importer".equals(userType)) {
+				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form-importer","btnLink","FilterButton", Translator.toLocale("button.filter"),"typeApprovedDataTable()","submitFilter"};
+				for(int i=0; i< names.length ; i++) {
+					button = new Button();
+					button.setType(names[i]);
+					i++;
+					button.setButtonTitle(names[i]);
+					i++;
+					button.setButtonURL(names[i]);
+					i++;
+					button.setId(names[i]);
+					buttonList.add(button);
+				}			
+				pageElement.setButtonList(buttonList);
+			}else {
+				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable()","submitFilter"};
+				for(int i=0; i< names.length ; i++) {
+					button = new Button();
+					button.setType(names[i]);
+					i++;
+					button.setButtonTitle(names[i]);
+					i++;
+					button.setButtonURL(names[i]);
+					i++;
+					button.setId(names[i]);
+					buttonList.add(button);
+				}			
+				pageElement.setButtonList(buttonList);
+			}
+			
+	
 			
 			
 			if("CEIRAdmin".equals(userType)) {
@@ -197,7 +238,7 @@ public class TRC implements CRUD{
 					dropdownList.add(inputFields);
 				}
 				pageElement.setDropdownList(dropdownList);
-			}else {
+			}else if("TRC".equals(userType)){
 				//Dropdown items
 				String[] selectParam= {"select","Status ","Status",""};
 				for(int i=0; i< selectParam.length; i++) {
@@ -216,20 +257,23 @@ public class TRC implements CRUD{
 						
 			
 			
+
+		
+				//input type date list		
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
+				for(int i=0; i< dateParam.length; i++) {
+					dateRelatedFields= new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
+					i++;
+					dateRelatedFields.setTitle(dateParam[i]);
+					i++;
+					dateRelatedFields.setId(dateParam[i]);
+					i++;
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields);
+				}
+	
 			
-			//input type date list		
-			String[] dateParam= {"date","Start date","startDate","","date","End date","endDate","","text","Transaction ID","transactionID","","text","TAC","tac",""};
-			for(int i=0; i< dateParam.length; i++) {
-				dateRelatedFields= new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
 			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);

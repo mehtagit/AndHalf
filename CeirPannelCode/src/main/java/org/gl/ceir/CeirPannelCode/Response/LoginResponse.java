@@ -17,7 +17,8 @@ public class LoginResponse {
 	private String status;
 	private String operatorTypeName;
     private Integer operatorTypeId;
-    
+    private String period;
+    private String userLanguage;
     
 	public String getOperatorTypeName() {
 		return operatorTypeName;
@@ -89,11 +90,27 @@ public class LoginResponse {
 		this.primaryRoleId = primaryRoleId;
 	}
 	
+	
+	public String getUserLanguage() {
+		return userLanguage;
+	}
+	public void setUserLanguage(String userLanguage) {
+		this.userLanguage = userLanguage;
+	}
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
 	@Override
 	public String toString() {
 		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
 				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + "]";
+				+ ", operatorTypeId=" + operatorTypeId + ", period=" + period + ", userLanguage=" + userLanguage + "]";
 	}
+	
+	
+	
 }

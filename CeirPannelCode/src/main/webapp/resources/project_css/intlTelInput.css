@@ -138,6 +138,7 @@
   padding-right: 6px;
   padding-left: 52px;
   margin-left: 0;
+  margin-bottom: 5px !important;
 }
 
 .iti--allow-dropdown .iti__flag-container,
@@ -1545,4 +1546,9 @@
 
 .iti__flag.iti__np {
   background-color: transparent;
+}
+p.contact-label {
+margin: 0;
+font-size: 12px;
+margin-top: -3px;
 }

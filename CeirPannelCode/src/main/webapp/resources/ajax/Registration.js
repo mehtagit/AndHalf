@@ -1,31 +1,94 @@
-function openRegistrationPage(){
-	var usertypeDropdown=$("#usertypes option:selected"); 
-	var usertypeDropdownText=usertypeDropdown.text();
-	var usertypeDropdownVal=usertypeDropdown.val(); 
-	if(usertypeDropdownVal=="4"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Importer";
-	}
-	else if(usertypeDropdownVal=="5"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Distributor";
-	}
-	else if(usertypeDropdownVal=="6"){   
-		window.location.href=contextpath+"/registration?usertypeId="+usertypeDropdownVal+"&name=Retailer";
-	}
-	else if(usertypeDropdownVal=="7"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=Custom";
-	}
-	else if(usertypeDropdownVal=="10"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=TRC";
-	}
-	else if(usertypeDropdownVal=="12"){
-		window.location.href=contextpath+"/customRegistration?usertypeId="+usertypeDropdownVal+"&name=Manufacturer";
-	}
+$('#langlist').on('change', function() {
+	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+	window.location.assign("registration?type="+type+"&lang="+window.lang);			
+	}); 
+	
+	var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
+	$.i18n().locale = langParam;
+	var successMsg;
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+		successMsg=$.i18n('successMsg');
+	});
 
-	else if(usertypeDropdownVal=="9"){
-		window.location.href=contextpath+"/operatorRegistration?usertypeId="+usertypeDropdownVal;
-	} 
-	else{
-	}
+	
+	
+        $(document).ready(function () {
+        	var url = new URL( window.location.href);
+    		var langParameter = url.searchParams.get("lang");
+            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
+        	$('.modal-trigger').leanModal({
+        		dismissible: false
+        	});
+        	
+        	asTypeData();       	
+            questionDataByCategory();
+            usertypeData2("${usertypeId}");
+        }); 
+        populateCountries("country",    "state");
+        
+       $("#country").val("Cambodia");
+       
+       populateStates( "country","state" );
+       
+       
+       function validatePassword(){
+           if(password.value != confirm_password.value) {
+             confirm_password.setCustomValidity("Passwords Don't Match");
+           } else {
+             confirm_password.setCustomValidity('');
+           }
+         }
+
+     password.onchange = validatePassword;
+     confirm_password.onkeyup = validatePassword;
+
+      
+        function myFunction() {
+            var x = document.getElementById("type").value;
+            if (x == '0') {
+                document.getElementById("uploadFile").style.display = "block";
+                document.getElementById("passportNumberDiv").style.display = "block";
+                document.getElementById("companyNames").style.display = "none";
+                $("#passportNo").prop('required',true);
+                $("#companyName").prop('required',false);
+                $("#companyName").val("");
+                $("#file").prop('required',true);
+            } else {
+                document.getElementById("uploadFile").style.display = "none";
+                document.getElementById("passportNumberDiv").style.display = "none";
+                document.getElementById("companyNames").style.display = "block";
+                $("#companyName").prop('required',true);
+                $("#passportNo").prop('required',false);
+                $("#passportNo").val("");
+                $("#file").prop('required',false);
+            }
+        }
+       
+        
+        function vatChecked(){
+        	var radioValue = $("input[name='vatStatus']:checked").val();
+        	if(radioValue==1){
+        		$("#vatNo").prop('required',true);
+        		$("#vatFile").prop('required',true);
+        	}
+        	else{
+        		$("#vatNo").prop('required',false);
+        		$("#vatFile").prop('required',false);
+        		$("#vatNo").val("");
+        		$("#vatFile").val("");
+        	}
+		}
+		
+
+
+function openRegistrationPage(usertype){
+	window.location.href=contextpath+"/registration?type="+usertype;
 }
 function portDropDownData(){ 
 	$.ajax({
@@ -72,13 +135,13 @@ function verifyOtp(){
 			if(resp.statusCode=="200"){
 				//window.location.href='#otpMessage';
 				$("#otpVerification").closeModal();
-				$('#otpVerification').closeModal();   
 				$('#otpMessage').openModal();   
 				$("#otpResponse").text(resp.response);
 				// $('#otpMessage').modal('open');
 			}
 			else{
-
+				$("#otpVerification #verifyOtpResp").text(resp.response);
+				
 			}
 			$("#otpVerifyBtn").prop('disabled', false);
 		},
@@ -98,7 +161,7 @@ function resendOtp(){
 		dataType : 'html',
 		success : function(data) {
 			var response=JSON.parse(data);
-			$("#resendOtp").text(response.response); 
+			$("#verifyOtpResp").text(response.response); 
 		},    
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
@@ -119,7 +182,7 @@ function reg(){
 function asTypeData(){ 
 	$.ajax({
 		type : 'GET',
-		url : contextpath + '/asTypeData/AS_TYPE',
+		url : contextpath + '/getSourceTypeDropdown/AS_TYPE/22',
 		contentType : "application/json",
 		dataType : 'html',
 		async:false,
@@ -301,6 +364,7 @@ function saveRegistration(){
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					usertypeName:val.find('#usertypeName').val(),
 					questionList:questionData   
 			}    
 		} 
@@ -369,6 +433,7 @@ function saveCustomRegistration(){
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					usertypeName:val.find('#usertypeName').val(),
 					arrivalPort:val.find('#arrivalPort').val(),
 					questionList:questionData,
 					type:val.find('#type').val()
@@ -378,13 +443,12 @@ function saveCustomRegistration(){
 	});
 	console.log("question data:  "+JSON.stringify(obj));
 	var formData;
-
 	formData = new FormData();
 	formData.append( 'NationalIdImage', $( '#NationalIdImage' )[0].files[0] );
 	formData.append( 'photo', $( '#photo' )[0].files[0] );
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));  
-	console.log("data=  "+formData);
+	console.log("data=  "+JSON.stringify(formData));
 	registrationAjax(formData);
 	return false;
 }   
@@ -440,6 +504,7 @@ function saveOperatorRegistration(){
 					roles:val.find('#usertypes').val(),  
 					captcha:val.find('#captcha').val(),
 					usertypeId:val.find('#usertypeId').val(),
+					usertypeName:val.find('#usertypeName').val(),
 					operatorTypeId:val.find('#operatorType').val(),  
 					operatorTypeName:val.find('#operatorType option:selected').text(),
 					type:val.find('#type').val(),
@@ -490,11 +555,7 @@ function registrationAjax(obj){
 
 
 function openEndUserGrievancePage(reportType){
-	//alert(reportType.value);
-	console.log("reportType=="+reportType.value);
-	window.location.href="./openEndUserGrievancePage?reportType="+reportType.value;
-	console.log("details."+window.location.href);
-	//alert(window.location.href);
+	window.location.href="./raiseAgrievance?reportType="+reportType.value;
 
 }
 
@@ -502,7 +563,7 @@ function  openEndUserStockPage(reportType)
 {
 	//alert(reportType.value);
 	console.log("reportType=="+reportType.value);
-	window.location.href="./openEndUserStockPage?reportType="+reportType.value;
+	window.location.href="./uploadAstock?reportType="+reportType.value;
 	console.log("details."+window.location.href);
 	/*alert(window.location.href);*/
 /*	$.ajax({   
@@ -530,4 +591,10 @@ function  openEndUserStockPage(reportType)
 			$("#btnSave").prop('disabled', false);
 		}
 	});*/
+}
+function selfRegisterDevice(){
+	window.location.href="./selfRegisterDevice";
+}
+function updateVisaValidity(){
+	window.location.href="./updateVisaValidaity";
 }

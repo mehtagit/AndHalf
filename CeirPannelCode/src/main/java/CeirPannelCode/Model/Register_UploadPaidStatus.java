@@ -1,11 +1,8 @@
 package CeirPannelCode.Model;
-
 import java.util.List;
-
 import org.gl.ceir.CeirPannelCode.Model.UplodPaidStatusModel;
 
 public class Register_UploadPaidStatus {
-
 	private String firstName;
 	private String middleName;
 	private String lastName;  

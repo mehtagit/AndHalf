@@ -22,10 +22,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,7 +47,7 @@ public class RegistrationController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
-	public ModelAndView index(){
+	public ModelAndView index(HttpServletRequest request){
 		log.info("inside index controller ");
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
@@ -74,21 +76,27 @@ public class RegistrationController {
 		List<Operator> response =feignImplementation.operatorList(tag);
 		return response;            
 	} 
-
-	@RequestMapping(value = "/registration",method = {RequestMethod.GET})
-	public ModelAndView registration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
-		ModelAndView mv=registrationService.registrationView(usertypeId);
+	
+	
+    @RequestMapping(value = "/registration")
+	public String registration(@RequestParam(name = "type",required =false) String usertype,Model model) {
+    	return registrationService.registrationView(usertype,model);
+    }
+    
+	@RequestMapping(value = "/importorRegistration",method = {RequestMethod.GET})
+	public ModelAndView importorRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue="0") Integer usertypeId	) throws IOException{
+		ModelAndView mv=registrationService.ImporterRegistrationView(usertypeId);
 		
 		return mv; 
 	} 
 	@RequestMapping(value = "/customRegistration",method = {RequestMethod.GET})
-	public ModelAndView customRegistration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
+	public ModelAndView customRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue ="0") Integer usertypeId	) throws IOException{
 		ModelAndView mv=registrationService.customRegistrationView(usertypeId);
 		return mv; 
 	} 
 
 	@RequestMapping(value = "/operatorRegistration",method = {RequestMethod.GET})
-	public ModelAndView operatorRegistration(@RequestParam(name = "usertypeId",required =false) Integer usertypeId	) throws IOException{
+	public ModelAndView operatorRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue ="0") Integer usertypeId) throws IOException{
 		ModelAndView mv=registrationService.operatorRegistrationView(usertypeId);
 		return mv; 
 	} 
@@ -101,8 +109,8 @@ public class RegistrationController {
 			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
 			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
 			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
-			HttpSession session) throws IOException{
-		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session);  
+			HttpSession session,HttpServletRequest request) throws IOException{
+		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session,request);  
 		return response;             
 	}
 
@@ -125,8 +133,8 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/verifyOtp",method = {RequestMethod.POST})
 	@ResponseBody
-	public HttpResponse verifyOtp(@RequestBody Otp otp){
-		HttpResponse response =registrationService.verifyOtp(otp);
+	public HttpResponse verifyOtp(@RequestBody Otp otp,HttpServletRequest request){
+		HttpResponse response =registrationService.verifyOtp(otp,request);
 		return response;       
 	}
 
@@ -134,8 +142,8 @@ public class RegistrationController {
 
 	@RequestMapping(value = "/resendOtp/{userid}",method = {RequestMethod.POST})
 	@ResponseBody
-	public HttpResponse resendOtp(@PathVariable Integer userid){
-		HttpResponse response =registrationService.resendOtp(userid);
+	public HttpResponse resendOtp(@PathVariable Integer userid,HttpServletRequest request){
+		HttpResponse response =registrationService.resendOtp(userid,request);
 		return response;                 
 	}  
 

@@ -81,16 +81,17 @@ class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
 
-<div class="input-field col s12 m6 l6">
-<!-- <label for="Category">Category</label> -->
+<div class=" col s12 m6 l6">
+ <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
 <select class="browser-default" id="category" required="required">
+<option value="" selected disabled ><spring:message code="operator.category" /></option>
 </select>
 </div>
 </div>
 
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
-<textarea id="Remark" class="materialize-textarea" required="required"></textarea>
+<textarea id="Remark" class="materialize-textarea" maxlength="200" required="required"></textarea>
 <label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
@@ -103,7 +104,7 @@ class="form-control boxBorder boxHeight"/>
 <h6 style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" required >
+<input type="file" name="files[]" id="docTypeFile1"  >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -114,8 +115,8 @@ placeholder="Upload one or more files">
 </div>
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /> <span class="star">*</span></label>
-<select class="browser-default" id="docTypetag1" required>
+<label for="Category"><spring:message code="input.documenttype" /></label>
+<select class="browser-default" id="docTypetag1" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
@@ -292,7 +293,8 @@ function saveGrievance(){
 			"attachedFiles":fileInfo,
 			"txnId":txnId,
 			"categoryId":category,
-			"remarks":remark
+			"remarks":remark,
+			"featureId":6
 		}
 	
 	formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -351,8 +353,8 @@ $.ajax({
 	success: function (data, textStatus, jqXHR) {
 		console.log(data);
 
-		$('#category').empty();
-		$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
+		//$('#category').empty();
+		//$('#category').append('<option value="">'+$.i18n('selectCategory')+' *</option>');
 
 		for (i = 0; i < data.length; i++){
 

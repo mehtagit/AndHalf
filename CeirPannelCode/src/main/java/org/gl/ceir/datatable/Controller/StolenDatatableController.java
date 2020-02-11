@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
@@ -31,7 +32,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 @RestController
 public class StolenDatatableController {
-
+	@Autowired
+	Translator Translator;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
@@ -71,7 +73,7 @@ public class StolenDatatableController {
 		log.info("flter request=="+filterrequest);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
-
+		filterrequest.setSearchString(request.getParameter("search[value]"));
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		try {
@@ -108,8 +110,10 @@ public class StolenDatatableController {
 					}
 				}else if("Operator".equals(userType)) {
 					log.info("in Opertator Controler-----" +userType);
-					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
-					log.info("actionResponse CEIRAdmin::::::::::::"+actionResponse);
+					//List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
+					//Gson JsonObj = new Gson();
+					//log.info("actionResponse CEIRAdmin::::::::::::"+JsonObj.toJson(actionResponse));
+				
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
@@ -122,7 +126,7 @@ public class StolenDatatableController {
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.blockUnblockState(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
+						String action = iconState.blockUnblockState(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
 						Object[] finalData = {createdOn,txnId,requestTypeName,source,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
@@ -228,7 +232,7 @@ public class StolenDatatableController {
 		
 		
 		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
-		pageElement.setPageTitle("Block/Unblock Devices");
+			pageElement.setPageTitle(Translator.toLocale("view.Block/UnblockDevices"));
 		}else {
 			pageElement.setPageTitle("Stolen/Recovery");
 		}
@@ -239,8 +243,8 @@ public class StolenDatatableController {
 		//This Block is for Operator & Admin Upper Filter/Button Forms------------------------------------------------
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType)) {
-			String[] names = { "HeaderButton", "Report Block/Unblock", "./selectblockUnblockPage",
-					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
+			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
+					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
@@ -256,7 +260,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", ""};
+			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -271,9 +275,10 @@ public class StolenDatatableController {
 			
 		//This is for Operator Dropdown for CEIRadmin
 			if("CEIRAdmin".equals(userType)){
-				String[] selectParam = { "select", "Operator", "operator", "","select", "Request Type", "requestType", "", "select",
-						"Mode", "sourceStatus", "","select", "Status", "status","" };	
-				for (int i = 0; i < selectParam.length; i++) {
+				String[] selectParam = { "select", Translator.toLocale("operator.Operator"), "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
+
+			for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
 					i++;
@@ -287,8 +292,8 @@ public class StolenDatatableController {
 				pageElement.setDropdownList(dropdownList);
 				
 			}else {
-				String[] selectParam = { "select", "Request Type", "requestType", "", "select",
-						"Mode", "sourceStatus", "","select", "Status", "status","" };	
+				String[] selectParam = { "select", Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""};	
 				for (int i = 0; i < selectParam.length; i++) {
 					inputFields = new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -309,8 +314,8 @@ public class StolenDatatableController {
 			
 			//This Block is for all other Stolen Upper Filter/Button Forms------------------------------------------------
 			
-			String[] names = { "HeaderButton", "Report Stolen/Recovery", "openStolenRecoveryModal()",
-					"btnLink", "FilterButton", "filter", "filterStolen()", "submitFilter" };
+			String[] names = { "HeaderButton", Translator.toLocale("button.repoertStolen/Recovery"), "openStolenRecoveryModal()",
+					"btnLink", "FilterButton", Translator.toLocale("button.filter"), "filterStolen()", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {
 				button = new Button();
 
@@ -326,7 +331,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", "Start date", "startDate", "", "date", "End date", "endDate", "","text","Transaction ID","transactionID",""};
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -341,8 +346,9 @@ public class StolenDatatableController {
 			
 		
 
-			String[] selectParam = { "select", "Status", "status", "", "select",
-					"Mode", "sourceStatus", "","select", "Request Type", "requestType","" };	
+			String[] selectParam = { "select", Translator.toLocale("table.status"), "status", "", "select",
+					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.requestType"), "requestType","" };	
+
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -358,7 +364,7 @@ public class StolenDatatableController {
 			
 			if("viaExistingRecovery".equals(sourceType)) {
 				//log.info("if sourceType in stolen Render controller 1--------"+sourceType);
-				String[] footerBtn = {"FooterButton", "Mark As Recovered","markedRecovered()","markedRecovered","FooterButton", "Cancel","redirectToViewStolenPage()","cancel"};
+				String[] footerBtn = {"FooterButton", Translator.toLocale("button.MarkAsRecovered"),"markedRecovered()","markedRecovered","FooterButton",Translator.toLocale("button.cancel"),"redirectToViewStolenPage()","cancel"};
 				for (int i = 0; i < footerBtn.length; i++) {
 					button = new Button();
 

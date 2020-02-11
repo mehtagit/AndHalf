@@ -1,4 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+
+<% 
+  
+        response.setHeader("Cache-Control","no-cache");
+        response.setHeader("Cache-Control","no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma","no-cache");
+
+        
+        
+        if(session.getAttribute("usertype") !=null){ %>
+        <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -72,8 +83,10 @@
 </style>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
-	data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
+	data-selected-roleType="${selectedUserTypeId}"
+	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -84,7 +97,7 @@
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
-						<div class="row card-panel">
+						<div class="row card-panel" id="verifyType">
 							<div class="container-fluid pageHeader" id="pageHeader">
 
 								<a href="" class="boton right" id="btnLink"></a>
@@ -160,7 +173,7 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
 							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
-							for="Quantity" class="center-align"><spring:message code="modal.quantity" /><span class="star">*</span></label></label>
+							for="Quantity" class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
@@ -405,7 +418,7 @@
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a href="./assignDistributor" class="modal-close btn"><spring:message code="modal.close" /></a>
+                        <a href="./assignDistributor" class="modal-close btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -512,11 +525,22 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 </body>
 </html>
 
+<%
+        }
+        else{
+        	request.setAttribute("msg", "  *Please login first");
+        request.getRequestDispatcher("./login.jsp").forward(request, response);
+        	
+        }
+%>

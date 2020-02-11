@@ -67,6 +67,7 @@ public class NotificationDatatableController {
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
+				filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.dashBoardNotification(filterrequest,pageNo,pageSize);
@@ -86,7 +87,7 @@ public class NotificationDatatableController {
 				  String featureName = dataInsideList.getFeatureName();
 				  String message =  dataInsideList.getMessage();
 				  String userStatus = (String) session.getAttribute("userStatus");
-				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId());			   
+				  String action=iconState.dashboardIcon(userStatus,dataInsideList.getFeatureId(),txnID);			   
 				  Object[] finalData={createdOn,txnID,featureName,message,action}; 
 				  List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				  finalList.add(finalDataList);

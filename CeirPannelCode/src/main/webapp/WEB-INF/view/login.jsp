@@ -1,3 +1,6 @@
+ <%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -76,30 +79,28 @@
             height: 40px;
         } */
 input[type=text] {
-	height: 35px;
 	margin: 0 0 5px 0;
 }
 
-.fa-eye-slash,
-.fa-eye {
+.fa-eye-slash, .fa-eye {
 	position: absolute;
-    right: 10px;
-    top: 10px;
+	right: 10px;
+	top: 10px;
 }
 
 a#newUserLink {
-    padding-right: 10px;
-    line-height: 13px;
-    }
-    
+	padding-right: 10px;
+	line-height: 13px;
+}
+
 .forgotPassword {
 	padding-left: 10px;
-    border-left: solid 2px #9e9e9e;
-    line-height: 13px;
+	border-left: solid 2px #9e9e9e;
+	line-height: 13px;
 }
 </style>
 <script>
-var contextpath = "${context}";
+	var contextpath = "${context}";
 </script>
 </head>
 
@@ -125,27 +126,52 @@ var contextpath = "${context}";
 				<!--start container-->
 				<div class="container">
 					<div class="section">
-						<div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
+						<div class="row card-panel login-card-panel">
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
-									<div class="row"> 
-										<h5 style="text-align: -webkit-center;">Login</h5>
-										<span id="errorMsg" style="color: red;">${msg}</span>
-										<hr style="margin-bottom: 30px;">
+									<div class="row">
+<div class="col s9 m10 select-lang-lable">
+											<label for="" style="font-size: 1rem;">Language :</label><i class="fa fa-globe fa-6" aria-hidden="true"></i>
+										</div>
+										<div class="col s3 m2 right" style="padding: 0;">
+											<select class="browser-default select-lang-drpdwn"
+												id="langlist">
+												<option value="en">English</option>
+												<option value="km">Khmer</option>
+											</select>
+										</div>
+										<div class="col s12 m12">
+											<h5 style="text-align: -webkit-center;">
+												<spring:message code="registration.login" />
+											</h5>
+											<span id="errorMsg" style="color: red;">${msg}</span>
+											<hr>
 
-										<div class="input-field col s12">
- 										<input type="text" required="required" name="username"
-												id="username" class="" maxlength="10" />
-										<label for="username">Username</label>
+
 										</div>
 
+
+
 										<div class="input-field col s12">
-										<input type="password" required="required" class="" name="password"
-												id="password" maxlength="10" />
-										<label for="password">Password</label> 
-										<div class="input-field-addon">
-										<a href=""><i class="fa fa-eye" aria-hidden="true"></i></a>
+											<input type="text" required="required" name="username"
+												id="username" class="" maxlength="10" /> <label
+												for="username"><spring:message
+													code="registration.username" /></label>
 										</div>
+
+
+
+
+										<div  class="input-field col s12" id="show_hide_password">
+											<input type="password"  required="required" class="password"
+												name="password" id="password" maxlength="10"
+												oncopy="return false" onpaste="return false" /> <label
+												for="password"> <spring:message
+													code="registration.password" /></label>
+											<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+											</div>
+
 										</div>
 
 										<div class="form-group form-actions col s12 m12">
@@ -161,34 +187,34 @@ var contextpath = "${context}";
 												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="captcha" style="left:0.01rem;">Enter
-														your captcha <span class="star">*</span>
-													</label>
+														required="required"> <label for="captcha"
+														style="left: 0.01rem;"><spring:message
+															code="registration.enteryourcaptcha" /><span
+														class="star">*</span> </label>
 												</div>
 
 											</span>
 										</div>
 
-										
+
 
 
 										<div class="row" style="margin: 30px 0 20px 0;">
 											<div class="input-field col s12 m12 l12 center">
 												<%--     <a href="${context}/importerDashboard" class="btn" type="button" id="save" style="width: 100%;">Login</a> --%>
 												<button type="submit" class="btn" id="save"
-													style="width: 100%;"  value="Login">Login</button>
+													style="width: 100%;" value="Login">
+													<spring:message code="registration.login" />
+												</button>
 											</div>
 										</div>
 
-							<a href="${context}/forgotPassword" class="right forgotPassword"> Forgot Password</a>
-							<span><a href="#" id="newUserLink" class="right"> New User?</a></span>	
-							
-
+										<a href="${context}/forgotPassword"
+											class="right forgotPassword"><spring:message
+												code="registration.forgotpassword" /></a> <span><a
+											href="javascript:void(0)" id="newUserLink" class="right"><spring:message
+													code="registration.newUser" /></a></span>
 									</div>
-
-
-
-
 								</div>
 							</form>
 						</div>
@@ -204,6 +230,95 @@ var contextpath = "${context}";
 	</div>
 	<!-- END MAIN -->
 
+
+<div id="changePasswordMessage" class="modal" style="width: 40%;">
+<h6 class="modal-header"><spring:message code="registration.changepassword" /></h6>
+<div class="modal-content">
+<div class="row">
+<h6 id="cPassSucessMsg"></h6>
+</div>
+<div class="row">
+<div class="center">
+<a href="" class="btn"><spring:message code="modal.ok" /></a>
+</div>
+</div>
+</div>
+</div>
+
+
+	<div id="changePassword" class="modal" style="width: 40%;">
+		<h6 class="modal-header"><spring:message code="registration.changepassword" /></h6>
+		<div class="modal-content">
+			<form onsubmit="return changeExpiryPassword()">
+				<div class="row">
+
+                   <input type="hidden" id="userId" >
+					<span style="text-align: center; color: red;" id="errorMsg"></span>
+					<div class="col s1">
+						<i class="fa fa-lock" aria-hidden="true"
+							style="font-size: 30px; margin-top: 12px; color: #ff4081;"></i>
+					</div>
+					<div class="input-field col s11">
+						<input type="password" id="oldPassword" class="password2"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							maxlength="10" min="8"
+							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+							required="required" /> <label for="oldPassword"
+							class="center-align" style="color: #000; font-size: 12px;">
+							 <spring:message code="registration.oldpassword" /></label>
+							<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+											</div>
+					</div>
+
+					<div class="col s1">
+						<span class="fa-passwd-reset fa-stack"
+							style="margin-top: 12px; color: #ff4081;"> <i
+							class="fa fa-undo fa-stack-2x"></i> <i
+							class="fa fa-lock fa-stack-1x"></i>
+						</span>
+					</div>
+					<div class="input-field col s11">
+
+						<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.newpassword" /></label> <input type="password"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							maxlength="10" min="8"
+							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+							required="required" id="password" class="password3" />
+				<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password3" aria-hidden="true"></i></a>
+											</div>				
+					</div>
+
+					<div class="col s1">
+						<i class="fa fa-check-square-o" aria-hidden="true"
+							style="font-size: 28px; margin-top: 12px; color: #ff4081;"></i>
+					</div>
+					<div class="input-field col s11">
+
+						<label for="confirm_password"
+							style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input
+							type="password" class="password4" id="confirm_password"
+							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+							maxlength="10" min="8" 
+							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
+							required="required" />
+						<div class="input-field-addon">
+												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password4" aria-hidden="true"></i></a>
+											</div>		
+					</div>
+				</div>
+				<div class="row" style="margin-top: 30px;">
+					<div class="input-field col s12 center">
+						<button class="btn" id="updateStatusBtn"><spring:message code="button.submit" /></button>
+						<button type="button" class="btn modal-close"
+							style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					</div>
+
+				</div>
+			</form>
+		</div>
+	</div>
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -223,7 +338,8 @@ var contextpath = "${context}";
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
-  <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>		
+	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -235,7 +351,6 @@ var contextpath = "${context}";
 	<!-- chartist -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
-
 	<!-- data-tables -->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
@@ -248,12 +363,9 @@ var contextpath = "${context}";
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function () {
-	dataByTag("link_dmc_portal","newUserLink",1);
-        });   
-</script>
+	<script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
 </body>
 
 </html>
 
+ 

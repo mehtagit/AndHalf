@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
@@ -65,13 +66,20 @@
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 
+data-selected-roleType="${selectedUserTypeId}" 
+data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+data-session-id="${not empty param.id ? param.id : 'null'}"
+data-session-roles="${not empty param.roles ? param.roles : 'null'}"
+data-session-type="${not empty param.type ? param.type : 'null'}">
 
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
 		<!--start container-->
+			<div id="initialloader"></div>
 		<div class="container">
 			<div class="section">
 				<div class="row">
@@ -106,18 +114,18 @@
 
    
 	<div id="approveInformation" class="modal">
-           <h6 class="modal-header">Approve</h6>
+           <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
            <div class="modal-content">
             <div class="row">
                 <form action="">
-                 	<h6>The Registration with Transaction ID: <span id="registrationTxnId"> </span> is pending for approval.</h6>
-                    <p>Do you want to Approve the request</p>
+                 	<h6> <spring:message code="registration.thetransactionid" /><span id="registrationTxnId"> </span> <spring:message code="registration.pendingforapproval" /></h6>
+                    <p><spring:message code="registration.dorequest" /></p>
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="aprroveUser()" class="btn modal-trigger">Yes</a>
-                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                    <a onclick="aprroveUser()" class="btn modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                       <span id="userId" hidden></span>
                        <span id="adminCurrentStatus" hidden></span>
                 </div>
@@ -125,62 +133,67 @@
         </div>
     </div>
 	<div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
-               <h6 class="modal-header">Approve</h6>
+               <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
                 <div class="modal-content">
             <div class="row">
                 <form action="">
             
-                    <h6>An email on the register mail ID of the user has been sent with <br> Registration ID <span id="RegistrationId"></span>
-                        and registration date <span id="registrationDate"></span>.</h6>
+                    <h6><spring:message code="registration.emailregister" /> <br> <spring:message code="registration.registrationid" />  <span id="RegistrationId"></span>
+                          <spring:message code="registration.registrationdate" /><span id="registrationDate"></span>.</h6>
                    
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./registrationRequest">ok</a>
+                     <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.ok" /></a>
                    
                 </div>
             </div>
         </div>
     </div>
 	<div id="rejectInformation" class="modal">
-           <h6 class="modal-header">Reject</h6>
+           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
             <div class="modal-content">
             <div class="row">
                 <form action="">
                 
                     <div class="input-field" style="margin-top: 30px;">
                         <textarea id="Reason" class="materialize-textarea"></textarea>
-                        <label for="textarea1" style="margin-left: -10px;">Reason</label>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
                     </div>
-                    <h6>Do you want to reject?</h6>
+                    <h6><spring:message code="registration.doreject" /></h6>
                     
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a onclick="rejectUser()" class="btn modal-close modal-trigger">Yes</a>
-                    <button class="btn modal-close" style="margin-left: 10px;">No</button>
+                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
         </div>
     </div>
 	<div id="confirmRejectInformation" class="modal">
-         <h6 class="modal-header">Reject</h6>
+         <h6 class="modal-header"><spring:message code="registration.reject" /></h6>
           <div class="modal-content">
             <div class="row">
                 <form action="">
                   
-                    <h6>An email on the register mail ID of the user has been sent with rejection reason.</h6>
+                    <h6><spring:message code="registration.rejectionreason" /></h6>
                 </form>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./registrationRequest">ok</a>
+                    <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
     </div>
+    
+    
+    
+
+    
 	
 	<!--materialize js-->
 	<script type="text/javascript"
@@ -211,10 +224,48 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+		
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>		
+			
 		
 </body>
 </html>
