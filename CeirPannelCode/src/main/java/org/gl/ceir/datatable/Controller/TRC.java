@@ -116,8 +116,10 @@ public class TRC implements CRUD{
 						String adminState = trcContentModelList.getAdminStateInterp();
 						String txnId= trcContentModelList.getTxnId();
 						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
+						
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.trcAdminIcons(status,trcContentModelList.getId(),fileName1,txnId,adminApproveStatus);
+						String action = iconState.trcAdminIcons(approveState,trcContentModelList.getId(),fileName1,txnId,adminApproveStatus);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
