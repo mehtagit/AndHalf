@@ -242,7 +242,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
 		this.stolenOrganizationUserDB = stolenOrganizationUserDB;
 	}
-	
 	public String getDateOfStolen() {
 		return dateOfStolen;
 	}
@@ -286,16 +285,37 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(sourceType);
 		builder.append(", qty=");
 		builder.append(qty);
+		builder.append(", remark=");
+		builder.append(remark);
 		builder.append(", sourceTypeInterp=");
 		builder.append(sourceTypeInterp);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", operatorTypeIdInterp=");
+		builder.append(operatorTypeIdInterp);
+		builder.append(", blockCategory=");
+		builder.append(blockCategory);
+		builder.append(", blockCategoryInterp=");
+		builder.append(blockCategoryInterp);
+		builder.append(", dateOfStolen=");
+		builder.append(dateOfStolen);
+		builder.append(", dateOfRecovery=");
+		builder.append(dateOfRecovery);
 		builder.append(", singleImeiDetails=");
 		builder.append(singleImeiDetails);
+		builder.append(", stolenIndividualUserDB=");
+		builder.append(stolenIndividualUserDB);
+		builder.append(", stolenOrganizationUserDB=");
+		builder.append(stolenOrganizationUserDB);
 		builder.append(", imei=");
 		builder.append(imei);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 
 }
