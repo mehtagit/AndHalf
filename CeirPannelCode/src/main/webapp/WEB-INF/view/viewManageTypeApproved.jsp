@@ -336,7 +336,7 @@ textarea {
 												<div class="row">
 													<div class="col s12 m6 l6" style="margin-top: 8px;">
 														<label for="Category"><spring:message code="input.documenttype"/></label> <select
-															class="browser-default" id="docTypetag1">
+															class="browser-default" id="docTypetag1" required>
 															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
 														
 														<select class="browser-default" id="docTypetagValue1"
@@ -354,7 +354,7 @@ textarea {
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1">
+															<input type="file" name="files[]" id="docTypeFile1" required>
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"

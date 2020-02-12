@@ -239,13 +239,11 @@ function viewByID(id,actionType,projectPath){
 			if(actionType=='view')
 				{
 				$("#viewModal").openModal();
-				console.log("222222222");
 				setViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
 				{
-				console.log("3333333333");
 				$("#editModal").openModal();
 				setEditPopupData(data)
 				
@@ -313,8 +311,12 @@ function setViewPopupData(data,projectPath){
 	{
 		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++)
 			{
+			if(importerViewResponse[i].attachedFiles[j].docType == null){
+				importerViewResponse[i].attachedFiles[j].docType == "";
+			}else{
 				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
 			}
+		}
 	}
 	
 }
@@ -338,9 +340,13 @@ function setImporterViewPopupData(data,projectPath){
 	for(var i=0; i< importerViewResponse.length; i++)
 	{
 		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++)
-			{
+		{
+			if(importerViewResponse[i].attachedFiles[j].docType == null){
+				importerViewResponse[i].attachedFiles[j].docType == "";
+			}else{
 				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
-			}
+			}	
+		}
 	}
 	
 	
@@ -632,7 +638,7 @@ return true;
 }
 
 function setAllDropdown(){
-$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+$.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
 		$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(

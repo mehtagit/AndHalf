@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
-import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.interfacepackage.CRUD;
 import org.gl.ceir.pageElement.model.Button;
@@ -116,8 +116,10 @@ public class TRC implements CRUD{
 						String adminState = trcContentModelList.getAdminStateInterp();
 						String txnId= trcContentModelList.getTxnId();
 						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
+						
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.trcAdminIcons(status,trcContentModelList.getId(),fileName1,txnId,adminApproveStatus);
+						String action = iconState.trcAdminIcons(approveState,trcContentModelList.getId(),fileName1,txnId,adminApproveStatus);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,adminState,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
@@ -205,7 +207,7 @@ public class TRC implements CRUD{
 				}			
 				pageElement.setButtonList(buttonList);
 			}else {
-				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable()","submitFilter"};
+				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable("+ConfigParameters.languageParam+")","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
@@ -225,7 +227,7 @@ public class TRC implements CRUD{
 			
 			if("CEIRAdmin".equals(userType)) {
 				//Dropdown items
-				String[] selectParam= {"select","CEIR Admin Status ","Status",""};
+				String[] selectParam= {"select",Translator.toLocale("table.ceirAdminStatus"),"Status",""};
 				for(int i=0; i< selectParam.length; i++) {
 					inputFields= new InputFields();
 					inputFields.setType(selectParam[i]);
@@ -240,7 +242,7 @@ public class TRC implements CRUD{
 				pageElement.setDropdownList(dropdownList);
 			}else if("TRC".equals(userType)){
 				//Dropdown items
-				String[] selectParam= {"select","Status ","Status",""};
+				String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
 				for(int i=0; i< selectParam.length; i++) {
 					inputFields= new InputFields();
 					inputFields.setType(selectParam[i]);

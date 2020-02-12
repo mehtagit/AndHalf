@@ -19,6 +19,10 @@ public class NotificationContent {
 	private String featureName;
 	private String subFeature;
 	private Integer status;
+	 private String subject;
+	 private Integer retryCount;
+	 private String referTable;
+	 private String roleType;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -86,6 +90,30 @@ public class NotificationContent {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public Integer getRetryCount() {
+		return retryCount;
+	}
+	public void setRetryCount(Integer retryCount) {
+		this.retryCount = retryCount;
+	}
+	public String getReferTable() {
+		return referTable;
+	}
+	public void setReferTable(String referTable) {
+		this.referTable = referTable;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -97,7 +125,9 @@ public class NotificationContent {
 		return "NotificationContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
 				+ ", channelType=" + channelType + ", message=" + message + ", userId=" + userId + ", featureId="
 				+ featureId + ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature="
-				+ subFeature + ", status=" + status + ", additionalProperties=" + additionalProperties + "]";
+				+ subFeature + ", status=" + status + ", subject=" + subject + ", retryCount=" + retryCount
+				+ ", referTable=" + referTable + ", roleType=" + roleType + ", additionalProperties="
+				+ additionalProperties + "]";
 	}
 	
 }
