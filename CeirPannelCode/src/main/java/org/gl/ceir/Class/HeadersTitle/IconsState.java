@@ -51,7 +51,7 @@ public class IconsState {
 
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
-	String disableViewIcon="\"fa fa-eye view-icon disable\"";
+	String disableViewIcon="\"fa fa-eye view-icon  disable\"";
 	String disableEditIcon="\"fa fa-pencil edit-icon disable\""; 
 	String disableDeletionIcon="\"fa fa-trash delete-icon disable\"";
 	String disableReplyIcon="\"fa fa-reply reply-icon disable\""; 
@@ -815,7 +815,7 @@ public class IconsState {
 	//System.out.println("featureID::::::::::"+featureID);
 	// state related Code
 	String view=null;
-	if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
+	if(featureID == 3 || featureID == 4 || featureID == 6  || featureID == 7) {
 	view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 	+viewIconTitle+" ></i></a>";
 	}
