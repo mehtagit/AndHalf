@@ -139,14 +139,11 @@ section {
 									id="registerConsignment">
 									<div class="container-fluid pageHeader">
 										<p class="PageHeading"><spring:message code="registerconsignment.view.header.title" /></p>
-										<!-- <button type="button" class="waves-effect waves-light modal-trigger boton right"
-                      data-target="modal1">Register Consignment</button> -->
 									</div>
 
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
-											<input type="text" name="supplierId" id="supplierId"
-												pattern="[A-Za-z0-9]{0,15}"
+											<input type="text" name="supplierId" id="supplierId" pattern="[A-Za-z0-9]{0,15}"
 												title="<spring:message code="validation.15character" />"
 												maxlength="15" /> <label for="supplierId" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
