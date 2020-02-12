@@ -371,7 +371,7 @@ String usertypeId="${usertypeId}";
 										pattern="[A-Za-z\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only">
 									<label for="companyName"><spring:message
-											code="registration.CompanyName" /> <span class="star">*</span></label>
+											code="registration.companyName" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="row myRow" style="display: none;" id="uploadFile">
