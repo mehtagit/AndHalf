@@ -40,5 +40,9 @@
 "Total Device in Transit":"Total Device in Transit",
 "Stock":"Stock",
 "Total Device Waiting For Upload":"Total Device Waiting For Upload",
-"Grievance":"Grievance"
+"Grievance":"Grievance",
+"requiredMsg_input":"Please fill in this field",
+"requiredMsg_date":"PPlease fill in this field",
+"requiredMsg_select":"Please select an item  in this field",
+"requiredMsg_fileType":"Please choose a file"
 }

@@ -797,6 +797,6 @@
         else{
          request.setAttribute("msg", "  *Please login first");
         request.getRequestDispatcher("./index.jsp").forward(request, response);
-        	
+      //  window.top.location.href ="./index.jsp";
         }
 %>
