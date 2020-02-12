@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
+import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -65,7 +66,6 @@ import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.StatusSetter;
@@ -325,7 +325,7 @@ public class RegularizedDeviceServiceImpl {
 							endUserDB.setTxnId(regularizeDeviceDb.getTxnId());
 							txnId = regularizeDeviceDb.getTxnId();
 						}
-						
+
 						if(Objects.isNull(endUserDB.getOrigin())) {
 							endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
 						}
@@ -407,6 +407,7 @@ public class RegularizedDeviceServiceImpl {
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {
 			String tag = "";
+			String mailSubject = null;
 			List<RawMail> rawMails = new ArrayList<>();
 			Map<String, String> placeholders = new HashMap<>();
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
@@ -424,8 +425,10 @@ public class RegularizedDeviceServiceImpl {
 				if(regularizeDeviceDb.getTaxPaidStatus() == 0) {
 					// Mail to CEIR Admin on tax update status change.
 					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID";
+					mailSubject = MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID.replace("<XXX>", userCustomDbDetails.getTxnId());
 				}else {
 					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID";	
+					mailSubject = MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID.replace("<XXX>", userCustomDbDetails.getTxnId());
 				}
 				rawMails.add(new RawMail(tag, 
 						ceirAdminProfile, 
@@ -433,7 +436,7 @@ public class RegularizedDeviceServiceImpl {
 						Features.REGISTER_DEVICE, 
 						SubFeatures.REGISTER, 
 						regularizeDeviceDb.getTxnId(), 
-						"Subject", 
+						mailSubject, 
 						placeholders,
 						ReferTable.USERS,
 						null));
@@ -507,46 +510,50 @@ public class RegularizedDeviceServiceImpl {
 	@Transactional
 	public GenricResponse acceptReject(CeirActionRequest ceirActionRequest) {
 		try {
-			UserProfile userProfile = null;
+			String tag = null;
+			String mailSubject = null;
+			EndUserDB endUserDB = null;
+			List<RawMail> rawMails = new ArrayList<>();
+			Map<String, String> placeholders = new HashMap<>();
+
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(ceirActionRequest.getImei1());
 			logger.debug("Accept/Reject regularized Devices : " + regularizeDeviceDb);
 
-			// Fetch user_profile to update user over mail/sms regarding the action.
-			userProfile = userProfileRepository.getByUserId(ceirActionRequest.getUserId());
-			logger.debug("userProfile : " + userProfile);
+			endUserDB = endUserDbRepository.getByNid(regularizeDeviceDb.getNid());
+			
+			placeholders.put("<FIRST_NAME>", endUserDB.getFirstName());
+			placeholders.put("<txn_name>", regularizeDeviceDb.getTxnId());
 
 			if("CEIRADMIN".equalsIgnoreCase(ceirActionRequest.getUserType())){
 
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
-
-					/*
-					emailUtil.sendMessageAndSaveNotification("Consignment_Success_CEIRAuthority_Email_Message", 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.CONSIGNMENT,
-							SubFeatures.ACCEPT,
-							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
-					 */
+					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
+					mailSubject = MailSubject.MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL.replace("<XXX>", regularizeDeviceDb.getTxnId());
 				}else if(ceirActionRequest.getAction() == 1){
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
-
-					/*
-					emailUtil.sendMessageAndSaveNotification("Consignment_Approved_CustomImporter_Email_Message", 
-							userProfile, 
-							consignmentUpdateRequest.getFeatureId(),
-							Features.CONSIGNMENT, 
-							SubFeatures.ACCEPT,
-							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT);
-					 */
+					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
+					mailSubject = MailSubject.MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL.replace("<XXX>", regularizeDeviceDb.getTxnId());
+				}else {
+					return new GenricResponse(2, "unknown operation", "");
 				}
 			}else {
 				return new GenricResponse(1, "You are not allowed to do this operation.", "");
 			}
 
 			regularizedDeviceDbRepository.save(regularizeDeviceDb);
+
+			// Send Notifications
+			rawMails.add(new RawMail(tag, 
+					endUserDB.getId(), 
+					4, 
+					Features.REGISTER_DEVICE, 
+					SubFeatures.REGISTER, 
+					regularizeDeviceDb.getTxnId(), 
+					mailSubject, 
+					placeholders,
+					ReferTable.END_USER,
+					null));
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {
