@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubjects;
+import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -296,7 +296,7 @@ public class StockServiceImpl {
 					Features.STOCK,
 					SubFeatures.ASSIGN,
 					stockMgmt.getTxnId(),
-					MailSubjects.SUBJECT,
+					MailSubject.ASSIGN_STOCK.replaceAll("<XXX>", stockMgmt.getTxnId()),
 					placeholderMap,
 					stockMgmt.getRoleType())) {
 				logger.info("Notification have been saved.");
@@ -324,7 +324,10 @@ public class StockServiceImpl {
 				placeholderMapForAnonymousUser.put("<txn_id>", stockMgmt.getTxnId());
 
 				rawMails.add(new RawMail("MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD", userProfile, 
-						4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT,  
+						4, Features.STOCK, 
+						SubFeatures.REGISTER, 
+						stockMgmt.getTxnId(), 
+						MailSubject.MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD.replaceAll("<XXX>", stockMgmt.getTxnId()),  
 						placeholderMapForAnonymousUser, ReferTable.USERS, stockMgmt.getRoleType()));
 			}
 
@@ -832,10 +835,12 @@ public class StockServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
+				String mailSubject = null;
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
+					mailSubject = MailSubject.STOCK_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stockMgmt.getTxnId());
 
 					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -844,6 +849,7 @@ public class StockServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
+					mailSubject = MailSubject.STOCK_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stockMgmt.getTxnId());
 
 					placeholderMap.put("<Custom first name>", firstName);
 					placeholderMap.put("<txn_name>", stockMgmt.getTxnId());
@@ -864,7 +870,7 @@ public class StockServiceImpl {
 							Features.STOCK,
 							action,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT,
+							mailSubject,
 							placeholderMap,
 							stockMgmt.getRoleType());
 					logger.info("Notfication have been saved.");

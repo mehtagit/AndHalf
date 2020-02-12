@@ -3,10 +3,8 @@ package com.gl.ceir.config.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -77,7 +75,7 @@ public class StolenIndividualUserDB implements Serializable {
 	@Column(length = 50)
 	private String deviceBrandName;
 
-	private Long imei_esn_meid;
+	private Long imeiEsnMeid;
 	private Integer deviceIdType;
 	private Integer deviceType;
 	@Column(length = 50)
@@ -254,11 +252,12 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setDeviceBrandName(String deviceBrandName) {
 		this.deviceBrandName = deviceBrandName;
 	}
-	public Long getImei_esn_meid() {
-		return imei_esn_meid;
+	
+	public Long getImeiEsnMeid() {
+		return imeiEsnMeid;
 	}
-	public void setImei_esn_meid(Long imei_esn_meid) {
-		this.imei_esn_meid = imei_esn_meid;
+	public void setImeiEsnMeid(Long imeiEsnMeid) {
+		this.imeiEsnMeid = imeiEsnMeid;
 	}
 	public Integer getDeviceIdType() {
 		return deviceIdType;

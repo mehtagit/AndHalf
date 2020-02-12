@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubjects;
+import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -76,8 +76,6 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class ConsignmentServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(ConsignmentServiceImpl.class);
-
-	//private final Path fileStorageLocation;
 
 	@Autowired
 	private ConsignmentRepository consignmentRepository;
@@ -416,7 +414,6 @@ public class ConsignmentServiceImpl {
 	public GenricResponse updateConsignmentStatus(ConsignmentUpdateRequest consignmentUpdateRequest) {
 		try {
 			UserProfile userProfile = null;
-			String firstName = "";
 			Map<String, String> placeholderMap = new HashMap<String, String>();
 			
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(consignmentUpdateRequest.getTxnId());
@@ -451,7 +448,7 @@ public class ConsignmentServiceImpl {
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
-								MailSubjects.SUBJECT,
+								MailSubject.Consignment_Success_CEIRAuthority_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
 								placeholderMap, null);
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -473,7 +470,7 @@ public class ConsignmentServiceImpl {
 								Features.CONSIGNMENT, 
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
-								MailSubjects.SUBJECT,
+								MailSubject.Consignment_Approved_CustomImporter_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
 								placeholderMap, 
 								null);
 
@@ -498,7 +495,7 @@ public class ConsignmentServiceImpl {
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT,
+							MailSubject.Consignment_Reject_CEIRAuthority_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
 							null);
 
@@ -520,7 +517,7 @@ public class ConsignmentServiceImpl {
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT, 
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT,
+							MailSubject.Consignment_Rejected_Custom_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
 							null);
 				}

@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubjects;
+import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -634,17 +634,23 @@ public class StolenAndRecoveryServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String action = null;
+				String mailSubject = null;
+				
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_APPROVED_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.STOLEN_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else if(consignmentUpdateRequest.getRequestType() == 1){
 						mailTag = "RECOVERY_APPROVED_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.RECOVERY_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else if(consignmentUpdateRequest.getRequestType() == 2){
 						mailTag = "BLOCK_APPROVED_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.BLOCK_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else if(consignmentUpdateRequest.getRequestType() == 3){
 						mailTag = "UNBLOCK_APPROVED_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.UNBLOCK_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else {
 						logger.warn("unknown request type received for stolen and recovery.");
 					}
@@ -656,12 +662,16 @@ public class StolenAndRecoveryServiceImpl {
 
 					if(consignmentUpdateRequest.getRequestType() == 0) {
 						mailTag = "STOLEN_REJECT_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.STOLEN_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else if(consignmentUpdateRequest.getRequestType() == 1){
 						mailTag = "RECOVERY_REJECT_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.RECOVERY_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else if(consignmentUpdateRequest.getRequestType() == 2){
 						mailTag = "BLOCK_REJECT_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.BLOCK_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else if(consignmentUpdateRequest.getRequestType() == 3){
 						mailTag = "UNBLOCK_REJECT_BY_CEIR_ADMIN";
+						mailSubject = MailSubject.UNBLOCK_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stolenandRecoveryMgmt.getTxnId());
 					}else {
 						logger.warn("unknown request type received for stolen and recovery.");
 						return new GenricResponse(2, "unknown request type received for stolen and recovery.", consignmentUpdateRequest.getTxnId());
@@ -683,7 +693,7 @@ public class StolenAndRecoveryServiceImpl {
 							Features.STOLEN_RECOVERY,
 							action,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubjects.SUBJECT,
+							mailSubject,
 							null,
 							null);
 					logger.info("Notfication have been saved.");
