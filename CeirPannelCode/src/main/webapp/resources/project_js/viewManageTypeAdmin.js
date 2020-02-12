@@ -51,7 +51,7 @@ function Datatable(Url,dataUrl){
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"adminStatus" : parseInt($('#Status').val()),
+			"approveStatus" : parseInt($('#Status').val()),
 		}
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
@@ -64,12 +64,14 @@ function Datatable(Url,dataUrl){
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"status" : parseInt($('#Status').val()),
+			"approveStatus" : parseInt($('#Status').val()),
 		}
 	}
-					
+	if(lang=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}				
 	
-
+	
 
 $.ajax({
 		url: Url,
@@ -85,9 +87,9 @@ $.ajax({
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
-				/*"oLanguage": {  
+				"oLanguage": {  
 					"sUrl": langFile  
-				},*/
+				},
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
@@ -230,6 +232,10 @@ function exportTacData()
 	var tacStatus=parseInt($('#Status').val());
 	var tacNumber=$('#tac').val();
 	var txnId = txn;
+	var featureId = 21;
+	var userType = userType;
+	var userTypeId = parseInt($("body").attr("data-userTypeID"));
+	
 	
 	console.log("tacStatus=="+tacStatus);
      if(isNaN(tacStatus))
@@ -243,7 +249,7 @@ function exportTacData()
   var pageSize =info.length;
 	console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" pageSize=="+pageSize+" pageNo=="+pageNo);
 	
-	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&featureId="+featureId+"&userType"+userType+"&userTypeId="+userTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
 }
 

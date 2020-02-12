@@ -234,10 +234,17 @@ public class TrcController {
 
 	//***************************************** Export Grievance controller *********************************
 	@RequestMapping(value="/exportTac",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public String exportToExcel(@RequestParam(name="tacStartDate",required = false) String tacStartDate,@RequestParam(name="tacStatus",required = false) Integer tacStatus,
+	public String exportToExcel(@RequestParam(name="tacStartDate",required = false) String tacStartDate,
+			@RequestParam(name="tacStatus",required = false) Integer tacStatus,
 			@RequestParam(name="txnId") String txnId,
-			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="tacNumber") String tacNumber,
-			@RequestParam(name="tacEndDate",required = false) String tacEndDate)
+			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,
+			@RequestParam(name="pageNo") Integer pageNo,
+			@RequestParam(name="tacNumber") String tacNumber,
+			@RequestParam(name="tacEndDate",required = false) String tacEndDate,
+			@RequestParam(name="featureId",required = false) Integer featureId,
+			@RequestParam(name="userType",required = false) String userType,
+			@RequestParam(name="userTypeId",required = false) Integer userTypeId
+			)
 	{
 		log.info("tacStartDate=="+tacStartDate+ " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
 		int userId= (int) session.getAttribute("userid"); 
@@ -250,6 +257,10 @@ public class TrcController {
 		trcRequest.setStatus(tacStatus);
 		trcRequest.setUserId(userId);
 		trcRequest.setTxnId(txnId);
+		trcRequest.setFeatureId(featureId);
+		trcRequest.setUserType(userType);
+		trcRequest.setUserTypeId(userTypeId);
+		trcRequest.setFile(file);
 		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file);
 

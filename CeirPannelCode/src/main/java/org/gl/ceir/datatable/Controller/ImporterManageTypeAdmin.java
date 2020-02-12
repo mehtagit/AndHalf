@@ -189,7 +189,7 @@ public class ImporterManageTypeAdmin {
 				pageElement.setButtonList(buttonList);
 		
 				//Dropdown items
-				String[] selectParam= {"select","CEIR Admin Status ","Status",""};
+				String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
 				for(int i=0; i< selectParam.length; i++) {
 					inputFields= new InputFields();
 					inputFields.setType(selectParam[i]);
