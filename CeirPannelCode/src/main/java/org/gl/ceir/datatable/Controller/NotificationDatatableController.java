@@ -16,8 +16,6 @@ import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.NotificationContent;
 import org.gl.ceir.pagination.model.NotificationPaginationModel;
-import org.gl.ceir.pagination.model.RegistrationContentModel;
-import org.gl.ceir.pagination.model.RegistrationPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
