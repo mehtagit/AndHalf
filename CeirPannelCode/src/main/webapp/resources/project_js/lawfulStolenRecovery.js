@@ -408,8 +408,8 @@ function saveIndivisualStolenRequest(){
 	var singleDevicecountry=$('#singleDevicecountry').val();
 	var singleDevicestate=$('#singleDevicestate').val();
 	var singleDeviceRemark=$('#singleDeviceRemark').val();
+	var IndivisualStolenDate=$('#IndivisualStolenDate').val();	
 	
-
 	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
@@ -448,6 +448,7 @@ function saveIndivisualStolenRequest(){
 	
 	
 	var request={
+			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
@@ -473,7 +474,7 @@ function saveIndivisualStolenRequest(){
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal();
+				$('#IndivisualStolenSucessPopup').openModal();
 				$('#dynamicTxnId').text(data.txnId);
 			}
 		},
@@ -530,7 +531,7 @@ function saveCompanyStolenRequest(){
 	var deviceBulkStolenComplaint=$('#deviceBulkStolenComplaint').val();
 	var deviceBulkStolenquantity=$('#deviceBulkStolenquantity').val();
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
-	
+	var bulkStolenDate=$('#bulkStolenDate').val();
 	
 
 	
@@ -562,6 +563,8 @@ function saveCompanyStolenRequest(){
 	
 	
 	var request={
+			"qty":deviceBulkStolenquantity,
+			"dateOfStolen":bulkStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,

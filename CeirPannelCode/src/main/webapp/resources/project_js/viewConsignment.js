@@ -33,9 +33,6 @@
 			filterConsignment(lang);
 			sessionStorage.removeItem("session-value");
 			pageRendering();
-			$('.modal-trigger').leanModal({
-				dismissible: false
-			});
 		 });
 		
 
@@ -868,4 +865,3 @@
 
 
 
-/*		$('#viewModal').openModal({dismissible:false});*/

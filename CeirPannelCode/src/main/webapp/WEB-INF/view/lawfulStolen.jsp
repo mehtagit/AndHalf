@@ -206,7 +206,7 @@ margin-bottom: 5px;
 															 <spring:message code="registration.altcontactnumber" /><span class="star"> *</span>
 														</p>
 														<input type="tel" name="phone" id="singleStolenphone1"
-															required pattern="[0-9]{1,12}" title="Please enter 12 digits contact number" maxlength="12">
+															required pattern="[0-9 + ]{1,14}" title="Please enter 12 digits contact number" maxlength="12">
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
 													<!-- </div>
@@ -337,7 +337,7 @@ margin-bottom: 5px;
 																<spring:message code="input.contactNum" /> <span class="star"> *</span>
 															</p>
 															<input type="tel" name="phone" id="singleStolenphone2"
-															required pattern="[0-9]{1,12}" title="Please enter 12 digits contact number" maxlength="12">
+															required pattern="[0-9 + ]{1,12}" title="Please enter 12 digits contact number" maxlength="12">
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
 
@@ -488,10 +488,20 @@ onclick="_Services._selectstartDate()"></i></span>
 														</div>
 
 														<div class="input-field col s12 m6">
-															<textarea id="singleDeviceRemark" maxlength="200"
+															<textarea id="singleDeviceRemark" maxlength="20000"
 																class="materialize-textarea"></textarea>
 															<label for="textarea1"><spring:message code="input.Remark" /></label>
 														</div>
+														  <div class="input-field col s12 m6">
+											<input type="text" name="IndivisualStolenDate"
+												id='IndivisualStolenDate' class='form-control datepick'
+												autocomplete='off' 
+												title="<spring:message code="validation.requiredMsg" />"  required /> 
+												<label
+												for="IndivisualStolenDate" class="center-align"><spring:message code="operator.stolenDate" /> <span class="star">*</span>
+											</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+										</div>
 													</div>
 												</div>
 											</div>
@@ -773,16 +783,25 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
 </div>
-
+								<div class="input-field col s12 m6">
+											<input type="text" name="bulkStolenDate"
+												id='bulkStolenDate' class='form-control datepick'
+												autocomplete='off' 
+												title="<spring:message code="validation.requiredMsg" />"  required /> 
+												<label
+												for="bulkStolenDate" class="center-align"><spring:message code="operator.stolenDate" /> <span class="star"> *</span>
+											</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+										</div>
 
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
-												<textarea id="deviceBulkStolenRemark" maxlength="200"
+												<textarea id="deviceBulkStolenRemark" maxlength="20000"
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.Remark" /></label>
 											</div>
 
 											<div class="col s12 m12">
-												<a href=""><spring:message code="input.downlaod.sample" /></a>
+												<a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a>
 											</div>
 
 											<div class="input-field col s12 center">
@@ -798,15 +817,12 @@ onclick="_Services._selectstartDate()"></i></span>
 					</div>
 				</div>
 					<div class="modal" id="IndivisualStolenSucessPopup">
-            <h6 class="modal-header">Stolen/Recovery</h6>
+            <h6 class="modal-header"> <spring:message code="sidebar.Stolen/Recovery"/></h6>
             <div class="row" style="margin-top: 30px; padding: 0 20px;">
-               <div col s12 m12>
-               	 <h6>Thank You for registering the complaint. Please note the transaction ID ( <span id="IndivisualStolenTxnId"></span> ) this will be
-                    used for
-                    future reference of the complaint. The same has been sent to your registered mail ID and
-                    alternate contact no. </h6>
+               <div class=" col s12 m12">
+               	 <h6 id="sucessMessage"> <spring:message code="input.StolenSucessMessage1"/> <span id="IndivisualStolenTxnId"></span> <spring:message code="input.StolenSucessMessage2"/></h6>
                 <div class="input-field col s12 center" style="margin:20px 0;">
-                    <a href="./stolenRecovery" class="btn" style="margin:20px 0;">ok</a>
+                    <a href="./stolenRecovery" class="btn" style="margin:20px 0;"><spring:message code="modal.ok"/></a>
                 </div>
                </div>
             </div>
@@ -890,6 +906,10 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/js/intlTelInput.js">
 		</script>
 	<script>
+	$('.datepick').datepicker({
+		dateFormat : "yy-mm-dd"
+	});
+	
  populateCountries(
 	        "singleDevicecountry",
 	        "singleDevicestate"
