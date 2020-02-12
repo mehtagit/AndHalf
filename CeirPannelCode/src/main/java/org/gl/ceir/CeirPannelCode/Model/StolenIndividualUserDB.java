@@ -38,7 +38,7 @@ public class StolenIndividualUserDB {
 	private String province;
 	private String remark;
 	private String street;
-	private String village;
+	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince;
 	
 	public String getAlternateContactNumber() {
 	return alternateContactNumber;
@@ -336,6 +336,42 @@ public class StolenIndividualUserDB {
 	this.village = village;
 	}
 
+	
+	
+	public String getMultiSimStatus() {
+		return multiSimStatus;
+	}
+
+	public void setMultiSimStatus(String multiSimStatus) {
+		this.multiSimStatus = multiSimStatus;
+	}
+
+	public String getDeviceSerialNumber() {
+		return deviceSerialNumber;
+	}
+
+	public void setDeviceSerialNumber(String deviceSerialNumber) {
+		this.deviceSerialNumber = deviceSerialNumber;
+	}
+
+	
+	
+	public String getDeviceStolenCountry() {
+		return deviceStolenCountry;
+	}
+
+	public void setDeviceStolenCountry(String deviceStolenCountry) {
+		this.deviceStolenCountry = deviceStolenCountry;
+	}
+
+	public String getDeviceStolenProvince() {
+		return deviceStolenProvince;
+	}
+
+	public void setDeviceStolenProvince(String deviceStolenProvince) {
+		this.deviceStolenProvince = deviceStolenProvince;
+	}
+
 	@Override
 	public String toString() {
 		return "StolenIndividualUserDB [alternateContactNumber=" + alternateContactNumber + ", commune=" + commune
@@ -351,8 +387,18 @@ public class StolenIndividualUserDB {
 				+ ", modelNumber=" + modelNumber + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", operator="
 				+ operator + ", phoneNo=" + phoneNo + ", postalCode=" + postalCode + ", propertyLocation="
 				+ propertyLocation + ", province=" + province + ", remark=" + remark + ", street=" + street
-				+ ", village=" + village + "]";
+				+ ", village=" + village + ", multiSimStatus=" + multiSimStatus + ", deviceSerialNumber="
+				+ deviceSerialNumber + ", deviceStolenCountry=" + deviceStolenCountry + ", deviceStolenProvince="
+				+ deviceStolenProvince + "]";
 	}
+
+	
+
+	
+
+	
+	
+	
 
 	
 
