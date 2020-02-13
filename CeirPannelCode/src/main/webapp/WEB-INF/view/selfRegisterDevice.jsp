@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -87,7 +86,7 @@
 					style="margin: auto;margin-top: 5vh;">
 					<h6 class="fixPage-modal-header "> <spring:message code="modal.header.registerdevice" /></h6>
 					<form action="" onsubmit="return submitEndUserDeviceInfo()"
-						method="POST" enctype="multipart/form-data">
+						method="POST" enctype="multipart/form-data" novalidate>
 						<div class="col s12 m12 l12">
 							<div class="row">
 								<div class="row">
@@ -111,78 +110,95 @@
 									</div>
 									<div id="nationalID">
 										<div class="input-field col s12 m6">
-											<input type="text" id="endUserNID" required="required"
-												pattern="[A-Za-z0-9]{1,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
+											<input type="text" id="endUserNID" 
+												pattern="[A-Za-z0-9]{1,15}"  maxlength="15"
+								 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.15character" />"  required / > <label
 												id="endUserLabelNID" for="NID"><spring:message code="registration.nationalid" />  <span
 												class="star">*</span></label>
 										</div>
 										<div class="file-field col s12 m6" style="margin-top: -8px;">
-											<h6 style="font-size: 12px;" id="nidType">
+											<h6 style="font-size: 12px;" id="nidType"> 
 											<spring:message code="input.IDImage" />  <span class="star">*</span>
 											</h6>
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /> </span> <input type="file" required="required" accept="image/*"
-													id="uploadnationalID">
+											
+												<span><spring:message code="input.selectfile" /> </span> <input type="file" accept="image/*"
+												id="uploadnationalID" 
+ 										title="<spring:message code="validation.NoChosen" />" 
+							 oninvalid="this.setCustomValidity('<spring:message code="validation.file" />')"  oninput="setCustomValidity('')"  required />
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate" type="text"
+												<input class="file-path validate" type="text" 
 													id="nidPlaceHolder" placeholder="Upload NID Image" value="">
 											</div>
 										</div>
 
 										<div class="input-field col s12 m4">
-											<input type="text" id="endUserfirstName" required="required"
-												pattern="[a-zA-Z]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" /> <label
+											<input type="text" id="endUserfirstName"
+												pattern="[a-zA-Z]{1,20}" maxlength="20"
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												 title= "<spring:message code="validation.20Character" />"  required /> <label
 												for="firstName"><spring:message code="input.firstName" /><span class="star">*</span></label>
 										</div>
 
 										<div class="input-field col s12 m4">
 											<input type="text" id="endUsermiddleName"
-												pattern="[a-zA-Z]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" /> <label
+												pattern="[a-zA-Z]{1,20}" maxlength="20"  
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.20Character" />" > <label
 												for="middleName"><spring:message code="input.middleName" /> </label>
 										</div>
 
 										<div class="input-field col s12 m4">
-											<input type="text" id="endUserlastName" required="required"
-												pattern="[a-zA-Z]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" /> <label
+											<input type="text" id="endUserlastName"
+												pattern="[a-zA-Z]{1,20}" maxlength="20"
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.20Character" />" required  / > <label
 												for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
 										</div>
 
 										<div class="input-field col s12 m6" id="nationalityDiv" style="display: none">
 											<input type="text" id="nationality" name="nationality"
-												pattern="[a-zA-Z]{1,25}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="25"> <label
+												pattern="[a-zA-Z]{1,25}" maxlength="25"
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												 title= "<spring:message code="validation.15character" />" required  / > <label
 												for="nationality" class=""><spring:message code="input.Nationality" />  <span
 												class="star">*</span></label>
 										</div>
 										<div class="input-field col s12 m12 l12">
 											<input type="text" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}"
-														title="Please enter alphabets and numbers upto 200 characters only"
-														maxlength="200" required="required" class="form-control boxBorder boxHeight"
+											oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+														title="<spring:message code="validation.200character" />" required  /
+														maxlength="200" class="form-control boxBorder boxHeight"
 												id="address"> <label for="address"><spring:message code="input.address" /><span class="star">*</span>
 											</label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												id="streetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}"
-													required="required"	title="Please enter alphabets and numbers upto 20 characters only"
-												maxlength="20"> <label
+												id="streetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" maxlength="20"
+													oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.20Character" />" required  / >
+												 <label
 												for="streetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 											</label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" required="required"
-														title="Please enter alphabets and numbers upto 50 characters only"
+												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+														title="<spring:message code="validation.50character" />"
 														class="form-control boxBorder boxHeight" id="locality"
-												id="endUserlocality" maxlength="50"> <label
+												id="endUserlocality" maxlength="50" required /> <label
 												for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
-											<input type="text" id="village" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" required="required"
-														title="Please enter alphabets and numbers upto 50 characters only" maxlength="50"> <label
+											<input type="text" id="village" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"  maxlength="50"
+														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+														title="<spring:message code="validation.50character" />"  required / > <label
 												for="village"><spring:message code="input.village" /> <span class="star">*</span>
 											</label>
 										</div>
@@ -195,26 +211,34 @@
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" id="endUserdistrict"
-												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" required="required"
-														title="Please enter alphabets and numbers upto 50 characters only"maxlength="50"> <label for="district"><spring:message code="input.district" />
+												pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" maxlength="50" 
+														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+														title="<spring:message code="validation.50character" />"  required / >
+														 <label for="district"><spring:message code="input.district" />
 												<span class="star">*</span>
 											</label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												id="pin" pattern="[0-9]{1,20}" title="Please enter Postel code upto 10 Numbers only" 
-												maxlength="20" required="required"> <label for="pin"><spring:message code="registration.postalcode" /><span
+												id="pin" pattern="[0-9]{1,20}" maxlength="20" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.10Numbers" />" 
+												 required / > <label for="pin"><spring:message code="registration.postalcode" /><span
 												class="star">*</span></label>
 										</div>
 
 										<div class="input-field col s12 m6 l6">
 											<p
 												style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-												<spring:message code="input.Country" /> <span class="star">*</span>
+												<spring:message code="input.Country" />
+												
+												 <span class="star">*</span>
 											</p>
 											<select id="country" required class="browser-default" class="mySelect"
-												style="padding-left: 0;" required></select>
+title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"
+												style="padding-left: 0;" onchange="setCustomValidity('')"  required / > </select>
+												
 										</div>
 
 										<div class="input-field col s12 m6 l6" style="margin-bottom: 5px;">
@@ -223,6 +247,7 @@
 												<spring:message code="input.province" /> <span class="star">*</span>
 											</p>
 											<select id="state" required class="browser-default" class="mySelect"
+											title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"
 												style="padding-left: 0;" required></select>
 										</div>
 
@@ -230,8 +255,11 @@
 											<p class="contact-label">
 												<spring:message code="input.contactNum" /> <span class="star">*</span>
 											</p>
-											<input type="tel" id="phone" required pattern="[0-9]{1,10}" title="Please enter 10 digits contact number"
-												maxlength="10">
+											<input type="tel" id="phone" required pattern="[0-9]{1,10}"  maxlength="10" 
+											oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.10digits" />" 
+												 required / >
+												
 										</div>
 
 										<div class="input-field col s12 m6">
@@ -255,14 +283,20 @@
 										<div class="row" style="display: none;" id="vipUserDiv">
 											<div class="input-field col s12 m6">
 												<input type="text" id="departmentName" 
-												pattern="[a-zA-Z ]{1,50}" title="Please enter alphabets  upto 50 characters only"  maxlength="50" /> <label
+												pattern="[a-zA-Z ]{1,50}" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.50character" />" 
+												 required / >  <label
 													for="departmentName"><spring:message code="input.DepartmentName" /> <span
 													class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<input type="text" id="endUserdepartmentID"
-													pattern="[a-zA-Z0-9]{1,15}" title="Please enter alphabets  upto 15 characters only" maxlength="15" /> <label
+													pattern="[a-zA-Z0-9]{1,15}" 
+													oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.15character" />" 
+												 required / >  <label
 													for="departmentID"><spring:message code="input.DepartmentID" /><span class="star">*</span>
 												</label>
 											</div>
@@ -275,6 +309,7 @@
 												<div class="btn">
 													<span><spring:message code="operator.file" /></span> <input type="file" accept="image/*"
 														id="endUserDepartmentId"
+title="<spring:message code="validation.NoChosen" />" oninvalid="this.setCustomValidity('<spring:message code="validation.file" />')"  onselect="setCustomValidity('')"  required /														
 														placeholder="Upload Department ID Image">
 												</div>
 												<div class="file-path-wrapper">
@@ -301,7 +336,8 @@
 										<div class="row" id="visaDetails" style="display: none;">
 											<div class="col s12 m6">
 												<label for="visaType"><spring:message code="input.VisaType" /> <span class="star">*</span></label>
-												<select class="browser-default" id="visaType" style="height: 33px">
+												<select class="browser-default" id="visaType" style="height: 33px"
+title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required >
 													<option value="" disabled selected><spring:message code="input.SelectVisaType" /></option>
 
 												</select>
@@ -346,6 +382,8 @@
 												</h6>
 												<div class="btn">
 													<span><spring:message code="operator.file" /></span> <input type="file" id="visaImage" accept="image/*"
+title="<spring:message code="validation.NoChosen" />" oninvalid="this.setCustomValidity('<spring:message code="validation.file" />')"  onselect="setCustomValidity('')"  required /														
+														
 														placeholder="Upload Visa Image">
 												</div>
 												<div class="file-path-wrapper">
@@ -364,7 +402,8 @@
 													<div class="col s12 m6">
 														<label for="deviceIdType"><spring:message code="select.deviceIDType" /><span
 															class="star">*</span></label> <select class="browser-default"
-															id="deviceIdType1" required="required">
+title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required															
+															id="deviceIdType1" >
 															<option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
 
 														</select>
@@ -373,7 +412,9 @@
 
 													<div class="col s12 m6">
 														<label for="deviceType"><spring:message code="select.multiSimStatus" /> <span
-															class="star">*</span></label> <select class="browser-default" required="required"
+															class="star">*</span></label> <select class="browser-default" 
+	title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required 														
+															
 															id="multipleSimStatus1">
 															<option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
 
@@ -383,7 +424,8 @@
 													<div class="col s12 m6">
 														<label for="deviceType"><spring:message code="select.deviceType" /><span
 															class="star">*</span></label> <select class="browser-default"
-															style="height: 34px" id="deviceType1" required="required">
+title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required															
+															style="height: 34px" id="deviceType1" >
 															<option value="" disabled selected><spring:message code="select.deviceType" /></option>
 
 														</select>
@@ -394,56 +436,44 @@
 															<spring:message code="input.Country" /><span class="star">*</span>
 														</p>
 														<select id="country1" class="browser-default" 
+title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" 														
 															style="margin-bottom: 5px;" class="mySelect"
 															style="padding-left: 0;" required></select>
 													</div>
 													<div class="input-field col s12 m6"
 														style="margin-top: 22px;">
 														<input type="text" id="serialNumber1" required="required"
-															pattern="[A-Za-z0-9]{0,15}"
-																title="Please enter alphabets and numbers upto 15 characters only"
-															maxlength="15"> <label for="serialNumber"><spring:message code="input.deviceSerialNumber" /> <span class="star">*</span>
+															pattern="[A-Za-z0-9]{0,15}" maxlength="15"
+											oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.15character" />" 
+												 required / > <label for="serialNumber"><spring:message code="input.deviceSerialNumber" /> <span class="star">*</span>
 														</label>
 													</div>
 
 													<div class="col s12 m6">
 														<label for="taxStatus"><spring:message code="select.deviceStatus" /> <span
 															class="star">*</span></label> <select class="browser-default"
-															id="deviceStatus1"  required="required">
-															<option value="" disabled="disabled" selected><spring:message code="select.selectDeviceStatus" /></option>
-
-														</select>
-													</div>
-
-													<div class="col s12 m12">
-														<p><spring:message code="title.imeiMeidEsn" /></p>
-													</div>
+title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"															
+															id="deviceStatus1"  required / >
+											<option value="" disabled="disabled" selected><spring:message code="select.selectDeviceStatus" /></option> 
+											</select> </div> <div class="col s12 m12"> <p><spring:message code="title.imeiMeidEsn" /></p> </div>
+			<div class="input-field col s12 m6"> <input type="text" id="IMEIA1" pattern="[0-9]{16,16}" maxlength="16"
+				oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+				title=  "<spring:message code="validation.1516digit" />" required / > <label for="IMEI1"><spring:message code="title.one" />
+				 <span class="star">*</span></label> </div>
+				<div class="input-field col s12 m6"> 
+				<input type="text" id="IMEIB1" pattern="[0-9]{16,16}" maxlength="16"
+				oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+				title=  "<spring:message code="validation.1516digit" />" >  <label for="IMEI2"><spring:message code="title.two" /></label> </div>
+													<div class="input-field col s12 m6">
+														<input type="text" id="IMEIC1" pattern="[0-9]{16,16}" maxlength="16"
+						oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+						title=  "<spring:message code="validation.1516digit" />" > <label for="IMEI1"><spring:message code="title.three" /></label> </div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIA1" pattern="[0-9]{16,16}"
-															title="Please enter minimum 15 and maximum 16 digit only"
-															maxlength="16" required="required"> <label for="IMEI1"><spring:message code="title.one" /> <span
-															class="star">*</span></label>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIB1" pattern="[0-9]{16,16}"
-															title="Please enter minimum 15 and maximum 16 digit only"
-															maxlength="16"> <label for="IMEI2"><spring:message code="title.two" /></label>
-													</div>
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIC1" pattern="[0-9]{16,16}"
-															title="Please enter minimum 15 and maximum 16 digit only"
-															maxlength="16"> <label for="IMEI1"><spring:message code="title.three" /></label>
-													</div>
-
-													<div class="input-field col s12 m6">
-														<input type="text" id="IMEID1" pattern="[0-9]{16,16}"
-															title="Please enter minimum 15 and maximum 16 digit only"
-															maxlength="16"> <label for="IMEI2"><spring:message code="title.four" /></label>
-													</div>
-
-
+														<input type="text" id="IMEID1" pattern="[0-9]{16,16}"maxlength="16"
+					oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+				title=  "<spring:message code="validation.1516digit" />" > <label for="IMEI2"><spring:message code="title.four" /></label> </div>
 												</div>
 											</div>
 											<!-- <div class="input_fields_wrap_1"></div> -->
