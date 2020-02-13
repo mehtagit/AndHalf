@@ -106,6 +106,49 @@
 		<!--end container-->
 	</section>
 
+	<div id="DeleteConsignment" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.delete" /></h6>
+		<div class="modal-content">
+	<div class="row">
+				<h6><spring:message code="modal.withdraw.messageforStolen" /> ( <span id="transID"></span>)
+				</h6>
+				<span id="setStolenRecoveyRowId" style="display: none;"></span>
+			</div>
+			<input type="text" id="popupTransactionId" maxlength="15" hidden />
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<a class="btn" onclick="confirmantiondelete()"><spring:message code="modal.ok" /></a>
+						<button class="modal-close btn" onclick="closeUpdateModal()"
+							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="confirmDeleteConsignment" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteStolen" /></h6>
+		<div class="modal-content">
+
+			
+			
+			<!-- <h4 class="header2 pb-2">User Info</h4> -->
+
+			<div class="row">
+				<h6 id=consignmentText></h6>
+			</div>
+
+			<div class="row">
+				<div class="input-field col s12 cent\er">
+					<div class="input-field col s12 center">
+						<a href="" class="btn"><spring:message code="modal.ok" /></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
                          <div id="chooseStolenOption" class="modal">
                          <button type="button"
 			class=" modal-action modal-close  btn-flat right"

@@ -1232,35 +1232,34 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
-		String deleteAction = "JavaScript:void(0);"; 
-
+        String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 			log.info("edit and view   Indivisual Stolen");
-			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit')";
-			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view')";
+			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("0")) {
 			//check for Stolen/Company
 			log.info("edit and view   Company Stolen");
-			editAction="openStolenRecoveryPage('editCompanyStolen','edit')";
-			viewAction="openStolenRecoveryPage('editCompanyStolen','view')";
+			editAction="openStolenRecoveryPage('editCompanyStolen','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"')";
 
 		}
 		else if(source.equals("4") && requestTypeValue.equals("1")) {
 			//check for Recovery/single
 			log.info("edit and view   single Recovery");
-			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit')";
-			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view')";
+			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view','"+txnId+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("1")) {
 			//check for Recovery/company
 			log.info("edit and view   Company Recovery");
-			editAction="openStolenRecoveryPage('editCompanyRecovery','edit')";
-			viewAction="openStolenRecoveryPage('editCompanyRecovery','view')";
+			editAction="openStolenRecoveryPage('editCompanyRecovery','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"')";
 
 		}
 		/*

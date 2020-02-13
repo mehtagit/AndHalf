@@ -133,20 +133,20 @@
 
 												<div class="col-s12 m12">
 													<div class="input-field col s12 m4">
-														<input type="text" name="singleStolenfirstName"
+														<input type="text" name="singleStolenfirstName" placeholder=""
 															id="singleStolenfirstName"> <label
 															for="singleStolenfirstName"><spring:message code="input.firstName" /> <span
 															class="star">*</span></label>
 													</div>
-
+									<input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
 													<div class="input-field col s12 m4">
 														<input type="text" name="middleName"
-															id="singleStolenmiddleName"> <label
+														placeholder=""	id="singleStolenmiddleName"> <label
 															for="middleName"><spring:message code="input.middleName" /></label>
 													</div>
 
 													<div class="input-field col s12 m4">
-														<input type="text" name="lastName"
+														<input type="text" name="lastName" placeholder=""
 															id="singleStolenlastName"> <label for="lastName">
 															<spring:message code="input.lastName" /> <span class="star">*</span>
 														</label>
@@ -182,14 +182,14 @@
 
 													<div class="input-field col s12 m6"
 														style="margin-top: 22px;">
-														<input type="text" name="nIDPassportNumber"
+														<input type="text" name="nIDPassportNumber" placeholder=""
 															id="singleStolennIDPassportNumber"> <label
 															for="nIDPassportNumber"><spring:message code="registration.nid/passportnumber" /> <span
 															class="star">*</span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="email" id="singleStolenemail"
+														<input type="text" name="email" id="singleStolenemail" placeholder=""
 															maxlength="30"> <label for="email"><spring:message code="input.email" />
 														</label>
 													</div>
@@ -198,7 +198,7 @@
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" /> <span class="star">*</span>
 														</p>
-														<input type="tel" name="phone" id="singleStolenphone1"
+														<input type="tel" name="phone" id="singleStolenphone1" placeholder=""
 															maxlength="15">
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
@@ -206,7 +206,7 @@
 
                                                         <div class="col s12 m12"> -->
 													<div class="input-field col s12 m12">
-														<input type="text" name="address"
+														<input type="text" name="address" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenaddress" pattern=[A-Za-z]
 															title="Please enter your address"> <label
@@ -215,7 +215,7 @@
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="streetNumber"
+														<input type="text" name="streetNumber" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenstreetNumber" maxlength="30"
 															pattern=[A-Za-z0-9] title="Please enter street number">
@@ -224,14 +224,14 @@
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="village" id="singleStolenvillage"
+														<input type="text" name="village" id="singleStolenvillage" placeholder=""
 															maxlength="20"> <label for="village"><spring:message code="input.village" />
 															<span class="star">*</span>
 														</label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="locality"
+														<input type="text" name="locality" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenlocality" maxlength="20"
 															pattern=[A-Za-z0-9] title="Please enter your locality">
@@ -239,20 +239,20 @@
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="district"
+														<input type="text" name="district" placeholder=""
 															id="singleStolendistrict" maxlength="20"> <label
 															for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="commune" id="singleStolencommune"
+														<input type="text" name="commune" id="singleStolencommune" placeholder=""
 															maxlength="20"> <label for="commune"><spring:message code="input.commune" />
 															<span class="star">*</span>
 														</label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
-														<input type="text" name="pin"
+														<input type="text" name="pin" placeholder=""
 															class="form-control boxBorder boxHeight"
 															id="singleStolenpin" maxlength="20"> <label
 															for="pin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
@@ -278,14 +278,14 @@
 													<div>
 														<div class="input-field col s12 m6"
 															style="margin-top: 22px;">
-															<input type="text" name="deviceBrandName"
+															<input type="text" name="deviceBrandName" placeholder=""
 																id="singleStolendeviceBrandName" maxlength="30">
 															<label for="deviceBrandName"><spring:message code="registration.devicebrandname" /></label>
 														</div>
 
 														<div class="input-field col s12 m6"
 															style="margin-top: 22px;">
-															<input type="text" name="imeiNumber"
+															<input type="text" name="imeiNumber" placeholder=""
 																id="singleStolenimeiNumber" maxlength="30"> <label
 																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
 														</div>
@@ -316,7 +316,7 @@
                                                               </div> -->
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="modalNumber"
+															<input type="text" name="modalNumber" placeholder=""
 																id="singleStolenmodalNumber" maxlength="30"> <label
 																for="modalNumber"><spring:message code="registration.modelnumber" /></label>
 														</div>
@@ -325,7 +325,7 @@
 															<p class="contact-label">
 																 <spring:message code="input.contactNum" /><span class="star">*</span>
 															</p>
-															<input type="tel" name="phone" id="singleStolenphone2"
+															<input type="tel" name="phone" id="singleStolenphone2" placeholder=""
 																maxlength="15">
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
@@ -372,7 +372,7 @@
                                                                 <p><b>Place Of Device Stolen</b></p>
                                                             </div> -->
 														<div class="input-field col s12 m12">
-															<input type="text" name="address"
+															<input type="text" name="address" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDeviceAddress" pattern=[A-Za-z]
 																title="Please enter your address"> <label
@@ -381,7 +381,7 @@
 														</div>
 
 														<div class="input-field col s12 m6 l6">
-															<input type="text" name="streetNumber"
+															<input type="text" name="streetNumber" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDevicestreetNumber" maxlength="30"
 																pattern=[A-Za-z0-9] title="Please enter street number">
@@ -390,13 +390,13 @@
 														</div>
 
 														<div class="input-field col s12 m6 l6">
-															<input type="text" name="village"
+															<input type="text" name="village" placeholder=""
 																id="singleDevicevillage" maxlength="20"> <label
 																for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
-															<input type="text" name="locality"
+															<input type="text" name="locality" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDevicelocality" maxlength="20"
 																pattern=[A-Za-z0-9] title="Please enter your locality">
@@ -404,19 +404,19 @@
 														</div>
 
 														<div class="input-field col s12 m6 l6">
-															<input type="text" name="district"
+															<input type="text" name="district" placeholder=""
 																id="singleDevicedistrict" maxlength="20"> <label
 																for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
-															<input type="text" name="commune"
+															<input type="text" name="commune" placeholder=""
 																id="singleDevicecommune" maxlength="20"> <label
 																for="commune"> <spring:message code="input.commune" /><span class="star">*</span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
-															<input type="text" name="pin"
+															<input type="text" name="pin" placeholder=""
 																class="form-control boxBorder boxHeight"
 																id="singleDevicepin" maxlength="20"> <label
 																for="pin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
@@ -435,7 +435,7 @@
 														</div>
 
 														<div class="input-field col s12 m6">
-															<textarea id="singleDeviceRemark"
+															<textarea id="singleDeviceRemark" placeholder="" 
 																class="materialize-textarea"></textarea>
 															<label for="textarea1"><spring:message code="input.remarks" /></label>
 														</div>
@@ -461,63 +461,72 @@
 
 
 									<div id="Bulkform" class="col s12" style="display: block">
-										<form action="#" style="margin-top: 30px;" id="bulkFormSubmit">
+										<form action="" id="SingleImeiBlockform" onsubmit="return updateCompanyStolenDetails()" method="POST" enctype="multipart/form-data">
 											<div class="input-field col s12 m6">
 												<input type="text" name="companyName"
+												pattern=[A-Za-z]{1,50} maxlength="50" required  title="Please enter alphabets and numbers upto 50 characters only"
 													id="bulkStolencompanyName"> <label
 													for="companyName"> <spring:message code="registration.companyName" /><span class="star">*</span></label>
 											</div>
 <input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 											<div class="input-field col s12 m6">
-												<input type="text" name="address"
+												<input type="text" name="address" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenaddress" pattern=[A-Za-z]
-													title="Please enter your address"> <label
+													id="bulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
+													title="Please enter alphabets and numbers upto 200 characters only" 
+													maxlength="200" required="required"> <label
 													for="address"> <spring:message code="input.address" /><span
 													class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="streetNumber"
+												<input type="text" name="streetNumber" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenstreetNumber" maxlength="30"
-													pattern=[A-Za-z0-9] title="Please enter street number">
+													id="bulkStolenstreetNumber" pattern="[^[a-zA-Z0-9\s,'50" title="Please enter alphabets and numbers upto 50 characters only"
+													 maxlength="50" required="required" title="Please enter street number">
 												<label for="streetNumber"> <spring:message code="input.streetNumber" /><span
 													class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="village" id="bulkStolenvillage"
-													maxlength="20"> <label for="village"><spring:message code="input.village" />
+												<input type="text" name="village" id="bulkStolenvillage" placeholder=""
+													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												 maxlength="50" required="required">
+												  <label for="village"><spring:message code="input.village" />
 													<span class="star">*</span>
 												</label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="locality"
+												<input type="text" name="locality" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="bulkStolenlocality" maxlength="20" pattern=[A-Za-z0-9]
+													id="bulkStolenlocality"  pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}"
+													 title="Please enter alphabets and numbers upto 50 characters only"
+													 maxlength="50" required="required"
 													title="Please enter your locality"> <label
 													for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="district" id="bulkStolendistrict"
-													maxlength="20"> <label for="district"><spring:message code="input.district" />
+												<input type="text" name="district" id="bulkStolendistrict" placeholder=""
+													pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												 maxlength="50" required="required"> <label for="district"><spring:message code="input.district" />
 													<span class="star">*</span>
 												</label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="commune" id="bulkStolencommune"
-													maxlength="20"> <label for="commune"><spring:message code="input.commune" />
+												<input type="text" name="commune" id="bulkStolencommune" placeholder=""
+													pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												 maxlength="50" required="required"> <label for="commune"><spring:message code="input.commune" />
 													<span class="star">*</span>
 												</label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="pin"
-													class="form-control boxBorder boxHeight" id="bulkStolenpin"
+													class="form-control boxBorder boxHeight" id="bulkStolenpin" placeholder=""
+													pattern="[0-9]{0,20}" title="Please enter numbers upto 20 characters only"  required="required"
 													maxlength="20"> <label for="pin"><spring:message code="input.postalCode" />
 													<span class="star">*</span>
 												</label>
@@ -544,31 +553,36 @@
                                                     </div> -->
 
 											<div class="input-field col s12 m4">
-												<input type="text" name="bulkStolenfirstName" id="firstName">
+												<input type="text" name="bulkStolenfirstName" placeholder="" id="firstName" 
+												pattern="[a-zA-Z]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" required="required">
 												<label for="firstName"> <spring:message code="input.firstName" /><span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m4">
-												<input type="text" name="middleName"
-													id="bulkStolenmiddleName"> <label for="middleName">
+												<input type="text" name="middleName" placeholder=""
+													id="bulkStolenmiddleName" pattern="[a-zA-Z]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20">
+													 <label for="middleName">
 													<spring:message code="input.middleName" /></label>
 											</div>
 
 											<div class="input-field col s12 m4">
-												<input type="text" name="lastName" id="bulkStolenlastName">
+												<input type="text" name="lastName" placeholder="" id="bulkStolenlastName"
+												pattern="[a-zA-Z ]{1,20}" title="Please enter alphabets  upto 20 characters only" maxlength="20" required="required">
 												<label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
-												<input type="text" name="officeEmail"
-													id="bulkStolenofficeEmail"> <label
+												<input type="email" name="officeEmail" placeholder=""
+													id="bulkStolenofficeEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+												 title="Please enter valid email formate " maxlength="30"> <label
 													for="officeEmail"><spring:message code="registration.officialemailid" /></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
-												<input type="tel" name="phone" id="bulkStolenContact"
-													maxlength="15"> <label for="phone2">
+												<input type="tel" name="phone" id="bulkStolenContact" placeholder=""
+													required pattern="[0-9]{1,12}" title="Please enter 12 digits contact number" 
+													maxlength="12"> <label for="phone2">
 													<spring:message code="input.contactNum" /></label>
 											</div>
 
@@ -585,53 +599,53 @@
                                                         <p><b>Place Of Device Stolen</b></p>
                                                     </div> -->
 											<div class="input-field col s12 m12">
-												<input type="text" name="address"
+												<input type="text" name="address" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenaddress" pattern=[A-Za-z]
-													title="Please enter your address"> <label
+													id="deviceBulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" title="Please enter alphabets and numbers upto 200 characters only" 
+													maxlength="200" required="required"> <label
 													for="address"><spring:message code="input.address" /> <span
 													class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="streetNumber"
+												<input type="text" name="streetNumber" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenstreetNumber" maxlength="30"
-													pattern=[A-Za-z0-9] title="Please enter street number">
+													id="deviceBulkStolenstreetNumber"  pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+													 maxlength="50" required="required">
 												<label for="streetNumber"><spring:message code="input.streetNumber" /> <span
 													class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="village"
-													id="deviceBulkStolenvillage" maxlength="20"> <label
+												<input type="text" name="village" placeholder=""
+													pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" maxlength="50" required="required"> <label
 													for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="locality"
+												<input type="text" name="locality" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenlocality" maxlength="20"
-													pattern=[A-Za-z0-9] title="Please enter your locality">
+													id="deviceBulkStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" 
+													maxlength="50" required="required">
 												<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="district"
-													id="deviceBulkStolendistrict" maxlength="20"> <label
+												<input type="text" name="district" placeholder=""
+													id="deviceBulkStolendistrict"pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" maxlength="50" required="required"> <label
 													for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="commune"
-													id="deviceBulkStolencommune" maxlength="20"> <label
+												<input type="text" name="commune" placeholder=""
+													id="deviceBulkStolencommune" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only" maxlength="50" required="required"> <label
 													for="commune"> <spring:message code="input.commune" /><span class="star">*</span></label>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="pin"
+												<input type="text" name="pin" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenpin" maxlength="20"> <label
+													id="deviceBulkStolenpin" pattern="[0-9]{0,20}" title="Please enter  numbers upto 20 characters only" maxlength="20" required="required"> <label
 													for="pin"><spring:message code="input.postalCode" /><span class="star">*</span></label>
 											</div>
 
@@ -658,10 +672,10 @@
 
 											<div class="input-field col s12 m6 l6"
 												style="margin-top: 22px;">
-												<input type="text" name="quantity"
+												<input type="text" name="quantity" placeholder=""
 													class="form-control boxBorder boxHeight"
-													id="deviceBulkStolenquantity" maxlength="10" pattern=[0-9]
-													title="Please enter your locality"> <label
+													id="deviceBulkStolenquantity" maxlength="10" pattern=[0-9]{1,7}
+													title="Please enter number upto 7 digits"> <label
 													for="quantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 											</div>
 
@@ -674,14 +688,14 @@
 														id="deviceBulkStolenFile" placeholder="Upload Photo">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="stolenFileName"
 														placeholder="Upload Device List"
 														title="Please upload your photo">
 												</div>
 											</div>
 
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
-												<textarea id="deviceBulkStolenRemark"
+												<textarea id="deviceBulkStolenRemark" placeholder=""
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.remarks" /></label>
 											</div>
@@ -691,7 +705,7 @@
 											</div>
 
 											<div class="input-field col s12 center">
-												<button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
+												<button class="btn" type="submit"><spring:message code="button.submit" /></button>
 												<a href="./stolenRecovery" class="btn modal-trigger"
 													style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
 											</div>
@@ -740,11 +754,43 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+		
+
+<!-- i18n library -->
+<script type="text/javascript"
+src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>		
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
+
+<script type="text/javascript"
+		src="${context}/resources/project_js/editCompanyStolen.js"></script>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/intlTelInput.js">
