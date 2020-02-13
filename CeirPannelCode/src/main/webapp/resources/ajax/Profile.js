@@ -1,3 +1,5 @@
+//var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+var tag;
 function changePassword(){
 	$("#changePassBtn").prop('disabled', true);
 	var obj="";
@@ -12,6 +14,8 @@ function changePassword(){
 			}    
 		}
 	});
+
+
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/changePassword',
@@ -53,14 +57,26 @@ function updateUSerStatus(){
 		dataType : 'html', 
 		data : JSON.stringify(obj),
 		success : function(data) { 
+
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#manageAccountSubmit #mgAccount").text(resp.response);
-				$("#manageAccountSubmit").openModal();   
-
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#manageAccountSubmit #mgAccount").text($.i18n(resp.tag));
+					$("#manageAccountSubmit").openModal(); 
+				});
 			}
 			else{  
-				$("#userStatusForm #errorMsg").text(resp.response);
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#userStatusForm #errorMsg").text($.i18n(resp.tag));
+				});
 			}
 			$("#updateStatusBtn").prop('disabled', true);
 		}, 
@@ -194,7 +210,7 @@ function editProfile(){
 			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
-			
+
 			//$("#registrationForm #state").text(resp.province);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);

@@ -154,7 +154,7 @@ var contextpath='${context}';
                                     <div class="row myRow" style="margin-top: 20px;">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="answer" class="center-align">n <spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
+                                            <label for="answer" class="center-align"> <spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -216,7 +216,7 @@ var contextpath='${context}';
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
 				<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>					
 				</div>           
 
@@ -231,7 +231,7 @@ var contextpath='${context}';
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
 				<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>					
 				</div>
 			</div>  

@@ -485,7 +485,7 @@ String usertypeId="${usertypeId}";
 										title="<spring:message code="validation.password" />"	required /> 
 										<label for="password"><spring:message code="registration.password" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+										<i class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 									</div>
 								</div>
 
@@ -494,7 +494,7 @@ String usertypeId="${usertypeId}";
 										min="8"										title="<spring:message code="validation.password" />" required /> 
 										<label for="confirm_password"> <spring:message code="registration.retypepassword" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+									<i class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
@@ -509,7 +509,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" placeholder="" name="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
+									<input type="text"  name="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" required="required" maxlength="50"
 										title="<spring:message code="validation.50alphanumeric" />" required />
 									<label for="answer0"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
 								</div>
@@ -524,7 +524,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" placeholder="" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
+									<input type="text" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="<spring:message code="validation.50alphanumeric" />" required /> 
 										<label for="answer1"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
 								</div>
@@ -540,7 +540,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="answer" placeholder="" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
+									<input type="text" name="answer"  class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
 										title="<spring:message code="validation.50alphanumeric" />"	required /> 
 										<label for="answer2"><spring:message code="registration.answer" /> <span class="star">*</span> </label>
 								</div>

@@ -44,5 +44,7 @@
 "requiredMsg_input":"Please fill in this field",
 "requiredMsg_date":"Please fill in this field",
 "requiredMsg_select":"Please select an item  in this field",
-"requiredMsg_fileType":"Please choose a file"
+"requiredMsg_fileType":"Please choose a file",
+"USER_STATUS_CHANGED":"User status has been changed",
+"USER_STATUS_CHANGE_FAIL":"User status failed to change"
 }

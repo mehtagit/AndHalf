@@ -330,14 +330,11 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 						@RequestParam(value = "file", defaultValue = "0") Integer file);
-					
-				
-				
-				//************************************************ view icon Message Management Feign *****************************************
-
+		
 				@PostMapping("/get/tags-mapping")
 				public @ResponseBody List<GrievanceDropdown> catagoryDropdownListFeign(FilterRequest filterRequest);	
 		}
+		
 
 
 

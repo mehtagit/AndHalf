@@ -349,7 +349,7 @@ String name = (String) session.getAttribute("name");
 			</h6>
 
 			<div class="input-field col s12 center">
-				<a href="${context}/logout" class="btn modal-close">ok</a>
+				<a href="${context}/logout" class="btn modal-close"> <spring:message code="modal.ok" /> </a>
 			</div>
 		</div>
 	</div>
@@ -383,8 +383,8 @@ String name = (String) session.getAttribute("name");
 							<spring:message code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 
@@ -404,8 +404,8 @@ String name = (String) session.getAttribute("name");
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password2"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 
@@ -424,8 +424,8 @@ String name = (String) session.getAttribute("name");
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password3"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 				</div>
@@ -558,12 +558,6 @@ data-dismiss="modal">&times;</button> -->
 
 	<!-- jQuery Library -->
 
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js"></script>
-
-		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
-			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -617,8 +611,12 @@ data-dismiss="modal">&times;</button> -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
+		
+	<!-- ajax js -->
+	
+
+		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript">
@@ -633,14 +631,15 @@ $(document).ready(function () {
 </script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js"></script>
 </body>
 
 </html>
 <%
         }
         else{            
-        request.setAttribute("msg", "  *Please login first");
+        request.setAttribute("msg", "  *Session has been expired");
         request.getRequestDispatcher("./login.jsp").forward(request, response);      	
         }
 %>
