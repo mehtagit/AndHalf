@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -39,14 +38,12 @@ import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.StockMgmt;
-import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
-import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserDepartment;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.VisaHistoryDb;
+import com.gl.ceir.config.model.WebActionDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.EndUserStatus;
 import com.gl.ceir.config.model.constants.Features;
@@ -54,7 +51,6 @@ import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
-import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.TaxStatus;
 import com.gl.ceir.config.model.file.EndUserFileModel;
@@ -62,6 +58,7 @@ import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.VisaHistoryDBRepository;
+import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
@@ -94,6 +91,9 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	VisaHistoryDBRepository visaHistoryDBRepository;
+	
+	@Autowired
+	WebActionDbRepository webActionDbRepository;
 
 	@Autowired
 	EmailUtil emailUtil;
@@ -119,6 +119,7 @@ public class EnduserServiceImpl {
 	@Transactional
 	public GenricResponse saveEndUser(EndUserDB endUserDB) {
 		try {
+			List<WebActionDb> webActionDbs = new ArrayList<>();
 			// TODO if user is already registerd.
 
 
@@ -162,6 +163,10 @@ public class EnduserServiceImpl {
 					if(Objects.isNull(endUserDB.getOrigin())) {
 						endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
 					}
+					
+					// Add in web action list.
+					webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
+							regularizeDeviceDb.getTxnId()));
 				}
 
 				logger.info(endUserDB.getRegularizeDeviceDbs());
@@ -170,6 +175,9 @@ public class EnduserServiceImpl {
 			endUserDB = endUserDbRepository.save(endUserDB);
 			logger.info(GenericMessageTags.USER_REGISTER_SUCCESS.getMessage() + " with nid [" + endUserDB.getNid() + "]");
 
+			webActionDbRepository.saveAll(webActionDbs);
+			logger.info("Batch update in web_action_db. " + webActionDbs );
+			
 			auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
 					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
 			logger.info("AUDIT : Saved request in audit.");
