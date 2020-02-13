@@ -1449,18 +1449,18 @@ public class IconsState {
 
 	/********************************** Icons for Manage Users**********************************/ 
 
-	public String manageUserIcons(String id) { 
+	public String manageUserIcons(String id, String passportNo) { 
 		executePostConstruct();
 		String viewAction="viewDetails('"+id+"')";
 		String editAction="";
-		String ListAction ="";
+		String ListAction = "deviceActivation?passportNo="+passportNo+"";
 		String AddAction = "";
 		// state related Code 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String List = "<a onclick="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
+		String List = "<a href="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
 				+ListIconTittle+"></i></a>"; 
 		String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
 				+plusIconTittle+"></i></a>"; 
