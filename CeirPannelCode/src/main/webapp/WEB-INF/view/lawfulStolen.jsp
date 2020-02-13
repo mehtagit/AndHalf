@@ -197,7 +197,8 @@ margin-bottom: 5px;
 
 													<div class="input-field col s12 m6 l6">
 														<input type="email" name="email" id="singleStolenemail"
-															maxlength="30"> <label for="email"><spring:message code="input.email" />
+														pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
+												        maxlength="30"> <label for="email"><spring:message code="input.email" />
 														</label>
 													</div>
 
@@ -230,7 +231,8 @@ margin-bottom: 5px;
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="village" id="singleStolenvillage"
-															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" required="required" title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
+															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" required="required"
+															 title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
 															 <label for="village"><spring:message code="input.village" />
 															<span class="star"> *</span>
 														</label>
@@ -295,7 +297,7 @@ margin-bottom: 5px;
 
 														<div class="input-field col s12 m6"
 															style="margin-top: 22px;">
-															<input type="text" name="imeiNumber" pattern="[0-9]{12,16}" title="Please enter minimum 15 and maximum 16 digit only" 
+															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only" 
 															maxlength="16" 	id="singleStolenimeiNumber" > <label
 																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
 														</div>
@@ -366,7 +368,7 @@ margin-bottom: 5px;
 
 														<div class="col s12 m6 l6">
 															<label><spring:message code="registration.complainttype" /> <span class="star"> *</span></label>
-															<select class="browser-default"
+															<select class="browser-default" required="required"
 																id="singleStolenComplaintType">
 																<option value="" disabled selected><spring:message code="registration.selectcomplainttype" /></option>
 
@@ -524,7 +526,7 @@ onclick="_Services._selectstartDate()"></i></span>
 									<div id="Bulkform" class="col s12" style="display: none">
 										<form action="" id="SingleImeiBlockform" onsubmit="return saveCompanyStolenRequest()" method="POST" enctype="multipart/form-data">
 											<div class="input-field col s12 m6">
-												<input type="text" name="companyName" pattern=[A-Za-z]{1,50} maxlength="50" required  title="Please enter alphabets and numbers upto 50 characters only"
+												<input type="text" name="companyName" pattern=[A-Za-z]{1,50} maxlength="50" required  title="Please enter alphabets and numbers upto 50 characters only" 
 													id="bulkStolencompanyName"> <label
 													for="companyName"><spring:message code="registration.companyName" /> <span class="star"> *</span></label>
 											</div>
@@ -566,7 +568,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											</div>
 
 											<div class="input-field col s12 m6 l6">
-												<input type="text" name="district" id="bulkStolendistrict"pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												<input type="text" name="district" id="bulkStolendistrict" pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
 												 maxlength="50" required="required"> <label for="district"><spring:message code="input.district" />
 													<span class="star"> *</span>
 												</label>
@@ -574,7 +576,8 @@ onclick="_Services._selectstartDate()"></i></span>
 
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="commune" id="bulkStolencommune"
-													maxlength="20"> <label for="commune"><spring:message code="input.commune" />
+												pattern="[a-zA-Z ]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+												 maxlength="50" required="required"> <label for="commune"><spring:message code="input.commune" />
 													<span class="star"> *</span>
 												</label>
 											</div>
@@ -722,7 +725,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="quantity"
 													class="form-control boxBorder boxHeight" required
 													id="deviceBulkStolenquantity" maxlength="7" pattern=[0-9]{1,7}
-													title="Please enter your locality"> <label
+													title="Please enter number upto 7 digits"> <label
 													for="quantity"><spring:message code="input.quantity" /><span class="star"> *</span></label>
 											</div>
 											

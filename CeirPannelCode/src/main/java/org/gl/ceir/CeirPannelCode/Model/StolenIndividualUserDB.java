@@ -2,6 +2,14 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class StolenIndividualUserDB {
 	
+	public Long getImeiEsnMeid() {
+		return imeiEsnMeid;
+	}
+
+	public void setImeiEsnMeid(Long imeiEsnMeid) {
+		this.imeiEsnMeid = imeiEsnMeid;
+	}
+
 	private String alternateContactNumber;
 	private String commune;
 	private Integer complaintType;
@@ -24,7 +32,7 @@ public class StolenIndividualUserDB {
 	private String email;
 	private String firstName;
 	private Integer id;
-	private Integer imeiEsnMeid;
+	private Long imeiEsnMeid;
 	private String lastName;
 	private String locality;
 	private String middleName;
@@ -216,13 +224,7 @@ public class StolenIndividualUserDB {
 	this.id = id;
 	}
 
-	public Integer getImeiEsnMeid() {
-	return imeiEsnMeid;
-	}
 
-	public void setImeiEsnMeid(Integer imeiEsnMeid) {
-	this.imeiEsnMeid = imeiEsnMeid;
-	}
 
 	public String getLastName() {
 	return lastName;
@@ -374,24 +376,97 @@ public class StolenIndividualUserDB {
 
 	@Override
 	public String toString() {
-		return "StolenIndividualUserDB [alternateContactNumber=" + alternateContactNumber + ", commune=" + commune
-				+ ", complaintType=" + complaintType + ", contactNumber=" + contactNumber + ", country=" + country
-				+ ", createdOn=" + createdOn + ", deviceBrandName=" + deviceBrandName + ", deviceIdType=" + deviceIdType
-				+ ", deviceStolenCommune=" + deviceStolenCommune + ", deviceStolenDistrict=" + deviceStolenDistrict
-				+ ", deviceStolenLocality=" + deviceStolenLocality + ", deviceStolenPostalCode="
-				+ deviceStolenPostalCode + ", deviceStolenPropertyLocation=" + deviceStolenPropertyLocation
-				+ ", deviceStolenStreet=" + deviceStolenStreet + ", deviceStolenVillage=" + deviceStolenVillage
-				+ ", deviceType=" + deviceType + ", district=" + district + ", docType=" + docType + ", docTypeInterp="
-				+ docTypeInterp + ", email=" + email + ", firstName=" + firstName + ", id=" + id + ", imeiEsnMeid="
-				+ imeiEsnMeid + ", lastName=" + lastName + ", locality=" + locality + ", middleName=" + middleName
-				+ ", modelNumber=" + modelNumber + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", operator="
-				+ operator + ", phoneNo=" + phoneNo + ", postalCode=" + postalCode + ", propertyLocation="
-				+ propertyLocation + ", province=" + province + ", remark=" + remark + ", street=" + street
-				+ ", village=" + village + ", multiSimStatus=" + multiSimStatus + ", deviceSerialNumber="
-				+ deviceSerialNumber + ", deviceStolenCountry=" + deviceStolenCountry + ", deviceStolenProvince="
-				+ deviceStolenProvince + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StolenIndividualUserDB [alternateContactNumber=");
+		builder.append(alternateContactNumber);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", complaintType=");
+		builder.append(complaintType);
+		builder.append(", contactNumber=");
+		builder.append(contactNumber);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", deviceBrandName=");
+		builder.append(deviceBrandName);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceStolenCommune=");
+		builder.append(deviceStolenCommune);
+		builder.append(", deviceStolenDistrict=");
+		builder.append(deviceStolenDistrict);
+		builder.append(", deviceStolenLocality=");
+		builder.append(deviceStolenLocality);
+		builder.append(", deviceStolenPostalCode=");
+		builder.append(deviceStolenPostalCode);
+		builder.append(", deviceStolenPropertyLocation=");
+		builder.append(deviceStolenPropertyLocation);
+		builder.append(", deviceStolenStreet=");
+		builder.append(deviceStolenStreet);
+		builder.append(", deviceStolenVillage=");
+		builder.append(deviceStolenVillage);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", docType=");
+		builder.append(docType);
+		builder.append(", docTypeInterp=");
+		builder.append(docTypeInterp);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", imeiEsnMeid=");
+		builder.append(imeiEsnMeid);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", modelNumber=");
+		builder.append(modelNumber);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", operator=");
+		builder.append(operator);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", multiSimStatus=");
+		builder.append(multiSimStatus);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", deviceStolenCountry=");
+		builder.append(deviceStolenCountry);
+		builder.append(", deviceStolenProvince=");
+		builder.append(deviceStolenProvince);
+		builder.append("]");
+		return builder.toString();
 	}
 
+
+	
+	
+	
 	
 
 	

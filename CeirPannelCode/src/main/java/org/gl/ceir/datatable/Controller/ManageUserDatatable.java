@@ -84,7 +84,7 @@ public class ManageUserDatatable {
 						String nationality =dataInsideList.getNationality();
 						String visaExpiryDate = "";
 						String phoneNo = dataInsideList.getPhoneNo();
-						String action=iconState.manageUserIcons(id);			   
+						String action=iconState.manageUserIcons(id,passportNo);			   
 						Object[] finalData={createdOn,txnId,passportNo,nationality,visaExpiryDate,phoneNo,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
