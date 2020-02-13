@@ -1,7 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,23 +11,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
-import com.gl.ceir.config.model.ActionsConfigDb;
-import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.SearchCriteria;
-import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.StatesInterpretationDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
-import com.gl.ceir.config.model.TableActions;
 import com.gl.ceir.config.model.TagsMapping;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
-import com.gl.ceir.config.repository.ActionConfigRepository;
-import com.gl.ceir.config.repository.StateMgmtRepository;
-import com.gl.ceir.config.repository.StatesInterpretaionRepository;
 import com.gl.ceir.config.repository.SystemConfigListRepository;
 import com.gl.ceir.config.repository.TagsMappingRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;

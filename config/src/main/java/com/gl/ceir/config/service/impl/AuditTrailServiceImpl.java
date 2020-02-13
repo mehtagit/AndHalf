@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
@@ -34,7 +33,6 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.file.AuditTrailFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
@@ -45,9 +43,6 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class AuditTrailServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(AuditTrailServiceImpl.class);
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;

@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
@@ -76,9 +75,6 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	PropertiesReader propertiesReader;
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;

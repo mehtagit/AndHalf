@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
@@ -46,9 +45,6 @@ public class FileController {
 
 	@Autowired
 	private FileStorageService fileStorageService;
-	
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	private DocumentsService documentService;
@@ -58,7 +54,7 @@ public class FileController {
 	
 	@Autowired
 	private FileServiceImpl fileServiceImpl;
-
+/*
 	@ApiOperation(value = "Upload file Ticket ID and Document Type must be there ", response = UploadFileResponse.class)
 	@RequestMapping(path = "/document/updateStatus", method = RequestMethod.PATCH)
 	public MappingJacksonValue partialUpdateName(@RequestParam String documentStatus, @RequestParam Long documentId) {
@@ -135,6 +131,7 @@ public class FileController {
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
 				.body(resource);
 	}
+	*/
 	
 	@ApiOperation(value = "Download Sample Stoke File.", response = String.class)
 	@RequestMapping(path = "/Download/SampleFile", method = RequestMethod.GET)

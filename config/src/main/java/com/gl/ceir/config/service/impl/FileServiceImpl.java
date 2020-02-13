@@ -1,18 +1,13 @@
 package com.gl.ceir.config.service.impl;
 
-import java.util.Objects;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gl.ceir.config.ConfigTags;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.model.FileDetails;
-import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.util.InterpSetter;
@@ -22,9 +17,6 @@ import com.gl.ceir.config.util.Utility;
 public class FileServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(FileServiceImpl.class);
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;

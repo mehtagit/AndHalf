@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
@@ -20,14 +19,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.gl.ceir.config.configuration.FileStorageProperties;
-import com.gl.ceir.config.controller.FileController;
 import com.gl.ceir.config.exceptions.FileStorageException;
 import com.gl.ceir.config.exceptions.MyFileNotFoundException;
 import com.gl.ceir.config.exceptions.ResourceNotFoundException;
 import com.gl.ceir.config.model.DocumentStatus;
 import com.gl.ceir.config.model.Documents;
-import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
 import com.gl.ceir.config.model.UploadFileRequest;
 import com.gl.ceir.config.model.UploadFileResponse;
@@ -42,8 +38,6 @@ public class FileStorageService {
 
 	public static final String downloadContext = "/document/download/";
 
-	private final Path fileStorageLocation;
-
 	@Autowired
 	private DocumentsService documentsService;
 
@@ -53,6 +47,7 @@ public class FileStorageService {
 	@Autowired
 	private PendingActionsRepositoy pendingActionsRepositoy;
 
+	/*
 	@Autowired
 	public FileStorageService(FileStorageProperties fileStorageProperties) {
 		System.out.println("fileStorageProperties " + fileStorageProperties.getUploadDir());
@@ -65,7 +60,7 @@ public class FileStorageService {
 					ex);
 		}
 	}
-
+ 
 	@Transactional
 	public UploadFileResponse storeFile(MultipartFile file, UploadFileRequest uploadFileRequest) {
 		// Normalize file name
@@ -157,4 +152,5 @@ public class FileStorageService {
 			throw new MyFileNotFoundException("File not found " + fileName, ex);
 		}
 	}
+	*/
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ActionsConfigDb;
@@ -35,9 +34,6 @@ public class StateMgmtServiceImpl {
 
 	@Autowired 
 	ActionConfigRepository actionConfigRepository;
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	PropertiesReader propertiesReader;

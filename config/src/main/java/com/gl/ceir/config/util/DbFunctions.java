@@ -25,6 +25,8 @@ public class DbFunctions {
 				dateFunction = "TO_CHAR";
 			}else if (dialect.toLowerCase().contains("mysql")) {
 				dateFunction = "STR_TO_DATE";
+			}else if (dialect.toLowerCase().contains("H2")) {
+				dateFunction = "PARSEDATETIME";
 			}else {
 				dateFunction = null;
 			}

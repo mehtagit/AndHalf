@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
@@ -14,7 +13,6 @@ import org.springframework.data.envers.repository.support.EnversRevisionReposito
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.model.DeviceSnapShot;
 import com.gl.ceir.config.model.DuplicateImeiMsisdn;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
@@ -22,7 +20,6 @@ import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ FileStorageProperties.class })
 @EnableJpaAuditing
 @EnableAutoConfiguration
 @EnableCaching

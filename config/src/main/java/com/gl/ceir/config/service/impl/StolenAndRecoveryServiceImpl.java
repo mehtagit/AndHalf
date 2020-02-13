@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubject;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.ConsignmentMgmt;
@@ -55,7 +54,6 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.StolenStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
-import com.gl.ceir.config.model.constants.Usertype;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
@@ -78,9 +76,6 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class StolenAndRecoveryServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(StolenAndRecoveryServiceImpl.class);
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	StolenAndRecoveryRepository stolenAndRecoveryRepository;
@@ -528,9 +523,9 @@ public class StolenAndRecoveryServiceImpl {
 
 		try {
 			StolenandRecoveryMgmt stolenandRecoveryMgmtInfo = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
-			if(stolenandRecoveryMgmtInfo == null) {
-
-				return new GenricResponse(4,"TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
+			logger.info(stolenandRecoveryMgmtInfo);
+			if(Objects.isNull(stolenandRecoveryMgmtInfo)) {
+				return new GenricResponse(4, "TxnId Does Not exist", stolenandRecoveryMgmt.getTxnId());
 			}else {
 
 				StolenAndRecoveryHistoryMgmt historyMgmt = new StolenAndRecoveryHistoryMgmt();
@@ -558,14 +553,31 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
+				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
-					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(updateStolenIndividualUserDB(stolenandRecoveryMgmt.getStolenIndividualUserDB()));
+					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(
+							stolenandRecoveryMgmtInfo.getStolenIndividualUserDB(),
+							stolenandRecoveryMgmt.getStolenIndividualUserDB()
+							);
+					
+					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(stolenIndividualUserDB);
+					
+					logger.info("After object update " + stolenIndividualUserDB);
 				}
 
+				// update StolenOrganizationUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
-					stolenandRecoveryMgmtInfo.setStolenOrganizationUserDB(updateStolenOrganizationUserDB(stolenandRecoveryMgmt.getStolenOrganizationUserDB()));
+					StolenOrganizationUserDB stolenOrganizationUserDB = updateStolenOrganizationUserDB(
+							stolenandRecoveryMgmtInfo.getStolenOrganizationUserDB(),
+							stolenandRecoveryMgmt.getStolenOrganizationUserDB()
+							);
+					
+					stolenandRecoveryMgmtInfo.setStolenOrganizationUserDB(stolenOrganizationUserDB);
+					
+					logger.info("After object update " + stolenOrganizationUserDB);
 				}
 
+				logger.info("Final object StolenandRecoveryMgmt : " + stolenandRecoveryMgmtInfo);
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
@@ -734,16 +746,17 @@ public class StolenAndRecoveryServiceImpl {
 		return status;
 	}
 
-	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDB) {
-		StolenIndividualUserDB updatedStolenIndividualUserDB = new StolenIndividualUserDB();
-
-		return updatedStolenIndividualUserDB;
+	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDBOld, 
+			StolenIndividualUserDB stolenIndividualUserDBNew) {
+		stolenIndividualUserDBNew.setId(stolenIndividualUserDBOld.getId());
+		
+		return stolenIndividualUserDBNew;
 	}
 
-	private StolenOrganizationUserDB updateStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
-		StolenOrganizationUserDB updatedStolenOrganizationUserDB = new StolenOrganizationUserDB();
-
-		return updatedStolenOrganizationUserDB;
+	private StolenOrganizationUserDB updateStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDbOld,
+			StolenOrganizationUserDB stolenOrganizationUserDbNew) {
+		stolenOrganizationUserDbNew.setId(stolenOrganizationUserDbOld.getId());
+		return stolenOrganizationUserDbNew;
 	}
 
 	private void setInterp(StolenandRecoveryMgmt stolenandRecoveryMgmt) {

@@ -20,7 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
-import com.gl.ceir.config.configuration.FileStorageProperties;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
@@ -53,9 +52,6 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 public class SystemConfigListServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(SystemConfigListServiceImpl.class);
-
-	@Autowired
-	FileStorageProperties fileStorageProperties;
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
