@@ -163,7 +163,7 @@ function pageRendering(){
 				}
 			} 
 			
-			if(userType=="Importer"){
+			if(userType=="TRC"){
 				console.log("userType is----->"+userType)
 			}else{
 				// dynamic drop down portion

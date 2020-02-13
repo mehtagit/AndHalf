@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -773,8 +779,8 @@ var contextpath = "${context}";
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
                                 <input required="required"  type="password" class="password" id="confirmPassword" maxlength="10">
                                 	<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password"
+								aria-hidden="true"></i>
 						</div>
                             </div>
                         
@@ -885,8 +891,19 @@ var contextpath = "${context}";
         }
        	
     </script>
-
-
-	
 </body>
-</html>  	
+</html>  
+<%
+        }
+        else{
+        
+        %>
+<script language="JavaScript">
+        sessionStorage.setItem("loginMsg", "*Session has been expired.please login again"); 
+     	 window.top.location.href ="./login";
+   
+        </script>
+<%
+       
+        }
+%>	

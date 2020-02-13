@@ -104,7 +104,7 @@ a#newUserLink {
 </script>
 </head>
 
-<body>
+<body data-msg="${msg}">
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -144,7 +144,7 @@ a#newUserLink {
 											<h5 style="text-align: -webkit-center;">
 												<spring:message code="registration.login" />
 											</h5>
-											<span id="errorMsg" style="color: red;">${msg}</span>
+											<span id="errorMsg" style="color: red;"></span>
 											<hr>
 
 
@@ -159,9 +159,6 @@ a#newUserLink {
 													code="registration.username" /></label>
 										</div>
 
-
-
-
 										<div  class="input-field col s12" id="show_hide_password">
 											<input type="password"  required="required" class="password"
 												name="password" id="password" maxlength="10"
@@ -169,7 +166,7 @@ a#newUserLink {
 												for="password"> <spring:message
 													code="registration.password" /></label>
 											<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+												<i   class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>
 
 										</div>
@@ -267,7 +264,7 @@ a#newUserLink {
 							class="center-align" style="color: #000; font-size: 12px;">
 							 <spring:message code="registration.oldpassword" /></label>
 							<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+												<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>
 					</div>
 
@@ -286,7 +283,7 @@ a#newUserLink {
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password3" />
 				<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password3" aria-hidden="true"></i></a>
+		<i  class="fa fa-eye-slash teal-text toggle-password3" aria-hidden="true"></i>
 											</div>				
 					</div>
 
@@ -304,7 +301,7 @@ a#newUserLink {
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 						<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password4" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password4" aria-hidden="true"></i>
 											</div>		
 					</div>
 				</div>

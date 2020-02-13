@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -242,7 +248,7 @@
 		<h6 class="modal-header"><spring:message code="modal.header.submitTypeApprove" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/><span id="transactionId"> </span></h6>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/>  <span id="transactionId"> </span></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			 <div class="row">
@@ -353,6 +359,7 @@ var featureId = 11;
 					"remark" : $('#remark').val(),
 					"userId" : $("body").attr("data-userID"),
 					"featureId" : featureId,
+					"adminApproveStatus" : 2
 				}
 			
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
@@ -438,3 +445,17 @@ var featureId = 11;
 			
 </body>
 </html>
+<%
+        }
+        else{
+        
+        %>
+<script language="JavaScript">
+        sessionStorage.setItem("loginMsg", "*Session has been expired.please login again"); 
+     	 window.top.location.href ="./login";
+   
+        </script>
+<%
+       
+        }
+%>

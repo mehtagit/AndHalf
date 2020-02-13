@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -335,7 +341,7 @@ textarea {
 											<div id="filediv" class="fileDiv">
 												<div class="row">
 													<div class="col s12 m6 l6" style="margin-top: 8px;">
-														<label for="Category"><spring:message code="input.documenttype"/></label> <select
+														<label for="Category"><spring:message code="input.documenttype"/> <span class="star"> * </span></label>  <select
 															class="browser-default" id="docTypetag1" required>
 															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
 														
@@ -663,3 +669,17 @@ textarea {
 
 </body>
 </html>
+<%
+        }
+        else{
+        
+        %>
+<script language="JavaScript">
+        sessionStorage.setItem("loginMsg", "*Session has been expired.please login again"); 
+     	 window.top.location.href ="./login";
+   
+        </script>
+<%
+       
+        }
+%>
