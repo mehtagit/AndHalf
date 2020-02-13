@@ -458,8 +458,8 @@ var contextpath = "${context}";
 											code="registration.password" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i
-											class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+										<i
+											class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 									</div>
 								</div>
 
@@ -474,8 +474,8 @@ var contextpath = "${context}";
 											code="registration.retypepassword" /> <span class="star">*</span>
 									</label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i
-											class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+										<i
+											class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
@@ -502,7 +502,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="answer"
+									<input type="text"  name="answer"
 										class="form-control boxBorder boxHeight answer" id="answer0"
 										pattern="[A-Za-z0-9\s]{0,50}" required="required"
 										maxlength="50"
@@ -532,7 +532,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="answer"
+									<input type="text"  name="answer"
 										class="form-control boxBorder boxHeight answer" id="answer1"
 										pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="Please enter alphanumeric upto 50 characters only"
@@ -558,7 +558,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="answer" placeholder=""
+									<input type="text" name="answer" 
 										class="form-control boxBorder boxHeight answer" id="answer2"
 										title="Please enter alphanumeric upto 50 characters only"
 										maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"

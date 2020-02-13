@@ -508,8 +508,8 @@ label {
 									<label for="password"><spring:message
 											code="registration.password" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i
-											class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+									<i
+											class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 									</div>
 								</div>
 
@@ -521,8 +521,8 @@ label {
 									<label for="confirm_password"><spring:message
 											code="registration.retypepassword" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i
-											class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+										<i
+											class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
@@ -543,7 +543,7 @@ label {
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="answer" class="answer"
+									<input type="text"  name="answer" class="answer"
 										id="answer0" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="<spring:message code="validation.50alphanumeric" />"
 										required /> <label><spring:message
@@ -566,7 +566,7 @@ label {
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="answer" class="answer"
+									<input type="text"  name="answer" class="answer"
 										id="answer1" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
 										title="<spring:message code="validation.50alphanumeric" />"
 										required /> <label> <spring:message
@@ -590,7 +590,7 @@ label {
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="answer" placeholder="" class="answer"
+									<input type="text" name="answer"  class="answer"
 										id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
 										title="<spring:message code="validation.50alphanumeric" />"
 										required /> <label><spring:message
