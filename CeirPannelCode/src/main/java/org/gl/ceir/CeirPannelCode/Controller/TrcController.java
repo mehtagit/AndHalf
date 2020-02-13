@@ -247,7 +247,7 @@ public class TrcController {
 			)
 	{
 		log.info("tacStartDate=="+tacStartDate+ " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
-		int userId= (int) session.getAttribute("userid"); 
+		//int userId= (int) session.getAttribute("userid"); 
 		int file=1;
 		FileExportResponse fileExportResponse;
 		TRCRequest trcRequest = new TRCRequest();
@@ -255,7 +255,7 @@ public class TrcController {
 		trcRequest.setEndDate(tacEndDate);
 		trcRequest.setTac(tacNumber);
 		trcRequest.setStatus(tacStatus);
-		trcRequest.setUserId(userId);
+		//trcRequest.setUserId(userId);
 		trcRequest.setTxnId(txnId);
 		trcRequest.setFeatureId(featureId);
 		trcRequest.setUserType(userType);

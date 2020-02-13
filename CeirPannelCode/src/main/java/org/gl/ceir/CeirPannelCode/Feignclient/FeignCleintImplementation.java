@@ -8,6 +8,7 @@ import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.StolenRecoveryModel;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
@@ -330,6 +331,12 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 						@RequestParam(value = "file", defaultValue = "0") Integer file);
 					
+				
+				
+				//************************************************ view icon Message Management Feign *****************************************
+
+				@PostMapping("/get/tags-mapping")
+				public @ResponseBody List<GrievanceDropdown> catagoryDropdownListFeign(FilterRequest filterRequest);	
 		}
 
 
