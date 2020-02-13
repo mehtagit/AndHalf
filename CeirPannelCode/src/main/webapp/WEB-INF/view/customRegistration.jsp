@@ -217,22 +217,22 @@ var contextpath = "${context}";
 								<input type="hidden" id="type" value="2">
 							<div class="row">
 								<div class="input-field col s12 m4 l4">
-									<input type="text" name="firstName" id="firstName" required="required" pattern="[A-Za-z]{0,20}" maxlength="20"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="firstName" id="firstName" required="required" pattern="[A-Za-z]{3,20}" maxlength="20"
+										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.20Character" />" required />
 									<label for="firstName" class="center-align"><spring:message code="input.firstName" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m4 l4">
-									<input type="text" name="middleName" id="middleName" pattern="[A-Za-z]{0,20}" maxlength="20"
+									<input type="text" name="middleName" id="middleName" pattern="[A-Za-z]{3,20}" maxlength="20"
 										title="<spring:message code="validation.20Character" />" />
 									<label for="middleName"><spring:message code="input.middleName" /></label>
 								</div>
 
 
 								<div class="input-field col s12 m4 l4">
-									<input type="text" name="lastName" id="lastName" pattern="[A-Za-z]{0,20}" maxlength="20"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="lastName" id="lastName" pattern="[A-Za-z]{3,20}" maxlength="20"
+										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.20Character" />" required />
 									<label for="lastName"> <spring:message code="input.lastName" /> <span class="star">*</span>
 									</label>
@@ -242,46 +242,46 @@ var contextpath = "${context}";
 
 							<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation"
-										id="propertyLocation" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]+{0,200}" name="propertyLocation"
+										id="propertyLocation" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.200character" />" required /> 
 										<label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s]{0,20}"
-									oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s]+{0,20}"
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address20characters" />" required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 									</label>
 								</div>
 									<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s]{0,30}"
-									oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s]+{0,30}"
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required />
 									<label for="village"> <spring:message code="input.village" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s]{0,30}"
-									oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s]+{0,30}"
+										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required />
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s]{0,30}"
-									oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s]+{0,30}"
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address20characters" />" required />
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s]{0,30}"
-									oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s]+{0,30}"
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required />
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9]{0,6}"
+									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9]{6}"
 										title="<spring:message code="validation.postalcode" />">
 									<label for="postalCode"><spring:message code="registration.postalcode" /></label>
 								</div>
@@ -290,96 +290,100 @@ var contextpath = "${context}";
 								
 								<div class="col s12 m6 l6">
 									<label><spring:message code="table.country" /> <span class="star">*</span></label>
-									<select id="country" class="browser-default" class="mySelect"title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  
-									oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" style="padding-left: 0;" required></select>
+									<select id="country" class="browser-default" class="mySelect"title="<spring:message code="validation.selectFieldMsg" />" 
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" style="padding-left: 0;" required></select>
 								</div>
 
 								<div class="col s12 m6 l6">
 									<label><spring:message code="input.province" /> <span class="star">*</span></label>
-									<select id="state" class="browser-default" class="mySelect"title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  
-									oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" style="padding-left: 0;" required></select>
+									<select id="state" class="browser-default" class="mySelect"title="<spring:message code="validation.selectFieldMsg" />" 
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" style="padding-left: 0;" required></select>
 								</div>
 								
 								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
 									<label><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
-									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required>
+									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" 
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
 										<option value="" disabled selected><spring:message code="input.arrivalport" /></option>
 									</select>
 								</div>
 								<%} %>
 								
-								<div class="input-field col s12 m6 l6">
+								<%-- <div class="input-field col s12 m6 l6">
 									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="arrivalPortLocation" id="arrivalPortLocation"
 									oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
 										title="<spring:message code="validation.200character" />" required /> 
 									<label for="arrivalPortLocation" class="">Port Address <span class="star">*</span></label>
+								</div> --%>
+								
+								<div class="col s12 m6 l6">
+									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
+									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" 
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
+										<option value="" disabled selected>Select port</option>
+										<option value="1">Abc</option>
+										<option value="2">Abc</option>
+									</select>
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{0,12}"
-									oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{8,12}"
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.12Character" />" required />
 									<label for="passportNo"><spring:message code="registration.nationalid" /> <span class="star">*</span></label>
 								</div>
 								
 								<div class="file-field col s12 m6 l6">
-									<h6 class="file-label"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
+									<h6 class="file-upload-heading"><spring:message code="registration.uploadnationalid" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="input.selectfile" /></span>
-										<input type="file" id="NationalIdImage" placeholder="Upload National ID Image" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-										title="<spring:message code="validation.selectImgMsg" />">
+										<input type="file" id="NationalIdImage" placeholder="Upload National ID Image"
+										oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+										title="<spring:message code="validation.selectImgMsg" />" required/>
 									</div>
 									<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" placeholder="Upload National ID Image" oninput="setCustomValidity('')" 
-									oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-									title="<spring:message code="validation.selectImgMsg" />" required />
+									<input class="file-path validate" type="text" placeholder="Upload National ID Image" />
 									</div>
 								</div>
 
 								<div class="file-field col s12 m6 l6">
-								<h6 class="file-label"><spring:message code="registration.uploadphoto" /> <span class="star">*</span></h6>
+								<h6 class="file-upload-heading"><spring:message code="registration.uploadphoto" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span><spring:message code="registration.uploadphoto" /></span> <input id="photo" type="file" placeholder=""
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-										title="<spring:message code="validation.selectImgMsg" />">
+										oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+										title="<spring:message code="validation.selectImgMsg" />" required/>
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text" placeholder="" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-										title="<spring:message code="validation.selectImgMsg" />" required />
+										<input class="file-path validate" type="text" placeholder=""  />
 									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
-									<input type="text" name="employeeID" required="required" id="employeeId" maxlength="30" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="employeeID" required="required" id="employeeId" maxlength="30" 
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.address30characters" />" required /> 
 									<label for="employeeId"><spring:message code="registration.employeeid" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="file-field col s12 m6 l6">
-								<h6 class="file-label"><spring:message code="registration.uploadidcard" /> <span class="star">*</span></h6>
+								<h6 class="file-upload-heading"><spring:message code="registration.uploadidcard" /> <span class="star">*</span></h6>
 									<div class="btn">
 										<span>*<spring:message code="registration.uploadidcard" /></span> <input id="idCard" type="file" placeholder=""
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-										title="<spring:message code="validation.selectImgMsg" />" >
+										oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+										title="<spring:message code="validation.selectImgMsg" />" required />
 									</div>
 									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text" placeholder="" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-										title="<spring:message code="validation.selectImgMsg" />" required/>
+										<input class="file-path validate" type="text" placeholder="" />
 									</div>
 								</div>
 
 								<div class="col s12 m6 l6" style="margin-top: 3px;">
 									<label> <spring:message code="registration.natureofemployment" /> <span class="star">*</span></label>
-									<select id="natureOfEmployment" class="browser-default"onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')" required>
+									<select id="natureOfEmployment" class="browser-default"onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />"
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
 										<option value="" disabled selected><spring:message code="registration.natureofemployment" /></option>
 										<option value="Permanent"><spring:message code="registration.permanent" /></option>
 										<option value="Temporary"><spring:message code="registration.temporary" /></option>
@@ -390,40 +394,40 @@ var contextpath = "${context}";
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="designation" id="designation" maxlength="30" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="designation" id="designation" maxlength="30" pattern="[a-zA-Z0-9]+{3,30}" 
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required /> 
 									<label for="designation"><spring:message code="registration.designationandtitle" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="reportingAuthorityName" id="authorityName" maxlength="30" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									<input type="text" name="reportingAuthorityName" id="authorityName" maxlength="30" pattern=".[a-zA-Z]+{3,30}"  
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required /> 
 									<label for="authorityName"><spring:message code="registration.reportingauthorityname" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="email" name="authorityEmail" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
-									oninput="setCustomValidity('')" title="<spring:message code="validation.email" />" >
+									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" >
 									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="20" pattern="[0-9]{7,15}"
-									oninput="setCustomValidity('')" title="<spring:message code="validation.contact" />"	>
+									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />"	>
 									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="email" name="email" required="required" id="email" maxlength="320" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
-									oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"
 										title="<spring:message code="validation.address30characters" />" required /> 
 									<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{8,20}"
+									<input type="tel" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}"
 									oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
 										title="<spring:message code="validation.contact" />" required /> 
 										<label for="phoneNo"><spring:message code="input.contactNum" /> <span class="star">*</span>
@@ -435,7 +439,7 @@ var contextpath = "${context}";
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password" class=" password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
-										min="8" oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+										min="8" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.password" />" required /> 
 										<label for="password"><spring:message code="registration.password" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
@@ -445,7 +449,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="rePassword" class="password2" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
-										min="8"oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
+										min="8" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.password" />" required /> 
 									<label for="confirm_password"><spring:message code="registration.retypepassword" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
@@ -459,15 +463,15 @@ var contextpath = "${context}";
 								<div class="col s12 m6 l6">
 									<label><spring:message code="registration.securityQuestion1" /> <span class="star">*</span></label>
 									<input type="hidden" class="id" id="id0"> <select class="browser-default questionId" id="questionId0" name="questionId"
-									onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 									title="<spring:message code="validation.selectFieldMsg" />"  required>
 										<option value="" disabled selected><spring:message code="registration.securityQuestion1" /></option>
 										</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="answer"class="answer" id="answer0" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50" 
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+									<input type="text" name="answer"class="answer" id="answer0" pattern="[A-Za-z0-9\s]+{0,50}" maxlength="50" 
+										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.50alphanumeric" />"  required />
 									<label><spring:message code="registration.answer" /> <span class="star">*</span>
 									</label>
@@ -477,15 +481,15 @@ var contextpath = "${context}";
 								<div class="col s12 m6 l6">
 									<label><spring:message code="registration.securityQuestion2" /> <span class="star">*</span></label>
 									<input type="hidden" class="id" id="id1" /> <select name="questionId" id="questionId1" class="browser-default questionId"
-									onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 									title="<spring:message code="validation.selectFieldMsg" />"  required>
 										<option value="" disabled selected><spring:message code="registration.securityQuestion2" /></option>
 									</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]{0,50}" maxlength="50"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+									<input type="text" name="answer" class="answer" id="answer1" pattern="[A-Za-z0-9\s]+{0,50}" maxlength="50"
+										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.50alphanumeric" />" required /> 
 										<label> <spring:message code="registration.answer" /> <span class="star">*</span></label>
 								</div>
@@ -495,15 +499,15 @@ var contextpath = "${context}";
 								<div class="col s12 m6 l6">
 									<label><spring:message code="registration.securityQuestion3" /> <span class="star">*</span></label>
 									<input type="hidden" class="id" id="id2" /> <select name="questionId" id="questionId2" class="browser-default questionId"
-									onchange="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 									title="<spring:message code="validation.selectFieldMsg" />"  required>
 										<option value="" disabled selected> <spring:message code="registration.securityQuestion3" /></option>
 									</select>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="answer" placeholder="" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]{0,50}"
-										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+									<input type="text" name="answer" class="answer" id="answer2" maxlength="50" pattern="[A-Za-z0-9\s]+{0,50}"
+										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.50alphanumeric" />"	required /> 
 										<label><spring:message code="registration.answer" /> <span class="star">*</span>
 									</label>
@@ -517,8 +521,7 @@ var contextpath = "${context}";
 						 		<br>
                            		<input type="button" onclick="refreshCaptcha('captchaImage')"> --%>
 								<div class="input-field col s12 m6 l12">
-									<input type="text"  autocomplete="off" name="captcha" id="captcha" oninput="setCustomValidity('')" 
-										oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+									<input type="text"  autocomplete="off" name="captcha" id="captcha" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.captcha" />" required /> 
 									<label for="captcha"><spring:message code="registration.enteryourcaptcha" /> <span class="star">*</span></label>
 								</div>
