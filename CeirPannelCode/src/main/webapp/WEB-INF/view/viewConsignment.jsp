@@ -882,7 +882,7 @@
 %>
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
-			"*Session has been expired.please login again");
+			"*Session has been expired");
 	window.top.location.href = "../login";
 </script>
 <%
