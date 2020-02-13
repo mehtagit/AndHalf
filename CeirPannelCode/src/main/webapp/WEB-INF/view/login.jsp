@@ -104,7 +104,7 @@ a#newUserLink {
 </script>
 </head>
 
-<body>
+<body data-msg="${msg}">
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -144,7 +144,7 @@ a#newUserLink {
 											<h5 style="text-align: -webkit-center;">
 												<spring:message code="registration.login" />
 											</h5>
-											<span id="errorMsg" style="color: red;">${msg}</span>
+											<span id="errorMsg" style="color: red;"></span>
 											<hr>
 
 

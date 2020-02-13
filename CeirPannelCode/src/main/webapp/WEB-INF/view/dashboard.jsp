@@ -558,12 +558,6 @@ data-dismiss="modal">&times;</button> -->
 
 	<!-- jQuery Library -->
 
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js"></script>
-
-		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
-			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -617,8 +611,12 @@ data-dismiss="modal">&times;</button> -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
+		
+	<!-- ajax js -->
+	
+
+		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript">
@@ -633,14 +631,15 @@ $(document).ready(function () {
 </script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js"></script>
 </body>
 
 </html>
 <%
         }
         else{            
-        request.setAttribute("msg", "  *Session has been expired.please login again");
+        request.setAttribute("msg", "  *Session has been expired");
         request.getRequestDispatcher("./login.jsp").forward(request, response);      	
         }
 %>

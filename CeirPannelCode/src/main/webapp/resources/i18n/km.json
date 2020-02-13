@@ -45,5 +45,7 @@
 "requiredMsg_input":"សូមបំពេញក្នុងប្រអប់នេះ",
 "requiredMsg_date":"សូមបំពេញក្នុងប្រអប់នេះ",
 "requiredMsg_select":"សូមជ្រើសរើសធាតុនៅក្នុងវាលនេះ",
-"requiredMsg_fileType":"សូមជ្រើសរើសឯកសារ"
+"requiredMsg_fileType":"សូមជ្រើសរើសឯកសារ",
+"USER_STATUS_CHANGED":"ស្ថានភាពអ្នកប្រើប្រាស់ត្រូវបានផ្លាស់ប្តូរ",
+"USER_STATUS_CHANGE_FAIL":"ស្ថានភាពអ្នកប្រើបានបរាជ័យក្នុងការផ្លាស់ប្តូរ"
 }
