@@ -245,33 +245,79 @@
                                                 </form>
                                             </div>
                                     </div>
+<!-- ---------------------------------------------------------- bulk recovery edit------------------------------------------------------------------------- -->                                    
+                                           
                                             <div id="bulkRecoveryDiv" class="col s12 m12" style="display: block">
-                                                <form action="#" style="margin-top: 30px;" id="bulkRecoveryForm">
+                                                <form action="#" style="margin-top: 30px;" onsubmit="return updateCompanyRecoveryRequest()" method="POST" enctype="multipart/form-data"  id="">
                                                     <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
-                                                        <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoveryquantity" maxlength="10" pattern=[0-9] title="Please enter your locality">
+                                                        <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight" placeholder=""
+                                                            id="bulkRecoveryquantity" maxlength="7" pattern="[0-9]{1,7}" 
+                                                            title="Please enter number up to 7 digits">
                                                         <label for="bulkRecoveryquantity"><spring:message code="operator.quantity" /> <span class="star">*</span></label>
                                                     </div>
 <input type="text" id="pageViewType" value="${viewType}" style="display: none;">
+<input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
                                                     <div class="input-field col s12 m6">
-                                                        <textarea id="bulkRecoveryRemark" class="materialize-textarea"></textarea>
+                                                        <textarea id="bulkRecoveryRemark" maxlength="200000" class="materialize-textarea" placeholder=""></textarea>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 
                                                     <div class="file-field col s12 m6">
-                                                        <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star">*</span></h6>
+                                                        <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /></h6>
                                                         <div class="btn">
                                                             <span><spring:message code="input.selectfile" /></span>
                                                             <input type="file" id="bulkRecoveryFile" placeholder="Upload Photo">
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" id="bulkRecoveryFileName"
+                                                            <input class="file-path validate" type="text" id="bulkRecoveryFileName" placeholder=""
                                                                 placeholder="Upload file" title="Please upload your photo">
                                                         </div>
                                                     </div>
+                                                    
+                                                    
+                                                     <div class="col s12 m6">
+<p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
+<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+value="Immediate"
+onclick="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
+</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+value="Default"
+onclick="document.getElementById('calender').style.display = 'none';"
+name="stolenBlockPeriod"><spring:message code="operator.default" />
+</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+onclick="document.getElementById('calender').style.display = 'block';"
+name="stolenBlockPeriod"><spring:message code="operator.later" />
+</label>
+<div class="col s6 m2 responsiveDiv"
+style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px" id="calender">
+<div id="startdatepicker" class="input-group date">
+<input type="text" id="stolenDatePeriod"
+style="margin-top: -9px" /> <span class="input-group-addon"
+style="color: #ff4081"><i class="fa fa-calendar"
+aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+</div>
+
+</div>
+
+
+<div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
+id="stolenDate">
+
+<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
+<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+
+<input class="form-control" name="inputsaves" type="text"
+id="startDateFilter" readonly /> <span class="input-group-addon"
+style="color: #ff4081"><i
+class="glyphicon glyphicon-calendar"
+onclick="_Services._selectstartDate()"></i></span>
+</div>
+</div>
+</div>
 
                                                    <div class="col s12 m12">
-                                                       <a href=""><spring:message code="input.downlaod.sample" /></a>
+                                                       <a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a>
                                                    </div>
 
                                                    <div class="col s12 m12" style="margin-top: 30px;">
@@ -282,41 +328,49 @@
                                                         <p><b>Place Of Device Recovery</b></p>
                                                     </div> -->
                                                     <div class="input-field col s12 m12">
-                                                        <input type="text" name="bulkRecoveryaddress" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoveryaddress" pattern=[A-Za-z] title="Please enter your address">
+                                                        <input type="text" name="bulkRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
+                                                            id="bulkRecoveryaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
+                                                            title="Please enter alphabets and numbers upto 200 characters only"
+                                                             maxlength="200" required="required">
                                                         <label for="bulkRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverystreetNumber" maxlength="30" pattern=[A-Za-z0-9] title="Please enter street number">
+                                                        <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
+                                                            id="bulkRecoverystreetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                             maxlength="50" required="required">
                                                         <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                     </div>
 
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" maxlength="20">
+                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                             maxlength="50" required="required">
                                                         <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star">*</span></label>
                                                     </div>
                     
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverylocality" maxlength="20" pattern=[A-Za-z0-9] title="Please enter your locality">
+                                                        <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
+                                                            id="bulkRecoverylocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                             maxlength="50" required="required">
                                                         <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" maxlength="20">
+                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                             maxlength="50" required="required">
                                                         <label for="bulkRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" maxlength="20">
+                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" title="Please enter alphabets and numbers upto 50 characters only"
+                                                             maxlength="50" required="required">
                                                         <label for="bulkRecoverycommune"> <spring:message code="input.commune" /><span class="star">*</span></label>
                                                     </div>
                         
                                                     <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" maxlength="20">
+                                                        <input type="text" name="bulkRecoverypin"  placeholder="" class="form-control boxBorder boxHeight"
+                                                            id="bulkRecoverypin" pattern="[0-9]{0,20}" title="Please enter  numbers upto 20 digits only" 
+                                                        maxlength="20" required="required">
                                                         <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
                                                     </div>
                     
@@ -331,13 +385,24 @@
                                                         <select id="bulkRecoverystate" class="browser-default" class="mySelect" style="padding-left: 0;"
                                                             required></select>
                                                     </div>
+                                                    
+                                                     <div class="input-field col s12 m6"> 
+											<input type="text" name="deviceRecoveryDevice" placeholder=""
+												id='bulkRecoveryDate' class='form-control datepick'
+												autocomplete='off' 
+												title="<spring:message code="validation.requiredMsg" />"  required /> 
+												<label
+												for="deviceRecoveryDevice" class="center-align"><spring:message code="operator.recoveryDate" /> <span class="star">*</span>
+											</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+										</div>
 
                                                     <div class="col s12 m12">
                                                         <p><spring:message code="input.requiredfields" /> <span class="star">*</span></p>
                                                     </div>
 
                                                     <div class="input-field col s12 center">
-                                                        <button class="btn modal-trigger" data-target="submitStolen"><spring:message code="button.submit" /></button>
+                                                        <button class="btn" type="submit"><spring:message code="button.submit" /></button>
                                                         <a href="./stolenRecovery" class="btn modal-trigger"
                                                             style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
                                                     </div>
@@ -350,6 +415,23 @@
                         </div>
                     </div>
                 </div>
+                
+                 	 <div id="stolenSucessPopUp" class="modal">
+  <h6 class="modal-header"><spring:message code="registration.updatereportstolen" /></h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6 id="dynamicMessage"><spring:message code="input.Theupdated" /></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
                 <!--end container-->
             </section>
 
@@ -364,6 +446,33 @@
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
 
+<!-- i18n library -->
+<script type="text/javascript"
+src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -387,9 +496,20 @@
 
 
 		<script type="text/javascript"
+		src="${context}/resources/project_js/editCompanyRecovery.js"></script>
+		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 		
 		<script>
+		$('.datepick').datepicker({
+			dateFormat : "yy-mm-dd"
+		});
+		
+		$('#stolenDatePeriod').datepicker({
+        	dateFormat: "yy-mm-dd"
+        	});
+
+
     populateCountries(
         "country1",
         "state1"

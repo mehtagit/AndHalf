@@ -44,6 +44,9 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#deviceBulkStolenpin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		$('#country3').val(response.stolenOrganizationUserDB.incidentCountry).change();
 
+		$('#bulkStolenofficeEmail').val(response.stolenOrganizationUserDB.email);
+		$('#bulkStolenContact').val(response.stolenOrganizationUserDB.phoneNo);
+		
 		$('#state3').val(response.stolenOrganizationUserDB.incidentProvince);
 		$('#deviceBulkStolenComplaint').val();
 		$('#deviceBulkStolenquantity').val(response.qty);

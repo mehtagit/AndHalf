@@ -1,12 +1,9 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
-import java.util.List;
-
 import org.gl.ceir.CeirPannelCode.Model.EndUserVisaInfo;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
-import org.gl.ceir.CeirPannelCode.Model.SingleImeiDetailsModel;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;

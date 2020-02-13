@@ -76,7 +76,7 @@ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${s
 
 <div class="row" >
 <div class="input-field col s12 m6 l6">
-<input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
+<input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>

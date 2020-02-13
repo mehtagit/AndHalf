@@ -152,14 +152,14 @@ margin-bottom: 5px;
 
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceType"><spring:message code="select.deviceType" /> </label>
-                                                                <select class="browser-default" id="sigleRecoverydeviceType" required>
+                                                                <select class="browser-default" id="sigleRecoverydeviceType" >
                                                                     <option value="" disabled selected><spring:message code="select.deviceType" /></option>
                                                                 </select>
                                                               </div> 
                                                               
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceSimStatus"> <spring:message code="select.multiSimStatus" /></label>
-                                                                <select id="sigleRecoverydeviceSimStatus" class="browser-default" required>
+                                                                <select id="sigleRecoverydeviceSimStatus" class="browser-default">
                                                                   <option value="" disabled selected><spring:message code="select.multiSimStatus" /></option>
                                                                 </select>
                                                               </div>
@@ -205,7 +205,8 @@ margin-bottom: 5px;
                                                             </div>
                                 
                                                             <div class="input-field col s12 m6 l6">
-                                                                <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" maxlength="20">
+                                                                <input type="text" name="sigleRecoverydistrict" id="sigleRecoverydistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" required="required"
+                                                                    title="Please enter alphabets and numbers upto 30 characters only">
                                                                 <label for="sigleRecoverydistrict"><spring:message code="input.district" /> <span class="star"> *</span></label>
                                                             </div>
                                 
@@ -217,7 +218,7 @@ margin-bottom: 5px;
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,30}" required="required"
+                                                                    id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}" required="required"
                                                                     title="Please enter  numbers upto 20 characters only">
                                                                 <label for="sigleRecoverypin"> <spring:message code="input.postalCode" /><span class="star"> *</span></label>
                                                             </div>
@@ -323,7 +324,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6">
-                                                        <textarea id="bulkRecoveryRemark" required maxlength="200000" class="materialize-textarea"></textarea>
+                                                        <textarea id="bulkRecoveryRemark"  maxlength="200000" class="materialize-textarea"></textarea>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 

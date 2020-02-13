@@ -12,7 +12,7 @@ $(document).ready(function() {
 
 function viewIndivisualStolen()
 {
-alert($('#pageName').val());
+
 
 var txnid=$('#existingStolenTxnId').val();
 	
