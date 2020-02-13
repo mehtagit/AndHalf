@@ -7,15 +7,18 @@ $('#langlist').on('change', function() {
 		});
 
 		$(document).ready(function() {
-		
+			var url = new URL( window.location.href);
+    		var langParameter = url.searchParams.get("lang");
+            $('#langlist').val(langParameter == 'km' ? 'km' : 'en'); 
 			dataByTag("link_dmc_portal", "newUserLink", 1);
 		});
 
 		
-	
+	//Login Msg from javascript
 		
-		
-		
+		var loginMsg=sessionStorage.getItem("loginMsg") == 'null' ? ' ' : sessionStorage.getItem("loginMsg");
+		$('#errorMsg').text(loginMsg);	
+		sessionStorage.removeItem("loginMsg");
 		
 		
 					

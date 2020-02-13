@@ -349,7 +349,7 @@ String name = (String) session.getAttribute("name");
 			</h6>
 
 			<div class="input-field col s12 center">
-				<a href="${context}/logout" class="btn modal-close">ok</a>
+				<a href="${context}/logout" class="btn modal-close"> <spring:message code="modal.ok" /> </a>
 			</div>
 		</div>
 	</div>
@@ -640,7 +640,7 @@ $(document).ready(function () {
 <%
         }
         else{            
-        request.setAttribute("msg", "  *Please login first");
+        request.setAttribute("msg", "  *Session has been expired.please login again");
         request.getRequestDispatcher("./login.jsp").forward(request, response);      	
         }
 %>
