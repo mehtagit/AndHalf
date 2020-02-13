@@ -383,8 +383,8 @@ String name = (String) session.getAttribute("name");
 							<spring:message code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 
@@ -404,8 +404,8 @@ String name = (String) session.getAttribute("name");
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password2"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 
@@ -424,8 +424,8 @@ String name = (String) session.getAttribute("name");
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password3"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 				</div>

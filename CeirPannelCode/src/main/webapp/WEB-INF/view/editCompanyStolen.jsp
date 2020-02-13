@@ -723,7 +723,22 @@
 
 
 
-
+ <div id="stolenSucessPopUp" class="modal">
+  <h6 class="modal-header"><spring:message code="registration.updatereportstolen" /></h6>
+        <div class="modal-content">
+           
+            <div class="row">
+                <h6 id="dynamicMessage"><spring:message code="input.Theupdated" /></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <div class="input-field col s12 center">
+                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 

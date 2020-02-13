@@ -207,7 +207,9 @@
   table.dataTable.no-footer {
     border-bottom: 1px solid #111111;
      width:100% !important;
-
+-webkit-user-select: none;
+  -ms-user-select: none; 
+  user-select: none;
   }
   table.dataTable.nowrap th, table.dataTable.nowrap td {
     white-space: nowrap;

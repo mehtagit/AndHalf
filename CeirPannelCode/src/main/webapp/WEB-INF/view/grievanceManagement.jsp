@@ -233,6 +233,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 <div id="live-chat">
 <div class="chat">
 <div class="chat-history">
+<h6 ><spring:message code="input.grievID" /><span id="viewGrievanceId"></span></h6>
 <div class="chat-message clearfix" id="chatMsg">
 
 </div> <!-- end chat-message -->

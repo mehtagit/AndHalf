@@ -54,9 +54,12 @@ href="${context}/resources/project_css/viewStock.css">
 href="${context}/resources/project_css/iconStates.css">
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}"
-data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<%-- <body data-roleType="${usertype}" data-userID="${userid}"
+data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"> --%>
 
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 
@@ -76,7 +79,7 @@ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${s
 
 <div class="row" >
 <div class="input-field col s12 m6 l6">
-<input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
+<input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
@@ -369,7 +372,7 @@ $.ajax({
 		console.log("error in ajax")
 	}
 });
-$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 	console.log("@@@@@"+JSON.stringify(data));
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
@@ -378,7 +381,7 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 		$('#docTypetagValue1').val(data[i].value);
 	}
 });
-
+ */
 
 		function cleanReplyPopUp()
 		{
@@ -406,7 +409,7 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			}
 			
 			
-			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		/* 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 
 
 				for (i = 0; i < data.length; i++) {
@@ -417,7 +420,44 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 					console.log('#docTypetag'+optionId);
 
 				}
-			});
+			}); */
+			
+
+				var request ={
+							 "childTag": "DOC_TYPE",
+							  "featureId": 6,
+							  "parentValue":  parseInt($('#category').val()),	
+							  "tag": "GRIEVANCE_CATEGORY",
+							  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+						}
+				
+				console.log("request --->" +JSON.stringify(request));	
+				 $.ajax({
+						url: './get/tags-mapping',
+						type: 'POST',
+						data : JSON.stringify(request),
+						dataType : 'json',
+						contentType : 'application/json; charset=utf-8',
+						success: function (data, textStatus, jqXHR) {
+							
+							console.log(data);
+							for (i = 0; i < data.length; i++){
+								var optionId=id-1;
+									//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+									//$('#docTypetag1').append(html);	
+								
+								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetag'+optionId);
+								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetagValue'+optionId);
+							}
+							
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							console.log("error in ajax")
+						}
+					});
+				 
+			
+			
 			id++;
 
 		});
@@ -442,6 +482,49 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			$('#docTypetagValue').val(data[i].value).change();
 			$('#docTypetagValue').val(data[i].value).change();
 		}
+		
+
+$('#category').on(
+					'change',
+				function() {
+	
+	
+	var request ={
+				 "childTag": "DOC_TYPE",
+				  "featureId": 6,
+				  "parentValue":  parseInt($('#category').val()),	
+				  "tag": "GRIEVANCE_CATEGORY",
+				  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+			}
+	
+	console.log("request --->" +JSON.stringify(request));	
+	 $.ajax({
+			url: './get/tags-mapping',
+			type: 'POST',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+				$("#docTypetag1").empty();
+				console.log(data);
+				for (i = 0; i < data.length; i++){
+						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+						//$('#docTypetag1').append(html);	
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+				
+				}
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});
+	 
+	}); 
+	 
+
+</script>
+		
 </script>
 </body>
 </html>

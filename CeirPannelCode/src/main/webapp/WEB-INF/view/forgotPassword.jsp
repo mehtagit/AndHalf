@@ -154,7 +154,7 @@ var contextpath='${context}';
                                     <div class="row myRow" style="margin-top: 20px;">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="answer" class="center-align">n <spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
+                                            <label for="answer" class="center-align"> <spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">

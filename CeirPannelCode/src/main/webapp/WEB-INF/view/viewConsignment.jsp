@@ -4,8 +4,8 @@
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-/* 	  session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null);  */
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
 	if (session.getAttribute("usertype") != null) {
 %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
