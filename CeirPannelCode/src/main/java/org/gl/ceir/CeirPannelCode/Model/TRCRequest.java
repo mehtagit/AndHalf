@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TRCRequest {
 	private String endDate,searchString,startDate,tac,txnId,userType;
-	private Integer status,adminStatus,featureId,userTypeId;
+	private Integer status,adminStatus,featureId,userTypeId,file;
 	private long userId;
 	public String getEndDate() {
 		return endDate;
@@ -67,6 +67,12 @@ public class TRCRequest {
 	public void setUserTypeId(Integer userTypeId) {
 		this.userTypeId = userTypeId;
 	}
+	public Integer getFile() {
+		return file;
+	}
+	public void setFile(Integer file) {
+		this.file = file;
+	}
 	public long getUserId() {
 		return userId;
 	}
@@ -77,9 +83,10 @@ public class TRCRequest {
 	public String toString() {
 		return "TRCRequest [endDate=" + endDate + ", searchString=" + searchString + ", startDate=" + startDate
 				+ ", tac=" + tac + ", txnId=" + txnId + ", userType=" + userType + ", status=" + status
-				+ ", adminStatus=" + adminStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId
-				+ ", userId=" + userId + "]";
+				+ ", adminStatus=" + adminStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", file="
+				+ file + ", userId=" + userId + "]";
 	}
+	
 	
 	
 	

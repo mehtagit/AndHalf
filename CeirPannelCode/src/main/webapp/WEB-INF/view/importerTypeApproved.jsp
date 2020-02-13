@@ -391,7 +391,7 @@
 					"tac" : $('#tac').val(),
 			 		"userId" : $("body").attr("data-userID"),
 			 		"featureId" : featureId,
-			 		"approveStatus" : parseInt($("#status option:eq(2)").val())
+			 		"approveStatus" : 2
 				}
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
