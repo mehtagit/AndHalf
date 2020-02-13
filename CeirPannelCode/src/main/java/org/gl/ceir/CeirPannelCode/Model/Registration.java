@@ -50,6 +50,9 @@ public class Registration extends UserHeader{
     private String photoFilePath;
     private String idCardFilePath;
     private String vatFilePath;
+    private Integer portAddress;
+    private String portAddressName;
+
 	public long getId() {
 		return id;
 	}
@@ -332,6 +335,21 @@ public class Registration extends UserHeader{
 	public void setVatFilePath(String vatFilePath) {
 		this.vatFilePath = vatFilePath;
 	}
+	
+	public Integer getPortAddress() {
+		return portAddress;
+	}
+	public void setPortAddress(Integer portAddress) {
+		this.portAddress = portAddress;
+	}
+	
+	
+	public String getPortAddressName() {
+		return portAddressName;
+	}
+	public void setPortAddressName(String portAddressName) {
+		this.portAddressName = portAddressName;
+	}
 	@Override
 	public String toString() {
 		return "Registration [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
@@ -349,11 +367,7 @@ public class Registration extends UserHeader{
 				+ idCardFilename + ", arrivalPort=" + arrivalPort + ", arrivalPortName=" + arrivalPortName
 				+ ", vatFilename=" + vatFilename + ", userLanguage=" + userLanguage + ", nidFilePath=" + nidFilePath
 				+ ", photoFilePath=" + photoFilePath + ", idCardFilePath=" + idCardFilePath + ", vatFilePath="
-				+ vatFilePath + "]";
+				+ vatFilePath + ", portAddress=" + portAddress + ", portAddressName=" + portAddressName + "]";
 	}
-    
-    
-    
-    
-   
+	
 }

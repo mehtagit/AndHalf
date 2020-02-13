@@ -26,7 +26,7 @@ public class IconsState {
 	// fa fa icons
 	String errorIcon="\"fa fa-exclamation-circle  error-icon\"";
 	String downloadIcon="\"fa fa-download download-icon\""; 
-	String viewIcon="\"fa fa-eye view-icon\"";
+	String viewIcon="\"fa fa-eye teal-text view-icon\"";
 	String editIcon="\"fa fa-pencil edit-icon\""; 
 	String deletionIcon="\"fa fa-trash delete-icon\"";
 	String replyIcon="\"fa fa-reply reply-icon\""; 
@@ -91,7 +91,7 @@ public class IconsState {
 
 
 
-		if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
@@ -121,6 +121,11 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
+		}else if(("4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
+			
 		}
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
@@ -815,7 +820,7 @@ public class IconsState {
 	//System.out.println("featureID::::::::::"+featureID);
 	// state related Code
 	String view=null;
-	if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
+	if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
 	view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 	+viewIconTitle+" ></i></a>";
 	}

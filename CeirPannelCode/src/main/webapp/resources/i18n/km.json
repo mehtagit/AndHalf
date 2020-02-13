@@ -41,5 +41,9 @@
 "Total Device in Transit":"ឧបករណ៍សរុបក្នុងការឆ្លងកាត់",
 "Stock":"ស្តុក",
 "Total Device Waiting For Upload":"ឧបករណ៍រង់ចាំសរុបសម្រាប់ផ្ទុកឡើង",
-"Grievance":"ការតវ៉ា"
+"Grievance":"ការតវ៉ា",
+"requiredMsg_input":"សូមបំពេញក្នុងប្រអប់នេះ",
+"requiredMsg_date":"សូមបំពេញក្នុងប្រអប់នេះ",
+"requiredMsg_select":"សូមជ្រើសរើសធាតុនៅក្នុងវាលនេះ",
+"requiredMsg_fileType":"សូមជ្រើសរើសឯកសារ"
 }
