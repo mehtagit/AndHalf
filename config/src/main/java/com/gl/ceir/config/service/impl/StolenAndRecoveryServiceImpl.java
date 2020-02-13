@@ -40,6 +40,8 @@ import com.gl.ceir.config.model.SingleImeiHistoryDb;
 import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
+import com.gl.ceir.config.model.StolenIndividualUserDB;
+import com.gl.ceir.config.model.StolenOrganizationUserDB;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -53,6 +55,7 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.StolenStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
+import com.gl.ceir.config.model.constants.Usertype;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
@@ -121,16 +124,16 @@ public class StolenAndRecoveryServiceImpl {
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
-			WebActionDb webActionDb = new WebActionDb(Integer.toString(stolenandRecoveryMgmt.getRequestType()), 
-					SubFeatures.REGISTER, WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
-			
+			WebActionDb webActionDb = new WebActionDb(decideFeature(stolenandRecoveryMgmt.getRequestType()), SubFeatures.REGISTER, 
+					WebActionStatus.INIT.getCode(), stolenandRecoveryMgmt.getTxnId());
+
 			stolenandRecoveryMgmt.setFileStatus(StolenStatus.INIT.getCode());
 			if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 				stolenandRecoveryMgmt.getStolenIndividualUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
 			} else if (Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
 				stolenandRecoveryMgmt.getStolenOrganizationUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
 			}
-			
+
 			if(executeUploadDetails(stolenandRecoveryMgmt, webActionDb)) {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
@@ -555,6 +558,14 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
+				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
+					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(updateStolenIndividualUserDB(stolenandRecoveryMgmt.getStolenIndividualUserDB()));
+				}
+
+				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
+					stolenandRecoveryMgmtInfo.setStolenOrganizationUserDB(updateStolenOrganizationUserDB(stolenandRecoveryMgmt.getStolenOrganizationUserDB()));
+				}
+
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
@@ -635,7 +646,7 @@ public class StolenAndRecoveryServiceImpl {
 				String mailTag = null;
 				String action = null;
 				String mailSubject = null;
-				
+
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 
@@ -723,6 +734,18 @@ public class StolenAndRecoveryServiceImpl {
 		return status;
 	}
 
+	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDB) {
+		StolenIndividualUserDB updatedStolenIndividualUserDB = new StolenIndividualUserDB();
+
+		return updatedStolenIndividualUserDB;
+	}
+
+	private StolenOrganizationUserDB updateStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDB) {
+		StolenOrganizationUserDB updatedStolenOrganizationUserDB = new StolenOrganizationUserDB();
+
+		return updatedStolenOrganizationUserDB;
+	}
+
 	private void setInterp(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		if(Objects.nonNull(stolenandRecoveryMgmt.getSourceType()))
 			stolenandRecoveryMgmt.setSourceTypeInterp(interpSetter.setConfigInterp(Tags.SOURCE_TYPE, stolenandRecoveryMgmt.getSourceType()));
@@ -737,4 +760,18 @@ public class StolenAndRecoveryServiceImpl {
 			stolenandRecoveryMgmt.setBlockCategoryInterp(interpSetter.setConfigInterp(Tags.BLOCK_CATEGORY, stolenandRecoveryMgmt.getBlockCategory()));
 	}
 
+	private String decideFeature(int requestType) {
+		switch (requestType) {
+		case 0:
+			return "Stolen";
+		case 1:
+			return "Recovery";
+		case 2:
+			return "Block";
+		case 3:
+			return "Unblock";
+		default:
+			return null;
+		}
+	}
 }

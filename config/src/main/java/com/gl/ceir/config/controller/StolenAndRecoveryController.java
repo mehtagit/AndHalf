@@ -1,6 +1,7 @@
 package com.gl.ceir.config.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -163,7 +164,7 @@ public class StolenAndRecoveryController {
 
 		StackholderPolicyMapping mapping = new StackholderPolicyMapping();
 		mapping.setListType("BlackList");
-		if(stolenandRecoveryRequest.getBlockingType() == null || 
+		if(Objects.isNull(stolenandRecoveryRequest.getBlockingType()) || 
 				stolenandRecoveryRequest.getBlockingType().equalsIgnoreCase("Default") ||
 				stolenandRecoveryRequest.getBlockingType().isEmpty()) {
 
