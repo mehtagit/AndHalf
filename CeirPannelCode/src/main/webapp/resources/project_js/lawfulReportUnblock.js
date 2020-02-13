@@ -42,7 +42,7 @@ var formData= new FormData();
 			"deviceStolenStreet": sigleRecoverystreetNumber,
 			"deviceStolenVillage": sigleRecoveryvillage,
 			"deviceType":sigleRecoverydeviceType,
-			"imei_esn_meid": sigleRecoveryimeiNumber,
+			"imeiEsnMeid": sigleRecoveryimeiNumber,
 			"deviceStolenProvince": state1,
 			"remark": sigleRecovery,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,

@@ -28,6 +28,7 @@ public class LawfulStolenRecovey {
 	private String txnId;
 	private Integer userId;
 	
+	
 	public Integer getBlockCategory() {
 	return blockCategory;
 	}

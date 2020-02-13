@@ -216,7 +216,7 @@ var contextpath='${context}';
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
 				<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>					
 				</div>           
 
@@ -231,7 +231,7 @@ var contextpath='${context}';
 									title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 									required="required"/>
 				<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>					
 				</div>
 			</div>  
