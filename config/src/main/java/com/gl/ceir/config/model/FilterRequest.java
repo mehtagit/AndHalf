@@ -23,11 +23,15 @@ public class FilterRequest {
 	private Integer type;
 	private Integer channel;
 
-	private String tag;
 	private Integer status;
 
 	private Integer operatorTypeId;
 	private String origin;
+	
+	// Mapping for parent child tags.
+	private String tag;
+	private String childTag;
+	private Integer parentValue;
 
 	public Long getId() {
 		return id;
@@ -84,7 +88,6 @@ public class FilterRequest {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
-
 	public Integer getConsignmentStatus() {
 		return consignmentStatus;
 	}
@@ -127,7 +130,6 @@ public class FilterRequest {
 	public void setDeviceIdType(Integer deviceIdType) {
 		this.deviceIdType = deviceIdType;
 	}
-
 	public Integer getDeviceType() {
 		return deviceType;
 	}
@@ -170,11 +172,25 @@ public class FilterRequest {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-	
+	public String getChildTag() {
+		return childTag;
+	}
+	public void setChildTag(String childTag) {
+		this.childTag = childTag;
+	}
+	public Integer getParentValue() {
+		return parentValue;
+	}
+	public void setParentValue(Integer parentValue) {
+		this.parentValue = parentValue;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("FilterRequest [userId=");
+		builder.append("FilterRequest [id=");
+		builder.append(id);
+		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", nid=");
 		builder.append(nid);
@@ -210,12 +226,18 @@ public class FilterRequest {
 		builder.append(type);
 		builder.append(", channel=");
 		builder.append(channel);
-		builder.append(", tag=");
-		builder.append(tag);
 		builder.append(", status=");
 		builder.append(status);
 		builder.append(", operatorTypeId=");
 		builder.append(operatorTypeId);
+		builder.append(", origin=");
+		builder.append(origin);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", childTag=");
+		builder.append(childTag);
+		builder.append(", parentValue=");
+		builder.append(parentValue);
 		builder.append("]");
 		return builder.toString();
 	}
