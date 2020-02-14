@@ -10,6 +10,7 @@
 		  <fileNamePattern>/home/ubuntu/CeirContent/Processes/SLA/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>
 <!-- 		  <fileNamePattern>/home/ubuntu/CeirContent/testingLogs/log.%d{yyyy-MM-dd}.log</fileNamePattern>  
  -->		
+ 	
  	<maxHistory>60</maxHistory>
 		</rollingPolicy>
 	</appender>
