@@ -86,7 +86,7 @@ public class StockServiceImpl {
 
 	@Autowired
 	StokeDetailsRepository stokeDetailsRepository;
-	
+
 	@Autowired
 	StockManagementRepository stockManagementRepository;
 
@@ -164,7 +164,7 @@ public class StockServiceImpl {
 				}
 
 				secondaryRoleType = getSecondaryRoleType(userRoles);
-				
+
 				if(Objects.isNull(secondaryRoleType)) {
 					logger.info("User is not a distributer or retailer to assign a stock.");
 					return new GenricResponse(5, "User is not a distributer or retailer to assign a stock.", "");
@@ -305,14 +305,14 @@ public class StockServiceImpl {
 			/*
 			User ceirAdmin = userRepository.getByUsername("CEIRAdmin");
 			logger.info("ceirAdmin : " + ceirAdmin);
-			
+
 			Map<String, String> placeholderMapForCeirAdmin = new HashMap<String, String>();
 			placeholderMapForCeirAdmin.put("<txn_id>", stockMgmt.getTxnId());
 
 			rawMails.add(new RawMail("MAIL_TO_CEIR_ADMIN_ON_STOCK_UPLOAD", ceirAdmin.getUserProfile(), 
 					4, Features.STOCK, SubFeatures.REGISTER, stockMgmt.getTxnId(), MailSubjects.SUBJECT, 
 					placeholderMapForCeirAdmin));
-*/
+			 */
 			// Send notification to the anonymous user if mail is provided.
 			if(Objects.nonNull(userProfile.getEmail()) && !userProfile.getEmail().isEmpty()) {
 				Map<String, String> placeholderMapForAnonymousUser = new HashMap<String, String>();
@@ -454,9 +454,15 @@ public class StockServiceImpl {
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType()))
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+		// Status handling.
+		if("CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.isNull(filterRequest.getConsignmentStatus()))
+				specificationBuilder.with(new SearchCriteria("stockStatus", 3, SearchOperation.EQUALITY, Datatype.STRING));
+			else {
+				specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			}
+		}else if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
-
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
@@ -499,18 +505,18 @@ public class StockServiceImpl {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
 			}
-			
+
 			// User user = userRepository.getById(stockMgmt.getUserId());
-	
+
 			auditTrailRepository.save(new AuditTrail(stockMgmt.getUserId(), "", 
 					0L,
 					"", 
 					4, Features.STOCK, 
 					SubFeatures.VIEW, "", stockMgmt.getTxnId()));
 			logger.info("Stock [ View ][" + stockMgmt.getTxnId() + "] saved in audit_trail.");
-			
-			
-			
+
+
+
 			return stockMgmt2;
 
 		} catch (Exception e) {
@@ -590,7 +596,7 @@ public class StockServiceImpl {
 		stockMgmt = stockManagementRepository.findByRoleTypeAndTxnId(distributerManagement.getRoleType(), 
 				distributerManagement.getTxnId());
 		logger.info(stockMgmt);
-		
+
 		if(Objects.isNull(stockMgmt)) {
 			return new GenricResponse(1000, "No record found against this transactionId.",distributerManagement.getTxnId());
 

@@ -247,13 +247,10 @@ public class ConsignmentMgmt implements Serializable {
 		return this;
 	}
 
-	public int getCurrency() {
+	public Integer getCurrency() {
 		return currency;
 	}
 
-	public void setCurrency(int currency) {
-		this.currency = currency;
-	}
 
 	public Double getTotalPrice() {
 		return totalPrice;
