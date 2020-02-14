@@ -51,7 +51,7 @@ function Datatable(Url,dataUrl){
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"approveStatus" : parseInt($('#Status').val()),
+			"status" : parseInt($('#Status').val()),
 		}
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
@@ -64,7 +64,7 @@ function Datatable(Url,dataUrl){
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"approveStatus" : parseInt($('#Status').val()),
+			"status" : parseInt($('#Status').val()),
 		}
 	}
 	if(lang=='km'){

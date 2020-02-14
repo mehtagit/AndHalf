@@ -357,7 +357,8 @@ public class StockDatatableController {
 				inputTypeDateList.add(dateRelatedFields); 
 			}
 		}
-		pageElement.setPageTitle(Translator.toLocale("view.stockMgt"));
+		String userTypeRole=(String)session.getAttribute("selectedUserTypeId");
+		pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userTypeRole));
 		pageElement.setButtonList(buttonList);
 		pageElement.setDropdownList(dropdownList);
 		pageElement.setInputTypeDateList(inputTypeDateList);
