@@ -31,11 +31,11 @@ public class GsmaTacDb {
 	private String marketingName; 
 	private String equipmentType; 
 	private String simSupport; 
-	private String nfcSupport; 
-	private String wlanSupport;
-	private String blueToothSupport; 
+	private String nfc; 
+	private String wlan;
+	private String bluetooth; 
 	private String lpwan;
-	private String manufacturer;
+	private String manufacturerOrApplicant;
 	private String tacApprovedDate;
 	private String gsmaApprovedTac;
 	private String created_on;
@@ -110,35 +110,11 @@ public class GsmaTacDb {
 	public void setSimSupport(String simSupport) {
 		this.simSupport = simSupport;
 	}
-	public String getNfcSupport() {
-		return nfcSupport;
-	}
-	public void setNfcSupport(String nfcSupport) {
-		this.nfcSupport = nfcSupport;
-	}
-	public String getWlanSupport() {
-		return wlanSupport;
-	}
-	public void setWlanSupport(String wlanSupport) {
-		this.wlanSupport = wlanSupport;
-	}
-	public String getBlueToothSupport() {
-		return blueToothSupport;
-	}
-	public void setBlueToothSupport(String blueToothSupport) {
-		this.blueToothSupport = blueToothSupport;
-	}
 	public String getLpwan() {
 		return lpwan;
 	}
 	public void setLpwan(String lpwan) {
 		this.lpwan = lpwan;
-	}
-	public String getManufacturer() {
-		return manufacturer;
-	}
-	public void setManufacturer(String manufacturer) {
-		this.manufacturer = manufacturer;
 	}
 	public String getTacApprovedDate() {
 		return tacApprovedDate;
@@ -182,6 +158,36 @@ public class GsmaTacDb {
 	public void setOperatingSystem(String operatingSystem) {
 		this.operatingSystem = operatingSystem;
 	}
+	public String getNfc() {
+		return nfc;
+	}
+	public void setNfc(String nfc) {
+		this.nfc = nfc;
+	}
+	public String getWlan() {
+		return wlan;
+	}
+	public void setWlan(String wlan) {
+		this.wlan = wlan;
+	}
+	public String getBluetooth() {
+		return bluetooth;
+	}
+	public void setBluetooth(String bluetooth) {
+		this.bluetooth = bluetooth;
+	}
+	public String getManufacturerOrApplicant() {
+		return manufacturerOrApplicant;
+	}
+	public void setManufacturerOrApplicant(String manufacturerOrApplicant) {
+		this.manufacturerOrApplicant = manufacturerOrApplicant;
+	}
+	public void setStatusCode(Integer statusCode) {
+		this.statusCode = statusCode;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -207,16 +213,16 @@ public class GsmaTacDb {
 		builder.append(equipmentType);
 		builder.append(", simSupport=");
 		builder.append(simSupport);
-		builder.append(", nfcSupport=");
-		builder.append(nfcSupport);
-		builder.append(", wlanSupport=");
-		builder.append(wlanSupport);
-		builder.append(", blueToothSupport=");
-		builder.append(blueToothSupport);
+		builder.append(", nfc=");
+		builder.append(nfc);
+		builder.append(", wlan=");
+		builder.append(wlan);
+		builder.append(", bluetooth=");
+		builder.append(bluetooth);
 		builder.append(", lpwan=");
 		builder.append(lpwan);
-		builder.append(", manufacturer=");
-		builder.append(manufacturer);
+		builder.append(", manufacturerOrApplicant=");
+		builder.append(manufacturerOrApplicant);
 		builder.append(", tacApprovedDate=");
 		builder.append(tacApprovedDate);
 		builder.append(", gsmaApprovedTac=");
@@ -234,5 +240,5 @@ public class GsmaTacDb {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }
