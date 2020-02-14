@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -590,3 +596,17 @@ textarea {
 
 </body>
 </html>
+<%
+        }
+        else{
+        
+        %>
+<script language="JavaScript">
+        sessionStorage.setItem("loginMsg", "*Session has been expired.please login again"); 
+     	 window.top.location.href ="./login";
+   
+        </script>
+<%
+       
+        }
+%>

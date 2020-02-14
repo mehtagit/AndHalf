@@ -341,6 +341,7 @@ function saveRegistration(){
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
+					userLanguage:val.find('#langlist option:selected').val(),
 					middleName:val.find('#middleName').val(),  
 					lastName: val.find('#lastName').val(),
 					type:val.find('#type').val(), 
@@ -408,6 +409,7 @@ function saveCustomRegistration(){
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
+					userLanguage:val.find('#langlist option:selected').val(),
 					middleName:val.find('#middleName').val(),  
 					lastName: val.find('#lastName').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
@@ -436,7 +438,8 @@ function saveCustomRegistration(){
 					usertypeName:val.find('#usertypeName').val(),
 					arrivalPort:val.find('#arrivalPort').val(),
 					questionList:questionData,
-					type:val.find('#type').val()
+					type:val.find('#type').val(),
+					portAddress:val.find('#portAddress option:selected').val(),
 
 			}    
 		} 
@@ -449,7 +452,7 @@ function saveCustomRegistration(){
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));  
 	console.log("data=  "+JSON.stringify(formData));
-	registrationAjax(formData);
+	otherRegistrationAjax(formData);
 	return false;
 }   
 
@@ -478,6 +481,7 @@ function saveOperatorRegistration(){
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
+					userLanguage:val.find('#langlist option:selected').val(),
 					middleName:val.find('#middleName').val(),  
 					lastName: val.find('#lastName').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
@@ -521,7 +525,7 @@ function saveOperatorRegistration(){
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));  
 	console.log("data=  "+formData);
-	registrationAjax(formData);
+	otherRegistrationAjax(formData);
 	return false;
 }
 function registrationAjax(obj){
@@ -535,9 +539,7 @@ function registrationAjax(obj){
 			var respData=JSON.parse(JSON.stringify(response));
 			console.log("response from server:  "+JSON.stringify(respData));
 			if(respData.statusCode==200){
-				//window.location.href='./verifyOtpPage/?userid='+respData.userId;
 				$("#userid").val(response.userId);
-				//window.location.href='#otpMsgModal';
 				$("#otpMsgModal").openModal();
 				$("#otpMsg").text(response.response);
 			}
@@ -552,6 +554,31 @@ function registrationAjax(obj){
 	});
 }
 
+function otherRegistrationAjax(obj){
+	$.ajax({   
+		type : 'POST',
+		url : contextpath + '/saveOtherRegistration',
+		data :obj,   
+		processData : false,
+		contentType : false,
+		success : function(response) {
+			var respData=JSON.parse(JSON.stringify(response));
+			console.log("response from server:  "+JSON.stringify(respData));
+			if(respData.statusCode==200){
+				$("#userid").val(response.userId);
+				$("#otpMsgModal").openModal();
+				$("#otpMsg").text(response.response);
+			}
+			else{
+				$("#registrationForm #msg").text(respData.response);
+			}
+			$("#btnSave").prop('disabled', false);
+		}, 
+		error: function (xhr, ajaxOptions, thrownError) {
+			$("#btnSave").prop('disabled', false);
+		}
+	});
+}
 
 
 function openEndUserGrievancePage(reportType){
@@ -597,4 +624,27 @@ function selfRegisterDevice(){
 }
 function updateVisaValidity(){
 	window.location.href="./updateVisaValidaity";
+}
+
+function getByPort(port){ 
+	$.ajax({
+		type : 'GET',
+		url : contextpath + '/byArrivalPort/'+port,
+		contentType : "application/json",
+		dataType : 'html',
+		async:false,
+		success : function(data) {
+			var response=JSON.parse(data);                                    
+			var asTypeDropdown=$("#portAddress"); 
+			asTypeDropdown.empty();
+			var header="<option value='' disabled selected>Select address</option>";
+			asTypeDropdown.append(header);
+			for(var i=0; i<response.length; i++){
+					var data2='<option value="'+response[i].id+'">'+response[i].address+'</option>';
+					asTypeDropdown.append(data2);
+			}    
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
 }

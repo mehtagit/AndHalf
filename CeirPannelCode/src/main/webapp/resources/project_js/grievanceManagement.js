@@ -461,13 +461,16 @@ var featureId = 6;
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-
+						var grievanceID=	
 						$('#chatMsg').empty();
 						$('#manageAccount').openModal();
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
 							for(var i=0; i<data.length; i++)
 						{
+								$('#viewGrievanceId').text('');	
+							$('#viewGrievanceId').text(grievanceId);	
+							
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{

@@ -51,7 +51,7 @@ function Datatable(Url,dataUrl){
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"adminStatus" : parseInt($('#Status').val()),
+			"status" : parseInt($('#Status').val()),
 		}
 	} else {
 		var userId = parseInt($("body").attr("data-userID"))
@@ -67,9 +67,11 @@ function Datatable(Url,dataUrl){
 			"status" : parseInt($('#Status').val()),
 		}
 	}
-					
+	if(lang=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}				
 	
-
+	
 
 $.ajax({
 		url: Url,
@@ -85,9 +87,9 @@ $.ajax({
 				"bFilter" : true,
 				"bInfo" : true,
 				"bSearchable" : true,
-				/*"oLanguage": {  
+				"oLanguage": {  
 					"sUrl": langFile  
-				},*/
+				},
 				ajax: {
 					url : dataUrl,
 					type: 'POST',
@@ -230,6 +232,10 @@ function exportTacData()
 	var tacStatus=parseInt($('#Status').val());
 	var tacNumber=$('#tac').val();
 	var txnId = txn;
+	var featureId = 21;
+	var userType = userType;
+	var userTypeId = parseInt($("body").attr("data-userTypeID"));
+	
 	
 	console.log("tacStatus=="+tacStatus);
      if(isNaN(tacStatus))
@@ -241,9 +247,9 @@ function exportTacData()
 	var info = table.page.info(); 
  var pageNo=info.page;
   var pageSize =info.length;
-	console.log("--------"+pageSize+"---------"+pageNo+" tacStartDate="+tacStartDate+" tacEndDate="+tacEndDate+" tacStatus= "+tacStatus);
+	console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+" tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+" tacStatus=="+tacStatus+" txnId=="+txnId+" pageSize=="+pageSize+" pageNo=="+pageNo);
 	
-	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportTac?tacNumber="+tacNumber+"&tacStartDate="+tacStartDate+"&tacEndDate="+tacEndDate+"&tacStatus="+tacStatus+"&txnId="+txnId+"&featureId="+featureId+"&userType"+userType+"&userTypeId="+userTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo;
 
 }
 
@@ -304,8 +310,12 @@ function setImporterViewPopupData(data,projectPath){
 	{
 		for (var j=0 ; j < importerViewResponse[i]["attachedFiles"].length; j++)
 			{
+			if(importerViewResponse[i].attachedFiles[j].docType == null || importerViewResponse[i].attachedFiles[j].docType == undefined ){
+				importerViewResponse[i].attachedFiles[j].docType == "";
+			}else{
 				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
 			}
+		}
 	}
 	
 	
@@ -337,7 +347,7 @@ function setImporterEditPopupData(data){
 	$("#importerColumnid").val(data.id);
 	$("#approveStatus").val(data.approveStatus);
 	
-	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function( //same values to be configure for featureId 21
+	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function( //same values to be configure for featureId 21
 			data) {
 		$("#docTypetag1").empty();
 		for (i = 0; i < data.length; i++) {
@@ -496,7 +506,7 @@ $(".add_field_button")
 												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 					}
 
-					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/11', function(
+					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
 
 						for (i = 0; i < data.length; i++) {

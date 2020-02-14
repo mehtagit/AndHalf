@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -6,7 +12,6 @@
 <!DOCTYPE html>
 <html>          
 <head>  
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -193,7 +198,7 @@ var contextpath = "${context}";
 								</div>
 
 
-									<div class="input-field col s12 m6 l6">
+<div class="input-field col s12 m6 l6">
                                     <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="registration.astype" /> <span
                                             class="star">*</span></p>
                                         <input type="text" readonly="readonly" id="asTypeName" name="type"  />
@@ -440,7 +445,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								</select>  
                                 </div> --%>
 
-                                <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
+                               <%--  <div class="input-field col s12 m6 l6" style="display: none;" id="vatNumberField">
                                     <input type="text" name="vatNo" maxlength="15"
 										class="form-control boxBorder boxHeight" id="vatNumber"
 										pattern="[A-Za-z0-9]{0,15}" 
@@ -448,7 +453,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								title= "<spring:message code="validation.15numbers" />" required / >
 								
                                     <label for="vatNumber"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
-                                </div>
+                                </div> --%>
                             </div>    
 								
 								<div class="input-field col s12 m6 l6">
@@ -798,8 +803,8 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
                                 <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
                                 <input required="required"  type="password" class="password" id="confirmPassword" maxlength="10">
                                 	<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password"
+								aria-hidden="true"></i>
 						</div>
                             </div>
                         
@@ -910,8 +915,19 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
         }
        	
     </script>
-
-
-	
 </body>
-</html>  	
+</html>  
+<%
+        }
+        else{
+        
+        %>
+<script language="JavaScript">
+        sessionStorage.setItem("loginMsg", "*Session has been expired.please login again"); 
+     	 window.top.location.href ="./login";
+   
+        </script>
+<%
+       
+        }
+%>	

@@ -10,17 +10,15 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.OperatorContentModel;
 import org.gl.ceir.pagination.model.OperatorPaginationModel;
-import org.gl.ceir.pagination.model.RegistrationContentModel;
-import org.gl.ceir.pagination.model.RegistrationPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,7 +138,7 @@ public class operatorDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"operatorDatatable()","submitFilter"};
+			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"operatorDatatable("+ConfigParameters.languageParam+")","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

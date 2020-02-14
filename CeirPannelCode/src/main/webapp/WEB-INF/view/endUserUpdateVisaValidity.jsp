@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -63,12 +62,12 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<!------------------------------------------- Dragable Model---------------------------------->
+  <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 <style>
+
 </style>
 </head>
 <body>
@@ -375,7 +374,7 @@
 								</form>
 							</div>
 
-							<!--  <div id="match-data" style="display: none;">
+                                       <!--  <div id="match-data" style="display: none;">
                                             <div class="row">
                                                 <div class="input-field col s12 m12">
                                                     <input type="text" id="passportNumber" name="passportNumber"
@@ -569,10 +568,11 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	<script type="text/javascript"
+	
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-	<!-- i18n library -->
+			<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -602,17 +602,17 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-
+		
 	<script type="text/javascript"
 		src="${context}/resources/project_js/endUserUpdateVisaValidity.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
-	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+					<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-
-	<script type="text/javascript"
+		
+			<script type="text/javascript"
 		src="${context}/resources/js/intlTelInput.js"></script>
-
+		
 	<script type="text/javascript">
 
 	 var input = document.querySelector("#phone1");
@@ -624,7 +624,7 @@
      window.intlTelInput(input, {
          utilsScript: "js/utils.js",
      });
-	</script>
+	</script>		
 
 </body>
 </html>

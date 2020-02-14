@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -71,6 +71,12 @@ public class FilterRequest {
 	}
 	public void setNid(String nid) {
 		this.nid = nid;
+	}
+	public String getChildTag() {
+		return childTag;
+	}
+	public void setChildTag(String childTag) {
+		this.childTag = childTag;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -186,18 +192,26 @@ public class FilterRequest {
 	public void setDeviceIdType(Integer deviceIdType) {
 		this.deviceIdType = deviceIdType;
 	}
+	public Integer getParentValue() {
+		return parentValue;
+	}
+	public void setParentValue(Integer parentValue) {
+		this.parentValue = parentValue;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
 				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
 				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid
-				+ ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus
-				+ ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus
-				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus
-				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
-				+ serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId
-				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + "]";
+				+ ", childTag=" + childTag + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus
+				+ ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId
+				+ ", fileStatus=" + fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType
+				+ ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status
+				+ ", asType=" + asType + ", serviceDump=" + serviceDump + ", fileType=" + fileType + ", action="
+				+ action + ", operatorTypeId=" + operatorTypeId + ", channel=" + channel + ", type=" + type
+				+ ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue + "]";
 	}
+	
 	
 
 }

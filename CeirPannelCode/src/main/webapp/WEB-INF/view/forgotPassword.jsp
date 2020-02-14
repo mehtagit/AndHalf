@@ -158,7 +158,7 @@ var contextpath='${context}';
                                     <div class="row myRow" style="margin-top: 20px;">
                                         <div class="input-field col s12 m6">
                                             
-                                            <label for="answer" class="center-align"><spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
+                                            <label for="answer" class="center-align"> <spring:message code="registration.provideanswertothequestion" /><span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6 l6">
@@ -223,7 +223,7 @@ var contextpath='${context}';
 						oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												 title= "<spring:message code="validation.minumum8" />" required  / >
 				<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>					
 				</div>           
 
@@ -238,7 +238,7 @@ var contextpath='${context}';
 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												 title= "<spring:message code="validation.minumum8" />" required  / >								
 				<div class="input-field-addon">
-												<a href="#"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>					
 				</div>
 			</div>  

@@ -22,11 +22,12 @@ public class LawfulStolenRecovey {
 	private SingleImeiDetails singleImeiDetails;
 	private Integer sourceType;
 	private String sourceTypeInterp;
-	private String stateInterp;
+	private String stateInterp,dateOfStolen,dateOfRecovery;
 	private StolenIndividualUserDB stolenIndividualUserDB;
 	private StolenOrganizationUserDB stolenOrganizationUserDB;
 	private String txnId;
 	private Integer userId;
+	
 	
 	public Integer getBlockCategory() {
 	return blockCategory;
@@ -228,20 +229,83 @@ public class LawfulStolenRecovey {
 	this.userId = userId;
 	}
 
-	@Override
-	public String toString() {
-		return "LawfulStolenRecovey [blockCategory=" + blockCategory + ", blockCategoryInterp=" + blockCategoryInterp
-				+ ", blockingTimePeriod=" + blockingTimePeriod + ", blockingType=" + blockingType + ", createdOn="
-				+ createdOn + ", fileName=" + fileName + ", fileStatus=" + fileStatus + ", id=" + id + ", imei=" + imei
-				+ ", modifiedOn=" + modifiedOn + ", operatorTypeId=" + operatorTypeId + ", operatorTypeIdInterp="
-				+ operatorTypeIdInterp + ", qty=" + qty + ", remark=" + remark + ", requestType=" + requestType
-				+ ", requestTypeInterp=" + requestTypeInterp + ", roleType=" + roleType + ", singleImeiDetails="
-				+ singleImeiDetails + ", sourceType=" + sourceType + ", sourceTypeInterp=" + sourceTypeInterp
-				+ ", stateInterp=" + stateInterp + ", stolenIndividualUserDB=" + stolenIndividualUserDB
-				+ ", stolenOrganizationUserDB=" + stolenOrganizationUserDB + ", txnId=" + txnId + ", userId=" + userId
-				+ "]";
+	
+	
+	public String getDateOfStolen() {
+		return dateOfStolen;
 	}
 
-	
+	public void setDateOfStolen(String dateOfStolen) {
+		this.dateOfStolen = dateOfStolen;
+	}
+
+	public String getDateOfRecovery() {
+		return dateOfRecovery;
+	}
+
+	public void setDateOfRecovery(String dateOfRecovery) {
+		this.dateOfRecovery = dateOfRecovery;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("LawfulStolenRecovey [blockCategory=");
+		builder.append(blockCategory);
+		builder.append(", blockCategoryInterp=");
+		builder.append(blockCategoryInterp);
+		builder.append(", blockingTimePeriod=");
+		builder.append(blockingTimePeriod);
+		builder.append(", blockingType=");
+		builder.append(blockingType);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", fileStatus=");
+		builder.append(fileStatus);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", operatorTypeIdInterp=");
+		builder.append(operatorTypeIdInterp);
+		builder.append(", qty=");
+		builder.append(qty);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", requestTypeInterp=");
+		builder.append(requestTypeInterp);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", singleImeiDetails=");
+		builder.append(singleImeiDetails);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append(", sourceTypeInterp=");
+		builder.append(sourceTypeInterp);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", dateOfStolen=");
+		builder.append(dateOfStolen);
+		builder.append(", dateOfRecovery=");
+		builder.append(dateOfRecovery);
+		builder.append(", stolenIndividualUserDB=");
+		builder.append(stolenIndividualUserDB);
+		builder.append(", stolenOrganizationUserDB=");
+		builder.append(stolenOrganizationUserDB);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append("]");
+		return builder.toString();
+	}
 
 }

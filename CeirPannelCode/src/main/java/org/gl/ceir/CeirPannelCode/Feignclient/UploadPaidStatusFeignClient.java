@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -64,7 +66,13 @@ public interface UploadPaidStatusFeignClient {
 	public @ResponseBody GenricResponse lawfulIndivisualStolen(LawfulStolenRecovey lawfulStolen);
 	
 	@PostMapping("/stakeholder/Recovery")
-	public @ResponseBody GenricResponse lawfulIndivisualRecovery(LawfulStolenRecovey lawfulStolen);
-	
+	public @ResponseBody GenricResponse lawfulIndivisualAndOraganisationRecovery(LawfulStolenRecovey lawfulStolen);
+
+	@RequestMapping(value="/stolen-and-recovery/by-txnId" ,method=RequestMethod.POST) 
+	public LawfulStolenRecovey fetchSingleDevicebyTxnId(LawfulStolenRecovey txnId );
+
+	@RequestMapping(value="/stakeholder/update",method=RequestMethod.PUT) 
+	public GenricResponse updateIndivisualStolen(LawfulStolenRecovey lawfulStolen );
+
 
 }

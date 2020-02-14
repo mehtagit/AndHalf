@@ -18,7 +18,9 @@ $(document).ready(function () {
 	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
 	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
 	var url = new URL(window.location.href);
-    var langParameter = url.searchParams.get("lang")== null ? sessionStorage.getItem("sessionLang") : url.searchParams.get("lang");
+	/*sessionStorage.getItem("sessionLang")*/
+    var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
+
     window.parent.$('#langlist').val(langParameter); 
 	//dataByTag("copyright_footer","copyrightText",2);
 	sessionStorage.removeItem("a");

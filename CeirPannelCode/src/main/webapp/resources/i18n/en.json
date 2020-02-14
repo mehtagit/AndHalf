@@ -35,5 +35,16 @@
 "price":"Price",
 "currency":"Currency",
 "selectCurrency":"Select Currency",
-"remove":"Remove"
+"remove":"Remove",
+"Consignment":"Consignment",
+"Total Device in Transit":"Total Device in Transit",
+"Stock":"Stock",
+"Total Device Waiting For Upload":"Total Device Waiting For Upload",
+"Grievance":"Grievance",
+"requiredMsg_input":"Please fill in this field",
+"requiredMsg_date":"Please fill in this field",
+"requiredMsg_select":"Please select an item  in this field",
+"requiredMsg_fileType":"Please choose a file",
+"USER_STATUS_CHANGED":"User status has been changed",
+"USER_STATUS_CHANGE_FAIL":"User status failed to change"
 }
