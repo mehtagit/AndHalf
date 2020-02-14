@@ -319,6 +319,15 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/countries.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/importerTypeApproved.js"></script>	
+
+	<script type="text/javascript">
+
+		populateCountries("country");	
+		</script>
 </body>
 </html>
 <%
@@ -330,6 +339,7 @@
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
 	window.top.location.href = "../login";
+	
 </script>
 <%
 	}
