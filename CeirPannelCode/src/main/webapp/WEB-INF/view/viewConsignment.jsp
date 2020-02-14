@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -109,6 +108,7 @@
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
+							
 							<table id="consignmentLibraryTable"
 								class="responsive-table striped display"></table>
 
@@ -872,7 +872,8 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 </body>
 </html>
 <%
