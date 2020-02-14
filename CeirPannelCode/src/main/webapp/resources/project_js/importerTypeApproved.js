@@ -18,6 +18,7 @@ window.parent
 			console.log("done")
 		});
 		
+	
 		var featureId = 21;
 		populateCountries("country");
 		
@@ -27,6 +28,28 @@ window.parent
 				.appendTo('#status');
 			}
 		});
+		
+		$.getJSON('./productList', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].brand_name)
+						.appendTo('#productname');
+			}
+		});
+
+		$('#productname').on(
+				'change',
+				function() {
+					var brand_id = $('#productname').val();
+					$.getJSON('./productModelList?brand_id=' + brand_id,
+							function(data) {
+								$("#modelNumber").empty();
+								for (i = 0; i < data.length; i++) {
+									$('<option>').val(data[i].id).text(
+											data[i].modelName).appendTo(
+											'#modelNumber');
+								}
+							});
+				});
 		
 	
 		
@@ -120,7 +143,7 @@ window.parent
 			console.log("reset form function");
 			$('#replymessageForm').trigger("reset");
 		}
-
+ 
 		var max_fields = 15; //maximum input boxes allowed
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
@@ -189,27 +212,7 @@ window.parent
 			$('#docTypetagValue').val(data[i].value).change();
 		}
 
-		$.getJSON('./productList', function(data) {
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].id).text(data[i].brand_name)
-						.appendTo('#productname');
-			}
-		});
-
-		$('#productname').on(
-				'change',
-				function() {
-					var brand_id = $('#productname').val();
-					$.getJSON('./productModelList?brand_id=' + brand_id,
-							function(data) {
-								$("#modelNumber").empty();
-								for (i = 0; i < data.length; i++) {
-									$('<option>').val(data[i].id).text(
-											data[i].modelName).appendTo(
-											'#modelNumber');
-								}
-							});
-				});
+	
 		
 /*		function fileTypeValueChanges(dd, ddd) {
 			var uploadedFileName = $("#file").val();

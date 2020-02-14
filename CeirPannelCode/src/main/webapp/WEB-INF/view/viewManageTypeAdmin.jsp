@@ -1,21 +1,23 @@
+
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
 	response.setDateHeader("Expires", 0);
 	response.setHeader("Pragma", "no-cache");
-/* 	 session.setMaxInactiveInterval(200); //200 secs
-	 session.setAttribute("usertype", null);  */
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
 	if (session.getAttribute("usertype") != null) {
 %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head>
-<title>TRC</title>
+<head> 
+<title>Consignment</title>
 <meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -68,26 +70,22 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
-  
+
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+   <script type="text/javascript">
 var path="${context}";
 </script>
-
-<style type="text/css">
-textarea {
-	padding: 0px;
-}
-
-</style>
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}"
- data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"
- session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
-
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 	<!-- START CONTENT -->
 	<!-- START CONTENT -->
