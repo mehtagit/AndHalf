@@ -139,7 +139,7 @@ var featureId = 6;
 					type: 'POST',
 					dataType: "json",
 					success: function(data){
-						data.userStatus == "Disable" ? $('#btnLink').addClass( "" ) : $('#btnLink').removeClass( "eventNone" );
+						data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
 
 
 						var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
