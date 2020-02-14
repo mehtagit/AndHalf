@@ -158,7 +158,7 @@ public class DatatableHeaders {
 
 			//TRC Manage Type dataTable Headers
 			else if("trcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.ManufacturerName","table.country","table.TAC","table.TRCStatus","table.Approve/RejectionDate","table.action"};
+				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.ManufacturerName","table.country","table.TAC","table.status","table.Approve/RejectionDate","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -239,7 +239,7 @@ public class DatatableHeaders {
 			//AdmintrcManageType Headers 
 			
 			else if("AdmintrcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.ManufacturerName","table.country","table.TAC","table.TRCStatus","table.Approve/RejectionDate","table.CEIRAdminStatus","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.requestdate","table.ManufacturerName","table.country","table.TAC","table.status","table.Approve/RejectionDate","table.CEIRAdminStatus","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -287,7 +287,7 @@ public class DatatableHeaders {
 			//ManageUserType Headers 
 			
 			else if("ImporterTrcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.Trademark","table.ProductName","table.transactionID","table.ModelNumber","table.CountryofManufacture","table.TAC","table.status","table.action"};
+				String[] headers = {"table.creationDate","table.Trademark","table.ProductName","table.transactionID","table.ModelNumber","table.country","table.TAC","table.status","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -308,7 +308,7 @@ public class DatatableHeaders {
 			//AdminImprtertrcManageType Headers 
 			
 			else if("AdminImportertrcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.Trademark","table.CountryofManufacture","table.TAC","table.TRCStatus","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.Trademark","table.country","table.TAC","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
