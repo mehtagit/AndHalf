@@ -837,7 +837,7 @@ public class IconsState {
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcManageIcons(String status,Integer id,String fileName,String txnId) {	
+	public String trcManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
@@ -854,7 +854,22 @@ public class IconsState {
 		String edit="<a onclick="+editAction+"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-
+		
+		if(("0".equals(status)) && "Approved".equals(userStatus)) {
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+		}else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" download=\"download\"></i></a>"; 
+		
+		}
+		
 
 		String action=download.concat(view).concat(edit);		  
 		return action;
@@ -1392,7 +1407,7 @@ public class IconsState {
 	/********************************** Icons for Importer TRC Datatable **********************************/ 
 
 
-	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
+	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 
@@ -1411,17 +1426,25 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
-		if("8".equals(status)) {
+		if(("8".equals(status)) && "Approved".equals(userStatus)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>";	
-		}else if("0".equals(status)) {
+		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>";
+		}else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
 		}
 
 		String action=view.concat(edit).concat(delete);		  

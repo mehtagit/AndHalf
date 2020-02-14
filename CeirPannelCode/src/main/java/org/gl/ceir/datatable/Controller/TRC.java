@@ -70,7 +70,7 @@ public class TRC implements CRUD{
 		// TODO Auto-generated method stub
 		String userType = (String) session.getAttribute("usertype");
 		log.info("userType in TRC----"+userType);
-		
+		String userStatus = (String) session.getAttribute("userStatus");
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		
@@ -143,8 +143,9 @@ public class TRC implements CRUD{
 						String statusInterp = trcContentModelList.getStateInterp();
 						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
 						String txnId= trcContentModelList.getTxnId();
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--FileName------->"+FileName+"--txnId------>"+txnId);
-						String action = iconState.trcManageIcons(status,trcContentModelList.getId(),FileName,txnId);
+						String action = iconState.trcManageIcons(approveState,trcContentModelList.getId(),FileName,txnId,userStatus);
 						Object[] data = {createdOn,txnId,requestedDate,manufacturerName,country,tac,statusInterp,approveRejectionDate,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
