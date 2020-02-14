@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>  
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -168,22 +169,26 @@ var contextpath = "${context}";
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
-                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
-                                                 maxlength="30" name="email"/>
+                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+												oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" 
+												 title= "<spring:message code="validation.Matchformat" />"  maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
                                                 <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0,7}
-                                                    title="Please enter maximum 10 characters only" maxlength="10" required/>
-                                            </div>
+												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+												 title= "<spring:message code="validation.10characters" />" required  / > </div>
 
                                             <div class="file-field col s12 m6">
                                                 <h6 style="margin-top: 15px;"><spring:message code="registration.uploadfile" /> <span
                                                         class="star">*</span></h6>
                                                 <div class="btn">
                                                     <span><spring:message code="input.selectfile" /></span>
-                                                    <input type="file" id="endUsercsvUploadFile" accept=".csv" required="required">
+                                                    <input type="file" id="endUsercsvUploadFile" accept=".csv" 
+                                                    title="<spring:message code="validation.NoChosen" />" 
+							 oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"  required />                                                    
+
                                                 </div>
                                                 <div class="file-path-wrapper">
                                                     <input class="file-path validate responsive-file-div" id="endUsersaveFileName" type="text">
@@ -238,8 +243,9 @@ var contextpath = "${context}";
                                             </div>
                                             <div class="input-field col s6 m7">
                                                 <input type="text" id="checktransactionID" name="checktransactionID"
-                                                    pattern=[A-Z0-9]{18,18} required="required"
-                                                    title="Please enter maximum 18 Numbers only" maxlength="18">
+                                                    pattern=[A-Z0-9]{18,18}  maxlength="18"
+ 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+												 title= "<spring:message code="validation.maximum18" />" required />
                                             </div>
                                         </div>
                                         <div class="row">

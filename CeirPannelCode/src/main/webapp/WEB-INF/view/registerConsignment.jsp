@@ -267,7 +267,7 @@ section {
 						
 											<button class=" btn" id="consignmentSubbmitButton" type="submit"><spring:message code="button.submit" /></button>
 												
-											<a href="#cancelMessage" class="btn modal-trigger" 
+											<a href="#cancelMessage" class="btn modal-trigger"
 												type="cancel" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
 
 
