@@ -244,12 +244,12 @@ section {
 										<div class="file-field input-field col s12 m6"
 											style="margin-top: 5px;">
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /></span> <input type="file"
+												<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges(this,'fileType')"
 													 name="file" id="file" accept=".csv"  title="<spring:message code="validation.file" />"
 												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"  required />
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate responsive-file-div"
+												<input class="file-path validate responsive-file-div" id="fileName"
 													type="text">
 											</div>
 										</div>
@@ -321,6 +321,22 @@ section {
 		</div>
 	</div>
 
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"> Uploaded file format</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!--end container-->
 

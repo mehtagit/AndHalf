@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <html lang="en">
-
 <head>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -130,7 +129,9 @@
                                                 <label for="Category"> <spring:message code="select.deviceIDType" /><span class="star">*</span></label>
                                             </div>
                                             <div class="col s6 m7 selectDropdwn">
-                                                <select class="browser-default" id = "deviceIdType" required>
+                                                <select class="browser-default" id = "deviceIdType" 
+	title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomValidity('')"  
+	oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"  required>
                                                     <option value="" disabled selected><spring:message code="select.selectDeviceIDType" /></option>
                                            	</select>
                                             </div>
@@ -139,9 +140,10 @@
                                                     :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <input type="text" id="DeviceID" 
-                                                    pattern=[A-Za-z0-9]{3,12}
-                                                    title="Please enter maximum 12 characters only" maxlength="12" required>
+                                                <input type="text" id="DeviceID"  pattern=[A-Za-z0-9]{3,12}  maxlength="12"
+                                  oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                    title= "<spring:message code="validation.12Character" />"  required / >
+                                                    
                                             </div>
                                         </div>
                                  
