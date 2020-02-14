@@ -325,7 +325,7 @@
 		src="${context}/resources/project_js/importerTypeApproved.js"></script>	
 
 	<script type="text/javascript">
-
+ 
 		populateCountries("country");	
 		</script>
 </body>

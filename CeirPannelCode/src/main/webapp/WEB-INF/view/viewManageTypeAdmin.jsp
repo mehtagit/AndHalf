@@ -16,7 +16,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head>
+<head> 
 <title>Consignment</title>
 <meta name="fragment" content="!">
 <meta charset="utf-8" />

@@ -143,7 +143,7 @@ window.parent
 			console.log("reset form function");
 			$('#replymessageForm').trigger("reset");
 		}
-
+ 
 		var max_fields = 15; //maximum input boxes allowed
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
