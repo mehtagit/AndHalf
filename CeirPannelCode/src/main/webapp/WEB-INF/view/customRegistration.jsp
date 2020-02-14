@@ -727,7 +727,94 @@ var contextpath = "${context}";
 	<!-- ================================================
     Scripts
     ================================================ -->
+    
+    
+		
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
+		
 	<script>
+	
+function InvalidMsg(textbox,type) {
+if (textbox.value == '') {
+	if(type=="input"){
+    textbox.setCustomValidity($.i18n('requiredMsg_input'));
+	}
+	else if(type=="date"){
+        textbox.setCustomValidity($.i18n('requiredMsg_date'));	
+	}
+	else if(type=="select"){
+        textbox.setCustomValidity($.i18n('requiredMsg_select'));	
+	}
+	else if(type=="fileType"){
+        textbox.setCustomValidity($.i18n('requiredMsg_fileType'));	
+	}
+	else if(type=="email"){
+        textbox.setCustomValidity($.i18n('requiredMsg_email'));	
+	}
+	
+}
+/*  else if(textbox.validity.typeMismatch){
+    
+    if(type=="input"){
+    	textbox.setCustomValidity($.i18n('requiredMsg_input'));
+    	}
+    	else if(type=="date"){
+    		textbox.setCustomValidity($.i18n('requiredMsg_date'));	
+    	}
+    	else if(type=="select"){
+    		textbox.setCustomValidity($.i18n('requiredMsg_select'));	
+    	}
+    	else if(type=="fileType"){
+    		textbox.setCustomValidity($.i18n('requiredMsg_fileType'));
+    	}
+    	
+    
+}*/
+else {
+    textbox.setCustomValidity('');
+}
+return true;
+}
+
 	$('#langlist').on('change', function() {
 		window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
 		var url_string = window.location.href;
@@ -745,6 +832,15 @@ var contextpath = "${context}";
             $('.modal').modal();
             questionDataByCategory();
             
+            var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+
+            	$.i18n().locale = lang;	
+            	
+            	$.i18n().load( {
+            		'en': './resources/i18n/en.json',
+            		'km': './resources/i18n/km.json'
+            	} ).done( function() { 
+            	});
         });   
 
         $('.dropdown-trigger').dropdown();

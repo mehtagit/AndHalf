@@ -340,7 +340,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" id="passportNumberDiv" style="display: none;">
-									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{0,12}"
+									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{8,12}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 									title="<spring:message code="validation.12Character" />" required/>
 									<label for="passportNo"><spring:message code="registration.nationalid/passporartnumber" /> <span class="star">*</span></label>
@@ -381,7 +381,7 @@ String usertypeId="${usertypeId}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="phoneNo" maxlength="20" id="phoneNo" pattern="[0-9]{7,15}"
+									<input type="text" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									title="<spring:message code="validation.contact" />"	required/> <label for="phoneNo"><spring:message
 											code="registration.phone" /> <span class="star">*</span> </label>
@@ -462,9 +462,9 @@ String usertypeId="${usertypeId}";
 									</div>
 								</div>
 								<div class="col s12 m6 l6">
-									<label data-error="Please select at least one option" for="usertypes"><spring:message code="registration.vatfile" /> <span class="star">*</span></label>
+									<label data-error="Please select at least one option" for="usertypes"><spring:message code="registration.roletype" /> <span class="star">*</span></label>
 									<select name="roles" class="validate" id="usertypes" title="<spring:message code="validation.selectFieldMsg" />" 
-									onchange="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" multiple required>
+									oninput="InvalidMsg(this,'select');"  oninvalid="InvalidMsg(this,'select');" multiple required>
 										<option value="" disabled><spring:message code="table.roleType" /></option>
 									</select> 
 								</div>
@@ -818,8 +818,52 @@ String usertypeId="${usertypeId}";
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
+		
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
+		
 
 	<script> 
+	
 	
 $('#langlist').on('change', function() {
 	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -829,15 +873,8 @@ $('#langlist').on('change', function() {
 	window.location.assign("registration?type="+type+"&lang="+window.lang);			
 	}); 
 	
-	var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	$.i18n().locale = langParam;
-	var successMsg;
-	$.i18n().load( {
-		'en': './resources/i18n/en.json',
-		'km': './resources/i18n/km.json'
-	} ).done( function() { 
-		successMsg=$.i18n('successMsg');
-	});
+	//var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
 
 	
 	
@@ -845,6 +882,18 @@ $('#langlist').on('change', function() {
         	var url = new URL( window.location.href);
     		var langParameter = url.searchParams.get("lang");
             	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
+            	
+            	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+
+            	
+            			$.i18n().locale = lang;	
+            			
+            			$.i18n().load( {
+            				'en': './resources/i18n/en.json',
+            				'km': './resources/i18n/km.json'
+            			} ).done( function() { 
+            			});
+            			
         	$('.modal-trigger').leanModal({
         		dismissible: false
         	});
