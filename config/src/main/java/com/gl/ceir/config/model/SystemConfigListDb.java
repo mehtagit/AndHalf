@@ -34,7 +34,6 @@ public class SystemConfigListDb implements Serializable {
 	@JsonIgnore
 	private Date modifiedOn;
 	
-	@JsonIgnore
 	private String tag;
 	
 	private Integer value;

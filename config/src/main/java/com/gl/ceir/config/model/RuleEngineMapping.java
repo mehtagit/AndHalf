@@ -49,6 +49,12 @@ public class RuleEngineMapping implements Serializable {
 	@NotNull
 	@Column(length = 20)
 	private String userType;
+	
+	@Column(length = 10)
+	private String failedRuleActionGrace;
+	
+	@Column(length = 10)
+	private String failedRuleActionPostGrace;
 
 	public Long getId() {
 		return id;
@@ -110,6 +116,22 @@ public class RuleEngineMapping implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getFailedRuleActionGrace() {
+		return failedRuleActionGrace;
+	}
+
+	public void setFailedRuleActionGrace(String failedRuleActionGrace) {
+		this.failedRuleActionGrace = failedRuleActionGrace;
+	}
+
+	public String getFailedRuleActionPostGrace() {
+		return failedRuleActionPostGrace;
+	}
+
+	public void setFailedRuleActionPostGrace(String failedRuleActionPostGrace) {
+		this.failedRuleActionPostGrace = failedRuleActionPostGrace;
 	}
 
 	@Override

@@ -4,38 +4,31 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.envers.Audited;
+import io.swagger.annotations.ApiModel;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+@ApiModel
 @Entity
-@Audited
-public class DeviceDb  implements Serializable{
-
+public class StolenTrackDb implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@JsonIgnore
-	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@NotNull
 	private Date createdOn;
-
-	@JsonIgnore
-	@UpdateTimestamp
+	
+	@NotNull
 	private Date modifiedOn;
 
-	private String manufatureDate;
 	private String deviceType;
 	private String deviceIdType;
 	private String multipleSimStatus;
@@ -43,11 +36,13 @@ public class DeviceDb  implements Serializable{
 	private String imeiEsnMeid;
 	private LocalDateTime DeviceLaunchDate;
 	private String deviceStatus;
-	private String deviceAction;
+	private String operatorName;
+	private Integer operatorId;
 	
-	private Integer tac;
-
-	private String period;
+	@Column(length = 10)
+	private String fileName;
+	
+	private LocalDateTime recordDate;
 
 	public Long getId() {
 		return id;
@@ -71,14 +66,6 @@ public class DeviceDb  implements Serializable{
 
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
-	}
-
-	public String getManufatureDate() {
-		return manufatureDate;
-	}
-
-	public void setManufatureDate(String manufatureDate) {
-		this.manufatureDate = manufatureDate;
 	}
 
 	public String getDeviceType() {
@@ -137,44 +124,51 @@ public class DeviceDb  implements Serializable{
 		this.deviceStatus = deviceStatus;
 	}
 
-	public String getDeviceAction() {
-		return deviceAction;
+	public String getOperatorName() {
+		return operatorName;
 	}
 
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
 	}
 
-	public String getPeriod() {
-		return period;
+	public Integer getOperatorId() {
+		return operatorId;
 	}
 
-	public void setPeriod(String period) {
-		this.period = period;
+	public void setOperatorId(Integer operatorId) {
+		this.operatorId = operatorId;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public LocalDateTime getRecordDate() {
+		return recordDate;
+	}
+
+	public void setRecordDate(LocalDateTime recordDate) {
+		this.recordDate = recordDate;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	public Integer getTac() {
-		return tac;
-	}
-
-	public void setTac(Integer tac) {
-		this.tac = tac;
-	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("DeviceDb [id=");
+		builder.append("StolenTrackDb [id=");
 		builder.append(id);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
-		builder.append(", manufatureDate=");
-		builder.append(manufatureDate);
 		builder.append(", deviceType=");
 		builder.append(deviceType);
 		builder.append(", deviceIdType=");
@@ -189,10 +183,14 @@ public class DeviceDb  implements Serializable{
 		builder.append(DeviceLaunchDate);
 		builder.append(", deviceStatus=");
 		builder.append(deviceStatus);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
-		builder.append(", period=");
-		builder.append(period);
+		builder.append(", operatorName=");
+		builder.append(operatorName);
+		builder.append(", operatorId=");
+		builder.append(operatorId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", recordDate=");
+		builder.append(recordDate);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -42,7 +42,7 @@ public class SystemConfigListController {
 		return mapping;
 	}
 	
-	@ApiOperation(value = "View By Id || system-config-list", response = SystemConfigListDb.class)
+	@ApiOperation(value = "Update || system-config-list", response = SystemConfigListDb.class)
 	@PutMapping("/system-config-list")
 	public MappingJacksonValue update(@RequestBody SystemConfigListDb systemConfigListDb) {
 
