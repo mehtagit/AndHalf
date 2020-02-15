@@ -1,6 +1,7 @@
 package org.gl.ceir.configuration;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
-public class ApplicationConfig extends AcceptHeaderLocaleResolver implements WebMvcConfigurer {
+public class InternationalizationConfig extends AcceptHeaderLocaleResolver implements WebMvcConfigurer {
 	@Bean 
 	public LocaleResolver localeResolver() { 
 		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
@@ -35,6 +36,7 @@ public class ApplicationConfig extends AcceptHeaderLocaleResolver implements Web
 	  registry.addInterceptor(localeChangeInterceptor());
 	  }
 		
+	
 	  @Bean
 	  public ResourceBundleMessageSource messageSource() {
 	  ResourceBundleMessageSource rs = new ResourceBundleMessageSource();
