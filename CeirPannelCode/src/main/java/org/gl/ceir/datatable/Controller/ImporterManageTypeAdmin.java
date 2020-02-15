@@ -62,6 +62,7 @@ public class ImporterManageTypeAdmin {
 			HttpSession session, @RequestParam(name = "sessionFlag", required = false) Integer sessionFlag) {
 
 		String userType = (String) session.getAttribute("usertype");
+		String userStatus = (String) session.getAttribute("userStatus");
 		log.info("userType in TRC----" + userType);
 
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
@@ -102,7 +103,7 @@ public class ImporterManageTypeAdmin {
 						String fileName1= trcContentModelList.getFileName();
 						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),fileName1,txnId);
+						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),fileName1,txnId,userStatus);
 						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
