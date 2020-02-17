@@ -114,6 +114,10 @@ label {
 	margin: auto;
 	/* border: solid 2px #444; */
 }
+
+p label span {
+    font-size: 1rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -230,39 +234,39 @@ var contextpath = "${context}";
 
 							<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation" id="propertyLocation"
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,200}$" name="propertyLocation" id="propertyLocation"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.200characters" />" required /> 
 										 <label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s]{0,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,20}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.20Characters" />" required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span> </label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="postalCode" maxlength="30" id="postalCode" pattern="[A-Za-z0-9\s]{6}"
+									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[A-Za-z0-9\s]{6}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.postalcode" />">
 									<label for="postalCode"><spring:message code="input.postalCode" /></label>
 								</div>
@@ -361,25 +365,25 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail" maxlength="320" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="email" name="authorityEmail" maxlength="320" id="authorityEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />"> 
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="20" pattern="[0-9]{7,15}"
+									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />">
 									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="email" required="required" id="email" maxlength="320" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="email" required="required" id="email" maxlength="320" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" required/> 
 										<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="phoneNo" maxlength="20" id="phoneNo" pattern="[0-9]{7,15}"
+									<input type="tel" name="phoneNo" maxlength="15" id="phoneNo" pattern="[0-9]{7,15}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />" required /> 
 										<label for="phoneNo"><spring:message code="input.contactNum" /> <span class="star">*</span></label>
 								</div>
