@@ -11,6 +11,7 @@
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
+
 		$.i18n().locale = lang;	
 		
 		$.i18n().load( {
@@ -949,9 +950,3 @@ function fileTypeValueChanges() {
 
 			}
 			});
-		
-		
-		
-		
-		
-		

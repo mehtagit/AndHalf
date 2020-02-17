@@ -483,7 +483,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																id="singleDevicevillage" maxlength="20"
 																pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.20Character" />" required  /  maxlength="20">
+																title= "<spring:message code="validation.address30characters" />" required  /  maxlength="30">
 																 <label
 																for="village"><spring:message code="input.village" /> <span class="star">*</span></label>
 														</div>
@@ -500,17 +500,17 @@ onclick="_Services._selectstartDate()"></i></span>
 
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="district"
-																id="singleDevicedistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" 
+																id="singleDevicedistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.20Character" />" required  /  maxlength="20"> <label
+																title= "<spring:message code="validation.address30characters" />" required  /  maxlength="30"> <label
 																for="district"><spring:message code="input.district" /><span class="star"> * </span></label>
 														</div>
 
 														<div class="input-field col s12 m6 l6">
 															<input type="text" name="commune"
-																id="singleDevicecommune" pattern="[a-zA-Z]{0,20}"
+																id="singleDevicecommune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.20Character" />" required  /  maxlength="20">
+																title= "<spring:message code="validation.address30characters" />" required  /  maxlength="30">
 															 	<label
 																for="commune"><spring:message code="input.commune" /> <span class="star"> *</span></label>
 														</div>
@@ -538,24 +538,41 @@ onclick="_Services._selectstartDate()"></i></span>
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 																title= "<spring:message code="validation.selectFieldMsg" />" required  / > </select>
 														</div>
+														
+														  <div class="input-field col s12 m6">
+															<input type="text" name="IndivisualStolenDate"
+																id='IndivisualStolenDate' class='form-control datepick'
+																autocomplete='off' 
+																title="<spring:message code="validation.requiredMsg" />"  required /> 
+																<label
+																for="IndivisualStolenDate" class="center-align"><spring:message code="operator.stolenDate" /> <span class="star">*</span>
+															</label> <span class="input-group-addon" style="color: #ff4081"><i
+																class="fa fa-calendar" aria-hidden="true"></i></span>
+														</div>
+														
+														<div class="file-field col s12 m6 l6">
+														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
+														<spring:message code="input.UploadFIR" />
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span> <input type="file" 
+															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+															title= "<spring:message code="validation.NoChosen" />" required  
+															placeholder="Upload FIR" id="uploadFirSingle">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text" placeholder="Upload FIR"
+																id="uploadFirSingleName" title="Please upload national ID image">
+														</div>
+													</div>
 
-														<div class="input-field col s12 m6">
+														<div class="input-field col s12 m12">
 															<textarea id="singleDeviceRemark"
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.200characters" />" maxlength="20000"
+																title= "<spring:message code="validation.10000characters" />" maxlength="10000"
 																class="materialize-textarea"></textarea>
 															<label for="textarea1"><spring:message code="input.Remark" /></label>
 														</div>
-														  <div class="input-field col s12 m6">
-											<input type="text" name="IndivisualStolenDate"
-												id='IndivisualStolenDate' class='form-control datepick'
-												autocomplete='off' 
-												title="<spring:message code="validation.requiredMsg" />"  required /> 
-												<label
-												for="IndivisualStolenDate" class="center-align"><spring:message code="operator.stolenDate" /> <span class="star">*</span>
-											</label> <span class="input-group-addon" style="color: #ff4081"><i
-												class="fa fa-calendar" aria-hidden="true"></i></span>
-										</div>
 													</div>
 												</div>
 											</div>
@@ -580,7 +597,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6">
 												<input type="text" name="companyName" pattern=[A-Za-z]{1,50} maxlength="50" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.50alphanumeric" />" required / 
+																title= "<spring:message code="validation.50alphanumeric" />" required  
 													id="bulkStolencompanyName"> <label
 													for="companyName"><spring:message code="registration.companyName" /> <span class="star"> *</span></label>
 											</div>
@@ -590,7 +607,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
 											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.200characters" />" required / maxlength="200" > <label
+																title= "<spring:message code="validation.200characters" />" required maxlength="200" /> <label
 													for="address"><spring:message code="input.address" /> <span
 													class="star">*</span></label>
 											</div>
@@ -600,7 +617,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenstreetNumber" pattern="[^[a-zA-Z0-9\s,'50" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.50alphanumeric" />" required /	
+																title= "<spring:message code="validation.50alphanumeric" />" required 
 																 maxlength="50" title="Please enter street number">
 												<label for="streetNumber"><spring:message code="input.streetNumber" /><span
 													class="star"> *</span></label>
@@ -609,7 +626,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="village" id="bulkStolenvillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.50alphanumeric" />" required /  maxlength="50">
+																title= "<spring:message code="validation.50alphanumeric" />" required   maxlength="50">
 												
 												 <label for="village"><spring:message code="input.village" />
 													<span class="star"> *</span>
@@ -621,7 +638,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,50}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.50alphanumeric" />" required /  maxlength="50"
+																title= "<spring:message code="validation.50alphanumeric" />" required  maxlength="50"
 													title="Please enter your locality"> <label
 													for="locality"><spring:message code="input.locality" /> <span class="star"> *</span></label>
 											</div>
@@ -629,7 +646,7 @@ onclick="_Services._selectstartDate()"></i></span>
 											<div class="input-field col s12 m6 l6">
 												<input type="text" name="district" id="bulkStolendistrict" pattern="[a-zA-Z ]{0,50}" 
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.50alphanumeric" />" required / 
+																title= "<spring:message code="validation.50alphanumeric" />" required 
 														maxlength="50" > <label for="district"><spring:message code="input.district" />
 													<span class="star"> *</span>
 												</label>
@@ -639,7 +656,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="commune" id="bulkStolencommune"
 												pattern="[a-zA-Z ]{0,50}" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.50alphanumeric" />" required /
+																title= "<spring:message code="validation.50alphanumeric" />" required 
 												 maxlength="50"> <label for="commune"><spring:message code="input.commune" />
 													<span class="star"> *</span>
 												</label>
@@ -649,7 +666,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin" pattern="[0-9]{0,20}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.postalcode" />" required / 
+																title= "<spring:message code="validation.postalcode" />" required 
 															maxlength="20"> <label for="pin"><spring:message code="registration.postalcode" />
 													<span class="star"> *</span>
 												</label>
@@ -893,12 +910,28 @@ onclick="_Services._selectstartDate()"></i></span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
+										
+										<div class="file-field col s12 m6 l6">
+														<h6 class="form-label" style="margin: 0; font-size: 0.9rem;">
+															<spring:message code="input.UploadFIR" />   
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span> <input type="file" 
+															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+															title= "<spring:message code="validation.NoChosen" />" required   
+															placeholder="Upload FIR" id="uploadFirBulk">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text" placeholder="Upload FIR"
+																id="uploadFirSingleBulkName" title="Please upload national ID image">
+														</div>
+													</div>
 
-											<div class="input-field col s12 m6" style="margin-top: 22px;">
+											<div class="input-field col s12 m12" style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark" 
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.200characters" />"
-												maxlength="20000"
+												title= "<spring:message code="validation.10000characters" />"
+												maxlength="10000"
 													class="materialize-textarea"></textarea>
 												<label for="textarea1"><spring:message code="input.Remark" /></label>
 											</div>
