@@ -46,7 +46,7 @@ public class StolenIndividualUserDB {
 	private String province;
 	private String remark;
 	private String street;
-	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince;
+	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince,nidFileName;
 	
 	public String getAlternateContactNumber() {
 	return alternateContactNumber;
@@ -374,6 +374,14 @@ public class StolenIndividualUserDB {
 		this.deviceStolenProvince = deviceStolenProvince;
 	}
 
+	public String getNidFileName() {
+		return nidFileName;
+	}
+
+	public void setNidFileName(String nidFileName) {
+		this.nidFileName = nidFileName;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -459,9 +467,13 @@ public class StolenIndividualUserDB {
 		builder.append(deviceStolenCountry);
 		builder.append(", deviceStolenProvince=");
 		builder.append(deviceStolenProvince);
+		builder.append(", nidFileName=");
+		builder.append(nidFileName);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 
 	

@@ -411,6 +411,9 @@ function saveIndivisualStolenRequest(){
 	var IndivisualStolenDate=$('#IndivisualStolenDate').val();	
 	var indivisualStolenfileName=$('#singleStolenFile').val();
 	
+	var uploadedFileName = $("#singleStolenFile").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	console.log("**** file name"+uploadedFileName)
 	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
@@ -433,7 +436,7 @@ function saveIndivisualStolenRequest(){
 			"district": singleStolendistrict,
 			"email":singleStolenemail,
 			"firstName":singleStolenfirstName,
-			"imeiEsnMeid": singleStolenimeiNumber,
+			"imeiEsnMeid": parseInt(singleStolenimeiNumber),
 			"lastName": singleStolenlastName,
 			"locality": singleStolenlocality,
 			"multiSimStatus": singleStolenSimStatus,
@@ -447,7 +450,8 @@ function saveIndivisualStolenRequest(){
 			"province": state,
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
-			"village":singleStolenvillage
+			"village":singleStolenvillage,
+			"nidFileName":uploadedFileName
 	}
 	
 	

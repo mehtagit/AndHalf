@@ -334,7 +334,7 @@
                                                             class="star">*</span></label>
                                                 </div> -->
 
-											<div class="input-field col s12 m6">
+											<div class="input-field col s12 m6" id="visaExpiryDateDiv" style="display: none;">
 												<input type="text" id="datepicker1" title="" maxlength="15" />
 												<label for="datepicker1"><spring:message code="input.VisaExpiry" /> <span
 													class="star">*</span></label>

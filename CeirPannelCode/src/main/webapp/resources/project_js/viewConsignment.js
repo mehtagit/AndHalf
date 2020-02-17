@@ -190,9 +190,12 @@
 			console.log(data.totalPrice);
 			if(data.totalPrice==null){
 			     totalPrice="";
+			     $("#viewCurrencyDiv").css("display", "none");
+			     
 			}
 			else{
 				totalPrice=(parseInt(data.totalPrice));
+				$("#viewCurrencyDiv").css("display", "block");
 			}
 			
 			$("#supplierId").val(data.supplierId);
@@ -219,9 +222,12 @@
 			console.log(data.totalPrice);
 			if(data.totalPrice==null){
 			     totalPrice="";
+			     $("#currencyDiv").css("display", "none"); 
 			}
 			else{
 				totalPrice=(parseInt(data.totalPrice));
+				 $("#currencyDiv").css("display", "block"); 
+				
 			}
 			
 			$("#supplierIdEdit").val(data.supplierId);
@@ -234,6 +240,8 @@
 			$("#QuantityEdit").val(data.quantity);
 			$("#TransactionIdEdit").val(data.txnId);
 			$("#fileNameEdit").val(data.fileName);
+			$("#fileNameToBeSame").val(data.fileName);
+			
 			$("#currency").val(data.currency);
 			$("#totalPrice").val(totalPrice);
 			$("#hideCurrency").val(data.currency);
@@ -379,7 +387,7 @@
 			formData.append('quantity',quantity);
 			formData.append('txnId',txnId);
 			formData.append('filename',filename);
-			formData.append('currency',currency);
+			formData.append('currency',parseInt(currency));
 			formData.append('totalPrice',totalPrice);
 			$.ajax({
 				url: './updateRegisterConsignment',
@@ -866,3 +874,64 @@
 
 
 
+		function fileTypeValueChanges() {
+			var uploadedFileName = $("#csvUploadFile").val();
+			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+			var ext = uploadedFileName.split('.').pop();
+		
+			var fileSize = ($("#csvUploadFile")[0].files[0].size);
+			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+		   if (uploadedFileName.length > 30) {
+		       $('#fileFormateModal').openModal();
+		       $('#fileErrormessage').text('');
+		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+		   } 
+			else if(ext!='csv')
+				{
+				$('#fileFormateModal').openModal();
+				 $('#fileErrormessage').text('');
+			       $('#fileErrormessage').text('file extension must be in  CSV.');
+				}
+			else if(fileSize>='5000'){
+				$('#fileFormateModal').openModal();
+				 $('#fileErrormessage').text('');
+			       $('#fileErrormessage').text('file size must be less then 5 mb.');
+			}
+			else {
+				console.log("file formate is correct")
+				
+			}
+			
+
+		}
+
+		function clearFileName() {
+			var existingfile=$("#fileNameToBeSame").val();
+			//$('#fileNameEdit').val('');
+			$("#csvUploadFile").val('');
+			$('#fileFormateModal').closeModal();
+			
+			$("#fileNameEdit").val(existingfile);
+		}
+
+		
+		
+		$(document).on("keyup", "#totalPrice", function(e) {
+			var totalPrice=$('#totalPrice').val();
+			if(totalPrice.length<'1' )
+			{
+			$("#currency").attr("required", false);
+			/*$('#currency').attr("disabled",true);*/
+			$('#currencyDiv').hide();
+
+			//$("#currency")[0].selectedIndex = 0;
+
+			}
+			else
+			{
+			$("#currency").attr("required", true);
+			/*$('#currency').attr("disabled",false);*/
+			$('#currencyDiv').show();
+
+			}
+			});

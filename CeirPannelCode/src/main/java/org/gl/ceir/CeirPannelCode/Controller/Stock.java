@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,13 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.LawfulStolenRecovey;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
+import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -56,6 +61,8 @@ public class Stock {
 	FeignCleintImplementation feignCleintImplementation;
 	@Autowired
 	UtilDownload utildownload;
+	
+	UserProfileFeignImpl userProfileFeignImpl;
 	
 	
 	
@@ -536,5 +543,33 @@ else {
 
 		}
 		
+		@RequestMapping(value= {"/fetchAssigneDetails"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
+		public @ResponseBody List<UploadStockAssigneModal> fetchAssigneDetails(HttpServletRequest request,HttpSession session) {
 
+			log.info("enter in  fetch asigne detals .");
+			String filter = request.getParameter("request");
+			Gson gson= new Gson(); 
+	        log.info("*********"+filter);
+	        
+	       AssigneRequestType assigneRequest  = gson.fromJson(filter, AssigneRequestType.class);
+	       List<UploadStockAssigneModal> response = new  ArrayList<UploadStockAssigneModal>();
+	      
+	       log.info("request passed to the fetch api=="+assigneRequest);
+			//String roleType=(String) session.getAttribute("usertype");
+			//String selectedRoletype=(String) session.getAttribute("selectedUserTypeId");
+	         //Object ob=  userProfileFeignImpl.fetchAssignedetails(assigneRequest);
+	       // response=userProfileFeignImpl.fetchAssignedetails(assigneRequest);
+			//log.info("response after delete Stock."+ob);
+			response.add(new UploadStockAssigneModal("FLHF0071K","FLHF0071K",null,null));
+			response.add(new UploadStockAssigneModal("FLHF0071K","FLHF0071K",null,null));
+		
+				
+		 
+		log.info("exit point fetch asigne details."+response);	
+		return response;
+			
+
+		}
+
+		
 }

@@ -145,7 +145,7 @@ var formData= new FormData();
 			"district": singleStolendistrict,
 			"email":singleStolenemail,
 			"firstName":singleStolenfirstName,
-			"imeiEsnMeid": singleStolenimeiNumber,
+			"imeiEsnMeid":parseInt(singleStolenimeiNumber),
 			"lastName": singleStolenlastName,
 			"locality": singleStolenlocality,
 			"multiSimStatus": singleStolenSimStatus,
