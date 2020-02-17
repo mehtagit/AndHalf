@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -206,7 +205,17 @@
 							code="input.totalprice" /></label>
 				</div>
 
-				<div class="col s12 m6">
+			
+				<div class="input-field col s12 m6">
+					<textarea id="remark" class="materialize-textarea"
+						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
+					<label for="remark" class=""><spring:message
+							code="input.remarks" /></label>
+
+					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Remark</label> -->
+				</div>
+					<div class="col s12 m6" id="viewCurrencyDiv">
 					<label for="Currency"><spring:message code="input.currency" /></label>
 					<select id="viewcurrency" class="browser-default"
 						disabled="disabled">
@@ -216,15 +225,6 @@
 					</select>
 					<!-- <input type="text" id="viewcurrency" placeholder="" disabled="disabled"> -->
 					<input type="text" id="viewhideCurrency" style="display: none;">
-				</div>
-				<div class="input-field col s12 m6">
-					<textarea id="remark" class="materialize-textarea"
-						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
-					<label for="remark" class=""><spring:message
-							code="input.remarks" /></label>
-
-					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
-                                               <label for="TransactionId" class="center-align">Remark</label> -->
 				</div>
 			</div>
 
@@ -595,7 +595,7 @@
 	</div>
 
 	<!-- Update Modal Start -->
-	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
+		<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.editConsignment" />
 		</h6>
@@ -704,7 +704,24 @@
 								code="input.totalprice" /></label>
 					</div>
 
-					<div class="col s12 m6">
+                     <div class="file-field input-field col s12 m6"
+						style="margin-top: 5px;">
+						<h6 class="file-upload-heading" style="margin-top: -5px;">
+							<spring:message code="input.bulkdevice" />
+							<span class="star">*</span>
+						</h6>
+						<div class="btn">
+							<span><spring:message code="input.selectfile" /></span> <input
+								type="file" name="file" id="csvUploadFile" accept=".csv" onchange="fileTypeValueChanges()"
+								title="<spring:message code="validation.file" />">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate responsive-file-div"
+								id="fileNameEdit" type="text">
+						</div>
+					</div>
+					<input type="text" id="fileNameToBeSame" style="display: none;">
+					<div class="col s12 m6" id="currencyDiv">
 						<label for="Currency"><spring:message
 								code="input.currency" /></label> <select id="currency"
 							class="browser-default"
@@ -715,22 +732,7 @@
 						</select> <input type="text" id="hideCurrency" style="display: none;">
 					</div>
 
-					<div class="file-field input-field col s12 m6"
-						style="margin-top: 5px;">
-						<h6 class="file-upload-heading" style="margin-top: -5px;">
-							<spring:message code="input.bulkdevice" />
-							<span class="star">*</span>
-						</h6>
-						<div class="btn">
-							<span><spring:message code="input.selectfile" /></span> <input
-								type="file" name="file" id="csvUploadFile" accept=".csv"
-								title="<spring:message code="validation.file" />">
-						</div>
-						<div class="file-path-wrapper">
-							<input class="file-path validate responsive-file-div"
-								id="fileNameEdit" type="text">
-						</div>
-					</div>
+					
 				</div>
 
 
@@ -798,6 +800,22 @@
 					<!-- <button class="modal-close btn" style="margin-left: 10px;">ok</button> -->
 					<a onclick="redirectToViewPage()" class="btn"><spring:message
 							code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"> Uploaded file format</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -872,7 +890,8 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 </body>
 </html>
 <%

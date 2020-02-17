@@ -332,10 +332,12 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 						@RequestParam(value = "file", defaultValue = "0") Integer file);
 		
 				@PostMapping("/get/tags-mapping")
-				public @ResponseBody List<GrievanceDropdown> catagoryDropdownListFeign(FilterRequest filterRequest);
+				public @ResponseBody List<GrievanceDropdown> catagoryDropdownListFeign(FilterRequest filterRequest);	
 				
 				@PostMapping("/tags/system-config-list")
 				public @ResponseBody GenricResponse getAllTagsDropdowntFeign(FilterRequest filterRequest);	
+		
+
 		}
 		
 

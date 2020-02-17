@@ -1,3 +1,13 @@
+
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -213,7 +223,7 @@ to {
 											pattern="[A-Za-z0-9]{0,15}"
 											title="<spring:message code="validation.15character" />"
 											maxlength="15" id="supplierId"
-											maxlength="15" /> <label for="SupplierId"
+											maxlength="15" /> <label for="SupplierId" id="SupplierIdAssignie"
 											class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
@@ -222,11 +232,15 @@ to {
 										<input type="text" name="supplierName" id="supplierName"
 											pattern="[A-Za-z ]{0,50}"
 											title="<spring:message code="validation.50character" />"
-											maxlength="50" required /> <label for="SupplierName"
+											maxlength="50" required /> <label for="SupplierName" id="SupplierIdAssignieName"
 											class="center-align"><spring:message
 												code="input.supllierName" /><span class="star">*</span></label>
 									</div>
 								</div>
+								<div class="col s12 m12">
+                                                <a onclick="openModalForAssigneId()" id="assigneDetailslink" class="supplierInformation" style="display: none;">Search
+                                                    For Assignee Information</a>
+                                            </div>
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
@@ -246,6 +260,7 @@ to {
 												code="input.invoiceNumber" /></label>
 									</div>
 								</div>
+								
 
 
 								<div class="row myRow">
@@ -256,12 +271,12 @@ to {
 									<div class="file-field input-field col s12 m6"
 										style="margin-top: 5px;">
 										<div class="btn">
-											<span><spring:message code="input.selectfile" /></span> <input
+											<span><spring:message code="input.selectfile" /></span> <input onchange="fileTypeValueChanges()"
 												type="file" id="file" required="required" size=50
 												maxlength=50 accept=".csv">
 										</div>
 										<div class="file-path-wrapper">
-											<input class="file-path validate responsive-file-div"
+											<input class="file-path validate responsive-file-div" id="fileName"
 												type="text">
 										</div>
 									</div>
@@ -344,6 +359,81 @@ to {
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"> Uploaded file format</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="searchSupplierInformation" class="modal">
+        <!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
+         <h6 class="modal-header">Search Assignee Information</h6>
+        <a href="uploadStock.html" class="btn-flat right">&times;</a>
+        <div class="modal-content">
+
+	<form action="" onsubmit="return serchAssigneDetaiils()"
+									method="POST" enctype="multipart/form-data"
+									id="registerConsignment">
+            <div class="row">
+                
+                    <h5 class="center">
+                        <label>
+                            <input name="group1" type="radio"
+                               value="1" onclick="document.getElementById('submitbtn').style.display ='block';" />
+                            <span class="checkboxFont"> Assignee Name</span>
+                             <input name="group1" type="radio"
+                               value="2" onclick="document.getElementById('submitbtn').style.display ='block';" />
+                            <span class="checkboxFont"> Contact Number</span>
+                             <input name="group1" type="radio"
+                                value="3" onclick="document.getElementById('submitbtn').style.display ='block';    " />
+                            <span class="checkboxFont"> Email ID</span>
+                        </label>
+                      </h5>
+                
+            </div>
+
+            <div class="row" id="submitbtn" style="display: none;" >
+                    <div class="input-field col s12 m2">
+                        <label for="Search" class="center-align ml-10">Search :</label>
+                    </div>
+                    <div class="input-field col s12 m5">
+                        <input type="text" id="assigneDetails" name="assigneDetails" placeholder="Search" />
+                    </div>
+                    <div class="input-field col s12 m2">
+                        <button class="btn" type="submit" >Submit</button>
+                    </div>
+            </div>
+           </form>
+
+            <div class="row myRow" style="margin-top: 10px; display: none;" id="user123">
+                
+                <p class="center" style="color: red;">No data found</p>
+
+            </div>
+            <div style="display: none;" id="user456" style="margin-bottom: 20px;">
+                <table class="responsive-table striped display" cellspacing="0">
+               
+                </table>
+            </div>
+
+           
+        </div>
+    </div>
+    
 	<!-- END CONTENT -->
 
 	<script type="text/javascript"
@@ -519,7 +609,128 @@ function redirectToViewPage()
 }); */
 
 }
+
+function fileTypeValueChanges(dd, ddd) {
+	var uploadedFileName = $("#file").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	var ext = uploadedFileName.split('.').pop();
+	
+	var fileSize = ($("#file")[0].files[0].size);
+	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+   if (uploadedFileName.length > 30) {
+       $('#fileFormateModal').openModal();
+       $('#fileErrormessage').text('');
+       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+   } 
+	else if(ext!='csv')
+		{
+		$('#fileFormateModal').openModal();
+		 $('#fileErrormessage').text('');
+	       $('#fileErrormessage').text('file extension must be in  CSV.');
+		}
+	else if(fileSize>='5000'){
+		$('#fileFormateModal').openModal();
+		 $('#fileErrormessage').text('');
+	       $('#fileErrormessage').text('file size must be less then 5 mb.');
+	}
+	else {
+		console.log("file formate is correct")
+		
+	}
+	
+
+}
+
+function clearFileName() {
+	$('#fileName').val('');
+	$("#file").val('');
+	$('#fileFormateModal').closeModal();
+}
+
+
+$(document).ready(function() {
+ // executes when HTML-Document is loaded and DOM is ready
+var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 
+
+if(currentRoleTypeAssignei!='Importer'){
+	$("#assigneDetailslink").css("display", "block"); 
+$('#SupplierIdAssignie').text('');
+$('#SupplierIdAssignie').text('Assignee ID');
+
+$('#SupplierIdAssignieName').text('');
+$('#SupplierIdAssignieName').text('Assignee Name');
+
+$("#SupplierIdAssignieName").append('<span class="star">*</span>');
+}
+else{
+	
+	$("#assigneDetailslink").css("display", "none"); 
+	console.log("----importer");
+}
+//$("#nidType").append('<span class="star">*</span>');
+
+});
+
+
+function openModalForAssigneId(){
+	
+	$('#searchSupplierInformation').openModal();
+}
+
+
+function serchAssigneDetaiils(){
+	var formData= new FormData()
+	var requestType =	$('input[name="group1"]:checked').val();
+   var assigneDetails=$('#assigneDetails').val();
+
+   var request={
+		   "field":assigneDetails,
+		   "type":1
+	}
+   formData.append("request",JSON.stringify(request));
+     $.ajax({
+		url: './fetchAssigneDetails',
+		type: 'POST',
+		data: formData,
+		processData: false,
+		contentType: false,
+		success: function (response, textStatus, jqXHR) {
+		
+			/* if(response.errorCode=='0'){
+				$("#indivisualStolenButton").prop('disabled', true);
+				$('#stolenSucessPopUp').openModal();
+			}
+			else{
+//				$('#sucessMessage').text('');
+				$('#indivisualStolenButton').openModal();
+				$('#dynamicMessage').text('');
+				$('#dynamicMessage').text(response.message);
+			} */
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+
+		}
+	});
+	return false;
+
+}
+
 </script>
 
 </body>
 </html>
+
+
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>
