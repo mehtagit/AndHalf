@@ -126,7 +126,7 @@
 											
 											<div class="col s12 m6 l6">
 												<label><spring:message
-														code="registration.countrymanufacture" /> <span
+														code="input.Country" /> <span
 													class="star">*</span></label> <select id="country"
 													class="browser-default" class="mySelect"
 													style="padding-left: 0;" required="required"></select>

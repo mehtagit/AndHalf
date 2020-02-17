@@ -118,7 +118,7 @@ public class LawfulFormController
         lawfulIndivisualStolen.setTxnId(txnNumber);
         lawfulIndivisualStolen.setUserId(userId);
         lawfulIndivisualStolen.setRoleType(roletype);
-        lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+       // lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
         
 		try {
 			byte[] bytes = file.getBytes();

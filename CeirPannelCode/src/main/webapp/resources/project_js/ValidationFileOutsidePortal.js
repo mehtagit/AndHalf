@@ -1,13 +1,4 @@
-var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-
-		$.i18n().locale = lang;	
-		
-		$.i18n().load( {
-			'en': '../resources/i18n/en.json',
-			'km': '../resources/i18n/km.json'
-		} ).done( function() { 
-		});
 function InvalidMsg(textbox,type) {
     if (textbox.value == '') {
     	if(type=="input"){
@@ -26,7 +17,6 @@ function InvalidMsg(textbox,type) {
             textbox.setCustomValidity($.i18n('requiredMsg_email'));	
     	}
     	
-    	
     }
   /*  else if(textbox.validity.typeMismatch){
         
@@ -42,6 +32,7 @@ function InvalidMsg(textbox,type) {
         	else if(type=="fileType"){
         		textbox.setCustomValidity($.i18n('requiredMsg_fileType'));
         	}
+        
         	
         
     }*/

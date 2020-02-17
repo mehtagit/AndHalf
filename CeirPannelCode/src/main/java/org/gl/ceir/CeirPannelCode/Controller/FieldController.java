@@ -29,7 +29,8 @@ public class FieldController {
 		ModelAndView mv = new ModelAndView();
 		 log.info(" view Field Management entry point."); 
 		 mv.setViewName("tagForm");
-		log.info(" view Field Management exit point."); 		return mv; 
+		log.info(" view Field Management exit point."); 		
+		return mv; 
 	}
 	
 }

@@ -52,6 +52,17 @@ function showCambodianUserForm()
 	 $("#visaImage").attr("required", false);
 	 $("#datepicker1").attr("required", false);
 	 $("#visaType").attr("required", false);
+	
+	 $("#nationality").attr("required", false);
+	 $("#departmentName").attr("required", false);
+	 $("#endUserdepartmentID").attr("required", false);
+	 $("#endUserDepartmentId").attr("required", false);
+	 $("#visaType").attr("required", false);
+	 $("#datepicker").attr("required", false);
+	 $("#datepicker1").attr("required", false);
+	 $("#visaImage").attr("required", false);
+	 
+	 
 	 
 		$("#endUserLabelNID").append('<span class="star">*</span>');
 		$("#nidType").append('<span class="star">*</span>');
@@ -89,6 +100,15 @@ function showOtherUserForm()
 	$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
+	
+	 
+	 /*$("#departmentName").attr("required", true);
+	 $("#endUserdepartmentID").attr("required", true);
+	 $("#endUserDepartmentId").attr("required", true);
+	 $("#visaType").attr("required", true);
+	 $("#datepicker").attr("required", true);
+	 $("#datepicker1").attr("required", true);
+	 $("#visaImage").attr("required", true);*/
 	
 }
 
@@ -276,6 +296,9 @@ function submitEndUserDeviceInfo(){
 	var isVip=$('input[name="selectvip"]:checked').val();
 	var onVisa=$('input[name="onVisa"]:checked').val();
 
+	if(onVisa==undefined){
+		onVisa='N';
+	}
 	var visaType=$('#visaType').val();
 	var visaDate=$('#datepicker').val();
 	var visaNumber=$('#visaNumber').val();
@@ -438,3 +461,22 @@ function submitEndUserDeviceInfo(){
 	});
 	return false;
 }
+
+
+$(document).on("keyup", "#visaNumber", function(e) {
+	var visaNumber=$('#visaNumber').val();
+	if(visaNumber.length<'1' )
+	{
+	$("#datepicker1").attr("required", false);
+	/*$('#currency').attr("disabled",true);*/
+	$('#visaExpiryDateDiv').hide();
+
+	}
+	else
+	{
+	$("#datepicker1").attr("required", true);
+	/*$('#currency').attr("disabled",false);*/
+	$('#visaExpiryDateDiv').show();
+
+	}
+	});
