@@ -409,6 +409,14 @@ h1.logo-wrapper {
 	margin: 0;
 }
 
+@media only screen and(max-width: 768px){
+	
+h1.logo-wrapper {
+	margin: 0;
+	font-size: 18px;
+}
+}
+
 h1 span.logo-text {
 	display: none;
 }
@@ -426,38 +434,19 @@ header .brand-logo {
 	padding: 8px 20px;
 }
 
-@media only screen and (max-width: 992px) and(min-width: 661px) header
-	.brand-logo {
-	margin
-	:
-	 
-	0;
-	padding
-	:
-	 
-	14
-	px
-	 
-	20
-	px
-	;
-	
-
+@media only screen and(max-width: 768px){
+header .brand-logo {
+    margin: 0;
+    padding: 12px 0 !important;
+    font-size: 18px !important;
+    /* margin-left: -40px; */
 }
 
-@media only screen and (max-width: 660px) header .brand-logo {
-	padding
-	:
-	 
-	14
-	px
-	 
-	20
-	px
-	;
-	
-
+.text-right.px-0.ml-3.my-auto a img.darken-1 {
+    margin-left: 50px !important;
 }
+}
+
 
 header .brand-logo img {
 	width: 172px;
@@ -475,7 +464,7 @@ header .brand-logo img {
 	}
 }
 
-@media only screen and(max-width: 660px) {
+/* @media only screen and(max-width: 660px) {
 	nav .nav-wrapper {
 		text-align: center;
 	}
@@ -485,9 +474,22 @@ header .brand-logo img {
 	ul.side-nav.leftside-navigation {
 		top: 120px !important;
 	}
+} */
+
+@media only screen and (max-width: 768px){
+	ul#chat-out.right {
+    right: 0;
+    position: absolute;
+    top: 64px;
+    height: 64px;
 }
 
-@media only screen and(max-width: 660px)and(min-width:480px) {
+i.mdi-action-account-circle {
+    margin-top: -14px;
+}
+}
+
+@media only screen and(max-width: 768px)and(min-width:480px) {
 	ul#chat-out.right {
 		margin-top: 60px;
 	}
@@ -499,7 +501,7 @@ header .brand-logo img {
   }
   }
  */
-@media only screen and(max-width: 660px) {
+@media only screen and(max-width: 768px) {
 	ul.side-nav.leftside-navigation {
 		top: 120px !important;
 	}
@@ -2853,16 +2855,12 @@ div#viewuplodedModel {
 	padding-right: 10px;
 }
 
-@media only screen and (max-width: 992px) and(min-width: 661px)
-	img.darken-1.my-2 {
-	margin-left
-	:
-	 
-	50
-	px
-	;
-	
 
+
+@media only screen and (max-width: 992px) and(min-width: 786px){
+	img.darken-1.my-2 {
+	margin-left:50px;
+}
 }
 
 .full-screen-modal {

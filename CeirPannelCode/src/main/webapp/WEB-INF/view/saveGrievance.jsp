@@ -1,3 +1,13 @@
+
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	 // session.setMaxInactiveInterval(200); //200 secs
+	 //session.setAttribute("usertype", null); 
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -147,7 +157,7 @@ style="display: none;">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" type="button"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 </div>
@@ -541,3 +551,15 @@ $('#category').on(
 </body>
 </html>
 
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

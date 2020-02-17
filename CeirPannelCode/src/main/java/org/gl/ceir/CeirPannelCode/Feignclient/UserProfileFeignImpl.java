@@ -1,8 +1,12 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import java.util.List;
+
+import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -52,6 +56,9 @@ public interface UserProfileFeignImpl {
 	
 	@PostMapping("/userProfile/viewProfile/{id}")
 	public Registration ViewAdminUser(@PathVariable("id") long id);
+	
+	@PostMapping("/userProfile/searchAssignee")
+	public List<UploadStockAssigneModal> fetchAssignedetails(AssigneRequestType assigneRequest);
 	
 } 
 

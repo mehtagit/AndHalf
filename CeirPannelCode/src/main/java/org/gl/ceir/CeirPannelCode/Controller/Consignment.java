@@ -6,6 +6,8 @@ import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -443,7 +445,8 @@ log.info("request send to the download file api= txnid("+txnid+") fileName ("+fi
 FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 log.info("redirect:"+response.getUrl());
-ModelAndView mv= new ModelAndView(("redirect:"+response.getUrl()));
+//ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));
+ModelAndView mv= new ModelAndView(("redirect:"+ new URL(response.getUrl())));
 
 return mv;
 }

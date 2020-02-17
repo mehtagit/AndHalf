@@ -152,7 +152,7 @@ var path="${context}";
 					<div class="input-field col s12 m6 l6">
 						<input type="text" id="viewManufacturercountry" name="Country"
 							placeholder="" disabled=""> <label
-							for="viewManufacturercountry" class="active"><spring:message code="input.manufacturerCountry" /></label>
+							for="viewManufacturercountry" class="active"><spring:message code="input.Country" /></label>
 					</div>
 					
 			
@@ -267,7 +267,7 @@ var path="${context}";
                                             </div>
 								 --%>
                                             <div class="col s12 m6 l6">
-                                                <label for="country"><spring:message code="input.manufacturerCountry" /> <span class="star">*</span></label>
+                                                <label for="country"><spring:message code="input.Country" /> <span class="star">*</span></label>
                                                 <select id="editmanufacturercountry"  required="required" class="browser-default" class="mySelect"
                                                     required></select>
                                             </div>
