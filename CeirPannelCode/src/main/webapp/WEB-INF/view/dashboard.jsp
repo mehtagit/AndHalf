@@ -85,11 +85,11 @@ String name = (String) session.getAttribute("name");
 					<ul class="left">
 						<li>
 							<div
-								class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
+								class="offset-md-1 text-right px-0 ml-3 my-auto">
 								<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer"
 									target="_blank"
 									title="DMC, external link that open in a new window"> <img
-									src="./resources/images/dmc_gl.png" class="darken-1 my-2"
+									src="./resources/images/dmc_gl.png" id="header-img" class="darken-1 my-2"
 									style="height: 56px;"></a>
 							</div>
 						</li>
@@ -113,6 +113,9 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
+						<li><a   data-target="goToHome" class="modal-trigger"
+							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
+							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">

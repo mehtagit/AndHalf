@@ -3683,10 +3683,18 @@
   .left {
     float: left !important;
   }
+  
+  @media only screen and(max-width: 992px) and(min-width: 768px){
+    .header-img {
+    margin-left: 50px !important;
+  }
+  }
 
   .right {
       float: right !important;
   }
+  
+  
 
   .no-select,
   input[type=range],
@@ -7873,24 +7881,38 @@
     white-space: nowrap;
   }
   
-  @media only screen and (max-width:991px) and (min-width: 601px){
+  /* @media only screen and (max-width:991px) and (min-width: 601px){
   	 a.brand-logo.darken-1 {
     font-size: 20px !important;
 }
-  }
+  } */
 
   .dropdown-content li>a, .dropdown-content li>span {
               color: #444;
           }
 
-  @media only screen and (max-width: 425px) {
+  @media only screen and (max-width: 768px) {
     nav .brand-logo {
       position: absolute;
       color: #fff;
       display: inline-block;
-      font-size: 1.3rem;
+      font-size: 18px !important;
       padding: 0;
       white-space: nowrap;
+      right: 0;
+    }
+  }
+  
+   @media only screen and (max-width: 992px) {
+    nav .brand-logo {
+      position: absolute;
+      color: #fff;
+      display: inline-block;
+      font-size: 18px !important;
+      padding: 0;
+      white-space: nowrap;
+      margin: 5px 0 !important;
+      /* right: -70px; */
     }
   }
 
@@ -7903,16 +7925,53 @@
     transform: translateX(-50%);
   }
 
-  @media only screen and (max-width: 992px) {
+  @media only screen and(min-width: 768px) and (max-width: 992px) {
     nav .brand-logo {
-      left: 50%;
+      left: 45%;
       -webkit-transform: translateX(-50%);
       -moz-transform: translateX(-50%);
       -ms-transform: translateX(-50%);
       -o-transform: translateX(-50%);
       transform: translateX(-50%);
+      font-size: 18px;
+      margin: 0 !important;
+      padding: 12px 0 !important;
     }
 
+    nav .brand-logo.left,
+    nav .brand-logo.right {
+      padding: 0;
+      -webkit-transform: none;
+      -moz-transform: none;
+      -ms-transform: none;
+      -o-transform: none;
+      transform: none;
+    }
+
+    nav .brand-logo.left {
+      left: 0.5rem;
+    }
+
+    nav .brand-logo.right {
+      right: 0.5rem;
+      left: auto;
+    }
+  }
+  
+  @media only screen and(max-width: 768px){
+   nav .brand-logo {
+      left: 70%;
+      -webkit-transform: translateX(-50%);
+      -moz-transform: translateX(-50%);
+      -ms-transform: translateX(-50%);
+      -o-transform: translateX(-50%);
+      transform: translateX(-50%);
+      font-size: 18px;
+      margin: 0 !important;
+      padding: 12px 0 !important;
+    }
+    
+    
     nav .brand-logo.left,
     nav .brand-logo.right {
       padding: 0;
@@ -7972,6 +8031,22 @@
   nav ul.left {
     float: left;
   }
+  
+  
+  
+@media only screen and (max-width: 992px) and(min-width:768px){
+nav ul.left {
+    float: left !important;
+    margin-left: 50px !important;
+}
+
+.new-dv {
+    margin-left: 50px;
+}
+}
+  
+  
+  
 
   nav .input-field {
     margin: 0;
@@ -8030,7 +8105,7 @@
     position: fixed;
   }
 
-  @media only screen and (max-width: 660px) {
+  @media only screen and (max-width: 768px) {
 
     nav,
     nav .nav-wrapper i,
@@ -8044,6 +8119,7 @@
      height: 120px;
     }
   }
+
 
 
 @media only screen and(min-width:661px){
@@ -8060,12 +8136,7 @@ a.btn-flat.dropdown-button.waves-effect.waves-light.white-text.profile-btn {
 }
 }
 
-@media only screen and (max-width: 660px){
-img.darken-1.my-2 {
-    margin-left: 0 !important 
-    width: 100%;
-}
-}
+
 
 
 @media only screen and(max-width: 660px){
@@ -8075,11 +8146,19 @@ img.darken-1.my-2 {
 }
 
 
-@media only screen and (max-width: 992px)and(min-width:661px){
+@media only screen and (max-width: 992px)and(min-width:768px){
 img.darken-1.my-2 {
-margin-left: 50px;
-width: 69%;
+margin-left: 50px !important;
+padding-left: 50px !important;
 }
+/* 
+.col-1.col-xs-1.offset-md-1.text-right.px-0.ml-3.my-auto {
+    margin-left: 50px;
+}
+
+ul.left {
+    margin-left: 50px !important;
+} */
 }
 
 @media only screen and (min-width: 993px){
@@ -8096,7 +8175,7 @@ padding: 14px 20px;
 
 }
 
-  @media only screen and (max-width: 660px){
+  @media only screen and (max-width: 768px){
 nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
     height: 120px;
     line-height: 62px;
