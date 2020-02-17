@@ -333,6 +333,11 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 		
 				@PostMapping("/get/tags-mapping")
 				public @ResponseBody List<GrievanceDropdown> catagoryDropdownListFeign(FilterRequest filterRequest);	
+				
+				@PostMapping("/tags/system-config-list")
+				public @ResponseBody GenricResponse getAllTagsDropdowntFeign(FilterRequest filterRequest);	
+		
+
 		}
 		
 
