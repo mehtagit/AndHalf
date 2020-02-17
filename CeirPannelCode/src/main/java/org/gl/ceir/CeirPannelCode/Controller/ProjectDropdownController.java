@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.pagination.model.MessageContentModel;
@@ -94,6 +95,15 @@ public class ProjectDropdownController {
 		log.info("request send to the catagoryDropdownList api="+filterRequest);
 		List<GrievanceDropdown> response= feignCleintImplementation.catagoryDropdownListFeign(filterRequest);
 		log.info("response from catagoryDropdownList api "+response);
+		return response;
+
+		}
+	
+	@PostMapping("/getSystemTags") 
+	public @ResponseBody GenricResponse getAllTagsDropdown (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the getAllTagsDropdown api="+filterRequest);
+		GenricResponse response= feignCleintImplementation.getAllTagsDropdowntFeign(filterRequest);
+		log.info("response from getAllTagsDropdown api "+response);
 		return response;
 
 		}

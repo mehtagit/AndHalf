@@ -22,6 +22,10 @@ function InvalidMsg(textbox,type) {
     	else if(type=="fileType"){
             textbox.setCustomValidity($.i18n('requiredMsg_fileType'));	
     	}
+    	else if(type=="email"){
+            textbox.setCustomValidity($.i18n('requiredMsg_email'));	
+    	}
+    	
     	
     }
   /*  else if(textbox.validity.typeMismatch){
