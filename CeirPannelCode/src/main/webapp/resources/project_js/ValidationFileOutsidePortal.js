@@ -32,6 +32,7 @@ function InvalidMsg(textbox,type) {
         	else if(type=="fileType"){
         		textbox.setCustomValidity($.i18n('requiredMsg_fileType'));
         	}
+        
         	
         
     }*/
