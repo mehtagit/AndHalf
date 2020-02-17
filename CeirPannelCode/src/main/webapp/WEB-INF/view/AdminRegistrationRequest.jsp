@@ -7,7 +7,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -66,7 +68,7 @@
 
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 
+<body data-id="8" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" 
 data-selected-roleType="${selectedUserTypeId}" 
 data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
@@ -265,6 +267,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/AdminRegistrationRequest.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>	
 			
 		
 </body>

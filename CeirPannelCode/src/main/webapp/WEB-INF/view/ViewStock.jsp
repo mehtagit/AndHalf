@@ -16,7 +16,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -80,7 +82,8 @@
 </style>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
+<body data-id="4"
+data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
@@ -532,7 +535,9 @@
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
+		src="${context}/resources/project_js/dragableModal.js"></script>
+					<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
 </body>
 </html>
 
