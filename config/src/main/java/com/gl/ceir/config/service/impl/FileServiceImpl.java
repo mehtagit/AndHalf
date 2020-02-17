@@ -65,7 +65,7 @@ public class FileServiceImpl {
 
 		String fileName = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link);
-		fileName = "CEIRv1.0_User Manual (Importer)_v1.0";
+		fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
 
 		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
 	}
