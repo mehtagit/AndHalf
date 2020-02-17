@@ -237,7 +237,7 @@ margin-bottom: 5px;
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
                                                                     id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}"
                                                                     oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.20Character" />" required />
+                                                                title= "<spring:message code="validation.postalcode" />" required />
                                       					<label for="sigleRecoverypin"> <spring:message code="input.postalCode" /><span class="star"> *</span></label>
                                                             </div>
                             
@@ -475,7 +475,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <input type="text" name="bulkRecoverypin" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoverypin" pattern="[0-9]{0,20}" 
                                                              oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                           title= "<spring:message code="validation.6digit" />" required  / maxlength="6">
+                                                           title= "<spring:message code="validation.postalcode" />" required  / maxlength="6">
                                                         <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star"> *</span></label>
                                                     </div>
                     

@@ -243,7 +243,7 @@
 											<input type="text" placeholder="" pattern="[0-9]{6,10}"
 												oninput="InvalidMsg(this,'input');"
 												oninvalid="InvalidMsg(this,'input');"
-												title="<spring:message code="validation.10Numbers" />"
+												title="<spring:message code="validation.postalcode" />"
 												class="form-control boxBorder boxHeight" id="endUserpin"
 												required  / maxlength="20"> <label for="pin"><spring:message
 													code="registration.postalcode" /><span class="star">*</span></label>

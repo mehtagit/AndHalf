@@ -286,7 +286,7 @@ margin-bottom: 5px;
 															class="form-control boxBorder boxHeight"
 															id="singleStolenpin" pattern="[0-9]{1,20}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.10Numbers" />" required  / maxlength="20" > 
+															title= "<spring:message code="validation.postalcode" />" required  / maxlength="20" > 
 															<label
 															for="pin"><spring:message code="input.postalCode" /><span class="star"> *</span></label>
 													</div>
@@ -371,7 +371,7 @@ margin-bottom: 5px;
 															</p>
 															<input type="tel" name="phone" id="singleStolenphone2" pattern="[0-9 + ]{1,12}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.10Numbers" />" required  / maxlength="12">
+															title= "<spring:message code="validation.postalcode" />" required  / maxlength="12">
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
 
@@ -520,7 +520,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																class="form-control boxBorder boxHeight"
 																id="singleDevicepin"  pattern="[0-9]{1,20}" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.10Numbers" />" required  /  maxlength="20">
+																title= "<spring:message code="validation.postalcode" />" required  /  maxlength="20">
 																	<label
 																for="pin"><spring:message code="registration.postalcode" /><span class="star"> *</span></label>
 														</div>
@@ -649,7 +649,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin" pattern="[0-9]{0,20}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-																title= "<spring:message code="validation.10Numbers" />" required / 
+																title= "<spring:message code="validation.postalcode" />" required / 
 															maxlength="20"> <label for="pin"><spring:message code="registration.postalcode" />
 													<span class="star"> *</span>
 												</label>
