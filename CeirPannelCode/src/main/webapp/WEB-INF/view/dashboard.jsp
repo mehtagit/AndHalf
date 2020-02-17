@@ -131,7 +131,7 @@ String name = (String) session.getAttribute("name");
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a   data-target="goToLogout" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -156,7 +156,7 @@ String name = (String) session.getAttribute("name");
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
 
-								<li><a href="${context}/logout" id=""><i
+								<li><a data-target="goToLogout" style="cursor: pointer;" class="modal-trigger" id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
@@ -283,7 +283,9 @@ String name = (String) session.getAttribute("name");
 
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
-							name="status" value="Deactivate" required="required"><span>
+							name="status" value="Deactivate" 
+							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+							title= "<spring:message code="validation.Options" />" required  / > <span>
 								<spring:message code="registration.deactivate" />
 						</span></label>
 						<spring:message code="registration.permanentlydeleteportal" />
@@ -298,7 +300,9 @@ String name = (String) session.getAttribute("name");
 				<div class="row" style="height: 30px;">
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
-							value="Disable" name="status" required="required"><span>
+							value="Disable" name="status" 
+							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+							title= "<spring:message code="validation.Options" />" required  / > <span>
 								<spring:message code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />
@@ -379,8 +383,8 @@ String name = (String) session.getAttribute("name");
 						<input type="password" id="oldPassword" class="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" />
+							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+							title= "<spring:message code="validation.minumum8length" />" required  / >
 							 <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
 							<spring:message code="registration.oldpassword" />
@@ -404,8 +408,8 @@ String name = (String) session.getAttribute("name");
 								code="registration.newpassword" /></label> <input type="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="password2" />
+							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+							title= "<spring:message code="validation.minumum8length" />" required  /  id="password" class="password2" />
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password2"
 								aria-hidden="true"></i>
@@ -424,8 +428,8 @@ String name = (String) session.getAttribute("name");
 							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" />
+							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+							title= "<spring:message code="validation.minumum8length" />" required  / >
 							<div class="input-field-addon">
 							<i class="fa fa-eye-slash teal-text toggle-password3"
 								aria-hidden="true"></i>
@@ -541,6 +545,30 @@ data-dismiss="modal">&times;</button> -->
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
 					<a href="./homePage" class="btn" type="submit" name="add_user"
+						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
+						class="modal-close btn" style="margin-left: 10px;"><spring:message
+							code="modal.no" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="goToLogout" class="modal modal-small" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="logout.page" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6>
+					<spring:message code="logout.msg" />
+				</h6>
+			</div>
+			<div class="input-field col s12 center">
+				<div class="input-field col s12 center">
+					<a href="./logout" class="btn" type="submit" name="add_user"
 						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a>
