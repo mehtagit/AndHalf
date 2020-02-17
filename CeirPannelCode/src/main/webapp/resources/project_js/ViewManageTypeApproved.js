@@ -230,7 +230,7 @@ function viewByID(id,actionType,projectPath){
 	window.projectPath = projectPath;
 	
 	$.ajax({
-		url : "./viewByID/"+id, //controller haven'nt made yet for this url. this is dummy url.
+		url : "./viewByID/"+id+"?lang="+lang, //controller haven'nt made yet for this url. this is dummy url.
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
@@ -255,7 +255,7 @@ function viewByID(id,actionType,projectPath){
 	});
 	
 }
-
+ 
 
 function ImporterviewByID(id,actionType,projectPath){
 	

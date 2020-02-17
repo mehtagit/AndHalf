@@ -8,8 +8,6 @@
 	 //session.setAttribute("usertype", null); 
 	if (session.getAttribute("usertype") != null) {
 %>
-
-
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -91,14 +89,18 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 <div class="row" >
 <div class="input-field col s12 m6 l6">
-<input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
+<input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
+oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+title= "<spring:message code="validation.18digit" />" required  / 
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
 
 <div class=" col s12 m6 l6">
  <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
-<select class="browser-default" id="category" required="required">
+<select class="browser-default" id="category" 
+oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
+title= "<spring:message code="validation.selectFieldMsg" />" required  / >
 <option value="" selected disabled ><spring:message code="operator.category" /></option>
 </select>
 </div>
@@ -106,7 +108,9 @@ class="form-control boxBorder boxHeight"/>
 
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
-<textarea id="Remark" class="materialize-textarea" maxlength="200" required="required"></textarea>
+<textarea id="Remark" class="materialize-textarea" maxlength="200" 
+oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+title= "<spring:message code="validation.200characters" />" required  / ></textarea>
 <label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
@@ -119,7 +123,9 @@ class="form-control boxBorder boxHeight"/>
 <h6 style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  >
+<input type="file" name="files[]" id="docTypeFile1" 
+oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+title= "<spring:message code="validation.NoChosen" />" required  / >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -135,7 +141,11 @@ placeholder="Upload one or more files">
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
-<select class="browser-default" id="docTypetagValue1" style="display: none;">
+<select class="browser-default" id="docTypetagValue1" 
+oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
+title= "<spring:message code="validation.selectFieldMsg" />"
+
+style="display: none;">
 <option value="" disabled selected><spring:message code="select.documenttype" /></option>
 
 </select>
@@ -147,7 +157,7 @@ placeholder="Upload one or more files">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" type="button"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 </div>
@@ -540,7 +550,6 @@ $('#category').on(
 </script>
 </body>
 </html>
-
 
 <%
 } else {

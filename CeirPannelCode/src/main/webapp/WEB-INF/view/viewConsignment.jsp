@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -596,7 +595,7 @@
 	</div>
 
 	<!-- Update Modal Start -->
-	<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
+		<div id="updateModal" class="modal-form" style="overflow-y: hidden;">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.editConsignment" />
 		</h6>
@@ -805,9 +804,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
 	<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"> Uploaded file format</h6>
 		<div class="modal-content">
@@ -894,7 +890,8 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 </body>
 </html>
 <%

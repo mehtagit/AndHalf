@@ -327,8 +327,6 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 	
 </body>
 </html>
-
-
 <%
 } else {
 

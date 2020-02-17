@@ -46,5 +46,9 @@
 "requiredMsg_select":"Please select an item  in this field",
 "requiredMsg_fileType":"Please choose a file",
 "USER_STATUS_CHANGED":"User status has been changed",
-"USER_STATUS_CHANGE_FAIL":"User status failed to change"
+"USER_STATUS_CHANGE_FAIL":"User status failed to change",
+"endDate":"Start Date should be less than End Date",
+"expectedArrivaldate":"Expected Dispatch Date should be less than Expected Arrival Date",
+"requiredMsg_email":"Please enter a valid email"
+
 }

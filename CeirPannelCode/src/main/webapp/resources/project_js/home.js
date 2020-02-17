@@ -26,7 +26,7 @@
 					var id=data[i].name;
 					/*var finalID=id.replace (/\//g, "");*/
 					url= data[i].url.split("?"); 
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+$.i18n(data[i].name)+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"' class=''><i class='fa fa-eye view-icon teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
+					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 100px;'>"+$.i18n(data[i].name)+"</h6><p class='circle-para right'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"' onclick='isActive(\""+data[i].featureId+"\")' class=''><i class='fa fa-eye view-icon teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
 					var finalID = data[i].id;
 					var outParam = data[i].outParam;
 					if(userTypeId == 8){
@@ -40,6 +40,8 @@
 							outParam == 'count' ? $('#'+finalID+'count').text(data.count) : $('#'+finalID+'count').text(data.quantity);	
 						}
 					});
+					
+					
 				}
 				
 			}
@@ -104,16 +106,15 @@
 	}
 
 
-/*	function changeLanguage(lang){
-		$.ajax({
-			type : 'POST',
-			url :'./changeLanguage/'+lang,
-			contentType :"application/json",
-			dataType : 'html',
-			success : function(data) {
-			},      
-			error: function (xhr, ajaxOptions, thrownError) {
-			}
-		});
+	
+	function isActive(feature){
+		window.parent.$('.navData li:nth-child(1)').removeClass("active");
+	    window.parent.$('.navData li a').each(function(){
+	      if($(this).attr('data-featureid') == feature){    	 
+	    	  $(this).closest('li').addClass("inactive");
+	    	  $(this).closest('li').removeClass("active");
+	    	  $(this).closest('li').removeClass("inactive");
+	    	  $(this).closest('li').addClass("active"); 
+	      }
+	    })
 	}
-*/

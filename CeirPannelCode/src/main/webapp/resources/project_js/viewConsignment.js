@@ -38,8 +38,8 @@
 
 		$('.datepick').datepicker({
 			dateFormat: "yy-mm-dd"
-
 		});
+
 
 
 
@@ -387,7 +387,7 @@
 			formData.append('quantity',quantity);
 			formData.append('txnId',txnId);
 			formData.append('filename',filename);
-			formData.append('currency',parseInt(currency));
+			formData.append('currency',currency);
 			formData.append('totalPrice',totalPrice);
 			$.ajax({
 				url: './updateRegisterConsignment',
@@ -444,53 +444,7 @@
 			setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
 		}
 
-		function dispatchDateValidation(){
-			var currentDate;
-			var dispatcDate=  $('#expectedDispatcheDate').val();
-			var now=new Date();
-			if(now.getDate().toString().charAt(0) != '0'){
-				currentDate='0'+now.getDate();
-			}
-			else{
-				currentDate=now.getDate();
-			}
-			var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-
-
-
-			if(Date.parse(today)>Date.parse(dispatcDate))
-			{
-				myFunction("dispatche date should be greater then or equals to today");
-				$('#expectedDispatcheDate').val("");
-			}
-
-			//alert("current date="+today+" dispatche date="+dispatcDate)
-		}
-
-		function arrivalDateValidation(){
-			var currentDate;
-			var dispatcDate=  $('#expectedArrivalDate').val();
-			var now=new Date();
-			if(now.getDate().toString().charAt(0) != '0'){
-				currentDate='0'+now.getDate();
-
-				/* alert("only date="+currentDate); */
-			}
-			else{
-				currentDate=now.getDate();
-			}
-			var today = now.getFullYear()+ '-' + (now.getMonth()+1)+ '-' +currentDate ;
-			if(Date.parse(today)>Date.parse(dispatcDate))
-			{
-				myFunction("Arrival date should be greater then or equals to today");
-				$('#expectedArrivalDate').val("");
-			}
-
-			//alert("current date="+today+" dispatche date="+dispatcDate)
-		}
-
-
-
+		
 
 
 		$('.datepicker').on('mousedown',function(event){
@@ -536,8 +490,8 @@
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
-					//data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
-					data.userStatus == "Disable" ? $('#btnLink').addClass( "" ) : $('#btnLink').removeClass( "eventNone" );
+					data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
+					
 					var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 					$("#pageHeader").append(elem);
 					var button=data.buttonList;
@@ -546,7 +500,7 @@
 						if(date[i].type === "date"){
 							$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
-									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
 									+"</label>"+
 									"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -556,7 +510,7 @@
 							$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 					} 
-
+				
 					// dynamic dropdown portion
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
@@ -581,7 +535,7 @@
 
 						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
+							
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							if(button[i].type === "HeaderButton"){
@@ -673,7 +627,9 @@
 						dateFormat: "yy-mm-dd"
 					});
 				}
-			}); 	
+			}); 
+		//	$("#consignmentTableDIv").append("<span id='errorMsg'></span>");
+			
 		}
 
 
@@ -872,8 +828,67 @@
 			window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 		}
 
+function fileTypeValueChanges() {
+			var uploadedFileName = $("#csvUploadFile").val();
+			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+			var ext = uploadedFileName.split('.').pop();
+		
+			var fileSize = ($("#csvUploadFile")[0].files[0].size);
+			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+		   if (uploadedFileName.length > 30) {
+		       $('#fileFormateModal').openModal();
+		       $('#fileErrormessage').text('');
+		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+		   } 
+			else if(ext!='csv')
+				{
+				$('#fileFormateModal').openModal();
+				 $('#fileErrormessage').text('');
+			       $('#fileErrormessage').text('file extension must be in  CSV.');
+				}
+			else if(fileSize>='5000'){
+				$('#fileFormateModal').openModal();
+				 $('#fileErrormessage').text('');
+			       $('#fileErrormessage').text('file size must be less then 5 mb.');
+			}
+			else {
+				console.log("file formate is correct")
+				
+			}
+			
 
+		}
 
+		function clearFileName() {
+			var existingfile=$("#fileNameToBeSame").val();
+			//$('#fileNameEdit').val('');
+			$("#csvUploadFile").val('');
+			$('#fileFormateModal').closeModal();
+			
+			$("#fileNameEdit").val(existingfile);
+		}
+
+		
+		
+		$(document).on("keyup", "#totalPrice", function(e) {
+			var totalPrice=$('#totalPrice').val();
+			if(totalPrice.length<'1' )
+			{
+			$("#currency").attr("required", false);
+			/*$('#currency').attr("disabled",true);*/
+			$('#currencyDiv').hide();
+
+			//$("#currency")[0].selectedIndex = 0;
+
+			}
+			else
+			{
+			$("#currency").attr("required", true);
+			/*$('#currency').attr("disabled",false);*/
+			$('#currencyDiv').show();
+
+			}
+			});	
 		function fileTypeValueChanges() {
 			var uploadedFileName = $("#csvUploadFile").val();
 			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');

@@ -297,8 +297,7 @@ function submitEndUserDeviceInfo(){
 	var onVisa=$('input[name="onVisa"]:checked').val();
 
 	if(onVisa==undefined){
-	alert(onVisa);
-	onVisa='N';
+		onVisa='N';
 	}
 	var visaType=$('#visaType').val();
 	var visaDate=$('#datepicker').val();
