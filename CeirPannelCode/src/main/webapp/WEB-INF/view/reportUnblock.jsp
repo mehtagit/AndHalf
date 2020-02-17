@@ -240,15 +240,18 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     
                                                      <div class="col s12 m6"><label for="bulkBlockdeviceCategory"><spring:message code="operator.category" />
                                                             <span class="star"> *</span></label>
-                                                        <select class="browser-default" id="bulkunBlockdeviceCategory"  required="required" >
+                                                        <select class="browser-default" id="bulkunBlockdeviceCategory"  
+                                                        oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
+                                                        title= "<spring:message code="validation.selectFieldMsg" />" required  / >
                                                             <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
                                                           
                                                         </select>
                                                     </div>
                                                     <div class="input-field col s12 m6 " style="margin-top: 22px;">
-                                                        <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,9}" title="Please enter  numbers upto 9 characters only"
-                                                         maxlength="16" required="required">
+                                                        <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,9}" 
+                                                        oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                        title= "<spring:message code="validation.7digits" />" required  / maxlength="16">
                                                         <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
@@ -256,8 +259,10 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     <div class="file-field input-field col s12 m6" style="margin-top: 21px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>
                                                         <div class="btn">
-                                                            <span>File</span>
-                                                            <input type="file" id="unblockBulkFile" required="required">
+                                                            <span><spring:message code="operator.file" /></span>
+                                                            <input type="file" id="unblockBulkFile" 
+                                                            oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+                                                            title= "<spring:message code="validation.NoChosen" />" required  / >
                                                         </div>
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" placeholder="Please select the file">
@@ -265,7 +270,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" maxlength="200" required="required"></textarea>
+                                                        <textarea id="unblockbulkRemark" class="materialize-textarea" 
+                                                      oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                        title= "<spring:message code="validation.200character" />" required  / maxlength="200" ></textarea>
                                                         <label for="unblockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
                                                     
