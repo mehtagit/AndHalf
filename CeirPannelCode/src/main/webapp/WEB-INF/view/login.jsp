@@ -155,8 +155,8 @@ a#newUserLink {
 										<div class="input-field col s12">
 											<input type="text"  name="username"
 												id="username" class="" 
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.Field" />" required   maxlength="10" /> <label
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required   maxlength="10" /> <label
 												for="username"><spring:message
 													code="registration.username" /></label>
 										</div>
@@ -164,8 +164,8 @@ a#newUserLink {
 										<div  class="input-field col s12" id="show_hide_password">
 											<input type="password"   class="password"
 												name="password" id="password" 
-												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.Field" />" required maxlength="10"
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required maxlength="10"
 												oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
@@ -188,8 +188,8 @@ a#newUserLink {
 												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.Field" />" required > <label for="captcha"
+														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required > <label for="captcha"
 														style="left: 0.01rem;"><spring:message
 															code="registration.enteryourcaptcha" /><span
 														class="star">*</span> </label>
@@ -364,6 +364,13 @@ a#newUserLink {
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 
 	<script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
 </body>
