@@ -137,7 +137,7 @@ a#newUserLink {
 											<select class="browser-default select-lang-drpdwn"
 												id="langlist">
 												<option value="en">English</option>
-												<option value="km">Khmer</option>
+												<option value="km"><spring:message code="lang.khmer" /></option>
 											</select>
 										</div>
 										<div class="col s12 m12">
@@ -153,10 +153,10 @@ a#newUserLink {
 
 
 										<div class="input-field col s12">
-											<input type="text"  name="username"
+											<input type="text" name="username"
 												id="username" class="" 
 												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-												title= "<spring:message code="validation.requiredMsg" />" required   maxlength="10" /> <label
+												title= "<spring:message code="validation.requiredMsg" />" required  maxlength="10" /> <label
 												for="username"><spring:message
 													code="registration.username" /></label>
 										</div>
@@ -189,7 +189,7 @@ a#newUserLink {
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
 														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-												title= "<spring:message code="validation.requiredMsg" />" required > <label for="captcha"
+												title= "<spring:message code="validation.requiredMsg" />" required> <label for="captcha"
 														style="left: 0.01rem;"><spring:message
 															code="registration.enteryourcaptcha" /><span
 														class="star">*</span> </label>
@@ -338,8 +338,41 @@ a#newUserLink {
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+		
+		
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->
@@ -364,13 +397,6 @@ a#newUserLink {
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
 
 	<script type="text/javascript" src="${context}/resources/project_js/login.js"></script>
 </body>
