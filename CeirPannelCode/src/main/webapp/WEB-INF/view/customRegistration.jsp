@@ -307,7 +307,7 @@ var contextpath = "${context}";
 								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
 									<label><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
-									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" 
+									<select id="arrivalPort" class="browser-default" onchange="getByPort(this.value)" title="<spring:message code="validation.selectFieldMsg" />" 
 									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
 										<option value="" disabled selected><spring:message code="input.arrivalport" /></option>
 									</select>
@@ -323,12 +323,10 @@ var contextpath = "${context}";
 								
 								<div class="col s12 m6 l6">
 									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
-									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" 
+									<select id="portAddress" class="browser-default"  title="<spring:message code="validation.selectFieldMsg" />" 
 									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
 										<option value="" disabled selected>Select port</option>
-										<option value="1">Abc</option>
-										<option value="2">Abc</option>
-									</select>
+											</select>
 								</div>
 							</div>
 

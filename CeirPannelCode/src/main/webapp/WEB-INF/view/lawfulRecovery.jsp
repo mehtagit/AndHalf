@@ -91,6 +91,10 @@
 height: 4.6rem;
 margin-bottom: 5px;
 }
+
+textarea.materialize-textarea {
+	height: 150px !important;
+}
     </style>
 
 

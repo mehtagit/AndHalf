@@ -104,7 +104,15 @@ function login(){
 				$('#changePassword').openModal();
 			}
 			else{
-				$("#errorMsg").text(resp.response);
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#errorMsg").text($.i18n(resp.tag));
+				});
+				
 			}
 
 		},

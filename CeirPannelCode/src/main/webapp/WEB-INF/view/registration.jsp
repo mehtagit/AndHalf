@@ -362,7 +362,7 @@ String usertypeId="${usertypeId}";
 												title="<spring:message code="validation.file" />" required>
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate responsive-file-div"  />
+												<input class="file-path validate responsive-file-div" id="fileText"  />
 											</div>
 										</div>
 										<br> <br>
@@ -452,7 +452,7 @@ String usertypeId="${usertypeId}";
 								<div class="col s12 m6 l6" style="margin-bottom: 10px;">
 									<label for="vatNumber"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									<div class=" boxHeight">
-										<label><input class="with-gap vatStatus" value="1" name="vatStatus" type="radio"
+										<label><input class="with-gap vatStatus" id="vatYes" value="1" name="vatStatus" type="radio"
 											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFileDiv').style.display = 'block';vatChecked()">
 											<span><spring:message code="registration.radioyes" /></span> </label> <label> <input class="with-gap vatStatus" name="vatStatus" type="radio" style="margin-left: 20px;" value="0"
 											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFileDiv').style.display = 'none';vatChecked()"
@@ -492,22 +492,22 @@ String usertypeId="${usertypeId}";
 							</div>
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" min="8" maxlength="10"
+									<input type="password" name="password" class="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" min="8" maxlength="10"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.password" />"	required /> 
 										<label for="password"><spring:message code="registration.password" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="rePassword" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
+									<input type="password" name="rePassword" class="password2" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
 										min="8" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.password" />" required /> 
 										<label for="confirm_password"> <spring:message code="registration.retypepassword" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+					<i class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>

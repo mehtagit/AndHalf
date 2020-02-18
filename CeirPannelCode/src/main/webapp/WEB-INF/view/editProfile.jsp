@@ -125,11 +125,19 @@ var contextpath = "${context}";
 	 <!-- jQuery Library -->
     <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
   <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+  <script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
   
-    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+       	
+	
+
+
+
+<script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
       <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
        	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>   
+    		
     <!--materialize js-->
     <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
@@ -144,6 +152,7 @@ var contextpath = "${context}";
     <!-- chartist -->
     <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
+
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
@@ -152,7 +161,8 @@ var contextpath = "${context}";
     <!--<script type="text/javascript" src="js/plugins.js"></script>-->
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 	<!-- START CONTENT -->
@@ -875,6 +885,36 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 			</div>
 		</div>
 	</div>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	
     <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -918,6 +958,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
         }
        	
     </script>
+    
 </body>
 </html>  
 <%
@@ -928,7 +969,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}
