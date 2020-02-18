@@ -138,6 +138,9 @@ width: 90%;
 margin: auto;
 /* border: solid 2px #444; */
 }
+p label span {
+font-size: 1rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
@@ -206,7 +209,7 @@ var contextpath = "${context}";
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
 									<option value="en">English</option>
-									<option value="km">Khmer</option>
+									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12"><h5><spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /></h5>
