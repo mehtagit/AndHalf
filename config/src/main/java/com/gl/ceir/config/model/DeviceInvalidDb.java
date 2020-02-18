@@ -182,7 +182,7 @@ public class DeviceInvalidDb implements Serializable {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("StolenTrackDb [id=");
+		builder.append("DeviceInvalidDb [id=");
 		builder.append(id);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
@@ -206,6 +206,10 @@ public class DeviceInvalidDb implements Serializable {
 		builder.append(operatorName);
 		builder.append(", operatorId=");
 		builder.append(operatorId);
+		builder.append(", operatorType=");
+		builder.append(operatorType);
+		builder.append(", ruleName=");
+		builder.append(ruleName);
 		builder.append(", fileName=");
 		builder.append(fileName);
 		builder.append(", recordDate=");
