@@ -381,11 +381,11 @@ to {
 	
 	<div id="searchSupplierInformation" class="modal">
         <!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
+         <a href="assignDistributor" class="btn-flat right">&times;</a>
          <h6 class="modal-header">Search Assignee Information</h6>
-        <a href="uploadStock.html" class="btn-flat right">&times;</a>
-        <div class="modal-content">
+       <div class="modal-content">
 
-	<form action="" onsubmit="return serchAssigneDetaiils()"
+	<form action="" <%-- onsubmit="return serchAssigneDetaiils()" --%>
 									method="POST" enctype="multipart/form-data"
 									id="registerConsignment">
             <div class="row">
@@ -414,24 +414,22 @@ to {
                         <input type="text" id="assigneDetails" name="assigneDetails" placeholder="Search" />
                     </div>
                     <div class="input-field col s12 m2">
-                        <button class="btn" type="submit" >Submit</button>
+                  	 <a onclick="viewAssigneeHistory()" class="btn">Submit</a>
                     </div>
             </div>
            </form>
-
+<!-- 
             <div class="row myRow" style="margin-top: 10px; display: none;" id="user123">
                 
                 <p class="center" style="color: red;">No data found</p>
 
-            </div>
-            <div style="display: none;" id="user456" style="margin-bottom: 20px;">
-                <table class="responsive-table striped display" cellspacing="0">
-               
-                </table>
-            </div>
-
-           
-        </div>
+            </div> -->
+            <div class="row">
+				<table class="responsive-table striped display"
+					id="assignee-data-table" cellspacing="0">
+				</table>
+			</div>
+		</div>
     </div>
     
 	<!-- END CONTENT -->
@@ -673,48 +671,75 @@ else{
 
 
 function openModalForAssigneId(){
-	
 	$('#searchSupplierInformation').openModal();
 }
 
+function viewAssigneeHistory() {
+	assigneeTable("./headers?type=AssigneeStock","./AssigneeDetailsData");
+};
 
-function serchAssigneDetaiils(){
+
+function assigneeTable(URL,dataUrl){
 	var formData= new FormData()
-	var requestType =	$('input[name="group1"]:checked').val();
-   var assigneDetails=$('#assigneDetails').val();
+	//var requestType =	$('input[name="group1"]:checked').val();
+   	var assigneDetails=$('#assigneDetails').val();
 
    var request={
 		   "field":assigneDetails,
-		   "type":1
+		   "type": parseInt($('input[name="group1"]:checked').val())
 	}
-   formData.append("request",JSON.stringify(request));
-     $.ajax({
-		url: './fetchAssigneDetails',
+	
+	if(lang=='km'){
+		var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+	}
+	$.ajax({
+		url: URL,
 		type: 'POST',
-		data: formData,
-		processData: false,
-		contentType: false,
-		success: function (response, textStatus, jqXHR) {
-		
-			/* if(response.errorCode=='0'){
-				$("#indivisualStolenButton").prop('disabled', true);
-				$('#stolenSucessPopUp').openModal();
-			}
-			else{
-//				$('#sucessMessage').text('');
-				$('#indivisualStolenButton').openModal();
-				$('#dynamicMessage').text('');
-				$('#dynamicMessage').text(response.message);
-			} */
+		dataType: "json",
+		success: function(result){
+			var table=	$("#assignee-data-table").DataTable({
+				destroy:true,
+				"serverSide": true,
+				orderCellsTop : true,
+				"ordering" : false,
+				"bPaginate" : true,
+				"bFilter" : true,
+				"bInfo" : true,
+				"bSearchable" : true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
+				ajax: {
+					url : dataUrl,
+					type: 'POST',
+					dataType: "json",
+					data : function(d) {
+						d.filter = JSON.stringify(request); 
+					   console.log(JSON.stringify(request));
+					}
+
+				},
+				"columns": result
+			});
+			$('div#initialloader').delay(300).fadeOut('slow');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
-			console.log("error in ajax")
-
+			console.log("error in ajax");
 		}
 	});
-	return false;
+
 
 }
+
+$('input:radio[name="group1"]').change(
+	    function(){
+	        if ($(this).is(':checked')) {
+	        	$("input[name='group1']").attr("disabled","disabled");
+	        }
+	    });
+
+
+
 
 </script>
 

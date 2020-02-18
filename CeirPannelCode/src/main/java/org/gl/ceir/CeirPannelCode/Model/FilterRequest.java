@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field;
 	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue;
 	public String getStartDate() {
 		return startDate;
@@ -77,6 +77,12 @@ public class FilterRequest {
 	}
 	public void setChildTag(String childTag) {
 		this.childTag = childTag;
+	}
+	public String getField() {
+		return field;
+	}
+	public void setField(String field) {
+		this.field = field;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -203,15 +209,17 @@ public class FilterRequest {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
 				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
 				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid
-				+ ", childTag=" + childTag + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus
-				+ ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId
-				+ ", fileStatus=" + fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType
-				+ ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status
-				+ ", asType=" + asType + ", serviceDump=" + serviceDump + ", fileType=" + fileType + ", action="
-				+ action + ", operatorTypeId=" + operatorTypeId + ", channel=" + channel + ", type=" + type
-				+ ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue + "]";
+				+ ", childTag=" + childTag + ", field=" + field + ", userId=" + userId + ", taxPaidStatus="
+				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
+				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
+				+ ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId="
+				+ userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump=" + serviceDump
+				+ ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId + ", channel="
+				+ channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue + "]";
 	}
 	
 	
-
+	
+	
+	
 }
