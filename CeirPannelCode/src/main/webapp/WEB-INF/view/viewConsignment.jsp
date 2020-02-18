@@ -204,7 +204,7 @@
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="totalPrice" placeholder=""
-						disabled="disabled" id="viewtotalPrice" maxlength="7" required />
+						disabled="disabled" id="viewtotalPrice" maxlength="7" />
 					<label for="totalPrice" class="center-align"><spring:message
 							code="input.totalprice" /></label>
 				</div>
