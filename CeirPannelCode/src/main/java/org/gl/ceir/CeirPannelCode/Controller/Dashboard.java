@@ -71,6 +71,7 @@ public class Dashboard {
 	}
 	
 	
+	
 	@GetMapping("/stakeholder/count")
 	public ResponseEntity<?> getStolen_RecoveryCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
 		RequestCountAndQuantity response = dashboardFeignClient.stolenRecoveryNotification(requestType, userId, featureId, userTypeId,userType);
@@ -84,4 +85,9 @@ public class Dashboard {
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
+	@GetMapping("/users/pendingCount")
+	public ResponseEntity<?> getUsersPendingCount(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.userPendingCount(userId, featureId, userTypeId,userType);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 } 
