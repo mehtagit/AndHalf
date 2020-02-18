@@ -181,7 +181,7 @@ var contextpath = "${context}";
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
 									<option value="en">English</option>
-									<option value="km">Khmer</option>
+									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12">
