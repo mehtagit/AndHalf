@@ -12501,8 +12501,3 @@ transition: 0.2s ease-out;
     .popup-btn-div {
 padding-bottom: 20px;
 }
-
-
-::-webkit-scrollbar {
-    display: none;
-}
