@@ -114,6 +114,9 @@ label {
 	margin: auto;
 	/* border: solid 2px #444; */
 }
+p label span {
+font-size: 1rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
