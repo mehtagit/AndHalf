@@ -9939,6 +9939,7 @@ transition: 0.2s ease-out;
     prevents text jump on Enter keypress */
     resize: none;
     min-height: 3rem;
+    overflow-y: scroll;
   }
 
   .hiddendiv {

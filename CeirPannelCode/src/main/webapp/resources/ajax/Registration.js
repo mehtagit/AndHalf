@@ -539,12 +539,26 @@ function registrationAjax(obj){
 			var respData=JSON.parse(JSON.stringify(response));
 			console.log("response from server:  "+JSON.stringify(respData));
 			if(respData.statusCode==200){
-				$("#userid").val(response.userId);
-				$("#otpMsgModal").openModal();
-				$("#otpMsg").text(response.response);
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#otpMsg").text($.i18n(respData.tag));
+					$("#userid").val(response.userId);
+					$("#otpMsgModal").openModal();
+				});
 			}
 			else{
-				$("#registrationForm #msg").text(respData.response);
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#registrationForm #msg").text($.i18n(respData.tag));
+				});
+
 			}
 			$("#btnSave").prop('disabled', false);
 		}, 
