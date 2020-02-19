@@ -122,9 +122,31 @@ public class SystemConfigListServiceImpl {
 					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
 
-			systemConfigListRepository.findDistinctTags();
+			List<String> result = systemConfigListRepository.findDistinctTags();
 
-			return new GenricResponse(0, "Sucess", "", systemConfigListRepository.findDistinctTags());
+			return new GenricResponse(0, "Sucess", "", result);
+
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public GenricResponse findDistinctTagsWithDescription(FilterRequest filterRequest){
+		try {
+			if(Objects.isNull(filterRequest.getUserId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+						GenericMessageTags.NULL_REQ.getMessage(), null);
+			}
+			User user = userRepository.getById(filterRequest.getUserId());
+
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
+					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
+
+			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findDistinctTagsWithDescription();
+
+			return new GenricResponse(0, "Sucess", "", systemConfigListDbs);
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);

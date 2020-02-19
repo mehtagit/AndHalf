@@ -102,9 +102,24 @@ public class SystemConfigListController {
 	@PostMapping("/tags/system-config-list")
 	public MappingJacksonValue getTagsList(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("Get system-config-list.");
+		logger.info("Get system-config-list." + filterRequest);
 
 		GenricResponse uniqueTags = systemConfigListServiceImpl.getTagsList(filterRequest);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
+
+		logger.info("Response to send for all tags of system-config-list = " + mapping);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "All tags list with display name|| system-config-list", response = String.class)
+	@PostMapping("/projection/tags/system-config-list")
+	public MappingJacksonValue findDistinctTagsWithDescription(@RequestBody FilterRequest filterRequest) {
+
+		logger.info("Get findDistinctTagsWithDescription ." + filterRequest);
+
+		GenricResponse uniqueTags = systemConfigListServiceImpl.findDistinctTagsWithDescription(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 

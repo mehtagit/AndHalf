@@ -48,6 +48,12 @@ public class SystemConfigListDb implements Serializable {
 	private String description;
 	private String displayName;
 	
+	public SystemConfigListDb(String tag, String description, String displayName) {
+		this.tag = tag;
+		this.description = description;
+		this.displayName = displayName;
+	}
+	
 	public Long getId() {
 		return id;
 	}

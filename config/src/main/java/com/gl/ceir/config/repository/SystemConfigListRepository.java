@@ -16,7 +16,10 @@ JpaRepository<SystemConfigListDb, Long>, JpaSpecificationExecutor<SystemConfigLi
 	public List<SystemConfigListDb> findByTag(String tag, Sort sort);
 	
 	@Query("SELECT DISTINCT a.tag FROM SystemConfigListDb a")
-	List<String> findDistinctTags(); 
+	List<String> findDistinctTags();
+	
+	@Query("SELECT NEW com.gl.ceir.config.model.SystemConfigListDb(a.tag, a.description, a.displayName) FROM SystemConfigListDb a group by a.tag, a.description, a.displayName")
+	List<SystemConfigListDb> findDistinctTagsWithDescription();
 	
 	public SystemConfigListDb getById(long id);
 	
