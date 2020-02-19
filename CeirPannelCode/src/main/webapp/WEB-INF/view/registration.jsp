@@ -16,6 +16,9 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+	<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <title>CEIR | Importer Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
@@ -348,7 +351,7 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6" id="companyNames" style="display: none; margin-top: 22px;">
 									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-									title="<spring:message code="validation.50character" />"	required/>
+									title="<spring:message code="validation.50character" />"/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
 								</div>
 
@@ -359,7 +362,7 @@ String usertypeId="${usertypeId}";
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="file" accept=".pdf"
 												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" pattern="{0,30}"
-												title="<spring:message code="validation.file" />" required>
+												title="<spring:message code="validation.file" />" >
 											</div>
 											<div class="file-path-wrapper">
 												<input class="file-path validate responsive-file-div" id="fileText"  />
@@ -372,7 +375,7 @@ String usertypeId="${usertypeId}";
 
 
 								<div class="input-field col s12 m6 l6" style="margin-top:22px;">
-									<input type="email" name="email" maxlength="320" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="email" maxlength="320" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
 									title="<spring:message code="validation.email" />" required />
 										 <label for="email"><spring:message                        
@@ -480,7 +483,7 @@ String usertypeId="${usertypeId}";
 											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" accept=".pdf"
-												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" title="<spring:message code="validation.file" />" required />
+												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" title="<spring:message code="validation.file" />"  />
 											</div>
 											<div class="file-path-wrapper">
 												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
@@ -730,7 +733,7 @@ String usertypeId="${usertypeId}";
 	<!-- END WRAPPER -->
 
 
-	<div id="otpMessage" class="modal" style="display: block;">
+	<div id="otpMessage" class="modal">
 		<button type="button"
 			class="modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
@@ -762,16 +765,14 @@ String usertypeId="${usertypeId}";
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email"
-							name="emailOtp" maxlength="6" required="required" id="emailOtp"
-							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
-							placeholder="" />
+						<input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required  />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text"
-							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
-							title="Please enter 6 digit number" required="required"
-							id="phoneOtp" placeholder="" />
+						<input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							id="phoneOtp" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required  />
 					</div>
 				</div>
 				<a href="javascript:void(0)"
@@ -911,7 +912,7 @@ $('#langlist').on('change', function() {
        
        function validatePassword(){
            if(password.value != confirm_password.value) {
-             confirm_password.setCustomValidity("Passwords Don't Match");
+             confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
            } else {
              confirm_password.setCustomValidity('');
            }

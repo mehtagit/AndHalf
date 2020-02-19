@@ -153,15 +153,19 @@ a#newUserLink {
 
 
 										<div class="input-field col s12">
-											<input type="text" required="required" name="username"
-												id="username" class="" maxlength="10" /> <label
+											<input type="text" name="username"
+												id="username" class="" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required  maxlength="10" /> <label
 												for="username"><spring:message
 													code="registration.username" /></label>
 										</div>
 
 										<div  class="input-field col s12" id="show_hide_password">
-											<input type="password"  required="required" class="password"
-												name="password" id="password" maxlength="10"
+											<input type="password"   class="password"
+												name="password" id="password" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required maxlength="10"
 												oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
@@ -184,7 +188,8 @@ a#newUserLink {
 												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="captcha"
+														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required> <label for="captcha"
 														style="left: 0.01rem;"><spring:message
 															code="registration.enteryourcaptcha" /><span
 														class="star">*</span> </label>
