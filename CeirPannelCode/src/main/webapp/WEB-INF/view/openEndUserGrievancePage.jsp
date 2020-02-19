@@ -153,7 +153,7 @@ var contextpath = "${context}";
 </script>
 
 </head>
-<body>
+<body data-lang-param="${pageContext.response.locale}">
          <!-- START CONTENT -->
             <section id="content">
                 <!--start container-->
@@ -610,7 +610,7 @@ var path="${context}";
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
