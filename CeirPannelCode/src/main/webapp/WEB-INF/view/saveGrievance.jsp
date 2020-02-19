@@ -17,6 +17,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -90,8 +93,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <div class="row" >
 <div class="input-field col s12 m6 l6">
 <input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
-oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-title= "<spring:message code="validation.18digit" />" required  / 
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+title= "<spring:message code="validation.18digit" />" required 
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
@@ -100,7 +103,7 @@ class="form-control boxBorder boxHeight"/>
  <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
 <select class="browser-default" id="category" 
 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-title= "<spring:message code="validation.selectFieldMsg" />" required  / >
+title= "<spring:message code="validation.selectFieldMsg" />" required>
 <option value="" selected disabled ><spring:message code="operator.category" /></option>
 </select>
 </div>
@@ -109,8 +112,8 @@ title= "<spring:message code="validation.selectFieldMsg" />" required  / >
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
 <textarea id="Remark" class="materialize-textarea" maxlength="200" 
-oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-title= "<spring:message code="validation.200characters" />" required  / ></textarea>
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+title= "<spring:message code="validation.200characters" />" required></textarea>
 <label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
@@ -546,6 +549,13 @@ $('#category').on(
 	 
 
 </script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 		
 </script>
 </body>
