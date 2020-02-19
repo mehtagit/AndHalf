@@ -214,7 +214,7 @@ a#newUserLink {
 										<a href="${context}/forgotPassword"
 											class="right forgotPassword"><spring:message
 												code="registration.forgotpassword" /></a> <span><a
-											href="http://13.233.39.58:8080/jiten" id="newUserLink" class="right"><spring:message
+											href="JavaScript:Void(0);" id="newUserLink" class="right"><spring:message
 													code="registration.newUser" /></a></span>
 									</div>
 								</div>

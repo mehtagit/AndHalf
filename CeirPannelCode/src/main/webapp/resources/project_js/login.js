@@ -11,7 +11,7 @@ $('#langlist').on('change', function() {
 			//var url = new URL( window.location.href);
     		//var langParameter = url.searchParams.get("lang") == 'km' ? 'km' : 'en';
             $('#langlist').val($("body").attr("data-lang-param")); 
-			//dataByTag("link_dmc_portal", "newUserLink", 1);
+			dataByTag("link_dmc_portal", "newUserLink", 1);
 		});
 
 		

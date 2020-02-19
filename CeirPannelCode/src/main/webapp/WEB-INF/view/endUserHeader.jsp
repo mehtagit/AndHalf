@@ -68,7 +68,7 @@
 
 </style>
 </head>
-<body >
+<body>
 
     <header id="header" class="page-topbar">
         <!-- start header nav-->

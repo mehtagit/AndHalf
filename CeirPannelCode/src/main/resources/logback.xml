@@ -10,7 +10,7 @@
 			<pattern>%date %level [%file:%line] %msg%n</pattern>
 		</encoder>
 		
-		 <file>/home/ubuntu/CeirContent/logs3/log.log</file> 
+		 <file>/home/ubuntu/CeirContent/logs/log.log</file> 
 <!-- 			 <file>/home/ceirapp/ceir/gui/logs/log.log</file>  --> 
 	
 		
@@ -19,7 +19,7 @@
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 		
 
-		 <fileNamePattern>/home/ubuntu/CeirContent/logs3/log.%d{yyyy-MM-dd}.log</fileNamePattern> 
+		 <fileNamePattern>/home/ubuntu/CeirContent/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern> 
 		 <!--  <fileNamePattern>/home/ceirapp/ceir/gui/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>  -->
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
