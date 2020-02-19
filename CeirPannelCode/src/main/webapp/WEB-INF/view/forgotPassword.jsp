@@ -86,23 +86,7 @@ var contextpath='${context}';
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-     <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><spring:message code="registration.ceir" /></a> <span
-                                    class="logo-text"><spring:message code="registration.materialize" /></span></h1>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
-
+     
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
     <!-- START MAIN -->
