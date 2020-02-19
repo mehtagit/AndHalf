@@ -8,7 +8,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -355,7 +357,13 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
