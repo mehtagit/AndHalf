@@ -47,7 +47,7 @@
 "requiredMsg_fileType":"Please choose a file",
 "USER_STATUS_CHANGED":"User status has been changed",
 "USER_STATUS_CHANGE_FAIL":"User status failed to change",
-"endDate":"Start Date should be less than End Date",
+"endDate":"Start Date should be less than or equal to End Date",
 "expectedArrivaldate":"Expected Dispatch Date should be less than Expected Arrival Date",
 "requiredMsg_email":"Please enter a valid email",
 
@@ -64,12 +64,19 @@
 "REG_REOTP_FAIL":"Otp failed to resend",
 "LOGIN_WRONG_DETAILS":"Please enter the correct credentials",
 "LOGIN_UNAUTHORIZED":"You are not allow to access this account",
-
 "PRO_CPASS_LAST_3PASS_ERROR":"Password should not be last 3 password",
 "PRO_CPASS_SUCESS":"User password  has been sucessfully changed",
 "PRO_CPASS_FAIL":"User password failed to change",
 "PRO_CORRECT_PASS":"Please enter correct password",
 "PRO_SUCESS_MSG":"User profile data succesfully update",
-"PRO_FAIL_MSG":"User profile data failed to update"
+"PRO_FAIL_MSG":"User profile data failed to update",
+"password_mismatch":"Password and Confirm password must be same",
+"Wrong_captcha":"You have entered the wrong Captcha. Please enter the correct value",
+"secu_ques_match":"security question and answer match",
+"secu_ques_not_match":"Security question and answer did not match",
+"wrong_userId:":"Please enter correct User Id",
+"Pending Registration":"Pending Registration",
+"new_pass_sucess":"User new password has been added",
+"new_pass_fail":"User new password fail to update"
 
 }

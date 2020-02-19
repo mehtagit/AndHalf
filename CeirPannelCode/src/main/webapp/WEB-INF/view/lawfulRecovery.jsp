@@ -7,7 +7,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -90,6 +92,10 @@
         .blockingType {
 height: 4.6rem;
 margin-bottom: 5px;
+}
+
+textarea.materialize-textarea {
+	height: 150px !important;
 }
     </style>
 

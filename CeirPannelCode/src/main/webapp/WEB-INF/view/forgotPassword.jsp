@@ -136,7 +136,7 @@ var contextpath='${context}';
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="username" 
      oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"                                       
-              title= "<spring:message code="validation.15character" />" required  /  id="username" maxlength="10" />
+              title= "<spring:message code="validation.15character" />" required id="username" maxlength="10" />
                                         </div>
                                     </div>
 
@@ -149,7 +149,7 @@ var contextpath='${context}';
                                         <div class="input-field col s12 m6 l6">
                                             <select class="browser-default" id="questionId" 
    													title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  
-												oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"  required / >
+												oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"  required  >
                                                 <option value="" disabled selected><spring:message code="registration.securityquestion" /></option>
                                              </select>
                                         </div>
@@ -164,7 +164,7 @@ var contextpath='${context}';
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="answer" 
   oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-												 title= "<spring:message code="validation.requiredMsg" />" required  / id="answer" maxlength="50" />
+												 title= "<spring:message code="validation.requiredMsg" />" required id="answer" maxlength="50" />
                                         </div>
                                     </div>
                                     
@@ -221,7 +221,7 @@ var contextpath='${context}';
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 						
 						oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-												 title= "<spring:message code="validation.minumum8" />" required  / >
+												 title= "<spring:message code="validation.minumum8" />" required/>
 				<div class="input-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>					
@@ -236,7 +236,7 @@ var contextpath='${context}';
 						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="password2" id="confirm_password"
 						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-												 title= "<spring:message code="validation.minumum8" />" required  / >								
+												 title= "<spring:message code="validation.minumum8" />" required/>								
 				<div class="input-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>					

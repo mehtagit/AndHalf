@@ -122,7 +122,7 @@ String name = (String) session.getAttribute("name");
 								<div id="iconLable" class="darken-1">
 									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 								</div>
-								<div>
+								<div style="width: 70px !important;">
 									<select class="darken-1" id="langlist"
 										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
 										<option value="en">English</option>
@@ -664,6 +664,8 @@ $(document).ready(function () {
 		src="${context}/resources/project_js/dashboard.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
 </body>
 
 </html>

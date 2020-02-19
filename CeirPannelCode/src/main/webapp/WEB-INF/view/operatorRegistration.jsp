@@ -16,6 +16,9 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <title>CEIR | Operator Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
@@ -265,7 +268,7 @@ var contextpath = "${context}";
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[A-Za-z0-9\s]{6}"
+									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9\s]{6}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.postalcode" />">
 									<label for="postalCode"><spring:message code="input.postalCode" /></label>
 								</div>
@@ -364,7 +367,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail" maxlength="320" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="authorityEmail" maxlength="320" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />"> 
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
@@ -633,16 +636,14 @@ var contextpath = "${context}";
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email"
-							name="emailOtp" maxlength="6" required="required" id="emailOtp"
-							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
-							placeholder="" />
+						<input type="text" placeholder="Enter OTP of Email"name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text"
-							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
-							title="Please enter 6 digit number" required="required"
-							id="phoneOtp" placeholder="" />
+						<input placeholder="Enter OTP of Phone" type="text"name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+						 id="phoneOtp" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required />
 					</div>
 				</div>
 				<a href="javascript:void(0)"
@@ -753,7 +754,7 @@ var contextpath = "${context}";
 
       function validatePassword(){
         if(password.value != confirm_password.value) {
-          confirm_password.setCustomValidity("Passwords Don't Match");
+        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
         } else {
           confirm_password.setCustomValidity('');
         }

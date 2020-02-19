@@ -43,4 +43,8 @@ public interface DashboardFeignClient {
 		@RequestMapping(value="/dashboard/dbConf" ,method=RequestMethod.GET) 
 		public List<NumberOfBox> dashBoardDBConf(@RequestParam(value = "userTypeId") Integer userTypeId);
 		
+		//stock/countAndQuantity  feign  controller
+		@RequestMapping(value="/users/pendingCount" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity userPendingCount(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+
 		}
