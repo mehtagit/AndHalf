@@ -3,7 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@page import="java.util.Locale"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -104,7 +104,7 @@ a#newUserLink {
 </script>
 </head>
 
-<body data-msg="${msg}">
+<body data-msg="${msg}" data-lang-param="${pageContext.response.locale}">
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -214,7 +214,7 @@ a#newUserLink {
 										<a href="${context}/forgotPassword"
 											class="right forgotPassword"><spring:message
 												code="registration.forgotpassword" /></a> <span><a
-											href="javascript:void(0)" id="newUserLink" class="right"><spring:message
+											href="http://13.233.39.58:8080/jiten" id="newUserLink" class="right"><spring:message
 													code="registration.newUser" /></a></span>
 									</div>
 								</div>

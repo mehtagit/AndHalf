@@ -228,10 +228,11 @@ var contextpath = "${context}";
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 	<%String userType=request.getParameter("type");
 String usertypeId="${usertypeId}";
 %>
+
 	<!-- Modal End -->
 	<!-- ================================================
     Scripts
@@ -879,14 +880,8 @@ $('#langlist').on('change', function() {
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
-    		var langParameter = url.searchParams.get("lang");
-            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
-            	
-            	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-
-            	
-            			$.i18n().locale = lang;	
+        	$('#langlist').val($("body").attr("data-lang-param"));
+            	$.i18n().locale = data_lang_param;	
             			
             			$.i18n().load( {
             				'en': './resources/i18n/en.json',
