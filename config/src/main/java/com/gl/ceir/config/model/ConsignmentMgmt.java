@@ -95,6 +95,9 @@ public class ConsignmentMgmt implements Serializable {
 	@OneToOne
 	@JoinColumn(name="local_user_id", updatable = false)
 	private User user;
+	
+	@Column(length = 1)
+	private String pendingTacApprovedByCustom; // Expected values Y or N
 
 	public Long getId() {
 		return id;
@@ -307,6 +310,14 @@ public class ConsignmentMgmt implements Serializable {
 
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
+	}
+
+	public String getPendingTacApprovedByCustom() {
+		return pendingTacApprovedByCustom;
+	}
+
+	public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
+		this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
 	}
 
 	@Override

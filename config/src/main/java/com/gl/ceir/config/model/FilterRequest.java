@@ -4,6 +4,7 @@ public class FilterRequest {
 
 	public Long id;
 	public Integer userId;
+	public Long importerId;
 	public String nid;
 	private String txnId;
 	public String startDate;
@@ -27,6 +28,8 @@ public class FilterRequest {
 
 	private Integer operatorTypeId;
 	private String origin;
+	
+	private String tac;
 	
 	// Mapping for parent child tags.
 	private String tag;
@@ -55,8 +58,9 @@ public class FilterRequest {
 	public String getTxnId() {
 		return txnId;
 	}
-	public void setTxnId(String txnId) {
+	public FilterRequest setTxnId(String txnId) {
 		this.txnId = txnId;
+		return this;
 	}
 	public String getStartDate() {
 		return startDate;
@@ -184,7 +188,19 @@ public class FilterRequest {
 	public void setParentValue(Integer parentValue) {
 		this.parentValue = parentValue;
 	}
-
+	public String getTac() {
+		return tac;
+	}
+	public void setTac(String tac) {
+		this.tac = tac;
+	}
+	public Long getImporterId() {
+		return importerId;
+	}
+	public void setImporterId(Long importerId) {
+		this.importerId = importerId;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -192,6 +208,8 @@ public class FilterRequest {
 		builder.append(id);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", importerId=");
+		builder.append(importerId);
 		builder.append(", nid=");
 		builder.append(nid);
 		builder.append(", txnId=");
@@ -232,6 +250,8 @@ public class FilterRequest {
 		builder.append(operatorTypeId);
 		builder.append(", origin=");
 		builder.append(origin);
+		builder.append(", tac=");
+		builder.append(tac);
 		builder.append(", tag=");
 		builder.append(tag);
 		builder.append(", childTag=");
@@ -241,7 +261,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }
 
 

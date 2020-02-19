@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.service.impl.PendingTacApprovedImpl;
 import com.gl.ceir.config.service.impl.SystemConfigListServiceImpl;
@@ -29,68 +30,28 @@ public class PendingTacApprovedController {
 	@Autowired
 	PendingTacApprovedImpl pendingTacApprovedImpl;
 
-	/*
-	@ApiOperation(value = "Save || system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/save/system-config-list")
-	public MappingJacksonValue save(@RequestBody SystemConfigListDb systemConfigListDb) {
+	@ApiOperation(value = "Save || pending-tac-approved", response = SystemConfigListDb.class)
+	@PostMapping("/save/pending-tac-approved")
+	public MappingJacksonValue save(@RequestBody PendingTacApprovedDb pendingTacApprovedDb) {
 
-		logger.info("Save system-config-list request [" + systemConfigListDb + "]");
+		logger.info("Save pending-tac-approved request [" + pendingTacApprovedDb + "]");
 
-		GenricResponse genricResponse = systemConfigListServiceImpl.saveSystemConfigList(systemConfigListDb);
+		GenricResponse genricResponse = pendingTacApprovedImpl.saveSystemConfigList(pendingTacApprovedDb);
 
-		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
+		MappingJacksonValue mapping = new MappingJacksonValue(pendingTacApprovedDb);
 
-		logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
-
-		return mapping;
-	}
-	
-	@ApiOperation(value = "Update || system-config-list", response = SystemConfigListDb.class)
-	@PutMapping("/system-config-list")
-	public MappingJacksonValue update(@RequestBody SystemConfigListDb systemConfigListDb) {
-
-		logger.info("Get system-config-list request [" + systemConfigListDb + "]");
-
-		GenricResponse genricResponse = systemConfigListServiceImpl.updateSystemConfigList(systemConfigListDb);
-
-		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
-
-		logger.info("Response to send for save on system-config-list [ " + genricResponse + "] = " + mapping);
+		logger.info("Response to send for save on pending-tac-approved [ " + genricResponse + "] = " + mapping);
 
 		return mapping;
 	}
 
-	
-	@ApiOperation(value = "pagination View filtered system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/filter/system-config-list")
-	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
-			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
-
-		MappingJacksonValue mapping = null;
-		if(file == 0) {
-			logger.info("Request to view filtered audit trail = " + filterRequest);
-			Page<SystemConfigListDb> auditTrail =  systemConfigListServiceImpl.filter(filterRequest, pageNo, pageSize);
-			mapping = new MappingJacksonValue(auditTrail);
-		}else {
-			logger.info("Request to export filtered audit trail = " + filterRequest);
-			FileDetails fileDetails = systemConfigListServiceImpl.getFilteredAuditTrailInFile(filterRequest);
-			mapping = new MappingJacksonValue(fileDetails);
-		}
-
-		logger.info("Response of view Request = " + mapping);
-
-		return mapping;
-	}
-	
-	@ApiOperation(value = "View By Id || system-config-list", response = SystemConfigListDb.class)
-	@PostMapping("/get/system-config-list")
-	public MappingJacksonValue findAuditTrailById(@RequestBody FilterRequest filterRequest) {
+	@ApiOperation(value = "View By Id || pending-tac-approved", response = SystemConfigListDb.class)
+	@PostMapping("/pending-tac-approved")
+	public MappingJacksonValue findPendingTacApproved(@RequestBody FilterRequest filterRequest) {
 
 		logger.info("Get system-config-list request [" + filterRequest + "]");
 
-		GenricResponse systemConfigListDb = systemConfigListServiceImpl.findById(filterRequest);
+		GenricResponse systemConfigListDb = pendingTacApprovedImpl.findById(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
 
@@ -98,50 +59,20 @@ public class PendingTacApprovedController {
 
 		return mapping;
 	}
-	
+
 	@ApiOperation(value = "All tags list || system-config-list", response = String.class)
-	@PostMapping("/tags/system-config-list")
-	public MappingJacksonValue getTagsList(@RequestBody FilterRequest filterRequest) {
-
-		logger.info("Get system-config-list." + filterRequest);
-
-		GenricResponse uniqueTags = systemConfigListServiceImpl.getTagsList(filterRequest);
-
-		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
-
-		logger.info("Response to send for all tags of system-config-list = " + mapping);
-
-		return mapping;
-	}
-	
-	@ApiOperation(value = "All tags list with display name|| system-config-list", response = String.class)
-	@PostMapping("/projection/tags/system-config-list")
-	public MappingJacksonValue findDistinctTagsWithDescription(@RequestBody FilterRequest filterRequest) {
-
-		logger.info("Get findDistinctTagsWithDescription ." + filterRequest);
-
-		GenricResponse uniqueTags = systemConfigListServiceImpl.findDistinctTagsWithDescription(filterRequest);
-
-		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
-
-		logger.info("Response to send for all tags of system-config-list = " + mapping);
-
-		return mapping;
-	}
-	
-	@ApiOperation(value = "All tags list || system-config-list", response = String.class)
-	@DeleteMapping("/tags/system-config-list")
+	@DeleteMapping("/pending-tac-approved")
 	public MappingJacksonValue deleteValue(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("Delete system-config-list. " + filterRequest);
+		logger.info("Delete pending-tac-approved " + filterRequest);
 
-		GenricResponse uniqueTags = systemConfigListServiceImpl.deleteValue(filterRequest);
+		GenricResponse uniqueTags = pendingTacApprovedImpl.deletePendingApproval(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 
-		logger.info("Response to send for all tags of system-config-list = " + mapping);
+		logger.info("Delete of pending-tac-approved [ " + mapping + "] for " + filterRequest);
 
 		return mapping;
 	}
-*/	
+
 }

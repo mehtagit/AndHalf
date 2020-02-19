@@ -118,6 +118,9 @@ public class ConsignmentServiceImpl {
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
 	
+	@Autowired
+	PendingTacApprovedImpl pendingTacApprovedImpl;
+	
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
 		try {
@@ -267,6 +270,16 @@ public class ConsignmentServiceImpl {
 			}
 
 			ConsignmentMgmt consignmentMgmt = consignmentRepository.getByTxnId(txnId);
+			
+			FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
+			if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
+				logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
+				consignmentMgmt.setPendingTacApprovedByCustom("Y");
+			}else {
+				logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
+				consignmentMgmt.setPendingTacApprovedByCustom("N");
+			}
+			
 			setInterp(consignmentMgmt);
 
 			return consignmentMgmt;
@@ -459,6 +472,17 @@ public class ConsignmentServiceImpl {
 
 						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.APPROVED.getCode());
 						consignmentMgmt.setTaxPaidStatus(TaxStatus.TAX_PAID.getCode());
+						
+						// Delete tac if available in pending_tac_approval_db.
+						FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentMgmt.getTxnId());
+						if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
+							logger.info("Tac related to the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] found in pending_tac_approval_db");
+							pendingTacApprovedImpl.deletePendingApproval(filterRequest);
+							consignmentMgmt.setPendingTacApprovedByCustom("Y");
+						}else {
+							logger.info("No tac for the consignment with txn_id [" + consignmentMgmt.getTxnId() + "] is pending.");
+							consignmentMgmt.setPendingTacApprovedByCustom("N");
+						}
 						
 						placeholderMap.put("<Importer first name>", userProfile.getFirstName());
 						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
