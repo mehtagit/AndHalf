@@ -102,8 +102,8 @@
 								</div>
 							</div>
                         </li>
-                        <li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>
-                     <!--    <li>
+<%--                         <li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>
+ --%>                     <!--    <li>
                             <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                                 data-activates="profile-dropdown" style="height: 64px;"><i
                                     class="mdi-action-account-circle" style="color: #fff; font-size: 40px;"></i></a>

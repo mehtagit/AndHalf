@@ -1,4 +1,4 @@
-var data_lang_param =$("body").attr("data-lang-param") == ('en_US' || 'en') ? 'en' : 'km';	
+var data_lang_param =$("body").attr("data-lang-param") == 'km' ? 'km' : 'en';	
 $('#langlist').on('change', function() {
 			lang = $('#langlist').val() == 'km' ? 'km' : 'en';
 			var url_string = window.location.href;
@@ -10,7 +10,7 @@ $('#langlist').on('change', function() {
 		$(document).ready(function() {
 			//var url = new URL( window.location.href);
     		//var langParameter = url.searchParams.get("lang") == 'km' ? 'km' : 'en';
-            $('#langlist').val($("body").attr("data-lang-param")); 
+            $('#langlist').val(data_lang_param); 
 			dataByTag("link_dmc_portal", "newUserLink", 1);
 		});
 
