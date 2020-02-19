@@ -48,6 +48,9 @@ public class SystemConfigListDb implements Serializable {
 	private String description;
 	private String displayName;
 	
+	public SystemConfigListDb() {
+	}
+	
 	public SystemConfigListDb(String tag, String description, String displayName) {
 		this.tag = tag;
 		this.description = description;

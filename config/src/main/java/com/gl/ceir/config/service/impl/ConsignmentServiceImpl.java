@@ -362,12 +362,11 @@ public class ConsignmentServiceImpl {
 			else if("IMPORTER".equalsIgnoreCase(userType))
 				// Check status must be Init or Rejected by system.
 				if(consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.INIT.getCode() || 
-						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_CEIR_AUTHORITY.getCode()) {
+						consignmentMgmt.getConsignmentStatus() == ConsignmentStatus.REJECTED_BY_SYSTEM.getCode()) {
 					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.WITHDRAWN_BY_IMPORTER.getCode());	
 				}else {
 					return new GenricResponse(5, GenericMessageTags.INVALID_STATE_TRANSTION.getTag(), GenericMessageTags.INVALID_STATE_TRANSTION.getMessage(), consignmentRequest.getTxnId());
 				}
-				
 			else {
 				logger.info("UserType is invalid." + consignmentRequest.getTxnId());
 				return new GenricResponse(1, "UserType is invalid.", consignmentRequest.getTxnId());

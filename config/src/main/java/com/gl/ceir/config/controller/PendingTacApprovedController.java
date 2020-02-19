@@ -16,18 +16,20 @@ import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.service.impl.PendingTacApprovedImpl;
 import com.gl.ceir.config.service.impl.SystemConfigListServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-public class SystemConfigListController {
+public class PendingTacApprovedController {
 
-	private static final Logger logger = LogManager.getLogger(SystemConfigListController.class);
+	private static final Logger logger = LogManager.getLogger(PendingTacApprovedController.class);
 
 	@Autowired
-	SystemConfigListServiceImpl systemConfigListServiceImpl;
+	PendingTacApprovedImpl pendingTacApprovedImpl;
 
+	/*
 	@ApiOperation(value = "Save || system-config-list", response = SystemConfigListDb.class)
 	@PostMapping("/save/system-config-list")
 	public MappingJacksonValue save(@RequestBody SystemConfigListDb systemConfigListDb) {
@@ -141,5 +143,5 @@ public class SystemConfigListController {
 
 		return mapping;
 	}
-	
+*/	
 }

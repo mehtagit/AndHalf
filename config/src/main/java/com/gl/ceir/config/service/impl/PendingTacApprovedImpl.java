@@ -49,9 +49,9 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 
 @Service
-public class SystemConfigListServiceImpl {
+public class PendingTacApprovedImpl {
 
-	private static final Logger logger = LogManager.getLogger(SystemConfigListServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(PendingTacApprovedImpl.class);
 
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
@@ -156,7 +156,7 @@ public class SystemConfigListServiceImpl {
 
 	public GenricResponse findById(FilterRequest filterRequest){
 		try {
-			if(Objects.isNull(filterRequest.getTag())) {
+			if(Objects.isNull(filterRequest.getUserId())) {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
@@ -277,7 +277,7 @@ public class SystemConfigListServiceImpl {
 	private GenericSpecificationBuilder<SystemConfigListDb> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<SystemConfigListDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		if(Objects.nonNull(filterRequest.getTag()))
+		if(Objects.nonNull(filterRequest.getUserId()))
 			cmsb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 
 
