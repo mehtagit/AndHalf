@@ -23,7 +23,6 @@ public class SystemConfigListDb implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonIgnore
 	private Long id;
 
 	@CreationTimestamp
