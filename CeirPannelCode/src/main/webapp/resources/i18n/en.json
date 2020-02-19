@@ -77,6 +77,12 @@
 "wrong_userId:":"Please enter correct User Id",
 "Pending Registration":"Pending Registration",
 "new_pass_sucess":"User new password has been added",
-"new_pass_fail":"User new password fail to update"
-
+"new_pass_fail":"User new password fail to update",
+"Type Approved":"Type Approved",
+"Stolen Device Count":"Stolen Device Count",
+"Recovery Device Count":"Recovery Device Count",
+"Type Approved1":"Type Approved1",
+"Type Approved2":"Type Approved2",
+"Unblock Device Count":"Unblock Device Count",
+"Block Device Count":"Block Device Count"
 }

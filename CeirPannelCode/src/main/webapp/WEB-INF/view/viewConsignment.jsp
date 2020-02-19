@@ -892,6 +892,8 @@
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<%-- 		<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
+				<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 	<script type="text/javascript"

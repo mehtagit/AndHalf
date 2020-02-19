@@ -613,7 +613,7 @@
 
 				/* 	$('#transactionID').val('');
 					$('#transactionID').val(txnid); */
-					$('#transactionID').attr("placeholder","" );
+					//$('#transactionID').attr("placeholder","" );
 					if(txnid=="")
 					{
 					

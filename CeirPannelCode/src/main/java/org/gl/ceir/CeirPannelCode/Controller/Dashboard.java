@@ -79,14 +79,27 @@ public class Dashboard {
 	
 	
 	@GetMapping("/grievance/count")
-	public ResponseEntity<?> getGrievanceNotificationCountAndQuantity(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
-		RequestCountAndQuantity response = dashboardFeignClient.grievanceNotification(userId, featureId, userTypeId,userType);
+	public ResponseEntity<?> getGrievanceNotificationCountAndQuantity(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.grievanceNotification(requestType,userId, featureId, userTypeId,userType);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping("/users/pendingCount")
-	public ResponseEntity<?> getUsersPendingCount(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
-		RequestCountAndQuantity response = dashboardFeignClient.userPendingCount(userId, featureId, userTypeId,userType);
+	public ResponseEntity<?> getUsersPendingCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.userPendingCount(requestType,userId, featureId, userTypeId,userType);
 	return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	
+	@GetMapping("/stakeholder/blockUnblockCount")
+	public ResponseEntity<?> getStakeholderBlockUnblockCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.stakeholderBlockUnblockCount(requestType,userId, featureId, userTypeId,userType);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/TypeApproved/count")
+	public ResponseEntity<?> getTypeApprovedCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) {
+		RequestCountAndQuantity response = dashboardFeignClient.typeApprovedCount(requestType,userId, featureId, userTypeId,userType);
+	return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
 } 
