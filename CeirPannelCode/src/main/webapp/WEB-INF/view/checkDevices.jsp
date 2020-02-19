@@ -102,7 +102,7 @@
 
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 
  
 
@@ -343,6 +343,7 @@
     <!-- chartist -->
     <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
 
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>

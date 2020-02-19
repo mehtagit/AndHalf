@@ -21,7 +21,8 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
+<jsp:include page="/WEB-INF/view/endUserHeader.jsp" ></jsp:include>
+<jsp:include page="/WEB-INF/view/endUserFooter.jsp" ></jsp:include>
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
@@ -81,7 +82,7 @@ var contextpath='${context}';
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -311,7 +312,7 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->

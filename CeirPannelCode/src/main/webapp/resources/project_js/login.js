@@ -1,15 +1,16 @@
+var data_lang_param =$("body").attr("data-lang-param") == ('en_US' || 'en') ? 'en' : 'km';	
 $('#langlist').on('change', function() {
-			window.lang = $('#langlist').val() == 'km' ? 'km' : 'en';
+			lang = $('#langlist').val() == 'km' ? 'km' : 'en';
 			var url_string = window.location.href;
 			var url = new URL(url_string);
 			var type = url.searchParams.get("type");
-			window.location.assign("login?&lang=" + window.lang);
+			window.location.assign("login?&lang=" + lang);
 		});
 
 		$(document).ready(function() {
-			var url = new URL( window.location.href);
-    		var langParameter = url.searchParams.get("lang") == 'km' ? 'km' : 'en';
-            $('#langlist').val(langParameter); 
+			//var url = new URL( window.location.href);
+    		//var langParameter = url.searchParams.get("lang") == 'km' ? 'km' : 'en';
+            $('#langlist').val($("body").attr("data-lang-param")); 
 			dataByTag("link_dmc_portal", "newUserLink", 1);
 		});
 

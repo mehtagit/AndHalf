@@ -74,7 +74,7 @@
 <style>
 </style>
 </head>
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 	<section id="content">
 		<!--start container-->
 		<div class="container">
@@ -603,7 +603,7 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/selfRegisterDevice.js"></script>
 	<script type="text/javascript"
@@ -633,13 +633,9 @@
 		
 		
 	        $(document).ready(function () {
-	        	var url = new URL( window.location.href);
-	    		var langParameter = url.searchParams.get("lang");
-	            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
-	            	
-	            	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-
-	            			$.i18n().locale = lang;	
+	    		$('#langlist').val($("body").attr("data-lang-param"));
+	        	$.i18n().locale = data_lang_param;	
+	            				
 	            			
 	            			$.i18n().load( {
 	            				'en': './resources/i18n/en.json',

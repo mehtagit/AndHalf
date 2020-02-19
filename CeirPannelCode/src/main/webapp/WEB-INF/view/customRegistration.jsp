@@ -150,7 +150,7 @@ var contextpath = "${context}";
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 
 <%String userType=request.getParameter("type");
 %>
@@ -830,15 +830,10 @@ return true;
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
-    		var langParameter = url.searchParams.get("lang");
-            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
+        	$('#langlist').val($("body").attr("data-lang-param"));
             $('.modal').modal();
             questionDataByCategory();
-            
-            var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-
-            	$.i18n().locale = lang;	
+            $.i18n().locale = data_lang_param;	
             	
             	$.i18n().load( {
             		'en': './resources/i18n/en.json',
