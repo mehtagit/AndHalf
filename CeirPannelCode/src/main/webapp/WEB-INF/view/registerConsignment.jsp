@@ -171,12 +171,13 @@ section {
 										<div class="input-field col s12 m6">
 											<input type="text" name="expectedDispatcheDate"
 												id='expectedDispatcheDate' class='form-control datepick'
-												autocomplete='off'  onchange="InvalidMsg(this,'date');" oninvalid="InvalidMsg(this,'date');" 
+												autocomplete='off'  onchange="InvalidMsg(this,'date');checkDate(expectedDispatcheDate,expectedArrivaldate);" oninvalid="InvalidMsg(this,'date');" 
 												title="<spring:message code="validation.requiredMsg" />"  required /> 
 												<label
 												for="expectedDispatcheDate" class="center-align"><spring:message code="input.dispatchdate" /> <span class="star">*</span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
+					<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;margin: 0;top: 40px;right: 0;" class="left"></p>
 										</div>
 									</div>
 
@@ -191,7 +192,7 @@ section {
 
 										<div class="input-field col s12 m6">
 											<input name="expectedArrivaldate" id="expectedArrivaldate"
-												type="text" class='form-control datepick' autocomplete='off' onchange="InvalidMsg(this,'date');" oninvalid="InvalidMsg(this,'date');"
+												type="text" class='form-control datepick' autocomplete='off' onchange="InvalidMsg(this,'date');checkDate(expectedDispatcheDate,expectedArrivaldate);" oninvalid="InvalidMsg(this,'date');"
 												title="<spring:message code="validation.requiredMsg" />"
 												required /> <label for="expectedArrivaldate"
 												class="center-align"><spring:message code="input.arrivaldate" /> <span
@@ -322,10 +323,10 @@ section {
 	</div>
 
 	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"> Uploaded file format</h6>
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"></h6>
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -410,6 +411,8 @@ section {
 		src="${context}/resources/project_js/registerConsignment.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 	
 </body>
 </html>

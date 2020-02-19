@@ -49,6 +49,9 @@
 "USER_STATUS_CHANGE_FAIL":"User status failed to change",
 "endDate":"Start Date should be less than End Date",
 "expectedArrivaldate":"Expected Dispatch Date should be less than Expected Arrival Date",
-"requiredMsg_email":"Please enter a valid email"
-
+"requiredMsg_email":"Please enter a valid email",
+"selectFilePlaceHolder":"Upload a file",
+"duplicateFileName":"File name should not be same",
+"assigneIdLabel":"Assignee ID",
+"assigneNameLabel":"Assignee Name"
 }

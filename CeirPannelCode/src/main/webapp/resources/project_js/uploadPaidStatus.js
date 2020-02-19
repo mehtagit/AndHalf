@@ -146,11 +146,15 @@ $(document).ready(function () {
 			$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 				var dropdownid=id-1;
 				if(dropdownid <= allowed){
-
+					alert("-----"+allowed);	
 					$('#taxStatus'+dropdownid).prop('disabled', 'disabled');
 					$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus'+dropdownid);
 
 				}
+			/*	else if(allowed==0)
+					{
+					alert("sount is 0")
+					}*/
 				else{
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
@@ -748,9 +752,22 @@ populateCountries(
 $(document).ready(function () {
 
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+		var checkAllowedCount =localStorage.getItem("allowed");	
+		//alert("222222"+checkAllowedCount);
+		if(checkAllowedCount==0)
+			{
+		
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#taxStatus1');
 
+			}
+			}
+		else{
+		
 		$('#taxStatus1').prop('disabled', 'disabled');
 		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
+		}
 	});
 
 

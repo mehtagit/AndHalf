@@ -315,6 +315,16 @@ public class DatatableHeaders {
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			
+			//AssigneeStock
+			
+			else if("AssigneeStock".equals(role)) {
+				String[] headers = {"tabel.Assignee","tabel.AssigneeName","table.Contact","table.email","table.action"};		
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 			//DEFAULT PORTION  
 			else {
 				String[] headers = {"table.date","table.transactionID","table.fileName","table.stockStatus","table.action"};		

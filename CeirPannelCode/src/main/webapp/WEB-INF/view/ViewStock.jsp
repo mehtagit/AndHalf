@@ -1,4 +1,3 @@
-
 <%
 	response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -8,15 +7,21 @@
 	 session.setAttribute("usertype", null); */
 	if (session.getAttribute("usertype") != null) {
 %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html class="no-js" lang="en" dir="ltr">
 <head>
-<title>Dashboard</title>
+<title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 
+<meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -58,7 +63,7 @@
 	type="text/css" rel="stylesheet" media="screen,projection">
 <%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
-	href="${context}/resources/project_css/viewStock.css">
+	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
@@ -68,24 +73,20 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
+
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-
-<style type="text/css">
- #starColor {
-            color: red;
-        }
-</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
-	data-selected-roleType="${selectedUserTypeId}"
-	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
-	 data-period="${period}">
-
+<body data-id="4"  data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 	<!-- START CONTENT -->
 	<section id="content">
@@ -449,11 +450,11 @@
 
 
 	
-	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"> Uploaded file format</h6>
+		<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"></h6>
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -528,11 +529,16 @@
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	
 	<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+	
+	<script type="text/javascript"
 		src="${context}/resources/project_js/viewStock.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>	
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 </body>
 </html>
 
