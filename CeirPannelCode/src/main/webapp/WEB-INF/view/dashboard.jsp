@@ -89,7 +89,7 @@ String name = (String) session.getAttribute("name");
 								<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer"
 									target="_blank"
 									title="DMC, external link that open in a new window"> <img
-									src="./resources/images/dmc_gl.png" id="header-img" class="darken-1 my-2"
+									src="./resources/images/DMC-Logo.png" id="header-img" class="darken-1 my-2"
 									style="height: 56px;"></a>
 							</div>
 						</li>
@@ -122,7 +122,7 @@ String name = (String) session.getAttribute("name");
 								<div id="iconLable" class="darken-1">
 									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 								</div>
-								<div style="width: 70px !important;">
+								<div style="width: 80px !important;">
 									<select class="darken-1" id="langlist"
 										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
 										<option value="en">English</option>
