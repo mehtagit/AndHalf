@@ -7,7 +7,7 @@
 		window.location.assign("forgotPassword?lang="+lang);			
 		});	
 $(document).ready(function () {
-	$('#langlist').val($("body").attr("data-lang-param"));
+	 $('#langlist').val(data_lang_param);
 				//$('.modal').openModal();
 				questionData();
 			});

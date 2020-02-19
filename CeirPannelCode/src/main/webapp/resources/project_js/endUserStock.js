@@ -9,7 +9,7 @@ $('#langlist').on('change', function() {
 
 
 $(document).ready(function () {
-	$('#langlist').val($("body").attr("data-lang-param"));
+	 $('#langlist').val(data_lang_param);
         if($('#pageTypeValue').val()==0)
         	{
         	$('#uploadPaidStatusDiv').css("display", "block");

@@ -880,7 +880,7 @@ $('#langlist').on('change', function() {
 	
 	
         $(document).ready(function () {
-        	$('#langlist').val($("body").attr("data-lang-param"));
+        	$('#langlist').val(data_lang_param);
             	$.i18n().locale = data_lang_param;	
             			
             			$.i18n().load( {

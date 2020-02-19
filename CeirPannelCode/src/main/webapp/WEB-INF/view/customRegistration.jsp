@@ -830,7 +830,7 @@ return true;
 	
 	
         $(document).ready(function () {
-        	$('#langlist').val($("body").attr("data-lang-param"));
+        	$('#langlist').val(data_lang_param);
             $('.modal').modal();
             questionDataByCategory();
             $.i18n().locale = data_lang_param;	
