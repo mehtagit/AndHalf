@@ -113,7 +113,7 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a  href="JavaScript:Void(0);"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
 							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
 						<li>
@@ -122,16 +122,16 @@ String name = (String) session.getAttribute("name");
 								<div id="iconLable" class="darken-1">
 									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 								</div>
-								<div>
+								<div style="width: 70px !important;">
 									<select class="darken-1" id="langlist"
 										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
 										<option value="en">English</option>
-										<option value="km">Khmer</option>
+										<option value="km"><spring:message code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a   data-target="goToLogout" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -156,7 +156,7 @@ String name = (String) session.getAttribute("name");
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
 
-								<li><a href="${context}/logout" id=""><i
+								<li><a data-target="goToLogout" style="cursor: pointer;" class="modal-trigger" id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
@@ -283,7 +283,9 @@ String name = (String) session.getAttribute("name");
 
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
-							name="status" value="Deactivate" required="required"><span>
+							name="status" value="Deactivate" 
+							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+							title= "<spring:message code="validation.Options" />" required  / > <span>
 								<spring:message code="registration.deactivate" />
 						</span></label>
 						<spring:message code="registration.permanentlydeleteportal" />
@@ -298,7 +300,9 @@ String name = (String) session.getAttribute("name");
 				<div class="row" style="height: 30px;">
 					<p>
 						<label style="margin-right: 67px"> <input type="radio"
-							value="Disable" name="status" required="required"><span>
+							value="Disable" name="status" 
+							oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+							title= "<spring:message code="validation.Options" />" required  / > <span>
 								<spring:message code="registration.disable" />
 						</span></label>
 						<spring:message code="registration.alltheactionwillbe" />
@@ -352,7 +356,7 @@ String name = (String) session.getAttribute("name");
 			</h6>
 
 			<div class="input-field col s12 center">
-				<a href="${context}/logout" class="btn modal-close">ok</a>
+				<a href="${context}/logout" class="btn modal-close"> <spring:message code="modal.ok" /> </a>
 			</div>
 		</div>
 	</div>
@@ -379,15 +383,15 @@ String name = (String) session.getAttribute("name");
 						<input type="password" id="oldPassword" class="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" />
+							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+							title= "<spring:message code="validation.minumum8length" />" required  / >
 							 <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
 							<spring:message code="registration.oldpassword" />
 						</label>
 						<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 
@@ -404,11 +408,11 @@ String name = (String) session.getAttribute("name");
 								code="registration.newpassword" /></label> <input type="password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8" 
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password" class="password2" />
+							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+							title= "<spring:message code="validation.minumum8length" />" required  /  id="password" class="password2" />
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password2"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 
@@ -424,11 +428,11 @@ String name = (String) session.getAttribute("name");
 							class="password3" id="confirm_password"
 							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 							maxlength="10" min="8"
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" />
+							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+							title= "<spring:message code="validation.minumum8length" />" required  / >
 							<div class="input-field-addon">
-							<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password3"
-								aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password3"
+								aria-hidden="true"></i>
 						</div>
 					</div>
 				</div>
@@ -548,6 +552,30 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="goToLogout" class="modal modal-small" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="logout.page" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6>
+					<spring:message code="logout.msg" />
+				</h6>
+			</div>
+			<div class="input-field col s12 center">
+				<div class="input-field col s12 center">
+					<a href="./logout" class="btn" type="submit" name="add_user"
+						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
+						class="modal-close btn" style="margin-left: 10px;"><spring:message
+							code="modal.no" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal End -->
 	<!-- Modal End -->
@@ -561,12 +589,6 @@ data-dismiss="modal">&times;</button> -->
 
 	<!-- jQuery Library -->
 
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js"></script>
-
-		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
-			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -620,8 +642,12 @@ data-dismiss="modal">&times;</button> -->
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>
+		
+	<!-- ajax js -->
+	
+
+		<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+			<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript">
@@ -636,14 +662,17 @@ $(document).ready(function () {
 </script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
 </body>
 
 </html>
 <%
         }
         else{            
-        request.setAttribute("msg", "  *Please login first");
+        request.setAttribute("msg", "  *Session has been expired");
         request.getRequestDispatcher("./login.jsp").forward(request, response);      	
         }
 %>

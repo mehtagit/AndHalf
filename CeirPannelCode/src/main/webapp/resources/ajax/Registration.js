@@ -134,14 +134,29 @@ function verifyOtp(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=="200"){
 				//window.location.href='#otpMessage';
-				$("#otpVerification").closeModal();
-				$('#otpMessage').openModal();   
-				$("#otpResponse").text(resp.response);
+				
 				// $('#otpMessage').modal('open');
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#otpVerification").closeModal();
+					$('#otpMessage').openModal();   
+					$("#otpResponse").text($.i18n(resp.tag));
+				});
+				
 			}
 			else{
-				$("#otpVerification #verifyOtpResp").text(resp.response);
-				
+			
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#otpVerification #verifyOtpResp").text($.i18n(resp.tag));
+				});
 			}
 			$("#otpVerifyBtn").prop('disabled', false);
 		},
@@ -161,7 +176,15 @@ function resendOtp(){
 		dataType : 'html',
 		success : function(data) {
 			var response=JSON.parse(data);
-			$("#verifyOtpResp").text(response.response); 
+			
+			$.i18n().locale = $('#langlist').val();
+			$.i18n().load( {
+				'en': './resources/i18n/en.json',
+				'km': './resources/i18n/km.json'
+			}).done( function() {
+				$("#verifyOtpResp").text($.i18n(response.tag));
+			});
+			
 		},    
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
@@ -341,6 +364,7 @@ function saveRegistration(){
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
+					userLanguage:val.find('#langlist option:selected').val(),
 					middleName:val.find('#middleName').val(),  
 					lastName: val.find('#lastName').val(),
 					type:val.find('#type').val(), 
@@ -408,6 +432,7 @@ function saveCustomRegistration(){
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
+					userLanguage:val.find('#langlist option:selected').val(),
 					middleName:val.find('#middleName').val(),  
 					lastName: val.find('#lastName').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
@@ -436,7 +461,8 @@ function saveCustomRegistration(){
 					usertypeName:val.find('#usertypeName').val(),
 					arrivalPort:val.find('#arrivalPort').val(),
 					questionList:questionData,
-					type:val.find('#type').val()
+					type:val.find('#type').val(),
+					portAddress:val.find('#portAddress option:selected').val(),
 
 			}    
 		} 
@@ -449,7 +475,7 @@ function saveCustomRegistration(){
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));  
 	console.log("data=  "+JSON.stringify(formData));
-	registrationAjax(formData);
+	otherRegistrationAjax(formData);
 	return false;
 }   
 
@@ -478,6 +504,7 @@ function saveOperatorRegistration(){
 			obj =   
 			{       
 					firstName:val.find('#firstName').val(),
+					userLanguage:val.find('#langlist option:selected').val(),
 					middleName:val.find('#middleName').val(),  
 					lastName: val.find('#lastName').val(),
 					propertyLocation:val.find('#propertyLocation').val(),
@@ -521,7 +548,7 @@ function saveOperatorRegistration(){
 	formData.append( 'idCard', $( '#idCard' )[0].files[0] );
 	formData.append('data',JSON.stringify(obj));  
 	console.log("data=  "+formData);
-	registrationAjax(formData);
+	otherRegistrationAjax(formData);
 	return false;
 }
 function registrationAjax(obj){
@@ -535,14 +562,26 @@ function registrationAjax(obj){
 			var respData=JSON.parse(JSON.stringify(response));
 			console.log("response from server:  "+JSON.stringify(respData));
 			if(respData.statusCode==200){
-				//window.location.href='./verifyOtpPage/?userid='+respData.userId;
-				$("#userid").val(response.userId);
-				//window.location.href='#otpMsgModal';
-				$("#otpMsgModal").openModal();
-				$("#otpMsg").text(response.response);
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#otpMsg").text($.i18n(respData.tag));
+					$("#userid").val(respData.userId);
+					$("#otpMsgModal").openModal();
+				});
 			}
 			else{
-				$("#registrationForm #msg").text(respData.response);
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#registrationForm #msg").text($.i18n(respData.tag));
+				});
+
 			}
 			$("#btnSave").prop('disabled', false);
 		}, 
@@ -552,6 +591,48 @@ function registrationAjax(obj){
 	});
 }
 
+function otherRegistrationAjax(obj){
+	$.ajax({   
+		type : 'POST',
+		url : contextpath + '/saveOtherRegistration',
+		data :obj,   
+		processData : false,
+		contentType : false,
+		success : function(response) {
+			var respData=JSON.parse(JSON.stringify(response));
+			console.log("response from server:  "+JSON.stringify(respData));
+			if(respData.statusCode==200){
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#otpMsg").text($.i18n(respData.tag));
+					$("#userid").val(respData.userId);
+					$("#otpMsgModal").openModal();
+				});
+				
+				
+				
+			}
+			else{
+			
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#registrationForm #msg").text($.i18n(respData.tag));
+				});
+
+			}
+			$("#btnSave").prop('disabled', false);
+		}, 
+		error: function (xhr, ajaxOptions, thrownError) {
+			$("#btnSave").prop('disabled', false);
+		}
+	});
+}
 
 
 function openEndUserGrievancePage(reportType){
@@ -597,4 +678,27 @@ function selfRegisterDevice(){
 }
 function updateVisaValidity(){
 	window.location.href="./updateVisaValidaity";
+}
+
+function getByPort(port){ 
+	$.ajax({
+		type : 'GET',
+		url : contextpath + '/byArrivalPort/'+port,
+		contentType : "application/json",
+		dataType : 'html',
+		async:false,
+		success : function(data) {
+			var response=JSON.parse(data);                                    
+			var asTypeDropdown=$("#portAddress"); 
+			asTypeDropdown.empty();
+			var header="<option value='' disabled selected>Select address</option>";
+			asTypeDropdown.append(header);
+			for(var i=0; i<response.length; i++){
+					var data2='<option value="'+response[i].id+'">'+response[i].address+'</option>';
+					asTypeDropdown.append(data2);
+			}    
+		},      
+		error: function (xhr, ajaxOptions, thrownError) {
+		}
+	});
 }

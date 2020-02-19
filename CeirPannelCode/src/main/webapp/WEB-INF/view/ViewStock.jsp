@@ -1,16 +1,13 @@
 
-<% 
-  
-        response.setHeader("Cache-Control","no-cache");
-        response.setHeader("Cache-Control","no-store");
-        response.setDateHeader("Expires", 0);
-        response.setHeader("Pragma","no-cache");
-
-        
-        
-        if(session.getAttribute("usertype") !=null){ %>
-        <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -19,7 +16,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -83,7 +82,8 @@
 </style>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
+<body data-id="4"
+data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
 	data-selected-roleType="${selectedUserTypeId}"
 	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
@@ -192,13 +192,14 @@
 					<div class="file-field col s12 m6">
 					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /><span class="star">*</span></p>
 						<div class="btn">
-							<span><spring:message code="input.selectfile" /></span> <input type="file"
+							<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges()"
 								id="editcsvUploadFile" accept=".csv">
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate responsive-file-div"
 								id="editcsvUploadFileName" type="text">
 						</div>
+						<input type="text" id="existingFileName" style="display: none;">
 					</div>
 				</div>
 
@@ -449,6 +450,24 @@
         </div>
     </div>
 
+
+	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"> Uploaded file format</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"></h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- Modal End -->
 	<!-- END MAIN -->
 
@@ -516,15 +535,21 @@
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
+		src="${context}/resources/project_js/dragableModal.js"></script>
+					<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
 </body>
 </html>
 
 <%
-        }
-        else{
-        	request.setAttribute("msg", "  *Please login first");
-        request.getRequestDispatcher("./login.jsp").forward(request, response);
-        	
-        }
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
 %>

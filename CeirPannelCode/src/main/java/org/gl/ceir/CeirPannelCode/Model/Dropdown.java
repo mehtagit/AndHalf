@@ -16,6 +16,7 @@ public class Dropdown {
 	private String brand_name;
 	private String modelName;
 	private Integer brand_id;
+	private Integer listOrder;
 	public Integer getId() {
 		return id;
 	}
@@ -88,12 +89,18 @@ public class Dropdown {
 	public void setBrand_id(Integer brand_id) {
 		this.brand_id = brand_id;
 	}
+	public Integer getListOrder() {
+		return listOrder;
+	}
+	public void setListOrder(Integer listOrder) {
+		this.listOrder = listOrder;
+	}
 	@Override
 	public String toString() {
 		return "Dropdown [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", featureId="
 				+ featureId + ", userTypeId=" + userTypeId + ", state=" + state + ", interp=" + interp + ", value="
 				+ value + ", tagId=" + tagId + ", brand_name=" + brand_name + ", modelName=" + modelName + ", brand_id="
-				+ brand_id + "]";
+				+ brand_id + ", listOrder=" + listOrder + "]";
 	}
 	
 	

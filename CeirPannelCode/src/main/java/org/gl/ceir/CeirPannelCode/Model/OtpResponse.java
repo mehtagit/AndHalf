@@ -6,6 +6,8 @@ public class OtpResponse {
 	private String response;
 	private Integer statusCode;
 	private Integer userId;
+	private String tag;
+	
 
 	public Integer getUserId() {
 		return userId;
@@ -29,6 +31,15 @@ public class OtpResponse {
 
 	public void setStatusCode(Integer statusCode) {
 		this.statusCode = statusCode;
+	}
+
+	
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
 	@Override

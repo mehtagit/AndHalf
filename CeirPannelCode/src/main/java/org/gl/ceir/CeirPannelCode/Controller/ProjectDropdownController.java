@@ -6,12 +6,21 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
+import org.gl.ceir.CeirPannelCode.Model.Tag;
+import org.gl.ceir.pagination.model.MessageContentModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -81,6 +90,23 @@ public class ProjectDropdownController {
 		
 	}
 	
+	@PostMapping("/get/tags-mapping") 
+	public @ResponseBody List<GrievanceDropdown> catagoryDropdownList (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the catagoryDropdownList api="+filterRequest);
+		List<GrievanceDropdown> response= feignCleintImplementation.catagoryDropdownListFeign(filterRequest);
+		log.info("response from catagoryDropdownList api "+response);
+		return response;
+
+		}
 	
+	@PostMapping("/getSystemTags") 
+	public @ResponseBody GenricResponse getAllTagsDropdown (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the getAllTagsDropdown api="+filterRequest);
+		GenricResponse response= feignCleintImplementation.getAllTagsDropdowntFeign(filterRequest);
+		log.info("response from getAllTagsDropdown api "+response);
+		return response;
+
+		}
+
 	
 }

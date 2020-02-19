@@ -1,3 +1,13 @@
+
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	 // session.setMaxInactiveInterval(200); //200 secs
+	 //session.setAttribute("usertype", null); 
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -7,6 +17,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -54,9 +67,12 @@ href="${context}/resources/project_css/viewStock.css">
 href="${context}/resources/project_css/iconStates.css">
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}"
-data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<%-- <body data-roleType="${usertype}" data-userID="${userid}"
+data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"> --%>
 
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 
@@ -76,14 +92,18 @@ data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${s
 
 <div class="row" >
 <div class="input-field col s12 m6 l6">
-<input type="text" id="TransactionId" pattern="[A-Za-z0-9]{0,18}" maxlength="18" title="Please enter alphabets and numbers upto 18 characters only"
+<input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+title= "<spring:message code="validation.18digit" />" required 
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
 
 <div class=" col s12 m6 l6">
  <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
-<select class="browser-default" id="category" required="required">
+<select class="browser-default" id="category" 
+oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
+title= "<spring:message code="validation.selectFieldMsg" />" required>
 <option value="" selected disabled ><spring:message code="operator.category" /></option>
 </select>
 </div>
@@ -91,7 +111,9 @@ class="form-control boxBorder boxHeight"/>
 
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
-<textarea id="Remark" class="materialize-textarea" maxlength="200" required="required"></textarea>
+<textarea id="Remark" class="materialize-textarea" maxlength="200" 
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+title= "<spring:message code="validation.200characters" />" required></textarea>
 <label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
@@ -104,7 +126,9 @@ class="form-control boxBorder boxHeight"/>
 <h6 style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  >
+<input type="file" name="files[]" id="docTypeFile1" 
+oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+title= "<spring:message code="validation.NoChosen" />" required  / >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -120,7 +144,11 @@ placeholder="Upload one or more files">
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
-<select class="browser-default" id="docTypetagValue1" style="display: none;">
+<select class="browser-default" id="docTypetagValue1" 
+oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
+title= "<spring:message code="validation.selectFieldMsg" />"
+
+style="display: none;">
 <option value="" disabled selected><spring:message code="select.documenttype" /></option>
 
 </select>
@@ -132,7 +160,7 @@ placeholder="Upload one or more files">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" type="button"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 </div>
@@ -369,7 +397,7 @@ $.ajax({
 		console.log("error in ajax")
 	}
 });
-$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 	console.log("@@@@@"+JSON.stringify(data));
 	for (i = 0; i < data.length; i++) {
 		console.log(data[i].interp);
@@ -378,7 +406,7 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 		$('#docTypetagValue1').val(data[i].value);
 	}
 });
-
+ */
 
 		function cleanReplyPopUp()
 		{
@@ -401,12 +429,12 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			if (x < max_fields) { //max input box allowed
 				x++; //text box increment
 				$(wrapper).append(
-						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 				); //add input box
 			}
 			
 			
-			$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		/* 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 
 
 				for (i = 0; i < data.length; i++) {
@@ -417,7 +445,44 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 					console.log('#docTypetag'+optionId);
 
 				}
-			});
+			}); */
+			
+
+				var request ={
+							 "childTag": "DOC_TYPE",
+							  "featureId": 6,
+							  "parentValue":  parseInt($('#category').val()),	
+							  "tag": "GRIEVANCE_CATEGORY",
+							  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+						}
+				
+				console.log("request --->" +JSON.stringify(request));	
+				 $.ajax({
+						url: './get/tags-mapping',
+						type: 'POST',
+						data : JSON.stringify(request),
+						dataType : 'json',
+						contentType : 'application/json; charset=utf-8',
+						success: function (data, textStatus, jqXHR) {
+							
+							console.log(data);
+							for (i = 0; i < data.length; i++){
+								var optionId=id-1;
+									//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+									//$('#docTypetag1').append(html);	
+								
+								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetag'+optionId);
+								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetagValue'+optionId);
+							}
+							
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							console.log("error in ajax")
+						}
+					});
+				 
+			
+			
 			id++;
 
 		});
@@ -442,7 +507,69 @@ $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			$('#docTypetagValue').val(data[i].value).change();
 			$('#docTypetagValue').val(data[i].value).change();
 		}
+		
+
+$('#category').on(
+					'change',
+				function() {
+	
+	
+	var request ={
+				 "childTag": "DOC_TYPE",
+				  "featureId": 6,
+				  "parentValue":  parseInt($('#category').val()),	
+				  "tag": "GRIEVANCE_CATEGORY",
+				  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+			}
+	
+	console.log("request --->" +JSON.stringify(request));	
+	 $.ajax({
+			url: './get/tags-mapping',
+			type: 'POST',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+				$("#docTypetag1").empty();
+				console.log(data);
+				for (i = 0; i < data.length; i++){
+						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+						//$('#docTypetag1').append(html);	
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+				
+				}
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});
+	 
+	}); 
+	 
+
+</script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
+		
 </script>
 </body>
 </html>
 
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

@@ -3,6 +3,8 @@ $('#langlist').on('change', function() {
 	sessionStorage.setItem("sessionLang", lang);
 	$('#mainArea').attr('src', function () {
 		currentPageLocation=$(this).contents().get(0).location;
+		var feature=$(this).contents().find("body").attr('data-id');
+		sessionStorage.setItem("data-feature", feature);
 		changeLanguage(lang);
 		sessionStorage.setItem("a", currentPageLocation);
 	});    
@@ -11,18 +13,22 @@ $('#langlist').on('change', function() {
 
 
 
-
+var featurID=sessionStorage.getItem("data-feature") == null ? '1' : sessionStorage.getItem("data-feature");
 var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
 $(document).ready(function () {
 	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
-	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
+	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='650px'></iframe>");
 	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
 	var url = new URL(window.location.href);
-    var langParameter = url.searchParams.get("lang")== null ? sessionStorage.getItem("sessionLang") : url.searchParams.get("lang");
-    window.parent.$('#langlist').val(langParameter); 
+	/*sessionStorage.getItem("sessionLang")*/
+	var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
+
+	window.parent.$('#langlist').val(langParameter); 
 	//dataByTag("copyright_footer","copyrightText",2);
 	sessionStorage.removeItem("a");
-	$('div#initialloader').delay(300).fadeOut('slow');
+	$('div#initialloader').delay(300).fadeOut('slow'); 
+	isActive(featurID);
+	sessionStorage.removeItem("data-feature");
 });   
 
 
@@ -44,8 +50,8 @@ password.onchange = validatePassword;
 confirm_password.onkeyup = validatePassword;
 var cierRoletype = $("body").attr("data-usertype");
 sessionStorage.setItem("cierRoletype", cierRoletype);
-$(".navData li:first").addClass("active");
-$('.navData li').on('click', function() {
+//$(".navData li:first").addClass("active");
+$('.navData li').on('click', function() {	
 	$('.navData li:not(.inactive)').addClass("inactive");
 	$('.navData li').removeClass("active");
 	$(this).removeClass("inactive");
@@ -68,3 +74,15 @@ function changeLanguage(lang){
 
 
 
+
+function isActive(feature){
+	$('.navData li:nth-child(1)').removeClass("active");
+	$('.navData li a').each(function(){
+		if($(this).attr('data-featureid') == feature){    	 
+			$(this).closest('li').addClass("inactive");
+			$(this).closest('li').removeClass("active");
+			$(this).closest('li').removeClass("inactive");
+			$(this).closest('li').addClass("active"); 
+		}
+	})
+}

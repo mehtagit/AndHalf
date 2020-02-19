@@ -1,4 +1,15 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -6,7 +17,10 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>TRC</title>
+<title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -59,25 +73,22 @@
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 <script src="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json"></script>
-  
+ 
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script type="text/javascript">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+   <script type="text/javascript">
 var path="${context}";
 </script>
-
-<style type="text/css">
-textarea {
-	padding: 0px;
-}
-
-</style>
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}"
- data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"
- session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+<body data-id="21" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}"
+	session-value="en"
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
 
 	<!-- START CONTENT -->
@@ -335,8 +346,8 @@ textarea {
 											<div id="filediv" class="fileDiv">
 												<div class="row">
 													<div class="col s12 m6 l6" style="margin-top: 8px;">
-														<label for="Category"><spring:message code="input.documenttype"/></label> <select
-															class="browser-default" id="docTypetag1">
+														<label for="Category"><spring:message code="input.documenttype"/> <span class="star"> * </span></label>  <select
+															class="browser-default" id="docTypetag1" required>
 															<option value="" disabled selected><spring:message code="select.documenttype" /></select> 
 														
 														<select class="browser-default" id="docTypetagValue1"
@@ -354,7 +365,7 @@ textarea {
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1">
+															<input type="file" name="files[]" id="docTypeFile1" required>
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
@@ -663,3 +674,17 @@ textarea {
 
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>
+

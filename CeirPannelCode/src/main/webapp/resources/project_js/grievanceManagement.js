@@ -461,13 +461,16 @@ var featureId = 6;
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-
+						var grievanceID=	
 						$('#chatMsg').empty();
 						$('#manageAccount').openModal();
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
 							for(var i=0; i<data.length; i++)
 						{
+								$('#viewGrievanceId').text('');	
+							$('#viewGrievanceId').text(grievanceId);	
+							
 							$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='chat-time' id='timeHistory'>"+data[i].modifiedOn+"</span><h5 id='userTypehistory'>"+data[i].userDisplayName+"</h5><p id='messageHistory'>"+data[i].reply+"</p></div>");
 								for (var j=0 ; j<data[i].attachedFiles.length;j++)
 								{
@@ -549,7 +552,7 @@ var featureId = 6;
 				if (x < max_fields) { //max input box allowed
 					x++; //text box increment
 					$(wrapper).append(
-							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 					); //add input box
 				}
 	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {

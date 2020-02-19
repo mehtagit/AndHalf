@@ -1,3 +1,9 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -8,7 +14,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>TRC</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -92,7 +100,7 @@
     </style>
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="11" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
@@ -242,7 +250,7 @@
 		<h6 class="modal-header"><spring:message code="modal.header.submitTypeApprove" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/><span id="transactionId"> </span></h6>
+				<h6 id="sucessMessage"><spring:message code="modal.message.futureRef"/>  <span id="transactionId"> </span></h6>
 				<input type="text" style="display: none" id="errorCode">
 			</div>
 			 <div class="row">
@@ -353,6 +361,7 @@ var featureId = 11;
 					"remark" : $('#remark').val(),
 					"userId" : $("body").attr("data-userID"),
 					"featureId" : featureId,
+					"adminApproveStatus" : 2
 				}
 			
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
@@ -401,7 +410,7 @@ var featureId = 11;
 
 		}
 		
-		$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+		/* $.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
 			for (i = 0; i < data.length; i++) {
 				console.log(data[i].interp);
@@ -409,7 +418,15 @@ var featureId = 11;
 						'#docTypetag1');
 			}
 		});
-		
+		 */
+		 
+		 $.getJSON('./getSourceTypeDropdown/DOC_TYPE/'+featureId, function(data) {
+				for (i = 0; i < data.length; i++) {
+					console.log(data[i].interp);
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
+							'#docTypetag1');
+				}
+			});
 		
 
 		$('#approveDisapproveDate,#requestDate').datepicker({
@@ -430,3 +447,17 @@ var featureId = 11;
 			
 </body>
 </html>
+<%
+        }
+        else{
+        
+        %>
+<script language="JavaScript">
+        sessionStorage.setItem("loginMsg", "*Session has been expired.please login again"); 
+     	 window.top.location.href ="./login";
+   
+        </script>
+<%
+       
+        }
+%>

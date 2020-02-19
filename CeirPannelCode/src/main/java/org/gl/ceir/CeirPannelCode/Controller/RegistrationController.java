@@ -8,11 +8,13 @@ import javax.validation.Valid;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation;
+import org.gl.ceir.CeirPannelCode.Feignclient.PortAddressFeign;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserRegistrationFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Model.Otp;
 import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
+import org.gl.ceir.CeirPannelCode.Model.PortAddress;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.SecurityQuestion;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
@@ -45,6 +47,9 @@ public class RegistrationController {
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 	
+	@Autowired
+	PortAddressFeign portAddressFeign;
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
 	public ModelAndView index(HttpServletRequest request){
@@ -60,6 +65,17 @@ public class RegistrationController {
 		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
 		return dropdown;
 	}
+	
+	@ResponseBody
+	@GetMapping("/byArrivalPort/{arrivalPort}")
+	public List<PortAddress> portAddByPort(@PathVariable("arrivalPort") Integer arrivalPort ) {
+		log.info("inside byArrivalPort controller");
+		log.info("arrival port from form:  "+arrivalPort);
+		List<PortAddress> address = portAddressFeign.getByPort(arrivalPort);
+		log.info("exit from byArrivalPort controller");
+		return address;
+	}
+	
 	
 	
 	
@@ -105,12 +121,20 @@ public class RegistrationController {
 	@ResponseBody     
 	public OtpResponse saveRegistration(@RequestParam(name = "data",required = true) String data,
 			@RequestParam(name = "file",required = false)MultipartFile file,
+			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
+			HttpSession session,HttpServletRequest request) throws IOException{
+		OtpResponse response =registrationService.saveRegistration(data, file,vatFile,session,request);  
+		return response;             
+	}
+	
+	@RequestMapping(value = "/saveOtherRegistration",method = {RequestMethod.POST})
+	@ResponseBody     
+	public OtpResponse saveOtherRegistration(@RequestParam(name = "data",required = true) String data,
 			@RequestParam(name = "photo",required = false)MultipartFile photo,
 			@RequestParam(name = "NationalIdImage",required = false)MultipartFile nationalIdImage,
 			@RequestParam(name = "idCard",required = false)MultipartFile idCard,
-			@RequestParam(name = "vatFile",required = false)MultipartFile vatFile,
 			HttpSession session,HttpServletRequest request) throws IOException{
-		OtpResponse response =registrationService.saveRegistration(data, file,photo,nationalIdImage,idCard,vatFile,session,request);  
+		OtpResponse response =registrationService.saveOtherRegistration(data,photo,nationalIdImage,idCard,session,request);  
 		return response;             
 	}
 

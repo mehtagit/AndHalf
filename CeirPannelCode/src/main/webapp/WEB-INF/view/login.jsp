@@ -104,7 +104,7 @@ a#newUserLink {
 </script>
 </head>
 
-<body>
+<body data-msg="${msg}">
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -137,14 +137,14 @@ a#newUserLink {
 											<select class="browser-default select-lang-drpdwn"
 												id="langlist">
 												<option value="en">English</option>
-												<option value="km">Khmer</option>
+												<option value="km"><spring:message code="lang.khmer" /></option>
 											</select>
 										</div>
 										<div class="col s12 m12">
 											<h5 style="text-align: -webkit-center;">
 												<spring:message code="registration.login" />
 											</h5>
-											<span id="errorMsg" style="color: red;">${msg}</span>
+											<span id="errorMsg" style="color: red;"></span>
 											<hr>
 
 
@@ -153,23 +153,24 @@ a#newUserLink {
 
 
 										<div class="input-field col s12">
-											<input type="text" required="required" name="username"
-												id="username" class="" maxlength="10" /> <label
+											<input type="text" name="username"
+												id="username" class="" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required  maxlength="10" /> <label
 												for="username"><spring:message
 													code="registration.username" /></label>
 										</div>
 
-
-
-
 										<div  class="input-field col s12" id="show_hide_password">
-											<input type="password"  required="required" class="password"
-												name="password" id="password" maxlength="10"
+											<input type="password"   class="password"
+												name="password" id="password" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required maxlength="10"
 												oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
 											<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+												<i   class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>
 
 										</div>
@@ -187,7 +188,8 @@ a#newUserLink {
 												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="captcha"
+														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required> <label for="captcha"
 														style="left: 0.01rem;"><spring:message
 															code="registration.enteryourcaptcha" /><span
 														class="star">*</span> </label>
@@ -267,7 +269,7 @@ a#newUserLink {
 							class="center-align" style="color: #000; font-size: 12px;">
 							 <spring:message code="registration.oldpassword" /></label>
 							<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+												<i  class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 											</div>
 					</div>
 
@@ -286,7 +288,7 @@ a#newUserLink {
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" id="password" class="password3" />
 				<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password3" aria-hidden="true"></i></a>
+		<i  class="fa fa-eye-slash teal-text toggle-password3" aria-hidden="true"></i>
 											</div>				
 					</div>
 
@@ -304,7 +306,7 @@ a#newUserLink {
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
 							required="required" />
 						<div class="input-field-addon">
-												<a href="javascript:void(0)"><i  class="fa fa-eye-slash toggle-password4" aria-hidden="true"></i></a>
+				<i  class="fa fa-eye-slash teal-text toggle-password4" aria-hidden="true"></i>
 											</div>		
 					</div>
 				</div>
@@ -336,8 +338,41 @@ a#newUserLink {
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+		
+		
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->

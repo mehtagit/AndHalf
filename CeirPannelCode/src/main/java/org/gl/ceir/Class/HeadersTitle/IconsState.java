@@ -74,9 +74,9 @@ public class IconsState {
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="
@@ -91,7 +91,7 @@ public class IconsState {
 
 
 
-		if(("0".equals(status) || "4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+		if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
@@ -121,14 +121,19 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
+		}else if(("4".equals(status) || "7".equals(status)) && "Approved".equals(userStatus)) {
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
+
 		}
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
@@ -158,9 +163,9 @@ public class IconsState {
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="
@@ -179,7 +184,7 @@ public class IconsState {
 					+errorIconTitle+"  ></i></a>"; 
 		}
 
-		else if(("1".equals(status))  && "Approved".equals(userStatus)) {
+		else if(("8".equals(status) || "4".equals(status) ||"6".equals(status) || "1".equals(status))  && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
@@ -199,23 +204,22 @@ public class IconsState {
 					+disableEditIcon+" aria-hidden=\"true\" title="
 					+editIconTitle+"></i></a>"; 
 		}
-		else if("6".equals(status) || "7".equals(status) && "Approved".equals(userStatus)) {
-			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
-					+disableErrorIcon+" aria-hidden=\"true\" title="
-					+errorIconTitle+"  ></i></a>"; 
+		else if("7".equals(status) && "Approved".equals(userStatus)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
-					+deleteIconTitle+"></i></a>";	
-			
+					+deleteIconTitle+"></i></a>";
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" ></i></a>"; 
 		}
 
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
@@ -243,9 +247,9 @@ public class IconsState {
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="
@@ -254,10 +258,7 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
-		String reply="<a href="+emptyURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
-				+deletionIcon+" aria-hidden=\"true\"  title="
-				+replyIconTitle+"></i></a>";
-
+		
 		if("0".equals(status) || "1".equals(status) ||  "3".equals(status) || "10".equals(status)  && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
@@ -292,9 +293,9 @@ public class IconsState {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
@@ -331,9 +332,9 @@ public class IconsState {
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
@@ -371,9 +372,9 @@ public class IconsState {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
@@ -391,7 +392,7 @@ public class IconsState {
 	/********************************** Icons for custom **********************************/ 
 
 	public String customState(String fileName,String txnId ,String status,String userStatus,String displayName) {
-		
+
 		// URL link 
 		// call post construct
 		executePostConstruct();
@@ -405,9 +406,9 @@ public class IconsState {
 
 
 		// state related Code 
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
@@ -435,9 +436,9 @@ public class IconsState {
 			reject = "<a onclick="+rejectAction+" class="+disableIconClass+"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
 
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+downloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 
 		}
 
@@ -484,8 +485,6 @@ public class IconsState {
 
 		//Disable View
 		if( "9".equals(status)  && "Approved".equals(userStatus) ) {
-			view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
@@ -495,12 +494,13 @@ public class IconsState {
 					+deleteIconTitle+"></i></a>"; 
 		}
 		else if("4".equals(status)  && "Approved".equals(userStatus) ) {
-			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
+		}else if("6".equals(status)   && "Approved".equals(userStatus) ) {
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
 		}
-		else if("5".equals(status) || "6".equals(status) || "7".equals(status) || "8".equals(status)  && "Approved".equals(userStatus) ) {
+		else if("5".equals(status) ||  "7".equals(status) || "8".equals(status)  && "Approved".equals(userStatus) ) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
@@ -541,14 +541,13 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-
-
+		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
-		if( "0".equals(status) || "1".equals(status) || "3".equals(status)) {
+		if(("0".equals(status) || "1".equals(status) || "3".equals(status)) && "Approved".equals(userStatus)) {
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 
-		}else if("0".equals(status)) {
+		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
 			view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
@@ -556,8 +555,7 @@ public class IconsState {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-			view="<a onclick="+viewAction+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
+			
 
 		}
 
@@ -582,25 +580,21 @@ public class IconsState {
 				+viewIconTitle+" ></i></a>";
 
 
-
+		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
-		if( "2".equals(status) || "3".equals(status)) {
-			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
-					+replyIconTitle+" ></i></a>";
+				if(("0".equals(status) || "1".equals(status) || "2".equals(status) ||"3".equals(status)) && "Approved".equals(userStatus)) {
+					reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+							+replyIconTitle+" ></i></a>";
 
-		}else if("0".equals(status)) {
-			view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
-		}
-		else if("Disable".equals(userStatus)) {
-			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
-					+replyIconTitle+" ></i></a>";
-			view="<a onclick="+viewAction+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
-
-		}
-
+				}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
+					view="<a onclick="+viewAction+" class=\"eventNone\"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
+							+viewIconTitle+" ></i></a>";
+				}
+				else if("Disable".equals(userStatus)) {
+					log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+					reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+							+replyIconTitle+" ></i></a>";
+				}
 
 		String action=reply.concat(view);
 		return action;
@@ -620,10 +614,10 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		log.info("status Admin Grievance---->" +status);	
+		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 
 		//Disable reply
-		if( "2".equals(status)) {
+		if(("2".equals(status) || "3".equals(status)) && "Approved".equals(userStatus))  {
 			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 
@@ -633,9 +627,6 @@ public class IconsState {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-			view="<a onclick="+viewAction+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
-					+viewIconTitle+" ></i></a>";
-
 		}
 
 
@@ -662,9 +653,9 @@ public class IconsState {
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 		// state related Code 
 
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
@@ -689,7 +680,7 @@ public class IconsState {
 
 
 
-		if(("1".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
+		if(("1".equals(status)) && "Approved".equals(userStatus)) {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
@@ -706,34 +697,49 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\" title="
+					+downloadIconTitle+" ></i></a>"; 
+
+		}
+
+		else if(("5".equals(status)  || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
+				delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
+		}
+		
+		else if (("6".equals(status)) && "Approved".equals(userStatus)) {
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			
+		}else if (("3".equals(status)) && "Approved".equals(userStatus)) {
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
+		}
+		
+		else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>";
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 
-		}
-
-
-
-		else if(("5".equals(status) || "6".equals(status) || "8".equals(status) || "9".equals(status)) && "Approved".equals(userStatus)) {
-
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>";
-		}
-		else if("Disable".equals(userStatus)) {
-			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
-					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
-
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
 		}
 
 		String action=download.concat(error).concat(view).concat(approve).concat(reject).concat(delete);	
@@ -746,7 +752,7 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username) {
+	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status) {
 		executePostConstruct();
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
@@ -755,7 +761,7 @@ public class IconsState {
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
 
-		//log.info("userId---->"+userId+"-------id---->"+id+"-------AdminCurrentStatus------>"+AdminCurrentStatus+"---createdOn--"+createdOn);
+		//log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus);
 
 		// state related Code 
 
@@ -770,26 +776,34 @@ public class IconsState {
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
+		
+		if (("1".equals(status)) && "Approved".equals(userStatus)) {
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}else if(("3".equals(status)) && "Approved".equals(userStatus)) {
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+		}else if(("4".equals(status)) && "Approved".equals(userStatus)) {
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}else if(("5".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+			
+		}
+		else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 
-
-		if("Approved".equals(AdminCurrentStatus) || "Rejected".equals(AdminCurrentStatus)) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
 
 		}
-
-		else if("Disable".equals(userStatus)) {
-			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-
-			approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
-					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
-
-		}
-
 		String action=view.concat(approve).concat(reject);		  
 		return action;
 
@@ -797,14 +811,14 @@ public class IconsState {
 
 
 
-	/********************************** Icons for DashBoard Notification **********************************/ 
+	/********************************* Icons for DashBoard Notification *********************************/
 
 
-	public String dashboardIcon(String userStatus,Integer featureID,String txnID) {
+	public String dashboardIcon(String userStatus,Integer featureID,String txnID,Integer userID,String roleType) {
 		executePostConstruct();
-		// URL link 
+		// URL link
 		String viewAction = featureID == 3 ?"./Consignment/viewConsignment?txnID="+txnID+"" :
-			featureID == 4 ? "./assignDistributor?txnID="+txnID+"": 
+			featureID == 4 ? "./assignDistributor?txnID="+txnID+"&userTypeId="+roleType+"":
 				featureID == 0 ? "./stolenRecovery?txnID="+txnID+"" :
 					featureID == 6 ? "./grievanceManagement?txnID="+txnID+"" :
 						featureID == 7 ? "./stolenRecovery?txnID="+txnID+"" :
@@ -813,18 +827,18 @@ public class IconsState {
 									featureID == 12 ? "./uploadPaidStatus?via=other&txnID="+txnID+"" :
 										"JavaScript:void(0);";
 		//System.out.println("featureID::::::::::"+featureID);
-		// state related Code 
+		// state related Code
 		String view=null;
-		if(featureID == 4 || featureID == 6 || featureID == 3 || featureID == 0 || featureID == 7) {
-			view="<a href="+viewAction+"><i  class="+viewIcon+" aria-hidden=\"true\" title="
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
+			view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
 		else {
 
-			view="<a href="+viewAction+" class="+disableIconClass+"><i  class="+disableViewIcon+" aria-hidden=\"true\" title="
+			view="<a href="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
-		String action=view;		  
+		String action=view;
 		return action;
 
 	}
@@ -832,16 +846,16 @@ public class IconsState {
 	/********************************** Icons for TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcManageIcons(String status,Integer id,String fileName,String txnId) {	
+	public String trcManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
 		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
@@ -849,7 +863,22 @@ public class IconsState {
 		String edit="<a onclick="+editAction+"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-
+		
+		if(("0".equals(status)) && "Approved".equals(userStatus)) {
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+		}else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
+					+disableDownloadIcon+" aria-hidden=\"true\"  title="
+					+downloadIconTitle+" ></i></a>"; 
+		
+		}
+		
 
 		String action=download.concat(view).concat(edit);		  
 		return action;
@@ -907,17 +936,17 @@ public class IconsState {
 		executePostConstruct();
 		String downloadURL = "./dowloadFiles/"+fileName.replace(" ", "%20")+"/";
 
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 
 
 		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 		}
 		String action=download;
 		return action;
@@ -954,9 +983,9 @@ public class IconsState {
 		// state related Code
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>";
+				+downloadIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\" title="
 				+editIconTitle+"></i></a>";
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
@@ -973,16 +1002,16 @@ public class IconsState {
 
 		}
 		else if(source.equals("4") && status.equals("0")) {
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>";
+					+downloadIconTitle+" ></i></a>";
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
 		}else if(status.equals("0") || status.equals("3")) {
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" download=\"download\"></i></a>";
+					+downloadIconTitle+" ></i></a>";
 		}
 
 
@@ -1123,22 +1152,27 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>";
+				+downloadIconTitle+" ></i></a>";
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
-		
-		if("0".equals(adminApproveStatus)) {
+
+		if("0".equals(status)) {
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
-		}else if("1".equals(adminApproveStatus)) {
+		}else if("1".equals(status)) {
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
-			download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
-					+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
+			download = "<a href=" + downloadURL + " ><i class=" + downloadIcon
+					+ " aria-hidden=\"true\" title=" + downloadIconTitle + " ></i></a>";
+		}else if("8".equals(status)) {
+			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
+					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
+			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
+					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 		}
 
 
@@ -1167,9 +1201,9 @@ public class IconsState {
 		// state related Code
 		String view="<a onclick="+viewAction+"><i class="
 				+viewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; String approve =
+				+downloadIconTitle+" ></i></a>"; String approve =
 				"<a onclick="+approveAction+"><i class="
 						+approveIcon+" aria-hidden=\"true\" title=" +approveIconTitle+" ></i></a>";
 				String reject = "<a onclick="+rejectAction+"><i class="
@@ -1180,8 +1214,8 @@ public class IconsState {
 					if (actionModel.getState() == 2) {
 						view = "<a onclick=" + viewAction + "><i class=" + viewIcon + " aria-hidden=\"true\" title="
 								+ viewIconTitle + " ></i></a>";
-						download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
-								+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
+						download = "<a href=" + downloadURL + " ><i class=" + downloadIcon
+								+ " aria-hidden=\"true\" title=" + downloadIconTitle + " ></i></a>";
 						approve = "<a onclick=" + approveAction + "><i class=" + approveIcon
 								+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 						reject = "<a onclick=" + rejectAction + "><i class=" + rejectIcon
@@ -1190,8 +1224,8 @@ public class IconsState {
 					} else if (actionModel.getState() == 4 || actionModel.getState() == 5) {
 						view = "<a onclick=" + viewAction + "><i class=" + viewIcon + " aria-hidden=\"true\" title="
 								+ viewIconTitle + " ></i></a>";
-						download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
-								+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
+						download = "<a href=" + downloadURL + " ><i class=" + downloadIcon
+								+ " aria-hidden=\"true\" title=" + downloadIconTitle + " ></i></a>";
 						approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 								+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 						reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
@@ -1227,35 +1261,34 @@ public class IconsState {
 		String emptyURL="JavaScript:void(0);"; 
 		String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";
-		String deleteAction = "JavaScript:void(0);"; 
-
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
 
 		if(source.equals("5") && requestTypeValue.equals("0")) {
 			//check for Stolen/Indvisual
 			log.info("edit and view   Indivisual Stolen");
-			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit')";
-			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view')";
+			editAction="openStolenRecoveryPage('editIndivisualsStolen','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualsStolen','view','"+txnId+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("0")) {
 			//check for Stolen/Company
 			log.info("edit and view   Company Stolen");
-			editAction="openStolenRecoveryPage('editCompanyStolen','edit')";
-			viewAction="openStolenRecoveryPage('editCompanyStolen','view')";
+			editAction="openStolenRecoveryPage('editCompanyStolen','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editCompanyStolen','view','"+txnId+"')";
 
 		}
 		else if(source.equals("4") && requestTypeValue.equals("1")) {
 			//check for Recovery/single
 			log.info("edit and view   single Recovery");
-			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit')";
-			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view')";
+			editAction="openStolenRecoveryPage('editIndivisualRecovery','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editIndivisualRecovery','view','"+txnId+"')";
 
 		}
 		else if(source.equals("6") && requestTypeValue.equals("1")) {
 			//check for Recovery/company
 			log.info("edit and view   Company Recovery");
-			editAction="openStolenRecoveryPage('editCompanyRecovery','edit')";
-			viewAction="openStolenRecoveryPage('editCompanyRecovery','view')";
+			editAction="openStolenRecoveryPage('editCompanyRecovery','edit','"+txnId+"')";
+			viewAction="openStolenRecoveryPage('editCompanyRecovery','view','"+txnId+"')";
 
 		}
 		/*
@@ -1268,12 +1301,13 @@ public class IconsState {
 		 * }
 		 */
 
+
 		// state related Code 
 		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>"; 
+				+downloadIconTitle+" ></i></a>"; 
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
@@ -1289,9 +1323,9 @@ public class IconsState {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 			error="<a href="+errorURL+" class="+disableIconClass+"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			download="<a href="+downloadURL+" download=\"download\" class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\"  title="
-					+downloadIconTitle+" download=\"download\"></i></a>"; 
+					+downloadIconTitle+" ></i></a>"; 
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
@@ -1382,7 +1416,7 @@ public class IconsState {
 	/********************************** Icons for Importer TRC Datatable **********************************/ 
 
 
-	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId) {	
+	public String importalTrcManageIcons(String status,Integer id,String fileName,String txnId,String userStatus) {	
 		// URL link 
 		//String downloadURL = "JavaScript:void(0)";
 
@@ -1390,7 +1424,7 @@ public class IconsState {
 		String editAction= "ImporterviewByID("+id+",'edit')";
 		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
 		// state related Code 
-		
+
 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
@@ -1401,6 +1435,26 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
+		if(("8".equals(status)) && "Approved".equals(userStatus)) {
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>";	
+		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>";
+		}else if("Disable".equals(userStatus)) {
+			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+					+deleteIconTitle+"></i></a>"; 
+		}
 
 		String action=view.concat(edit).concat(delete);		  
 		return action;
@@ -1427,18 +1481,18 @@ public class IconsState {
 
 	/********************************** Icons for Manage Users**********************************/ 
 
-	public String manageUserIcons(String id) { 
+	public String manageUserIcons(String id, String passportNo) { 
 		executePostConstruct();
 		String viewAction="viewDetails('"+id+"')";
 		String editAction="";
-		String ListAction ="";
+		String ListAction = "deviceActivation?passportNo="+passportNo+"";
 		String AddAction = "";
 		// state related Code 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String List = "<a onclick="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
+		String List = "<a href="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
 				+ListIconTittle+"></i></a>"; 
 		String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
 				+plusIconTittle+"></i></a>"; 
@@ -1447,6 +1501,8 @@ public class IconsState {
 		return action;
 
 	}
+
+
 
 
 
@@ -1464,9 +1520,9 @@ public class IconsState {
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String download="<a href="+downloadURL+" download=\"download\"><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" download=\"download\"></i></a>";
+				+downloadIconTitle+" ></i></a>";
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
@@ -1483,44 +1539,43 @@ public class IconsState {
 
 
 
-/********************************** Icons for Admin TRC Manage Type Admin Datatable **********************************/ 
+	/********************************** Icons for Admin TRC Manage Type Admin Datatable **********************************/ 
 
 
-public String trcAdminIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus) {	
-	executePostConstruct();
-	String viewAction="viewByID("+id+",'view','"+projectPath+"')";
-	String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-	String approveAction = "openApproveTACPopUp('"+txnId+"','')";
-	String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
+	public String trcAdminIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus) {	
+		executePostConstruct();
+		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
+		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
+		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
 
-	String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
-			+viewIconTitle+" ></i></a>";
+		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
 
-	String download="<a href="+downloadURL+" download=\"download\"><i class="
-			+downloadIcon+" aria-hidden=\"true\" title="
-			+downloadIconTitle+" download=\"download\"></i></a>";
-	String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
-			+approveIconTitle+" ></i></a>";   
-	String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
-			+rejectIconTitle+" ></i></a>";
+		String download="<a href="+downloadURL+" ><i class="
+				+downloadIcon+" aria-hidden=\"true\" title="
+				+downloadIconTitle+" ></i></a>";
+		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+				+approveIconTitle+" ></i></a>";   
+		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+				+rejectIconTitle+" ></i></a>";
 
-	
-	if("0".equals(adminApproveStatus)) {
-		approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
-				+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
-	}else if("1".equals(adminApproveStatus)) {
-		reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
-				+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
-		download = "<a href=" + downloadURL + " download=\"download\"><i class=" + downloadIcon
-				+ " aria-hidden=\"true\" title=" + downloadIconTitle + " download=\"download\"></i></a>";
+
+		if("0".equals(adminApproveStatus)) {
+			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
+					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
+		}else if("1".equals(adminApproveStatus)) {
+			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
+					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
+			download = "<a href=" + downloadURL + " ><i class=" + downloadIcon
+					+ " aria-hidden=\"true\" title=" + downloadIconTitle + " ></i></a>";
+		}
+
+		String action = view.concat(download).concat(approve).concat(reject);
+		return action;
+
 	}
-	
-	String action = view.concat(download).concat(approve).concat(reject);
-	return action;
-
-}
-	
 
 
 	@PostConstruct

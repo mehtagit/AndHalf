@@ -103,7 +103,7 @@ textarea.materialize-textarea {
 
 </head>
 
-<body data-id="5" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
@@ -203,9 +203,9 @@ textarea.materialize-textarea {
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverystreetNumber" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverystreetNumber" maxlength="20" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" 
+                                                                    id="sigleRecoverystreetNumber" maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.20Character" />" required />
+                                                                title= "<spring:message code="validation.30characters" />" required />
                                                                 <label for="sigleRecoverystreetNumber"> <spring:message code="input.streetNumber" /><span class="star"> *</span></label>
                                                             </div>
         
@@ -241,7 +241,7 @@ textarea.materialize-textarea {
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{0,6}"
+                                                                    id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}"
                                                                     oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.postalcode" />" required />
                                       					<label for="sigleRecoverypin"> <spring:message code="input.postalCode" /><span class="star"> *</span></label>
@@ -347,7 +347,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                 <textarea id="sigleRecovery" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.10000characters" />" 
-                                                                maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                                maxlength="10000" class="materialize-textarea"></textarea>
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
                                                             </div>
                                                             </div>
@@ -365,12 +365,36 @@ onclick="_Services._selectstartDate()"></i></span>
                                     </div>
                                             <div id="bulkRecoveryDiv" class="col s12 m12" style="display: none">
                                                 <form action="#" style="margin-top: 30px;" onsubmit="return saveCompanyRecoveryRequest()" method="POST" enctype="multipart/form-data"  id="bulkRecoveryForm">
-                                                    <div class="input-field col s12 m6 l6" style="margin-top: 19px;">
+                                                    <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
                                                         <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoveryquantity" required id="deviceBulkStolenquantity" maxlength="7" pattern="[0-9]{1,7}" 
                                                             oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                             title= "<spring:message code="validation.7digits" />" required  / >
 														 <label for="bulkRecoveryquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
+                                                    </div>
+                                                    
+                                                    <div class="file-field col s12 m6 l6">
+														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
+														<spring:message code="input.UploadFIR" />
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span> <input type="file" 
+															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+															title= "<spring:message code="validation.NoChosen" />" required  
+															placeholder="Upload FIR" id="uploadFirBulk">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text" placeholder="Upload FIR"
+																id="uploadFirBulkName" title="Please upload national ID image">
+														</div>
+													</div>
+
+                                                    <div class="input-field col s12 m12">
+                                                        <textarea id="bulkRecoveryRemark"  
+                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                                title= "<spring:message code="validation.10000characters" />" 
+                                                        		maxlength="10000" class="materialize-textarea"></textarea>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 
                                                     <div class="file-field col s12 m6">
@@ -518,30 +542,6 @@ onclick="_Services._selectstartDate()"></i></span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
-                                                    
-                                                    <div class="file-field col s12 m6 l6">
-														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
-														<spring:message code="input.UploadFIR" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" 
-															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
-															placeholder="Upload FIR" id="uploadFirBulk">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" placeholder="Upload FIR"
-																id="uploadFirBulkName" title="Please upload national ID image">
-														</div>
-													</div>
-
-                                                    <div class="input-field col s12 m12">
-                                                        <textarea id="bulkRecoveryRemark"  
-                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.10000characters" />" 
-                                                        		maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
-                                                    </div>
 
                                                     <div class="col s12 m12">
                                                         <p> <spring:message code="input.requiredfields" /><span class="star"> *</span></p>
@@ -644,12 +644,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulReportUnblock.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		
 		<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

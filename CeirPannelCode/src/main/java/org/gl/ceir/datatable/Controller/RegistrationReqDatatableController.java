@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -103,9 +104,10 @@ public class RegistrationReqDatatableController {
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
 				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
+				   String status =  String.valueOf(dataInsideList.getUser().getCurrentStatus());
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username);			   
+				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status);			   
 				   Object[] finalData={createdOn,modifiedOn,username,type,roles,StatusName,action}; 
 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
@@ -148,7 +150,7 @@ public class RegistrationReqDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable()","submitFilter"};
+			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable("+ConfigParameters.languageParam+")","submitFilter"};
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

@@ -1,3 +1,5 @@
+//var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+var tag;
 function changePassword(){
 	$("#changePassBtn").prop('disabled', true);
 	var obj="";
@@ -12,6 +14,8 @@ function changePassword(){
 			}    
 		}
 	});
+
+
 	$.ajax({
 		type : 'POST',
 		url : contextpath + '/changePassword',
@@ -21,11 +25,27 @@ function changePassword(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#changePasswordMessage #cPassSucessMsg").text(resp.response);
-				$("#changePasswordMessage").openModal();   
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#changePasswordMessage #cPassSucessMsg").text($.i18n(resp.tag));
+					$("#changePasswordMessage").openModal();   
+				});
+				
 			}
 			else{
-				$("#changePassword #errorMsg").text(resp.response);
+				
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#changePassword #errorMsg").text($.i18n(resp.tag));
+				});
+				
 			}
 			$("#changePassBtn").prop('disabled', false);
 		},  
@@ -53,14 +73,26 @@ function updateUSerStatus(){
 		dataType : 'html', 
 		data : JSON.stringify(obj),
 		success : function(data) { 
+
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#manageAccountSubmit #mgAccount").text(resp.response);
-				$("#manageAccountSubmit").openModal();   
-
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#manageAccountSubmit #mgAccount").text($.i18n(resp.tag));
+					$("#manageAccountSubmit").openModal(); 
+				});
 			}
 			else{  
-				$("#userStatusForm #errorMsg").text(resp.response);
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#userStatusForm #errorMsg").text($.i18n(resp.tag));
+				});
 			}
 			$("#updateStatusBtn").prop('disabled', true);
 		}, 
@@ -194,7 +226,7 @@ function editProfile(){
 			$("#registrationForm #country").val(resp.country); 
 			$("#registrationForm #postalCode").val(resp.postalCode);
 			$("#registrationForm #locality").val(resp.locality);
-			
+
 			//$("#registrationForm #state").text(resp.province);
 			$("#registrationForm #companyName").val(resp.companyName);
 			$("#registrationForm #passportNo").val(resp.passportNo);
@@ -291,11 +323,19 @@ function updateProfile(){
 		success : function(data) {
 			var response=JSON.parse(data);
 			if(response.statusCode=='200'){
-				if(response.userstatus=='Approved'){
-					$("#passwordModal").closeModal();
-					$("#profileResponse #updateInfoMsg").text(response.response); 
-					$('#profileResponse').openModal();    
-				} 
+				//if(response.userstatus=='Approved'){
+					    
+				var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+				$.i18n().locale = lang;	
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$("#profileResponse #updateInfoMsg").text($.i18n(response.tag)); 
+						$('#profileResponse').openModal();
+					});
+					
+				/*} 
 				else if(response.userstatus=='OTP Verification Pending'){
 					$("#userid").val(response.userId);
 					$("#passwordModal").closeModal();
@@ -303,11 +343,19 @@ function updateProfile(){
 					$("#otpMsg").text(response.response);
 				}
 				else{
-				}
+				}*/
 			}
 			else{
-				$("#registrationForm #errorMsg").text(response.response);
-				$("#passwordModal").closeModal();
+				
+				
+				$.i18n().locale = window.parent.$('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#registrationForm #errorMsg").text($.i18n(response.tag));
+					$("#passwordModal").closeModal();
+				});
 			}
 			$("#passwordBtn").prop('disabled', false);
 			$("#btnSave").prop('disabled', false);

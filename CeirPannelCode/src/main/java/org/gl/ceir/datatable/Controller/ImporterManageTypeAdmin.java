@@ -13,6 +13,7 @@ import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.gl.ceir.CeirPannelCode.Model.TRCRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -61,6 +62,7 @@ public class ImporterManageTypeAdmin {
 			HttpSession session, @RequestParam(name = "sessionFlag", required = false) Integer sessionFlag) {
 
 		String userType = (String) session.getAttribute("usertype");
+		String userStatus = (String) session.getAttribute("userStatus");
 		log.info("userType in TRC----" + userType);
 
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
@@ -97,10 +99,11 @@ public class ImporterManageTypeAdmin {
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						/* String status = trcContentModelList.getStateInterp(); */
-						String status = trcContentModelList.getAdminStateInterp();
+						String status = trcContentModelList.getStateInterp();
 						String fileName1= trcContentModelList.getFileName();
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
-						String action = iconState.importalTrcManageIcons(status,trcContentModelList.getId(),fileName1,txnId);
+						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),fileName1,txnId,userStatus);
 						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
@@ -117,23 +120,19 @@ public class ImporterManageTypeAdmin {
 						}
 
 						String createdOn = trcContentModelList.getCreatedOn();
-						String requestedDate = trcContentModelList.getRequestDate();
 						String trademark = trcContentModelList.getTrademark();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
 						String status = trcContentModelList.getStateInterp();
-						String statusInterp = trcContentModelList.getStateInterp();
-						String approveRejectionDate = trcContentModelList.getApproveDisapproveDate();
-						String adminState = trcContentModelList.getAdminStateInterp();	
+						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						String txnId = trcContentModelList.getTxnId();
-						
 						String adminApproveStatus = String.valueOf(trcContentModelList.getAdminApproveStatus());
 
-						log.info("status----->" + status + "adminState-------->"+ adminState+"--Id--------->" + trcContentModelList.getId()
+						log.info("status----->" + status + "adminState-------->"+ approveState+"--Id--------->" + trcContentModelList.getId()
 								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
-						String action = iconState.trcAdminManageIcons(adminState, trcContentModelList.getId(), fileName1,
+						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(), fileName1,
 								txnId,adminApproveStatus);
-						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, adminState, action };
+						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -176,8 +175,8 @@ public class ImporterManageTypeAdmin {
 			
 			
 		
-				String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form-importer","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable()","submitFilter"};
-				for(int i=0; i< names.length ; i++) {
+			String[] names= {"HeaderButton",Translator.toLocale("table.ReportTypeApprovedDevices"),"./register-form-importer","btnLink","FilterButton",Translator.toLocale("button.filter"),"typeApprovedDataTable("+ConfigParameters.languageParam+")","submitFilter"};
+							for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
 					i++;
@@ -191,7 +190,7 @@ public class ImporterManageTypeAdmin {
 				pageElement.setButtonList(buttonList);
 		
 				//Dropdown items
-				String[] selectParam= {"select","CEIR Admin Status ","Status",""};
+				String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
 				for(int i=0; i< selectParam.length; i++) {
 					inputFields= new InputFields();
 					inputFields.setType(selectParam[i]);

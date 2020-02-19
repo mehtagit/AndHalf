@@ -265,10 +265,10 @@ function openStolenRecoveryModal()
 	$('#chooseStolenOption').openModal();
 }
 
-function openStolenRecoveryPage(pageType,pageView)
+function openStolenRecoveryPage(pageType,pageView,txnId)
 {
 	console.log("###");
-	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView;
+	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView+"&txnId="+txnId;
 }
 
 function showSingleFormDiv()
@@ -383,7 +383,7 @@ function saveIndivisualStolenRequest(){
 	var singleStolendistrict=$('#singleStolendistrict').val();
 	var singleStolencommune=$('#singleStolencommune').val();
 	var singleStolenpin=$('#singleStolenpin').val();
-	var country=$('#singleStolenfirstName').val();
+	var country=$('#country').val();
 	var state=$('#state').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
@@ -408,8 +408,12 @@ function saveIndivisualStolenRequest(){
 	var singleDevicecountry=$('#singleDevicecountry').val();
 	var singleDevicestate=$('#singleDevicestate').val();
 	var singleDeviceRemark=$('#singleDeviceRemark').val();
+	var IndivisualStolenDate=$('#IndivisualStolenDate').val();	
+	var indivisualStolenfileName=$('#singleStolenFile').val();
 	
-
+	var uploadedFileName = $("#singleStolenFile").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	console.log("**** file name"+uploadedFileName)
 	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
@@ -426,13 +430,16 @@ function saveIndivisualStolenRequest(){
 			"deviceStolenPropertyLocation": singleDeviceAddress,
 			"deviceStolenStreet": singleDevicestreetNumber,
 			"deviceStolenVillage": singleDevicevillage,
+			"deviceStolenCountry": singleDevicecountry,
+			"deviceStolenProvince": singleDevicestate,
 			"deviceType":singleStolendeviceType,
 			"district": singleStolendistrict,
 			"email":singleStolenemail,
 			"firstName":singleStolenfirstName,
-			"imei_esn_meid": singleStolenimeiNumber,
+			"imeiEsnMeid": parseInt(singleStolenimeiNumber),
 			"lastName": singleStolenlastName,
 			"locality": singleStolenlocality,
+			"multiSimStatus": singleStolenSimStatus,
 			"middleName": singleStolenmiddleName,
 			"modelNumber":singleStolenmodalNumber,
 			"nid": singleStolennIDPassportNumber,
@@ -443,11 +450,14 @@ function saveIndivisualStolenRequest(){
 			"province": state,
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
-			"village":singleStolenvillage
+			"village":singleStolenvillage,
+			"nidFileName":uploadedFileName
 	}
 	
 	
 	var request={
+			
+			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
@@ -473,7 +483,7 @@ function saveIndivisualStolenRequest(){
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#regularisedDevice').openModal();
+				$('#IndivisualStolenSucessPopup').openModal();
 				$('#dynamicTxnId').text(data.txnId);
 			}
 		},
@@ -530,7 +540,7 @@ function saveCompanyStolenRequest(){
 	var deviceBulkStolenComplaint=$('#deviceBulkStolenComplaint').val();
 	var deviceBulkStolenquantity=$('#deviceBulkStolenquantity').val();
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
-	
+	var bulkStolenDate=$('#bulkStolenDate').val();
 	
 
 	
@@ -562,6 +572,8 @@ function saveCompanyStolenRequest(){
 	
 	
 	var request={
+			"qty":deviceBulkStolenquantity,
+			"dateOfStolen":bulkStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
@@ -601,6 +613,50 @@ function saveCompanyStolenRequest(){
 	
 }
 
+
+function DeleteConsignmentRecord(txnId,id){
+	$("#DeleteConsignment").openModal();
+	$("#transID").text(txnId);
+	$("#setStolenRecoveyRowId").text(id);
+}
+
+
+function confirmantiondelete(){
+	var txnId = $("#transID").text();
+	var id= $("#setStolenRecoveyRowId").text();
+	var roleType = $("body").attr("data-roleType");
+	var userId = $("body").attr("data-userID");
+	var currentRoleType = $("body").attr("data-stolenselected-roleType"); 
+	var role = currentRoleType == null ? roleType : currentRoleType;
+	console.log("txnId===**"+txnId+" userId="+userId+" roleType== "+roleType+ " currentRoleType=="+currentRoleType);
+	var obj ={
+			"txnId" : txnId,
+			"roleType":role,
+			"userId":userId,
+			"id":id
+
+	}
+	$.ajax({
+		url : "./stolenRecoveryDelete",
+		data : JSON.stringify(obj),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'POST',
+		success : function(data, textStatus, xhr) {
+			console.log(data);
+			if(data.errorCode == 200){
+				$("#consignmentText").text(data.message);
+			}else if(data.errorCode == 0){
+				$("#consignmentText").text(data.message);
+			}
+		},
+		error : function() {
+			console.log("Error");
+		}
+	});
+	$("#DeleteConsignment").closeModal();
+	$("#confirmDeleteConsignment").openModal();
+}
 
 
 

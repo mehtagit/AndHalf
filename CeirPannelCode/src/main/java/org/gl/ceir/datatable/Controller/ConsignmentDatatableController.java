@@ -13,6 +13,7 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
@@ -379,7 +380,7 @@ public class ConsignmentDatatableController {
 	log.info("sourceType in rendering $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" +sourceType);
 
 	if("Importer".equals(userType) && "viaStolen".equals(sourceType)){
-	String[] names= {"HeaderButton",Translator.toLocale("button.registerConsignment"),"./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filterConsignment()","submitFilter"};
+	String[] names= {"HeaderButton",Translator.toLocale("button.registerConsignment"),"./openRegisterConsignmentForm?reqType=formPage","btnLink","FilterButton", Translator.toLocale("button.filter"),"filterConsignment("+ConfigParameters.languageParam+")","submitFilter"};
 	for(int i=0; i< names.length ; i++) {
 	button = new Button();
 	button.setType(names[i]);

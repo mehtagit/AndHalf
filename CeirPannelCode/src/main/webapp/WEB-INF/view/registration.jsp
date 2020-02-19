@@ -105,6 +105,7 @@ input[type=text], input[type=password], input[type=email], input[type=url],
 }
 
 input
+[
 type
 =
 text
@@ -120,6 +121,9 @@ readonly
 )
 {
 border-bottom:1px
+ 
+1
+px
  
 solid
  
@@ -291,8 +295,8 @@ String usertypeId="${usertypeId}";
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
-									<option value="en"><spring:message code="lang.english" /></option>
-										<option value="km"><spring:message code="lang.khmer" /></option>
+									<option value="en">English</option>
+									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12">
@@ -347,7 +351,7 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6" id="companyNames" style="display: none; margin-top: 22px;">
 									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-									title="<spring:message code="validation.50character" />"	required/>
+									title="<spring:message code="validation.50character" />"/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
 								</div>
 
@@ -358,10 +362,10 @@ String usertypeId="${usertypeId}";
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="file" accept=".pdf"
 												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" pattern="{0,30}"
-												title="<spring:message code="validation.file" />" required>
+												title="<spring:message code="validation.file" />" >
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate responsive-file-div"  />
+												<input class="file-path validate responsive-file-div" id="fileText"  />
 											</div>
 										</div>
 										<br> <br>
@@ -371,8 +375,9 @@ String usertypeId="${usertypeId}";
 
 
 								<div class="input-field col s12 m6 l6" style="margin-top:22px;">
-									<input type="text" name="email" maxlength="320" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,320}"
-									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" required />
+									<input type="text" name="email" maxlength="320" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
+									title="<spring:message code="validation.email" />" required />
 										 <label for="email"><spring:message                        
 											code="input.email" /> <span class="star">*</span> </label>
 								</div>
@@ -450,7 +455,7 @@ String usertypeId="${usertypeId}";
 								<div class="col s12 m6 l6" style="margin-bottom: 10px;">
 									<label for="vatNumber"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									<div class=" boxHeight">
-										<label><input class="with-gap vatStatus" value="1" name="vatStatus" type="radio"
+										<label><input class="with-gap vatStatus" id="vatYes" value="1" name="vatStatus" type="radio"
 											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFileDiv').style.display = 'block';vatChecked()">
 											<span><spring:message code="registration.radioyes" /></span> </label> <label> <input class="with-gap vatStatus" name="vatStatus" type="radio" style="margin-left: 20px;" value="0"
 											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFileDiv').style.display = 'none';vatChecked()"
@@ -478,7 +483,7 @@ String usertypeId="${usertypeId}";
 											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" accept=".pdf"
-												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" title="<spring:message code="validation.file" />" required />
+												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" title="<spring:message code="validation.file" />"  />
 											</div>
 											<div class="file-path-wrapper">
 												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
@@ -490,22 +495,22 @@ String usertypeId="${usertypeId}";
 							</div>
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" min="8" maxlength="10"
+									<input type="password" name="password" class="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" min="8" maxlength="10"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.password" />"	required /> 
 										<label for="password"><spring:message code="registration.password" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="rePassword" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
+									<input type="password" name="rePassword" class="password2" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
 										min="8" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.password" />" required /> 
 										<label for="confirm_password"> <spring:message code="registration.retypepassword" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+					<i class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
@@ -728,7 +733,7 @@ String usertypeId="${usertypeId}";
 	<!-- END WRAPPER -->
 
 
-	<div id="otpMessage" class="modal" style="display: block;">
+	<div id="otpMessage" class="modal">
 		<button type="button"
 			class="modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
@@ -907,7 +912,7 @@ $('#langlist').on('change', function() {
        
        function validatePassword(){
            if(password.value != confirm_password.value) {
-             confirm_password.setCustomValidity("Passwords Don't Match");
+             confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
            } else {
              confirm_password.setCustomValidity('');
            }
@@ -917,26 +922,34 @@ $('#langlist').on('change', function() {
      confirm_password.onkeyup = validatePassword;
 
       
-        function myFunction() {
-            var x = document.getElementById("type").value;
-            if (x == '0') {
-                document.getElementById("uploadFile").style.display = "block";
-                document.getElementById("passportNumberDiv").style.display = "block";
-                document.getElementById("companyNames").style.display = "none";
-                $("#passportNo").prop('required',true);
-                $("#companyName").prop('required',false);
-                $("#companyName").val("");
-                $("#file").prop('required',true);
-            } else {
-                document.getElementById("uploadFile").style.display = "none";
-                document.getElementById("passportNumberDiv").style.display = "none";
-                document.getElementById("companyNames").style.display = "block";
-                $("#companyName").prop('required',true);
-                $("#passportNo").prop('required',false);
-                $("#passportNo").val("");
-                $("#file").prop('required',false);
-            }
-        }
+     function myFunction() {
+         var x = document.getElementById("type").value;
+         if (x == '0') {
+         	$("input[name='vatStatus']").prop('checked',true);
+         	vatShowHide();
+         	$("input[name='vatStatus']").attr('disabled', false);
+             document.getElementById("uploadFile").style.display = "block";
+             document.getElementById("passportNumberDiv").style.display = "block";
+             document.getElementById("companyNames").style.display = "none";
+             $("#passportNo").prop('required',true);
+             $("#companyName").prop('required',false);
+             $("#companyName").val("");
+             $("#file").prop('required',true);
+         } else {
+         	$("#vatYes").prop('checked',true);
+         	vatShowHide();
+         	$("input[name='vatStatus']").attr('disabled', true);
+             document.getElementById("uploadFile").style.display = "none";
+             document.getElementById("passportNumberDiv").style.display = "none";
+             document.getElementById("companyNames").style.display = "block";
+             $("#companyName").prop('required',true);
+             $("#passportNo").prop('required',false);
+             $("#passportNo").val("");
+             $("#fileText").val("");
+             $("#file").val("");
+             $("#file").prop('required',false);
+         }
+     }
        
         
         function vatChecked(){
@@ -950,6 +963,26 @@ $('#langlist').on('change', function() {
         		$("#vatFile").prop('required',false);
         		$("#vatNo").val("");
         		$("#vatFile").val("");
+        		$("input[name='vatFile']").val("");
+        	}
+        }
+        
+        function vatShowHide(){
+        	var radioValue = $("input[name='vatStatus']:checked").val();
+        	if(radioValue==1){
+           		$("#vatNo").prop('required',true);
+        		$("#vatFile").prop('required',true);
+        		document.getElementById("vatNumberField").style.display = "block";
+        		document.getElementById("vatFileDiv").style.display = "block";
+        	}
+        	else{
+         		$("#vatNo").val("");
+        		$("#vatFile").val("");
+        		$("input[name='vatFile']").val("");
+        		$("#vatNo").prop('required',false);
+        		$("#vatFile").prop('required',false);
+        		document.getElementById("vatNumberField").style.display = "none";
+        		document.getElementById("vatFileDiv").style.display = "none";
         	}
         }
     </script>

@@ -144,7 +144,7 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>${artifactId}</finalName>
+		<finalName>Vivek19feb</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

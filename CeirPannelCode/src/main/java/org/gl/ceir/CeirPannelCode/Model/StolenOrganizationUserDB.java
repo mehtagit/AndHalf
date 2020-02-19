@@ -29,7 +29,7 @@ public class StolenOrganizationUserDB {
 	private String province;
 	private String street;
 	private String username;
-	private String village;
+	private String village,incidentPropertyLocation;
 
 	public String getCommune() {
 	return commune;
@@ -247,6 +247,14 @@ public class StolenOrganizationUserDB {
 	this.village = village;
 	}
 
+	public String getIncidentPropertyLocation() {
+		return incidentPropertyLocation;
+	}
+
+	public void setIncidentPropertyLocation(String incidentPropertyLocation) {
+		this.incidentPropertyLocation = incidentPropertyLocation;
+	}
+
 	@Override
 	public String toString() {
 		return "StolenOrganizationUserDB [commune=" + commune + ", companyName=" + companyName + ", country=" + country
@@ -259,8 +267,10 @@ public class StolenOrganizationUserDB {
 				+ ", personnelLastName=" + personnelLastName + ", personnelMiddleName=" + personnelMiddleName
 				+ ", phoneNo=" + phoneNo + ", postalCode=" + postalCode + ", propertyLocation=" + propertyLocation
 				+ ", province=" + province + ", street=" + street + ", username=" + username + ", village=" + village
-				+ "]";
+				+ ", incidentPropertyLocation=" + incidentPropertyLocation + "]";
 	}
+
+
 
 	
 }

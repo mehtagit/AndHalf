@@ -12,12 +12,11 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
+import org.gl.ceir.configuration.ConfigParameters;
 import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.AuditContentModel;
-import org.gl.ceir.pagination.model.AuditPaginationModel;
 import org.gl.ceir.pagination.model.ManageUserContent;
 import org.gl.ceir.pagination.model.ManageUserPagination;
 import org.slf4j.Logger;
@@ -85,7 +84,7 @@ public class ManageUserDatatable {
 						String nationality =dataInsideList.getNationality();
 						String visaExpiryDate = "";
 						String phoneNo = dataInsideList.getPhoneNo();
-						String action=iconState.manageUserIcons(id);			   
+						String action=iconState.manageUserIcons(id,passportNo);			   
 						Object[] finalData={createdOn,txnId,passportNo,nationality,visaExpiryDate,phoneNo,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
@@ -128,7 +127,7 @@ public class ManageUserDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			
-			String[] names= {"HeaderButton",Translator.toLocale("table.registerUser"),"./register-user","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter()","submitFilter"};
+			String[] names= {"HeaderButton",Translator.toLocale("table.registerUser"),"./register-user","btnLink","FilterButton", Translator.toLocale("button.filter"),"filter("+ConfigParameters.languageParam+")","submitFilter"};
 				for(int i=0; i< names.length ; i++) {
 					button = new Button();
 					button.setType(names[i]);
