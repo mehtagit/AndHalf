@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -103,6 +105,21 @@ public class SystemConfigListController {
 		logger.info("Get system-config-list.");
 
 		GenricResponse uniqueTags = systemConfigListServiceImpl.getTagsList(filterRequest);
+
+		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
+
+		logger.info("Response to send for all tags of system-config-list = " + mapping);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "All tags list || system-config-list", response = String.class)
+	@DeleteMapping("/tags/system-config-list")
+	public MappingJacksonValue deleteValue(@RequestBody FilterRequest filterRequest) {
+
+		logger.info("Delete system-config-list. " + filterRequest);
+
+		GenricResponse uniqueTags = systemConfigListServiceImpl.deleteValue(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(uniqueTags);
 

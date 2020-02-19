@@ -45,6 +45,9 @@ public class SystemConfigListDb implements Serializable {
 	@Column(length = 10)
 	private String tagId;
 	
+	private String description;
+	private String displayName;
+	
 	public Long getId() {
 		return id;
 	}
@@ -90,12 +93,23 @@ public class SystemConfigListDb implements Serializable {
 	public void setTagId(String tagId) {
 		this.tagId = tagId;
 	}
-	
 	public Integer getListOrder() {
 		return listOrder;
 	}
 	public void setListOrder(Integer listOrder) {
 		this.listOrder = listOrder;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
 	}
 	
 	@Override
