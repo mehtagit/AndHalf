@@ -16,6 +16,9 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+	<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <title>CEIR | Importer Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
@@ -288,8 +291,8 @@ String usertypeId="${usertypeId}";
 							</div>
 							<div class="col s2 m1 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
-									<option value="en">English</option>
-									<option value="km">Khmer</option>
+									<option value="en"><spring:message code="lang.english" /></option>
+										<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12">
@@ -368,9 +371,8 @@ String usertypeId="${usertypeId}";
 
 
 								<div class="input-field col s12 m6 l6" style="margin-top:22px;">
-									<input type="email" name="email" maxlength="320" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,320}"
-									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
-									title="<spring:message code="validation.email" />" required />
+									<input type="text" name="email" maxlength="320" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-zA-Z]{2,320}"
+									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" required />
 										 <label for="email"><spring:message                        
 											code="input.email" /> <span class="star">*</span> </label>
 								</div>
@@ -758,16 +760,14 @@ String usertypeId="${usertypeId}";
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email"
-							name="emailOtp" maxlength="6" required="required" id="emailOtp"
-							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
-							placeholder="" />
+						<input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required  />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text"
-							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
-							title="Please enter 6 digit number" required="required"
-							id="phoneOtp" placeholder="" />
+						<input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							id="phoneOtp" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required  />
 					</div>
 				</div>
 				<a href="javascript:void(0)"

@@ -365,36 +365,12 @@ onclick="_Services._selectstartDate()"></i></span>
                                     </div>
                                             <div id="bulkRecoveryDiv" class="col s12 m12" style="display: none">
                                                 <form action="#" style="margin-top: 30px;" onsubmit="return saveCompanyRecoveryRequest()" method="POST" enctype="multipart/form-data"  id="bulkRecoveryForm">
-                                                    <div class="input-field col s12 m6 l6" style="margin-top: 20px;">
+                                                    <div class="input-field col s12 m6 l6" style="margin-top: 19px;">
                                                         <input type="text" name="bulkRecoveryquantity" class="form-control boxBorder boxHeight"
                                                             id="bulkRecoveryquantity" required id="deviceBulkStolenquantity" maxlength="7" pattern="[0-9]{1,7}" 
                                                             oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                             title= "<spring:message code="validation.7digits" />" required  / >
 														 <label for="bulkRecoveryquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
-                                                    </div>
-                                                    
-                                                    <div class="file-field col s12 m6 l6">
-														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
-														<spring:message code="input.UploadFIR" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" 
-															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
-															placeholder="Upload FIR" id="uploadFirBulk">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" placeholder="Upload FIR"
-																id="uploadFirBulkName" title="Please upload national ID image">
-														</div>
-													</div>
-
-                                                    <div class="input-field col s12 m12">
-                                                        <textarea id="bulkRecoveryRemark"  
-                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.10000characters" />" 
-                                                        		maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 
                                                     <div class="file-field col s12 m6">
@@ -542,6 +518,30 @@ onclick="_Services._selectstartDate()"></i></span>
 											</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
+                                                    
+                                                    <div class="file-field col s12 m6 l6">
+														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
+														<spring:message code="input.UploadFIR" />
+														</h6>
+														<div class="btn">
+															<span><spring:message code="input.selectfile" /></span> <input type="file" 
+															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+															title= "<spring:message code="validation.NoChosen" />" required  
+															placeholder="Upload FIR" id="uploadFirBulk">
+														</div>
+														<div class="file-path-wrapper">
+															<input class="file-path validate" type="text" placeholder="Upload FIR"
+																id="uploadFirBulkName" title="Please upload national ID image">
+														</div>
+													</div>
+
+                                                    <div class="input-field col s12 m12">
+                                                        <textarea id="bulkRecoveryRemark"  
+                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                                title= "<spring:message code="validation.10000characters" />" 
+                                                        		maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
+                                                    </div>
 
                                                     <div class="col s12 m12">
                                                         <p> <spring:message code="input.requiredfields" /><span class="star"> *</span></p>
