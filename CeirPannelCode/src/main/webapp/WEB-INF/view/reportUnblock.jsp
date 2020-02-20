@@ -123,7 +123,7 @@ padding: 0 !important;
                                                                     <spring:message code="operator.deviceidtype" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="UnblockdeviceIdType" 
                                                                 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                title= "<spring:message code="validation.selectFieldMsg" />" required / >
+                                                                title= "<spring:message code="validation.selectFieldMsg" />" required>
                                                                     <option value="" disabled selected>
                                                                         <spring:message code="operator.selectdeviceidtype" />
                                                                     </option>
@@ -143,7 +143,7 @@ padding: 0 !important;
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,15}"
-                                                                   oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                                   oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
                                                                    title= "<spring:message code="validation.numberfirst" />"  maxlength="15">
                                                                 <label for="serialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
@@ -197,7 +197,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI1"  name="IMEI1" pattern="[0-9]{15,16}"
                                                                    oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                   title= "<spring:message code="validation.1516digit" />" required  / maxlength="16">
+                                                                   title= "<spring:message code="validation.1516digit" />" required   maxlength="16">
                                                                 <label for="IMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
                                                             </div>
                                         
@@ -337,30 +337,6 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
 
-
-	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-	<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
-	<!--custom-script.js - Add your own theme custom JS-->
-	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/Validator.js"></script>
-	<!--prism
-    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
-	<!--scrollbar-->
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/reportBlock.js"></script>
-
-
 <!-- i18n library -->
 <script type="text/javascript"
 src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
@@ -406,7 +382,34 @@ src="${context}/resources/project_js/enterKey.js"></script>
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 		<script>
 
+		<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+		<%--   <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.date.js"></script>
+	    <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
+		<!--custom-script.js - Add your own theme custom JS-->
+		<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+		<script type="text/javascript"
+			src="${context}/resources/js/Validator.js"></script>
+		<!--prism
+	    <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
+		<!--scrollbar-->
+		<script type="text/javascript"
+			src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+		<!-- chartist -->
+		<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+		<script type="text/javascript"
+			src="${context}/resources/js/countries.js"></script>
+		<script type="text/javascript"
+			src="${context}/resources/project_js/reportBlock.js"></script>
+
+		
+		
+		
+		
+		
+		
 		<script type="text/javascript">
 		window.parent.$('#langlist').on('change', function() {
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';

@@ -388,7 +388,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes').val(),  
+					roles:val.find('#usertypes:selected').val(),  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
