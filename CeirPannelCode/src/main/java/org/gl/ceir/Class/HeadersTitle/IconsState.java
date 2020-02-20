@@ -95,9 +95,6 @@ public class IconsState {
 			error="<a href="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>";
 		}
 
 		else if(("1".equals(status)) && "Approved".equals(userStatus)) {
@@ -1576,6 +1573,29 @@ public class IconsState {
 		return action;
 
 	}
+	
+	/********************************** Icons for Field Management**********************************/ 
+
+	public String fieldManagementIcons(String tag,String interp,String tagId) { 
+		executePostConstruct();
+		
+		String editAction= "FieldViewByID('"+tag+"')";
+		String deleteAction = "DeleteTacRecord()";
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>";		
+
+		String action=edit.concat(delete);
+		return action;
+
+	}
+
 
 
 	@PostConstruct

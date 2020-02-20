@@ -602,7 +602,7 @@
 
 
 					//Tax paid status-----------dropdown
-					$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+					$.getJSON('../getTypeDropdownList/CUSTOMS_TAX_STATUS/'+$("body").attr("data-userTypeID"), function(data) {
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].value).text(data[i].interp)
 							.appendTo('#taxPaidStatus');

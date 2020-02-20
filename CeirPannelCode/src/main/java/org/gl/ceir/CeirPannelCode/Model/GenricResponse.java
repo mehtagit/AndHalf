@@ -7,6 +7,7 @@ public class GenricResponse {
 	private String  message;
 	private String response,statusCode,user;
 	private Object data ;
+	private String tag;
 	public String getErrorCode() {
 		return errorCode;
 	}
@@ -43,17 +44,24 @@ public class GenricResponse {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	
-	
 	public Object getData() {
 		return data;
 	}
 	public void setData(Object data) {
 		this.data = data;
 	}
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 	@Override
 	public String toString() {
 		return "GenricResponse [errorCode=" + errorCode + ", txnId=" + txnId + ", message=" + message + ", response="
-				+ response + ", statusCode=" + statusCode + ", user=" + user + ", data=" + data + "]";
+				+ response + ", statusCode=" + statusCode + ", user=" + user + ", data=" + data + ", tag=" + tag + "]";
 	}
+
+	
+	
 	}
