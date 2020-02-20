@@ -16,6 +16,9 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+	<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <title>CEIR | Importer Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
@@ -117,8 +120,7 @@ readonly
  
 )
 {
-border-bottom
-:
+border-bottom:1px
  
 1
 px
@@ -226,10 +228,11 @@ var contextpath = "${context}";
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 	<%String userType=request.getParameter("type");
 String usertypeId="${usertypeId}";
 %>
+
 	<!-- Modal End -->
 	<!-- ================================================
     Scripts
@@ -294,7 +297,7 @@ String usertypeId="${usertypeId}";
 							<div class="col s2 m1 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
 									<option value="en">English</option>
-									<option value="km">Khmer</option>
+									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12">
@@ -349,7 +352,7 @@ String usertypeId="${usertypeId}";
 								<div class="input-field col s12 m6 l6" id="companyNames" style="display: none; margin-top: 22px;">
 									<input type="text" name="companyName" id="companyName" pattern="[A-Za-z\s]+{0,50}" maxlength="50"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-									title="<spring:message code="validation.50character" />"	required/>
+									title="<spring:message code="validation.50character" />"/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
 								</div>
 
@@ -360,10 +363,10 @@ String usertypeId="${usertypeId}";
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="file" accept=".pdf"
 												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" pattern="{0,30}"
-												title="<spring:message code="validation.file" />" required>
+												title="<spring:message code="validation.file" />" >
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate responsive-file-div"  />
+												<input class="file-path validate responsive-file-div" id="fileText"  />
 											</div>
 										</div>
 										<br> <br>
@@ -373,7 +376,7 @@ String usertypeId="${usertypeId}";
 
 
 								<div class="input-field col s12 m6 l6" style="margin-top:22px;">
-									<input type="email" name="email" maxlength="320" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="email" maxlength="320" id="email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
 									title="<spring:message code="validation.email" />" required />
 										 <label for="email"><spring:message                        
@@ -390,39 +393,39 @@ String usertypeId="${usertypeId}";
 
 							<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]+{0,200}" name="propertyLocation" id="propertyLocation" 
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,200}" name="propertyLocation" id="propertyLocation" 
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									title="<spring:message code="validation.200characters" />" required> 
 									<label for="propertyLocation"> <spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s]+{0,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,20}"
 									 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									 title="<spring:message code="validation.address20characters" />" required/>
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									title="<spring:message code="validation.address30characters" />" required/>
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									title="<spring:message code="validation.address30characters" />" required/>
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span> </label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									title="<spring:message code="validation.address30characters" />" required/>
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 									title="<spring:message code="validation.address30characters" />" required/>
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span> </label>
@@ -453,7 +456,7 @@ String usertypeId="${usertypeId}";
 								<div class="col s12 m6 l6" style="margin-bottom: 10px;">
 									<label for="vatNumber"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									<div class=" boxHeight">
-										<label><input class="with-gap vatStatus" value="1" name="vatStatus" type="radio"
+										<label><input class="with-gap vatStatus" id="vatYes" value="1" name="vatStatus" type="radio"
 											onclick="document.getElementById('vatNumberField').style.display = 'block';document.getElementById('vatFileDiv').style.display = 'block';vatChecked()">
 											<span><spring:message code="registration.radioyes" /></span> </label> <label> <input class="with-gap vatStatus" name="vatStatus" type="radio" style="margin-left: 20px;" value="0"
 											onclick="document.getElementById('vatNumberField').style.display = 'none';document.getElementById('vatFileDiv').style.display = 'none';vatChecked()"
@@ -481,7 +484,7 @@ String usertypeId="${usertypeId}";
 											<p class="upload-file-label"><spring:message code="registration.vatfile" /> <span class="star">*</span></p>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input name="file" type="file" id="vatFile" accept=".pdf"
-												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" title="<spring:message code="validation.file" />" required />
+												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" title="<spring:message code="validation.file" />"  />
 											</div>
 											<div class="file-path-wrapper">
 												<input name="vatFile" class="file-path validate responsive-file-div" type="text"  >
@@ -493,22 +496,22 @@ String usertypeId="${usertypeId}";
 							</div>
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" min="8" maxlength="10"
+									<input type="password" name="password" class="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" min="8" maxlength="10"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.password" />"	required /> 
 										<label for="password"><spring:message code="registration.password" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password" aria-hidden="true"></i></a>
+							<i class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 									</div>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="rePassword" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
+									<input type="password" name="rePassword" class="password2" id="confirm_password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$" maxlength="10"
 										min="8" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.password" />" required /> 
 										<label for="confirm_password"> <spring:message code="registration.retypepassword" /> <span class="star">*</span></label>
 									<div class="input-field-addon">
-										<a href="javascript:void(0)"><i class="fa fa-eye-slash toggle-password2" aria-hidden="true"></i></a>
+					<i class="fa fa-eye-slash teal-text toggle-password2" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
@@ -731,7 +734,7 @@ String usertypeId="${usertypeId}";
 	<!-- END WRAPPER -->
 
 
-	<div id="otpMessage" class="modal" style="display: block;">
+	<div id="otpMessage" class="modal">
 		<button type="button"
 			class="modal-action modal-close waves-effect waves-green btn-flat right"
 			data-dismiss="modal">&times;</button>
@@ -763,16 +766,14 @@ String usertypeId="${usertypeId}";
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email"
-							name="emailOtp" maxlength="6" required="required" id="emailOtp"
-							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
-							placeholder="" />
+						<input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required  />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text"
-							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
-							title="Please enter 6 digit number" required="required"
-							id="phoneOtp" placeholder="" />
+						<input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+							id="phoneOtp" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required  />
 					</div>
 				</div>
 				<a href="javascript:void(0)"
@@ -788,38 +789,7 @@ String usertypeId="${usertypeId}";
 
 	<!-- Modal End -->
 
-	<!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-		
-		
+	
 		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
@@ -879,14 +849,8 @@ $('#langlist').on('change', function() {
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
-    		var langParameter = url.searchParams.get("lang");
-            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
-            	
-            	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-
-            	
-            			$.i18n().locale = lang;	
+        	$('#langlist').val(data_lang_param);
+            	$.i18n().locale = data_lang_param;	
             			
             			$.i18n().load( {
             				'en': './resources/i18n/en.json',
@@ -912,7 +876,7 @@ $('#langlist').on('change', function() {
        
        function validatePassword(){
            if(password.value != confirm_password.value) {
-             confirm_password.setCustomValidity("Passwords Don't Match");
+             confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
            } else {
              confirm_password.setCustomValidity('');
            }

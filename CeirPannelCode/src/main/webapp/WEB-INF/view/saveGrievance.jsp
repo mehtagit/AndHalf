@@ -17,10 +17,10 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
+
 <meta charset="utf-8" />
 <meta name="viewport"
 content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -93,15 +93,15 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <div class="row" >
 <div class="input-field col s12 m6 l6">
 <input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
-oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-title= "<spring:message code="validation.18digit" />"
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+title= "<spring:message code="validation.18digit" />"  
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
 
 <div class=" col s12 m6 l6">
  <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
-<select class="browser-default" style="height:32px;" id="category"  onchange="enableAddMore()" 
+<select class="browser-default" id="category" onchange="enableAddMore()"
 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 title= "<spring:message code="validation.selectFieldMsg" />" required>
 <option value="" selected disabled ><spring:message code="operator.category" /></option>
@@ -112,8 +112,8 @@ title= "<spring:message code="validation.selectFieldMsg" />" required>
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
 <textarea id="Remark" class="materialize-textarea" maxlength="200" 
-oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-title= "<spring:message code="validation.200characters" />" required ></textarea>
+oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+title= "<spring:message code="validation.200characters" />" required></textarea>
 <label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
 </div>
 </div>
@@ -127,12 +127,12 @@ title= "<spring:message code="validation.200characters" />" required ></textarea
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
 <input type="file" name="files[]" id="docTypeFile1" 
-oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" 
-title= "<spring:message code="validation.NoChosen" />"   >
+oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+title= "<spring:message code="validation.NoChosen" />" required  / >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
-placeholder="<spring:message code="grievanceFileMessage" />">
+placeholder="<spring:message code="grievanceFileMessage" />"">
 <div>
 <p id="myFiles"></p>
 </div>
@@ -208,6 +208,7 @@ class="btn"
 </div>
 </div>
 
+
 	<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
@@ -224,8 +225,6 @@ class="btn"
 			</div>
 		</div>
 	</div>
-
-
 
 <!--materialize js-->
 <script type="text/javascript"
@@ -293,6 +292,7 @@ src="${context}/resources/project_js/viewStock.js"></script>
 
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+
 
 <script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
@@ -420,7 +420,6 @@ function saveGrievance(){
 return false;
 
 }
-
 var grievanceCategory="GRIEVANCE_CATEGORY";
 $.ajax({
 	url: './Consignment/consignmentCurency?CURRENCY='+grievanceCategory,
@@ -562,7 +561,10 @@ $.ajax({
 		}
 		
 
- $('#category').on('change',function() {
+
+$('#category').on(
+					'change',
+				function() {
 	
 	
 	var request ={
@@ -582,12 +584,10 @@ $.ajax({
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 				$("#docTypetag1").empty();
-				$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
 				console.log(data);
 				for (i = 0; i < data.length; i++){
 						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 						//$('#docTypetag1').append(html);	
-						
 					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
 				
 				}
@@ -599,13 +599,19 @@ $.ajax({
 		});
 	 
 	}); 
-
+	 
 function enableAddMore(){
 	$(".add_field_button").attr("disabled", false);
 }
 
-
 </script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 		
 </script>
 </body>
@@ -623,4 +629,3 @@ window.top.location.href = "./login";
 <%
 }
 %>
-

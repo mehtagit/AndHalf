@@ -169,7 +169,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  >
+<input type="file" name="files[]" id="docTypeFile1"  multiple>
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -254,12 +254,12 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 </div> <!-- end chat-message -->
 
 
-
 </div>
 </div>
 </div>
 </div>
 </div>  
+	
 <div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
@@ -275,8 +275,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 				</div>
 			</div>
 		</div>
-	</div>	
-
+	</div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -344,11 +343,11 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-		
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		
 	
 </body>
 </html>

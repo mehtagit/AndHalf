@@ -19,6 +19,8 @@ public class LoginResponse {
     private Integer operatorTypeId;
     private String period;
     private String userLanguage;
+    private String tag;
+    
     
 	public String getOperatorTypeName() {
 		return operatorTypeName;
@@ -103,14 +105,21 @@ public class LoginResponse {
 	public void setPeriod(String period) {
 		this.period = period;
 	}
+	
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 	@Override
 	public String toString() {
 		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
 				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + ", period=" + period + ", userLanguage=" + userLanguage + "]";
+				+ ", operatorTypeId=" + operatorTypeId + ", period=" + period + ", userLanguage=" + userLanguage
+				+ ", tag=" + tag + "]";
 	}
-	
 	
 	
 }

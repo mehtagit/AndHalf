@@ -2,11 +2,20 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -20,16 +29,31 @@ public class FieldController {
 	@Value ("${filePathforMoveFile}")
 	String filePathforMoveFile;
 	
-	
-	@RequestMapping(value=
-		{"/fieldManagement"},method={org.springframework.web.bind.annotation.
-				RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}
-			)
-	    public ModelAndView viewMessageManagement(HttpSession session) {
-		ModelAndView mv = new ModelAndView();
-		 log.info(" view Field Management entry point."); 
-		 mv.setViewName("tagForm");
-		log.info(" view Field Management exit point."); 		return mv; 
+	@Autowired
+	FeignCleintImplementation feignCleintImplementation;
+
+	@GetMapping("fieldManagement")
+	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,
+								@RequestParam(name="tagId", required = false) String tagId, HttpSession session) {
+		ModelAndView modelAndView = new ModelAndView();
+		if("other".equals(via)) {
+			modelAndView.setViewName("fieldManagement");
+		}
+		else {
+			modelAndView.setViewName("tagForm");
+		}
+		return modelAndView;
 	}
 	
+	
+	
+	/*------------------------------------- Add Fields ------------------------------------------ */
+	
+	@PostMapping("add-Field") 
+	public @ResponseBody GenricResponse AddfieldManagement (@RequestBody FilterRequest filterRequest)  {
+		log.info("request send to the add Field api="+filterRequest);
+		GenricResponse response= feignCleintImplementation.AddfieldManagementFeign(filterRequest);
+		log.info("response from add Field api "+response);
+		return response;
+	}
 }

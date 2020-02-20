@@ -79,7 +79,7 @@
                     	<li>
 					<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
             					<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
-                				<img src="./resources/images/dmc_gl.png" class="darken-1 my-2" style="height:56px;"></a>
+                				<img src="./resources/images/DMC-Logo.png" class="darken-1 my-2" style="height:56px;"></a>
         					</div>
         				</li>
                         <li>
@@ -97,13 +97,13 @@
 									<select class="darken-1" id="langlist"
 										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
 										<option value="en">English</option>
-										<option value="km">Khmer</option>
+										<option value="km"><spring:message code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>
                         </li>
-                        <li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>
-                     <!--    <li>
+<%--                         <li><a href="#goToHome" id="newUserLink" class="modal-trigger" style="color:white;"><spring:message code="registration.home" /></a>	</li>
+ --%>                     <!--    <li>
                             <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#"
                                 data-activates="profile-dropdown" style="height: 64px;"><i
                                     class="mdi-action-account-circle" style="color: #fff; font-size: 40px;"></i></a>

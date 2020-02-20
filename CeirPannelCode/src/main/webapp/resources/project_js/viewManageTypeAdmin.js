@@ -105,7 +105,7 @@ $.ajax({
 				columnDefs: [
 		            { width: 142, targets: result.length - 1 },
 		            { width: 143, targets: 0 },
-		            { width: 75, targets: 2 }
+		            { width: 105, targets: 2 }
 			]
 			});
 			

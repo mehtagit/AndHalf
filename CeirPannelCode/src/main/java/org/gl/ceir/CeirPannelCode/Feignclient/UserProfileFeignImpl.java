@@ -57,8 +57,6 @@ public interface UserProfileFeignImpl {
 	@PostMapping("/userProfile/viewProfile/{id}")
 	public Registration ViewAdminUser(@PathVariable("id") long id);
 	
-	@PostMapping("/userProfile/searchAssignee")
-	public List<UploadStockAssigneModal> fetchAssignedetails(AssigneRequestType assigneRequest);
 	
 	@RequestMapping(value="/userProfile/searchAssignee" ,method=RequestMethod.POST)
 	public Object asigneeDetailsFeign(@RequestBody FilterRequest filterRequest,

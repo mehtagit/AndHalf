@@ -128,7 +128,7 @@
 					if(date[i].type === "date"){
 					$("#registrationTableDiv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+

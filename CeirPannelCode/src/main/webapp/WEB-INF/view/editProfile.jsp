@@ -125,11 +125,19 @@ var contextpath = "${context}";
 	 <!-- jQuery Library -->
     <!-- <script type="text/javascript" src="js/plugins/jquery-1.11.2.min.js"></script>-->
   <script type="text/javascript" src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
+  <script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
   
-    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+       	
+	
+
+
+
+<script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
       <script type="text/javascript" src="${context}/resources/ajax/Profile.js"></script>
        	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>   
+    		
     <!--materialize js-->
     <!--<script type="text/javascript" src="js/materialize.js"></script>-->
     <!-- Compiled and minified JavaScript -->
@@ -144,6 +152,7 @@ var contextpath = "${context}";
     <!-- chartist -->
     <!--<script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>-->
 
+
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
@@ -152,7 +161,8 @@ var contextpath = "${context}";
     <!--<script type="text/javascript" src="js/plugins.js"></script>-->
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
 	<!-- START CONTENT -->
@@ -266,7 +276,7 @@ var contextpath = "${context}";
 								</div> -->
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text"  placeholder="" name="email" maxlength="320"
+									<input type="text"  disabled="disabled" placeholder="" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.emial" />"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"  required / >
@@ -275,7 +285,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input  placeholder="" type="text"  name="phoneNo" maxlength="20"
+									<input  disabled="disabled" placeholder="" type="text"  name="phoneNo" maxlength="20"
 										class="form-control boxBorder boxHeight" id="phoneNo"
 										pattern="[0-9]{8,20}" 
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
@@ -295,12 +305,12 @@ var contextpath = "${context}";
 								</div> -->
 							</div>
 															<div class="row">
-								<div class="input-field col s12 m12 l12">
+							<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200"
-										pattern="[A-Za-z0-9\s]{0,200}" placeholder="" name="propertyLocation"
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,200}" placeholder="" name="propertyLocation"
 										class="form-control boxBorder boxHeight"
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.12Character" />" 
+										title= "<spring:message code="validation.200characters" />" 
 										id="propertyLocation" required / > <label for="propertyLocation"><spring:message code="input.address" />  <span
 										class="star">*</span></label> 
 								</div>
@@ -308,7 +318,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
-										pattern="[A-Za-z0-9\s]{0,20}" placeholder="" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,20}" placeholder="" 
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.20Character" />" required / >
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
@@ -317,7 +327,7 @@ var contextpath = "${context}";
 									<div class="input-field col s12 m6 l6">
 									<input type="text" name="village" maxlength="30"
 										class="form-control boxBorder boxHeight" id="village"
-										pattern="[A-Za-z0-9\s]{0,30}" placeholder="" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" placeholder="" 
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.30characters" />" required />
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span>
@@ -326,7 +336,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
-										pattern="[A-Za-z0-9\s]{0,30}" placeholder="" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" placeholder="" 
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.30characters" />" required / >
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span>
@@ -336,7 +346,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="district" placeholder="" maxlength="30"
 										class="form-control boxBorder boxHeight" id="district"
-										pattern="[A-Za-z0-9\s]{0,30}" 
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.30characters" />" required / >
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span>
@@ -345,18 +355,18 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" placeholder="" name="commune" maxlength="30"
 										class="form-control boxBorder boxHeight" id="commune"
-										pattern="[A-Za-z0-9\s]{0,30}" required
+										pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" required
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.30characters" />" required / >
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span>
 									</label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="postalCode" maxlength="30"
+									<input type="text" placeholder="" name="postalCode" maxlength="6"
 										class="form-control boxBorder boxHeight" id="postalCode"
-										pattern="[A-Za-z0-9\s]{0,30}"
+										pattern="[A-Za-z0-9\s]{0,6}"
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-										title= "<spring:message code="validation.30characters" />" >
+										title= "<spring:message code="validation.postalcode" />" >
 									<label for="postalCode"><spring:message code="input.postalCode" /></label>
 								</div>
 								
@@ -875,6 +885,36 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 			</div>
 		</div>
 	</div>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 	
     <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -918,6 +958,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
         }
        	
     </script>
+    
 </body>
 </html>  
 <%
@@ -928,7 +969,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 <script language="JavaScript">
 	sessionStorage.setItem("loginMsg",
 			"*Session has been expired");
-	window.top.location.href = "../login";
+	window.top.location.href = "./login";
 </script>
 <%
 	}

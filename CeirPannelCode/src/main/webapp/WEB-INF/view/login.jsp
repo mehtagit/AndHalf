@@ -3,7 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@page import="java.util.Locale"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
@@ -104,7 +104,7 @@ a#newUserLink {
 </script>
 </head>
 
-<body data-msg="${msg}">
+<body data-msg="${msg}" data-lang-param="${pageContext.response.locale}">
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -137,7 +137,7 @@ a#newUserLink {
 											<select class="browser-default select-lang-drpdwn"
 												id="langlist">
 												<option value="en">English</option>
-												<option value="km">Khmer</option>
+												<option value="km"><spring:message code="lang.khmer" /></option>
 											</select>
 										</div>
 										<div class="col s12 m12">
@@ -153,15 +153,19 @@ a#newUserLink {
 
 
 										<div class="input-field col s12">
-											<input type="text" required="required" name="username"
-												id="username" class="" maxlength="10" /> <label
+											<input type="text" name="username"
+												id="username" class="" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required  maxlength="10" /> <label
 												for="username"><spring:message
 													code="registration.username" /></label>
 										</div>
 
 										<div  class="input-field col s12" id="show_hide_password">
-											<input type="password"  required="required" class="password"
-												name="password" id="password" maxlength="10"
+											<input type="password"   class="password"
+												name="password" id="password" 
+												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required maxlength="10"
 												oncopy="return false" onpaste="return false" /> <label
 												for="password"> <spring:message
 													code="registration.password" /></label>
@@ -184,7 +188,8 @@ a#newUserLink {
 												<div class="input-field">
 													<input autocomplete="off" type="text" name="captcha"
 														class="form-control boxBorder boxHeight" id="captcha"
-														required="required"> <label for="captcha"
+														oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												title= "<spring:message code="validation.requiredMsg" />" required> <label for="captcha"
 														style="left: 0.01rem;"><spring:message
 															code="registration.enteryourcaptcha" /><span
 														class="star">*</span> </label>
@@ -209,7 +214,7 @@ a#newUserLink {
 										<a href="${context}/forgotPassword"
 											class="right forgotPassword"><spring:message
 												code="registration.forgotpassword" /></a> <span><a
-											href="javascript:void(0)" id="newUserLink" class="right"><spring:message
+											href="JavaScript:Void(0);" id="newUserLink" class="right"><spring:message
 													code="registration.newUser" /></a></span>
 									</div>
 								</div>
@@ -333,8 +338,41 @@ a#newUserLink {
 
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+		
+		
 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js"></script>
+		<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 	<!--materialize js-->

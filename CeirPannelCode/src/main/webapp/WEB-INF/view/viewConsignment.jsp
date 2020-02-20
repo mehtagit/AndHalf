@@ -17,6 +17,9 @@
 <html class="no-js" lang="en" dir="ltr">
 <head>
 <title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -76,7 +79,8 @@
 	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
 </head>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="3"
+	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
@@ -200,7 +204,7 @@
 
 				<div class="input-field col s12 m6">
 					<input type="text" name="totalPrice" placeholder=""
-						disabled="disabled" id="viewtotalPrice" maxlength="7" required />
+						disabled="disabled" id="viewtotalPrice" maxlength="7" />
 					<label for="totalPrice" class="center-align"><spring:message
 							code="input.totalprice" /></label>
 				</div>
@@ -804,7 +808,7 @@
 			</div>
 		</div>
 	</div>
-		<div id="fileFormateModal" class="modal">
+	<div id="fileFormateModal" class="modal">
 		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
@@ -820,9 +824,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -895,6 +896,8 @@
 		src="${context}/resources/project_js/viewConsignment.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 </html>
 <%

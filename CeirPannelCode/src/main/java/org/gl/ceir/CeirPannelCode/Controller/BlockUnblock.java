@@ -201,7 +201,7 @@ public class BlockUnblock {
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			stolenRecoveryModel.setBlockCategory(deviceCategory);
 			stolenRecoveryModel.setRoleType(roletype);
-			
+
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);

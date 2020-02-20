@@ -234,7 +234,7 @@ to {
 									</div>
 
 									<div class="input-field col s12 m6">
-										<input type="text" name="supplierName" id="supplierName" 
+										<input type="text" name="supplierName" id="supplierName"
 											pattern="[A-Za-z ]{0,50}"
 											title="<spring:message code="validation.50character" />"
 											maxlength="50" required /> <label for="supplierName" id="SupplierIdAssignieName"
@@ -257,7 +257,7 @@ to {
 									</div>
 
 									<div class="input-field col s12 m6" id="invoiceNumberDiv" style="display: none">
-										<input type="text" name="invoiceNumber" id="invoiceNumber"
+										<input type="text" name="invoiceNumber" id="invoiceNumber" 
 											pattern="[A-Za-z0-9]{0,15}"
 											title="<spring:message code="validation.15numbers" />"
 											maxlength="15" /> <label for="InvoiceNumber"
@@ -505,13 +505,13 @@ to {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-		
+
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 
 	<script>
 
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {
 		var language=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		window.location.assign("./openUploadStock?reqType=formPage&lang="+language);
@@ -564,10 +564,6 @@ to {
 				$("#SupplierIdAssignieName").append('<span class="star">*</span>');
 			}
 	});
-
-
-
-
 
 
 function uploadStock(){
@@ -694,11 +690,8 @@ function clearFileName() {
 	$('#fileFormateModal').closeModal();
 }
 
-
-
-
-
 function openModalForAssigneId(){
+	
 	$('#searchSupplierInformation').openModal();
 }
 

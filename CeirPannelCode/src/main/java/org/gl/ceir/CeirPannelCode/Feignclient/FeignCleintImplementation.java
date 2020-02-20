@@ -333,15 +333,38 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 		
 				@PostMapping("/get/tags-mapping")
 				public @ResponseBody List<GrievanceDropdown> catagoryDropdownListFeign(FilterRequest filterRequest);	
+				
 		
-
 				//download file(Error or Uploaded file) feign  controller
 				@RequestMapping(value="/Download/manuals" ,method=RequestMethod.GET) 
 				public @ResponseBody FileExportResponse manualDownloadSampleFile();
+				
+//******************************* Tag Updated DropDown in Field ****************************************
+				
+				@PostMapping("/projection/tags/system-config-list")
+				public @ResponseBody GenricResponse getAllTagsDropdowntFeign(FilterRequest filterRequest);	
+				
+				
+				//***************************************************Field Management Feign********************************
 
-}
+				@RequestMapping(value= "/filter/system-config-list" , method=RequestMethod.POST) 
+				public Object fieldManagementFeign(@RequestBody FilterRequest filterRequest,
+						@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+						@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+						@RequestParam(value = "file", defaultValue = "0") Integer file);
+
+				
+				
+				//***************************************************Add Field Management Feign********************************
+
+				@RequestMapping(value= "/save/system-config-list" , method=RequestMethod.POST) 
+				public GenricResponse AddfieldManagementFeign(@RequestBody FilterRequest filterRequest);
+						
+
+				
+
+		}
 		
-
 
 
 

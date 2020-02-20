@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Ceir17feb</name>
+	<name>Ceir20feb</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>

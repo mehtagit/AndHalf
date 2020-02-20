@@ -16,6 +16,9 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <title>CEIR | Operator Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
@@ -114,13 +117,16 @@ label {
 	margin: auto;
 	/* border: solid 2px #444; */
 }
+p label span {
+font-size: 1rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 	<%String name=request.getParameter("type");%>
 
 	<!--  Scripts
@@ -181,7 +187,7 @@ var contextpath = "${context}";
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
 									<option value="en">English</option>
-									<option value="km">Khmer</option>
+									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12">
@@ -228,41 +234,41 @@ var contextpath = "${context}";
 								</div>
 							</div>
 
-							<div class="row">
+												<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="propertyLocation" id="propertyLocation"
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,200}$" name="propertyLocation" id="propertyLocation"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.200characters" />" required /> 
 										 <label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s]{0,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,20}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.20Characters" />" required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="village"><spring:message code="input.village" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span> </label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s]{0,30}"
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.30Characters" />" required />
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span> </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="postalCode" maxlength="30" id="postalCode" pattern="[A-Za-z0-9\s]{6}"
+									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9\s]{6}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.postalcode" />">
 									<label for="postalCode"><spring:message code="input.postalCode" /></label>
 								</div>
@@ -361,7 +367,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail" maxlength="320" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="authorityEmail" maxlength="320" id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />"> 
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
@@ -630,16 +636,14 @@ var contextpath = "${context}";
 				<input type="hidden" id="userid" name="userid" value="${userId}">
 				<div class="row">
 					<div class="input-field col s12 m12">
-						<input type="text" placeholder="Enter OTP of Email"
-							name="emailOtp" maxlength="6" required="required" id="emailOtp"
-							pattern="[0-9]{0,6}" title="Please enter 6 digit number"
-							placeholder="" />
+						<input type="text" placeholder="Enter OTP of Email"name="emailOtp" maxlength="6" id="emailOtp"
+							pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required />
 					</div>
 					<div class="input-field col s12 m12">
-						<input placeholder="Enter OTP of Phone" type="text"
-							name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
-							title="Please enter 6 digit number" required="required"
-							id="phoneOtp" placeholder="" />
+						<input placeholder="Enter OTP of Phone" type="text"name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+						 id="phoneOtp" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required />
 					</div>
 				</div>
 				<a href="javascript:void(0)"
@@ -720,14 +724,8 @@ var contextpath = "${context}";
 		
 		
 	        $(document).ready(function () {
-	        	var url = new URL( window.location.href);
-	    		var langParameter = url.searchParams.get("lang");
-	            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
-	            	
-	            	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-
-	            	
-	            			$.i18n().locale = lang;	
+	        	$('#langlist').val(data_lang_param);
+	        	$.i18n().locale = data_lang_param;	
 	            			
 	            			$.i18n().load( {
 	            				'en': './resources/i18n/en.json',
@@ -750,7 +748,7 @@ var contextpath = "${context}";
 
       function validatePassword(){
         if(password.value != confirm_password.value) {
-          confirm_password.setCustomValidity("Passwords Don't Match");
+        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
         } else {
           confirm_password.setCustomValidity('');
         }

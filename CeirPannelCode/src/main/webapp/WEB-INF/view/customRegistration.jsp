@@ -16,6 +16,9 @@
 	content="Materialize is a Material Design Admin Template,It's modern, responsive and based on Material Design by Google. ">
 <meta name="keywords"
 	content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
+	<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <title>CEIR | Custom Portal</title>
 <link
 	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
@@ -138,13 +141,16 @@ width: 90%;
 margin: auto;
 /* border: solid 2px #444; */
 }
+p label span {
+font-size: 1rem;
+}
 </style>
 <script>
 var contextpath = "${context}";
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 
 <%String userType=request.getParameter("type");
 %>
@@ -206,7 +212,7 @@ var contextpath = "${context}";
 							<div class="col s2 m2 right" style="padding: 0;">
 								<select class="browser-default select-lang-drpdwn" id="langlist">
 									<option value="en">English</option>
-									<option value="km">Khmer</option>
+									<option value="km"><spring:message code="lang.khmer" /></option>
 								</select>
 							</div>
 							<div class="col s12 m12"><h5><spring:message code="roletype.${param.type}" /> <spring:message code="select.registration" /></h5>
@@ -240,46 +246,47 @@ var contextpath = "${context}";
 
 							</div>
 
-							<div class="row">
+											<div class="row">
 								<div class="input-field col s12 m12 l12">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]+{0,200}" name="propertyLocation"
+									<input type="text" maxlength="200" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,200}" name="propertyLocation"
 										id="propertyLocation" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.200character" />" required /> 
 										<label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s]+{0,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,20}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address20characters" />" required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 									</label>
 								</div>
 									<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s]+{0,30}"
+									<input type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required />
 									<label for="village"> <spring:message code="input.village" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s]+{0,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required />
 									<label for="locality"><spring:message code="input.locality" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s]+{0,30}"
+									<input type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address20characters" />" required />
 									<label for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s]+{0,30}"
+									<input type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9._%+-$@,/]+\.+{0,30}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.address30characters" />" required />
 									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span></label>
 								</div>
+
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="postalCode" maxlength="6" id="postalCode" pattern="[0-9]{6}"
 										title="<spring:message code="validation.postalcode" />">
@@ -303,11 +310,18 @@ var contextpath = "${context}";
 								<%if("Custom".equalsIgnoreCase(name)){ %>
 								<div class="col s12 m6 l6">
 									<label><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
-									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" 
+									<select id="arrivalPort" class="browser-default" onchange="getByPort(this.value)" title="<spring:message code="validation.selectFieldMsg" />" 
 									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
 										<option value="" disabled selected><spring:message code="input.arrivalport" /></option>
 									</select>
 								</div>
+								<div class="col s12 m6 l6">
+									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
+									<select id="portAddress" class="browser-default"  title="<spring:message code="validation.selectFieldMsg" />" 
+									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
+										<option value="" disabled selected>Select port</option>
+											</select>
+								</div>								
 								<%} %>
 								
 								<%-- <div class="input-field col s12 m6 l6">
@@ -317,15 +331,6 @@ var contextpath = "${context}";
 									<label for="arrivalPortLocation" class="">Port Address <span class="star">*</span></label>
 								</div> --%>
 								
-								<div class="col s12 m6 l6">
-									<label><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
-									<select id="arrivalPort" class="browser-default" onchange="myFunction()" title="<spring:message code="validation.selectFieldMsg" />" 
-									oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');" required>
-										<option value="" disabled selected>Select port</option>
-										<option value="1">Abc</option>
-										<option value="2">Abc</option>
-									</select>
-								</div>
 							</div>
 
 							<div class="row">
@@ -403,12 +408,12 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="reportingAuthorityName" id="authorityName" maxlength="30" pattern=".[a-zA-Z]+{3,30}"  
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-										title="<spring:message code="validation.address30characters" />" required /> 
+										title="<spring:message code="validation.address30characters" />" /> 
 									<label for="authorityName"><spring:message code="registration.reportingauthorityname" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="authorityEmail" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
+									<input type="text" name="authorityEmail" maxlength="320"  id="authorityEmail" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}" 
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" title="<spring:message code="validation.email" />" >
 									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
@@ -420,7 +425,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="email" name="email" required="required" id="email" maxlength="320" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
+									<input type="text" name="email" required="required" id="email" maxlength="320" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"
 									oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"
 										title="<spring:message code="validation.address30characters" />" required /> 
 									<label for="email"><spring:message code="input.email" /> <span class="star">*</span></label>
@@ -705,15 +710,14 @@ var contextpath = "${context}";
                         <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
                             <div class="input-field col s12 m12">
-                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"
-                                 required="required" id="emailOtp" pattern="[0-9]{0,6}"
-										title="Please enter 6 digit number" placeholder=""/>
+                                <input type="text" placeholder="Enter OTP of Email" name="emailOtp" maxlength="6"id="emailOtp" 
+                                pattern="[0-9]{0,6}" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+								title="<spring:message code="validation.6Character" />" required />
                             </div> 
                             <div class="input-field col s12 m12">
-                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" 
-										pattern="[0-9]{0,6}"
-										title="Please enter 6 digit number" 
-                                required="required" id="phoneOtp" placeholder=""/>
+                                <input placeholder="Enter OTP of Phone" type="text" name="phoneOtp" maxlength="6" pattern="[0-9]{0,6}"
+								 id="phoneOtp" oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+							title="<spring:message code="validation.6Character" />" required />
                             </div>
                         </div>
                         <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
@@ -826,15 +830,10 @@ return true;
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
-    		var langParameter = url.searchParams.get("lang");
-            	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
+        	$('#langlist').val(data_lang_param);
             $('.modal').modal();
             questionDataByCategory();
-            
-            var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-
-            	$.i18n().locale = lang;	
+            $.i18n().locale = data_lang_param;	
             	
             	$.i18n().load( {
             		'en': './resources/i18n/en.json',
@@ -850,7 +849,7 @@ return true;
 
       function validatePassword(){
         if(password.value != confirm_password.value) {
-          confirm_password.setCustomValidity("Passwords Don't Match");
+        	 confirm_password.setCustomValidity("<spring:message code='registration.passnotmatch' />");
         } else {
           confirm_password.setCustomValidity('');
         }
