@@ -226,6 +226,7 @@ to {
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierId" 
 											pattern="[A-Za-z0-9]{0,15}"
+											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.15character" />"
 											maxlength="15" id="supplierId"
 											maxlength="15" /> <label for="supplierId" id="SupplierIdAssignie"
@@ -236,6 +237,7 @@ to {
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
 											pattern="[A-Za-z ]{0,50}"
+											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.50character" />"
 											maxlength="50" required /> <label for="supplierName" id="SupplierIdAssignieName"
 											class="center-align"><spring:message
@@ -250,7 +252,8 @@ to {
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
 											pattern="[0-9]{0,7}"
-											title="<spring:message code="validation.7character" />"
+											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+											title="<spring:message code="validation.7digits" />"
 											maxlength="7" required />
 										<label for="Quantity" class="center-align"><spring:message
 												code="input.quantity" /><span class="star">*</span></label>
@@ -259,6 +262,7 @@ to {
 									<div class="input-field col s12 m6" id="invoiceNumberDiv" style="display: none">
 										<input type="text" name="invoiceNumber" id="invoiceNumber" 
 											pattern="[A-Za-z0-9]{0,15}"
+											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.15numbers" />"
 											maxlength="15" /> <label for="InvoiceNumber"
 											class="center-align"><spring:message
@@ -277,7 +281,9 @@ to {
 										style="margin-top: 5px;">
 										<div class="btn">
 											<span><spring:message code="input.selectfile" /></span> <input onchange="fileTypeValueChanges()"
-												type="file" id="file" required="required" size=50
+												type="file" id="file" 
+												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+												title="<spring:message code="validation.NoChosen" />" required size=50
 												maxlength=50 accept=".csv">
 										</div>
 										<div class="file-path-wrapper">
@@ -508,7 +514,8 @@ to {
 
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script>
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';

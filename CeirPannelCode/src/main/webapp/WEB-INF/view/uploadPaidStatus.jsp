@@ -154,7 +154,7 @@ input[type='search'] {
 <body data-id="12" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentTxnId="${consignmentTxnIdv}"
 	data-selected-consignmentStatus="${consignmentStatus}" 
 	session-value="${not empty param.NID ? param.NID : 'null'}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
