@@ -27,7 +27,6 @@ function forgotPassword(){
 				$('#changePassword').openModal();
 			}      
 			else{
-				alert($('#langlist').val())
 				$.i18n().locale = $('#langlist').val();
 	
 			//	$("#forgotPassword #errorMsg").text(resp.response);

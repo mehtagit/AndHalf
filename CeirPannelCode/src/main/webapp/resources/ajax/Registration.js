@@ -261,6 +261,8 @@ function usertypeData2(id){
 					usertypeDropdown.append(data2);
 				
 			}    
+			usertypeDropdown.val(id);
+			$('#usertypes option[value="'+id+'"]').attr('disabled', true);
 			setTimeout(function(){ 
 				$('.dropdown-trigger').dropdown();
 				$('select').formSelect();
