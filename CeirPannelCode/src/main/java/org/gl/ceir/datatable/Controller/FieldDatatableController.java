@@ -75,7 +75,8 @@ public class FieldDatatableController {
 			}else {
 				for(FieldContantModel dataInsideList : paginationContentList) 
 				{
-					String displayName =dataInsideList.getDisplayName();
+				  String id = String.valueOf(dataInsideList.getId());	
+				  String displayName =dataInsideList.getDisplayName();
 					//pageRendering(displayName, session);
 				   log.info("displayName1---->" +displayName);
 				   String tag = dataInsideList.getTag();
@@ -83,8 +84,8 @@ public class FieldDatatableController {
 				   String listOrder = String.valueOf(dataInsideList.getListOrder());
 				   String tagId = dataInsideList.getTagId();
 				  
-				   String action=iconState.fieldManagementIcons(tag,interp,tagId);			   
-				   Object[] finalData={displayName,interp,listOrder,tagId,action}; 
+				   String action=iconState.fieldManagementIcons(id,tag,interp,tagId);			   
+				   Object[] finalData={displayName,interp,tagId,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	

@@ -431,11 +431,10 @@ public class IconsState {
 
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-			approve = "<a onclick="+approveAction+" class="+disableIconClass+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class="+disableIconClass+"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
-
 			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+downloadIcon+" aria-hidden=\"true\"  title="
 					+downloadIconTitle+" ></i></a>"; 
@@ -514,12 +513,12 @@ public class IconsState {
 
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-			approve = "<a onclick="+approveAction+"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
+			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
-			reject = "<a onclick="+rejectAction+" class=\"+disableIconClass+\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\"  title="
+			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>"; 
 		}
 
@@ -553,7 +552,7 @@ public class IconsState {
 		}
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 			
 
@@ -592,7 +591,7 @@ public class IconsState {
 				}
 				else if("Disable".equals(userStatus)) {
 					log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-					reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+					reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 							+replyIconTitle+" ></i></a>";
 				}
 
@@ -625,7 +624,7 @@ public class IconsState {
 
 		else if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-			reply = "<a onclick="+replyAction+"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
+			reply = "<a onclick="+replyAction+" class=\"eventNone\"><i class="+disableReplyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
 		}
 
@@ -1580,11 +1579,11 @@ public class IconsState {
 	
 	/********************************** Icons for Field Management**********************************/ 
 
-	public String fieldManagementIcons(String tag,String interp,String tagId) { 
+	public String fieldManagementIcons(String id,String tag,String interp,String tagId) { 
 		executePostConstruct();
 		
-		String editAction= "FieldViewByID('"+tag+"')";
-		String deleteAction = "DeleteTacRecord()";
+		String editAction= "FieldViewByID('"+tag+"','"+id+"')";
+		String deleteAction = "DeleteFieldRecord('"+id+"')";
 		// state related Code 
 
 

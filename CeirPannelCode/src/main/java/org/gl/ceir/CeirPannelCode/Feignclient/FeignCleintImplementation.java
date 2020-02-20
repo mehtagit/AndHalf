@@ -359,8 +359,24 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 
 				@RequestMapping(value= "/save/system-config-list" , method=RequestMethod.POST) 
 				public GenricResponse AddfieldManagementFeign(@RequestBody FilterRequest filterRequest);
-						
+				
+				
+				//***************************************************View Field Management Feign********************************
 
+				@RequestMapping(value= "/get/system-config-list" , method=RequestMethod.POST) 
+				public GenricResponse viewfieldManagementFeign(@RequestBody FilterRequest filterRequest);
+				
+				
+				//***************************************************update Field Management Feign********************************
+
+				@RequestMapping(value= "/system-config-list" , method=RequestMethod.PUT) 
+				public GenricResponse updatefieldManagementFeign(@RequestBody FilterRequest filterRequest);
+				
+				
+				//***************************************************Delete Field Management Feign********************************
+				
+				@RequestMapping(value="/tags/system-config-list" ,method=RequestMethod.DELETE) 
+				public @ResponseBody GenricResponse deleteFieldFeign(@RequestBody FilterRequest filterRequest);
 				
 
 		}

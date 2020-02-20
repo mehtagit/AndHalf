@@ -139,6 +139,7 @@
                                 <option value="" disabled="" selected="">Select field</option>
                           </select>
                         <label for="tag" class="active">Field <span class="star">*</span></label>
+                         <input type="text" id="displayName" hidden>
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -178,6 +179,7 @@
                                 <option value="" disabled="" selected="">Select field</option>
                           </select>
                         <label for="Edittag" class="active">Field <span class="star">*</span></label>
+                    <input type="text" id="id" Disabled> 
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -219,6 +221,43 @@
 		</div>
 	</div>
 		
+	   <!-- --------------------------------------------------------------Delete Field Modal Start --------------------------------------------------------------->
+
+
+	<div id="DeleteFieldModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteTac" /></h6>
+		<div class="modal-content">
+		<div class="row">
+				<h6><spring:message code="modal.message.tac.widthdraw" /></h6>
+			</div> 
+			<input type="text" id="deleteFieldId">
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="confirmantiondelete()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deleteTac" /></h6>
+			<div class="modal-content">
+		
+			
+			<div class="row">
+
+				<h6 id="tacModalText"><spring:message code="modal.message.tacDeleted" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 		
 <!--materialize js-->
 	<script type="text/javascript"
