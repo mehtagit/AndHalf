@@ -156,10 +156,7 @@ function pageRendering(){
 				}
 			} 
 			
-			if(userType=="Importer"){
-				console.log("userType is----->"+userType)
-			}else{
-				// dynamic drop down portion
+					// dynamic drop down portion
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
 					var dropdownDiv=
@@ -177,7 +174,7 @@ function pageRendering(){
 						"</div>");
 				
 				}
-			}
+	
 	
 			$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 			$("#typeAprroveTableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
