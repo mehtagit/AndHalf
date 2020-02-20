@@ -4,11 +4,9 @@
 		<encoder>
 			<pattern>%date %level [%file:%line] %msg%n</pattern>
 		</encoder>
-		<!--  <file>/home/ubuntu/CeirContent/CEIRPostman/emailLogs/log.log</file> -->
-		 <file>/home/ubuntu/CeirContent/CEIRPostman/smsLogs/log.log</file>
+		 <file>/home/ceirapp/ceir/PostMan/SmsService/logs/log.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-		<!--   <fileNamePattern>/home/ubuntu/CeirContent/CEIRPostman/emailLogs/log.%d{yyyy-MM-dd}.log</fileNamePattern> -->
-		  <fileNamePattern>/home/ubuntu/CeirContent/CEIRPostman/smsLogs/log.%d{yyyy-MM-dd}.log</fileNamePattern>  
+		  <fileNamePattern>/home/ceirapp/ceir/PostMan/SmsService/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>  
 			<maxHistory>60</maxHistory>
 		</rollingPolicy>
 	</appender>

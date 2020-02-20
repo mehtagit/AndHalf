@@ -1,4 +1,4 @@
-package com.ceir.CEIRPostman.RepositoryImpl;
+package com.ceir.CEIRPostman.RepositoryService;
 
 import java.util.List;
 

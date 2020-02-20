@@ -45,12 +45,6 @@ public class User {
 	private Integer previousStatus; 
 	private String remark;
 
-
-
-	@OneToMany(mappedBy = "userForNofication", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-	private List<Notification> notificationData;
-
-
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "usertype_id", nullable = false) 
 	private Usertype usertype;
@@ -112,14 +106,6 @@ public class User {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-	public List<Notification> getNotificationData() {
-		return notificationData;
-	}
-	public void setNotificationData(List<Notification> notificationData) {
-		this.notificationData = notificationData;
-	}
-
 
 	public UserProfile getUserProfile() {
 		return userProfile;

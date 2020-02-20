@@ -1,15 +1,23 @@
 package com.ceir.CEIRPostman.service;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.ceir.CEIRPostman.Repository.NotificationRepository;
-import com.ceir.CEIRPostman.RepositoryImpl.NotificationRepoImpl;
-import com.ceir.CEIRPostman.RepositoryImpl.SystemConfigurationDbRepoImpl;
+import com.ceir.CEIRPostman.RepositoryService.EndUserRepoService;
+import com.ceir.CEIRPostman.RepositoryService.NotificationRepoImpl;
+import com.ceir.CEIRPostman.RepositoryService.SystemConfigurationDbRepoImpl;
+import com.ceir.CEIRPostman.RepositoryService.UserRepoService;
 import com.ceir.CEIRPostman.configuration.AppConfig;
+import com.ceir.CEIRPostman.model.EndUserDB;
 import com.ceir.CEIRPostman.model.Notification;
 import com.ceir.CEIRPostman.model.SystemConfigurationDb;
+import com.ceir.CEIRPostman.model.User;
 import com.ceir.CEIRPostman.util.EmailUtil;
 
 @Service
@@ -29,13 +37,23 @@ public class EmailService implements Runnable {
 	
 	@Autowired
 	SystemConfigurationDbRepoImpl systemConfigRepoImpl;
+	
+	@Value("${mailusername}")
+	String fromEmail;
+	
+	@Autowired
+	EndUserRepoService endUserRepoService;
+	
+	@Autowired
+	UserRepoService userRepoService;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	public void run() {
 		while (true) {
 			log.info("inside run method");
 			try {
-				List<Notification> notificationData=notificationRepoImpl.notitificationByStatus(1,"EMAIL");
+				List<Notification> notificationData=notificationRepoImpl.notitificationByStatus(1,"SMS");
 				int totalMailsent=0;
 				int totalMailNotsent=0;
 				if(notificationData!=null) {
@@ -46,8 +64,29 @@ public class EmailService implements Runnable {
 						if(emailBodyFooter!=null) {
 							body=body+"\n"+emailBodyFooter.getValue();
 						}
-						boolean emailStatus=emailUtil.sendEmail(notification.getUserForNofication().getUserProfile().getEmail(), "heenakumari1024@gmail.com",notification.getSubject() , body);
-						if(emailStatus) {
+						String toEmail=new String();
+						
+						if(notification.getReferTable()!=null) {
+							log.info("refer Table: "+notification.getReferTable());
+							if("END_USER".equals(notification.getReferTable())) {
+							   EndUserDB endUser=endUserRepoService.getById(notification.getUserId());
+							   toEmail=endUser.getEmail();
+							}
+							else {
+								User user=userRepoService.getById(notification.getUserId());
+								toEmail=user.getUserProfile().getEmail();
+										
+							}
+						}
+						else {
+							User user=userRepoService.getById(notification.getUserId());
+							toEmail=user.getUserProfile().getEmail();
+						}
+						boolean emailStatus = false;
+						if(toEmail!=null) {
+							 emailStatus=emailUtil.sendEmail(toEmail,fromEmail,notification.getSubject() , body);
+						}
+							if(emailStatus) {
 							log.info("if email sent");
 							notification.setStatus(0);
 							totalMailsent++;

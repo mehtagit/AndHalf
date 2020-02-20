@@ -32,9 +32,7 @@ public class Notification  implements Serializable{
 	@Column(length = 1000)
 	private String message;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User userForNofication;
+	private long userId;
 
 	private Long featureId;
 
@@ -49,8 +47,10 @@ public class Notification  implements Serializable{
 	private String subject;
 
 	private Integer retryCount;
-
-
+    
+	private String referTable;
+	
+      
 	public Notification() {
 
 	}
@@ -133,14 +133,13 @@ public class Notification  implements Serializable{
 		this.retryCount = retryCount;
 	}
 
-
-	public User getUserForNofication() {
-		return userForNofication;
+	public long getUserId() {
+		return userId;
 	}
 
 
-	public void setUserForNofication(User userForNofication) {
-		this.userForNofication = userForNofication;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 
@@ -148,14 +147,19 @@ public class Notification  implements Serializable{
 		this.id = id;
 	}
 	
+	public String getReferTable() {
+		return referTable;
+	}
+	public void setReferTable(String referTable) {
+		this.referTable = referTable;
+	}
+
 	@Override
 	public String toString() {
 		return "Notification [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", channelType="
-				+ channelType + ", message=" + message + ", featureId=" + featureId + ", featureTxnId=" + featureTxnId
-				+ ", featureName=" + featureName + ", subFeature=" + subFeature + ", status=" + status + ", subject="
-				+ subject + ", retryCount=" + retryCount + "]";
+				+ channelType + ", message=" + message + ", userId=" + userId + ", featureId=" + featureId
+				+ ", featureTxnId=" + featureTxnId + ", featureName=" + featureName + ", subFeature=" + subFeature
+				+ ", status=" + status + ", subject=" + subject + ", retryCount=" + retryCount + ", referTable="
+				+ referTable + "]";
 	}
-
-
-	
 }
