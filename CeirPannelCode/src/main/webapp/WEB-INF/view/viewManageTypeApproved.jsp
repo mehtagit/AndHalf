@@ -82,7 +82,7 @@
 var path="${context}";
 </script>
 </head>
-<body data-id="21" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="11" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
@@ -672,6 +672,8 @@ var path="${context}";
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ViewManageTypeApproved.js"></script>	
 
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 </html>
 <%
