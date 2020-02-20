@@ -2699,15 +2699,19 @@ div#initialloader {
 
 .export-to-excel {
 	width: 80px;
-	color: #2979a5;
+	color: #fff;
 	float: right;
-	border: solid 1px rgba(33, 167, 201, 0.774);
+	border: none;
 	padding: 4px 7px;
 	border-radius: 2px;
 	font-size: 14px;
-	background-color: #fff;
+	background-color: #ff4081 !important;
 	margin-top: 20px;
 	height: 32px;
+}
+
+i.fa.fa-file-excel-o {
+    margin-left: 4px;
 }
 
 @media only screen and (max-width: 425px) {
