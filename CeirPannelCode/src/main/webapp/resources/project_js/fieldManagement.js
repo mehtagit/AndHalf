@@ -190,24 +190,8 @@
 			var consignmentTxnId=$('#transactionID').val();
 			var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 			var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
-			if(isNaN(consignmentTaxPaidStatus) && isNaN(filterConsignmentStatus) )
-			{
-				consignmentTaxPaidStatus="";
-				filterConsignmentStatus='';
-				
-			}
-			else if(isNaN(consignmentTaxPaidStatus))
-			{
-				consignmentTaxPaidStatus="";
 			
-			}
-			else if(isNaN(filterConsignmentStatus))
-			{
-				filterConsignmentStatus='';
-			
-			}
-
-			var table = $('#consignmentLibraryTable').DataTable();
+			var table = $('#fieldManagementLibraryTable').DataTable();
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
@@ -255,10 +239,11 @@
 					  "displayName" : $('#displayName').val(),		
 					  "interp": $('#addInterp').val(), 
 					  "tag":   $('#tag').val(),
-					  "tagId": $('#addFieldId').val(),
+					  "tagId": $('#tagId').val(),
 					  "value": $('#addValue').val(),
+					  "description" : $('#description').val(),
 				}
-			
+		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
 			url : './add-Field',
@@ -268,9 +253,7 @@
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
 					console.log(JSON.stringify(data));
-					
-					
-			
+					$("#confirmField").openModal();
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -286,7 +269,6 @@
 	
 	
 	function FieldViewByID(tag,id){
-			alert("id is--->" +id)
 			var Id = parseInt(id);
 			var request ={
 					  "id" : parseInt(Id)
@@ -333,9 +315,10 @@
 		
 		$("#id").val(data.id);
 		$("#Edittag").val(data.tag);
-		$("#editValue").val(data.value);
+		$("#editdescription").val(data.description);
 		$("#editInterp").val(data.interp);
 		$("#editFieldId").val(data.tagId);
+		
 	}
 	
 	

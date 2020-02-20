@@ -330,7 +330,7 @@ public class DatatableHeaders {
 //fieldManagement
 			
 			else if("fieldManagement".equals(role)) {
-				String[] headers = {"tabel.field","tabel.interp","tabel.fieldId","table.action"};		
+				String[] headers = {"tabel.field","tabel.interp","tabel.fieldId","table.Description","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
