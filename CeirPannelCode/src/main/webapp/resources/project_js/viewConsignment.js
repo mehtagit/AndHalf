@@ -602,7 +602,7 @@
 
 
 					//Tax paid status-----------dropdown
-					$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+					$.getJSON('../getTypeDropdownList/CUSTOMS_TAX_STATUS/'+$("body").attr("data-userTypeID"), function(data) {
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].value).text(data[i].interp)
 							.appendTo('#taxPaidStatus');
@@ -613,7 +613,7 @@
 
 				/* 	$('#transactionID').val('');
 					$('#transactionID').val(txnid); */
-					//$('#transactionID').attr("placeholder","" );
+					$('#transactionID').attr("placeholder","" );
 					if(txnid=="")
 					{
 					
@@ -837,19 +837,16 @@ function fileTypeValueChanges() {
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
 		       $('#fileFormateModal').openModal();
-		       $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+		       
 		   } 
 			else if(ext!='csv')
 				{
 				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file extension must be in  CSV.');
+				 
 				}
 			else if(fileSize>='5000'){
 				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file size must be less then 5 mb.');
+				 
 			}
 			else {
 				console.log("file formate is correct")
