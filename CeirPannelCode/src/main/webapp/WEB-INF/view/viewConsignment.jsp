@@ -356,7 +356,7 @@
 		<div class="modal-content">
 
 
-			<div class="row">
+						<div class="row">
 				<h6 id="approveConsignmnetHeading">
 					<spring:message code="modal.message.clearConsignment" />
 					<span id="displayname"></span>
@@ -368,9 +368,16 @@
 					<h6>
 						<spring:message code="modal.message.doApprove" />
 					</h6>
+					<form action=""  >
+          <p id="tacSatusForCustom" style="display: none">
+            <label>
+              <input type="checkbox" id="tacStatusChecKbox" >
+              <span>By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request</span>
+            </label>
+          </p>
+        </form>
 				</div>
-
-			</div>
+</div>
 			<div class="row">
 				<%-- <h6 id="confirmationMessage">
 					<spring:message code="modal.message.clearConsignment" />
@@ -378,19 +385,20 @@
 				<input type="text" id="setApproveConsignmentTxnId"
 					style="display: none">
 			</div>
-			<div class="row button-div">
+						<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
+						<button class="modal-close modal-trigger btn" id="approveButton" disabled="disabled"
 							onclick="approveSubmit(0)">
 							<spring:message code="modal.yes" />
 						</button>
-						<button class="modal-close btn" style="margin-left: 10px;">
+						<button class="modal-close btn"   style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 

@@ -1514,5 +1514,7 @@ type="submit" ><spring:message code="button.update" /></button>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>			
 
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 </html>

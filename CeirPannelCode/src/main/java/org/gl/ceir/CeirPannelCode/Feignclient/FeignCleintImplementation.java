@@ -359,8 +359,8 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 
 				@RequestMapping(value= "/save/system-config-list" , method=RequestMethod.POST) 
 				public GenricResponse AddfieldManagementFeign(@RequestBody FilterRequest filterRequest);
-				
-				
+						
+
 				//***************************************************View Field Management Feign********************************
 
 				@RequestMapping(value= "/get/system-config-list" , method=RequestMethod.POST) 

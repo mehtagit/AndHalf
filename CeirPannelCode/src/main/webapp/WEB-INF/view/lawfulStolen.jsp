@@ -99,6 +99,11 @@ textarea.materialize-textarea {
 	height: unset !important;
 	max-height: 300px !important;
 }
+
+select.browser-default {
+    height: 34px;
+    margin-bottom: 4px;
+}
 </style>
 
 
@@ -319,8 +324,7 @@ textarea.materialize-textarea {
 													</div>
 
 													<div>
-														<div class="input-field col s12 m6"
-															style="margin-top: 22px;">
+														<div class="input-field col s12 m6">
 															<input type="text" name="deviceBrandName"
 																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}" 
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
@@ -328,15 +332,7 @@ textarea.materialize-textarea {
 															<label for="deviceBrandName"><spring:message code="registration.devicebrandname" /></label>
 														</div>
 
-														<div class="input-field col s12 m6"
-															style="margin-top: 22px;">
-															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" 
-															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumber" > <label
-																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
-														</div>
-
-														<div class="col s6 m6 selectDropdwn">
+														<div class="col s6 m6">
 															<label for="deviceIDType"><spring:message code="select.deviceIDType" /></label> <select
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 																title= "<spring:message code="validation.selectFieldMsg" />" id="singleStolendeviceIDType" class="browser-default">
@@ -344,7 +340,7 @@ textarea.materialize-textarea {
 															</select>
 														</div>
 
-														<div class="col s6 m6 selectDropdwn">
+														<div class="col s6 m6">
 															<label for="deviceType"><spring:message code="select.deviceType" /></label> <select
 																class="browser-default" id="singleStolendeviceType"
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
@@ -416,45 +412,78 @@ textarea.materialize-textarea {
 															</select>
 														</div>
 														 <div class="col s12 m6">
-<p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
-<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
-value="Immediate"
-onclick="document.getElementById('calender').style.display = 'none';"
-name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
-</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
-value="Default"
-onclick="document.getElementById('calender').style.display = 'none';"
-name="stolenBlockPeriod"><spring:message code="operator.default" />
-</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
-onclick="document.getElementById('calender').style.display = 'block';"
-name="stolenBlockPeriod"><spring:message code="operator.later" />
-</label>
-<div class="col s6 m2 responsiveDiv"
-style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px" id="calender">
-<div id="startdatepicker" class="input-group date">
-<input type="text" id="stolenDatePeriod"
-style="margin-top: -9px" /> <span class="input-group-addon"
-style="color: #ff4081"><i class="fa fa-calendar"
-aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
-</div>
+															<p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
+															<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+															value="Immediate"
+															onclick="document.getElementById('calender').style.display = 'none';"
+															name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
+															</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+															value="Default"
+															onclick="document.getElementById('calender').style.display = 'none';"
+															name="stolenBlockPeriod"><spring:message code="operator.default" />
+															</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+															onclick="document.getElementById('calender').style.display = 'block';"
+															name="stolenBlockPeriod"><spring:message code="operator.later" />
+															</label>
+															<div class="col s6 m2 responsiveDiv"
+															style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px" id="calender">
+															<div id="startdatepicker" class="input-group date">
+															<input type="text" id="stolenDatePeriod"
+															style="margin-top: -9px" /> <span class="input-group-addon"
+															style="color: #ff4081"><i class="fa fa-calendar"
+															aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+															</div>
+															
+															</div>
+															
+															
+															<div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
+															id="stolenDate">
+															
+															<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
+															<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+															
+															<input class="form-control" name="inputsaves" type="text"
+															id="startDateFilter" readonly /> <span class="input-group-addon"
+															style="color: #ff4081"><i
+															class="glyphicon glyphicon-calendar"
+															onclick="_Services._selectstartDate()"></i></span>
+															</div>
+															</div>
+														</div>
+														
+														<div class="col s12 m12" style="margin-top: 30px; font-weight: bold;">
+															<h6><spring:message code="registration.imei/meid/esnnumber" /></h6>
+														</div>
 
-</div>
-
-
-<div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
-id="stolenDate">
-
-<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
-<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
-
-<input class="form-control" name="inputsaves" type="text"
-id="startDateFilter" readonly /> <span class="input-group-addon"
-style="color: #ff4081"><i
-class="glyphicon glyphicon-calendar"
-onclick="_Services._selectstartDate()"></i></span>
-</div>
-</div>
-</div>
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" id="singleStolenimeiNumber"> <label
+																for="imeiNumber"><spring:message code="registration.one" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumber" > <label
+																for="imeiNumber"><spring:message code="registration.two" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumber" > <label
+																for="imeiNumber"><spring:message code="registration.three" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumber" > <label
+																for="imeiNumber"><spring:message code="registration.four" /></label>
+														</div>
+														
 
 														<div class="col s12 m12" style="margin-top: 30px;">
 															<h5><spring:message code="registration.plstolen" /></h5>
@@ -537,7 +566,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														</div>
 
 														<div class="col s12 m6 l6">
-															<label><spring:message code="input.province" /><span class="star">*</span></label> <select
+															<label><spring:message code="input.province" /> <span class="star">*</span></label> <select
 																id="singleDevicestate" class="browser-default"
 																class="mySelect" style="padding-left: 0;" 
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"

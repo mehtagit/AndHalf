@@ -94,7 +94,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <div class="input-field col s12 m6 l6">
 <input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-title= "<spring:message code="validation.18digit" />"  
+title= "<spring:message code="validation.T18characters" />"  
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
