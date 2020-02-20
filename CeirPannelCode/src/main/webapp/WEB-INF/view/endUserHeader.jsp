@@ -79,7 +79,7 @@
                     	<li>
 					<div class="col-1 col-xs-1 offset-md-1 text-right px-0 ml-3 my-auto">
             					<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer" target="_blank" title="DMC, external link that open in a new window">
-                				<img src="./resources/images/dmc_gl.png" class="darken-1 my-2" style="height:56px;"></a>
+                				<img src="./resources/images/DMC-Logo.png" class="darken-1 my-2" style="height:56px;"></a>
         					</div>
         				</li>
                         <li>

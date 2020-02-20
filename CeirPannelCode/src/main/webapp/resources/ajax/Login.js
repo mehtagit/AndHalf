@@ -27,16 +27,17 @@ function forgotPassword(){
 				$('#changePassword').openModal();
 			}      
 			else{
-				
+				alert($('#langlist').val())
 				$.i18n().locale = $('#langlist').val();
-				$("#forgotPassword #errorMsg").text(resp.response);
-/*				$.i18n().load( {
+	
+			//	$("#forgotPassword #errorMsg").text(resp.response);
+				$.i18n().load( {
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#forgotPassword #errorMsg").text($.i18n(resp.tag));
 				});
-*/
+
 			}
 			$("#forgotPasswordBtn").prop('disabled', false);
 		},

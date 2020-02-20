@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description;
 	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue;
 	public String getStartDate() {
 		return startDate;
@@ -77,6 +77,42 @@ public class FilterRequest {
 	}
 	public void setChildTag(String childTag) {
 		this.childTag = childTag;
+	}
+	public String getField() {
+		return field;
+	}
+	public void setField(String field) {
+		this.field = field;
+	}
+	public String getInterp() {
+		return interp;
+	}
+	public void setInterp(String interp) {
+		this.interp = interp;
+	}
+	public String getTagId() {
+		return tagId;
+	}
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -203,15 +239,18 @@ public class FilterRequest {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
 				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
 				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid
-				+ ", childTag=" + childTag + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus
-				+ ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId
-				+ ", fileStatus=" + fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType
-				+ ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status
-				+ ", asType=" + asType + ", serviceDump=" + serviceDump + ", fileType=" + fileType + ", action="
-				+ action + ", operatorTypeId=" + operatorTypeId + ", channel=" + channel + ", type=" + type
-				+ ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue + "]";
+				+ ", childTag=" + childTag + ", field=" + field + ", interp=" + interp + ", tagId=" + tagId + ", value="
+				+ value + ", displayName=" + displayName + ", description=" + description + ", userId=" + userId
+				+ ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId="
+				+ featureId + ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType="
+				+ requestType + ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus
+				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
+				+ serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId
+				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue="
+				+ parentValue + "]";
 	}
 	
 	
-
+	
+	
 }

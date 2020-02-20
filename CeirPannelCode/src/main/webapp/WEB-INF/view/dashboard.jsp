@@ -113,7 +113,7 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  href="JavaScript:Void(0);"
+						<li><a  href="./Consignment/ManualFileDownload/"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
 							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
 						<li>

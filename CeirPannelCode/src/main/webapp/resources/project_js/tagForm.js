@@ -14,14 +14,14 @@
 	
 	
 	function hide() {
-		var In = $('#Search').val();
+		var tagId = $('#tagId').val();
 		
-		if(In.length == 0){
+		if(tagId.length == 0){
 			console.log("please field input");
 		}else{
-			sessionStorage.setItem("roleType",roleType);
-			sessionStorage.setItem("nationalId", In);
-		window.location.replace("./uploadPaidStatus?via=other&NID="+In);
+			//sessionStorage.setItem("roleType",roleType);
+		sessionStorage.setItem("tagId", tagId);
+		window.location.replace("./fieldManagement?via=other&tagId="+tagId);
 		}
 	}
 	
@@ -39,7 +39,7 @@
 		success: function (data, textStatus, jqXHR) {
 			var result = data.data;
 			for (i = 0; i < result.length; i++){
-				$('<option>').val(result[i]).text(result[i]).appendTo('#tagId');
+				$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#tagId');
 			}
 			
 		},
