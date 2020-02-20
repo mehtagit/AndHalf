@@ -91,8 +91,9 @@ public class AssigneeStockDatatableController {
 					String firstName = dataInsideList.getFirstName();
 					String phoneNo = dataInsideList.getPhoneNo();
 					String email = dataInsideList.getEmail();
+					String selectAction="saveAssigneDetails('"+username+"','"+firstName+"')";
 					// log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-					String action = "<a href=\"#\">SELECT</a>";
+					String action = "<a onclick="+selectAction+">SELECT</a>";
 					Object[] finalData = { username, firstName, phoneNo, email, action };
 					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);

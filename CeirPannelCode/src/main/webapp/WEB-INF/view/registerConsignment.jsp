@@ -214,13 +214,13 @@ section {
 												pattern="[0-9]{0,7}"
 												title="<spring:message code="validation.7character" />"
 												maxlength="7"  oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"  required/> <label for="quantity"
-												class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label>
+												class="center-align"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 										</div>
 
 
 										<div class=" col s12 m6">
 											
-												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /><span class="star">*</span></label>
+												<label for="expectedArrivalPort"><spring:message code="input.arrivalport" /> <span class="star">*</span></label>
 											<select class="browser-default" id="expectedArrivalPort"  oninput="InvalidMsg(this'select');" oninvalid="InvalidMsg(this,'select');" required
 												 name="expectedArrivalPort" title="<spring:message code="validation.selectFieldMsg" />">
 												<%-- <spring:message code="input.arrivalport" /> --%>
@@ -240,7 +240,7 @@ section {
 
 									<div class="row myRow">
 										<h6 class="file-upload-heading" style="margin-left: 15px;">
-											<spring:message code="input.bulkdevice" /><span class="star">*</span>
+											<spring:message code="input.bulkdevice" /> <span class="star">*</span>
 										</h6>
 										<div class="file-field input-field col s12 m6"
 											style="margin-top: 5px;">

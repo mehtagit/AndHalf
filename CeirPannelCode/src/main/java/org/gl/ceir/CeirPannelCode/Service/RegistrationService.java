@@ -185,6 +185,7 @@ public class RegistrationService {
 
 				OtpResponse response=new OtpResponse();
 				log.info("confirm password is not same as password");
+				response.setTag("password_mismatch");
 				response.setResponse("Password and Confirm password must be same");
 				return response;
 			}
@@ -192,6 +193,7 @@ public class RegistrationService {
 		else {
 			log.info("if captcha not match");
 			OtpResponse response=new OtpResponse();
+			response.setTag("Wrong_captcha");
 			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
 			return response;
 		}
@@ -274,6 +276,7 @@ public class RegistrationService {
 			else {
 
 				OtpResponse response=new OtpResponse();
+				response.setTag("password_mismatch");
 				log.info("confirm password is not same as password");
 				response.setResponse("Password and Confirm password must be same");
 				return response;
@@ -282,6 +285,7 @@ public class RegistrationService {
 		else {
 			log.info("if captcha not match");
 			OtpResponse response=new OtpResponse();
+			response.setTag("Wrong_captcha");
 			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
 			return response;
 		}

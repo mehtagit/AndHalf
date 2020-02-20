@@ -142,7 +142,7 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="addValue" name="value" pattern="[0-9]{8,8}" title="Please enter digits"  maxlength="8" required="required">
+                        <input type="text" id="addValue" name="value" pattern="[0-9]" title="Please enter digits"  maxlength="8" required="required">
                         <label for="addValue" class="">Value <span class="star">*</span></label>
                     </div>
 
@@ -181,7 +181,7 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editValue" name="value" pattern="[0-9]{8,8}" title="Please enter digits"  maxlength="8" required="required">
+                        <input type="text" id="editValue" name="value" pattern="[0-9]" title="Please enter digits"  maxlength="8" required="required">
                         <label for="editValue" class="">Value <span class="star">*</span></label>
                     </div>
 

@@ -1573,6 +1573,7 @@ public class IconsState {
 		return action;
 
 	}
+
 	
 	/********************************** Icons for Field Management**********************************/ 
 
@@ -1595,8 +1596,6 @@ public class IconsState {
 		return action;
 
 	}
-
-
 
 	@PostConstruct
 	public void executePostConstruct() {

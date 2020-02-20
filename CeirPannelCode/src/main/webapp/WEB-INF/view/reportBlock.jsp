@@ -8,7 +8,9 @@
 <html lang="en" class="no-js">
 <head>
 <title>Dashboard</title>
-
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -86,7 +88,7 @@
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}"
+<body data-id="7" data-roleType="${usertype}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -155,16 +157,16 @@
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <textarea id="singleblockremark" class="materialize-textarea" maxlength="200" 
+                                                                <textarea id="singleblockremark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.200characters" />" required  / > </textarea>
-                                                                <label for="singleblockRemark"><spring:message code="input.remarks" /> <span class="star"> *</span></label>
+                                                                title= "<spring:message code="validation.200character" />"  maxlength="200" required /></textarea>
+                                                                <label for="singleblockremark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
                                                               <div class="col s12 m6"><label for="singleDeviceCategory"><spring:message code="operator.category" />
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="singleDeviceCategory" 
                                                          oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                    title= "<spring:message code="validation.numberfirst" />" required / >
+                                                                    title= "<spring:message code="validation.numberfirst" />" required>
                                                             <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
                                                             
@@ -273,9 +275,9 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                        <input type="text" id="blockbulkquantity" name="quantity" pattern="[0-9]{1-9}" 
+                                                        <input type="text" id="blockbulkquantity" name="quantity" pattern="[0-9]{1-7}" 
                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                        title= "<spring:message code="validation.7digits" />" required  / maxlength="16" >
+                                                        title= "<spring:message code="validation.7digits" />" required  / maxlength="7" >
                                                         <label for="blockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                     </div>
                                                     
@@ -292,12 +294,12 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         </div>
                                                     </div>
 
-                                                    <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="blockbulkRemark" class="materialize-textarea" maxlength="200" 
-                                                        oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                        title= "<spring:message code="validation.200character" />" required  / > </textarea>
-                                                        <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
-                                                    </div>
+                    <div class="input-field col s12 m6" style="margin-top: 62px;">
+                                                                <textarea id="blockbulkRemark"  class="materialize-textarea" 
+                                                                oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                                title= "<spring:message code="validation.200character" />"  maxlength="200" required /></textarea>
+                                                                <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
+                                                            </div>
 
                                                     <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>
@@ -355,7 +357,13 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->

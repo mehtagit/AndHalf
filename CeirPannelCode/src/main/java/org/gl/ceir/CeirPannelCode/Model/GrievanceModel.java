@@ -16,18 +16,117 @@ private String txnId;
 private String userType;
 private String reply;
 private String userDisplayName,email,firstName,lastName,middleName,phoneNo;
+private GrievanceMessageModal grievance;
 private List<MultipleFileModel> attachedFiles;
+
+
+
+
+public GrievanceMessageModal getGrievance() {
+	return grievance;
+}
+
+
+
+public void setGrievance(GrievanceMessageModal grievance) {
+	this.grievance = grievance;
+}
 
 
 
 @Override
 public String toString() {
-	return "GrievanceModel [id=" + id + ", categoryId=" + categoryId + ", grievanceStatus=" + grievanceStatus
-			+ ", userId=" + userId + ", featureId=" + featureId + ", fileName=" + fileName + ", grievanceId="
-			+ grievanceId + ", modifiedOn=" + modifiedOn + ", createdOn=" + createdOn + ", remarks=" + remarks
-			+ ", txnId=" + txnId + ", userType=" + userType + ", reply=" + reply + ", userDisplayName="
-			+ userDisplayName + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-			+ ", middleName=" + middleName + ", phoneNo=" + phoneNo + ", attachedFiles=" + attachedFiles + "]";
+	StringBuilder builder = new StringBuilder();
+	builder.append("GrievanceModel [id=");
+	builder.append(id);
+	builder.append(", categoryId=");
+	builder.append(categoryId);
+	builder.append(", grievanceStatus=");
+	builder.append(grievanceStatus);
+	builder.append(", userId=");
+	builder.append(userId);
+	builder.append(", featureId=");
+	builder.append(featureId);
+	builder.append(", fileName=");
+	builder.append(fileName);
+	builder.append(", grievanceId=");
+	builder.append(grievanceId);
+	builder.append(", modifiedOn=");
+	builder.append(modifiedOn);
+	builder.append(", createdOn=");
+	builder.append(createdOn);
+	builder.append(", remarks=");
+	builder.append(remarks);
+	builder.append(", txnId=");
+	builder.append(txnId);
+	builder.append(", userType=");
+	builder.append(userType);
+	builder.append(", reply=");
+	builder.append(reply);
+	builder.append(", userDisplayName=");
+	builder.append(userDisplayName);
+	builder.append(", email=");
+	builder.append(email);
+	builder.append(", firstName=");
+	builder.append(firstName);
+	builder.append(", lastName=");
+	builder.append(lastName);
+	builder.append(", middleName=");
+	builder.append(middleName);
+	builder.append(", phoneNo=");
+	builder.append(phoneNo);
+	builder.append(", grievance=");
+	builder.append(grievance);
+	builder.append(", attachedFiles=");
+	builder.append(attachedFiles);
+	builder.append(", getFeatureId()=");
+	builder.append(getFeatureId());
+	builder.append(", getId()=");
+	builder.append(getId());
+	builder.append(", getCategoryId()=");
+	builder.append(getCategoryId());
+	builder.append(", getGrievanceStatus()=");
+	builder.append(getGrievanceStatus());
+	builder.append(", getUserId()=");
+	builder.append(getUserId());
+	builder.append(", getFileName()=");
+	builder.append(getFileName());
+	builder.append(", getGrievanceId()=");
+	builder.append(getGrievanceId());
+	builder.append(", getModifiedOn()=");
+	builder.append(getModifiedOn());
+	builder.append(", getCreatedOn()=");
+	builder.append(getCreatedOn());
+	builder.append(", getRemarks()=");
+	builder.append(getRemarks());
+	builder.append(", getTxnId()=");
+	builder.append(getTxnId());
+	builder.append(", getUserType()=");
+	builder.append(getUserType());
+	builder.append(", getReply()=");
+	builder.append(getReply());
+	builder.append(", getUserDisplayName()=");
+	builder.append(getUserDisplayName());
+	builder.append(", getEmail()=");
+	builder.append(getEmail());
+	builder.append(", getFirstName()=");
+	builder.append(getFirstName());
+	builder.append(", getLastName()=");
+	builder.append(getLastName());
+	builder.append(", getMiddleName()=");
+	builder.append(getMiddleName());
+	builder.append(", getPhoneNo()=");
+	builder.append(getPhoneNo());
+	builder.append(", getAttachedFiles()=");
+	builder.append(getAttachedFiles());
+	builder.append(", getClass()=");
+	builder.append(getClass());
+	builder.append(", hashCode()=");
+	builder.append(hashCode());
+	builder.append(", toString()=");
+	builder.append(super.toString());
+	builder.append("]");
+	return builder.toString();
 }
 
 

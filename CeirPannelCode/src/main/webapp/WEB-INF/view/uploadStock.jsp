@@ -19,6 +19,11 @@
 <head>
 <title>Dashboard</title>
 
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
+
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -198,7 +203,7 @@ to {
 </style>
 
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -217,13 +222,13 @@ to {
 							<form action="" onsubmit="return uploadStock()" method="POST"
 								enctype="multipart/form-data" id="uploadStock">
 
-								<div class="row myRow">
+								<div class="row myRow" id="supplierNameOrIdDiv" style="display: none;">
 									<div class="input-field col s12 m6">
-										<input type="text" name="supplierId"
+										<input type="text" name="supplierId" 
 											pattern="[A-Za-z0-9]{0,15}"
 											title="<spring:message code="validation.15character" />"
 											maxlength="15" id="supplierId"
-											maxlength="15" /> <label for="SupplierId" id="SupplierIdAssignie"
+											maxlength="15" /> <label for="supplierId" id="SupplierIdAssignie"
 											class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
@@ -232,14 +237,14 @@ to {
 										<input type="text" name="supplierName" id="supplierName"
 											pattern="[A-Za-z ]{0,50}"
 											title="<spring:message code="validation.50character" />"
-											maxlength="50" required /> <label for="SupplierName" id="SupplierIdAssignieName"
+											maxlength="50" required /> <label for="supplierName" id="SupplierIdAssignieName"
 											class="center-align"><spring:message
 												code="input.supllierName" /><span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
-                                                <a onclick="openModalForAssigneId()" id="assigneDetailslink" class="supplierInformation" style="display: none;">Search
-                                                    For Assignee Information</a>
+                                                <a onclick="openModalForAssigneId()" id="assigneDetailslink" class="supplierInformation" style="display: none;">
+                                                 <spring:message code="AssigneSearchLink" /></a>
                                             </div>
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
@@ -251,8 +256,8 @@ to {
 												code="input.quantity" /><span class="star">*</span></label>
 									</div>
 
-									<div class="input-field col s12 m6">
-										<input type="text" name="invoiceNumber" id="invoiceNumber"
+									<div class="input-field col s12 m6" id="invoiceNumberDiv" style="display: none">
+										<input type="text" name="invoiceNumber" id="invoiceNumber" 
 											pattern="[A-Za-z0-9]{0,15}"
 											title="<spring:message code="validation.15numbers" />"
 											maxlength="15" /> <label for="InvoiceNumber"
@@ -362,10 +367,10 @@ to {
 	
 	
 	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"> Uploaded file format</h6>
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"></h6>
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -381,8 +386,8 @@ to {
 	
 	<div id="searchSupplierInformation" class="modal">
         <!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
-         <a href="assignDistributor" class="btn-flat right">&times;</a>
-         <h6 class="modal-header">Search Assignee Information</h6>
+         <a  class="modal-close btn-flat right">&times;</a>
+         <h6 class="modal-header"><spring:message code="searchAssigneMessage" /></h6>
        <div class="modal-content">
 
 	<form action="" <%-- onsubmit="return serchAssigneDetaiils()" --%>
@@ -394,13 +399,13 @@ to {
                         <label>
                             <input name="group1" type="radio"
                                value="1" onclick="document.getElementById('submitbtn').style.display ='block';" />
-                            <span class="checkboxFont"> Assignee Name</span>
+                            <span class="checkboxFont"> <spring:message code="AssigneeName" /></span>
                              <input name="group1" type="radio"
                                value="2" onclick="document.getElementById('submitbtn').style.display ='block';" />
-                            <span class="checkboxFont"> Contact Number</span>
+                            <span class="checkboxFont"> <spring:message code="AssigneContactNumber" /></span>
                              <input name="group1" type="radio"
                                 value="3" onclick="document.getElementById('submitbtn').style.display ='block';    " />
-                            <span class="checkboxFont"> Email ID</span>
+                            <span class="checkboxFont"><spring:message code="AssigneEmailID" /> </span>
                         </label>
                       </h5>
                 
@@ -408,13 +413,13 @@ to {
 
             <div class="row" id="submitbtn" style="display: none;" >
                     <div class="input-field col s12 m2">
-                        <label for="Search" class="center-align ml-10">Search :</label>
+                        <label for="Search" class="center-align ml-10"> <spring:message code="AssigneSearch" /></label>
                     </div>
                     <div class="input-field col s12 m5">
-                        <input type="text" id="assigneDetails" name="assigneDetails" placeholder="Search" />
+                        <input type="text" id="assigneDetails" name="assigneDetails" placeholder="<spring:message code="AssigneSearch" />" />
                     </div>
                     <div class="input-field col s12 m2">
-                  	 <a onclick="viewAssigneeHistory()" class="btn">Submit</a>
+                  	 <a onclick="viewAssigneeHistory()" class="btn"><spring:message code="button.submit" /></a>
                     </div>
             </div>
            </form>
@@ -501,22 +506,64 @@ to {
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+
 	<script>
+
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-window.parent.$('#langlist').on('change', function() {
-	var language=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	window.location.assign("./openUploadStock?reqType=formPage&lang="+language);
-}); 
-$.i18n().locale = lang;
-var successMsg,invoiceNumberExist;
-$.i18n().load( {
-	'en': './resources/i18n/en.json',
-	'km': './resources/i18n/km.json'
-} ).done( function() { 
-	successMsg=$.i18n('successMsg');
-	invoiceNumberExist=$.i18n('invoiceNumberExist');
-	console.log(successMsg+"**********"+invoiceNumberExist);
-});
+	window.parent.$('#langlist').on('change', function() {
+		var language=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+		window.location.assign("./openUploadStock?reqType=formPage&lang="+language);
+	}); 
+	$.i18n().locale = lang;
+	var successMsg,invoiceNumberExist,assigneIdLabel,assigneNameLabel;
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+		successMsg=$.i18n('successMsg');
+		invoiceNumberExist=$.i18n('invoiceNumberExist');
+		   assigneIdLabel=$.i18n('assigneIdLabel');
+		  assigneNameLabel=$.i18n('assigneNameLabel');
+		 
+		 var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 
+		 
+			if(currentRoleTypeAssignei=='Importer'){
+				$("#assigneDetailslink").css("display", "none"); 
+				$("#supplierNameOrIdDiv").css("display", "block"); 
+				$("#invoiceNumberDiv").css("display", "block"); 
+				console.log("----importer");
+			}
+			
+			
+			else if(currentRoleTypeAssignei == 'Manufacturer')
+				{
+				
+				$("#supplierNameOrIdDiv").css("display", "none"); 
+				$("#invoiceNumberDiv").css("display", "none");
+				$("#assigneDetailslink").css("display", "none");
+				
+				 $("#supplierId").attr("required", false);
+				 $("#supplierName").attr("required", false);
+				 $("#invoiceNumber").attr("required", false);
+				}
+			else{
+				
+				
+				
+				$("#supplierNameOrIdDiv").css("display", "block"); 
+				$("#invoiceNumberDiv").css("display", "block")
+				$("#assigneDetailslink").css("display", "block"); 
+				$('#SupplierIdAssignie').text('');
+				$('#SupplierIdAssignie').text(assigneIdLabel);
+			
+				$('#SupplierIdAssignieName').text('');
+				$('#SupplierIdAssignieName').text(assigneNameLabel);
+
+				$("#SupplierIdAssignieName").append('<span class="star">*</span>');
+			}
+	});
 
 
 function uploadStock(){
@@ -617,19 +664,17 @@ function fileTypeValueChanges(dd, ddd) {
 	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
    if (uploadedFileName.length > 30) {
        $('#fileFormateModal').openModal();
-       $('#fileErrormessage').text('');
-       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+      
+       
    } 
 	else if(ext!='csv')
 		{
 		$('#fileFormateModal').openModal();
-		 $('#fileErrormessage').text('');
-	       $('#fileErrormessage').text('file extension must be in  CSV.');
+		 
 		}
-	else if(fileSize>='5000'){
+	else if(fileSize>='2000'){
 		$('#fileFormateModal').openModal();
-		 $('#fileErrormessage').text('');
-	       $('#fileErrormessage').text('file size must be less then 5 mb.');
+		 
 	}
 	else {
 		console.log("file formate is correct")
@@ -645,32 +690,8 @@ function clearFileName() {
 	$('#fileFormateModal').closeModal();
 }
 
-
-$(document).ready(function() {
- // executes when HTML-Document is loaded and DOM is ready
-var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 
-
-if(currentRoleTypeAssignei!='Importer'){
-	$("#assigneDetailslink").css("display", "block"); 
-$('#SupplierIdAssignie').text('');
-$('#SupplierIdAssignie').text('Assignee ID');
-
-$('#SupplierIdAssignieName').text('');
-$('#SupplierIdAssignieName').text('Assignee Name');
-
-$("#SupplierIdAssignieName").append('<span class="star">*</span>');
-}
-else{
-	
-	$("#assigneDetailslink").css("display", "none"); 
-	console.log("----importer");
-}
-//$("#nidType").append('<span class="star">*</span>');
-
-});
-
-
 function openModalForAssigneId(){
+	
 	$('#searchSupplierInformation').openModal();
 }
 
@@ -734,12 +755,22 @@ function assigneeTable(URL,dataUrl){
 $('input:radio[name="group1"]').change(
 	    function(){
 	        if ($(this).is(':checked')) {
-	        	$("input[name='group1']").attr("disabled","disabled");
+	        	//$("input[name='group1']").attr("disabled","disabled");
 	        }
 	    });
 
 
-
+function saveAssigneDetails(assigneId,assigneName)
+{
+	$('#searchSupplierInformation').closeModal();
+	$("#supplierId").attr("placeholder","");
+	$("#supplierName").attr("placeholder","");
+	$('#supplierId').val(assigneId).prop('readonly', true);
+	$('#supplierName').val(assigneName).prop('readonly', true);
+	$("label[for='supplierId']").addClass('active');
+	$("label[for='supplierName']").addClass('active');
+	
+}
 
 </script>
 

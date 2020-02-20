@@ -17,7 +17,7 @@ var featurID=sessionStorage.getItem("data-feature") == null ? '1' : sessionStora
 var intialController=sessionStorage.getItem("a") == null ? "./Home" : sessionStorage.getItem("a");
 $(document).ready(function () {
 	//var DB_LANG_VALUE= sessionStorage.getItem("sessionLang") == null ? window.parent.$("body").attr("data-lang") :  sessionStorage.getItem("sessionLang");
-	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' scrolling='yes' frameBorder='0' src="+intialController+" width='100%' height='700px'></iframe>");
+	$("#section").append(" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' frameBorder='0' src="+intialController+" width='100%' onLoad='self.scrollTo(0,0)'></iframe>");
 	//window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
 	var url = new URL(window.location.href);
 	/*sessionStorage.getItem("sessionLang")*/
