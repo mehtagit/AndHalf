@@ -98,6 +98,11 @@ textarea.materialize-textarea {
 	height: auto;
 	max-height: 300px;s
 }
+
+select.browser-default {
+    height: 34px;
+    margin-bottom: 4px;
+}
     </style>
 
 
@@ -138,20 +143,20 @@ textarea.materialize-textarea {
                                                 <form action="" id="" onsubmit="return saveIndivisualRecoveryRequest()" method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-s12 m12">
-                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" pattern="[a-zA-Z]{0,30}" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.30characters" />"  maxlength="30">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
                                                             </div>
-
+<%-- 
                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" 
                                                                  pattern="[0-9]{15,16}" 
                                                                oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.1516digit" />" required  maxlength="16" />
                                                                 <label for="sigleRecoveryimeiNumber"> <spring:message code="registration.imei/meid/esnnumber" /><span class="star"> *</span></label>
-                                                            </div>
+                                                            </div> --%>
 
                                                             <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceIDType"><spring:message code="select.deviceIDType" /> <span class="star"> *</span></label>
@@ -186,6 +191,38 @@ textarea.materialize-textarea {
                                                                 title= "<spring:message code="validation.15serialNo" />"  maxlength="15">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
+                                                            
+                                                            <div class="col s12 m12" style="margin-top: 10px; font-weight: bold;">
+															<h6><spring:message code="registration.imei/meid/esnnumber" /></h6>
+														</div>
+
+														<div class="input-field col s12 m6">
+															<input type="text" name="sigleRecoveryimeiNumber" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" id="sigleRecoveryimeiNumber" required/> 
+															<label for="sigleRecoveryimeiNumber"><spring:message code="registration.one" /> <span class="star"> *</span></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumberTwo" > <label
+																for="singleStolenimeiNumberTwo"><spring:message code="registration.two" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumberThree" > <label
+																for="singleStolenimeiNumberThree"><spring:message code="registration.three" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+															title= "<spring:message code="validation.1516digit" />"  maxlength="16" 	id="singleStolenimeiNumberFour" > <label
+																for="singleStolenimeiNumberFour"><spring:message code="registration.four" /></label>
+														</div>
 
                                                             <div class="col s12 m12" style="margin-top: 30px;">
                                                                 <h5><spring:message code="registration.placeofdevicerecovery" /></h5>
