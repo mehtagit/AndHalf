@@ -95,7 +95,8 @@ margin-bottom: 5px;
 }
 
 textarea.materialize-textarea {
-	height: 150px !important;
+	height: auto;
+	max-height: 300px;s
 }
     </style>
 
@@ -103,7 +104,7 @@ textarea.materialize-textarea {
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="5" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"	>
@@ -138,9 +139,9 @@ textarea.materialize-textarea {
                                                     <div class="row">
                                                         <div class="col-s12 m12">
                                                              <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                                <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" pattern="[a-zA-Z]{0,20}" required="required"
+                                                                <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" pattern="[a-zA-Z]{0,30}" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.20Character" />" maxlength="20">
+                                                                title= "<spring:message code="validation.30characters" />"  maxlength="30">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
                                                             </div>
 
@@ -148,7 +149,7 @@ textarea.materialize-textarea {
                                                                 <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" 
                                                                  pattern="[0-9]{15,16}" 
                                                                oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.1516digit" />" required / maxlength="16" >
+                                                                title= "<spring:message code="validation.1516digit" />" required  maxlength="16" />
                                                                 <label for="sigleRecoveryimeiNumber"> <spring:message code="registration.imei/meid/esnnumber" /><span class="star"> *</span></label>
                                                             </div>
 
@@ -156,7 +157,7 @@ textarea.materialize-textarea {
                                                                 <label for="sigleRecoverydeviceIDType"><spring:message code="select.deviceIDType" /> <span class="star"> *</span></label>
                                                                 <select id="sigleRecoverydeviceIDType" class="browser-default"
                                                                 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                               title= "<spring:message code="validation.selectFieldMsg" />" required / >
+                                                               title= "<spring:message code="validation.selectFieldMsg" />" required  >
                                                                   <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                 </select>
                                                               </div>
@@ -180,9 +181,9 @@ textarea.materialize-textarea {
                                                               </div>
 
                                                               <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" pattern="[a-zA-Z0-9]{0,20}" required="required"
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" pattern="[a-zA-Z0-9]{0,15}" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.20Character" />" maxlength="20">
+                                                                title= "<spring:message code="validation.15serialNo" />"  maxlength="15">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
 
@@ -203,9 +204,9 @@ textarea.materialize-textarea {
                             
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverystreetNumber" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverystreetNumber" maxlength="30" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
+                                                                    id="sigleRecoverystreetNumber" maxlength="20" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.30characters" />" required />
+                                                                title= "<spring:message code="validation.20Character" />" required />
                                                                 <label for="sigleRecoverystreetNumber"> <spring:message code="input.streetNumber" /><span class="star"> *</span></label>
                                                             </div>
         
@@ -241,7 +242,7 @@ textarea.materialize-textarea {
                                 
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight"
-                                                                    id="sigleRecoverypin" maxlength="20" pattern="[0-9]{0,20}"
+                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{0,6}"
                                                                     oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.postalcode" />" required />
                                       					<label for="sigleRecoverypin"> <spring:message code="input.postalCode" /><span class="star"> *</span></label>
@@ -393,7 +394,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <textarea id="bulkRecoveryRemark"  
                                                          oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.10000characters" />" 
-                                                        		maxlength="10000" class="materialize-textarea"></textarea>
+                                                        		maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
                                                         <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
 
@@ -644,7 +645,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulReportUnblock.js"></script>
-		
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
 		<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

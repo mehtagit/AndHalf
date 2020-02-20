@@ -37,14 +37,21 @@ public interface DashboardFeignClient {
 
 	//stock/countAndQuantity  feign  controller
 	@RequestMapping(value="/grievance/count" ,method=RequestMethod.GET) 
-	public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType);
-
+	public RequestCountAndQuantity grievanceNotification(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType);
+ 
 	//dashboard/dbConf  controller
 		@RequestMapping(value="/dashboard/dbConf" ,method=RequestMethod.GET) 
 		public List<NumberOfBox> dashBoardDBConf(@RequestParam(value = "userTypeId") Integer userTypeId);
 		
 		//stock/countAndQuantity  feign  controller
 		@RequestMapping(value="/users/pendingCount" ,method=RequestMethod.GET) 
-		public RequestCountAndQuantity userPendingCount(@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+		public RequestCountAndQuantity userPendingCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+
+		///stakeholder/blockUnblockCount
+		@RequestMapping(value="/stakeholder/blockUnblockCount" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity stakeholderBlockUnblockCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
+		///TypeApproved/count
+		@RequestMapping(value="/TypeApproved/count" ,method=RequestMethod.GET) 
+		public RequestCountAndQuantity typeApprovedCount(@RequestParam(value = "requestType") String requestType,@RequestParam(value = "userId") Integer userId,@RequestParam(value = "featureId") Integer featureId,@RequestParam(value = "userTypeId") Integer userTypeId,@RequestParam(value = "userType") String userType) ;
 
 		}

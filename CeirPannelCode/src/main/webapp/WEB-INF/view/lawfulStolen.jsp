@@ -147,7 +147,7 @@ textarea.materialize-textarea {
 													<div class="input-field col s12 m4">
 														<input type="text" name="singleStolenfirstName"  
 							oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.20Character" />" required  / 	pattern="[a-zA-Z ]{1,20}" maxlength="20"
+							title= "<spring:message code="validation.20Character" />" required   	pattern="[a-zA-Z ]{1,20}" maxlength="20"
 															id="singleStolenfirstName"> <label
 															for="singleStolenfirstName"><spring:message code="input.firstName" /> <span
 															class="star"> *</span></label>
@@ -162,9 +162,9 @@ textarea.materialize-textarea {
 													</div>
 
 													<div class="input-field col s12 m4">
-														<input type="text" name="lastName" required="required" pattern="[a-zA-Z]{1,20}"
+														<input type="text" name="lastName"  pattern="[a-zA-Z]{1,20}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-							title= "<spring:message code="validation.20Character" />" required  /  maxlength="20"
+							title= "<spring:message code="validation.20Character" />" required    maxlength="20"
 															id="singleStolenlastName"> <label for="lastName"><spring:message code="input.lastName" /><span class="star"> *</span>
 														</label>
 													</div>
@@ -188,7 +188,7 @@ textarea.materialize-textarea {
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span> <input type="file" 
 															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  / 
+															title= "<spring:message code="validation.NoChosen" />" required   
 															
 																placeholder="Upload Photo" id="singleStolenFile">
 														</div>
@@ -204,7 +204,7 @@ textarea.materialize-textarea {
 														style="margin-top: 22px;">
 														<input type="text" name="nIDPassportNumber"  pattern="[A-Za-z0-9]{1,15}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-														title= "<spring:message code="validation.15alphanumeric" />" required  / maxlength="15"
+														title= "<spring:message code="validation.15alphanumeric" />" required   maxlength="15"
 															id="singleStolennIDPassportNumber"> <label
 															for="nIDPassportNumber"><spring:message code="registration.nid/passportnumber" /> <span
 															class="star"> *</span></label>
@@ -219,14 +219,14 @@ textarea.materialize-textarea {
 														</label>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
+													<div class="col s12 m6 l6">
 														<p class="contact-label">
 															 <spring:message code="registration.altcontactnumber" /><span class="star"> *</span>
 														</p>
-														<input type="tel" name="phone" id="singleStolenphone1"
-															required pattern="[0-9 + ]{1,14}" 
+														<input type="text" name="phone" id="singleStolenphone1"
+															 pattern="[0-9\s,+]{7,15}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.10digits" />" required  / maxlength="12">
+															title= "<spring:message code="validation.10digits" />"  maxlength="15" required/>
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
 													<!-- </div>
@@ -237,7 +237,7 @@ textarea.materialize-textarea {
 															class="form-control boxBorder boxHeight" id="singleStolenaddress" 
 														pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.200characters" />" required  / maxlength="200"> <label
+															title= "<spring:message code="validation.200characters" />" required   maxlength="200"> <label
 															for="address"><spring:message code="input.address" /> <span
 															class="star"> *</span></label>
 													</div>
@@ -246,7 +246,7 @@ textarea.materialize-textarea {
 														<input type="text" name="streetNumber" 	class="form-control boxBorder boxHeight" id="singleStolenstreetNumber" 
 														 pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" 
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.20Character" />" required  /  maxlength="20">
+															title= "<spring:message code="validation.20Character" />" required    maxlength="20">
 														<label for="streetNumber"><spring:message code="input.streetNumber" /><span
 															class="star"> *</span></label>
 													</div>
@@ -255,7 +255,7 @@ textarea.materialize-textarea {
 														<input type="text" name="village" id="singleStolenvillage"
 															pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.address30characters" />" required  / maxlength="30">
+															title= "<spring:message code="validation.address30characters" />" required   maxlength="30">
 															 <label for="village"><spring:message code="input.village" />
 															<span class="star"> *</span>
 														</label>
@@ -266,7 +266,7 @@ textarea.materialize-textarea {
 															class="form-control boxBorder boxHeight"
 															id="singleStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.address30characters" />" required  / maxlength="30">
+															title= "<spring:message code="validation.address30characters" />" required   maxlength="30">
 														<label for="locality"> <spring:message code="input.locality" /><span class="star"> *</span></label>
 													</div>
 
@@ -274,7 +274,7 @@ textarea.materialize-textarea {
 														<input type="text" name="district"
 															id="singleStolendistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.address30characters" />" required  / maxlength="30"> <label
+															title= "<spring:message code="validation.address30characters" />" required   maxlength="30"> <label
 															for="district"><spring:message code="input.district" /> <span class="star"> *</span></label>
 													</div>
 
@@ -282,7 +282,7 @@ textarea.materialize-textarea {
 														<input type="text" name="commune" id="singleStolencommune"
 															pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.address30characters" />" required  / maxlength="30"
+															title= "<spring:message code="validation.address30characters" />" required   maxlength="30"
 															> <label for="commune"><spring:message code="input.commune" />
 															<span class="star"> *</span>
 														</label>
@@ -293,7 +293,7 @@ textarea.materialize-textarea {
 															class="form-control boxBorder boxHeight"
 															id="singleStolenpin" pattern="[0-9]{1,6}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.postalcode" />" required  / maxlength="6" > 
+															title= "<spring:message code="validation.postalcode" />" required   maxlength="6" > 
 															<label
 															for="pin"><spring:message code="input.postalCode" /><span class="star"> *</span></label>
 													</div>
@@ -302,7 +302,7 @@ textarea.materialize-textarea {
 														<label><spring:message code="input.Country" /><span class="star"> *</span></label> <select
 															id="country" class="browser-default" class="mySelect"
 															oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-															title= "<spring:message code="validation.selectFieldMsg" />" required  / style="padding-left: 0;" ></select>
+															title= "<spring:message code="validation.selectFieldMsg" />" required   style="padding-left: 0;" ></select>
 													</div>
 
 													<div class="col s12 m6 l6">
@@ -372,13 +372,11 @@ textarea.materialize-textarea {
 																for="modalNumber"><spring:message code="input.modelNumber" /></label>
 														</div>
 
-														<div class="input-field col s12 m6">
-															<p class="contact-label">
-																<spring:message code="input.contactNum" /> <span class="star"> *</span>
-															</p>
-															<input type="tel" name="phone" id="singleStolenphone2" pattern="[0-9 + ]{1,12}" 
+														<div class="col s12 m6">
+															<p class="contact-label"><spring:message code="input.contactNum" /> <span class="star"> *</span></p>
+															<input type="text" name="phone" id="singleStolenphone2" pattern="[0-9\s,+]{7,15}" 
 															oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-															title= "<spring:message code="validation.postalcode" />" required  / maxlength="12">
+															title= "<spring:message code="validation.10digits" />"  maxlength="15" required/>
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
 
@@ -391,7 +389,7 @@ textarea.materialize-textarea {
 															<label><spring:message code="operator.Operator" /> <span class="star"> *</span></label> <select
 																class="browser-default" id="singleStolenOperator"
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-																title= "<spring:message code="validation.selectFieldMsg" />" required  / >
+																title= "<spring:message code="validation.selectFieldMsg" />" required>
 																<option value="" disabled selected><spring:message code="registration.selectoperator" /></option>
 																</select>
 														</div>
@@ -412,7 +410,7 @@ textarea.materialize-textarea {
 															<label><spring:message code="registration.complainttype" /> <span class="star"> *</span></label>
 															<select class="browser-default" 
 															oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-																title= "<spring:message code="validation.selectFieldMsg" />" required / id="singleStolenComplaintType">
+																title= "<spring:message code="validation.selectFieldMsg" />" required  id="singleStolenComplaintType">
 																<option value="" disabled selected><spring:message code="registration.selectcomplainttype" /></option>
 
 															</select>
@@ -734,9 +732,10 @@ onclick="_Services._selectstartDate()"></i></span>
 
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
-												<input type="tel" name="phone" id="bulkStolenContact" required pattern="[0-9]{1,12}" 
+												<input type="text" name="phone" id="bulkStolenContact"  pattern="[0-9\s,+]{7,15}" 
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.10digits" />" maxlength="12"> <label for="phone2"><spring:message code="input.contactNum" /></label>
+												title= "<spring:message code="validation.10digits" />"  maxlength="15" required/> 
+												<label for="phone2"><spring:message code="input.contactNum" /></label>
 											</div>
 
 											<!-- <div class="input-field col s12 m6">
@@ -756,7 +755,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenaddress" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,200}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.200characters" />" required  / maxlength="200"> <label
+													title= "<spring:message code="validation.200characters" />" maxlength="200" required/> <label
 													for="address"><spring:message code="input.address" /> <span
 													class="star"> *</span></label>
 											</div>
@@ -1045,10 +1044,10 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
+			<%-- <script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>	
 		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		src="${context}/resources/project_js/profileInfoTab.js" async></script> --%>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/intlTelInput.js">

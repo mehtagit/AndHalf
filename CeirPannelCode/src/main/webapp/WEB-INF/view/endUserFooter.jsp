@@ -74,7 +74,7 @@
         <div class="footer-copyright">
             <div class="container">
                 <span class="right">
-                <spring:message code="registration.copyright@" />
+                <spring:message code="registration.copyright" />
               
                 
                 </span>

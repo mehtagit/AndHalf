@@ -160,7 +160,9 @@ public class BlockUnblock {
 		 
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
-		    int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
+		    Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		    log.info("operaot type id=="+operatorTypeId);
+			String roletype=session.getAttribute("usertype").toString();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
 			log.info("Random transaction id number="+stlnTxnNumber);
@@ -198,7 +200,8 @@ public class BlockUnblock {
 			//stolenRecoveryModel.setDeviceCaegory(deviceCaegory);
 			stolenRecoveryModel.setOperatorTypeId(operatorTypeId);
 			stolenRecoveryModel.setBlockCategory(deviceCategory);
-			
+			stolenRecoveryModel.setRoleType(roletype);
+
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);

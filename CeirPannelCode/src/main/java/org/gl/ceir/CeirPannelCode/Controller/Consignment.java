@@ -509,4 +509,17 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 	return "redirect:"+fileExportResponse.getUrl();
 }
 
+
+
+@RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
+public String ManualSampleFile() throws IOException {
+log.info("request send to the manual sample file download api=");
+
+
+FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile();
+log.info("response from manual sample file download file "+response);
+
+return "redirect:"+response.getUrl();
+
+}
 }

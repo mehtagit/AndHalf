@@ -152,7 +152,7 @@ var contextpath = "${context}";
 </script>
 
 </head>
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 <section id="content" style="margin-bottom: 100px;">
                 <!--start container-->
                 <input type="text" id="pageTypeValue" value="${showPagetype}" style="display: none;">
@@ -488,7 +488,7 @@ var contextpath = "${context}";
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
     <!--plugins.js - Some Specific JS codes for Plugin Settings-->
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
