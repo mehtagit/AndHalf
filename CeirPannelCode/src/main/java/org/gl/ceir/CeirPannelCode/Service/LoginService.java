@@ -93,6 +93,7 @@ public class LoginService {
 			log.info("if captcha not match");
 			LoginResponse response=new LoginResponse();
 			response.setResponse("You have entered the wrong Captcha. Please enter the correct value");
+			response.setTag("Wrong_captcha");
 			return response; 
 		}
 	}

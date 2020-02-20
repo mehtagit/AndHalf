@@ -70,7 +70,7 @@
 
 </style>
 </head>
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 
 
 	<section id="content">
@@ -602,7 +602,7 @@
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-		
+			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/endUserUpdateVisaValidity.js"></script>
 	<script type="text/javascript"

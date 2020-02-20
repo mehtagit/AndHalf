@@ -5,7 +5,7 @@ public class UpdateProfileResponse {
 	private Integer statusCode;
 	private String userstatus;
 	private Integer userId;
-	
+	private String tag;
 	public String getResponse() {
 		return response;
 	}
@@ -30,10 +30,17 @@ public class UpdateProfileResponse {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
+	
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 	@Override
 	public String toString() {
 		return "UpdateProfileResponse [response=" + response + ", statusCode=" + statusCode + ", userstatus="
-				+ userstatus + ", userId=" + userId + "]";
+				+ userstatus + ", userId=" + userId + ", tag=" + tag + "]";
 	}
 
 	

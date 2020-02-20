@@ -131,7 +131,7 @@
                                                                     <spring:message code="operator.deviceidtype" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="blockdeviceIdType" 
                                                                  oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                title= "<spring:message code="validation.selectFieldMsg" />" required >
+                                                                title= "<spring:message code="validation.selectFieldMsg" />" required / >
                                                                     <option value="" disabled selected>
                                                                         <spring:message code="operator.selectdeviceidtype"/>
                                                                     </option>
@@ -155,15 +155,13 @@
                                                                     title= "<spring:message code="validation.numberfirst" />"  maxlength="15">
                                                                         <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
-                                                            
+                                        
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="singleblockremark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.200character" />"  maxlength="200" required /></textarea>
                                                                 <label for="singleblockremark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
-                                        
-                                                            
                                                               <div class="col s12 m6"><label for="singleDeviceCategory"><spring:message code="operator.category" />
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="singleDeviceCategory" 
@@ -295,20 +293,13 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             <input class="file-path validate" type="text" placeholder="">
                                                         </div>
                                                     </div>
-                                                    
-                                                    <div class="input-field col s12 m6" style="margin-top: 62px;">
+
+                    <div class="input-field col s12 m6" style="margin-top: 62px;">
                                                                 <textarea id="blockbulkRemark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.200character" />"  maxlength="200" required /></textarea>
                                                                 <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
-
-                                                    <%-- <div class="input-field col s12 m6" style="margin-top: 62px;">
-                                                        <textarea id="blockbulkRemark" class="materialize-textarea validate" 
-                                                        oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                        title= "<spring:message code="validation.200character" />" aria-required="true" required  maxlength="200"> </textarea>
-                                                        <label for="blockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
-                                                    </div> --%>
 
                                                     <p style="margin-left: 10px;"><a href="./Consignment/sampleFileDownload/7"><spring:message code="input.downlaod.sample" /></a></p>
                                                    <span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span class="star">*</span></span>

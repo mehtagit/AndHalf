@@ -21,7 +21,6 @@
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
-
     <!-- Favicons-->
     <!--<link rel="icon" href="images/favicon/favicon-32x32.png" sizes="32x32">-->
     <!-- Favicons-->
@@ -55,16 +54,6 @@
             background-color: #fff;
         }
 
-        /* .row {
-            margin-bottom: 0;
-            margin-top: 0;
-        } */
-
-        /* @media only screen and (min-width: 601px) .row .col.m6 {
-            margin-top: 0;
-            margin-bottom: 0;
-            height: 40px;
-        } */
 
         input[type=text] {
             /* height: 35px; */
@@ -75,32 +64,25 @@
 	right: 10px;
 	top: 10px;
 }
+
+.select-lang-lable {
+    margin-top: 9px;
+    text-align: right;
+    }
+    
+    .select-lang-drpdwn {
+    width: 75px;
+    margin-top: 0;
+    border-bottom: none;
+}
     </style>
 <script type="text/javascript">
 var contextpath='${context}';
 </script>
 </head>
 
-<body>
+<body data-lang-param="${pageContext.response.locale}">
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-
-     <header id="header" class="page-topbar">
-        <!-- start header nav-->
-        <div class="navbar-fixed">
-            <nav class="navbar-color">
-                <div class="nav-wrapper">
-                    <ul class="left">
-                        <li>
-                            <h1 class="logo-wrapper"><a href="index.html" class="brand-logo darken-1"><spring:message code="registration.ceir" /></a> <span
-                                    class="logo-text"><spring:message code="registration.materialize" /></span></h1>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        <!-- end header nav-->
-    </header>
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -119,11 +101,29 @@ var contextpath='${context}';
                 <div class="container">
                     <div class="section">
                         <div class="row card-panel login-card-panel" style="margin: auto; margin-top: 10vh;">
-                        <h6 class="fixPage-modal-header"><spring:message code="registration.forgotpassword" /></h6>
+                            <div class="col s9 m10 select-lang-lable">
+										<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+										</div>
+										<div class="col s3 m2 right" style="padding: 0;">
+											<select class="browser-default select-lang-drpdwn"
+												id="langlist">
+												<option value="en">English</option>
+												<option value="km"><spring:message code="lang.khmer" /></option>
+											</select>
+										</div>
+										<div class="col s12 m12">
+											<h5 style="text-align: -webkit-center;">
+												<spring:message code="registration.forgotpassword" />
+											</h5>
+											<span id="errorMsg" style="color: red;"></span>
+											<hr>
+
+
+										</div>
                             <div class="col s12 m12 l12">
                                 <form  id="forgotPassword" onsubmit="return forgotPassword()" >
                                 <div class="row">
-                       
+                       			
                         <span style="text-align: center;color: red;" id="errorMsg"></span>                          
                                  <!--     <hr style="margin-bottom: 30px;"> -->
 
@@ -135,8 +135,8 @@ var contextpath='${context}';
 
                                         <div class="input-field col s12 m6 l6">
                                             <input type="text" name="username" 
-     oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"                                       
-              title= "<spring:message code="validation.15character" />" required id="username" maxlength="10" />
+     oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"                                       
+              title= "<spring:message code="validation.requiredMsg" />" required id="username" maxlength="10" />
                                         </div>
                                     </div>
 
@@ -200,7 +200,8 @@ var contextpath='${context}';
 		<h6 class="modal-header" ><spring:message code="registration.setnewpassword" /></h6>  
 		<div class="modal-content">
 		<form onsubmit="return udapteNewPassword()">
-			<div class="row">   
+			<div class="row">  
+ 
 				<h5 style="text-align: -webkit-center;"><spring:message code="registration.newpassword" /></h5>
   <span style="text-align: center;color: red;" id="errorMsg"></span>
 				<div class="col s1">
@@ -292,13 +293,43 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
     <!-- ================================================
     Scripts
     ================================================ -->
+<!-- i18n library -->
+    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
 
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		
+	
   <!-- jQuery Library -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
        <!-- ajax js -->
-    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
-    <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
- 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+
     <!--materialize js-->
     <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
     <!--prism
@@ -316,9 +347,13 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
     <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
     <!--custom-script.js - Add your own theme custom JS-->
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
     
+    <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+ 	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
 
   
 </body>

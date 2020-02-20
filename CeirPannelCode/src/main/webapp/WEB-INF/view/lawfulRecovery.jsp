@@ -348,7 +348,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                 <textarea id="sigleRecovery" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
                                                                 title= "<spring:message code="validation.10000characters" />" 
-                                                                maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                                maxlength="10000" class="materialize-textarea"></textarea>
                                                                 <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
                                                             </div>
                                                             </div>
@@ -645,12 +645,12 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulReportUnblock.js"></script>
-			<script type="text/javascript"
+<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
 		<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

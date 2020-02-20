@@ -400,7 +400,11 @@ src="${context}/resources/project_js/dragableModal.js"></script>
 src="${context}/resources/project_js/enterKey.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
-
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 
 
 		<script type="text/javascript">

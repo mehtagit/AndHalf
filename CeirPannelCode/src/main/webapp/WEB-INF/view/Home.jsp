@@ -69,7 +69,7 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 </style>
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-id="1" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
 
 <!-- 
 <section id="content">
@@ -170,7 +170,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 		src="${context}/resources/project_js/enterKey.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/home.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 </body>
 
 </html>

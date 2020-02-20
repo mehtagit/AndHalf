@@ -18,6 +18,9 @@
 <html class="no-js" lang="en" dir="ltr">
 <head> 
 <title>Consignment</title>
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
 <meta name="fragment" content="!">
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -79,7 +82,7 @@
 var path="${context}";
 </script>
 </head>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="21" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
@@ -594,6 +597,8 @@ var path="${context}";
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/viewManageTypeAdmin.js"></script>	
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 
 </body>
 </html>

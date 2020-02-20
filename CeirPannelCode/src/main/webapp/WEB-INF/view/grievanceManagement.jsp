@@ -19,6 +19,11 @@
 <head>
 <title>Grievance</title>
 
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='-1'>
+<meta http-equiv='pragma' content='no-cache'>
+
+
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -82,7 +87,7 @@ var path="${context}";
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+<body data-id="6" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
@@ -133,7 +138,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
                     <span id="grievanceTxnId" style="display: none;"></span>
                     <hr>
                 </div>
-
+				<input type="text" id="existingGrievanceID" style="display: none;">	
                 <div class="col s12 m12" id="viewPreviousMessage">
                    <!--  <h6 style="float: left; font-weight: bold;" id="mesageUserType"> </h6>
                     <h6 style="float: left;"></h6>
@@ -167,8 +172,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <input type="file" name="files[]" id="docTypeFile1"  multiple>
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
-placeholder="Upload one or more files">
+<input class="file-path validate" type="text" 
+placeholder="<spring:message code="grievanceFileMessage" />">
 <div>
 <p id="myFiles"></p>
 </div>
@@ -176,7 +181,7 @@ placeholder="Upload one or more files">
 </div>
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" >
+<select class="browser-default" id="docTypetag1" onchange="enableAddMore()" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
@@ -189,7 +194,7 @@ placeholder="Upload one or more files">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button"><span
+<button class="btn right add_field_button" disabled="disabled"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">  <p>
@@ -255,7 +260,22 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 </div>
 </div>  
 	
-
+<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -323,6 +343,10 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
 		src="${context}/resources/project_js/dragableModal.js"></script>	
 			<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		
 	
 </body>

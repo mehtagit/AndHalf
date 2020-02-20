@@ -89,7 +89,7 @@ String name = (String) session.getAttribute("name");
 								<a href="http://dmc-cci.edu.kh/" rel="noopener noreferrer"
 									target="_blank"
 									title="DMC, external link that open in a new window"> <img
-									src="./resources/images/dmc_gl.png" id="header-img" class="darken-1 my-2"
+									src="./resources/images/DMC-Logo.png" id="header-img" class="darken-1 my-2"
 									style="height: 56px;"></a>
 							</div>
 						</li>
@@ -113,7 +113,7 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a  href="./Consignment/ManualFileDownload/"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
 							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
 						<li>
@@ -122,16 +122,16 @@ String name = (String) session.getAttribute("name");
 								<div id="iconLable" class="darken-1">
 									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 								</div>
-								<div>
+								<div style="width: 80px !important;">
 									<select class="darken-1" id="langlist"
 										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
 										<option value="en">English</option>
-										<option value="km">Khmer</option>
+										<option value="km"><spring:message code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToHome" class="modal-trigger"
+						<li><a   data-target="goToLogout" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -156,7 +156,7 @@ String name = (String) session.getAttribute("name");
 												code="registration.activate/deactivateaccount" /></span></a></li>
 								<li class="divider"></li>
 
-								<li><a href="${context}/logout" id=""><i
+								<li><a data-target="goToLogout" style="cursor: pointer;" class="modal-trigger" id=""><i
 										style="float: left;"
 										class="mdi-hardware-keyboard-tab dropdownColor"></i> <span
 										class="dropdownColor"> <spring:message
@@ -552,6 +552,30 @@ data-dismiss="modal">&times;</button> -->
 			</div>
 		</div>
 	</div>
+	
+	
+	<div id="goToLogout" class="modal modal-small" style="width: 40%;">
+		<!-- <button type="button" class=" modal-action modal-close waves-effect waves-green btn-flat right"
+data-dismiss="modal">&times;</button> -->
+		<h6 class="modal-header">
+			<spring:message code="logout.page" />
+		</h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6>
+					<spring:message code="logout.msg" />
+				</h6>
+			</div>
+			<div class="input-field col s12 center">
+				<div class="input-field col s12 center">
+					<a href="./logout" class="btn" type="submit" name="add_user"
+						id="add_user"><spring:message code="modal.yes" /></a> <a href="#"
+						class="modal-close btn" style="margin-left: 10px;"><spring:message
+							code="modal.no" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal End -->
 	<!-- Modal End -->
@@ -640,6 +664,8 @@ $(document).ready(function () {
 		src="${context}/resources/project_js/dashboard.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/ajax/Profile.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
 </body>
 
 </html>
