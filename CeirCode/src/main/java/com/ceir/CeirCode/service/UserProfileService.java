@@ -15,9 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
+import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.UserProfileSpecificationBuilder;
 import com.ceir.CeirCode.configuration.FileStorageProperties;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
@@ -26,14 +29,18 @@ import com.ceir.CeirCode.filtermodel.SearchAssignee;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.StateMgmtDb;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
+import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserProfileFileModel;
+import com.ceir.CeirCode.model.constants.AssigneeType;
 import com.ceir.CeirCode.model.constants.UserStatus;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repo.UserProfileRepo;
-import com.ceir.CeirCode.repoImpl.SystemConfigDbRepoImpl;
+import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
+import com.ceir.CeirCode.repoService.UserRepoService;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -56,17 +63,30 @@ public class UserProfileService {
 	SystemConfigDbListRepository systemConfigRepo;
 
 	@Autowired
-	SystemConfigDbRepoImpl systemConfigurationDbRepoImpl;
+	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
+
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	UserRepoService userRepoService;
+
+	@Autowired
+	StateMgmtServiceImpl stateMgmtServiceImpl;
+
 
 	public Page<UserProfile>  viewAllRecord(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
 		try { 
-
 			log.info("filter data:  "+filterRequest);
 			Integer currentStatus=null;
+			User user=userRepoService.findByUSerId(filterRequest.getUserId());
+			if(user!=null) {
+				userService.saveUserTrail(user, "Registration Request", "View", filterRequest.getFeatureId());
+			}
 			if(filterRequest.getStatus()!=null && filterRequest.getStatus()!=-1){
 				currentStatus=UserStatus.PENDING_ADMIN_APPROVAL.getCode();
 			}
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			UserProfileSpecificationBuilder uPSB = new UserProfileSpecificationBuilder(propertiesReader.dialect);	
 
@@ -86,8 +106,26 @@ public class UserProfileService {
 				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
 			else  
 				uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",UserStatus.PENDING_ADMIN_APPROVAL.getCode(), SearchOperation.EQUALITY, Datatype.INT)));				
+
 			log.info("uPSB specification:  "+uPSB);
-			return userProfileRepo.findAll(uPSB.build(),pageable);
+
+			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+
+			Page<UserProfile> page = userProfileRepo.findAll(uPSB.build(),pageable);
+
+			for(UserProfile userProfile : page.getContent()) {
+
+				for(StateMgmtDb stateMgmtDb : statusList) {
+					if(userProfile.getUser().getCurrentStatus() == stateMgmtDb.getState()) {
+						userProfile.getUser().setStateInterp(stateMgmtDb.getInterp());
+						break;
+					}
+				}
+
+				// setInterp(consignmentMgmt2);
+			}
+
+			return page;
 
 		} catch (Exception e) {
 			log.info("Exception found ="+e.getMessage());
@@ -98,9 +136,42 @@ public class UserProfileService {
 	}
 
 
-	public List<UserProfile> assigneeInfo(SearchAssignee searchAssignee ){
-	//	Specification<UserProfile> specification=new Specification<UserProfile>(propertiesReader.dialect) ;
-		return null;
+	public Page<UserProfile> assigneeInfo(SearchAssignee searchAssignee, Integer pageNo, Integer pageSize){
+		log.info("inside assignee controller");
+		log.info("assignee information: "+searchAssignee);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		SpecificationBuilder<UserProfile> specification=new SpecificationBuilder<UserProfile>(propertiesReader.dialect) ;
+		if(Objects.nonNull(searchAssignee.getField())) 
+		{
+			if(searchAssignee.getType()!=null && searchAssignee.getType()!=0) {
+				if(searchAssignee.getField()!=null && !searchAssignee.getField().equals(""))
+				{	
+					if(searchAssignee.getType()==AssigneeType.NAME.getCode()) {
+						specification.with(new SearchCriteria("displayName", searchAssignee.getField(), SearchOperation.LIKE,Datatype.STRING));
+
+					}
+					else if(searchAssignee.getType()==AssigneeType.CONTACT.getCode()) {
+						specification.with(new SearchCriteria("phoneNo", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.STRING));
+
+					}
+					else if(searchAssignee.getType()==AssigneeType.EMAIL.getCode()) {
+						specification.with(new SearchCriteria("email", searchAssignee.getField(),SearchOperation.EQUALITY, Datatype.STRING));
+					}
+					else {
+
+					}
+					/*
+					 * int arr[]= {5,6};
+					 * specification.addSpecification(specification.joinWithUser(new
+					 * SearchCriteria("usertypeData",arr, SearchOperation.EQUALITY,
+					 * Datatype.INTEGER)));
+					 */		     // specification.addSpecification(specification.joinWithUser(new SearchCriteria("usertypeData",6, SearchOperation.EQUALITY, Datatype.INTEGER)));
+				}
+			}
+		}
+		return userProfileRepo.findAll(specification.build(),pageable);
+		//return userProfileRepo.findAll(specification.build());
+
 	}
 
 
@@ -112,6 +183,10 @@ public class UserProfileService {
 		SystemConfigurationDb userProfileDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("USER_PRO_EXP_DIR");
 		SystemConfigurationDb userProfileDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("USER_PRO_EXP_DOWNLOAD_LINK");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		User user=userRepoService.findByUSerId(profileFilter.getUserId());
+		if(user!=null) {
+			userService.saveUserTrail(user, "Registration Request", "Export", profileFilter.getFeatureId());
+		}
 		String filePath  = userProfileDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);
 		StatefulBeanToCsvBuilder<UserProfileFileModel> builder = null;
@@ -132,11 +207,7 @@ public class UserProfileService {
 			}
 
 			if( userProfileData.getSize()> 0 ) {
-				//if(Objects.nonNull(profileFilter.getUserId()) && (profileFilter.getUserId() != -1 && grievance.getUserId() != 0)) {
-				//fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_"+grievances.get(0).getUser().getUsername()+"_Grievances.csv";
-				//}else {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_UserProfile.csv";
-				//}
 			}else {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_UserProfile.csv";
 			}
@@ -149,32 +220,6 @@ public class UserProfileService {
 				fileRecords = new ArrayList<UserProfileFileModel>(); 
 				for( UserProfile userProfile : userProfileData ) {
 					uPFm = new UserProfileFileModel();
-					/*
-					 * uPFm.setFirstName(userProfile.getFirstName());
-					 * uPFm.setMiddleName(userProfile.getMiddleName());
-					 * uPFm.setLastName(userProfile.getLastName());;
-					 * uPFm.setCompanyName(userProfile.getCompanyName());
-					 * uPFm.setAsType(userProfile.getAsTypeName());
-					 * uPFm.setVatNo(userProfile.getVatNo());
-					 * uPFm.setVatStatus(userProfile.getVatStatus());
-					 * uPFm.setPropertyLocation(userProfile.getPropertyLocation());
-					 * uPFm.setStreet(userProfile.getStreet());
-					 * uPFm.setLocality(userProfile.getLocality());
-					 * uPFm.setProvince(userProfile.getProvince());
-					 * uPFm.setCountry(userProfile.getCountry());
-					 * uPFm.setProvince(userProfile.getProvince());
-					 * uPFm.setPassportNo(userProfile.getPassportNo());
-					 * uPFm.setEmail(userProfile.getEmail());
-					 * uPFm.setPhoneNo(userProfile.getPhoneNo());
-					 * uPFm.setDisplayName(userProfile.getDisplayName());
-					 * uPFm.setEmployeeId(userProfile.getEmployeeId());
-					 * uPFm.setNatureOfEmployment(userProfile.getNatureOfEmployment());
-					 * uPFm.setDesignation(userProfile.getDesignation());
-					 * uPFm.setAuthorityName(userProfile.getAuthorityName());
-					 * uPFm.setAuthorityEmail(userProfile.getAuthorityEmail());
-					 * uPFm.setPhoneNo(userProfile.getPhoneNo());
-					 * uPFm.setOperatorTypeName(userProfile.getOperatorTypeName());
-					 */
 					uPFm.setRequestedOn(userProfile.getUser().getCreatedOn());
 					uPFm.setUserId(userProfile.getUser().getUsername());
 					uPFm.setAsType(userProfile.getAsTypeName());

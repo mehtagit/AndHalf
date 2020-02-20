@@ -3,22 +3,22 @@ package com.ceir.CeirCode.model;
 public class PeriodValidate {
 
 	private long usertypeId;
-	private long featureID;
+	private long featureId;
 	public long getUsertypeId() {
 		return usertypeId;
 	}
 	public void setUsertypeId(long usertypeId) {
 		this.usertypeId = usertypeId;
 	}
-	public long getFeatureID() {
-		return featureID;
+	public long getFeatureId() {
+		return featureId;
 	}
-	public void setFeatureID(long featureID) {
-		this.featureID = featureID;
+	public void setFeatureId(long featureId) {
+		this.featureId = featureId;
 	}
 	@Override
 	public String toString() {
-		return "PeriodValidate [usertypeId=" + usertypeId + ", featureID=" + featureID + "]";
+		return "PeriodValidate [usertypeId=" + usertypeId + ", featureId=" + featureId + "]";
 	}
 	
 	

@@ -1,4 +1,6 @@
 package com.ceir.CeirCode.controller;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.ceir.CeirCode.filtermodel.SearchAssignee;
 import com.ceir.CeirCode.model.ChangePassword;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.SystemConfigListDb;
+import com.ceir.CeirCode.model.UploadStockAssigneModal;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserStatusRequest;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.service.UserProfileService;
 import com.ceir.CeirCode.service.UserService;
 import com.ceir.CeirCode.util.HttpResponse;
@@ -38,12 +44,18 @@ public class UserProfileController {
 
 	@Autowired 
 	UserProfileService userProService;
-
+	
 	@ApiOperation(value = "change password", response = HttpResponse.class)
 	@PostMapping("/changePassword")
 	public ResponseEntity<?> changePassword(@RequestBody ChangePassword password){
 		return userService.changePassword(password);   
-	}    
+	} 
+	
+	@ApiOperation(value = "change expriry password", response = HttpResponse.class)
+	@PostMapping("/updateExpirePassword")
+	public ResponseEntity<?> changeExpiryPassword(@RequestBody ChangePassword password){
+		return userService.updateExpirePassword(password);   
+	}
 
 	@ApiOperation(value = "change user status", response = HttpResponse.class)
 	@PostMapping("/updateUserStatus")
@@ -81,6 +93,7 @@ public class UserProfileController {
 				}
 			}
 			mapping = new MappingJacksonValue(userProfileResponse);
+			
 		}else {
 			FileDetails fileDetails = userProService.getFilterUSerPRofileInFile(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(fileDetails);
@@ -88,12 +101,30 @@ public class UserProfileController {
 		return mapping;
 	}
 
+	@ApiOperation(value = "search assignee.", response = UserProfile.class)
+	@PostMapping("/searchAssignee")
+	public MappingJacksonValue searchAssignee(@RequestBody SearchAssignee assignee,
+			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+		Page<UserProfile> profileList=userProService.assigneeInfo(assignee,pageNo,pageSize);
+		//Iterator<UserProfile> dataIterator=profileList.getContent().iterator();
+	//	List<UploadStockAssigneModal> assigneeList = new ArrayList<UploadStockAssigneModal>();
+//		while(dataIterator.hasNext()) {
+//			UserProfile profile=dataIterator.next();
+//			UploadStockAssigneModal assigneeInfo=new UploadStockAssigneModal(profile.getUser().getUsername(),profile.getFirstName()
+//					,profile.getPhoneNo(),profile.getEmail());
+//			assigneeList.add(assigneeInfo);
+//		}
+		MappingJacksonValue mapping=new MappingJacksonValue(profileList);
+		return mapping;
+	}
+	
+	
 	@ApiOperation(value = "user profile status ", response = HttpResponse.class)
 	@PutMapping("/updateStatus")
 	public HttpResponse updateUserStatus(@RequestBody User user){
-
 		return userService.updateStatus(user);
-
 	}
 
 	@ApiOperation(value = "user profile data by  id", response = HttpResponse.class)

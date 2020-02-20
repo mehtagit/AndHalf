@@ -13,6 +13,7 @@ public class LoginResponse {
 	private String operatorTypeName;
     private Integer operatorTypeId;
 	private String userLanguage;
+	private String period;
 	
 	public String getStatus() {
 		return status;
@@ -88,34 +89,47 @@ public class LoginResponse {
 	public void setUserLanguage(String userLanguage) {
 		this.userLanguage = userLanguage;
 	}
+	public String getPeriod() {
+		return period;
+	}
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	public LoginResponse() {
+		super();
+	}
+	public LoginResponse(String response, Integer statusCode, List<Usertype> userRoles, String username, long userId,
+			String name, String primaryRole, long primaryRoleId, String status, String operatorTypeName,
+			Integer operatorTypeId, String userLanguage,String period) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.userRoles = userRoles;
+		this.username = username;
+		this.userId = userId;
+		this.name = name;
+		this.primaryRole = primaryRole;
+		this.primaryRoleId = primaryRoleId;
+		this.status = status;
+		this.operatorTypeName = operatorTypeName;
+		this.operatorTypeId = operatorTypeId;
+		this.userLanguage = userLanguage;
+		this.period=period;
+	}
+	public LoginResponse(String response, Integer statusCode, long userId) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.userId = userId;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("LoginResponse [response=");
-		builder.append(response);
-		builder.append(", statusCode=");
-		builder.append(statusCode);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", primaryRole=");
-		builder.append(primaryRole);
-		builder.append(", primaryRoleId=");
-		builder.append(primaryRoleId);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", operatorTypeName=");
-		builder.append(operatorTypeName);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append(", userLanguage=");
-		builder.append(userLanguage);
-		builder.append("]");
-		return builder.toString();
+		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
+				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
+				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
+				+ ", operatorTypeId=" + operatorTypeId + ", userLanguage=" + userLanguage + ", period=" + period + "]";
 	}
+	
 	
 
 }

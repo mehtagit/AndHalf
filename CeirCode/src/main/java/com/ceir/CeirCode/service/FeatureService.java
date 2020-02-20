@@ -1,32 +1,25 @@
 package com.ceir.CeirCode.service;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.model.PeriodValidate;
-import com.ceir.CeirCode.model.ShFeature;
 import com.ceir.CeirCode.model.StakeholderFeature;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
-import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
-import com.ceir.CeirCode.repo.UsertypeRepo;
-import com.ceir.CeirCode.repoImpl.SystemConfigDbRepoImpl;
-import com.ceir.CeirCode.repoImpl.UserFeatureRepoImpl;
+import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
+import com.ceir.CeirCode.repoService.UserFeatureRepoService;
 import com.ceir.CeirCode.util.HttpResponse;
 import com.ceir.CeirCode.util.Utility;
 @Service
@@ -40,7 +33,7 @@ public class FeatureService {
 	UserToStakehoderfeatureMappingRepo userFeatureRepo;
 
 	@Autowired
-	SystemConfigDbRepoImpl systemConfigurationDbRepoImpl;
+	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
 
 	@Autowired
 	Utility utility;
@@ -49,15 +42,13 @@ public class FeatureService {
 	PropertiesReaders propertiesReader;
 
 	@Autowired
-	UserFeatureRepoImpl userFeatureRepoImpl;
+	UserFeatureRepoService userFeatureRepoImpl;
 	
 	public ResponseEntity<?> featureData(Integer userId){
 		try {  
 			User userData=userRepo.findById(userId);
 			List<StakeholderFeature> featureList=new ArrayList<StakeholderFeature>();
 			Usertype usertypeData=userData.getUsertype();
-			log.info("usertypeData : "+usertypeData);
-			log.info("mappping data:  "+usertypeData.getUserTofeatureMapping());
 			SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag("GRACE_PERIOD_END_DATE");
 			String period=new String();
 			List<UserToStakehoderfeatureMapping> data=new ArrayList<UserToStakehoderfeatureMapping>();
@@ -80,7 +71,6 @@ public class FeatureService {
 					featureList.add(feature); 
 				}   
 			}
-			log.info("feature data: "+featureList);
 			if(!featureList.isEmpty()) {
 				return new ResponseEntity<>(featureList,HttpStatus.OK);
 			}
@@ -125,27 +115,30 @@ public class FeatureService {
 		SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag("GRACE_PERIOD_END_DATE");
 		if(systemConfigData!=null) {
 			currentPeriod=currentPeriod(systemConfigData);			
+			log.info("current period= "+currentPeriod);
 		}
+		
 		UserToStakehoderfeatureMapping userFeature=userFeatureRepoImpl.getByUsertypeIdAndFeatureId(periodValidate);
 		if(userFeature!=null) 
 		{
+			log.info("period in feature"+userFeature.getPeriod());
 			if("Both".equalsIgnoreCase(userFeature.getPeriod())) 
 			{
 				return new HttpResponse("this functinality is supported ",200);									
 			}
 			else 
 			{
-				if(currentPeriod.equals(userFeature.getPeriod())) {
+				if(currentPeriod.equalsIgnoreCase(userFeature.getPeriod())) {
 					return new HttpResponse("this functinality is supported ",200);									
 				}
 				else {
-					return new HttpResponse("this functinality is not supported now",200);									
+					return new HttpResponse("this functinality is not supported now",420);									
 				}
 			}
 		}
 		else 
 		{
-			return new HttpResponse("Oops something wrong happened",409);
+			return new HttpResponse("Data is not found against this usertype Id and feature Id",409);
 		}
 
 	}

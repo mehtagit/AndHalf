@@ -14,6 +14,11 @@ public class FilterRequest {
 	private Integer asType;
 	private long userRoleTypeId;
 	private Integer viewAllUserStatus;
+	private Integer featureId;
+	private long userId;
+	private Integer userTypeId;
+	
+	
   
 	public String getStartDate() {
 		return startDate;
@@ -53,9 +58,30 @@ public class FilterRequest {
 	public void setViewAllUserStatus(Integer viewAllUserStatus) {
 		this.viewAllUserStatus = viewAllUserStatus;
 	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public long getUserId() {
+		return userId;
+	}
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	 
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer usertypeId) {
+		this.userTypeId = usertypeId;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", asType="
-				+ asType + ", userRoleTypeId=" + userRoleTypeId + ", viewAllUserStatus=" + viewAllUserStatus + "]";
+				+ asType + ", userRoleTypeId=" + userRoleTypeId + ", viewAllUserStatus=" + viewAllUserStatus
+				+ ", featureId=" + featureId + ", userId=" + userId + ", usertypeId=" + userTypeId + "]";
 	}
+
 }

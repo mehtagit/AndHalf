@@ -1,6 +1,6 @@
 package com.ceir.CeirCode.model.constants;
 public enum UserStatus {
-	INIT(0, "Init"), 
+	NEW(0, "New"), 
 	OTP_VERIFICATION_PENDING(1, "OTP Verification Pending"), 
 	PENDING_ADMIN_APPROVAL(2, "Pending Admin Approval"),
 	APPROVED(3, "Approved"),

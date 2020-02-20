@@ -9,12 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ceir.CeirCode.model.EmailDetails;
-import com.ceir.CeirCode.util.EmailUtil2;
 import com.ceir.CeirCode.util.HttpClient;
 @Service
 public class OtpService {
-	@Autowired
-	EmailUtil2 sendMail;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());	
 	String SALTCHARS = "1234567890";
@@ -35,7 +32,7 @@ public class OtpService {
 	public boolean emailOtp(EmailDetails details)     {
 		try {
 		log.info("inside email otp");    
-			boolean b=sendMail.sendEmail(details.getToEmail(),details.getFromEmail(), details.getSubject(),details.getMsgBody());
+			boolean b=true;
 			log.info("email send:   "+b);
 			return b;   
 		}  

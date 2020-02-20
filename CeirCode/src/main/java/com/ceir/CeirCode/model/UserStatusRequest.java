@@ -3,7 +3,7 @@ public class UserStatusRequest {
 	private String status;
 	private Integer userId;
 	private String remark;
-	private Integer featureId=0;
+	private long featureId=0;
 	
 	public Integer getUserId() {
 		return userId;
@@ -23,10 +23,10 @@ public class UserStatusRequest {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Integer getFeatureId() {
+	public long getFeatureId() {
 		return featureId;
 	}
-	public void setFeatureId(Integer featureId) {
+	public void setFeatureId(long featureId) {
 		this.featureId = featureId;
 	}
 	@Override

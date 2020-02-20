@@ -26,7 +26,6 @@ public class FeatureController{
 	public ResponseEntity<?> featureList(@PathVariable Integer userid){
 		return featureService.featureData(userid) ;
 	} 
-
 	
 	@ApiOperation(value = "period validate", response = HttpResponse.class)
 	@CrossOrigin
@@ -37,8 +36,4 @@ public class FeatureController{
 		MappingJacksonValue mapping=new MappingJacksonValue(response);
 		return mapping;
 	} 
-	
-	
-	
-	
 }

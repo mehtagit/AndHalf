@@ -1,16 +1,17 @@
+
 package com.ceir.CeirCode.controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ceir.CeirCode.model.ForgotPassword;
 import com.ceir.CeirCode.model.Otp;
+import com.ceir.CeirCode.model.ResendOtp;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.repo.SecurityQuestionRepo;
 import com.ceir.CeirCode.repo.UserProfileRepo;
@@ -19,7 +20,6 @@ import com.ceir.CeirCode.repo.UsertypeRepo;
 import com.ceir.CeirCode.service.LoginService;
 import com.ceir.CeirCode.service.OtpService;
 import com.ceir.CeirCode.service.UserService;
-import com.ceir.CeirCode.util.EmailUtil2;
 import com.ceir.CeirCode.util.GenerateRandomDigits;
 import com.ceir.CeirCode.util.HttpResponse;
 import io.swagger.annotations.ApiOperation;
@@ -35,11 +35,7 @@ public class UserRegistrationController {
 	@Autowired 
 	UserService userService;           
 	@Autowired
-	EmailUtil2 emailUtil;
-	@Autowired
 	OtpService otpService;
-	@Value("${mailusername}")
-	String fromEmail;
 	@Autowired 
 	UsertypeRepo usertypeRepo;
 	@Autowired
@@ -50,8 +46,8 @@ public class UserRegistrationController {
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/getUsertypes") 
-	public ResponseEntity<?> getUsertypes(){
-		return userService.getUsertypeData();
+	public ResponseEntity<?> getUsertypes(@RequestHeader HttpHeaders headers){
+		return userService.getUsertypeData(headers);
 	}
 	
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
@@ -66,8 +62,8 @@ public class UserRegistrationController {
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/getSecurityQuestion") 
-	public ResponseEntity<?> getSecurityQuestion(){
-		return userService.getSecurityQuestion();
+	public ResponseEntity<?> getSecurityQuestion(@RequestHeader HttpHeaders headers){
+		return userService.getSecurityQuestion(headers);
 	}                                                             
 
 	@ApiOperation(value = "user registration .", response = HttpResponse.class)
@@ -83,14 +79,14 @@ public class UserRegistrationController {
 	@PostMapping("/validate")
 	public ResponseEntity<?> UpdateOtpStatus(@RequestBody Otp  otp)
 	{  
-		return userService.UpdateOtpStatus(otp);
+		return userService.validateUser(otp);
 	}            
 
 	@ApiOperation(value = "otp resend", response = HttpResponse.class)
 	@CrossOrigin
-	@PostMapping("/resendOtp/{userid}")   
-	public ResponseEntity<?> resendOtp(@PathVariable("userid") Integer id)
+	@PostMapping("/resendOtp")   
+	public ResponseEntity<?> resendOtp(@RequestBody ResendOtp otp)
 	{     
-		return userService.resendOtp(id);
+		return userService.resendOtp(otp);
 	}        
 }

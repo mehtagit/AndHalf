@@ -1,4 +1,4 @@
-package com.ceir.CeirCode.repoImpl;
+package com.ceir.CeirCode.repoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.repo.SystemConfigDbRepository;
 @Service
-public class SystemConfigDbRepoImpl {
+public class SystemConfigurationDbRepoService {
 
 	@Autowired
 	SystemConfigDbRepository systemConfigRepo;
@@ -22,4 +22,5 @@ public class SystemConfigDbRepoImpl {
 		return null;
 	}
 	}
+	
 }

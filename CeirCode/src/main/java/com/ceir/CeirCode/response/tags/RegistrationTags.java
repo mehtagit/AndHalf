@@ -1,0 +1,39 @@
+package com.ceir.CeirCode.response.tags;
+
+public enum RegistrationTags {
+
+	REG_SUCESS_RESP ("REG_SUCESS_RESP", "The text and and an e-mail with OTP details has been sent to your registered Phone Number and E-Mail ID"),
+	REG_PROFILE_FAIL_RESP("REG_PROFILE_FAIL_RESP", "user profile data not added"),
+	REG_USER_FAIL_RESP("REG_USER_FAIL_RESP", "user data not added"),
+	REG_FAIL_ROLES_RESP("REG_FAIL_ROLES_RESP", "please select correct roles"),
+	REG_WRONG_USER_ID("REG_WRONG_USER_ID","user id is wrong"),
+	COMMAN_FAIL_MSG("COMMAN_FAIL_MSG","Oops something wrong happened"),
+	OTP_SUCESS_RESP("OTP_SUCESS_RESP","Your OTP is verified! The form has been submitted for approval. You will receive an intimation on your registered e-mail with the approval status within 2 to 3 working days"),
+	REG_WRONG_OTP("REG_WRONG_OTP", "Otp failed to verify"),
+	REG_EXPIRE_OTP("REG_EXPIRE_OTP", "Otp time is expired"),
+	REOTP_SUCESS_RESP("REOTP_SUCESS_RESP","A text message and e-mail with OTP has been sent"),
+	REG_REOTP_FAIL("REG_REOTP_FAIL", "Otp failed to resend"),
+    LOGIN_WRONG_DETAILS("LOGIN_WRONG_DETAILS","Please enter the correct credentials"),
+    LOGIN_UNAUTHORIZED("LOGIN_UNAUTHORIZED","You are not allow to access this account")
+	;
+	
+	private String tag;
+	private String message;
+	
+	private RegistrationTags() {
+
+	}
+
+	RegistrationTags(String tag, String message) {
+		this.tag = tag;
+		this.message = message;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+}

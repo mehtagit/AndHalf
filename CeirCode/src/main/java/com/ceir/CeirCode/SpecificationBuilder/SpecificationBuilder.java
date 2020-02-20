@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +14,10 @@ import org.springframework.data.jpa.domain.Specification;
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.UserProfile;
+import com.ceir.CeirCode.model.Usertype;
+import com.ceir.CeirCode.model.Userrole;
 import com.ceir.CeirCode.util.DbFunctions;
 
 
@@ -92,6 +97,10 @@ public class SpecificationBuilder<T> {
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.lessThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 					}
+					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.like(root.get(searchCriteria.getKey()), "%" +searchCriteria.getValue().toString()+ "%");
+					}
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
@@ -99,12 +108,12 @@ public class SpecificationBuilder<T> {
 					else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-						return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+						return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
-						return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+						return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
 					
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
@@ -132,5 +141,69 @@ public class SpecificationBuilder<T> {
 			return cb.in(root.get(searchCriteria.getKey())).value(status);
 		};
 	}
+	
+	public Specification<UserProfile> joinWithUser(SearchCriteria searchCriteria){
+		return (root, query, cb) -> { 
+			Join<UserProfile, User> users = root.join("user".intern());
+			Join<User, Userrole> user = users.join("userRole".intern());
+			if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.greaterThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.lessThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.in(user.get(searchCriteria.getKey()));
+			} 
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INTEGER.equals(searchCriteria.getDatatype())) {
+				return cb.in(user.get(searchCriteria.getKey()));
+			} 
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
+			}
+			else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+				return cb.greaterThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+				return cb.lessThan(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), (Integer)searchCriteria.getValue());
+			}else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
+			}else {
+				return null;
+			}
+			
+		};
+	}
+	
 
+	public Specification<UserProfile> joinWithMultiple(SearchCriteria searchCriteria){
+		return (root, query, cb) -> {
+			Join<UserProfile, User> addresses = root.join("user".intern());
+			//Join<User, Usertype> userdetails = addresses.join("usertype".intern());	
+			Join<User, Userrole> userRoles = addresses.join("userrole".intern());	
+			return cb.equal(userRoles.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+		}; 
+	}
 }

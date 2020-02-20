@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -34,7 +35,12 @@ public class User {
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createdOn;
-
+	
+	@JsonIgnore
+	@CreationTimestamp
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime passwordDate;
+	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -44,7 +50,7 @@ public class User {
 	private Integer previousStatus; 
 	private String remark;
    
-	private long parentId=0;
+	private Integer parentId=0;
 	
     private String userLanguage;
     
@@ -85,7 +91,8 @@ public class User {
 	@OneToMany(mappedBy = "userPassword",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	private List<UserPasswordHistory> userPasswordHistory;
 
-
+	@Transient
+    private String stateInterp;
 	public long getId() {      
 		return id;
 	}
@@ -181,10 +188,10 @@ public class User {
 	//
 
 
-	public long getParentId() {
+	public Integer getParentId() {
 		return parentId;
 	}
-	public void setParentId(long parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 	
@@ -213,13 +220,10 @@ public class User {
 	public User() {
 		super();
 	}
-	public User(String username, String password, LocalDateTime createdOn, LocalDateTime modifiedOn,
-			Integer currentStatus, Integer previousStatus, Usertype usertype) {
+	public User(String username, String password,Integer currentStatus, Integer previousStatus, Usertype usertype) {
 		super();
 		this.username = username;
 		this.password = password;
-		this.createdOn = createdOn;
-		this.modifiedOn = modifiedOn;
 		this.currentStatus = currentStatus;
 		this.previousStatus = previousStatus;
 		this.usertype = usertype;
@@ -232,6 +236,24 @@ public class User {
 		this.currentStatus = currentStatus;
 		this.previousStatus = previousStatus;
 	}
+	public LocalDateTime getPasswordDate() {
+		return passwordDate;
+	}
+	public void setPasswordDate(LocalDateTime passwordDate) {
+		this.passwordDate = passwordDate;
+	}
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+	public static void setSerialVersionUID(long serialVersionUID) {
+		User.serialVersionUID = serialVersionUID;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -243,6 +265,8 @@ public class User {
 		builder.append(password);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
+		builder.append(", passwordDate=");
+		builder.append(passwordDate);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
 		builder.append(", currentStatus=");
@@ -255,11 +279,13 @@ public class User {
 		builder.append(parentId);
 		builder.append(", userLanguage=");
 		builder.append(userLanguage);
-		builder.append(", notificationData=");
-		builder.append(notificationData);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 
 }

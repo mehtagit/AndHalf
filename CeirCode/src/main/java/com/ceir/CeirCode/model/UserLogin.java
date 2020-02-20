@@ -1,9 +1,10 @@
 package com.ceir.CeirCode.model;
 
-public class UserLogin {
+public class UserLogin extends UserHeader{
 
 	private String username;
 	private String password;
+
 	public String getUsername() {
 		return username;
 	}
@@ -20,5 +21,6 @@ public class UserLogin {
 	public String toString() {
 		return "UserLogin [username=" + username + ", password=" + password + "]";
 	}
+	
 	
 }

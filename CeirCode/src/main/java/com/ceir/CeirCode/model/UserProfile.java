@@ -1,5 +1,6 @@
 package com.ceir.CeirCode.model;
 
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -52,13 +53,16 @@ public class UserProfile {
 
 	
 	@Column(length = 50)
-	private Integer postalCode;
+	private String postalCode;
 	private String province;   
 	private String country;
 	private String passportNo;
 	private String email;
 	private String phoneNo;
 	private Integer arrivalPort;
+	private Integer PortAddress;
+	@Transient
+	private String PortAddressName;
 	@Transient
 	private String arrivalPortName;
 	@Transient
@@ -117,7 +121,15 @@ public class UserProfile {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiryDate;
     private String sourceUsername;
+    @Transient
+    private String userAgent;
+    @Transient
+	private String publicIp;
     
+	@Transient
+	private String userLanguage;
+	
+	
 	public long[] getRoles() {
 		return roles;
 	}
@@ -386,10 +398,10 @@ public class UserProfile {
 	public void setCommune(String commune) {
 		this.commune = commune;
 	}
-	public Integer getPostalCode() {
+	public String  getPostalCode() {
 		return postalCode;
 	}
-	public void setPostalCode(Integer postalCode) {
+	public void setPostalCode(String  postalCode) {
 		this.postalCode = postalCode;
 	}
 	public Integer getArrivalPort() {
@@ -455,115 +467,81 @@ public class UserProfile {
 	public void setSourceUsername(String sourceUsername) {
 		this.sourceUsername = sourceUsername;
 	}
+	
+	public String getUserAgent() {
+		return userAgent;
+	}
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
+	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getUserLanguage() {
+		return userLanguage;
+	}
+	public void setUserLanguage(String userLanguage) {
+		this.userLanguage = userLanguage;
+	}
+	public Integer getPortAddress() {
+		return PortAddress;
+	}
+	public void setPortAddress(Integer portAddress) {
+		PortAddress = portAddress;
+	}
+	public String getPortAddressName() {
+		return PortAddressName;
+	}
+	public void setPortAddressName(String portAddressName) {
+		PortAddressName = portAddressName;
+	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("UserProfile [id=");
-		builder.append(id);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", middleName=");
-		builder.append(middleName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", companyName=");
-		builder.append(companyName);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", vatStatus=");
-		builder.append(vatStatus);
-		builder.append(", vatNo=");
-		builder.append(vatNo);
-		builder.append(", propertyLocation=");
-		builder.append(propertyLocation);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", district=");
-		builder.append(district);
-		builder.append(", commune=");
-		builder.append(commune);
-		builder.append(", village=");
-		builder.append(village);
-		builder.append(", postalCode=");
-		builder.append(postalCode);
-		builder.append(", province=");
-		builder.append(province);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", passportNo=");
-		builder.append(passportNo);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", phoneNo=");
-		builder.append(phoneNo);
-		builder.append(", arrivalPort=");
-		builder.append(arrivalPort);
-		builder.append(", arrivalPortName=");
-		builder.append(arrivalPortName);
-		builder.append(", asTypeName=");
-		builder.append(asTypeName);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", phoneOtp=");
-		builder.append(phoneOtp);
-		builder.append(", emailOtp=");
-		builder.append(emailOtp);
-		builder.append(", displayName=");
-		builder.append(displayName);
-		builder.append(", employeeId=");
-		builder.append(employeeId);
-		builder.append(", natureOfEmployment=");
-		builder.append(natureOfEmployment);
-		builder.append(", designation=");
-		builder.append(designation);
-		builder.append(", authorityName=");
-		builder.append(authorityName);
-		builder.append(", authorityEmail=");
-		builder.append(authorityEmail);
-		builder.append(", authorityPhoneNo=");
-		builder.append(authorityPhoneNo);
-		builder.append(", operatorTypeName=");
-		builder.append(operatorTypeName);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append(", nidFilename=");
-		builder.append(nidFilename);
-		builder.append(", photoFilename=");
-		builder.append(photoFilename);
-		builder.append(", idCardFilename=");
-		builder.append(idCardFilename);
-		builder.append(", vatFilename=");
-		builder.append(vatFilename);
-		builder.append(", nidFilePath=");
-		builder.append(nidFilePath);
-		builder.append(", photoFilePath=");
-		builder.append(photoFilePath);
-		builder.append(", idCardFilePath=");
-		builder.append(idCardFilePath);
-		builder.append(", vatFilePath=");
-		builder.append(vatFilePath);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", questionList=");
-		builder.append(questionList);
-		builder.append(", roles=");
-		builder.append(roles);
-		builder.append(", usertypeName=");
-		builder.append(usertypeName);
-		builder.append(", password=");
-		builder.append(password);
-		builder.append(", source=");
-		builder.append(source);
-		builder.append(", expiryDate=");
-		builder.append(expiryDate);
-		builder.append(", sourceUsername=");
-		builder.append(sourceUsername);
-		builder.append("]");
-		return builder.toString();
+		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
+				+ lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus=" + vatStatus + ", vatNo="
+				+ vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
+				+ ", district=" + district + ", commune=" + commune + ", village=" + village + ", postalCode="
+				+ postalCode + ", province=" + province + ", country=" + country + ", passportNo=" + passportNo
+				+ ", email=" + email + ", phoneNo=" + phoneNo + ", arrivalPort=" + arrivalPort + ", arrivalPortName="
+				+ arrivalPortName + ", asTypeName=" + asTypeName + ", createdOn=" + createdOn + ", modifiedOn="
+				+ modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", displayName=" + displayName
+				+ ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation="
+				+ designation + ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail
+				+ ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
+				+ ", operatorTypeId=" + operatorTypeId + ", nidFilename=" + nidFilename + ", photoFilename="
+				+ photoFilename + ", idCardFilename=" + idCardFilename + ", vatFilename=" + vatFilename
+				+ ", nidFilePath=" + nidFilePath + ", photoFilePath=" + photoFilePath + ", idCardFilePath="
+				+ idCardFilePath + ", vatFilePath=" + vatFilePath + ", username=" + username + ", questionList="
+				+ questionList + ", roles=" + roles + ", usertypeName=" + usertypeName + ", password=" + password
+				+ ", source=" + source + ", expiryDate=" + expiryDate + ", sourceUsername=" + sourceUsername
+				+ ", userAgent=" + userAgent + ", publicIp=" + publicIp + ", userLanguage=" + userLanguage +
+				" portAddress=" + PortAddress +" , PortAddressName=" + PortAddressName +"]";
+	}
+	public UserProfile(String firstName, String middleName, String lastName, String propertyLocation, String street,
+			String locality, @NotNull String district, @NotNull String commune, @NotNull String village,
+			String  postalCode, String province, String country, String email, String phoneNo) {
+		super();
+		this.firstName = firstName;
+		this.middleName = middleName;
+		this.lastName = lastName;
+		this.propertyLocation = propertyLocation;
+		this.street = street;
+		this.locality = locality;
+		this.district = district;
+		this.commune = commune;
+		this.village = village;
+		this.postalCode = postalCode;
+		this.province = province;
+		this.country = country;
+		this.email = email;
+		this.phoneNo = phoneNo;
+	}
+	public UserProfile() {
+		super();
 	}
 
 

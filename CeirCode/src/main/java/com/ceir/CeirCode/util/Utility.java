@@ -5,15 +5,22 @@ import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class Utility {
 
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	Date yesterday() {
 		final Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -1);
@@ -115,14 +122,36 @@ public class Utility {
 			return unit;
 		}
 	}
+	
+	public  long getDifferenceMinutes(String input1, String input2) {
 
-	public String addDaysInDate(Integer days,Date date) {
+		try {
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date d1=sdf.parse(input1);
+			Date d2=sdf.parse(input2);
+			long diff = d2.getTime() - d1.getTime();
+			return TimeUnit.MINUTES.convert(diff, TimeUnit.MILLISECONDS);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+			long unit=0;
+			return unit;
+		}
+	}
+
+	/*
+	 * public String addDaysInDate(Integer days,Date date) { SimpleDateFormat sdf =
+	 * new SimpleDateFormat("yyyy-MM-dd"); Calendar c = Calendar.getInstance();
+	 * c.setTime(date); c.add(Calendar.DATE, days); // Adding days String output =
+	 * sdf.format(c.getTime()); return output; }
+	 */
+	public Date addDaysInDate(Integer days,Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		c.setTime(date); 
 		c.add(Calendar.DATE, days); // Adding days
 		String output = sdf.format(c.getTime());
-		return output;
+		return stringToDate(output);
 	}
 
 	public String addDaysInCurrentDate(Integer days) {
@@ -136,7 +165,6 @@ public class Utility {
 	}
 
 	public Date stringToDate(String date) {
-
 		Date date1;
 		try {
 			date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
@@ -145,10 +173,8 @@ public class Utility {
 			e.printStackTrace();
 			return null;
 		}  
-
 	}
 	public Date currentOnlyDate() {
-
 		try {
 			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = new Date();
@@ -159,6 +185,24 @@ public class Utility {
 			return null;
 		}  
 	}
-	
-	
+	public String convertlocalTimeToString(LocalDateTime time) {
+		try {
+		DateTimeFormatter aFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); 
+		String date = time.format(aFormatter);
+		return date;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return null;
+		}
+	}
+	public long timeDifferenceInMinutes(LocalDateTime date) {
+		DateTimeFormatter aFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); 
+		LocalDateTime localDateTime = LocalDateTime.now();
+		String currentime = localDateTime.format(aFormatter);
+		log.info("current time: "+currentime);
+        String time2=date.format(aFormatter);
+        log.info("otp insertion date time: "+time2);
+        return  getDifferenceMinutes(time2,currentime);
+	}
 }

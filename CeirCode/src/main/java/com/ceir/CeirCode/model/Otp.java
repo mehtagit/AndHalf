@@ -1,8 +1,9 @@
 package com.ceir.CeirCode.model;
-public class Otp {   
+public class Otp extends UserHeader{   
 	private String phoneOtp;
 	private String emailOtp;
 	private long userid;
+	
 	public String getPhoneOtp() {
 		return phoneOtp;
 	} 

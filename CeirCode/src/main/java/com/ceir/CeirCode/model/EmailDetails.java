@@ -3,7 +3,6 @@ package com.ceir.CeirCode.model;
 import org.springframework.beans.factory.annotation.Value;
 
 public class EmailDetails {
-	@Value("${mailusername}")
 	private String fromEmail;	
 	private String toEmail;
 	private String msgBody;

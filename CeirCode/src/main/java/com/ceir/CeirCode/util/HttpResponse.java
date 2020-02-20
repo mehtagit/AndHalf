@@ -2,6 +2,7 @@ package com.ceir.CeirCode.util;
 import com.ceir.CeirCode.model.User;
 public class HttpResponse {
 	private String response;
+	private String tag;
 	private Integer statusCode;
 	private User user;
 	
@@ -10,6 +11,12 @@ public class HttpResponse {
 		super();
 		this.response = response;
 		this.statusCode = statusCode;
+	}
+	public HttpResponse(String response, Integer statusCode,String tag) {
+		super();
+		this.response = response;
+		this.statusCode = statusCode;
+		this.tag=tag;
 	}
 	public HttpResponse(String response, Integer statusCode, User user) {
 		super();
@@ -38,13 +45,16 @@ public class HttpResponse {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	public String getTag() {
+		return tag;
+	}
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
 	@Override
 	public String toString() {
-		return "HttpResponse [response=" + response + ", statusCode=" + statusCode + "]";
+		return "HttpResponse [response=" + response + ", tag=" + tag + ", statusCode=" + statusCode + "]";
 	}
 	
-
-
-
-
 }
