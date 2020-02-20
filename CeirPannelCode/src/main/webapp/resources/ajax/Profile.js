@@ -31,7 +31,10 @@ function changePassword(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#changePasswordMessage #cPassSucessMsg").text($.i18n(resp.tag));
-					$("#changePasswordMessage").openModal();   
+					$("#changePasswordMessage").openModal({
+				        dismissible:false
+				    });
+ 
 				});
 				
 			}
@@ -82,7 +85,10 @@ function updateUSerStatus(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#manageAccountSubmit #mgAccount").text($.i18n(resp.tag));
-					$("#manageAccountSubmit").openModal(); 
+					$("#manageAccountSubmit").openModal({
+				        dismissible:false
+				    });
+ 
 				});
 			}
 			else{  
@@ -332,7 +338,10 @@ function updateProfile(){
 						'km': './resources/i18n/km.json'
 					}).done( function() {
 						$("#profileResponse #updateInfoMsg").text($.i18n(response.tag)); 
-						$('#profileResponse').openModal();
+						$('#profileResponse').openModal({
+					        dismissible:false
+					    });
+
 					});
 					
 				/*} 
@@ -370,6 +379,9 @@ function updateProfile(){
 
 function passwordPopup(){
 	$("#btnSave").prop('disabled', true);
-	$("#passwordModal").openModal();
+	$("#passwordModal").openModal({
+        dismissible:false
+    });
+
 	return false;
 }

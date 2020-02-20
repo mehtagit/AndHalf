@@ -143,7 +143,10 @@ function verifyOtp(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#otpVerification").closeModal();
-					$('#otpMessage').openModal();   
+					$('#otpMessage').openModal({
+				        dismissible:false
+				    });
+   
 					$("#otpResponse").text($.i18n(resp.tag));
 				});
 				
@@ -572,7 +575,10 @@ function registrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal();
+					$("#otpMsgModal").openModal({
+				        dismissible:false
+				    });
+
 				});
 			}
 			else{
@@ -611,7 +617,10 @@ function otherRegistrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal();
+					$("#otpMsgModal").openModal({
+				        dismissible:false
+				    });
+
 				});
 				
 				
