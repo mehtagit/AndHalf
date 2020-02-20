@@ -1187,25 +1187,37 @@ public class IconsState {
 		String downloadURL = "./Consignment/dowloadFiles/actual/" + file + "/" + txnId +"/"+defaultTagName+ "";
 		String approveAction = "deviceApprovalPopup('" + txnId + "','" + requestType + "')";
 		String rejectAction = "userRejectPopup('" + txnId + "','" + requestType + "')";
+		
+		String editAction="";
+		String deleteAction ="DeleteConsignmentRecord('"+txnId+"','"+id+"')";
+
+		
 		log.info("============actionResponse=======" + actionResponse);
 		if(source.equals("3")) {
+			editAction="viewDeviceDetails('"+txnId+"','edit','"+requestType+"')";
 			viewAction="viewDeviceDetails('"+txnId+"','view','"+requestType+"')";
 
 		}
 		else if(source.equals("4")) {
+			editAction="viewblockImeiDevice('"+txnId+"','edit','"+requestType+"')";
 			viewAction="viewblockImeiDevice('"+txnId+"','view','"+requestType+"')";
 		}
 		// state related Code
 		String view="<a onclick="+viewAction+"><i class="
 				+viewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\" title="
+				+editIconTitle+"></i></a>";
 		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
-				+downloadIconTitle+" ></i></a>"; String approve =
+				+downloadIconTitle+" ></i></a>";
+		String approve =
 				"<a onclick="+approveAction+"><i class="
 						+approveIcon+" aria-hidden=\"true\" title=" +approveIconTitle+" ></i></a>";
-				String reject = "<a onclick="+rejectAction+"><i class="
+		String reject = "<a onclick="+rejectAction+"><i class="
 						+rejectIcon+" aria-hidden=\"true\" title=" +rejectIconTitle+" ></i></a>";
 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
+				+deleteIconTitle+"></i></a>";
 
 				for (ActionModel actionModel : actionResponse) {
 					if (actionModel.getState() == 2) {
@@ -1238,7 +1250,7 @@ public class IconsState {
 				}
 
 
-				String action = view.concat(download).concat(approve).concat(reject);
+				String action = view.concat(download).concat(approve).concat(reject).concat(edit).concat(delete);
 				return action;
 	}	
 
