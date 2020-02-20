@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FieldContantModel {
+	private Integer id;
 	private String tag;
 	private Integer value;
 	private String interp;
@@ -15,6 +16,12 @@ public class FieldContantModel {
 	private String description;
 	private String displayName;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getTag() {
 		return tag;
 	}
@@ -65,11 +72,11 @@ public class FieldContantModel {
 	}
 	@Override
 	public String toString() {
-		return "FieldContantModel [tag=" + tag + ", value=" + value + ", interp=" + interp + ", listOrder=" + listOrder
-				+ ", tagId=" + tagId + ", description=" + description + ", displayName=" + displayName
-				+ ", additionalProperties=" + additionalProperties + "]";
+		return "FieldContantModel [id=" + id + ", tag=" + tag + ", value=" + value + ", interp=" + interp
+				+ ", listOrder=" + listOrder + ", tagId=" + tagId + ", description=" + description + ", displayName="
+				+ displayName + ", additionalProperties=" + additionalProperties + "]";
 	}
 	
 	
-
+	
 }

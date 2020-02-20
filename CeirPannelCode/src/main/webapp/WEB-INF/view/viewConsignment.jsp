@@ -356,7 +356,7 @@
 		<div class="modal-content">
 
 
-			<div class="row">
+						<div class="row">
 				<h6 id="approveConsignmnetHeading">
 					<spring:message code="modal.message.clearConsignment" />
 					<span id="displayname"></span>
@@ -377,8 +377,7 @@
           </p>
         </form>
 				</div>
-
-			</div>
+</div>
 			<div class="row">
 				<%-- <h6 id="confirmationMessage">
 					<spring:message code="modal.message.clearConsignment" />
@@ -386,7 +385,7 @@
 				<input type="text" id="setApproveConsignmentTxnId"
 					style="display: none">
 			</div>
-			<div class="row button-div">
+						<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<button class="modal-close modal-trigger btn" id="approveButton" disabled="disabled"
@@ -399,6 +398,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 

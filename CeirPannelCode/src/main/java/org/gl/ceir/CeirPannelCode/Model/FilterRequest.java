@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -234,6 +234,12 @@ public class FilterRequest {
 	public void setParentValue(Integer parentValue) {
 		this.parentValue = parentValue;
 	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
@@ -247,8 +253,9 @@ public class FilterRequest {
 				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
 				+ serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId
 				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue="
-				+ parentValue + "]";
+				+ parentValue + ", id=" + id + "]";
 	}
+	
 	
 	
 	

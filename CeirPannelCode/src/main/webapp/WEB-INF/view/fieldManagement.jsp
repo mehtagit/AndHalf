@@ -139,11 +139,12 @@
                                 <option value="" disabled="" selected="">Select field</option>
                           </select>
                         <label for="tag" class="active">Field <span class="star">*</span></label>
+                         <input type="text" id="displayName" hidden>
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="addValue" name="value" pattern="[0-9]" title="Please enter digits"  maxlength="8" required="required">
-                        <label for="addValue" class="">Value <span class="star">*</span></label>
+                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="30">
+                        <label for="description" class="">Description</label>
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -178,12 +179,14 @@
                                 <option value="" disabled="" selected="">Select field</option>
                           </select>
                         <label for="Edittag" class="active">Field <span class="star">*</span></label>
+                    <input type="text" id="id" Disabled hidden> 
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editValue" name="value" pattern="[0-9]" title="Please enter digits"  maxlength="8" required="required">
-                        <label for="editValue" class="">Value <span class="star">*</span></label>
+                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="30">
+                        <label for="editdescription" class="">Description</label>
                     </div>
+
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" required="required">
@@ -205,20 +208,58 @@
     </div>
 		
 	<div id="confirmField" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.submitTypeApprove" /></h6>
+		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage"></h6>
-				<input type="text" style="display: none" id="errorCode">
+				<h6 id="sucessMessage">Field Record Added Successfully</h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">
-                    <a href="./fieldManagement" class="btn">ok</a>
+                   <a href="" class="modal-close btn" class="btn">ok</a>
                 </div>
 			</div> 
 		</div>
 	</div>
+	
+	
 		
+	   <!-- --------------------------------------------------------------Delete Field Modal Start --------------------------------------------------------------->
+
+
+	<div id="DeleteFieldModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteField" /></h6>
+		<div class="modal-content">
+		<div class="row">
+				<h6><spring:message code="modal.message.field.delete" /></h6>
+			</div> 
+			<input type="text" id="deleteFieldId" hidden>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="confirmantiondelete()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deleteField" /></h6>
+			<div class="modal-content">
+		
+			
+			<div class="row">
+
+				<h6 id="tacModalText"><spring:message code="modal.message.fieldDeleted" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 		
 <!--materialize js-->
 	<script type="text/javascript"
