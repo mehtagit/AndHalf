@@ -36,7 +36,7 @@ body {
 }
 
 footer {
-	padding-left: 240px;
+	/* padding-left: 240px; */
 }
 
 footer.page-footer {
@@ -2698,16 +2698,21 @@ div#initialloader {
 }
 
 .export-to-excel {
-	width: 80px;
+	width: 91px;
 	color: #fff;
 	float: right;
 	border: none;
-	padding: 4px 7px;
+	padding: 6px 7px;
 	border-radius: 2px;
 	font-size: 14px;
 	background-color: #ff4081 !important;
 	margin-top: 20px;
 	height: 32px;
+	text-transform: uppercase;
+	text-align: center;
+	letter-spacing: .5px;
+	transition: 0.2s ease-out;
+    cursor: pointer;
 }
 
 i.fa.fa-file-excel-o {
