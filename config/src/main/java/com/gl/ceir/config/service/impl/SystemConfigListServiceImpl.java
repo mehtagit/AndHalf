@@ -302,7 +302,7 @@ public class SystemConfigListServiceImpl {
 
 			systemConfigListRepository.deleteById(filterRequest.getId());
 
-			return new GenricResponse(0, "Sucess", "", systemConfigListRepository.findDistinctTags());
+			return new GenricResponse(0, "Sucess", "", "");
 
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);

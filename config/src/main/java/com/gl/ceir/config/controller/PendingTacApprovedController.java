@@ -51,7 +51,7 @@ public class PendingTacApprovedController {
 
 		logger.info("Get system-config-list request [" + filterRequest + "]");
 
-		GenricResponse systemConfigListDb = pendingTacApprovedImpl.findById(filterRequest);
+		GenricResponse systemConfigListDb = pendingTacApprovedImpl.findByTxnId(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(systemConfigListDb);
 
