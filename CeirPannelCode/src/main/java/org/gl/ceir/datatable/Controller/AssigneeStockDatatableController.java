@@ -88,7 +88,7 @@ public class AssigneeStockDatatableController {
 				for (RegistrationContentModel dataInsideList : paginationContentList) {
 					//String sNO = "";
 					String username = dataInsideList.getUser().getUsername();
-					String firstName = dataInsideList.getFirstName();
+					String firstName = dataInsideList.getDisplayName();
 					String phoneNo = dataInsideList.getPhoneNo();
 					String email = dataInsideList.getEmail();
 					String selectAction="saveAssigneDetails('"+username+"','"+firstName+"')";

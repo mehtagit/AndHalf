@@ -16,7 +16,7 @@ private String expectedArrivalDate;
 private String expectedArrivaldate;
 private String expectedDispatcheDate;
 private Integer expectedArrivalPort;
-private String organisationcountry,expectedArrivalPortInterp;
+private String organisationcountry,expectedArrivalPortInterp,pendingTacApprovedByCustom;
 private String organisationCountry;
 private MultipartFile file;
 private String txnId;
@@ -31,6 +31,14 @@ private String remarks;
 private String roleType;
 private Integer currency;
 
+
+
+public String getPendingTacApprovedByCustom() {
+	return pendingTacApprovedByCustom;
+}
+public void setPendingTacApprovedByCustom(String pendingTacApprovedByCustom) {
+	this.pendingTacApprovedByCustom = pendingTacApprovedByCustom;
+}
 public int getId() {
 return id;
 }
@@ -207,21 +215,65 @@ public void setCurrency(Integer currency) {
 }
 @Override
 public String toString() {
-	return "ConsignmentModel [id=" + id + ", supplierId=" + supplierId + ", supplierName=" + supplierName
-			+ ", taxPaidStatus=" + taxPaidStatus + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn
-			+ ", importerId=" + importerId + ", consignmentNumber=" + consignmentNumber + ", expectedArrivalDate="
-			+ expectedArrivalDate + ", expectedArrivaldate=" + expectedArrivaldate + ", expectedDispatcheDate="
-			+ expectedDispatcheDate + ", expectedArrivalPort=" + expectedArrivalPort + ", organisationcountry="
-			+ organisationcountry + ", expectedArrivalPortInterp=" + expectedArrivalPortInterp
-			+ ", organisationCountry=" + organisationCountry + ", file=" + file + ", txnId=" + txnId + ", importerName="
-			+ importerName + ", totalPrice=" + totalPrice + ", fileName=" + fileName + ", fileStatus=" + fileStatus
-			+ ", consignmentStatus=" + consignmentStatus + ", quantity=" + quantity + ", userId=" + userId
-			+ ", remarks=" + remarks + ", roleType=" + roleType + ", currency=" + currency + "]";
+	StringBuilder builder = new StringBuilder();
+	builder.append("ConsignmentModel [id=");
+	builder.append(id);
+	builder.append(", supplierId=");
+	builder.append(supplierId);
+	builder.append(", supplierName=");
+	builder.append(supplierName);
+	builder.append(", taxPaidStatus=");
+	builder.append(taxPaidStatus);
+	builder.append(", createdOn=");
+	builder.append(createdOn);
+	builder.append(", modifiedOn=");
+	builder.append(modifiedOn);
+	builder.append(", importerId=");
+	builder.append(importerId);
+	builder.append(", consignmentNumber=");
+	builder.append(consignmentNumber);
+	builder.append(", expectedArrivalDate=");
+	builder.append(expectedArrivalDate);
+	builder.append(", expectedArrivaldate=");
+	builder.append(expectedArrivaldate);
+	builder.append(", expectedDispatcheDate=");
+	builder.append(expectedDispatcheDate);
+	builder.append(", expectedArrivalPort=");
+	builder.append(expectedArrivalPort);
+	builder.append(", organisationcountry=");
+	builder.append(organisationcountry);
+	builder.append(", expectedArrivalPortInterp=");
+	builder.append(expectedArrivalPortInterp);
+	builder.append(", pendingTacApprovedByCustom=");
+	builder.append(pendingTacApprovedByCustom);
+	builder.append(", organisationCountry=");
+	builder.append(organisationCountry);
+	builder.append(", file=");
+	builder.append(file);
+	builder.append(", txnId=");
+	builder.append(txnId);
+	builder.append(", importerName=");
+	builder.append(importerName);
+	builder.append(", totalPrice=");
+	builder.append(totalPrice);
+	builder.append(", fileName=");
+	builder.append(fileName);
+	builder.append(", fileStatus=");
+	builder.append(fileStatus);
+	builder.append(", consignmentStatus=");
+	builder.append(consignmentStatus);
+	builder.append(", quantity=");
+	builder.append(quantity);
+	builder.append(", userId=");
+	builder.append(userId);
+	builder.append(", remarks=");
+	builder.append(remarks);
+	builder.append(", roleType=");
+	builder.append(roleType);
+	builder.append(", currency=");
+	builder.append(currency);
+	builder.append("]");
+	return builder.toString();
 }
-
-
-
-
-
 
 }

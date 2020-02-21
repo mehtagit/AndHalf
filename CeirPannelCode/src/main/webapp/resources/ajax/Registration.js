@@ -143,7 +143,10 @@ function verifyOtp(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#otpVerification").closeModal();
-					$('#otpMessage').openModal();   
+					$('#otpMessage').openModal({
+				        dismissible:false
+				    });
+   
 					$("#otpResponse").text($.i18n(resp.tag));
 				});
 				
@@ -385,7 +388,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes').val(),  
+					roles:val.find('#usertypes:selected').val(),  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
@@ -572,7 +575,10 @@ function registrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal();
+					$("#otpMsgModal").openModal({
+				        dismissible:false
+				    });
+
 				});
 			}
 			else{
@@ -611,7 +617,10 @@ function otherRegistrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal();
+					$("#otpMsgModal").openModal({
+				        dismissible:false
+				    });
+
 				});
 				
 				

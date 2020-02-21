@@ -21,6 +21,7 @@ public class User extends UserHeader {
 	private String captcha;
     private String status;
     
+    
 	
     
     

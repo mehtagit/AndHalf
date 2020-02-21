@@ -12,7 +12,18 @@ $('#langlist').on('change', function() {
     		//var langParameter = url.searchParams.get("lang") == 'km' ? 'km' : 'en';
             $('#langlist').val(data_lang_param); 
 			dataByTag("link_dmc_portal", "newUserLink", 1);
-		});
+			//  $("label[for='username']").addClass("active");
+			/*  if ($("#username").val() != '') {
+				  $("label[for='username']").addClass('active');
+				  } else {
+					  $("label[for='username']").removeClass('remove');
+				  }
+			  if ($("#password").val() != '') {
+				  $("label[for='password']").addClass('active');
+				  } else {
+					  $("label[for='password']").removeClass('remove');
+				  }
+*/		});
 
 		
 	//Login Msg from javascript
