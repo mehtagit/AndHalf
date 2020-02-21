@@ -156,7 +156,7 @@ public class SystemConfigListServiceImpl {
 
 	public GenricResponse findById(FilterRequest filterRequest){
 		try {
-			if(Objects.isNull(filterRequest.getTag())) {
+			if(Objects.isNull(filterRequest.getId())) {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
