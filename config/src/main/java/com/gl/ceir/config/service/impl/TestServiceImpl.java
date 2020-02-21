@@ -12,11 +12,13 @@ import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.StolenandRecoveryMgmt;
+import com.gl.ceir.config.model.TypeApprovedDb;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
+import com.gl.ceir.config.repository.TypeApproveRepository;
 
 @Service
 public class TestServiceImpl {
@@ -37,6 +39,9 @@ public class TestServiceImpl {
 	
 	@Autowired
 	EndUserDbRepository endUserDbRepository;
+	
+	@Autowired
+	TypeApproveRepository typeApproveRepository;
 	
 	public GenricResponse updateStatus(int featureId, String txnId, int status) {
 		try {
@@ -59,6 +64,11 @@ public class TestServiceImpl {
 				StolenandRecoveryMgmt stolenandRecoveryMgmt = stolenAndRecoveryRepository.getByTxnId(txnId);
 				stolenandRecoveryMgmt.setFileStatus(status);
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
+				return new GenricResponse(0, "Status of Stolen/Recovery have been updated successfully.", txnId);
+			}else if(featureId == 11) {
+				TypeApprovedDb typeApprovedDb = typeApproveRepository.getByTxnId(txnId);
+				typeApprovedDb.setApproveStatus(status);
+				typeApproveRepository.save(typeApprovedDb);
 				return new GenricResponse(0, "Status of Stolen/Recovery have been updated successfully.", txnId);
 			}else if(featureId == 12) {
 				RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByTxnId(txnId);
