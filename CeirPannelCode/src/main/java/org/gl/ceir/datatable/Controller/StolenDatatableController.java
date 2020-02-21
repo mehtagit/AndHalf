@@ -137,23 +137,20 @@ public class StolenDatatableController {
 			
 				}else if("CEIRAdmin".equals(userType)) {
 					log.info("in CEIRAdmin Controler-----" +userType);
-					List<ActionModel> actionResponse = feignCleintImplementation.tableActionFeign(featureId,userTypeId);
-					log.info("actionResponse CEIRAdmin::::::::::::"+actionResponse);
-					
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String txnId = dataInsideList.getTxnId();
 						String operator = dataInsideList.getOperatorTypeIdInterp();
 						String fileName = dataInsideList.getRequestType();
-						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						String fileStatus = String.valueOf(dataInsideList.getFileStatus());
 						String stolenStatusName = dataInsideList.getStateInterp();
 						String source =dataInsideList.getSourceTypeInterp();
 						String requestType = dataInsideList.getRequestType(); 
 						String requestTypeName = dataInsideList.getRequestTypeInterp();
 						int id = dataInsideList.getId();
 						String userStatus = (String) session.getAttribute("userStatus");
-						String action = iconState.adminBlockUnblock(actionResponse,dataInsideList.getFileName(), dataInsideList.getTxnId(),
-								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
+						String action = iconState.adminBlockUnblock(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								fileStatus, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType());
 						Object[] finalData = {createdOn,txnId,operator,requestTypeName,source,stolenStatusName,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);

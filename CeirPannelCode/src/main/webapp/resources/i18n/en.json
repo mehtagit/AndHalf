@@ -92,7 +92,12 @@
 "Unblock Device Count":"Unblock Device Count",
 "Block Device Count":"Block Device Count",
 
-"Reg_userlimit_exceed":"We are facing some technical difficulties. Please try after some time."
+"Reg_userlimit_exceed":"We are facing some technical difficulties. Please try after some time.",
+
+"Upload Passport Image":"Upload Passport Image",
+"Passport Number":"Passport Number",
+"Upload ID Image":"Upload ID Image",
+"National ID":"National ID"
 
 
 }

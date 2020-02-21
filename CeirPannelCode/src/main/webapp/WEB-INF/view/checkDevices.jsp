@@ -14,6 +14,7 @@
     <meta name="keywords"
         content="materialize, admin template, dashboard template, flat admin template, responsive admin template,">
     <title>CEIR | Importer Portal</title>
+    
 
     <link href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet"
         media="screen,projection">
@@ -354,7 +355,8 @@
     <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
     <script type="text/javascript"
 		src="${context}/resources/project_js/checkDevice.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 </body>
 
 </html>

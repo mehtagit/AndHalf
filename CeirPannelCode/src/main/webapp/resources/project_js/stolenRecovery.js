@@ -384,7 +384,7 @@ function Datatable(url,dataUrl){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 240, targets: result.length - 1 }
+		            { width: 246, targets: result.length - 1 }
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
