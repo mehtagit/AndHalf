@@ -61,8 +61,14 @@ function refreshCaptcha(imageId){
 
 function reg(){
 	
-	alert("inside reg function");
 	return false;
 	
 }
+
+
+
+
+
+
+
 

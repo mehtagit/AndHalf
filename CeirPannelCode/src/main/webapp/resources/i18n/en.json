@@ -92,7 +92,7 @@
 "Unblock Device Count":"Unblock Device Count",
 "Block Device Count":"Block Device Count",
 
-"Reg_userlimit_exceed":"We are facing some technical difficulties. Please try after some time."
-
+"Reg_userlimit_exceed":"We are facing some technical difficulties. Please try after some time.",
+"requiredMsg_checkbox":"Please tick this box if you want to proceed"
 
 }
