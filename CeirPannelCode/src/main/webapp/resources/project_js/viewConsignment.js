@@ -652,14 +652,38 @@
 
 
 
-		function openApprovePopUp(txnId,displayName)
+				function openApprovePopUp(txnId,displayName)
 		{
 			var userType=$("body").attr("data-roleType");
 			displayName=displayName.replace("+20"," " );
-			$('#ApproveConsignment').openModal({
-				dismissible:false
-			});
+			$('#ApproveConsignment').openModal();
 			if(userType=='Custom'){
+				
+				$.ajax({
+					url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'GET',
+					success : function(data) {
+						console.log(data.pendingTacApprovedByCustom);
+						console.log(data.pendingTacApprovedByCustom);
+						
+						if(data.pendingTacApprovedByCustom=='y')
+							{
+						$('#tacSatusForCustom').css("display", "none");
+						$('#approveButton').prop('disabled', false);
+						
+							}
+						else{
+							$('#tacSatusForCustom').css("display", "block"); 
+							$('#approveButton').prop('disabled', true);
+						}
+					},
+					
+					error : function() {
+						alert("Failed");
+					}
+				});
 				
 				$('#ApproveConsignmentTxnid').text(txnId);
 				$('#setApproveConsignmentTxnId').val(txnId);
@@ -672,12 +696,14 @@
 				$('#confirmationMessage').text('');
 				$('#setApproveConsignmentTxnId').val(txnId);
 				$('#displayname').text(displayName);
+				   $('#approveButton').attr('disabled', false); 
 				
 			}
 
 
 
 		}
+
 		function approveSubmit(actiontype){
 			var txnId=$('#setApproveConsignmentTxnId').val();
 
@@ -986,3 +1012,16 @@ function fileTypeValueChanges() {
 
 			}
 			});
+			
+				
+		$('#tacStatusChecKbox').click(function () {
+		    //check if checkbox is checked
+		    if ($(this).is(':checked')) {
+		      
+		        $('#approveButton').removeAttr('disabled'); //enable input
+		        
+		    }
+		    else {
+		        $('#approveButton').attr('disabled', true); //disable input
+		    }
+		});

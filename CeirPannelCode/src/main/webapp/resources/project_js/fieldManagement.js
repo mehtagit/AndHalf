@@ -190,73 +190,60 @@
 			var consignmentTxnId=$('#transactionID').val();
 			var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 			var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
-			if(isNaN(consignmentTaxPaidStatus) && isNaN(filterConsignmentStatus) )
-			{
-				consignmentTaxPaidStatus="";
-				filterConsignmentStatus='';
-				
-			}
-			else if(isNaN(consignmentTaxPaidStatus))
-			{
-				consignmentTaxPaidStatus="";
 			
-			}
-			else if(isNaN(filterConsignmentStatus))
-			{
-				filterConsignmentStatus='';
-			
-			}
-
-			var table = $('#consignmentLibraryTable').DataTable();
+			var table = $('#fieldManagementLibraryTable').DataTable();
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
 			window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
 		}
 
-
+		var request ={
+				  "userId" : parseInt($("body").attr("data-userID"))
+			}
+		$.ajax({
+			url: './getSystemTags',
+			type: 'POST',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+				var result = data.data;
+				for (i = 0; i < result.length; i++){
+					$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#tag');
+				}
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});	
+		
 
 		function AddField(){
 			$('#addTags').openModal();
-			
-			var request ={
-					  "userId" : parseInt($("body").attr("data-userID"))
-				}
-			$.ajax({
-				url: './getSystemTags',
-				type: 'POST',
-				data : JSON.stringify(request),
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				success: function (data, textStatus, jqXHR) {
-					var result = data.data;
-					for (i = 0; i < result.length; i++){
-						$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#tag');
-					}
-					
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log("error in ajax")
-				}
-			});	
-			
 			var tag = sessionStorage.getItem("tagId")
-			
 			$('#tag').val(tag);	
-		
+			
+			var tagDropDown =  document.getElementById("tag");
+			var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
+			$('#displayName').val(displayName);	
 		}
 		
+	
+	/*----------------------------------- Save Field ----------------------------------------- */
 		
 	function submitTag(){
 		
 		var request={
-					  //"displayName" : $('#addField').val(),	
+					  "displayName" : $('#displayName').val(),		
 					  "interp": $('#addInterp').val(), 
 					  "tag":   $('#tag').val(),
 					  "tagId": $('#tagId').val(),
 					  "value": $('#addValue').val(),
+					  "description" : $('#description').val(),
 				}
-			
+		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
 			url : './add-Field',
@@ -266,9 +253,7 @@
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
 					console.log(JSON.stringify(data));
-					
-					
-			
+					$("#confirmField").openModal();
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -278,36 +263,131 @@
 			return false
 	}
 
-/*	function cancelbtn(){
-		sessionStorage.removeItem("tagId");
-		alert("called")
-	}	*/
 
+  
+	/*--------------------------------- Edit Model View -----------------------------------*/
 	
-	function FieldViewByID(tag){
-			$("#editTags").openModal();
-			
+	
+	function FieldViewByID(tag,id){
+			var Id = parseInt(id);
 			var request ={
-					  "userId" : parseInt($("body").attr("data-userID"))
+					  "id" : parseInt(Id)
 				}
 			$.ajax({
-				url: './getSystemTags',
+				url: './fieldViewByID',
 				type: 'POST',
 				data : JSON.stringify(request),
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
-					var result = data.data;
-					for (i = 0; i < result.length; i++){
-						$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#Edittag');
-					}
-					
+						console.log(data);
+						$("#editTags").openModal();
+						FieldEditPopupData(data);
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
 				}
 			});	
-			
+		}
+	
+	
+	function FieldEditPopupData(data){
+		var request ={
+				  "userId" : parseInt($("body").attr("data-userID"))
+			}
+		$.ajax({
+			url: './getSystemTags',
+			type: 'POST',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+				var result = data.data;
+				for (i = 0; i < result.length; i++){
+					$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#Edittag');
+				}
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});	
+		
+		$("#id").val(data.id);
+		$("#Edittag").val(data.tag);
+		$("#editdescription").val(data.description);
+		$("#editInterp").val(data.interp);
+		$("#editFieldId").val(data.tagId);
+		
+	}
+	
+	
+	/*---------------------------------- Update Field-------------------------------------*/
+	
+	
+	function updatedTag(){
+		
+		var request ={ 
+		  //"description": "",
+		  //"displayName": "",
+		  "id": parseInt($("#id").val()),
+		  "interp": $("#editInterp").val(),
+		  "tag": $("#Edittag").val(),
+		  "tagId": $("#editFieldId").val(),
+		  "value":$("#editValue").val()
+		}
+		
+		$.ajax({
+			url: './updateSystemTags',
+			type: 'PUT',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+							
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});	
 	}
 
+	
+	
+  /*------------------------------------ Delete Field -----------------------------------*/
+	
+	
+	function DeleteFieldRecord(id){
+		$("#DeleteFieldModal").openModal();
+		$("#deleteFieldId").val(id);
 		
+	}	
+	
+	
+	
+	function confirmantiondelete(){
+		var request ={
+				"userId" : $("body").attr("data-userID"),
+				"id"  : parseInt($("#deleteFieldId").val())
+		}
+		console.log(JSON.stringify(request));
+		$.ajax({
+			url : './deleteField',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'DELETE',
+			success : function(data, textStatus, xhr) {
+				console.log(data);
+				$("#DeleteFieldModal").closeModal();
+				$("#closeDeleteModal").openModal();
+				
+				$("#materialize-lean-overlay-3").css("display","none");
+			},
+			error : function() {
+				console.log("Error");
+			}
+		});
+	}
+	
