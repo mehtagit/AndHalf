@@ -18,5 +18,7 @@ public interface RegularizedDeviceDbRepository extends JpaRepository<RegularizeD
 	public RegularizeDeviceDb getByFirstImei(Long imei1);
 	
 	public Long countByNid(String nid);
+	
+	public RegularizeDeviceDb getByTxnId(String txnid);
 
 }
