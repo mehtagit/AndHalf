@@ -7,8 +7,10 @@ public class StateMachine {
 	public static boolean isConsignmentStatetransitionAllowed(String userType, int currentStatus) {
 		if("CEIRADMIN".equalsIgnoreCase(userType)) {
 			return ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode() == currentStatus;
-		}else if("CUSTOM".equalsIgnoreCase(userType))
+		}else if("CUSTOM".equalsIgnoreCase(userType)) {
 			return ConsignmentStatus.PENDING_APPROVAL_FROM_CUSTOMS.getCode() == currentStatus;
+		}else if("CEIRSYSTEM".equalsIgnoreCase(userType))
+			return ConsignmentStatus.PROCESSING.getCode() == currentStatus;
 		
 		return Boolean.FALSE;
 	}

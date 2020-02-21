@@ -35,6 +35,7 @@ import com.gl.ceir.config.model.ConsignmentUpdateRequest;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
@@ -46,6 +47,7 @@ import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
@@ -120,6 +122,9 @@ public class ConsignmentServiceImpl {
 	
 	@Autowired
 	PendingTacApprovedImpl pendingTacApprovedImpl;
+	
+	@Autowired
+	UserStaticServiceImpl userStaticServiceImpl;
 	
 	public GenricResponse registerConsignment(ConsignmentMgmt consignmentFileRequest) {
 
@@ -310,6 +315,16 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setSupplierName(consignmentFileRequest.getSupplierName());
 				consignmentInfo.setTotalPrice(consignmentFileRequest.getTotalPrice());
 				consignmentInfo.setCurrency(consignmentFileRequest.getCurrency());
+				
+				// pending tac if available in pending_tac_approval_db.
+				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
+				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
+					logger.info("Tac related to the consignment with txn_id [" + consignmentFileRequest.getTxnId() + "] found in pending_tac_approval_db");
+					consignmentInfo.setPendingTacApprovedByCustom("Y");
+				}else {
+					logger.info("No tac for the consignment with txn_id [" + consignmentFileRequest.getTxnId() + "] is pending.");
+					consignmentInfo.setPendingTacApprovedByCustom("N");
+				}
 
 				if(Objects.nonNull(consignmentFileRequest.getFileName()) && !consignmentFileRequest.getFileName().isEmpty()){
 					consignmentInfo.setConsignmentStatus(ConsignmentStatus.INIT.getCode());	
@@ -497,6 +512,40 @@ public class ConsignmentServiceImpl {
 								placeholderMap, 
 								null);
 
+					}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
+
+						List<RawMail> rawMails = new LinkedList<>();
+						if(!StateMachine.isConsignmentStatetransitionAllowed("CEIRSYSTEM", consignmentMgmt.getConsignmentStatus())) {
+							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
+							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
+						}
+						consignmentMgmt.setConsignmentStatus(ConsignmentStatus.PENDING_APPROVAL_FROM_CEIR_AUTHORITY.getCode());
+						
+						placeholderMap.put("<First name>", userProfile.getFirstName());
+						placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+						
+						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL", 
+								consignmentMgmt.getUserId(), 
+								consignmentUpdateRequest.getFeatureId(), 
+								Features.CONSIGNMENT,
+								SubFeatures.ACCEPT,
+								consignmentUpdateRequest.getTxnId(), 
+								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL.replaceAll("<XXX>", consignmentMgmt.getTxnId()), 
+								placeholderMap, ReferTable.USERS, 
+								consignmentUpdateRequest.getRoleType()));
+						
+						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
+								userStaticServiceImpl.getCeirAdmin().getId(), 
+								consignmentUpdateRequest.getFeatureId(), 
+								Features.CONSIGNMENT,
+								SubFeatures.ACCEPT,
+								consignmentUpdateRequest.getTxnId(), 
+								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL.replaceAll("<XXX>", consignmentMgmt.getTxnId()), 
+								placeholderMap, ReferTable.USERS, 
+								consignmentUpdateRequest.getRoleType()));
+						
+						emailUtil.saveNotification(rawMails);
+
 					}
 				}
 			}else {
@@ -543,6 +592,30 @@ public class ConsignmentServiceImpl {
 							MailSubject.Consignment_Rejected_Custom_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
 							null);
+					
+				}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
+					List<RawMail> rawMails = new LinkedList<>();
+					if(!StateMachine.isConsignmentStatetransitionAllowed("CEIRSYSTEM", consignmentMgmt.getConsignmentStatus())) {
+						logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
+						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
+					}
+					consignmentMgmt.setConsignmentStatus(ConsignmentStatus.REJECTED_BY_SYSTEM.getCode());
+					
+					placeholderMap.put("<First name>", userProfile.getFirstName());
+					placeholderMap.put("<txn_name>", consignmentMgmt.getTxnId());
+					
+					rawMails.add(new RawMail("CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL", 
+							consignmentMgmt.getUserId(), 
+							consignmentUpdateRequest.getFeatureId(), 
+							Features.CONSIGNMENT,
+							SubFeatures.ACCEPT,
+							consignmentUpdateRequest.getTxnId(), 
+							MailSubject.CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL.replaceAll("<XXX>", consignmentMgmt.getTxnId()), 
+							placeholderMap, ReferTable.USERS, 
+							consignmentUpdateRequest.getRoleType()));
+					
+					emailUtil.saveNotification(rawMails);
+
 				}
 			}
 
