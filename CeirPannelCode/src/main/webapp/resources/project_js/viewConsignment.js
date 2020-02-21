@@ -44,7 +44,9 @@
 
 
 		function DeleteConsignmentRecord(txnId){
-			$("#DeleteConsignment").openModal();
+			$("#DeleteConsignment").openModal({
+				dismissible:false
+			});
 			$("#transID").text(txnId);
 		}
 
@@ -80,7 +82,10 @@
 				}
 			});
 			$("#DeleteConsignment").closeModal();
-			$("#confirmDeleteConsignment").openModal();
+			$("#confirmDeleteConsignment").openModal({
+				dismissible:false
+			});
+			return false;
 		}
 		$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 			$("#expectedArrivalPortEdit").empty();
@@ -111,7 +116,9 @@
 				}
 			});
 
-			$("#updateModal").openModal();
+			$("#updateModal").openModal({
+				dismissible:false
+			});
 		}
 
 	function ConsignmentCurrency()
@@ -168,7 +175,12 @@
 		}
 
 		function viewConsignmentDetails(txnId){
-			$("#viewModal").openModal();
+			
+			$("#viewModal").openModal({
+		        dismissible:false
+		    });
+			
+			
 			$.ajax({
 				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 				dataType : 'json',
@@ -398,7 +410,9 @@
 				success: function (data, textStatus, jqXHR) {
 					$('#updateModal').closeModal();
 
-					$('#updateConsignment').openModal();
+					$('#updateConsignment').openModal({
+						dismissible:false
+					});
 					if(data.errorCode==200){
 
 
@@ -430,7 +444,9 @@
 
 		function openDeleteModal(transactionId)
 		{
-			$('#deletemodal').openModal();
+			$('#deletemodal').openModal({
+				dismissible:false
+			});
 			$('#deleteTransactionId').val(transactionId);
 		}
 
@@ -613,7 +629,7 @@
 
 				/* 	$('#transactionID').val('');
 					$('#transactionID').val(txnid); */
-					$('#transactionID').attr("placeholder","" );
+					//$('#transactionID').attr("placeholder","" );
 					if(txnid=="")
 					{
 					
@@ -637,7 +653,7 @@
 
 
 
-		function openApprovePopUp(txnId,displayName)
+				function openApprovePopUp(txnId,displayName)
 		{
 			var userType=$("body").attr("data-roleType");
 			displayName=displayName.replace("+20"," " );
@@ -653,7 +669,7 @@
 						console.log(data.pendingTacApprovedByCustom);
 						console.log(data.pendingTacApprovedByCustom);
 						
-						if(data.pendingTacApprovedByCustom=='y')
+						if(data.pendingTacApprovedByCustom=='N')
 							{
 						$('#tacSatusForCustom').css("display", "none");
 						$('#approveButton').prop('disabled', false);
@@ -661,6 +677,8 @@
 							}
 						else{
 							$('#tacSatusForCustom').css("display", "block"); 
+							$('#tacStatucMessage').text('');
+							$('#tacStatucMessage').text($.i18n('tacStatucMessage'));
 							$('#approveButton').prop('disabled', true);
 						}
 					},
@@ -673,7 +691,6 @@
 				$('#ApproveConsignmentTxnid').text(txnId);
 				$('#setApproveConsignmentTxnId').val(txnId);
 				$('#displayname').text(displayName);
-					
 			}
 			else{
 				$('#approveConsignmnetHeading').text('');
@@ -688,6 +705,7 @@
 
 
 		}
+
 		function approveSubmit(actiontype){
 			var txnId=$('#setApproveConsignmentTxnId').val();
 
@@ -703,7 +721,9 @@
 				contentType : 'application/json; charset=utf-8',
 				type : 'POST',
 				success : function(data) {
-					$('#confirmApproveConsignment').openModal();
+					$('#confirmApproveConsignment').openModal({
+						dismissible:false
+					});
 					if(data.errorCode==0){
 
 						$('#approveSuccessMessage').text('');
@@ -723,7 +743,9 @@
 		function openDisapprovePopup(txnId,displayName)
 		{
 			displayName=displayName.replace("+20"," " );
-			$('#RejectConsignment').openModal();
+			$('#RejectConsignment').openModal({
+				dismissible:false
+			});
 			$('#disaproveTxnId').text(txnId);
 			$('#setDisapproveConsignmentTxnId').val(txnId);
 			$('#disapprovedDisplayname').text(displayName);
@@ -748,7 +770,9 @@
 				contentType : 'application/json; charset=utf-8',
 				type : 'POST',
 				success : function(data) {
-					setTimeout(function(){ $('#confirmRejectConsignment').openModal()}, 200);
+					setTimeout(function(){ $('#confirmRejectConsignment').openModal({
+						dismissible:false
+					});}, 200);
 
 					if(data.errorCode==0){
 
@@ -790,7 +814,9 @@
 
 
 		function markedstolen(){
-			$('#markAsMultipleStolen').openModal();
+			$('#markAsMultipleStolen').openModal({
+				dismissible:false
+			});
 
 		}
 
@@ -805,7 +831,9 @@
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
-					$('#markAsStolenDone').openModal();
+					$('#markAsStolenDone').openModal({
+						dismissible:false
+					});
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 				
@@ -863,16 +891,22 @@ function fileTypeValueChanges() {
 			var fileSize = ($("#csvUploadFile")[0].files[0].size);
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
-		       $('#fileFormateModal').openModal();
+		       $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
 		       
 		   } 
 			else if(ext!='csv')
 				{
-				$('#fileFormateModal').openModal();
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
 				 
 				}
 			else if(fileSize>='5000'){
-				$('#fileFormateModal').openModal();
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
 				 
 			}
 			else {
@@ -921,20 +955,23 @@ function fileTypeValueChanges() {
 			var fileSize = ($("#csvUploadFile")[0].files[0].size);
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
-		       $('#fileFormateModal').openModal();
-		       $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+		       $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+		      
 		   } 
 			else if(ext!='csv')
 				{
-				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file extension must be in  CSV.');
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				
 				}
-			else if(fileSize>='5000'){
-				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file size must be less then 5 mb.');
+			else if(fileSize>='2000'){
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				 
 			}
 			else {
 				console.log("file formate is correct")
@@ -974,8 +1011,8 @@ function fileTypeValueChanges() {
 
 			}
 			});
-		
-		
+			
+				
 		$('#tacStatusChecKbox').click(function () {
 		    //check if checkbox is checked
 		    if ($(this).is(':checked')) {

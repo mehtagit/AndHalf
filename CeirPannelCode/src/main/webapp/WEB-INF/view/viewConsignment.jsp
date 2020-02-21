@@ -253,8 +253,9 @@
 		<h6 class="modal-header">
 			<spring:message code="modal.header.deleteConsignment" />
 		</h6>
+		<form action="" onsubmit=" return confirmantiondelete()" method="POST">
 		<div class="modal-content">
-			<div class="row">
+		
 				<h6>
 					<spring:message code="modal.withdraw.message" />
 					(<span id="transID"></span>)
@@ -263,24 +264,27 @@
 
 			<div class="row">
 				<div class="input-field col s12 m12">
-					<textarea id="textarea1" class="materialize-textarea"></textarea>
-					<label for="textarea1"><spring:message code="input.remarks" /></label>
+					<textarea id="textarea1" required="required" maxlength="200"  class="materialize-textarea"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /><span class="star">*</span></label>
 				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a class="btn" onclick="confirmantiondelete()"><spring:message
-								code="modal.yes" /></a>
-						<button class="modal-close btn" type="button"
+						<button class="btn" type="submit"><spring:message
+								code="modal.yes" /></button>
+						<button class="modal-close btn" type="submit"
 							onclick="closeUpdateModal()" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
 				</div>
+		
 			</div>
+		</form>
 		</div>
+		
 	</div>
 	<!-- Modal End -->
 	<!-- END CONTENT -->
@@ -372,7 +376,7 @@
           <p id="tacSatusForCustom" style="display: none">
             <label>
               <input type="checkbox" id="tacStatusChecKbox" >
-              <span>By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request</span>
+              <span id="tacStatucMessage"></span>
             </label>
           </p>
         </form>

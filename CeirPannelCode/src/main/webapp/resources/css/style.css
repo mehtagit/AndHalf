@@ -2937,3 +2937,9 @@ thead {
 background: #529dba !important;
 color: white;
 }
+
+.grievance-reply-msg{
+	max-width: 85%;
+max-height: 50px;
+overflow-y: scroll;
+}

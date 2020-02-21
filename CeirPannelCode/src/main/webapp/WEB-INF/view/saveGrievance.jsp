@@ -66,6 +66,16 @@ href="${context}/resources/project_css/viewStock.css">
 <link rel="stylesheet"
 href="${context}/resources/project_css/iconStates.css">
 
+<style>
+h6 {
+margin: 0 0 0.4rem 0 !important;
+}
+
+select {
+height: 32px !important;
+}
+</style>
+
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}"
 data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"> --%>
@@ -94,7 +104,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <div class="input-field col s12 m6 l6">
 <input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-title= "<spring:message code="validation.18digit" />"  
+title= "<spring:message code="validation.T18characters" />"  
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
@@ -128,7 +138,7 @@ title= "<spring:message code="validation.200characters" />" required></textarea>
 <span><spring:message code="input.selectfile" /></span>
 <input type="file" name="files[]" id="docTypeFile1" 
 oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-title= "<spring:message code="validation.NoChosen" />" required  / >
+title= "<spring:message code="validation.NoChosen" />" >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -324,6 +334,8 @@ function saveGrievance(){
 	var docTypeTagIdValue='';
 	var filename='';
 	var filesameStatus=false;
+	var documenttype=false;
+	var docTypeTag='';
 	$('.fileDiv').each(function() {	
 
 		
@@ -334,23 +346,23 @@ function saveGrievance(){
 		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
 		
 		documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		docTypeTag=$('#docTypetag'+fieldId).val();
+		
 		var fileIsSame=	documentFileNameArray.includes(documentFileName);
+		
+		var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+	
 		if(filesameStatus!=true){
 			filesameStatus=	fileIsSame;
 		}
-		documentFileNameArray.push(documentFileName);
-		/* var hh=	documentFileNameArray.includes(documentFileName);
-		//alert(documentFileName);
-		if(hh==true)
-		{
-			
-		//alert("diuplicate file name found.."+hh);
-		$('#fileFormateModal').openModal();
-		$('#fileErrormessage').text($.i18n('duplicateFileName'));
-		return false;
 		
-		} */
-	//	documentFileNameArray.push(documentFileName);
+		 if(documenttype!=true)
+			{
+			documenttype=documentTypeTag;
+	
+			}
+		documentFileNameArray.push(documentFileName);
+		documentFileNameArray.push(docTypeTag);
 		
 		fileInfo.push(x);
 		fieldId++;
@@ -366,6 +378,18 @@ function saveGrievance(){
 	return false;
 	
 	}
+	
+	if(documenttype==true)
+	{	
+		
+	$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('documentTypeName'));
+	return false;
+	
+	}
+	
+	
 	var multirequest={
 			"attachedFiles":fileInfo,
 			"txnId":txnId,
@@ -523,7 +547,7 @@ $.ajax({
 									//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 									//$('#docTypetag1').append(html);	
 								
-								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetag'+optionId);
+								$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
 								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetagValue'+optionId);
 							}
 							
@@ -584,6 +608,7 @@ $('#category').on(
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 				$("#docTypetag1").empty();
+				$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
 				console.log(data);
 				for (i = 0; i < data.length; i++){
 						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
