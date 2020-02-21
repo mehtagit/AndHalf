@@ -141,6 +141,7 @@ public class StockServiceImpl {
 		try {
 			stockMgmt.setStockStatus(StockStatus.UPLOADING.getCode());
 
+			// Assign Stock is done by custom.
 			if("Custom".equalsIgnoreCase(stockMgmt.getUserType())) {
 				String secondaryRoleType = null;
 				user =	userRepository.getByUsername(stockMgmt.getSupplierId());

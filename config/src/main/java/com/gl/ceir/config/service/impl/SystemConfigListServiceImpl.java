@@ -100,7 +100,9 @@ public class SystemConfigListServiceImpl {
 			}
 			
 			SystemConfigListDb systemConfigListDb2 = systemConfigListRepository.getById(systemConfigListDb.getId());
-			
+			systemConfigListDb2.setDescription(systemConfigListDb.getDescription());
+			systemConfigListDb2.setTagId(systemConfigListDb.getTagId());
+			systemConfigListDb2.setInterp(systemConfigListDb.getInterp());
 			systemConfigListRepository.save(systemConfigListDb2);
 			return new GenricResponse(0);
 
