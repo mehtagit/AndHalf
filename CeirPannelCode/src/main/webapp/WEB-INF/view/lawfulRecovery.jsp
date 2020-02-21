@@ -335,7 +335,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span> <input type="file" 
 															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
+															title= "<spring:message code="validation.NoChosen" />"   
 															placeholder="Upload FIR" id="uploadFirSingle">
 														</div>
 														<div class="file-path-wrapper">
@@ -381,7 +381,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span> <input type="file" 
 															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
+															title= "<spring:message code="validation.NoChosen" />"  
 															placeholder="Upload FIR" id="uploadFirBulk">
 														</div>
 														<div class="file-path-wrapper">

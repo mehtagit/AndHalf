@@ -562,7 +562,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span> <input type="file" 
 															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
+															title= "<spring:message code="validation.NoChosen" />" 
 															placeholder="Upload FIR" id="uploadFirSingle">
 														</div>
 														<div class="file-path-wrapper">
@@ -734,7 +734,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"  pattern="[0-9\s,+]{7,15}" 
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												title= "<spring:message code="validation.10digits" />"  maxlength="15" required/> 
+												title= "<spring:message code="validation.10digits" />"  maxlength="15" /> 
 												<label for="phone2"><spring:message code="input.contactNum" /></label>
 											</div>
 
@@ -765,7 +765,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenstreetNumber" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,20}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.20Character" />" required  / maxlength="20">
+													title= "<spring:message code="validation.20Character" />" required   maxlength="20">
 												<label for="streetNumber"><spring:message code="input.streetNumber" /> <span
 													class="star"> *</span></label>
 											</div>
@@ -774,7 +774,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="village"
 													id="deviceBulkStolenvillage" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.30characters" />" required  /  maxlength="30"> <label
+													title= "<spring:message code="validation.30characters" />" required    maxlength="30"> <label
 													for="village"><spring:message code="input.village" /> <span class="star"> *</span></label>
 											</div>
 
@@ -783,7 +783,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenlocality" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.30characters" />" required  / maxlength="30">
+													title= "<spring:message code="validation.30characters" />" required   maxlength="30">
 												<label for="locality"><spring:message code="input.locality" /> <span class="star"> *</span></label>
 											</div>
 
@@ -791,7 +791,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="district"
 													id="deviceBulkStolendistrict" pattern="[^[a-zA-Z0-9\s,'-]*$]{0,30}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.30characters" />" required  /  maxlength="30"> <label
+													title= "<spring:message code="validation.30characters" />" required    maxlength="30"> <label
 													for="district"><spring:message code="input.district" /> <span class="star"> *</span></label>
 											</div>
 
@@ -799,7 +799,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<input type="text" name="commune"
 													id="deviceBulkStolencommune" pattern="[A-Za-z0-9._%+-$@,/]+\.{0,30}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.30characters" />" required  / maxlength="30"> <label
+													title= "<spring:message code="validation.30characters" />" required   maxlength="30"> <label
 													for="commune"><spring:message code="input.commune" /><span class="star"> *</span></label>
 											</div>
 
@@ -808,7 +808,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenpin" pattern="[0-9]{0,6}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.postalcode" />" required  / maxlength="6" > <label
+													title= "<spring:message code="validation.postalcode" />" required   maxlength="6" > <label
 													for="pin"><spring:message code="registration.postalcode" /><span class="star"> *</span></label>
 											</div>
 
@@ -816,7 +816,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<label><spring:message code="input.Country" /><span class="star"> *</span></label> <select
 													id="country3" class="browser-default" class="mySelect"
 													oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-													title= "<spring:message code="validation.selectFieldMsg" />" required  / 
+													title= "<spring:message code="validation.selectFieldMsg" />" required   
 													style="padding-left: 0;"></select>
 											</div>
 
@@ -824,7 +824,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<label><spring:message code="input.province" /> <span class="star"> *</span></label> <select
 													id="state3" class="browser-default" class="mySelect"
 													oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-													title= "<spring:message code="validation.selectFieldMsg" />" required  /
+													title= "<spring:message code="validation.selectFieldMsg" />" required  
 													style="padding-left: 0;" required></select>
 											</div>
 
@@ -832,7 +832,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<label><spring:message code="registration.complainttype" /><span class="star"> *</span></label> <select
 													class="browser-default" id="deviceBulkStolenComplaint" 
 													oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-													title= "<spring:message code="validation.selectFieldMsg" />" required  / >
+													title= "<spring:message code="validation.selectFieldMsg" />" required   >
 													<option value="" disabled selected><spring:message code="registration.selectcomplainttype" /></option>
 
 												</select>
@@ -844,7 +844,7 @@ onclick="_Services._selectstartDate()"></i></span>
 													class="form-control boxBorder boxHeight" required
 													id="deviceBulkStolenquantity" maxlength="7" pattern=[0-9]{1,7}
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-													title= "<spring:message code="validation.7digits" />" required  / > <label
+													title= "<spring:message code="validation.7digits" />" required   > <label
 													for="quantity"><spring:message code="input.quantity" /><span class="star"> *</span></label>
 											</div>
 											
@@ -856,7 +856,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<div class="btn">
 													<span><spring:message code="input.selectfile" /></span> <input type="file"
 													oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-													title= "<spring:message code="validation.NoChosen" />" required  / id="deviceBulkStolenFile" accept=".csv">
+													title= "<spring:message code="validation.NoChosen" />" required   id="deviceBulkStolenFile" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"
@@ -924,7 +924,7 @@ onclick="_Services._selectstartDate()"></i></span>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span> <input type="file" 
 															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required   
+															title= "<spring:message code="validation.NoChosen" />"    
 															placeholder="Upload FIR" id="uploadFirBulk">
 														</div>
 														<div class="file-path-wrapper">

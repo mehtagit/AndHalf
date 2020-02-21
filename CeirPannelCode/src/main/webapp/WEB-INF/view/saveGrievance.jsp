@@ -128,11 +128,11 @@ title= "<spring:message code="validation.200characters" />" required></textarea>
 <span><spring:message code="input.selectfile" /></span>
 <input type="file" name="files[]" id="docTypeFile1" 
 oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-title= "<spring:message code="validation.NoChosen" />" required  / >
+title= "<spring:message code="validation.NoChosen" />" >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
-placeholder="<spring:message code="grievanceFileMessage" />"">
+placeholder="<spring:message code="grievanceFileMessage" />">
 <div>
 <p id="myFiles"></p>
 </div>
