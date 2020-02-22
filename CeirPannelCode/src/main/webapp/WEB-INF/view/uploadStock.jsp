@@ -215,7 +215,7 @@ to {
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
-								<p class="PageHeading">
+								<p class="PageHeading" id="uploaDStockHeader">
 									<spring:message code="button.uploadStock" />
 								</p>
 							</div>
@@ -419,7 +419,7 @@ to {
 
             <div class="row" id="submitbtn" style="display: none;" >
                     <div class="input-field col s12 m2">
-                        <label for="Search" class="center-align ml-10"> <spring:message code="AssigneSearch" /></label>
+                        <label for="Search" class="center-align ml-10"> <spring:message code="searchField" /></label>
                     </div>
                     <div class="input-field col s12 m5">
                         <input type="text" id="assigneDetails" name="assigneDetails" placeholder="<spring:message code="AssigneSearch" />" />
@@ -540,7 +540,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$("#assigneDetailslink").css("display", "none"); 
 				$("#supplierNameOrIdDiv").css("display", "block"); 
 				$("#invoiceNumberDiv").css("display", "block"); 
-				console.log("----importer");
+			
 			}
 			
 			
@@ -554,10 +554,9 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				 $("#supplierId").attr("required", false);
 				 $("#supplierName").attr("required", false);
 				 $("#invoiceNumber").attr("required", false);
+					$('#assigneDetailslink').text($.i18n('AssigneSearchLink'))
 				}
-			else{
-				
-				
+			else if(currentRoleTypeAssignei == 'Custom'){
 				
 				$("#supplierNameOrIdDiv").css("display", "block"); 
 				$("#invoiceNumberDiv").css("display", "block")
@@ -569,6 +568,26 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$('#SupplierIdAssignieName').text(assigneNameLabel);
 
 				$("#SupplierIdAssignieName").append('<span class="star">*</span>');
+				$('#uploaDStockHeader').text($.i18n('assignStock'));
+				
+				
+			}
+			else{
+				
+				
+				
+				$("#supplierNameOrIdDiv").css("display", "block"); 
+				$("#invoiceNumberDiv").css("display", "block")
+				$("#assigneDetailslink").css("display", "block"); 
+				
+				$('#assigneDetailslink').text($.i18n('AssigneSearchLink'));
+				/* $('#SupplierIdAssignie').text('');
+				$('#SupplierIdAssignie').text(assigneIdLabel);
+			
+				$('#SupplierIdAssignieName').text('');
+				$('#SupplierIdAssignieName').text(assigneNameLabel);
+
+				$("#SupplierIdAssignieName").append('<span class="star">*</span>'); */
 			}
 	});
 
@@ -618,10 +637,17 @@ function uploadStock(){
 				    $('#stockSuccessMessage').text('');
 					$('#stockSuccessMessage').text(data.message);
 			 }
+			 else if(data.errorCode=="5")
+				 {
+				 $('#stockSuccessMessage').text('');
+					$('#stockSuccessMessage').text($.i18n('stockResponseMessage'));
+				 }
+			 
 			 else{
 				 $('#stockSuccessMessage').text('');
 					$('#stockSuccessMessage').text(data.message);
 			 }
+			
 			 
 		   // $('#updateConsignment').modal('open'); 
 			//alert("success");
@@ -731,9 +757,9 @@ function assigneeTable(URL,dataUrl){
 				orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
-				"bSearchable" : true,
+				
 				"oLanguage": {  
 					"sUrl": langFile  
 				},
@@ -762,6 +788,7 @@ function assigneeTable(URL,dataUrl){
 $('input:radio[name="group1"]').change(
 	    function(){
 	        if ($(this).is(':checked')) {
+	        	$('#assigneDetails').val('')
 	        	//$("input[name='group1']").attr("disabled","disabled");
 	        }
 	    });
@@ -769,6 +796,11 @@ $('input:radio[name="group1"]').change(
 
 function saveAssigneDetails(assigneId,assigneName)
 {
+	 //assigneName=assigneName.replace(/%20/g," " );
+	 
+	 assigneName=assigneName.split("+20").join(" ");
+	// alert(assigneName);
+	
 	$('#searchSupplierInformation').closeModal();
 	$("#supplierId").attr("placeholder","");
 	$("#supplierName").attr("placeholder","");
