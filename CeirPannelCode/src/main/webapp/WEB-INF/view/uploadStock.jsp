@@ -198,7 +198,7 @@ to {
 }
 
 .selectDropdwn {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 </style>
 
@@ -222,54 +222,58 @@ to {
 							<form action="" onsubmit="return uploadStock()" method="POST"
 								enctype="multipart/form-data" id="uploadStock">
 
-								<div class="row myRow" id="supplierNameOrIdDiv" style="display: none;">
+								<div class="row myRow" id="supplierNameOrIdDiv"
+									style="display: none;">
 									<div class="input-field col s12 m6">
-										<input type="text" name="supplierId" 
+										<input type="text" name="supplierId"
 											pattern="[A-Za-z0-9]{0,15}"
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+											oninput="InvalidMsg(this,'input');"
+											oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.15character" />"
-											maxlength="15" id="supplierId"
-											maxlength="15" /> <label for="supplierId" id="SupplierIdAssignie"
-											class="center-align"><spring:message
+											maxlength="15" id="supplierId" maxlength="15" /> <label
+											for="supplierId" id="SupplierIdAssignie" class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
 
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
-											pattern="[A-Za-z ]{0,50}"
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input');"
+											oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.50character" />"
-											maxlength="50" required /> <label for="supplierName" id="SupplierIdAssignieName"
-											class="center-align"><spring:message
+											maxlength="50" required /> <label for="supplierName"
+											id="SupplierIdAssignieName" class="center-align"><spring:message
 												code="input.supllierName" /><span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
-                                                <a onclick="openModalForAssigneId()" id="assigneDetailslink" class="supplierInformation" style="display: none;">
-                                                 <spring:message code="AssigneSearchLink" /></a>
-                                            </div>
+									<a onclick="openModalForAssigneId()" id="assigneDetailslink"
+										class="supplierInformation" style="display: none;"> <spring:message
+											code="AssigneSearchLink" /></a>
+								</div>
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
-											pattern="[0-9]{0,7}"
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input');"
+											oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.7digits" />"
-											maxlength="7" required />
-										<label for="Quantity" class="center-align"><spring:message
+											maxlength="7" required /> <label for="Quantity"
+											class="center-align"><spring:message
 												code="input.quantity" /><span class="star">*</span></label>
 									</div>
 
-									<div class="input-field col s12 m6" id="invoiceNumberDiv" style="display: none">
-										<input type="text" name="invoiceNumber" id="invoiceNumber" 
+									<div class="input-field col s12 m6" id="invoiceNumberDiv"
+										style="display: none">
+										<input type="text" name="invoiceNumber" id="invoiceNumber"
 											pattern="[A-Za-z0-9]{0,15}"
-											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+											oninput="InvalidMsg(this,'input');"
+											oninvalid="InvalidMsg(this,'input');"
 											title="<spring:message code="validation.15numbers" />"
 											maxlength="15" /> <label for="InvoiceNumber"
 											class="center-align"><spring:message
 												code="input.invoiceNumber" /></label>
 									</div>
 								</div>
-								
+
 
 
 								<div class="row myRow">
@@ -280,19 +284,19 @@ to {
 									<div class="file-field input-field col s12 m6"
 										style="margin-top: 5px;">
 										<div class="btn">
-											<span><spring:message code="input.selectfile" /></span> <input onchange="fileTypeValueChanges()"
-												type="file" id="file" 
-												oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-												title="<spring:message code="validation.NoChosen" />" required size=50
-												maxlength=50 accept=".csv">
+											<span><spring:message code="input.selectfile" /></span> <input
+												onchange="fileTypeValueChanges()" type="file" id="file"
+												oninput="InvalidMsg(this,'fileType');"
+												oninvalid="InvalidMsg(this,'fileType');"
+												title="<spring:message code="validation.NoChosen" />"
+												required size=50 maxlength=50 accept=".csv">
 										</div>
 										<div class="file-path-wrapper">
-											<input class="file-path validate responsive-file-div" id="fileName"
-												type="text">
+											<input class="file-path validate responsive-file-div"
+												id="fileName" type="text">
 										</div>
 									</div>
-									<br>
-									<br>
+									<br> <br>
 									<p style="margin-left: 10px;">
 										<a href="./Consignment/sampleFileDownload/4"><spring:message
 												code="input.downlaod.sample" /></a>
@@ -322,7 +326,7 @@ to {
 
 			</div>
 		</div>
-	
+
 		<!--end container-->
 	</section>
 
@@ -370,79 +374,98 @@ to {
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+				<h6 id="fileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+						<button class="modal-close waves-effect waves-light btn"
+							onclick="clearFileName()" style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="searchSupplierInformation" class="modal">
-        <!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
-         <a  class="modal-close btn-flat right">&times;</a>
-         <h6 class="modal-header"><spring:message code="searchAssigneMessage" /></h6>
-       <div class="modal-content">
+		<!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
+		<a class="modal-close btn-flat right">&times;</a>
+		<h6 class="modal-header">
+			<spring:message code="searchAssigneMessage" />
+		</h6>
+		<div class="modal-content">
 
-	<form action="" <%-- onsubmit="return serchAssigneDetaiils()" --%>
-									method="POST" enctype="multipart/form-data"
-									id="registerConsignment">
-            <div class="row">
-                
-                    <h5 class="center">
-                        <label>
-                            <input name="group1" type="radio"
-                               value="1" onclick="document.getElementById('submitbtn').style.display ='block';" />
-                            <span class="checkboxFont"> <spring:message code="AssigneeName" /></span>
-                             <input name="group1" type="radio"
-                               value="2" onclick="document.getElementById('submitbtn').style.display ='block';" />
-                            <span class="checkboxFont"> <spring:message code="AssigneContactNumber" /></span>
-                             <input name="group1" type="radio"
-                                value="3" onclick="document.getElementById('submitbtn').style.display ='block';    " />
-                            <span class="checkboxFont"><spring:message code="AssigneEmailID" /> </span>
-                        </label>
-                      </h5>
-                
-            </div>
+			<form action=""
+				<%-- onsubmit="return serchAssigneDetaiils()" --%>
+									method="POST"
+				enctype="multipart/form-data" id="registerConsignment">
+				<div class="row">
 
-            <div class="row" id="submitbtn" style="display: none;" >
-                    <div class="input-field col s12 m2">
-                        <label for="Search" class="center-align ml-10"> <spring:message code="searchField" /></label>
-                    </div>
-                    <div class="input-field col s12 m5">
-                        <input type="text" id="assigneDetails" name="assigneDetails" placeholder="<spring:message code="AssigneSearch" />" />
-                    </div>
-                    <div class="input-field col s12 m2">
-                  	 <a onclick="viewAssigneeHistory()" class="btn"><spring:message code="button.submit" /></a>
-                    </div>
-            </div>
-           </form>
-<!-- 
+					<h5 class="center">
+						<label> <input name="group1" type="radio" value="1"
+							onclick="document.getElementById('submitbtn').style.display ='block';" />
+							<span class="checkboxFont"> <spring:message
+									code="AssigneeName" /></span> <input name="group1" type="radio"
+							value="2"
+							onclick="document.getElementById('submitbtn').style.display ='block';" />
+							<span class="checkboxFont"> <spring:message
+									code="AssigneContactNumber" /></span> <input name="group1"
+							type="radio" value="3"
+							onclick="document.getElementById('submitbtn').style.display ='block';    " />
+							<span class="checkboxFont"><spring:message
+									code="AssigneEmailID" /> </span>
+						</label>
+					</h5>
+
+				</div>
+
+				<div class="row" id="submitbtn" style="display: none;">
+					<div class="input-field col s12 m2">
+						<label for="Search" class="center-align ml-10"> <spring:message
+								code="searchField" /></label>
+					</div>
+					<div class="input-field col s12 m5">
+						<input type="text" id="assigneDetails" name="assigneDetails"
+							placeholder="<spring:message code="AssigneSearch" />" />
+					</div>
+					<div class="input-field col s12 m2">
+						<a onclick="viewAssigneeHistory()" class="btn"><spring:message
+								code="button.submit" /></a>
+					</div>
+				</div>
+			</form>
+			<!-- 
             <div class="row myRow" style="margin-top: 10px; display: none;" id="user123">
                 
                 <p class="center" style="color: red;">No data found</p>
 
             </div> -->
-            <div class="row">
+			<div class="row">
 				<table class="responsive-table striped display"
 					id="assignee-data-table" cellspacing="0">
 				</table>
 			</div>
 		</div>
-    </div>
-    
+	</div>
+
 	<!-- END CONTENT -->
 
 	<script type="text/javascript"
@@ -512,9 +535,9 @@ to {
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script>
 
@@ -818,8 +841,7 @@ function saveAssigneDetails(assigneId,assigneName)
 
 
 <%
-} else {
-
+	} else {
 %>
 <script language="JavaScript">
 sessionStorage.setItem("loginMsg",
@@ -827,5 +849,5 @@ sessionStorage.setItem("loginMsg",
 window.top.location.href = "./login";
 </script>
 <%
-}
+	}
 %>
