@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -29,6 +30,7 @@ public class DeviceImporterDb  implements Serializable{
 	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+	@NotNull
 	private Date createdOn;
 
 	@JsonIgnore
@@ -51,6 +53,7 @@ public class DeviceImporterDb  implements Serializable{
 	private Integer importerDeviceStatus;
 	private Integer previousImporterDeviceStatus;
 	private Integer period;
+	
 	public Long getId() {
 		return id;
 	}

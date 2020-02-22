@@ -162,7 +162,7 @@ public class ConsignmentServiceImpl {
 	private boolean executeRegisterConsignment(ConsignmentMgmt consignmentMgmt, WebActionDb webActionDb) {
 		boolean queryStatus = Boolean.FALSE;
 		webActionDbRepository.save(webActionDb);
-		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in web_action_db.");
+		logger.info(String.format("Consignment [{0}] saved in web_action_db.", consignmentMgmt.getTxnId()));
 
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
@@ -343,7 +343,6 @@ public class ConsignmentServiceImpl {
 					return new GenricResponse(1, "Consignment Update have been failed.", consignmentFileRequest.getTxnId());
 				}
 			}				
-			// }
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -475,7 +474,7 @@ public class ConsignmentServiceImpl {
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
-								MailSubject.Consignment_Success_CEIRAuthority_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
+								MailSubject.Consignment_Success_CEIRAuthority_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 								placeholderMap, null);
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
@@ -508,7 +507,7 @@ public class ConsignmentServiceImpl {
 								Features.CONSIGNMENT, 
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
-								MailSubject.Consignment_Approved_CustomImporter_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
+								MailSubject.Consignment_Approved_CustomImporter_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 								placeholderMap, 
 								null);
 
@@ -530,7 +529,7 @@ public class ConsignmentServiceImpl {
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(), 
-								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL.replaceAll("<XXX>", consignmentMgmt.getTxnId()), 
+								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL.replace("<XXX>", consignmentMgmt.getTxnId()), 
 								placeholderMap, ReferTable.USERS, 
 								consignmentUpdateRequest.getRoleType()));
 						
@@ -540,7 +539,7 @@ public class ConsignmentServiceImpl {
 								Features.CONSIGNMENT,
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(), 
-								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL.replaceAll("<XXX>", consignmentMgmt.getTxnId()), 
+								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL.replace("<XXX>", consignmentMgmt.getTxnId()), 
 								placeholderMap, ReferTable.USERS, 
 								consignmentUpdateRequest.getRoleType()));
 						
@@ -567,7 +566,7 @@ public class ConsignmentServiceImpl {
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT,
 							consignmentUpdateRequest.getTxnId(),
-							MailSubject.Consignment_Reject_CEIRAuthority_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
+							MailSubject.Consignment_Reject_CEIRAuthority_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
 							null);
 
@@ -589,7 +588,7 @@ public class ConsignmentServiceImpl {
 							Features.CONSIGNMENT,
 							SubFeatures.REJECT, 
 							consignmentUpdateRequest.getTxnId(),
-							MailSubject.Consignment_Rejected_Custom_Email_Message.replaceAll("<XXX>", consignmentMgmt.getTxnId()),
+							MailSubject.Consignment_Rejected_Custom_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
 							null);
 					
@@ -610,7 +609,7 @@ public class ConsignmentServiceImpl {
 							Features.CONSIGNMENT,
 							SubFeatures.ACCEPT,
 							consignmentUpdateRequest.getTxnId(), 
-							MailSubject.CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL.replaceAll("<XXX>", consignmentMgmt.getTxnId()), 
+							MailSubject.CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL.replace("<XXX>", consignmentMgmt.getTxnId()), 
 							placeholderMap, ReferTable.USERS, 
 							consignmentUpdateRequest.getRoleType()));
 					
@@ -672,11 +671,11 @@ public class ConsignmentServiceImpl {
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
 			mappingStrategy.setType(ConsignmentFileModel.class);
 			
-			builder = new StatefulBeanToCsvBuilder<ConsignmentFileModel>(writer);
+			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 			
-			if( consignmentMgmts.size() > 0 ) {
-				fileRecords = new ArrayList<ConsignmentFileModel>();
+			if( !consignmentMgmts.isEmpty() ) {
+				fileRecords = new ArrayList<>();
 				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
 					cfm = new ConsignmentFileModel(consignmentMgmt.getStateInterp(), 
 							consignmentMgmt.getTxnId(), 
@@ -715,7 +714,7 @@ public class ConsignmentServiceImpl {
 
 	public ResponseCountAndQuantity getConsignmentCountAndQuantity( Integer userId, Integer userTypeId, Integer featureId, String userType ) {
 		List<StateMgmtDb> featureList = null;
-		List<Integer> status = new ArrayList<Integer>();
+		List<Integer> status = new ArrayList<>();
 		try {
 			logger.info("Going to get  Cosignment count and quantity.");
 			featureList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId( featureId, userTypeId);
@@ -730,16 +729,17 @@ public class ConsignmentServiceImpl {
 				return consignmentRepository.getConsignmentCountAndQuantity( status);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			//throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 			return new ResponseCountAndQuantity(0,0);
 		}
 	}
 
 	private GenericSpecificationBuilder<ConsignmentMgmt> buildSpecification(FilterRequest consignmentMgmt, List<StateMgmtDb> statusList){
 		GenericSpecificationBuilder<ConsignmentMgmt> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-
-		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType())) {
-			if(Objects.nonNull(consignmentMgmt.getUserId()))
+		String consignmentStatusLiteral = "consignmentStatus";
+		
+		if("IMPORTER".equalsIgnoreCase(consignmentMgmt.getUserType()) 
+				&& Objects.nonNull(consignmentMgmt.getUserId())) {
+			
 				cmsb.with(new SearchCriteria("userId", consignmentMgmt.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
 		
@@ -758,15 +758,15 @@ public class ConsignmentServiceImpl {
 		// Status handling.
 		if("CEIRADMIN".equalsIgnoreCase(consignmentMgmt.getUserType())) {
 			if(Objects.isNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("consignmentStatus", 3, SearchOperation.EQUALITY, Datatype.STRING));
+				cmsb.with(new SearchCriteria(consignmentStatusLiteral, 3, SearchOperation.EQUALITY, Datatype.STRING));
 			else {
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+				cmsb.with(new SearchCriteria(consignmentStatusLiteral, consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
 		}else if("Custom".equalsIgnoreCase(consignmentMgmt.getUserType())) {
 			if(Objects.isNull(consignmentMgmt.getConsignmentStatus()))
-				cmsb.with(new SearchCriteria("consignmentStatus", 5, SearchOperation.EQUALITY, Datatype.STRING));
+				cmsb.with(new SearchCriteria(consignmentStatusLiteral, 5, SearchOperation.EQUALITY, Datatype.STRING));
 			else {
-				cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+				cmsb.with(new SearchCriteria(consignmentStatusLiteral, consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
 		}else if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -775,7 +775,6 @@ public class ConsignmentServiceImpl {
 			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 
 				List<Integer> consignmentStatus = new LinkedList<>();
-				// featureList =	stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(), consignmentMgmt.getUserTypeId());
 				logger.debug(statusList);
 
 				if(Objects.nonNull(statusList)) {	

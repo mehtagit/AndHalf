@@ -2,13 +2,13 @@ package com.gl.ceir.config.model;
 
 public class FilterRequest {
 
-	public Long id;
-	public Integer userId;
-	public Long importerId;
-	public String nid;
+	private Long id;
+	private Integer userId;
+	private Long importerId;
+	private String nid;
 	private String txnId;
-	public String startDate;
-	public String endDate;
+	private String startDate;
+	private String endDate;
 	private Integer consignmentStatus;
 	private String roleType;
 	private Integer requestType;
@@ -18,7 +18,7 @@ public class FilterRequest {
 	private Integer userTypeId;
 	private String searchString;
 
-	public Integer taxPaidStatus;
+	private Integer taxPaidStatus;
 	private Integer deviceIdType;
 	private Integer deviceType;
 	private Integer type;

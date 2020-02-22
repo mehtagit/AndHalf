@@ -26,8 +26,6 @@ public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Lo
 
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(c.id) as count, sum(c.quantity) as quantity) from ConsignmentMgmt c "
 			+ "where c.userId =:userId and c.consignmentStatus in (:consignmentStatus)")
-//	@Query(value="select new com.gl.ceir.config.model.RequestCountAndQuantity(count,quantity) from (select count(c.id) as count, if(sum(c.quantity) IS NULL,0,sum(c.quantity)) as quantity from ConsignmentMgmt c "
-//			+ "where c.userId =:userId and c.consignmentStatus =:consignmentStatus) a")
 	public ResponseCountAndQuantity getConsignmentCountAndQuantity( @Param("userId") Integer userId, @Param("consignmentStatus") List< Integer > consignmentStatus);
 	
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(c.id) as count, sum(c.quantity) as quantity) from ConsignmentMgmt c "
