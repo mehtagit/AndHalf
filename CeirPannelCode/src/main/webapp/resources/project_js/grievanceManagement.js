@@ -331,7 +331,7 @@ var featureId = 6;
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
 
 
 						}
@@ -394,6 +394,8 @@ var featureId = 6;
 				var docTypeTagIdValue='';
 				var filename='';
 				var filesameStatus=false;
+				var documenttype=false;
+				var docTypeTag='';
 				$('.fileDiv').each(function() {	
 					var x={
 					"docType":$('#docTypetag'+fieldId).val(),
@@ -404,12 +406,22 @@ var featureId = 6;
 					fileInfo.push(x);
 					
 					documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+					docTypeTag=$('#docTypetag'+fieldId).val();
 					
 					var fileIsSame=	documentFileNameArray.includes(documentFileName);
+					var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+					
 					if(filesameStatus!=true){
 						filesameStatus=	fileIsSame;
 					}
+					
+					if(documenttype!=true)
+					{
+					documenttype=documentTypeTag;
+			         }
 					documentFileNameArray.push(documentFileName);
+					documentFileNameArray.push(docTypeTag);
+					
 					fieldId++;
 					i++;
 				});
@@ -419,6 +431,15 @@ var featureId = 6;
 				$('#fileFormateModal').openModal();
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
+				return false;
+				
+				}
+				if(documenttype==true)
+				{	
+					
+				$('#fileFormateModal').openModal();
+					$('#fileErrormessage').text('')
+					$('#fileErrormessage').text($.i18n('documentTypeName'));
 				return false;
 				
 				}

@@ -49,128 +49,126 @@ public class FieldDatatableController {
 	FieldPaginationModel fieldPaginationModel;
 	@Autowired
 	FieldContantModel fieldContantModel;
-	
-	
+
 	@PostMapping("fieldManagementData")
-	 public ResponseEntity<?> viewFieldManagement(@RequestParam(name="type",defaultValue = "FieldManagement",required = false) String role,
-	    @RequestParam(name="sourceType",required = false) String sourceType,HttpServletRequest request,HttpSession session) {
-		List<List<Object>> finalList=new ArrayList<List<Object>>();
+	public ResponseEntity<?> viewFieldManagement(
+			@RequestParam(name = "type", defaultValue = "FieldManagement", required = false) String role,
+			@RequestParam(name = "sourceType", required = false) String sourceType, HttpServletRequest request,
+			HttpSession session) {
+		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
-		Gson gsonObject=new Gson();
+		Gson gsonObject = new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
-		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			log.info("request send to the filter api ="+filterrequest);
+			log.info("request send to the filter api =" + filterrequest);
 			Object response = feignCleintImplementation.fieldManagementFeign(filterrequest, pageNo, pageSize, file);
-			log.info("response in datatable"+response);
-			Gson gson= new Gson(); 
+			log.info("response in datatable" + response);
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
 			fieldPaginationModel = gson.fromJson(apiResponse, FieldPaginationModel.class);
 			List<FieldContantModel> paginationContentList = fieldPaginationModel.getContent();
-			if(paginationContentList.isEmpty()) {
+			if (paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
-			}else {
-				for(FieldContantModel dataInsideList : paginationContentList) 
-				{
-				  String id = String.valueOf(dataInsideList.getId());	
-				  String displayName =dataInsideList.getDisplayName();
-					//pageRendering(displayName, session);
-				   log.info("displayName1---->" +displayName);
-				   String tag = dataInsideList.getTag();
-				   String interp = dataInsideList.getInterp();
-				  String description = dataInsideList.getDescription();
-				   String tagId = dataInsideList.getTagId();
-				  
-				   String action=iconState.fieldManagementIcons(id,tag,interp,tagId);			   
-				   Object[] finalData={displayName,interp,tagId,description,action}; 
-				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
-				   finalList.add(finalDataList);
-				   datatableResponseModel.setData(finalList);	
+			} else {
+				for (FieldContantModel dataInsideList : paginationContentList) {
+					String id = String.valueOf(dataInsideList.getId());
+					String displayName = dataInsideList.getDisplayName();
+					String tag = dataInsideList.getTag();
+					String interp = dataInsideList.getInterp();
+					String description = dataInsideList.getDescription();
+					String tagId = dataInsideList.getTagId();
+
+					String action = iconState.fieldManagementIcons(id, tag, interp, tagId);
+					Object[] finalData = { displayName, interp, tagId, description, action };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
 				}
 			}
-				//data set on ModelClass
-				datatableResponseModel.setRecordsTotal(fieldPaginationModel.getNumberOfElements());
-				datatableResponseModel.setRecordsFiltered(fieldPaginationModel.getTotalElements());
-				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-		}catch(Exception e) {
+			// data set on ModelClass
+			datatableResponseModel.setRecordsTotal(fieldPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(fieldPaginationModel.getTotalElements());
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+		} catch (Exception e) {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
-			log.error(e.getMessage(),e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
-	}
-	
-}
+			log.error(e.getMessage(), e);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+		}
 
-	
-	
+	}
+
 	@PostMapping("fieldManagement/pageRendering")
-	public ResponseEntity<?> pageRendering(String displayName,HttpSession session){
+	public ResponseEntity<?> pageRendering(String displayName, HttpSession session) {
 
-	String userType = (String) session.getAttribute("usertype");
-	String userStatus = (String) session.getAttribute("userStatus");
+		String userType = (String) session.getAttribute("usertype");
+		String userStatus = (String) session.getAttribute("userStatus");
 
-	InputFields inputFields = new InputFields();
-	InputFields dateRelatedFields;
+		InputFields inputFields = new InputFields();
+		InputFields dateRelatedFields;
 
-	pageElement.setPageTitle(Translator.toLocale("view.Field"));
+		pageElement.setPageTitle(Translator.toLocale("view.Field"));
 
-	List<Button> buttonList = new ArrayList<>();
-	List<InputFields> dropdownList = new ArrayList<>();
-	List<InputFields> inputTypeDateList = new ArrayList<>();
-	log.info("USER STATUS:::::::::"+userStatus);
-	log.info("session value user Type=="+session.getAttribute("usertype"));
+		List<Button> buttonList = new ArrayList<>();
+		List<InputFields> dropdownList = new ArrayList<>();
+		List<InputFields> inputTypeDateList = new ArrayList<>();
+		log.info("USER STATUS:::::::::" + userStatus);
+		log.info("session value user Type==" + session.getAttribute("usertype"));
 
+		String[] names = { "HeaderButton", Translator.toLocale("button.addTag"), "AddField()", "btnLink",
+				"FilterButton", Translator.toLocale("button.filter"),"filterFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+		for (int i = 0; i < names.length; i++) {
+			button = new Button();
+			button.setType(names[i]);
+			i++;
+			button.setButtonTitle(names[i]);
+			i++;
+			button.setButtonURL(names[i]);
+			i++;
+			button.setId(names[i]);
+			buttonList.add(button);
+		}
+		pageElement.setButtonList(buttonList);
 
+		
+		  //Dropdown items 
+		String[] selectParam={"select",Translator.toLocale("select.filterTagId"),"filterTagId",""}; 
+		for(int i=0; i<selectParam.length; i++) {
+		  inputFields= new InputFields();
+		  inputFields.setType(selectParam[i]); 
+		  i++;
+		  inputFields.setTitle(selectParam[i]);
+		  i++; inputFields.setId(selectParam[i]);
+		  i++; 
+		  inputFields.setClassName(selectParam[i]); 
+		  dropdownList.add(inputFields);
+		  } 
+		pageElement.setDropdownList(dropdownList);
+		 
 
-	String[] names= {"HeaderButton",Translator.toLocale("button.addTag"),"AddField()","btnLink","FilterButton", Translator.toLocale("button.filter"),"filterFieldTable("+ConfigParameters.languageParam+")","submitFilter"};
-	for(int i=0; i< names.length ; i++) {
-	button = new Button();
-	button.setType(names[i]);
-	i++;
-	button.setButtonTitle(names[i]);
-	i++;
-	button.setButtonURL(names[i]);
-	i++;
-	button.setId(names[i]);
-	buttonList.add(button);
-	}	
-	pageElement.setButtonList(buttonList);
+		// input type date list
+		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
+				Translator.toLocale("input.endDate"), "endDate", "" };
+		for (int i = 0; i < dateParam.length; i++) {
+			dateRelatedFields = new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
+		}
 
-		/*
-		 * //Dropdown items String[] selectParam=
-		 * {"select",Translator.toLocale("select.consignmentStatus"),
-		 * "filterConsignmentStatus","","select",Translator.toLocale(
-		 * "select.taxPaidStatus"),"taxPaidStatus",""}; for(int i=0; i<
-		 * selectParam.length; i++) { inputFields= new InputFields();
-		 * inputFields.setType(selectParam[i]); i++;
-		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
-		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
-		 * } pageElement.setDropdownList(dropdownList);
-		 */
-
-	//input type date list	
-	String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
-	for(int i=0; i< dateParam.length; i++) {
-	dateRelatedFields= new InputFields();
-	dateRelatedFields.setType(dateParam[i]);
-	i++;
-	dateRelatedFields.setTitle(dateParam[i]);
-	i++;
-	dateRelatedFields.setId(dateParam[i]);
-	i++;
-	dateRelatedFields.setClassName(dateParam[i]);
-	inputTypeDateList.add(dateRelatedFields);
+		pageElement.setInputTypeDateList(inputTypeDateList);
+		pageElement.setUserStatus(userStatus);
+		return new ResponseEntity<>(pageElement, HttpStatus.OK);
 	}
 
-
-
-	pageElement.setInputTypeDateList(inputTypeDateList);
-	pageElement.setUserStatus(userStatus);
-	return new ResponseEntity<>(pageElement, HttpStatus.OK); 
-	}
-	
 }

@@ -133,27 +133,29 @@
           	<form action="" onsubmit="return submitTag()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
+					<div class="col s12 m6">
+					<label for="tag" class="active">Field <span class="star">*</span></label>
                         <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
                         <select class="browser-default" id="tag" disabled>
                                 <option value="" disabled="" selected="">Select field</option>
                           </select>
-                        <label for="tag" class="active">Field <span class="star">*</span></label>
+                        
                          <input type="text" id="displayName" hidden>
+                        
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="30">
+                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
                         <label for="description" class="">Description</label>
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="addInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" required="required">
+                        <input type="text" id="addInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="addInterp" class="">Interp <span class="star">*</span></label>
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="addFieldId" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" required="required">
+                        <input type="text" id="tagId" name="addFieldId" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="addFieldId" class="">Field ID <span class="star">*</span></label>
                     </div>
 
@@ -170,31 +172,33 @@
 		<div id="editTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
         <h6 class="modal-header">Edit Fields</h6>
         <div class="modal-content">
-          	<form action="" onsubmit="return updatedTag()" method="post" >
+          	<form action="" onsubmit="return updatedTag()">
                 <div class="row" style="margin-top: 10px;">
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
+					<div class="col s12 m6">
+					<label for="tag" class="active">Field <span class="star">*</span></label>
                         <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
                         <select class="browser-default" id="Edittag" disabled>
                                 <option value="" disabled="" selected="">Select field</option>
                           </select>
-                        <label for="Edittag" class="active">Field <span class="star">*</span></label>
-                    <input type="text" id="id" Disabled hidden> 
+                        
+                         <input type="text" id="editdisplayName" hidden>
+                          <input type="text" id="editId" hidden>
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="30">
+                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
                         <label for="editdescription" class="">Description</label>
                     </div>
 
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" required="required">
+                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="editInterp" class="">Interp <span class="star">*</span></label>
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="editFieldId" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" required="required">
+                        <input type="text" id="editFieldId" name="editField" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="editFieldId" class="">Field ID <span class="star">*</span></label>
                     </div>
 
@@ -261,6 +265,22 @@
 		</div>
 	</div>
 		
+		
+		
+	<div id="updateFieldsSuccess" class="modal">
+     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>	
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

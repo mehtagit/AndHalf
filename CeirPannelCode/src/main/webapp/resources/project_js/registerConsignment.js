@@ -217,20 +217,27 @@ function fileTypeValueChanges(dd, ddd) {
    } 
 	else if(ext!='csv')
 		{
-		$('#fileFormateModal').openModal();
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		 
 		}
 	else if(fileSize>='2000'){
-		$('#fileFormateModal').openModal();
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		
 	}
 	else {
-		console.log("file formate is correct")
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		
 	}
 	
 
 }
+
 
 function clearFileName() {
 	$('#fileName').val('');

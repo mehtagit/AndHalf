@@ -93,6 +93,16 @@
 "Block Device Count":"Block Device Count",
 
 "Reg_userlimit_exceed":"We are facing some technical difficulties. Please try after some time.",
-"requiredMsg_checkbox":"Please tick this box if you want to proceed"
+"requiredMsg_checkbox":"Please tick this box if you want to proceed",
+
+"Upload Passport Image":"Upload Passport Image",
+"Passport Number":"Passport Number",
+"Upload ID Image":"Upload ID Image",
+"National ID":"National ID",
+"AssigneSearchLink":"Search For Supplier Information",
+"assignStock":"Assign Stock",
+"stockResponseMessage":"User is not a distributer or retailer to assign a stock.",
+"documentTypeName":"Document type should not be same.",
+"tacStatucMessage":"By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request"
 
 }

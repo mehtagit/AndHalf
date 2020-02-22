@@ -323,10 +323,10 @@ section {
 	</div>
 
 	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"> Uploaded file format</h6>
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"></h6>
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
