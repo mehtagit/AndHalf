@@ -58,7 +58,7 @@ public class CustomerCareServiceImpl {
 					try {
 						customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(customerCareRequest.getImei()));
 					}catch (Exception e) {
-						logger.error("Db [" + o + "] have some issue in fetching data for imei [" + customerCareRequest.getImei() + "] ");
+						logger.error("Db [" + o + "] have some issue in fetching data for imei [" + customerCareRequest.getImei() + "]", e);
 					}
 				});
 
