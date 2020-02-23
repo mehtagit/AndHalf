@@ -8,13 +8,17 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.factory.impl.CustomerCareCustom;
 import com.gl.ceir.config.factory.impl.CustomerCareDistributor;
+import com.gl.ceir.config.factory.impl.CustomerCareEndUser;
 import com.gl.ceir.config.factory.impl.CustomerCareImporter;
+import com.gl.ceir.config.factory.impl.CustomerCareManufacturer;
 import com.gl.ceir.config.factory.impl.CustomerCareRetailer;
 
 @Component
 public class CustomerCareFactory {
 
-	public final List<String> dbsList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM");
+	public final List<String> dbsList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
+			"MANUFACTURER", "REGULARIZE", "VIP", "BLACKLIST", "GREYLIST", "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", 
+			"TYPE_APPROVED");
 	
 	@Autowired
 	CustomerCareImporter customerCareImporter;
@@ -27,6 +31,12 @@ public class CustomerCareFactory {
 	
 	@Autowired
 	CustomerCareCustom customerCareCustom;
+	
+	@Autowired
+	CustomerCareManufacturer customerCareManufacturer;
+	
+	@Autowired
+	CustomerCareEndUser customerCareEndUser;
 
 	public CustomerCareTarget getObject(String name) {
 
@@ -39,6 +49,10 @@ public class CustomerCareFactory {
 			return customerCareRetailer;
 		case "CUSTOM":
 			return customerCareCustom;
+		case "MANUFACTURER":
+			return customerCareManufacturer;
+		case "REGULARIZE":
+			return customerCareEndUser;
 		default:
 			break;
 		}
