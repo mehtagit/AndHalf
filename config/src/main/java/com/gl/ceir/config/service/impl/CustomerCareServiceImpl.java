@@ -56,7 +56,7 @@ public class CustomerCareServiceImpl {
 					
 					// To avoid 500, if only one or few DB's have issue for the imei.
 					try {
-						customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(customerCareRequest.getImei()));
+						customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(customerCareRequest.getImei(), new CustomerCareDeviceState()));
 					}catch (Exception e) {
 						logger.error("Db [" + o + "] have some issue in fetching data for imei [" + customerCareRequest.getImei() + "]", e);
 					}

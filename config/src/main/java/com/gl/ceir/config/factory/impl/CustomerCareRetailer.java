@@ -7,24 +7,24 @@ import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
-import com.gl.ceir.config.model.DeviceImporterDb;
+import com.gl.ceir.config.model.DeviceRetailerDb;
 import com.gl.ceir.config.model.constants.Constants;
-import com.gl.ceir.config.repository.DeviceImporterDbRepository;
+import com.gl.ceir.config.repository.DeviceRetailerDbRepository;
 
 @Component
-public class CustomerCareImporter implements CustomerCareTarget{
+public class CustomerCareRetailer implements CustomerCareTarget{
 	
 	@Autowired
-	DeviceImporterDbRepository deviceImporterDbRepository;
+	DeviceRetailerDbRepository deviceRetailerDbRepository;
 	
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		DeviceImporterDb deviceImporterDb = deviceImporterDbRepository.getByImeiEsnMeid(imei);
+		DeviceRetailerDb deviceDb = deviceRetailerDbRepository.getByImeiEsnMeid(imei);
 		
-		if(Objects.nonNull(deviceImporterDb)) {
-			customerCareDeviceState.setTxnId(deviceImporterDb.getImporterTxnId());
-			customerCareDeviceState.setDate(deviceImporterDb.getCreatedOn().toString());
+		if(Objects.nonNull(deviceDb)) {
+			customerCareDeviceState.setTxnId(deviceDb.getRetalierTxnId());
+			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
 		}else {
 			customerCareDeviceState.setDate("");
@@ -37,7 +37,7 @@ public class CustomerCareImporter implements CustomerCareTarget{
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {
-		customerCareDeviceState.setName("Importer");
+		customerCareDeviceState.setName("Retailer");
 	}
 
 }

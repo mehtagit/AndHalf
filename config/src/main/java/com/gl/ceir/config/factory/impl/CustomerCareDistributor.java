@@ -18,9 +18,8 @@ public class CustomerCareDistributor implements CustomerCareTarget{
 	DeviceDistributorDbRepository deviceDistributorDbRepository;
 	
 	@Override
-	public CustomerCareDeviceState fetchDetailsByImei(String imei) {
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
 		DeviceDistributerDb deviceDistributerDb = deviceDistributorDbRepository.getByImeiEsnMeid(imei);
 		
 		if(Objects.nonNull(deviceDistributerDb)) {
