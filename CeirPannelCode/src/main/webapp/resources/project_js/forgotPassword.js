@@ -1,13 +1,4 @@
-	$('#langlist').on('change', function() {
-		lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-		var url_string = window.location.href;
-		var url = new URL(url_string);
-		var type = url.searchParams.get("reportType");
-
-		window.location.assign("forgotPassword?lang="+lang);			
-		});	
-$(document).ready(function () {
-	 $('#langlist').val(data_lang_param);
+	$(document).ready(function () {
 				//$('.modal').openModal();
 				questionData();
 			});

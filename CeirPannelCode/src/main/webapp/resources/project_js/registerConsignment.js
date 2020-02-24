@@ -196,7 +196,8 @@ window.parent.$('#langlist').on('change', function() {
 			}
 			else
 			{
-			$("#currency").attr("required", true);
+				$('#currency').prop('required',true);
+			//$("#currency").attr("required", true);
 			/*$('#currency').attr("disabled",false);*/
 			$('#currencyDiv').show();
 

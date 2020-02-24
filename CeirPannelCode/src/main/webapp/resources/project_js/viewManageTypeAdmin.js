@@ -105,7 +105,7 @@ $.ajax({
 				columnDefs: [
 		            { width: 142, targets: result.length - 1 },
 		            { width: 143, targets: 0 },
-		            { width: 105, targets: 2 }
+		            { width: 75, targets: 2 }
 			]
 			});
 			
@@ -156,7 +156,9 @@ function pageRendering(){
 				}
 			} 
 			
-			
+			if(userType=="Importer"){
+				console.log("userType is----->"+userType)
+			}else{
 				// dynamic drop down portion
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
@@ -175,7 +177,7 @@ function pageRendering(){
 						"</div>");
 				
 				}
-			
+			}
 	
 			$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 			$("#typeAprroveTableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");

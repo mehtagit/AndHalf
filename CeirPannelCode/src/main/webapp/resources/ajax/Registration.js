@@ -134,32 +134,14 @@ function verifyOtp(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=="200"){
 				//window.location.href='#otpMessage';
-				
+				$("#otpVerification").closeModal();
+				$('#otpMessage').openModal();   
+				$("#otpResponse").text(resp.response);
 				// $('#otpMessage').modal('open');
-				
-				$.i18n().locale = $('#langlist').val();
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				}).done( function() {
-					$("#otpVerification").closeModal();
-					$('#otpMessage').openModal({
-				        dismissible:false
-				    });
-   
-					$("#otpResponse").text($.i18n(resp.tag));
-				});
-				
 			}
 			else{
-			
-				$.i18n().locale = $('#langlist').val();
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				}).done( function() {
-					$("#otpVerification #verifyOtpResp").text($.i18n(resp.tag));
-				});
+				$("#otpVerification #verifyOtpResp").text(resp.response);
+				
 			}
 			$("#otpVerifyBtn").prop('disabled', false);
 		},
@@ -179,15 +161,7 @@ function resendOtp(){
 		dataType : 'html',
 		success : function(data) {
 			var response=JSON.parse(data);
-			
-			$.i18n().locale = $('#langlist').val();
-			$.i18n().load( {
-				'en': './resources/i18n/en.json',
-				'km': './resources/i18n/km.json'
-			}).done( function() {
-				$("#verifyOtpResp").text($.i18n(response.tag));
-			});
-			
+			$("#verifyOtpResp").text(response.response); 
 		},    
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
@@ -264,8 +238,6 @@ function usertypeData2(id){
 					usertypeDropdown.append(data2);
 				
 			}    
-			usertypeDropdown.val(id);
-			$('#usertypes option[value="'+id+'"]').attr('disabled', true);
 			setTimeout(function(){ 
 				$('.dropdown-trigger').dropdown();
 				$('select').formSelect();
@@ -388,7 +360,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes:selected').val(),  
+					roles:val.find('#usertypes').val(),  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
@@ -567,29 +539,12 @@ function registrationAjax(obj){
 			var respData=JSON.parse(JSON.stringify(response));
 			console.log("response from server:  "+JSON.stringify(respData));
 			if(respData.statusCode==200){
-				
-				$.i18n().locale = $('#langlist').val();
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				}).done( function() {
-					$("#otpMsg").text($.i18n(respData.tag));
-					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal({
-				        dismissible:false
-				    });
-
-				});
+				$("#userid").val(response.userId);
+				$("#otpMsgModal").openModal();
+				$("#otpMsg").text(response.response);
 			}
 			else{
-				$.i18n().locale = $('#langlist').val();
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				}).done( function() {
-					$("#registrationForm #msg").text($.i18n(respData.tag));
-				});
-
+				$("#registrationForm #msg").text(respData.response);
 			}
 			$("#btnSave").prop('disabled', false);
 		}, 
@@ -610,32 +565,12 @@ function otherRegistrationAjax(obj){
 			var respData=JSON.parse(JSON.stringify(response));
 			console.log("response from server:  "+JSON.stringify(respData));
 			if(respData.statusCode==200){
-				$.i18n().locale = $('#langlist').val();
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				}).done( function() {
-					$("#otpMsg").text($.i18n(respData.tag));
-					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal({
-				        dismissible:false
-				    });
-
-				});
-				
-				
-				
+				$("#userid").val(response.userId);
+				$("#otpMsgModal").openModal();
+				$("#otpMsg").text(response.response);
 			}
 			else{
-			
-				$.i18n().locale = $('#langlist').val();
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				}).done( function() {
-					$("#registrationForm #msg").text($.i18n(respData.tag));
-				});
-
+				$("#registrationForm #msg").text(respData.response);
 			}
 			$("#btnSave").prop('disabled', false);
 		}, 

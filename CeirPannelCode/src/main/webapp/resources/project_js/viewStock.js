@@ -137,6 +137,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			$("#editSupplierIdDiv").css("display", "none"); 
 			$("#editSupplierNameDiv").css("display", "none");
 			$("#editInvoiceNumberDiv").css("display", "none");
+			$("#editSupplierName").attr("required", false);
 			}
 		else if(currentRoleTypeAssignei=='Custom'){
 			$('#editSupplierIdLabel').text('');
@@ -411,7 +412,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					if(date[i].type === "date"){
 						$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 								"<div id='enddatepicker' class='input-group date'>"+
-								"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 								"<label for="+date[i].id+">"+date[i].title
 								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -719,16 +720,19 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 	   if (uploadedFileName.length > 30) {
 	       $('#fileFormateModal').openModal();
-	      
+	       $('#fileErrormessage').text('');
+	       $('#fileErrormessage').text('file name length must be less then 30 characters.');
 	   } 
 		else if(ext!='csv')
 			{
 			$('#fileFormateModal').openModal();
-			 
+			 $('#fileErrormessage').text('');
+		       $('#fileErrormessage').text('file extension must be in  CSV.');
 			}
-		else if(fileSize>='2000'){
+		else if(fileSize>='5000'){
 			$('#fileFormateModal').openModal();
-			 
+			 $('#fileErrormessage').text('');
+		       $('#fileErrormessage').text('file size must be less then 5 mb.');
 		}
 		else {
 			console.log("file formate is correct")

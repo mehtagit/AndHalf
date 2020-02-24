@@ -1,15 +1,12 @@
-$('#langlist').on('change', function() {
-	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var type = url.searchParams.get("reportType");
-
-	window.location.assign("uploadAstock?reportType="+type+"&lang="+lang);			
-	}); 
+/*window.parent.$('#langlist').on('change', function() {
+			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+			alert(lang)
+			window.location.replace("./Consignment/viewConsignment?lang="+lang);				
+		});*/ 
 
 
 $(document).ready(function () {
-	 $('#langlist').val(data_lang_param);
+      
         if($('#pageTypeValue').val()==0)
         	{
         	$('#uploadPaidStatusDiv').css("display", "block");

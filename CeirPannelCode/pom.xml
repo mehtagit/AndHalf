@@ -9,7 +9,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>Ceir22feb</name>
+	<name>jiten</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>
@@ -144,7 +144,7 @@
 	</dependencyManagement>
 	<build>
 
-		<finalName>${name}</finalName>
+		<finalName>${artifactId}</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>

@@ -112,7 +112,7 @@ if(lang=='km'){
 				columnDefs: [
 		            { width: 142, targets: result.length - 1 },
 		            { width: 143, targets: 0 },
-		            { width: 118, targets: 2 }
+		            { width: 75, targets: 2 }
 			]
 			});
 			
