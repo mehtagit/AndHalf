@@ -53,6 +53,8 @@
 <link
 	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <!-- Country -->
 <!-- <script type="text/javascript" src="js/country.js"></script> -->
 <style>
@@ -222,6 +224,8 @@ width: 90%;
 margin: auto;
 /* border: solid 2px #444; */
 }
+
+
 </style>
 <script>
 var contextpath = "${context}";

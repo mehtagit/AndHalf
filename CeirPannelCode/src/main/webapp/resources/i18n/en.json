@@ -103,6 +103,13 @@
 "assignStock":"Assign Stock",
 "stockResponseMessage":"User is not a distributer or retailer to assign a stock.",
 "documentTypeName":"Document type should not be same.",
-"tacStatucMessage":"By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request"
-
+"tacStatucMessage":"By clicking on the checkbox, it is understood that type approval document has been checked and verified as provided by the importer.  If they are not provided, kindly reject the request",
+"expectedArrivaldateEdit":"Expected Dispatch Date should be less than Expected Arrival Date",
+"validationIMEI":"Please enter numbers upto 16 characters only",
+"validationMEID":"Please enter alphabets and numbers upto 16 characters only",
+"validationESN8":"Please enter number upto 8 characters only",
+"validationESN11":"Please enter alphabets and numbers upto 11 characters only",
+"IMEIMsg":"IMEI should be 15 to 16 digit number",
+"MEIDMsg":"MEID should be alphabets and numbers upto 16 characters only",
+"ESNMsg":"The length is either 8 or 11. If length is 11, then all value should be numeric else value can be alphanumeric."
 }

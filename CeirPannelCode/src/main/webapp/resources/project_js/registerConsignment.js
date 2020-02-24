@@ -228,12 +228,7 @@ function fileTypeValueChanges(dd, ddd) {
 	       });
 		
 	}
-	else {
-		  $('#fileFormateModal').openModal({
-	    	   dismissible:false
-	       });
-		
-	}
+	
 	
 
 }
