@@ -1,7 +1,5 @@
 $('#consignmentTableDIv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
-$('#registrationTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
-$('#greivanceTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
-$('#FieldTableDiv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
+
 //$('#consignmentTableDIv div:last').after('<p id="errorMsg" style="color: red;font-size: 12px;position: absolute;left: 40px;margin: 0;top: 122px;"class="left"></p>')
 function myStringToDate(str) {
   var arr  = str.split("-"); // split string at slashes to make an array
@@ -27,14 +25,14 @@ function checkDate(startDate,endDate) {
     if (input2.getTime() ==  input1.getTime()) {
     	$('#errorMsg').text('');
     	$('#'+endDate.id).css('border-color', '');
-    	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').removeClass( "eventNone" );
+    	$('#submitFilter,#consignmentSubbmitButton').removeClass( "eventNone" );
     	
     	
     } 
     else if(input2.getTime() <  input1.getTime()){
     	$('#'+endDate.id).css('border-color', 'red');
     	$('#errorMsg').text($.i18n(endDate.id));
-    	$('#submitFilter,#consignmentSubbmitButton,#filterFieldTable').addClass( "eventNone" );
+    	$('#submitFilter,#consignmentSubbmitButton').addClass( "eventNone" );
     	$('#consignmentSubbmitButton').addClass( "eventNone" );
     }
     else{
