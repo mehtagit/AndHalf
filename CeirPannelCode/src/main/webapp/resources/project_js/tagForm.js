@@ -9,18 +9,41 @@
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var roleType = $("body").attr("data-roleType"); 
-	var featureId =23;
+
 
 	
 	
 	function hide() {
-		var In = $('#Search').val();
+		var tagId = $('#tagId').val();
 		
-		if(In.length == 0){
+		if(tagId.length == 0){
 			console.log("please field input");
 		}else{
-			sessionStorage.setItem("roleType",roleType);
-			sessionStorage.setItem("nationalId", In);
-		window.location.replace("./uploadPaidStatus?via=other&NID="+In);
+			//sessionStorage.setItem("roleType",roleType);
+		sessionStorage.setItem("tagId", tagId);
+		window.location.replace("./fieldManagement?via=other&tagId="+tagId);
 		}
 	}
+	
+	
+	
+	var request ={
+			  "userId" : parseInt($("body").attr("data-userID"))
+		}
+	$.ajax({
+		url: './getSystemTags',
+		type: 'POST',
+		data : JSON.stringify(request),
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		success: function (data, textStatus, jqXHR) {
+			var result = data.data;
+			for (i = 0; i < result.length; i++){
+				$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#tagId');
+			}
+			
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log("error in ajax")
+		}
+	});
