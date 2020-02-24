@@ -113,9 +113,9 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  href="./Consignment/ManualFileDownload/"
+						<li><a  href="./Consignment/ManualFileDownload/" download="download"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
-							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
+							 title="Download Manual"  style="color: #fff;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">

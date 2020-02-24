@@ -197,19 +197,13 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 <button class="btn right add_field_button" disabled="disabled"><span
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
-              <div class="col s12 m12">  <p>
-              <p id="closeTicketCheckbox" style="float: left; display: none;">
-                        <label>
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
-                            <input type="checkbox" id="closeTicketCheck" />
-                        </label>
-                    </p> <br>
+              <div class="col s12 m12">
+              	<p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
+	              <p id="closeTicketCheckbox" style="display: none;">
+	               <label><span><spring:message code="modal.message.griev.closeticket" /></span><input type="checkbox" id="closeTicketCheck" /></label>
+	               </p>
 				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
-			
-
-			<span> <spring:message code="input.requiredfields" /> <span class="star">*</span></span>
-			
-                </div>
+				</div>
                 <div class="col s12 m12 center">
                  <p id="closeTicketCheckbox" style="float: left; display: none;">
                         <label>

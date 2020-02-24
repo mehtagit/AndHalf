@@ -9,7 +9,8 @@
 		<encoder>
 			<pattern>%date %level [%file:%line] %msg%n</pattern>
 		</encoder>
-		
+		 
+		 
 		 <file>/home/ubuntu/CeirContent/logs/log.log</file> 
 <!-- 			 <file>/home/ceirapp/ceir/gui/logs/log.log</file>  --> 
 	

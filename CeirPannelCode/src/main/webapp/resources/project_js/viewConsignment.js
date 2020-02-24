@@ -49,7 +49,7 @@
 		}
 
 
-		function confirmantiondelete(){
+function confirmantiondelete(){
 			var txnId = $("#transID").text();
 			var remarks = $("#textarea1").val();
 			var obj ={
@@ -80,7 +80,14 @@
 				}
 			});
 			$("#DeleteConsignment").closeModal();
+<<<<<<< HEAD
 			$("#confirmDeleteConsignment").openModal();
+=======
+			$("#confirmDeleteConsignment").openModal({
+				dismissible:false
+			});
+			return false;
+>>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 		}
 		$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 			$("#expectedArrivalPortEdit").empty();
@@ -636,6 +643,37 @@
 			$('#ApproveConsignment').openModal();
 			if(userType=='Custom'){
 				
+<<<<<<< HEAD
+=======
+				$.ajax({
+					url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'GET',
+					success : function(data) {
+						console.log(data.pendingTacApprovedByCustom);
+						console.log(data.pendingTacApprovedByCustom);
+						
+						if(data.pendingTacApprovedByCustom=='N')
+							{
+						$('#tacSatusForCustom').css("display", "none");
+						$('#approveButton').prop('disabled', false);
+						
+							}
+						else{
+							$('#tacSatusForCustom').css("display", "block"); 
+							$('#tacStatucMessage').text('');
+							$('#tacStatucMessage').text($.i18n('tacStatucMessage'));
+							$('#approveButton').prop('disabled', true);
+						}
+					},
+					
+					error : function() {
+						alert("Failed");
+					}
+				});
+				
+>>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 				$('#ApproveConsignmentTxnid').text(txnId);
 				$('#setApproveConsignmentTxnId').val(txnId);
 				$('#displayname').text(displayName);
@@ -881,11 +919,8 @@ function fileTypeValueChanges() {
 
 			}
 			});	
-		function fileTypeValueChanges() {
-			var uploadedFileName = $("#csvUploadFile").val();
-			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-			var ext = uploadedFileName.split('.').pop();
 		
+<<<<<<< HEAD
 			var fileSize = ($("#csvUploadFile")[0].files[0].size);
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
@@ -911,6 +946,9 @@ function fileTypeValueChanges() {
 			
 
 		}
+=======
+		
+>>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 
 		function clearFileName() {
 			var existingfile=$("#fileNameToBeSame").val();
