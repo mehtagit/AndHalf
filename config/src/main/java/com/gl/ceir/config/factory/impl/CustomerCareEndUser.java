@@ -1,14 +1,10 @@
 package com.gl.ceir.config.factory.impl;
 
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
-import com.gl.ceir.config.model.RegularizeDeviceDb;
-import com.gl.ceir.config.model.constants.Constants;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 
 @Component

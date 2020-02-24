@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
+import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.ConsignmentMgmt;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 
 import io.lettuce.core.dynamic.annotation.Param;
 
-public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>, JpaSpecificationExecutor<ConsignmentMgmt> {
+public interface ConsignmentRepository extends JpaRepository<ConsignmentMgmt, Long>, 
+JpaSpecificationExecutor<ConsignmentMgmt>, CustomerCareRepo<ConsignmentMgmt>{
 
 	@SuppressWarnings("unchecked")
 	public ConsignmentMgmt save(ConsignmentMgmt consignment);

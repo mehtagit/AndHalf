@@ -26,6 +26,8 @@ public class CustomerCareManufacturer implements CustomerCareTarget{
 			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(deviceDb.getFeatureId());
+			customerCareDeviceState.setFeatureId(deviceDb.getFeatureId());
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);

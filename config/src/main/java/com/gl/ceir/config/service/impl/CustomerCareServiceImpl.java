@@ -13,6 +13,7 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.CustomerCareFactory;
+import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
@@ -53,7 +54,7 @@ public class CustomerCareServiceImpl {
 						logger.info("Corresponding object of Db [" + o + "] is not defined in the factory ");
 						return;
 					}
-					
+
 					// To avoid 500, if only one or few DB's have issue for the imei.
 					try {
 						customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(customerCareRequest.getImei(), new CustomerCareDeviceState()));
@@ -69,6 +70,47 @@ public class CustomerCareServiceImpl {
 				return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", null);
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
+			}
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	public GenricResponse getByTxnId(CustomerCareDeviceState customerCareDeviceState) {
+		try {
+			if(Objects.isNull(customerCareDeviceState) ||
+					Objects.isNull(customerCareDeviceState.getFeatureId())
+					|| Objects.isNull(customerCareDeviceState.getName())) {
+
+				logger.info(GenericMessageTags.NULL_REQ.getMessage());
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), GenericMessageTags.NULL_REQ.getMessage(), "");
+			}
+
+			Object objectBytxnId = null;
+			CustomerCareRepo repository = null;
+
+			// Getting repository from factory.
+			if(customerCareDeviceState.getFeatureId() == 0)
+				repository = customerCareFactory.getRepoByName(customerCareDeviceState.getName());
+			else
+				repository = customerCareFactory.getRepoByFeatureId(customerCareDeviceState.getFeatureId());
+			
+			// If factory has a valid repo.
+			if(Objects.isNull(repository)) {
+				logger.info(GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
+				return new GenricResponse(2, GenericMessageTags.FEATURE_NOT_SUPPORTED.getTag(), GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage(), customerCareDeviceState.getTxnId());
+			}
+
+			objectBytxnId = repository.getByTxnId(customerCareDeviceState.getTxnId());
+
+			if(Objects.isNull(objectBytxnId)) {
+				logger.info(GenericMessageTags.INVALID_TXN_ID.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
+				return new GenricResponse(3, GenericMessageTags.INVALID_TXN_ID.getTag(), GenericMessageTags.INVALID_TXN_ID.getMessage(), customerCareDeviceState.getTxnId());
+			}else {
+				return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "",  objectBytxnId);
 			}
 
 		} catch (Exception e) {

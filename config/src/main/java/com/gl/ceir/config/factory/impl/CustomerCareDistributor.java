@@ -20,12 +20,13 @@ public class CustomerCareDistributor implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		DeviceDistributerDb deviceDistributerDb = deviceDistributorDbRepository.getByImeiEsnMeid(imei);
+		DeviceDistributerDb deviceDb = deviceDistributorDbRepository.getByImeiEsnMeid(imei);
 		
-		if(Objects.nonNull(deviceDistributerDb)) {
-			customerCareDeviceState.setTxnId(deviceDistributerDb.getTxnId());
-			customerCareDeviceState.setDate(deviceDistributerDb.getCreatedOn().toString());
+		if(Objects.nonNull(deviceDb)) {
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
+			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(deviceDb.getFeatureId());
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);

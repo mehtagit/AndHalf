@@ -48,10 +48,18 @@ public class DeviceLawfulDb  implements Serializable{
 	private Long userId;
 	private String txnId;
 	private LocalDateTime localDate;
-	private Integer deviceBlockStatus;
+	private Integer deviceState;
 	private Integer previousDeviceStatus;
-	private Integer period;
+	private String period;
+	private Integer featureId;
 	
+	
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -143,26 +151,26 @@ public class DeviceLawfulDb  implements Serializable{
 	public void setLocalDate(LocalDateTime localDate) {
 		this.localDate = localDate;
 	}
-	public Integer getDeviceBlockStatus() {
-		return deviceBlockStatus;
-	}
-	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
-		this.deviceBlockStatus = deviceBlockStatus;
-	}
 	public Integer getPreviousDeviceStatus() {
 		return previousDeviceStatus;
 	}
 	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
 		this.previousDeviceStatus = previousDeviceStatus;
 	}
-	public Integer getPeriod() {
+	public String getPeriod() {
 		return period;
 	}
-	public void setPeriod(Integer period) {
+	public void setPeriod(String period) {
 		this.period = period;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	public Integer getDeviceState() {
+		return deviceState;
+	}
+	public void setDeviceState(Integer deviceState) {
+		this.deviceState = deviceState;
 	}
 	@Override
 	public String toString() {
@@ -197,14 +205,17 @@ public class DeviceLawfulDb  implements Serializable{
 		builder.append(txnId);
 		builder.append(", localDate=");
 		builder.append(localDate);
-		builder.append(", deviceBlockStatus=");
-		builder.append(deviceBlockStatus);
+		builder.append(", deviceState=");
+		builder.append(deviceState);
 		builder.append(", previousDeviceStatus=");
 		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", featureId=");
+		builder.append(featureId);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }

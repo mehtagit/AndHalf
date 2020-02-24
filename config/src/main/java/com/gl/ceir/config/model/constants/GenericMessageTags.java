@@ -17,9 +17,11 @@ public enum GenericMessageTags {
 	FEATURE_NOT_ALLOWED("FEATURE_NOT_ALLOWED", "This functionality is not supported now."),
 	//----------
 	NULL_USER_DEPARTMENT ("NULL_USER_DEPARTMENT", "User Department is null for VIP."),
-	INVALID_STATE_TRANSTION("INVALID_STATE_TRANSTION", "Operation not allowed."),
 	SUCCESS("SUCCESS", "Success"),
-	INVALID_REQUEST("INVALID_REQUEST", "Invalid Request.")
+	INVALID_STATE_TRANSTION("INVALID_STATE_TRANSTION", "Operation not allowed."),
+	INVALID_REQUEST("INVALID_REQUEST", "Invalid Request."),
+	INVALID_TXN_ID("INVALID_TXN_ID", "Txn id is not valid."),
+	FEATURE_NOT_SUPPORTED("FEATURE_NOT_SUPPORTED", "This feature is not supported.")
 	;
 	
 	private String tag;

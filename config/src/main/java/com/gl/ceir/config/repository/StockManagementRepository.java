@@ -7,11 +7,14 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.model.ResponseCountAndQuantity;
 import com.gl.ceir.config.model.StockMgmt;
 
-public interface StockManagementRepository extends JpaRepository<StockMgmt, Long>, JpaSpecificationExecutor<StockMgmt> {
+public interface StockManagementRepository extends JpaRepository<StockMgmt, Long>, 
+JpaSpecificationExecutor<StockMgmt>, CustomerCareRepo<StockMgmt>{
 
+	@SuppressWarnings("unchecked")
 	public StockMgmt save(StockMgmt distributerManagement);
 	
 	public StockMgmt getByTxnId(String txnId);

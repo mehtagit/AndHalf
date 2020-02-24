@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.service.impl.CustomerCareServiceImpl;
 import com.gl.ceir.config.util.Utility;
@@ -33,6 +35,19 @@ public class CustomerCareController {
 		logger.info(String.format("Request TO view TO all record of user = %s", customerCareRequest));
 
 		GenricResponse response = customerCareServiceImpl.getAll(customerCareRequest);
+		MappingJacksonValue mapping = new MappingJacksonValue(response);
+		logger.info("Response of view Request = " + mapping);
+
+		return mapping;
+	}
+	
+	@ApiOperation(value = "View  DB's state name and txn_id.", response = GenricResponse.class)
+	@PostMapping("/customer-care/by-txn-id")
+	public MappingJacksonValue getByTxnId(@RequestBody CustomerCareDeviceState customerCareDeviceState) {
+
+		logger.info(String.format("Request TO view TO all record of user = %s", customerCareDeviceState));
+
+		GenricResponse response = customerCareServiceImpl.getByTxnId(customerCareDeviceState);
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
 		logger.info("Response of view Request = " + mapping);
 

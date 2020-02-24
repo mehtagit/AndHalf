@@ -48,100 +48,82 @@ public class DeviceEndUserDb  implements Serializable{
 	private Long userId;
 	private String txnId;
 	private LocalDateTime localDate;
-	private Integer deviceBlockStatus;
+	private Integer deviceState;
 	private Integer previousDeviceStatus;
-	private Integer period;
-
+	private String period;
+	private Integer featureId;
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public Date getCreatedOn() {
 		return createdOn;
 	}
 
-
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-
 
 	public Date getModifiedOn() {
 		return modifiedOn;
 	}
 
-
 	public void setModifiedOn(Date modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-
 
 	public String getManufatureDate() {
 		return manufatureDate;
 	}
 
-
 	public void setManufatureDate(String manufatureDate) {
 		this.manufatureDate = manufatureDate;
 	}
-
 
 	public String getDeviceType() {
 		return deviceType;
 	}
 
-
 	public void setDeviceType(String deviceType) {
 		this.deviceType = deviceType;
 	}
-
 
 	public String getDeviceIdType() {
 		return deviceIdType;
 	}
 
-
 	public void setDeviceIdType(String deviceIdType) {
 		this.deviceIdType = deviceIdType;
 	}
-
 
 	public String getMultipleSimStatus() {
 		return multipleSimStatus;
 	}
 
-
 	public void setMultipleSimStatus(String multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
 	}
-
 
 	public String getSnOfDevice() {
 		return snOfDevice;
 	}
 
-
 	public void setSnOfDevice(String snOfDevice) {
 		this.snOfDevice = snOfDevice;
 	}
-
 
 	public String getImeiEsnMeid() {
 		return imeiEsnMeid;
 	}
 
-
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-
 
 	public LocalDateTime getDeviceLaunchDate() {
 		return deviceLaunchDate;
@@ -191,15 +173,14 @@ public class DeviceEndUserDb  implements Serializable{
 		this.localDate = localDate;
 	}
 
-
-	public Integer getDeviceBlockStatus() {
-		return deviceBlockStatus;
+	public Integer getDeviceState() {
+		return deviceState;
 	}
 
-	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
-		this.deviceBlockStatus = deviceBlockStatus;
-	}
 
+	public void setDeviceState(Integer deviceState) {
+		this.deviceState = deviceState;
+	}
 	public Integer getPreviousDeviceStatus() {
 		return previousDeviceStatus;
 	}
@@ -208,16 +189,24 @@ public class DeviceEndUserDb  implements Serializable{
 		this.previousDeviceStatus = previousDeviceStatus;
 	}
 
-	public Integer getPeriod() {
+	public String getPeriod() {
 		return period;
 	}
 
-	public void setPeriod(Integer period) {
+	public void setPeriod(String period) {
 		this.period = period;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Integer getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
 	}
 
 	@Override
@@ -253,14 +242,15 @@ public class DeviceEndUserDb  implements Serializable{
 		builder.append(txnId);
 		builder.append(", localDate=");
 		builder.append(localDate);
-		builder.append(", deviceBlockStatus=");
-		builder.append(deviceBlockStatus);
+		builder.append(", deviceState=");
+		builder.append(deviceState);
 		builder.append(", previousDeviceStatus=");
 		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
+		builder.append(", featureId=");
+		builder.append(featureId);
 		builder.append("]");
 		return builder.toString();
 	}
-
 }

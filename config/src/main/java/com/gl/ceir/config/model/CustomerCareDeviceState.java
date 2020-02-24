@@ -10,6 +10,7 @@ public class CustomerCareDeviceState implements Serializable{
 	private String date;
 	private String status;
 	private String txnId;
+	private Integer featureId;
 
 	public CustomerCareDeviceState() {}
 
@@ -41,10 +42,18 @@ public class CustomerCareDeviceState implements Serializable{
 		return serialVersionUID;
 	}
 
+	public Integer getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CustomercareDeviceState [name=");
+		builder.append("CustomerCareDeviceState [name=");
 		builder.append(name);
 		builder.append(", date=");
 		builder.append(date);
@@ -52,6 +61,8 @@ public class CustomerCareDeviceState implements Serializable{
 		builder.append(status);
 		builder.append(", txnId=");
 		builder.append(txnId);
+		builder.append(", featureId=");
+		builder.append(featureId);
 		builder.append("]");
 		return builder.toString();
 	}

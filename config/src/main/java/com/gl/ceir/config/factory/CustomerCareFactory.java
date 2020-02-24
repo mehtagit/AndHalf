@@ -12,6 +12,10 @@ import com.gl.ceir.config.factory.impl.CustomerCareEndUser;
 import com.gl.ceir.config.factory.impl.CustomerCareImporter;
 import com.gl.ceir.config.factory.impl.CustomerCareManufacturer;
 import com.gl.ceir.config.factory.impl.CustomerCareRetailer;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.repository.ConsignmentRepository;
+import com.gl.ceir.config.repository.StockManagementRepository;
+import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 
 @Component
 public class CustomerCareFactory {
@@ -19,24 +23,35 @@ public class CustomerCareFactory {
 	public final List<String> dbsList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
 			"MANUFACTURER", "REGULARIZE", "VIP", "BLACKLIST", "GREYLIST", "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", 
 			"TYPE_APPROVED");
-	
+
 	@Autowired
 	CustomerCareImporter customerCareImporter;
 
 	@Autowired
 	CustomerCareDistributor customerCareDistributor;
-	
+
 	@Autowired
 	CustomerCareRetailer customerCareRetailer;
-	
+
 	@Autowired
 	CustomerCareCustom customerCareCustom;
-	
+
 	@Autowired
 	CustomerCareManufacturer customerCareManufacturer;
-	
+
 	@Autowired
 	CustomerCareEndUser customerCareEndUser;
+
+	// View By txn id repository.
+
+	@Autowired
+	ConsignmentRepository consignmentRepository;
+
+	@Autowired
+	StockManagementRepository stockManagementRepository;
+
+	@Autowired
+	StolenAndRecoveryRepository stolenAndRecoveryRepository;
 
 	public CustomerCareTarget getObject(String name) {
 
@@ -53,6 +68,42 @@ public class CustomerCareFactory {
 			return customerCareManufacturer;
 		case "REGULARIZE":
 			return customerCareEndUser;
+		default:
+			break;
+		}
+
+		return null;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public CustomerCareRepo getRepoByName(String name) {
+
+		switch (name) {
+		case Features.CONSIGNMENT:
+			return consignmentRepository;
+		case Features.STOCK:
+			return stockManagementRepository;
+		case Features.STOLEN_RECOVERY:
+			return stolenAndRecoveryRepository;
+		default:
+			break;
+		}
+
+		return null;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public CustomerCareRepo getRepoByFeatureId(int featureId) {
+
+		switch (featureId) {
+		case 3:
+			return consignmentRepository;
+		case 4:
+			return stockManagementRepository;
+		case 5:
+			return stolenAndRecoveryRepository;
+		case 7:
+			return stolenAndRecoveryRepository;
 		default:
 			break;
 		}
