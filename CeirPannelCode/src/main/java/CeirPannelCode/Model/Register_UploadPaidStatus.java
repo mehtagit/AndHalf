@@ -17,8 +17,6 @@ public class Register_UploadPaidStatus {
 	private String country,district,commune,village, nationality;
 	
 	
-	
-	
 	@Override
 	public String toString() {
 		return "Register_UploadPaidStatus [firstName=" + firstName + ", middleName=" + middleName + ", lastName="

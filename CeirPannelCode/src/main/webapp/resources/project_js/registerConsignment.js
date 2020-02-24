@@ -213,24 +213,15 @@ function fileTypeValueChanges(dd, ddd) {
 	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
    if (uploadedFileName.length > 30) {
        $('#fileFormateModal').openModal();
-       $('#fileErrormessage').text('');
-       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+      
    } 
 	else if(ext!='csv')
 		{
-		$('#fileFormateModal').openModal();
-		 $('#fileErrormessage').text('');
-	       $('#fileErrormessage').text('file extension must be in  CSV.');
 		  $('#fileFormateModal').openModal({
 	    	   dismissible:false
 	       });
 		 
 		}
-	else if(fileSize>='5000'){
-		$('#fileFormateModal').openModal();
-		 $('#fileErrormessage').text('');
-	       $('#fileErrormessage').text('file size must be less then 5 mb.');
-	}
 	else if(fileSize>='2000'){
 		  $('#fileFormateModal').openModal({
 	    	   dismissible:false
