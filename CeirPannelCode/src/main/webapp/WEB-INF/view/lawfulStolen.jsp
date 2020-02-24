@@ -759,7 +759,7 @@ select.browser-default {
 													for="officeEmail"><spring:message code="registration.officialemailid" /></label>
 											</div>
 
-											<div class="input-field col s12 m6">
+											<div class="input-field col s12 m6" style="margin-bottom: 5px;">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
 												<input type="text" name="phone" id="bulkStolenContact"  pattern="[0-9\s,+]{7,15}" 
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"

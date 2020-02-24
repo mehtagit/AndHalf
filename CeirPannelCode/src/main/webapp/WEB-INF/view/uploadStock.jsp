@@ -239,7 +239,7 @@ to {
 											title="<spring:message code="validation.50character" />"
 											maxlength="50" required /> <label for="supplierName" id="SupplierIdAssignieName"
 											class="center-align"><spring:message
-												code="input.supllierName" /><span class="star">*</span></label>
+												code="input.supllierName" /> <span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
@@ -253,7 +253,7 @@ to {
 											title="<spring:message code="validation.7character" />"
 											maxlength="7" required />
 										<label for="Quantity" class="center-align"><spring:message
-												code="input.quantity" /><span class="star">*</span></label>
+												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
 
 									<div class="input-field col s12 m6" id="invoiceNumberDiv" style="display: none">
@@ -264,17 +264,12 @@ to {
 											class="center-align"><spring:message
 												code="input.invoiceNumber" /></label>
 									</div>
-								</div>
-								
-
-
-								<div class="row myRow">
-									<h6 style="color: #000; margin-left: 10px;">
+									
+									<div class="file-field col s12 m6">
+									<h6 class="file-upload-heading">
 										<spring:message code="input.uploadBulkStock" />
 										<span class="star">*</span>
 									</h6>
-									<div class="file-field input-field col s12 m6"
-										style="margin-top: 5px;">
 										<div class="btn">
 											<span><spring:message code="input.selectfile" /></span> <input onchange="fileTypeValueChanges()"
 												type="file" id="file" required="required" size=50
@@ -285,16 +280,17 @@ to {
 												type="text">
 										</div>
 									</div>
-									<br>
-									<br>
-									<p style="margin-left: 10px;">
+									<div class="col s12 m12">
+										<p>
 										<a href="./Consignment/sampleFileDownload/4"><spring:message
 												code="input.downlaod.sample" /></a>
 									</p>
+									<p><spring:message code="input.requiredfields" /> <span
+									class="star">*</span></p>
+									</div>
 								</div>
 
-								<span><spring:message code="input.requiredfields" /></span><span
-									class="star">*</span>
+								
 
 								<div class="row" style="padding-bottom: 100px;">
 									<div class="input-field col s12 center">

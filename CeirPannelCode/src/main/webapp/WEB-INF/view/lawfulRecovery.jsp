@@ -365,22 +365,6 @@ onclick="_Services._selectstartDate()"></i></span>
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
 										
-										<div class="file-field col s12 m6 l6">
-														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
-														<spring:message code="input.UploadFIR" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" 
-															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
-															placeholder="Upload FIR" id="uploadFirSingle">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" placeholder="Upload FIR"
-																id="uploadFirSingleName" title="Please upload national ID image">
-														</div>
-													</div>
-										
                                                             <div class="input-field col s12 m12">
                                                                 <textarea id="sigleRecovery" 
                                                                 oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
@@ -410,30 +394,6 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             title= "<spring:message code="validation.7digits" />" required  / >
 														 <label for="bulkRecoveryquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
-                                                    
-                                                    <div class="file-field col s12 m6 l6">
-														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
-														<spring:message code="input.UploadFIR" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" 
-															oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-															title= "<spring:message code="validation.NoChosen" />" required  
-															placeholder="Upload FIR" id="uploadFirBulk">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" placeholder="Upload FIR"
-																id="uploadFirBulkName" title="Please upload national ID image">
-														</div>
-													</div>
-
-                                                    <div class="input-field col s12 m12">
-                                                        <textarea id="bulkRecoveryRemark"  
-                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.10000characters" />" 
-                                                        		maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
-                                                    </div>
 
                                                     <div class="file-field col s12 m6">
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star"> *</span></h6>
@@ -443,6 +403,14 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
                                                             title= "<spring:message code="validation.NoChosen" />" required  /  accept=".csv" placeholder="Upload Photo">
                                                         </div>
+
+                                                    <div class="input-field col s12 m12">
+                                                        <textarea id="bulkRecoveryRemark"  
+                                                         oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                                                                title= "<spring:message code="validation.10000characters" />" 
+                                                        		maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
+                                                    </div>
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName"
                                                                 placeholder="Upload file" title="Please upload your photo">
@@ -450,46 +418,42 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div>
                                                     
                                                     <div class="col s12 m6">
-<p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
-<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
-value="Immediate"
-onclick="document.getElementById('calender').style.display = 'none';"
-name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
-</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
-value="Default"
-onclick="document.getElementById('calender').style.display = 'none';"
-name="stolenBlockPeriod"><spring:message code="operator.default" />
-</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
-onclick="document.getElementById('calender').style.display = 'block';"
-name="stolenBlockPeriod"><spring:message code="operator.later" />
-</label>
-<div class="col s6 m2 responsiveDiv"
-style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px" id="calender">
-<div id="startdatepicker" class="input-group date">
-<input type="text" id="stolenDatePeriod"
-style="margin-top: -9px" /> <span class="input-group-addon"
-style="color: #ff4081"><i class="fa fa-calendar"
-aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
-</div>
-
-</div>
-
-
-<div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
-id="stolenDate">
-
-<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
-<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
-
-<input class="form-control" name="inputsaves" type="text"
-id="startDateFilter" readonly /> <span class="input-group-addon"
-style="color: #ff4081"><i
-class="glyphicon glyphicon-calendar"
-onclick="_Services._selectstartDate()"></i></span>
-</div>
-</div>
-</div>
-                                                    
+														<p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
+														<label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
+														value="Immediate" onclick="document.getElementById('calender').style.display = 'none';"
+														name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
+														</label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
+														value="Default" onclick="document.getElementById('calender').style.display = 'none';"
+														name="stolenBlockPeriod"><spring:message code="operator.default" />
+														</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+														onclick="document.getElementById('calender').style.display = 'block';"
+														name="stolenBlockPeriod"><spring:message code="operator.later" />
+														</label>
+														<div class="col s6 m2 responsiveDiv"
+														style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px" id="calender">
+														<div id="startdatepicker" class="input-group date">
+														<input type="text" id="stolenDatePeriod" style="margin-top: -9px" /> <span class="input-group-addon"
+														style="color: #ff4081"><i class="fa fa-calendar" aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
+														</div>
+														
+														</div>
+														
+														
+														<div class="col s12 m2 l2" style="width: 40%; display: none; float: right; margin-right:30%;"
+														id="stolenDate">
+														
+														<label for="TotalPrice" class="center-align"><spring:message code="operator.tilldate" /></label>
+														<div id="startdatepicker" class="input-group" style="margin-top: 10px;">
+														
+														<input class="form-control" name="inputsaves" type="text"
+														id="startDateFilter" readonly /> <span class="input-group-addon"
+														style="color: #ff4081"><i
+														class="glyphicon glyphicon-calendar"
+														onclick="_Services._selectstartDate()"></i></span>
+														</div>
+														</div>
+														</div>
+														                                                    
                                                     
 
                                                    <div class="col s12 m12">

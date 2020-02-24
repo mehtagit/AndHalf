@@ -70,14 +70,14 @@
 
 </style>
 </head>
-<body data-lang-param="${pageContext.response.locale}">
+<body onSubmit='window.scrollTo(60, 0)' data-lang-param="${pageContext.response.locale}">
 
 
 	<section id="content">
 		<!--start container-->
 		<div class="container">
 			<div class="section">
-				<div class="row card-panel update-visa-responsive-page"
+				<div class="row card-panel update-visa-responsive-page" onSubmit='self.scrollTo(0,0)'
 					style="width: 50%; margin: auto; margin-bottom: 50px; margin-top: 20px;">
 					<h6 class="fixPage-modal-header ">
 						<spring:message code="input.UpdateVisaValidity" />
@@ -109,7 +109,7 @@
 									</div>
 								</form>
 							</div>
-							<div id="EndUserInfoForm" style="display: none;">
+							<div id="EndUserInfoForm" onSubmit='self.scrollTo(0,0)' style="display: none;">
 								<form id="" onsubmit="return updateVisaDetails()" method="POST"
 									enctype="multipart/form-data">
 									<div class="row">
@@ -624,6 +624,9 @@
      window.intlTelInput(input, {
          utilsScript: "js/utils.js",
      });
+     
+
+     $('html').scrollTop(0);
 	</script>		
 
 </body>

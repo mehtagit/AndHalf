@@ -66,6 +66,16 @@ href="${context}/resources/project_css/viewStock.css">
 <link rel="stylesheet"
 href="${context}/resources/project_css/iconStates.css">
 
+<style>
+	h6 {
+	margin: 0 0 0.4rem 0 !important;
+	}
+	
+	select {
+		height: 32px !important;
+	}
+</style>
+
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}"
 data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"> --%>
