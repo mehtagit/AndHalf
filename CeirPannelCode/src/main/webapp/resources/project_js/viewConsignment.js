@@ -80,7 +80,7 @@ function confirmantiondelete(){
 				}
 			});
 			$("#DeleteConsignment").closeModal();
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			$("#confirmDeleteConsignment").openModal();
 =======
 			$("#confirmDeleteConsignment").openModal({
@@ -88,7 +88,7 @@ function confirmantiondelete(){
 			});
 			return false;
 >>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
-		}
+*/		}
 		$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 			$("#expectedArrivalPortEdit").empty();
 			for (i = 0; i < data.length; i++) {
@@ -643,7 +643,7 @@ function confirmantiondelete(){
 			$('#ApproveConsignment').openModal();
 			if(userType=='Custom'){
 				
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 =======
 				$.ajax({
 					url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
@@ -674,7 +674,7 @@ function confirmantiondelete(){
 				});
 				
 >>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
-				$('#ApproveConsignmentTxnid').text(txnId);
+*/				$('#ApproveConsignmentTxnid').text(txnId);
 				$('#setApproveConsignmentTxnId').val(txnId);
 				$('#displayname').text(displayName);
 					
@@ -920,7 +920,7 @@ function fileTypeValueChanges() {
 			}
 			});	
 		
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 			var fileSize = ($("#csvUploadFile")[0].files[0].size);
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
@@ -949,7 +949,7 @@ function fileTypeValueChanges() {
 =======
 		
 >>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
-
+*/
 		function clearFileName() {
 			var existingfile=$("#fileNameToBeSame").val();
 			//$('#fileNameEdit').val('');

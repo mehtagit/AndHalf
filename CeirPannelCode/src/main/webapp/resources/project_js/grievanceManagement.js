@@ -387,12 +387,9 @@ var featureId = 6;
 				var formData= new FormData();
 				var docTypeTagIdValue='';
 				var filename='';
-<<<<<<< HEAD
-=======
 				var filesameStatus=false;
 				var documenttype=false;
 				var docTypeTag='';
->>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 				$('.fileDiv').each(function() {	
 					var x={
 					"docType":$('#docTypetag'+fieldId).val(),
@@ -401,9 +398,6 @@ var featureId = 6;
 					}
 					formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
 					fileInfo.push(x);
-<<<<<<< HEAD
-=======
-					
 					documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 					docTypeTag=$('#docTypetag'+fieldId).val();
 					
@@ -421,13 +415,10 @@ var featureId = 6;
 					documentFileNameArray.push(documentFileName);
 					documentFileNameArray.push(docTypeTag);
 					
->>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 					fieldId++;
 					i++;
 				});
 				
-<<<<<<< HEAD
-=======
 				$('#fileFormateModal').openModal();
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
@@ -444,8 +435,7 @@ var featureId = 6;
 				
 				}
 			
->>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
-				var multirequest={
+				/*var multirequest={
 						"attachedFiles":fileInfo,
 						"txnId":grievanceTxnId,
 						"reply":remark,
@@ -460,12 +450,12 @@ var featureId = 6;
 				formData.append('fileInfo[]',JSON.stringify(fileInfo));
 				formData.append('multirequest',JSON.stringify(multirequest));
 				
-				/*
+				
 				formData.append('file', $('#replyFile')[0].files[0]);
 				formData.append('remark',remark);
 				formData.append('grievanceId',grievanceIdToSave);
 				formData.append('txnId',grievanceTxnId);
-				formData.append('grievanceStatus',grievanceTicketStatus);*/
+				formData.append('grievanceStatus',grievanceTicketStatus);
 
 				$.ajax({
 					url: './saveGrievanceMessage',
@@ -494,8 +484,8 @@ var featureId = 6;
 					}
 				});
 				return false;
-			}
-
+			
+			}*/
 
 			function viewGrievanceHistory(grievanceId,projectPath)
 			{
