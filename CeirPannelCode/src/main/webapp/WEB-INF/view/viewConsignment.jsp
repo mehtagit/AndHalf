@@ -618,7 +618,7 @@
 		<div class="modal-content">
 			<form action="" onsubmit="return editRegisterConsignment()"
 				method="POST" enctype="multipart/form-data">
-				<div class="row myRow" style="margin-top: 5px;">
+				<div class="row myRow" style="margin-top: 5px;" >
 					<div class="input-field col s12 m6">
 						<input type="text" name="supplierId" id="supplierIdEdit"
 							pattern="[A-Za-z0-9]{0,15}"
