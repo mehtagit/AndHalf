@@ -1,52 +1,57 @@
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
-		$.i18n().locale = lang;	
-		
+		$.i18n().locale = lang;		
 		$.i18n().load( {
 			'en': '../resources/i18n/en.json',
 			'km': '../resources/i18n/km.json'
 		} ).done( function() { 
 		});
-function InvalidMsg(textbox,type) {
-    if (textbox.value == '') {
-    	if(type=="input"){
-        textbox.setCustomValidity($.i18n('requiredMsg_input'));
-    	}
-    	else if(type=="date"){
-            textbox.setCustomValidity($.i18n('requiredMsg_date'));	
-    	}
-    	else if(type=="select"){
-            textbox.setCustomValidity($.i18n('requiredMsg_select'));	
-    	}
-    	else if(type=="fileType"){
-            textbox.setCustomValidity($.i18n('requiredMsg_fileType'));	
-    	}
-    	else if(type=="email"){
-            textbox.setCustomValidity($.i18n('requiredMsg_email'));	
+		
+	
+		$(function(){
+			$('*').tooltip({ track: true });
+		    $('*[title]').tooltip('disable');
+			});
+
+		
+		
+function InvalidMsg(textbox,type,msg) {
+var element = document.getElementById(textbox.id);
+
+if(element.validity.valueMissing){
+	 if(type=="input"){
+	        element.setCustomValidity($.i18n('requiredMsg_input'));
+	    	}
+	    	else if(type=="date"){
+	            element.setCustomValidity($.i18n('requiredMsg_date'));	
+	    	}
+	    	else if(type=="select"){
+	            element.setCustomValidity($.i18n('requiredMsg_select'));	
+	    	}
+	    	else if(type=="fileType"){
+	            element.setCustomValidity($.i18n('requiredMsg_fileType'));	
+	    	}
+	    	else if(type=="email"){
+	            element.setCustomValidity($.i18n('requiredMsg_email'));	
+	    	}
+	 
+}
+
+else if (element.validity.patternMismatch) {
+	
+	if(type=="input" || type=="date" || type=="select" || type=="fileType" || type=="email"){
+        element.setCustomValidity(msg);
     	}
     	
-    	
-    }
-  /*  else if(textbox.validity.typeMismatch){
-        
-        if(type=="input"){
-        	textbox.setCustomValidity($.i18n('requiredMsg_input'));
-        	}
-        	else if(type=="date"){
-        		textbox.setCustomValidity($.i18n('requiredMsg_date'));	
-        	}
-        	else if(type=="select"){
-        		textbox.setCustomValidity($.i18n('requiredMsg_select'));	
-        	}
-        	else if(type=="fileType"){
-        		textbox.setCustomValidity($.i18n('requiredMsg_fileType'));
-        	}
-        	
-        
-    }*/
-    else {
-        textbox.setCustomValidity('');
-    }
-    return true;
+	    	
+return false;
+ } 
+else{
+		
+	if(type=="input" || type=="date" || type=="select" || type=="fileType" || type=="email"){
+	        element.setCustomValidity('');
+	    	}
+	    	
+	 return true;
+	  
+}
 }

@@ -51,7 +51,7 @@
 		}
 
 
-		function confirmantiondelete(){
+function confirmantiondelete(){
 			var txnId = $("#transID").text();
 			var remarks = $("#textarea1").val();
 			var obj ={
@@ -85,6 +85,7 @@
 			$("#confirmDeleteConsignment").openModal({
 				dismissible:false
 			});
+			return false;
 		}
 		$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 			$("#expectedArrivalPortEdit").empty();
@@ -668,7 +669,7 @@
 						console.log(data.pendingTacApprovedByCustom);
 						console.log(data.pendingTacApprovedByCustom);
 						
-						if(data.pendingTacApprovedByCustom=='y')
+						if(data.pendingTacApprovedByCustom=='N')
 							{
 						$('#tacSatusForCustom').css("display", "none");
 						$('#approveButton').prop('disabled', false);
@@ -676,6 +677,8 @@
 							}
 						else{
 							$('#tacSatusForCustom').css("display", "block"); 
+							$('#tacStatucMessage').text('');
+							$('#tacStatucMessage').text($.i18n('tacStatucMessage'));
 							$('#approveButton').prop('disabled', true);
 						}
 					},
@@ -945,42 +948,8 @@ function fileTypeValueChanges() {
 
 			}
 			});	
-		function fileTypeValueChanges() {
-			var uploadedFileName = $("#csvUploadFile").val();
-			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-			var ext = uploadedFileName.split('.').pop();
 		
-			var fileSize = ($("#csvUploadFile")[0].files[0].size);
-			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
-		   if (uploadedFileName.length > 30) {
-		       $('#fileFormateModal').openModal({
-		    	   dismissible:false
-		       });
-		       $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
-		   } 
-			else if(ext!='csv')
-				{
-				$('#fileFormateModal').openModal({
-					dismissible:false
-				});
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file extension must be in  CSV.');
-				}
-			else if(fileSize>='5000'){
-				$('#fileFormateModal').openModal({
-					dismissible:false
-				});
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file size must be less then 5 mb.');
-			}
-			else {
-				console.log("file formate is correct")
-				
-			}
-			
-
-		}
+		
 
 		function clearFileName() {
 			var existingfile=$("#fileNameToBeSame").val();
