@@ -419,7 +419,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="20" pattern="[0-9]{7,15}"
+									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />"	>
 									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /></label>
 								</div>

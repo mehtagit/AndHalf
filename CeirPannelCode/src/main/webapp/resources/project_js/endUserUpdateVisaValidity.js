@@ -1,11 +1,4 @@
-$('#langlist').on('change', function() {
-	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var type = url.searchParams.get("type");
-	window.location.assign("updateVisaValidaity?lang="+lang);			
-	});   
-function hide() {
+   function hide() {
             var In = $('#nidForEndUser').val()
             if (In == "black") {
 
@@ -139,7 +132,6 @@ function hide() {
    
  
    $(document).ready(function () {
-	   $('#langlist').val(data_lang_param);
        var max_fields = 15; //maximum input boxes allowed
        var wrapper = $(".input_fields_wrap"); //Fields wrapper
        var add_button = $(".add_field_button"); //Add button ID

@@ -196,7 +196,8 @@ window.parent.$('#langlist').on('change', function() {
 			}
 			else
 			{
-			$("#currency").attr("required", true);
+				$('#currency').prop('required',true);
+			//$("#currency").attr("required", true);
 			/*$('#currency').attr("disabled",false);*/
 			$('#currencyDiv').show();
 
@@ -212,24 +213,45 @@ function fileTypeValueChanges(dd, ddd) {
 	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
    if (uploadedFileName.length > 30) {
        $('#fileFormateModal').openModal();
-      
+       $('#fileErrormessage').text('');
+       $('#fileErrormessage').text('file name length must be less then 30 characters.');
    } 
 	else if(ext!='csv')
 		{
+<<<<<<< HEAD
 		$('#fileFormateModal').openModal();
+		 $('#fileErrormessage').text('');
+	       $('#fileErrormessage').text('file extension must be in  CSV.');
+=======
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		 
+>>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 		}
-	else if(fileSize>='2000'){
+<<<<<<< HEAD
+	else if(fileSize>='5000'){
 		$('#fileFormateModal').openModal();
+		 $('#fileErrormessage').text('');
+	       $('#fileErrormessage').text('file size must be less then 5 mb.');
+=======
+	else if(fileSize>='2000'){
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		
+>>>>>>> branch 'CEIR_TEAM_6' of https://github.com/mehtagit/AndHalf.git
 	}
 	else {
-		console.log("file formate is correct")
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		
 	}
 	
 
 }
+
 
 function clearFileName() {
 	$('#fileName').val('');

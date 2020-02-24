@@ -60,14 +60,40 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 	function setViewPopupData(data){
-		console.log("_________________++++++++++"+data)
-
+		var  assigneIdLabel=$.i18n('assigneIdLabel');
+		 var assigneNameLabel=$.i18n('assigneNameLabel');
+		
+ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 
+		if(currentRoleTypeAssignei=='Manufacturer')
+			{
+			
+			$("#supplierIdDiv").css("display", "none"); 
+			$("#supplierNameDiv").css("display", "none");
+			$("#invoiceNumberDiv").css("display", "none");
+			}
+		else if(currentRoleTypeAssignei=='Custom'){
+			$('#SupplierIdLabel').text('');
+			$('#SupplierIdLabel').text(assigneIdLabel);
+		
+			$('#SupplierNameLabel').text('');
+			$('#SupplierNameLabel').text(assigneNameLabel);
+			
+			$("#editSupplierIdDiv").css("display", "block"); 
+			$("#editSupplierNameDiv").css("display", "block");
+			$("#editSupplierNameDiv").css("display", "block");
+		}
+		else {
+			$("#supplierIdDiv").css("display", "block"); 
+			$("#supplierNameDiv").css("display", "block");
+			$("#invoiceNumberDiv").css("display", "block");
+		}
 		$("#SupplierId").val(data.supplierId);
 		$("#SupplierName").val(data.suplierName);
 		$("#InvoiceNumber").val(data.invoiceNumber);
 		$("#Quantity").val(data.quantity);
 		$("#TransactionId").val(data.txnId);
 		$("#csvUploadFileName").val(data.fileName);
+		$("#withdrawnRemark").val(data.remarks);
 
 
 	}
@@ -100,7 +126,29 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 
 	function setEditPopupData(data){
+		var  assigneIdLabel=$.i18n('assigneIdLabel');
+		 var assigneNameLabel=$.i18n('assigneNameLabel');
+
 		console.log()
+var currentRoleTypeAssignei = $("body").attr("data-selected-roleType"); 		
+		if(currentRoleTypeAssignei=='Manufacturer')
+			{
+			
+			$("#editSupplierIdDiv").css("display", "none"); 
+			$("#editSupplierNameDiv").css("display", "none");
+			$("#editInvoiceNumberDiv").css("display", "none");
+			$("#editSupplierName").attr("required", false);
+			}
+		else if(currentRoleTypeAssignei=='Custom'){
+			$('#editSupplierIdLabel').text('');
+			$('#editSupplierIdLabel').text(assigneIdLabel);
+		
+			$('#editSupplierNameLabel').text('');
+			$('#editSupplierNameLabel').text(assigneNameLabel);
+			$("#editSupplierIdDiv").css("display", "block"); 
+			$("#editSupplierNameDiv").css("display", "block");
+			$("#editSupplierNameDiv").css("display", "block");
+		}
 		$("#editSupplierId").val(data.supplierId);
 		$("#editSupplierName").val(data.suplierName);
 		$("#editInvoiceNumber").val(data.invoiceNumber);
@@ -222,7 +270,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				console.log("Error");
 			}
 		});
-		
+		return false;
 		/* 
 	$(".lean-overlay").remove(); */ 
 
@@ -364,7 +412,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					if(date[i].type === "date"){
 						$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 								"<div id='enddatepicker' class='input-group date'>"+
-								"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 								"<label for="+date[i].id+">"+date[i].title
 								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -672,16 +720,19 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 	   if (uploadedFileName.length > 30) {
 	       $('#fileFormateModal').openModal();
-	      
+	       $('#fileErrormessage').text('');
+	       $('#fileErrormessage').text('file name length must be less then 30 characters.');
 	   } 
 		else if(ext!='csv')
 			{
 			$('#fileFormateModal').openModal();
-			 
+			 $('#fileErrormessage').text('');
+		       $('#fileErrormessage').text('file extension must be in  CSV.');
 			}
-		else if(fileSize>='2000'){
+		else if(fileSize>='5000'){
 			$('#fileFormateModal').openModal();
-			 
+			 $('#fileErrormessage').text('');
+		       $('#fileErrormessage').text('file size must be less then 5 mb.');
 		}
 		else {
 			console.log("file formate is correct")

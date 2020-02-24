@@ -168,7 +168,7 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="firstName"  name="firstName" pattern="[a-zA-Z]{0,20}"
 											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.20Character" />" required  / maxlength="20" />
+												 title= "<spring:message code="validation.20Character" />" required   maxlength="20" />
                                             <label for="firstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
                                         </div>
 
@@ -182,14 +182,14 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m4">
                                             <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]{0,20}" 
 											oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.20Character" />"  required /  maxlength="20" />
+												 title= "<spring:message code="validation.20Character" />"  required   maxlength="20" />
                                             <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
                                             <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{10,12}"
  													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.10digits" />"  required /  maxlength="10" />
+												 title= "<spring:message code="validation.10digits" />"  required   maxlength="10" />
                                             <label for="contactNumber"><spring:message code="input.contactNum" /><span
                                                     class="star">*</span></label>
                                         </div>
@@ -197,7 +197,7 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m6">
                                             <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
 											 oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
-												 title= "<spring:message code="validation.emailformate" />"  required /   maxlength="30" />
+												 title= "<spring:message code="validation.emailformate" />" maxlength="30" />
                                             <label for="emailID"><spring:message code="input.EmailID" /></label>
                                         </div>
 
@@ -205,7 +205,7 @@ var contextpath = "${context}";
                                             <label for="endUsercategory"><spring:message code="input.Category" /> <span class="star">*</span></label>
                                             <select class="browser-default" 
 											title="<spring:message code="validation.selectFieldMsg" />" oninput="setCustomValidity('')"  
-										oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"  required /  id="endUsercategory">
+										oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"  required   id="endUsercategory">
                                                 <option value="" disabled selected><spring:message code="input.Category" /></option>
                                             </select>
                                         </div>
@@ -213,7 +213,7 @@ var contextpath = "${context}";
                                         <div class="input-field col s12 m6">
                                             <textarea id="endUserRemark" 
 										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
-												 title= "<spring:message code="validation.200character" />"  required /  maxlength="200" class="materialize-textarea"></textarea>
+												 title= "<spring:message code="validation.200character" />"  required   maxlength="200" class="materialize-textarea"></textarea>
                                             <label for="endUserRemark"><spring:message code="input.Remark" /><span
                                                     class="star">*</span></label>
                                         </div>
@@ -245,7 +245,7 @@ var contextpath = "${context}";
                                                 <span><spring:message code="input.selectfile" /></span>
                                                 <input id="endUserdocTypeFile1" type="file" 
  												title="<spring:message code="validation.NoChosen" />" 
-						oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" required / name="files[]" id="filer_input"
+						oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" name="files[]" id="filer_input"
                                                     multiple="multiple" />
                                             </div>
                                             <div class="file-path-wrapper">
@@ -297,7 +297,7 @@ var contextpath = "${context}";
                                             <div class="input-field col s6 m6 l6">
                                                 <input type="text" id="trackGrievanceId"  name="trackGrievanceId" pattern="[A-Za-z0-9]{18,18}" 
 													oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.18characters" />" required  /  maxlength="18">
+												 title= "<spring:message code="validation.18characters" />" required    maxlength="18">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -425,7 +425,9 @@ var contextpath = "${context}";
  
                <div class="col s12 m12">
                   <label for="replyRemark" style="margin-top: 7px"><spring:message code="input.remarks" /><span class="star">*</span></label>
-                    <textarea id="replyRemark" class="materialize-textarea" maxlength="200" placeholder="" required="required"></textarea>
+                    <textarea id="replyRemark" class="materialize-textarea" 
+                    oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+                    title= "<spring:message code="validation.200characters" />" required maxlength="200" placeholder=""></textarea>
                     <input type="text" style="display: none" id="grievanceUserid">
                     <!-- <h6 style="color: #000;">Upload Supporting Document </h6> -->
                 </div>
@@ -620,19 +622,14 @@ var path="${context}";
 		src="${context}/resources/project_js/grievanceManagement.js"></script>
     <script type="text/javascript"
 		src="${context}/resources/project_js/endUserGrievance.js"></script>
-  <!--   <script>
-        $(document).ready(function () {
-        	  usertypeDropDownData();
-            $('.modal').modal();
-        });
-      
-        
-        
-        
-    </script> -->
-    
+		<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script>
 
-    <script>
         $(document).ready(function () {
             $('.modal').modal();
          

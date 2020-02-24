@@ -177,7 +177,6 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 
 
 $(document).ready(function () {
-	 $('#langlist').val(data_lang_param);
 	var max_fields = 15; //maximum input boxes allowed
 	var wrapper = $(".mainDeviceInformation"); //Fields wrapper
 	var add_button = $(".add_field_button"); //Add button ID
@@ -298,7 +297,8 @@ function submitEndUserDeviceInfo(){
 	var onVisa=$('input[name="onVisa"]:checked').val();
 
 	if(onVisa==undefined){
-		onVisa='N';
+	alert(onVisa);
+	onVisa='N';
 	}
 	var visaType=$('#visaType').val();
 	var visaDate=$('#datepicker').val();

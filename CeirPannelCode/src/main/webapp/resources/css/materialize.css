@@ -3239,7 +3239,7 @@
     display: table-cell;
     text-align: left;
     vertical-align: middle;
-    border-radius: 2px;
+    border-radius: 0px;
   }
 
   @media only screen and (max-width: 992px) {
