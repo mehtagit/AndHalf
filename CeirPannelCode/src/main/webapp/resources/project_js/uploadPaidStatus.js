@@ -748,9 +748,22 @@ populateCountries(
 $(document).ready(function () {
 
 	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+		var checkAllowedCount =localStorage.getItem("allowed");	
+		//alert("222222"+checkAllowedCount);
+		if(checkAllowedCount==0)
+			{
+		
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#taxStatus1');
 
+			}
+			}
+		else{
+		
 		$('#taxStatus1').prop('disabled', 'disabled');
 		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
+		}
 	});
 
 

@@ -384,7 +384,7 @@ function Datatable(url,dataUrl){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 240, targets: result.length - 1 }
+		            { width: 246, targets: result.length - 1 }
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
@@ -483,8 +483,8 @@ function pageElements(url){
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton" && userType != "Operator" ){
-						$('#'+button[i].id).attr("onclick", "openStolenRecoveryModal()");
-					}else if(button[i].type === "HeaderButton" && userType == "Operator" ){
+						$('#'+button[i].id).attr("href", button[i].buttonURL);
+					}else if(button[i].type === "HeaderButton" && userType == "Operator"){
 						$('#'+button[i].id).attr("href", button[i].buttonURL);
 						
 					}else{
@@ -501,9 +501,9 @@ function pageElements(url){
 	}); 
 
 	setAllDropdowns();
-	if(userType=="CEIRAdmin"){
+	/*if(userType=="CEIRAdmin"){
 		$("#btnLink").css({display: "none"});
-		}
+		}*/
 
 }	 
 
