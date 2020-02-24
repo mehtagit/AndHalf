@@ -20,19 +20,19 @@ public class CustomerCareEndUser implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		RegularizeDeviceDb deviceDb = regularizedDeviceDbRepository.getByImei(imei);
-		
-		if(Objects.nonNull(deviceDb)) {
-			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
-			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
-			customerCareDeviceState.setStatus(Constants.available);
-		}else {
-			customerCareDeviceState.setDate("");
-			customerCareDeviceState.setStatus(Constants.non_available);
-		}
-		
-		setName(customerCareDeviceState);
-		return customerCareDeviceState;
+		/*
+		 * RegularizeDeviceDb deviceDb = regularizedDeviceDbRepository.getByImei(imei);
+		 * 
+		 * if(Objects.nonNull(deviceDb)) {
+		 * customerCareDeviceState.setTxnId(deviceDb.getTxnId());
+		 * customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
+		 * customerCareDeviceState.setStatus(Constants.available); }else {
+		 * customerCareDeviceState.setDate("");
+		 * customerCareDeviceState.setStatus(Constants.non_available); }
+		 * 
+		 * setName(customerCareDeviceState);
+		 */
+		return null;
 	}
 
 	@Override

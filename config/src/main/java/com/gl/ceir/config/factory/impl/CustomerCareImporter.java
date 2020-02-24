@@ -23,7 +23,7 @@ public class CustomerCareImporter implements CustomerCareTarget{
 		DeviceImporterDb deviceImporterDb = deviceImporterDbRepository.getByImeiEsnMeid(imei);
 		
 		if(Objects.nonNull(deviceImporterDb)) {
-			customerCareDeviceState.setTxnId(deviceImporterDb.getImporterTxnId());
+			customerCareDeviceState.setTxnId(deviceImporterDb.getTxnId());
 			customerCareDeviceState.setDate(deviceImporterDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
 		}else {

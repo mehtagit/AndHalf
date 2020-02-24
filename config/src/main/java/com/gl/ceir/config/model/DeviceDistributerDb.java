@@ -45,11 +45,11 @@ public class DeviceDistributerDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 
-	private Long distributerUserId;	
-	private String distributerTxnId;
-	private LocalDateTime distributerDate;
-	private Integer distributerDeviceStatus;
-	private Integer previousDistributerDeviceStatus;
+	private Long userId;
+	private String txnId;
+	private LocalDateTime localDate;
+	private Integer deviceBlockStatus;
+	private Integer previousDeviceStatus;
 	private Integer period;
 	
 	public Long getId() {
@@ -125,35 +125,36 @@ public class DeviceDistributerDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-	public Long getDistributerUserId() {
-		return distributerUserId;
+	
+	public Long getUserId() {
+		return userId;
 	}
-	public void setDistributerUserId(Long distributerUserId) {
-		this.distributerUserId = distributerUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getDistributerTxnId() {
-		return distributerTxnId;
+	public String getTxnId() {
+		return txnId;
 	}
-	public void setDistributerTxnId(String distributerTxnId) {
-		this.distributerTxnId = distributerTxnId;
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
-	public LocalDateTime getDistributerDate() {
-		return distributerDate;
+	public LocalDateTime getLocalDate() {
+		return localDate;
 	}
-	public void setDistributerDate(LocalDateTime distributerDate) {
-		this.distributerDate = distributerDate;
+	public void setLocalDate(LocalDateTime localDate) {
+		this.localDate = localDate;
 	}
-	public Integer getDistributerDeviceStatus() {
-		return distributerDeviceStatus;
+	public Integer getDeviceBlockStatus() {
+		return deviceBlockStatus;
 	}
-	public void setDistributerDeviceStatus(Integer distributerDeviceStatus) {
-		this.distributerDeviceStatus = distributerDeviceStatus;
+	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
+		this.deviceBlockStatus = deviceBlockStatus;
 	}
-	public Integer getPreviousDistributerDeviceStatus() {
-		return previousDistributerDeviceStatus;
+	public Integer getPreviousDeviceStatus() {
+		return previousDeviceStatus;
 	}
-	public void setPreviousDistributerDeviceStatus(Integer previousDistributerDeviceStatus) {
-		this.previousDistributerDeviceStatus = previousDistributerDeviceStatus;
+	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
+		this.previousDeviceStatus = previousDeviceStatus;
 	}
 	public Integer getPeriod() {
 		return period;
@@ -191,20 +192,22 @@ public class DeviceDistributerDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
-		builder.append(", distributerUserId=");
-		builder.append(distributerUserId);
-		builder.append(", distributerTxnId=");
-		builder.append(distributerTxnId);
-		builder.append(", distributerDate=");
-		builder.append(distributerDate);
-		builder.append(", distributerDeviceStatus=");
-		builder.append(distributerDeviceStatus);
-		builder.append(", previousDistributerDeviceStatus=");
-		builder.append(previousDistributerDeviceStatus);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", localDate=");
+		builder.append(localDate);
+		builder.append(", deviceBlockStatus=");
+		builder.append(deviceBlockStatus);
+		builder.append(", previousDeviceStatus=");
+		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 
 }

@@ -23,7 +23,7 @@ public class CustomerCareRetailer implements CustomerCareTarget{
 		DeviceRetailerDb deviceDb = deviceRetailerDbRepository.getByImeiEsnMeid(imei);
 		
 		if(Objects.nonNull(deviceDb)) {
-			customerCareDeviceState.setTxnId(deviceDb.getRetalierTxnId());
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
 		}else {

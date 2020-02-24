@@ -47,11 +47,11 @@ public class DeviceImporterDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 
-	private Long importerUserId;
-	private String importerTxnId;
-	private LocalDateTime importerDate;
-	private Integer importerDeviceStatus;
-	private Integer previousImporterDeviceStatus;
+	private Long userId;
+	private String txnId;
+	private LocalDateTime localDate;
+	private Integer deviceBlockStatus;
+	private Integer previousDeviceStatus;
 	private Integer period;
 	
 	public Long getId() {
@@ -127,35 +127,36 @@ public class DeviceImporterDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-	public Long getImporterUserId() {
-		return importerUserId;
+	
+	public Long getUserId() {
+		return userId;
 	}
-	public void setImporterUserId(Long importerUserId) {
-		this.importerUserId = importerUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getImporterTxnId() {
-		return importerTxnId;
+	public String getTxnId() {
+		return txnId;
 	}
-	public void setImporterTxnId(String importerTxnId) {
-		this.importerTxnId = importerTxnId;
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
-	public LocalDateTime getImporterDate() {
-		return importerDate;
+	public LocalDateTime getLocalDate() {
+		return localDate;
 	}
-	public void setImporterDate(LocalDateTime importerDate) {
-		this.importerDate = importerDate;
+	public void setLocalDate(LocalDateTime localDate) {
+		this.localDate = localDate;
 	}
-	public Integer getImporterDeviceStatus() {
-		return importerDeviceStatus;
+	public Integer getDeviceBlockStatus() {
+		return deviceBlockStatus;
 	}
-	public void setImporterDeviceStatus(Integer importerDeviceStatus) {
-		this.importerDeviceStatus = importerDeviceStatus;
+	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
+		this.deviceBlockStatus = deviceBlockStatus;
 	}
-	public Integer getPreviousImporterDeviceStatus() {
-		return previousImporterDeviceStatus;
+	public Integer getPreviousDeviceStatus() {
+		return previousDeviceStatus;
 	}
-	public void setPreviousImporterDeviceStatus(Integer previousImporterDeviceStatus) {
-		this.previousImporterDeviceStatus = previousImporterDeviceStatus;
+	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
+		this.previousDeviceStatus = previousDeviceStatus;
 	}
 	public Integer getPeriod() {
 		return period;
@@ -193,20 +194,20 @@ public class DeviceImporterDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
-		builder.append(", importerUserId=");
-		builder.append(importerUserId);
-		builder.append(", importerTxnId=");
-		builder.append(importerTxnId);
-		builder.append(", importerDate=");
-		builder.append(importerDate);
-		builder.append(", importerDeviceStatus=");
-		builder.append(importerDeviceStatus);
-		builder.append(", previousImporterDeviceStatus=");
-		builder.append(previousImporterDeviceStatus);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", localDate=");
+		builder.append(localDate);
+		builder.append(", deviceBlockStatus=");
+		builder.append(deviceBlockStatus);
+		builder.append(", previousDeviceStatus=");
+		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 }

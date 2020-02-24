@@ -45,11 +45,13 @@ public class DeviceManufacturerDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 
-	private Long manufacturerUserId;
-	private String manufacturerTxnId;
-	private LocalDateTime manufacturerDate;
-	private Integer manufacturerStatus;
-	private Integer manufacturerPreviousStatus;
+	private Long userId;
+	private String txnId;
+	private LocalDateTime localDate;
+	private Integer deviceBlockStatus;
+	private Integer previousDeviceStatus;
+	private Integer period;
+	
 	public Long getId() {
 		return id;
 	}
@@ -122,35 +124,42 @@ public class DeviceManufacturerDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-	public Long getManufacturerUserId() {
-		return manufacturerUserId;
+	
+	public Long getUserId() {
+		return userId;
 	}
-	public void setManufacturerUserId(Long manufacturerUserId) {
-		this.manufacturerUserId = manufacturerUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getManufacturerTxnId() {
-		return manufacturerTxnId;
+	public String getTxnId() {
+		return txnId;
 	}
-	public void setManufacturerTxnId(String manufacturerTxnId) {
-		this.manufacturerTxnId = manufacturerTxnId;
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
-	public LocalDateTime getManufacturerDate() {
-		return manufacturerDate;
+	public LocalDateTime getLocalDate() {
+		return localDate;
 	}
-	public void setManufacturerDate(LocalDateTime manufacturerDate) {
-		this.manufacturerDate = manufacturerDate;
+	public void setLocalDate(LocalDateTime localDate) {
+		this.localDate = localDate;
 	}
-	public Integer getManufacturerStatus() {
-		return manufacturerStatus;
+	public Integer getDeviceBlockStatus() {
+		return deviceBlockStatus;
 	}
-	public void setManufacturerStatus(Integer manufacturerStatus) {
-		this.manufacturerStatus = manufacturerStatus;
+	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
+		this.deviceBlockStatus = deviceBlockStatus;
 	}
-	public Integer getManufacturerPreviousStatus() {
-		return manufacturerPreviousStatus;
+	public Integer getPreviousDeviceStatus() {
+		return previousDeviceStatus;
 	}
-	public void setManufacturerPreviousStatus(Integer manufacturerPreviousStatus) {
-		this.manufacturerPreviousStatus = manufacturerPreviousStatus;
+	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
+		this.previousDeviceStatus = previousDeviceStatus;
+	}
+	public Integer getPeriod() {
+		return period;
+	}
+	public void setPeriod(Integer period) {
+		this.period = period;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -182,18 +191,20 @@ public class DeviceManufacturerDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
-		builder.append(", manufacturerUserId=");
-		builder.append(manufacturerUserId);
-		builder.append(", manufacturerTxnId=");
-		builder.append(manufacturerTxnId);
-		builder.append(", manufacturerDate=");
-		builder.append(manufacturerDate);
-		builder.append(", manufacturerStatus=");
-		builder.append(manufacturerStatus);
-		builder.append(", manufacturerPreviousStatus=");
-		builder.append(manufacturerPreviousStatus);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", localDate=");
+		builder.append(localDate);
+		builder.append(", deviceBlockStatus=");
+		builder.append(deviceBlockStatus);
+		builder.append(", previousDeviceStatus=");
+		builder.append(previousDeviceStatus);
+		builder.append(", period=");
+		builder.append(period);
 		builder.append("]");
 		return builder.toString();
 	}
-		
+	
 }

@@ -22,7 +22,7 @@ public interface RegularizedDeviceDbRepository extends JpaRepository<RegularizeD
 	
 	public RegularizeDeviceDb getByTxnId(String txnid);
 	
-	@Query("SELECT r FROM RegularizeDeviceDb WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei")
-	public RegularizeDeviceDb getByImei(String imei);
+	// @Query("SELECT r FROM RegularizeDeviceDb WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei")
+	// public RegularizeDeviceDb getByImei(String imei);
 
 }

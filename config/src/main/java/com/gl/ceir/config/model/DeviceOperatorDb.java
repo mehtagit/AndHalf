@@ -45,12 +45,13 @@ public class DeviceOperatorDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 
-	private Long operatorUserId;
-	private String operatorTxnId;        
-	private LocalDateTime operatorDate;
-	private Integer operatorStatus;
-	private Integer operatorPreviousStatus;
+	private Long userId;
+	private String txnId;
+	private LocalDateTime localDate;
+	private Integer deviceBlockStatus;
+	private Integer previousDeviceStatus;
 	private Integer period;
+	
 	public Long getId() {
 		return id;
 	}
@@ -123,35 +124,35 @@ public class DeviceOperatorDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-	public Long getOperatorUserId() {
-		return operatorUserId;
+	public Long getUserId() {
+		return userId;
 	}
-	public void setOperatorUserId(Long operatorUserId) {
-		this.operatorUserId = operatorUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getOperatorTxnId() {
-		return operatorTxnId;
+	public String getTxnId() {
+		return txnId;
 	}
-	public void setOperatorTxnId(String operatorTxnId) {
-		this.operatorTxnId = operatorTxnId;
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
-	public LocalDateTime getOperatorDate() {
-		return operatorDate;
+	public LocalDateTime getLocalDate() {
+		return localDate;
 	}
-	public void setOperatorDate(LocalDateTime operatorDate) {
-		this.operatorDate = operatorDate;
+	public void setLocalDate(LocalDateTime localDate) {
+		this.localDate = localDate;
 	}
-	public Integer getOperatorStatus() {
-		return operatorStatus;
+	public Integer getDeviceBlockStatus() {
+		return deviceBlockStatus;
 	}
-	public void setOperatorStatus(Integer operatorStatus) {
-		this.operatorStatus = operatorStatus;
+	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
+		this.deviceBlockStatus = deviceBlockStatus;
 	}
-	public Integer getOperatorPreviousStatus() {
-		return operatorPreviousStatus;
+	public Integer getPreviousDeviceStatus() {
+		return previousDeviceStatus;
 	}
-	public void setOperatorPreviousStatus(Integer operatorPreviousStatus) {
-		this.operatorPreviousStatus = operatorPreviousStatus;
+	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
+		this.previousDeviceStatus = previousDeviceStatus;
 	}
 	public Integer getPeriod() {
 		return period;
@@ -189,21 +190,20 @@ public class DeviceOperatorDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
-		builder.append(", operatorUserId=");
-		builder.append(operatorUserId);
-		builder.append(", operatorTxnId=");
-		builder.append(operatorTxnId);
-		builder.append(", operatorDate=");
-		builder.append(operatorDate);
-		builder.append(", operatorStatus=");
-		builder.append(operatorStatus);
-		builder.append(", operatorPreviousStatus=");
-		builder.append(operatorPreviousStatus);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", localDate=");
+		builder.append(localDate);
+		builder.append(", deviceBlockStatus=");
+		builder.append(deviceBlockStatus);
+		builder.append(", previousDeviceStatus=");
+		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 		
 }

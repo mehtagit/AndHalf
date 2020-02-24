@@ -45,11 +45,11 @@ public class DeviceEndUserDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 
-	private Long endUserUserId;
-	private String endUserTxnId;   
-	private LocalDateTime endUserDate;
-	private Integer endUserDeviceStatus;
-	private Integer previousEndUserDeviceStatus;
+	private Long userId;
+	private String txnId;
+	private LocalDateTime localDate;
+	private Integer deviceBlockStatus;
+	private Integer previousDeviceStatus;
 	private Integer period;
 
 
@@ -172,71 +172,53 @@ public class DeviceEndUserDb  implements Serializable{
 		this.deviceAction = deviceAction;
 	}
 
-
-	public Long getEndUserUserId() {
-		return endUserUserId;
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public String getTxnId() {
+		return txnId;
+	}
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
+	}
+	public LocalDateTime getLocalDate() {
+		return localDate;
+	}
+	public void setLocalDate(LocalDateTime localDate) {
+		this.localDate = localDate;
 	}
 
 
-	public void setEndUserUserId(Long endUserUserId) {
-		this.endUserUserId = endUserUserId;
+	public Integer getDeviceBlockStatus() {
+		return deviceBlockStatus;
 	}
 
-
-	public String getEndUserTxnId() {
-		return endUserTxnId;
+	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
+		this.deviceBlockStatus = deviceBlockStatus;
 	}
 
-
-	public void setEndUserTxnId(String endUserTxnId) {
-		this.endUserTxnId = endUserTxnId;
+	public Integer getPreviousDeviceStatus() {
+		return previousDeviceStatus;
 	}
 
-
-	public LocalDateTime getEndUserDate() {
-		return endUserDate;
+	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
+		this.previousDeviceStatus = previousDeviceStatus;
 	}
-
-
-	public void setEndUserDate(LocalDateTime endUserDate) {
-		this.endUserDate = endUserDate;
-	}
-
-
-	public Integer getEndUserDeviceStatus() {
-		return endUserDeviceStatus;
-	}
-
-
-	public void setEndUserDeviceStatus(Integer endUserDeviceStatus) {
-		this.endUserDeviceStatus = endUserDeviceStatus;
-	}
-
-
-	public Integer getPreviousEndUserDeviceStatus() {
-		return previousEndUserDeviceStatus;
-	}
-
-
-	public void setPreviousEndUserDeviceStatus(Integer previousEndUserDeviceStatus) {
-		this.previousEndUserDeviceStatus = previousEndUserDeviceStatus;
-	}
-
 
 	public Integer getPeriod() {
 		return period;
 	}
 
-
 	public void setPeriod(Integer period) {
 		this.period = period;
 	}
 
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
 
 	@Override
 	public String toString() {
@@ -265,23 +247,20 @@ public class DeviceEndUserDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
-		builder.append(", endUserUserId=");
-		builder.append(endUserUserId);
-		builder.append(", endUserTxnId=");
-		builder.append(endUserTxnId);
-		builder.append(", endUserDate=");
-		builder.append(endUserDate);
-		builder.append(", endUserDeviceStatus=");
-		builder.append(endUserDeviceStatus);
-		builder.append(", previousEndUserDeviceStatus=");
-		builder.append(previousEndUserDeviceStatus);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", localDate=");
+		builder.append(localDate);
+		builder.append(", deviceBlockStatus=");
+		builder.append(deviceBlockStatus);
+		builder.append(", previousDeviceStatus=");
+		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append("]");
 		return builder.toString();
 	}
-
-
-	
 
 }

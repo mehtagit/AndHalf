@@ -45,11 +45,11 @@ public class DeviceLawfulDb  implements Serializable{
 	private String deviceStatus;
 	private String deviceAction;
 
-	private Long lawfulUserId;
-	private String lawfulTxnId;        
-	private LocalDateTime lawfulDate;
-	private Integer lawfulDeviceStatus;
-	private Integer lawfulPreviousStatus;
+	private Long userId;
+	private String txnId;
+	private LocalDateTime localDate;
+	private Integer deviceBlockStatus;
+	private Integer previousDeviceStatus;
 	private Integer period;
 	
 	public Long getId() {
@@ -124,35 +124,36 @@ public class DeviceLawfulDb  implements Serializable{
 	public void setDeviceAction(String deviceAction) {
 		this.deviceAction = deviceAction;
 	}
-	public Long getLawfulUserId() {
-		return lawfulUserId;
+	
+	public Long getUserId() {
+		return userId;
 	}
-	public void setLawfulUserId(Long lawfulUserId) {
-		this.lawfulUserId = lawfulUserId;
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
-	public String getLawfulTxnId() {
-		return lawfulTxnId;
+	public String getTxnId() {
+		return txnId;
 	}
-	public void setLawfulTxnId(String lawfulTxnId) {
-		this.lawfulTxnId = lawfulTxnId;
+	public void setTxnId(String txnId) {
+		this.txnId = txnId;
 	}
-	public LocalDateTime getLawfulDate() {
-		return lawfulDate;
+	public LocalDateTime getLocalDate() {
+		return localDate;
 	}
-	public void setLawfulDate(LocalDateTime lawfulDate) {
-		this.lawfulDate = lawfulDate;
+	public void setLocalDate(LocalDateTime localDate) {
+		this.localDate = localDate;
 	}
-	public Integer getLawfulDeviceStatus() {
-		return lawfulDeviceStatus;
+	public Integer getDeviceBlockStatus() {
+		return deviceBlockStatus;
 	}
-	public void setLawfulDeviceStatus(Integer lawfulDeviceStatus) {
-		this.lawfulDeviceStatus = lawfulDeviceStatus;
+	public void setDeviceBlockStatus(Integer deviceBlockStatus) {
+		this.deviceBlockStatus = deviceBlockStatus;
 	}
-	public Integer getLawfulPreviousStatus() {
-		return lawfulPreviousStatus;
+	public Integer getPreviousDeviceStatus() {
+		return previousDeviceStatus;
 	}
-	public void setLawfulPreviousStatus(Integer lawfulPreviousStatus) {
-		this.lawfulPreviousStatus = lawfulPreviousStatus;
+	public void setPreviousDeviceStatus(Integer previousDeviceStatus) {
+		this.previousDeviceStatus = previousDeviceStatus;
 	}
 	public Integer getPeriod() {
 		return period;
@@ -190,16 +191,16 @@ public class DeviceLawfulDb  implements Serializable{
 		builder.append(deviceStatus);
 		builder.append(", deviceAction=");
 		builder.append(deviceAction);
-		builder.append(", lawfulUserId=");
-		builder.append(lawfulUserId);
-		builder.append(", lawfulTxnId=");
-		builder.append(lawfulTxnId);
-		builder.append(", lawfulDate=");
-		builder.append(lawfulDate);
-		builder.append(", lawfulDeviceStatus=");
-		builder.append(lawfulDeviceStatus);
-		builder.append(", lawfulPreviousStatus=");
-		builder.append(lawfulPreviousStatus);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", localDate=");
+		builder.append(localDate);
+		builder.append(", deviceBlockStatus=");
+		builder.append(deviceBlockStatus);
+		builder.append(", previousDeviceStatus=");
+		builder.append(previousDeviceStatus);
 		builder.append(", period=");
 		builder.append(period);
 		builder.append("]");

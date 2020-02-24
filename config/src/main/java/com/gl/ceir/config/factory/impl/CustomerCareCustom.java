@@ -23,7 +23,7 @@ public class CustomerCareCustom implements CustomerCareTarget{
 		DeviceCustomDb deviceDb = deviceCustomDbRepository.getByImeiEsnMeid(imei);
 		
 		if(Objects.nonNull(deviceDb)) {
-			customerCareDeviceState.setTxnId(deviceDb.getCustomTxnId());
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
 			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
 			customerCareDeviceState.setStatus(Constants.available);
 		}else {
