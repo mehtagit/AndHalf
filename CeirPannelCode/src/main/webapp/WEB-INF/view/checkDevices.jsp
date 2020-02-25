@@ -147,9 +147,9 @@ footer {
 											</div>
 											<div class="col s6 m7 selectDropdwn">
 												<select class="browser-default" id="deviceIdType"
-													
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required>
+													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+													required>
 													<option value="" disabled selected><spring:message
 															code="select.selectDeviceIDType" /></option>
 												</select>
@@ -158,11 +158,10 @@ footer {
 												<label for="DeviceID"><spring:message
 														code="registration.pleaseenterdeviceid" /> <span
 													class="star">*</span> :</label>
-													<p id="errorMsgOnModal" class="onEditModalTitle"></p>
+												<p id="errorMsgOnModal" class="onEditModalTitle"></p>
 											</div>
 											<div class="input-field col s6 m7">
-												<input type="text" id="DeviceID"
-													required / >
+												<input type="text" id="DeviceID"required / >
 
 											</div>
 										</div>
@@ -413,7 +412,7 @@ footer {
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
 	<!--custom-script.js - Add your own theme custom JS-->
-		<!-- i18n library -->
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -443,22 +442,21 @@ footer {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-<script type="text/javascript"
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/dragableModal.js"></script>	
-			<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
-	    	<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
- <script type="text/javascript">
-	
 	<script type="text/javascript"
 		src="${context}/resources/js/custom-script.js"></script>
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/checkDevice.js"></script>
-	
+
 </body>
 
 </html>
