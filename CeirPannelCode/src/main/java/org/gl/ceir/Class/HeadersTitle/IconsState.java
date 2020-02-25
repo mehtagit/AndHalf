@@ -762,7 +762,7 @@ public class IconsState {
 		String editAction="userChangeStatus('"+userId+"')";
 		
 
-		//log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus);
+		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
 
 		// state related Code 
 
@@ -781,7 +781,7 @@ public class IconsState {
 				+rejectIconTitle+" ></i></a>";
 
 		
-		if (("1".equals(status)) && "Approved".equals(userStatus)) {
+		if (("0".equals(status) || "1".equals(status)) && "Approved".equals(userStatus)) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
@@ -806,6 +806,9 @@ public class IconsState {
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
+			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
+					+disableEditIcon+" aria-hidden=\"true\"  title="
+					+editIconTitle+"></i></a>"; 
 
 		}
 		String action=view.concat(edit).concat(approve).concat(reject);		  
