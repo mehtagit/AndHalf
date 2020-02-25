@@ -158,7 +158,7 @@ footer {
 												<label for="DeviceID"><spring:message
 														code="registration.pleaseenterdeviceid" /> <span
 													class="star">*</span> :</label>
-												<p id="errorMsgOnModal" class="onEditModalTitle"></p>
+												<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 											</div>
 											<div class="input-field col s6 m7">
 												<input type="text" id="DeviceID"required / >
