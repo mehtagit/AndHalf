@@ -173,6 +173,7 @@ public class UploadPaidStatusView {
 		filterRequestuserpaidStatus.setDeviceType(deviceType);
 		filterRequestuserpaidStatus.setNid(nid);
 		filterRequestuserpaidStatus.setTxnId(txnId);
+		filterRequestuserpaidStatus.setUserId(userId);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file);
 		Gson gson= new Gson(); 
