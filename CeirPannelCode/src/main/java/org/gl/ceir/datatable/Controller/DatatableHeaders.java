@@ -39,7 +39,7 @@ public class DatatableHeaders {
 
 			//STOLEN DATATABLE HEADERS
 			else if("stolen".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.fileName","table.status","table.source","table.requestType","table.action"};		
+				String[] headers = {"table.date","table.transactionID","table.fileName","table.status","table.source","table.requestType","table.quantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -199,7 +199,7 @@ public class DatatableHeaders {
 
 			//adminUserPaidStatus Headers 
 			else if("blockUnblock".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.requestType","input.mode","table.status","table.action"};		
+				String[] headers = {"table.date","table.transactionID","table.requestType","input.mode","table.status","table.quantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -249,7 +249,7 @@ public class DatatableHeaders {
 //BlockUnblockCEIRAdmin Headers 
 			
 			else if("BlockUnblockCEIRAdmin".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","table.action"};		
+				String[] headers = {"table.date","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","table.quantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -260,7 +260,7 @@ public class DatatableHeaders {
 //lawfulStolenHeaders Headers 
 			
 			else if("lawfulStolenHeaders".equals(role)) {
-				String[] headers = {"table.requestdate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","table.action"};		
+				String[] headers = {"table.requestdate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","table.quantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

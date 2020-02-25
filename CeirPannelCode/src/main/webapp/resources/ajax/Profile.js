@@ -25,11 +25,30 @@ function changePassword(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#changePasswordMessage #cPassSucessMsg").text(resp.response);
-				$("#changePasswordMessage").openModal();   
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#changePasswordMessage #cPassSucessMsg").text($.i18n(resp.tag));
+					$("#changePasswordMessage").openModal({
+				        dismissible:false
+				    });
+ 
+				});
+				
 			}
 			else{
-				$("#changePassword #errorMsg").text(resp.response);
+				
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#changePassword #errorMsg").text($.i18n(resp.tag));
+				});
+				
 			}
 			$("#changePassBtn").prop('disabled', false);
 		},  
@@ -66,7 +85,10 @@ function updateUSerStatus(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#manageAccountSubmit #mgAccount").text($.i18n(resp.tag));
-					$("#manageAccountSubmit").openModal(); 
+					$("#manageAccountSubmit").openModal({
+				        dismissible:false
+				    });
+ 
 				});
 			}
 			else{  
@@ -308,22 +330,49 @@ function updateProfile(){
 			var response=JSON.parse(data);
 			if(response.statusCode=='200'){
 				if(response.userstatus=='Approved'){
-					$("#passwordModal").closeModal();
-					$("#profileResponse #updateInfoMsg").text(response.response); 
-					$('#profileResponse').openModal();    
+					    
+				var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+				$.i18n().locale = lang;	
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$("#profileResponse #updateInfoMsg").text($.i18n(response.tag)); 
+						$('#profileResponse').openModal({
+					        dismissible:false
+					    });
+
+					});
+					
 				} 
 				else if(response.userstatus=='OTP Verification Pending'){
 					$("#userid").val(response.userId);
 					$("#passwordModal").closeModal();
 					$("#otpMsgModal").openModal();     
-					$("#otpMsg").text(response.response);
+					//$("#otpMsg").text(response.response);
+					$.i18n().locale = $('#langlist').val();
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$("#otpMsg").text($.i18n(response.tag));
+					});
+					
 				}
 				else{
 				}
 			}
 			else{
-				$("#registrationForm #errorMsg").text(response.response);
-				$("#passwordModal").closeModal();
+				
+				
+				$.i18n().locale = window.parent.$('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#registrationForm #errorMsg").text($.i18n(response.tag));
+					$("#passwordModal").closeModal();
+				});
 			}
 			$("#passwordBtn").prop('disabled', false);
 			$("#btnSave").prop('disabled', false);
@@ -338,6 +387,9 @@ function updateProfile(){
 
 function passwordPopup(){
 	$("#btnSave").prop('disabled', true);
-	$("#passwordModal").openModal();
+	$("#passwordModal").openModal({
+        dismissible:false
+    });
+
 	return false;
 }

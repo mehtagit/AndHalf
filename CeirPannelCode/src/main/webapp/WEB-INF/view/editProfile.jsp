@@ -276,7 +276,7 @@ var contextpath = "${context}";
 								</div> -->
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text"  disabled="disabled" placeholder="" name="email" maxlength="320"
+									<input type="text"   placeholder="" name="email" maxlength="320"
 										class="form-control boxBorder boxHeight" id="email"
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.emial" />"  pattern="[^@]+@[^@]+\.[a-zA-Z]{2,320}"  required / >
@@ -285,7 +285,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input  disabled="disabled" placeholder="" type="text"  name="phoneNo" maxlength="20"
+									<input   placeholder="" type="text"  maxlength="20"
 										class="form-control boxBorder boxHeight" id="phoneNo"
 										pattern="[0-9]{8,20}" 
 										oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"

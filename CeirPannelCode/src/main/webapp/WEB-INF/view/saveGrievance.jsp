@@ -66,6 +66,16 @@ href="${context}/resources/project_css/viewStock.css">
 <link rel="stylesheet"
 href="${context}/resources/project_css/iconStates.css">
 
+<style>
+h6 {
+margin: 0 0 0.4rem 0 !important;
+}
+
+select {
+height: 32px !important;
+}
+</style>
+
 </head>
 <%-- <body data-roleType="${usertype}" data-userID="${userid}"
 data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}"> --%>
@@ -93,17 +103,18 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 <div class="row" >
 <div class="input-field col s12 m6 l6">
 <input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
-oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-title= "<spring:message code="validation.T18characters" />"  
+oninput="InvalidMsg(this,'input','<spring:message code="validation.T18characters" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.T18characters" />');" 
 class="form-control boxBorder boxHeight"/>
 <label for="TransactionId"><spring:message code="input.transactionID" /></label>
 </div>
 
 <div class=" col s12 m6 l6">
- <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
+ <label for="category"><spring:message code="operator.category" /> <span class="star">*</span></label> 
 <select class="browser-default" id="category" onchange="enableAddMore()"
-oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-title= "<spring:message code="validation.selectFieldMsg" />" required>
+oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+ required>
 <option value="" selected disabled ><spring:message code="operator.category" /></option>
 </select>
 </div>
@@ -112,9 +123,10 @@ title= "<spring:message code="validation.selectFieldMsg" />" required>
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m6 l6">
 <textarea id="Remark" class="materialize-textarea" maxlength="200" 
-oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-title= "<spring:message code="validation.200characters" />" required></textarea>
-<label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
+oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+ required></textarea>
+<label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
 </div>
 </div>
 
@@ -127,12 +139,12 @@ title= "<spring:message code="validation.200characters" />" required></textarea>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
 <input type="file" name="files[]" id="docTypeFile1" 
-oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
-title= "<spring:message code="validation.NoChosen" />" required  / >
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
-placeholder="<spring:message code="grievanceFileMessage" />"">
+placeholder="<spring:message code="grievanceFileMessage" />">
 <div>
 <p id="myFiles"></p>
 </div>
@@ -145,9 +157,8 @@ placeholder="<spring:message code="grievanceFileMessage" />"">
 
 </select>
 <select class="browser-default" id="docTypetagValue1" 
-oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-title= "<spring:message code="validation.selectFieldMsg" />"
-
+oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 style="display: none;">
 <option value="" disabled selected><spring:message code="select.documenttype" /></option>
 
@@ -317,13 +328,15 @@ function saveGrievance(){
 	var fileData = [];
 	var documentFileNameArray=[];
 	var x;
-	var filename='';
+		var filename='';
 	var filediv;
 	var i=0;
 	var formData= new FormData();
 	var docTypeTagIdValue='';
 	var filename='';
 	var filesameStatus=false;
+	var documenttype=false;
+	var docTypeTag='';
 	$('.fileDiv').each(function() {	
 
 		
@@ -334,23 +347,23 @@ function saveGrievance(){
 		formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
 		
 		documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		docTypeTag=$('#docTypetag'+fieldId).val();
+		
 		var fileIsSame=	documentFileNameArray.includes(documentFileName);
+		
+		var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+	
 		if(filesameStatus!=true){
 			filesameStatus=	fileIsSame;
 		}
-		documentFileNameArray.push(documentFileName);
-		/* var hh=	documentFileNameArray.includes(documentFileName);
-		//alert(documentFileName);
-		if(hh==true)
-		{
-			
-		//alert("diuplicate file name found.."+hh);
-		$('#fileFormateModal').openModal();
-		$('#fileErrormessage').text($.i18n('duplicateFileName'));
-		return false;
 		
-		} */
-	//	documentFileNameArray.push(documentFileName);
+		 if(documenttype!=true)
+			{
+			documenttype=documentTypeTag;
+	
+			}
+		documentFileNameArray.push(documentFileName);
+		documentFileNameArray.push(docTypeTag);
 		
 		fileInfo.push(x);
 		fieldId++;
@@ -360,12 +373,28 @@ function saveGrievance(){
 	if(filesameStatus==true)
 	{	
 	
-	$('#fileFormateModal').openModal();
+	
+	$('#fileFormateModal').openModal({
+ 	   dismissible:false
+    });
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('duplicateFileName'));
 	return false;
 	
 	}
+	
+	if(documenttype==true)
+	{	
+		
+		$('#fileFormateModal').openModal({
+		 	   dismissible:false
+		    });
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('documentTypeName'));
+	return false;
+	
+	}
+		
 	var multirequest={
 			"attachedFiles":fileInfo,
 			"txnId":txnId,
@@ -393,7 +422,10 @@ function saveGrievance(){
 			var x=data;
 			var y= JSON.parse(x);
 			
-			$('#submitGrievance').openModal();
+			//$('#submitGrievance').openModal();
+			$('#submitGrievance').openModal({
+			 	   dismissible:false
+			    });
 			$('#greivanceId').text(y.txnId);
 			/*alert(data.errorCode);
 			if(data.errorCode=="0")
@@ -523,7 +555,7 @@ $.ajax({
 									//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 									//$('#docTypetag1').append(html);	
 								
-								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetag'+optionId);
+								$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
 								$('<option>').val(data[i].value).text(data[i].interp).appendTo('#docTypetagValue'+optionId);
 							}
 							
@@ -584,6 +616,7 @@ $('#category').on(
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 				$("#docTypetag1").empty();
+				$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
 				console.log(data);
 				for (i = 0; i < data.length; i++){
 						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';

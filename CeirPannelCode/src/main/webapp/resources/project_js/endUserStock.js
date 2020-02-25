@@ -1,12 +1,15 @@
-/*window.parent.$('#langlist').on('change', function() {
-			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-			alert(lang)
-			window.location.replace("./Consignment/viewConsignment?lang="+lang);				
-		});*/ 
+$('#langlist').on('change', function() {
+	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("reportType");
+
+	window.location.assign("uploadAstock?reportType="+type+"&lang="+lang);			
+	}); 
 
 
 $(document).ready(function () {
-      
+	 $('#langlist').val(data_lang_param);
         if($('#pageTypeValue').val()==0)
         	{
         	$('#uploadPaidStatusDiv').css("display", "block");
@@ -203,4 +206,43 @@ function  openCancelPopUp()
 function  closeCancelPopUp()
 {
 	 $('#cancelStock').closeModal();
+}
+
+
+
+function fileTypeValueChanges(dd, ddd) {
+	var uploadedFileName = $("#endUsercsvUploadFile").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	var ext = uploadedFileName.split('.').pop();
+	
+	var fileSize = ($("#endUsercsvUploadFile")[0].files[0].size);
+	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+   if (uploadedFileName.length > 30) {
+       $('#fileFormateModal').openModal();
+      
+   } 
+	else if(ext!='csv')
+		{
+	
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+		 
+		}
+	else if(fileSize>='2000'){
+		alert("2222");		$('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+		
+	}
+	
+	
+
+}
+
+
+function clearFileName() {
+	$('#endUsersaveFileName').val('');
+	$("#endUsercsvUploadFile").val('');
+	$('#fileFormateModal').closeModal();
 }

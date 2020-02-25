@@ -1,4 +1,30 @@
-   function hide() {
+/*$('#langlist').on('change', function() {
+	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("type");
+	window.location.assign("updateVisaValidaity?lang="+lang);			
+	});   */
+
+
+$('#langlist').on('change', function() {
+	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.location.assign("updateVisaValidaity?lang="+lang);	
+});
+			 
+			 
+			var langParam=$('#langlist').val() == 'km' ? 'km' : 'en';
+			$.i18n().locale = langParam;
+			//alert($.i18n('imageSize')+"  langParam  "+langParam);
+			
+			var successMsg;
+			$.i18n().load( {
+				'en': './resources/i18n/en.json',
+				'km': './resources/i18n/km.json'
+			} ).done( function() { 
+				successMsg=$.i18n('successMsg');
+			});
+function hide() {
             var In = $('#nidForEndUser').val()
             if (In == "black") {
 
@@ -132,6 +158,7 @@
    
  
    $(document).ready(function () {
+	   $('#langlist').val(data_lang_param);
        var max_fields = 15; //maximum input boxes allowed
        var wrapper = $(".input_fields_wrap"); //Fields wrapper
        var add_button = $(".add_field_button"); //Add button ID
@@ -271,3 +298,55 @@
 		return false;
     }
     
+    
+
+    function visaImageValidation() {
+    	var uploadedFileName = $("#endUseruploadnationalID").val();
+    	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+    	//alert("file extension=="+uploadedFileName)
+    	var ext = uploadedFileName.split('.').pop();
+    	
+    	var fileSize = ($("#endUseruploadnationalID")[0].files[0].size);
+    	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+    	alert("----"+fileSize);*/
+       fileSize = Math.floor(fileSize/1000);
+                        
+                      
+         
+        if (uploadedFileName.length > 30) {
+           $('#visafileFormateModal').openModal();
+           $('#visafileErrormessage').text('');
+    		  $('#visafileErrormessage').text($.i18n('imageMessage'));
+       } 
+    	else if(ext!='PNG')
+    		{
+    		  $('#visafileFormateModal').openModal({
+    	    	   dismissible:false
+    	       });
+    		  $('#visafileErrormessage').text('');
+    		  $('#visafileErrormessage').text($.i18n('imageMessage'));
+    		  
+    		}
+    	else if(fileSize>='100'){
+    		  $('#visafileFormateModal').openModal({
+    	    	   dismissible:false
+    	       });
+    		  $('#visafileErrormessage').text('');
+    		  $('#visafileErrormessage').text($.i18n('imageSize'));	
+    	}
+    	else {
+    		  $('#visafileFormateModal').openModal({
+    	    	   dismissible:false
+    	       });
+    		
+    	}
+    	
+
+    }
+
+
+    function clearVisaName() {
+    	$('#endUseruploadnationalID').val('');
+    	$("#endUseruploadnationalIDPlaceHolder").val('');
+    	$('#visafileFormateModal').closeModal();
+    }

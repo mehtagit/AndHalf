@@ -8,6 +8,14 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./manageTypeDevices?lang="+lang);				
 }); */
 
+$.i18n().locale = lang;
+		var documenttype,selectfile,selectDocumentType;
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		} ).done( function() { 
+				
+		});
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
@@ -105,7 +113,7 @@ $.ajax({
 				columnDefs: [
 		            { width: 142, targets: result.length - 1 },
 		            { width: 143, targets: 0 },
-		            { width: 75, targets: 2 }
+		            { width: 105, targets: 2 }
 			]
 			});
 			
@@ -145,7 +153,7 @@ function pageRendering(){
 					$("#typeAprroveTableDiv")
 					.append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' type='text'  id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -156,9 +164,7 @@ function pageRendering(){
 				}
 			} 
 			
-			if(userType=="Importer"){
-				console.log("userType is----->"+userType)
-			}else{
+			
 				// dynamic drop down portion
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
@@ -177,7 +183,7 @@ function pageRendering(){
 						"</div>");
 				
 				}
-			}
+			
 	
 			$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 			$("#typeAprroveTableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
@@ -270,13 +276,19 @@ function ImporterviewByID(id,actionType,projectPath){
 			console.log(+data);
 			if(actionType=='view')
 				{
-				$("#viewImporterModal").openModal();
+				//$("#viewImporterModal").openModal();
+				$('#viewImporterModal').openModal({
+			    	   dismissible:false
+			       });
 				setImporterViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
 				{
-				$("#importereditModal").openModal();
+				//$("#importereditModal").openModal();
+				$('#importereditModal').openModal({
+			    	   dismissible:false
+			       });
 				setImporterEditPopupData(data)
 				
 				}
@@ -383,7 +395,10 @@ function updateImporterTypeDevice()
 		var formData= new FormData();
 		var docTypeTagIdValue='';
 		var filename='';
-		
+		var filesameStatus=false;
+		var documenttype=false;
+		var docTypeTag='';
+		var documentFileNameArray=[];
 		
 		$('.fileDiv').each(function() {	
 		var x={
@@ -391,10 +406,53 @@ function updateImporterTypeDevice()
 			"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 			}
 			formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
-			fileInfo.push(x);
+			
+		documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		docTypeTag=$('#docTypetag'+fieldId).val();
+		
+		var fileIsSame=	documentFileNameArray.includes(documentFileName);
+		var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+		
+		if(filesameStatus!=true){
+			filesameStatus=	fileIsSame;
+		}
+		
+		if(documenttype!=true)
+		{
+		documenttype=documentTypeTag;
+         }
+		documentFileNameArray.push(documentFileName);
+		documentFileNameArray.push(docTypeTag);
+		
+		
+		fileInfo.push(x);
 			fieldId++;
 			i++;
 		});
+		
+		if(filesameStatus==true)
+		{	
+		
+		//$('#fileFormateModal').openModal();
+		$('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+			$('#fileErrormessage').text('')
+			$('#fileErrormessage').text($.i18n('duplicateFileName'));
+		return false;
+		
+		}
+		if(documenttype==true)
+		{	
+			
+			$('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+			$('#fileErrormessage').text('')
+			$('#fileErrormessage').text($.i18n('documentTypeName'));
+		return false;
+		
+		}
 		
 		var multirequest={
 					"attachedFiles":fileInfo,
@@ -429,11 +487,17 @@ function updateImporterTypeDevice()
 			
 					
 					 if (data.errorCode==0){
-						$('#updateManageTypeDevice').openModal();
+						//$('#updateManageTypeDevice').openModal();
+						$('#updateManageTypeDevice').openModal({
+					    	   dismissible:false
+					       });
 					}
 					 else {
 
-							$('#updateManageTypeDevice').openModal();
+							//$('#updateManageTypeDevice').openModal();
+							$('#updateManageTypeDevice').openModal({
+						    	   dismissible:false
+						       });
 							$('#updateTacMessage').text('');
 							$('#updateTacMessage').text(data.message);
 						}
@@ -540,7 +604,10 @@ $(wrapper).on("click", ".remove_field", function(e) { // user click on remove  t
 function openApproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
-	$('#ApproveTAC').openModal();
+	//$('#ApproveTAC').openModal();
+	$('#ApproveTAC').openModal({
+ 	   dismissible:false
+    });
 	$('#ApproveTacTxnId').text(txnId);
 	$('#setApproveTacTxnId').val(txnId);
 
@@ -566,7 +633,11 @@ function approveSubmit(actiontype){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			$('#confirmApproveTAC').openModal();
+			//$('#confirmApproveTAC').openModal();
+			
+			$('#confirmApproveTAC').openModal({
+			 	   dismissible:false
+			    });
 			if(data.errorCode==0){
 
 				$('#approveSuccessMessage').text('');
@@ -586,7 +657,11 @@ function approveSubmit(actiontype){
 function openDisapproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
-	$('#RejectTAC').openModal();
+	//$('#RejectTAC').openModal();
+	
+	$('#RejectTAC').openModal({
+	 	   dismissible:false
+	    });
 	
 	$('#RejectTacTxnId').text(txnId);
 	$('#setRejectTacTxnId').val(txnId);
@@ -633,7 +708,10 @@ function rejectSubmit(actiontype){
 
 
 function DeleteTacRecord(txnId, id){
-	$("#DeleteTacConfirmationModal").openModal();
+	//$("#DeleteTacConfirmationModal").openModal();
+	$('#DeleteTacConfirmationModal').openModal({
+	 	   dismissible:false
+	    });
 	$("#tacdeleteTxnId").text(txnId);
 	$("#deleteTacId").val(id);
 }
@@ -663,7 +741,10 @@ function confirmantiondelete(){
 			//$("#stockModalText").text(data.message);
 			$("#DeleteTacConfirmationModal").closeModal();
 
-			$("#closeDeleteModal").openModal();
+			//$("#closeDeleteModal").openModal();
+			$('#closeDeleteModal').openModal({
+			 	   dismissible:false
+			    });
 			if(data.errorCode == 0){
 				$("#tacModalText").text(stockDeleted);
 			}
@@ -675,7 +756,14 @@ function confirmantiondelete(){
 		}
 	});
 	
+	return false;
 	/* 
 $(".lean-overlay").remove(); */ 
 
+}
+
+function clearFileName() {
+	$('#fileName').val('');
+	$("#file").val('');
+	$('#fileFormateModal').closeModal();
 }

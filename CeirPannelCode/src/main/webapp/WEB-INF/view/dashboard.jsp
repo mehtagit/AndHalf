@@ -113,9 +113,9 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  href="./Consignment/ManualFileDownload/"
+						<li><a  href="./Consignment/ManualFileDownload/" download="download"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
-							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
+							 title="Download Manual"  style="color: #fff;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
@@ -131,7 +131,7 @@ String name = (String) session.getAttribute("name");
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToLogout" class="modal-trigger"
+						<li><a   data-target="goToHome" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -292,10 +292,11 @@ String name = (String) session.getAttribute("name");
 					</p>
 				</div>
 				<%
-					String status = (String) session.getAttribute("userStatus");
+					//String status = (String) session.getAttribute("userStatus");
+				Integer statusValue=(Integer)session.getAttribute("userStatus");
 				%>
 				<%
-					if (status.equalsIgnoreCase("Approved")) {
+					if (statusValue==3) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
@@ -309,7 +310,7 @@ String name = (String) session.getAttribute("name");
 					</p>
 				</div>
 				<%
-					} else if (status.equalsIgnoreCase("Disable")) {
+					} else if (statusValue==5) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>

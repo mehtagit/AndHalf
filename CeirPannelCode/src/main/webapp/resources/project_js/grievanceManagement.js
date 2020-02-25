@@ -151,7 +151,7 @@ var featureId = 6;
 							if(date[i].type === "date"){
 								$("#greivanceTableDiv").append("<div class='input-field col s6 m2'>"+
 										"<div id='enddatepicker' class='input-group date'>"+
-										"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+										"<input class='form-control datepicker' type='text' onchange='checkDate(startDate,endDate)' id="+date[i].id+" autocomplete='off'>"+
 										"<label for="+date[i].id+">"+date[i].title
 										+"</label>"+
 										"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -317,7 +317,15 @@ var featureId = 6;
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-						$('#replyModal').openModal();
+						//$('#replyModal').openModal();
+						$('#replyModal').openModal({
+						 	   dismissible:false
+						    });
+						//console.log(data.grievance.categoryId)
+						//alert("11"+data.categoryId)
+						setDocTypeValue(data[0].grievance.categoryId);
+						$('#existingGrievanceID').val(data[0].grievance.categoryId);
+					/*	alert("22");*/
 						$('#grievanceIdToSave').text(grievanceId);
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
@@ -326,7 +334,7 @@ var featureId = 6;
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
 
 
 						}
@@ -379,7 +387,8 @@ var featureId = 6;
 				var fileInfo =[];
 				var formData= new FormData();
 				var fileData = [];
-				
+				var documentFileName='';
+				var documentFileNameArray=[];
 				var x;
 				var filename='';
 				var filediv;
@@ -387,6 +396,9 @@ var featureId = 6;
 				var formData= new FormData();
 				var docTypeTagIdValue='';
 				var filename='';
+				var filesameStatus=false;
+				var documenttype=false;
+				var docTypeTag='';
 				$('.fileDiv').each(function() {	
 					var x={
 					"docType":$('#docTypetag'+fieldId).val(),
@@ -395,10 +407,50 @@ var featureId = 6;
 					}
 					formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
 					fileInfo.push(x);
+					
+					documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+					docTypeTag=$('#docTypetag'+fieldId).val();
+					
+					var fileIsSame=	documentFileNameArray.includes(documentFileName);
+					var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+					
+					if(filesameStatus!=true){
+						filesameStatus=	fileIsSame;
+					}
+					
+					if(documenttype!=true)
+					{
+					documenttype=documentTypeTag;
+			         }
+					documentFileNameArray.push(documentFileName);
+					documentFileNameArray.push(docTypeTag);
+					
 					fieldId++;
 					i++;
 				});
+				if(filesameStatus==true)
+				{	
 				
+			///	$('#fileFormateModal').openModal();
+				$('#fileFormateModal').openModal({
+				 	   dismissible:false
+				    });
+					$('#fileErrormessage').text('')
+					$('#fileErrormessage').text($.i18n('duplicateFileName'));
+				return false;
+				
+				}
+				if(documenttype==true)
+				{	
+					$('#fileFormateModal').openModal({
+					 	   dismissible:false
+					    });
+					$('#fileErrormessage').text('')
+					$('#fileErrormessage').text($.i18n('documentTypeName'));
+				return false;
+				
+				}
+			
 				var multirequest={
 						"attachedFiles":fileInfo,
 						"txnId":grievanceTxnId,
@@ -429,7 +481,10 @@ var featureId = 6;
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						$('#replyMsg').openModal();
+					//	$('#replyMsg').openModal();
+						$('#replyMsg').openModal({
+						 	   dismissible:false
+						    });
 						if(data.errorCode=="0")
 						{
 							
@@ -463,7 +518,10 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						var grievanceID=	
 						$('#chatMsg').empty();
-						$('#manageAccount').openModal();
+						//$('#manageAccount').openModal();
+						$('#manageAccount').openModal({
+						 	   dismissible:false
+						    });
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
 							for(var i=0; i<data.length; i++)
@@ -534,6 +592,7 @@ var featureId = 6;
 			function cleanReplyPopUp()
 			{
 				$('#replymessageForm').trigger("reset");
+				$('.fileDiv12').remove();
 			}
 
 
@@ -548,14 +607,14 @@ var featureId = 6;
 			var id=2;
 			$(".add_field_button").click(function (e) { //on add input button click
 				e.preventDefault();
-
+            
 				if (x < max_fields) { //max input box allowed
 					x++; //text box increment
 					$(wrapper).append(
-							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 					); //add input box
 				}
-	$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+	               /*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 
 
 					for (i = 0; i < data.length; i++) {
@@ -564,7 +623,52 @@ var featureId = 6;
 						$('<option>').val(data[i].value).text(data[i].tagId).appendTo('#docTypetagValue'+optionId);
 						
 					}
+				});*/
+				
+				var grievanceUserTypeId=parseInt($("body").attr("data-userTypeID"));
+				var categoryParentValues= $('#existingGrievanceID').val();
+				if(isNaN(grievanceUserTypeId))
+					{
+					
+					grievanceUserTypeId=17;
+					categoryParentValues=$('#grievanceSelectedCategory').val();
+					}
+				
+				var request ={
+						 "childTag": "DOC_TYPE",
+						  "featureId": 6,
+						  "parentValue":  parseInt(categoryParentValues),	
+						  "tag": "GRIEVANCE_CATEGORY",
+						  "userTypeId":grievanceUserTypeId,
+					}
+			
+			console.log("request --->" +JSON.stringify(request));	
+			 $.ajax({
+					url: './get/tags-mapping',
+					type: 'POST',
+					data : JSON.stringify(request),
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					success: function (data, textStatus, jqXHR) {
+						/*$("#docTypetag1").empty();
+						$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');*/
+						console.log(data);
+						for (i = 0; i < data.length; i++){
+							var optionId=id-1;
+								//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+								//$('#docTypetag1').append(html);	
+								
+							$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag'+optionId);
+						
+						}
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log("error in ajax")
+					}
 				});
+				
+				
 				id++;
 				/*alert("$$$$"+id)*/
 			});
@@ -582,4 +686,50 @@ var featureId = 6;
 			function saveDocTypeValue(){
 				$('#docTypetagValue').val(data[i].value).change();
 				$('#docTypetagValue').val(data[i].value).change();
+			}
+			
+			
+			function setDocTypeValue(categoryParentValue){
+			
+			var request ={
+						 "childTag": "DOC_TYPE",
+						  "featureId": 6,
+						  "parentValue":  parseInt(categoryParentValue),	
+						  "tag": "GRIEVANCE_CATEGORY",
+						  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+					}
+			
+			console.log("request --->" +JSON.stringify(request));	
+			 $.ajax({
+					url: './get/tags-mapping',
+					type: 'POST',
+					data : JSON.stringify(request),
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					success: function (data, textStatus, jqXHR) {
+						$("#docTypetag1").empty();
+						$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
+						console.log(data);
+						for (i = 0; i < data.length; i++){
+								//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+								//$('#docTypetag1').append(html);	
+								
+							$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+						
+						}
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log("error in ajax")
+					}
+				});
+			}
+			
+			function clearFileName() {
+				$('#fileName').val('');
+				$("#file").val('');
+				$('#fileFormateModal').closeModal();
+			}
+			function enableAddMore(){
+				$(".add_field_button").attr("disabled", false);
 			}

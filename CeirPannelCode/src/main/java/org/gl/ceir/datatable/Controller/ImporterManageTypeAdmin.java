@@ -131,7 +131,7 @@ public class ImporterManageTypeAdmin {
 						log.info("status----->" + status + "adminState-------->"+ approveState+"--Id--------->" + trcContentModelList.getId()
 								+ "--fileName1------->" + fileName1 + "--txnId------>" + txnId);
 						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(), fileName1,
-								txnId,adminApproveStatus);
+								txnId,adminApproveStatus,userStatus);
 						Object[] data = { createdOn, txnId, trademark, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);

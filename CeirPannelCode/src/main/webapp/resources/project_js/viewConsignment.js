@@ -44,12 +44,14 @@
 
 
 		function DeleteConsignmentRecord(txnId){
-			$("#DeleteConsignment").openModal();
+			$("#DeleteConsignment").openModal({
+				dismissible:false
+			});
 			$("#transID").text(txnId);
 		}
 
 
-		function confirmantiondelete(){
+function confirmantiondelete(){
 			var txnId = $("#transID").text();
 			var remarks = $("#textarea1").val();
 			var obj ={
@@ -80,7 +82,10 @@
 				}
 			});
 			$("#DeleteConsignment").closeModal();
-			$("#confirmDeleteConsignment").openModal();
+			$("#confirmDeleteConsignment").openModal({
+				dismissible:false
+			});
+			return false;
 		}
 		$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
 			$("#expectedArrivalPortEdit").empty();
@@ -111,7 +116,9 @@
 				}
 			});
 
-			$("#updateModal").openModal();
+			$("#updateModal").openModal({
+				dismissible:false
+			});
 		}
 
 	function ConsignmentCurrency()
@@ -168,7 +175,12 @@
 		}
 
 		function viewConsignmentDetails(txnId){
-			$("#viewModal").openModal();
+			
+			$("#viewModal").openModal({
+		        dismissible:false
+		    });
+			
+			
 			$.ajax({
 				url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 				dataType : 'json',
@@ -190,9 +202,12 @@
 			console.log(data.totalPrice);
 			if(data.totalPrice==null){
 			     totalPrice="";
+			     $("#viewCurrencyDiv").css("display", "none");
+			     
 			}
 			else{
 				totalPrice=(parseInt(data.totalPrice));
+				$("#viewCurrencyDiv").css("display", "block");
 			}
 			
 			$("#supplierId").val(data.supplierId);
@@ -219,9 +234,12 @@
 			console.log(data.totalPrice);
 			if(data.totalPrice==null){
 			     totalPrice="";
+			     $("#currencyDiv").css("display", "none"); 
 			}
 			else{
 				totalPrice=(parseInt(data.totalPrice));
+				 $("#currencyDiv").css("display", "block"); 
+				
 			}
 			
 			$("#supplierIdEdit").val(data.supplierId);
@@ -234,6 +252,8 @@
 			$("#QuantityEdit").val(data.quantity);
 			$("#TransactionIdEdit").val(data.txnId);
 			$("#fileNameEdit").val(data.fileName);
+			$("#fileNameToBeSame").val(data.fileName);
+			
 			$("#currency").val(data.currency);
 			$("#totalPrice").val(totalPrice);
 			$("#hideCurrency").val(data.currency);
@@ -390,7 +410,9 @@
 				success: function (data, textStatus, jqXHR) {
 					$('#updateModal').closeModal();
 
-					$('#updateConsignment').openModal();
+					$('#updateConsignment').openModal({
+						dismissible:false
+					});
 					if(data.errorCode==200){
 
 
@@ -422,7 +444,9 @@
 
 		function openDeleteModal(transactionId)
 		{
-			$('#deletemodal').openModal();
+			$('#deletemodal').openModal({
+				dismissible:false
+			});
 			$('#deleteTransactionId').val(transactionId);
 		}
 
@@ -594,7 +618,7 @@
 
 
 					//Tax paid status-----------dropdown
-					$.getJSON('../getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+					$.getJSON('../getTypeDropdownList/CUSTOMS_TAX_STATUS/'+$("body").attr("data-userTypeID"), function(data) {
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].value).text(data[i].interp)
 							.appendTo('#taxPaidStatus');
@@ -605,7 +629,7 @@
 
 				/* 	$('#transactionID').val('');
 					$('#transactionID').val(txnid); */
-					$('#transactionID').attr("placeholder","" );
+					//$('#transactionID').attr("placeholder","" );
 					if(txnid=="")
 					{
 					
@@ -629,12 +653,40 @@
 
 
 
-		function openApprovePopUp(txnId,displayName)
+				function openApprovePopUp(txnId,displayName)
 		{
 			var userType=$("body").attr("data-roleType");
 			displayName=displayName.replace("+20"," " );
 			$('#ApproveConsignment').openModal();
 			if(userType=='Custom'){
+				
+				$.ajax({
+					url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'GET',
+					success : function(data) {
+						console.log(data.pendingTacApprovedByCustom);
+						console.log(data.pendingTacApprovedByCustom);
+						
+						if(data.pendingTacApprovedByCustom=='N')
+							{
+						$('#tacSatusForCustom').css("display", "none");
+						$('#approveButton').prop('disabled', false);
+						
+							}
+						else{
+							$('#tacSatusForCustom').css("display", "block"); 
+							$('#tacStatucMessage').text('');
+							$('#tacStatucMessage').text($.i18n('tacStatucMessage'));
+							$('#approveButton').prop('disabled', true);
+						}
+					},
+					
+					error : function() {
+						alert("Failed");
+					}
+				});
 				
 				$('#ApproveConsignmentTxnid').text(txnId);
 				$('#setApproveConsignmentTxnId').val(txnId);
@@ -647,12 +699,14 @@
 				$('#confirmationMessage').text('');
 				$('#setApproveConsignmentTxnId').val(txnId);
 				$('#displayname').text(displayName);
+				   $('#approveButton').attr('disabled', false); 
 				
 			}
 
 
 
 		}
+
 		function approveSubmit(actiontype){
 			var txnId=$('#setApproveConsignmentTxnId').val();
 
@@ -668,7 +722,9 @@
 				contentType : 'application/json; charset=utf-8',
 				type : 'POST',
 				success : function(data) {
-					$('#confirmApproveConsignment').openModal();
+					$('#confirmApproveConsignment').openModal({
+						dismissible:false
+					});
 					if(data.errorCode==0){
 
 						$('#approveSuccessMessage').text('');
@@ -688,7 +744,9 @@
 		function openDisapprovePopup(txnId,displayName)
 		{
 			displayName=displayName.replace("+20"," " );
-			$('#RejectConsignment').openModal();
+			$('#RejectConsignment').openModal({
+				dismissible:false
+			});
 			$('#disaproveTxnId').text(txnId);
 			$('#setDisapproveConsignmentTxnId').val(txnId);
 			$('#disapprovedDisplayname').text(displayName);
@@ -713,7 +771,9 @@
 				contentType : 'application/json; charset=utf-8',
 				type : 'POST',
 				success : function(data) {
-					setTimeout(function(){ $('#confirmRejectConsignment').openModal()}, 200);
+					setTimeout(function(){ $('#confirmRejectConsignment').openModal({
+						dismissible:false
+					});}, 200);
 
 					if(data.errorCode==0){
 
@@ -755,7 +815,9 @@
 
 
 		function markedstolen(){
-			$('#markAsMultipleStolen').openModal();
+			$('#markAsMultipleStolen').openModal({
+				dismissible:false
+			});
 
 		}
 
@@ -770,7 +832,9 @@
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
-					$('#markAsStolenDone').openModal();
+					$('#markAsStolenDone').openModal({
+						dismissible:false
+					});
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 				
@@ -828,20 +892,23 @@ function fileTypeValueChanges() {
 			var fileSize = ($("#csvUploadFile")[0].files[0].size);
 			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 		   if (uploadedFileName.length > 30) {
-		       $('#fileFormateModal').openModal();
-		       $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+		       $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+		       
 		   } 
 			else if(ext!='csv')
 				{
-				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file extension must be in  CSV.');
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				 
 				}
 			else if(fileSize>='5000'){
-				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file size must be less then 5 mb.');
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				 
 			}
 			else {
 				console.log("file formate is correct")
@@ -881,36 +948,8 @@ function fileTypeValueChanges() {
 
 			}
 			});	
-		function fileTypeValueChanges() {
-			var uploadedFileName = $("#csvUploadFile").val();
-			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-			var ext = uploadedFileName.split('.').pop();
 		
-			var fileSize = ($("#csvUploadFile")[0].files[0].size);
-			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
-		   if (uploadedFileName.length > 30) {
-		       $('#fileFormateModal').openModal();
-		       $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file name length must be less then 30 characters.');
-		   } 
-			else if(ext!='csv')
-				{
-				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file extension must be in  CSV.');
-				}
-			else if(fileSize>='5000'){
-				$('#fileFormateModal').openModal();
-				 $('#fileErrormessage').text('');
-			       $('#fileErrormessage').text('file size must be less then 5 mb.');
-			}
-			else {
-				console.log("file formate is correct")
-				
-			}
-			
-
-		}
+		
 
 		function clearFileName() {
 			var existingfile=$("#fileNameToBeSame").val();
@@ -942,3 +981,16 @@ function fileTypeValueChanges() {
 
 			}
 			});
+			
+				
+		$('#tacStatusChecKbox').click(function () {
+		    //check if checkbox is checked
+		    if ($(this).is(':checked')) {
+		      
+		        $('#approveButton').removeAttr('disabled'); //enable input
+		        
+		    }
+		    else {
+		        $('#approveButton').attr('disabled', true); //disable input
+		    }
+		});
