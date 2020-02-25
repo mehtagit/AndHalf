@@ -86,9 +86,9 @@ $('#deviceIdType').on('change', function() {
 
 	switch (value) {
 	case 0:
-		$("#DeviceID").attr("pattern","[0-9]");
+		$("#DeviceID").attr("pattern","[0-9]{15,16}");
 		$("#DeviceID").attr("maxlength","16");
-		$("#DeviceID").attr("maxlength","16");
+		$("#DeviceID").removeAttr("onkeyup");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
@@ -96,6 +96,7 @@ $('#deviceIdType').on('change', function() {
 	case 1:
 		$("#DeviceID").attr("pattern","[A-F0-9]{15,16}");
 		$("#DeviceID").attr("maxlength","16");
+		$("#DeviceID").removeAttr("onkeyup");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
 		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
@@ -112,7 +113,7 @@ $('#deviceIdType').on('change', function() {
 function isLengthValid(val){
 	var deviceIDLength=val.length;
 
-	
+
 	if(val.match(/^[0-9a-z]+$/) && (deviceIDLength > 8)){
 		$("#DeviceID").attr("pattern","[A-F0-9]{0,9}");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");

@@ -114,16 +114,17 @@ padding: 0 !important;
                                                             <div class="col s12 m6">
                                                                 <label for="deviceType"><spring:message code="operator.devicetype" /></label>
                                                                 <select class="browser-default" id="unbockSingledeviceType"
-                                                                 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                title= "<spring:message code="validation.selectFieldMsg" />" >
+                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
                                                                     <option value="" disabled selected><spring:message code="operator.devicetype" /></option> 
                                                                 </select>
                                                             </div>
                                                              <div class="col s12 m6"><label for="UnblockdeviceIdType">
                                                                     <spring:message code="operator.deviceidtype" /> <span class="star">*</span></label>
                                                                 <select class="browser-default" id="UnblockdeviceIdType" 
-                                                                oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                title= "<spring:message code="validation.selectFieldMsg" />" required>
+                                                                oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                required>
                                                                     <option value="" disabled selected>
                                                                         <spring:message code="operator.selectdeviceidtype" />
                                                                     </option>
@@ -134,8 +135,8 @@ padding: 0 !important;
                                                             <div class="col s12 m6">
                                                                 <label for="deviceType"><spring:message code="operator.multiplesim" /></label>
                                                                 <select class="browser-default" id="unbockSingleMultipleSimStatus"
-                                                                 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                title= "<spring:message code="validation.selectFieldMsg" />" >
+                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
                                                                     <option value="" disabled selected><spring:message code="operator.multiplesim" /></option>
                                                                    
                                                                 </select>
@@ -143,16 +144,18 @@ padding: 0 !important;
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
                                                                 <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,15}"
-                                                                   oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                   title= "<spring:message code="validation.numberfirst" />"  maxlength="15">
+                                                                   oninput="InvalidMsg(this,'select','<spring:message code="validation.numberfirst" />');" 
+                                                                   oninvalid="InvalidMsg(this,'select','<spring:message code="validation.numberfirst" />');"
+                                                                     maxlength="15">
                                                                 <label for="serialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
                                                             
                                                               <div class="col s12 m6"><label for="singleDeviceUnblock"><spring:message code="operator.category" />
                                                             <span class="star">*</span></label>
                                                         <select class="browser-default" id="singleDeviceUnblock"  
-                                                     		 oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                                title= "<spring:message code="validation.selectFieldMsg" />" required  >
+                                                     		 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                     		 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                                required  >
                                                             <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
                                                           
@@ -160,8 +163,9 @@ padding: 0 !important;
                                                     </div>
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="unbockSingleRemark"  class="materialize-textarea" 
-                                                                oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                title= "<spring:message code="validation.200character" />"  maxlength="200" required /></textarea>
+                                                                oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+                                                                maxlength="200" required /></textarea>
                                                                 <label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                             </div>
                                                            
@@ -196,29 +200,33 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI1"  name="IMEI1" pattern="[0-9]{15,16}"
-                                                                   oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                   title= "<spring:message code="validation.1516digit" />" required   maxlength="16">
+                                                                   oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+                                                                required   maxlength="16">
                                                                 <label for="IMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
-                                                                   oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                   title= "<spring:message code="validation.1516digit" />"  maxlength="16">
+                                                                   oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+                                                                    maxlength="16">
                                                                 <label for="IMEI2"><spring:message code="title.two" /></label>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
-                                                                   oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                   title= "<spring:message code="validation.1516digit" />" maxlength="16">
+                                                                   oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+                                                                   maxlength="16">
                                                                 <label for="IMEI3"><spring:message code="title.three" /></label>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
-                                                                   oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                                   title= "<spring:message code="validation.1516digit" />" maxlength="16">
+                                                                   oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+                                                                 maxlength="16">
                                                                 <label for="IMEI4"><spring:message code="title.four" /></label>
                                                             </div>
                                                         	<div class="col s12 m12"><span><spring:message code="input.requiredfields" /> <span class="star">*</span></span></div>
@@ -243,8 +251,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                      <div class="col s12 m6"><label for="bulkBlockdeviceCategory"><spring:message code="operator.category" />
                                                             <span class="star"> *</span></label>
                                                         <select class="browser-default" id="bulkunBlockdeviceCategory"  
-                                                        oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
-                                                        title= "<spring:message code="validation.selectFieldMsg" />" required>
+                                                        oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+                                                        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+                                                         required>
                                                             <option value="" disabled selected><spring:message code="operator.selectcategory" />
                                                             </option>
                                                           
@@ -252,8 +261,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                     </div>
                                                     <div class="input-field col s12 m6 " style="margin-top: 22px;">
                                                         <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,7}" 
-                                                        oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                        title= "<spring:message code="validation.7digits" />" required maxlength="7">
+                                                        oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
+                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+                                                        required maxlength="7">
                                                         <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
@@ -263,8 +273,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>
                                                             <input type="file" id="unblockBulkFile" 
-                                                           oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');" 
-                                                            title= "<spring:message code="validation.NoChosen" />" required >
+                                                           oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+                                                           oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+                                                            required >
                                                         </div>
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" placeholder="Please select the file">
@@ -273,8 +284,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 
                                                     <div class="input-field col s12 m6" style="margin-top: 62px;">
                                                         <textarea id="unblockbulkRemark" class="materialize-textarea" maxlength="200" 
-                                                        oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-                                                        title= "<spring:message code="validation.200character" />" required ></textarea>
+                                                        oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
+                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+                                                        required ></textarea>
                                                         <label for="unblockbulkRemark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
                                                     </div>
                                                     

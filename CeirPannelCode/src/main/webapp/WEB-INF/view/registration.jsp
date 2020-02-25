@@ -845,11 +845,6 @@ String usertypeId="${usertypeId}";
  	window.location.assign("registration?type="+type+"&lang="+window.lang);			
  	}); 
  	
- 	//var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
- 	
- 	
          $(document).ready(function () {
          	$('#langlist').val(data_lang_param);
              	$.i18n().locale = data_lang_param;	

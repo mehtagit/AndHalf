@@ -178,11 +178,18 @@
 			}
 
 		}); 
+	
+		setAllDropdown();
+	};
+
+	
+	function setAllDropdown(){
+		
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].state).text(data[i].interp)
-				.appendTo('#recentStatus');
+				.appendTo('#recentStatus,#userStatus');
 			}
 		});
 		
@@ -202,9 +209,7 @@
 			}
 			});
 		
-	};
-
-
+	}
 
 
 	function myFunction(message) {
@@ -390,3 +395,37 @@
 			window.open(FinalLink);
 		}
 	}
+	
+	
+ function userChangeStatus(userId){
+	 window.userId = userId
+	 $("#statusChangemodal").openModal();
+	 
+	 
+ }
+	
+ function chanegeUserStatus(){
+		var status= $("#userStatus").val();
+		
+		var Request={
+				"status" : parseInt(status),
+				"userId": parseInt(window.userId)
+		}
+		
+		$.ajax({
+			url : './adminChangeRequest',
+			data : JSON.stringify(Request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				console.log("Request----->"+JSON.stringify(Request));
+				$("#confirmUserStatus").openModal();
+			},
+			error : function() {
+				alert("Failed");
+			}
+		});
+	 return false
+ }	
+	

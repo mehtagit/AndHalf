@@ -41,7 +41,7 @@ function registerConsignment() {
 		contentType : false,
 		success : function(data, textStatus, jqXHR) {
 			$("#consignmentSubbmitButton").prop('disabled', true);
-			$('#submitConsignment').openModal();
+			$('#submitConsignment').openModal({dismissible:false});
 			if (data.errorCode == "0") {
 				$('#sucessMessage')
 				.text(successMsg);
@@ -66,7 +66,7 @@ function registerConsignment() {
 function openDeleteModal(transactionId) {
 	/*   $('#deletemodal').modal('open');
 							backdrop: 'static' */
-	$('#deletemodal').openModal();
+	$('#deletemodal').openModal({dismissible:false});
 	$('#deleteTransactionId').val(transactionId);
 }
 
@@ -155,77 +155,77 @@ $(document).ready(function() {
 		}
 	});
 
-			$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
-				/* $("#expectedArrivalPort").empty(); */
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#expectedArrivalPort');
+	$.getJSON('../getDropdownList/CUSTOMS_PORT', function(data) {
+		/* $("#expectedArrivalPort").empty(); */
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#expectedArrivalPort');
 
-				}
-			});
-			$('#currencyDiv').hide();
+		}
+	});
+	$('#currencyDiv').hide();
 });
 
-			$('.datepick').datepicker({
-				dateFormat : "yy-mm-dd"
-			});
+$('.datepick').datepicker({
+	dateFormat : "yy-mm-dd"
+});
 
 
 
-			$(document).on("keyup", "#totalPrice", function(e) {
-				var totalPrice=$('#totalPrice').val();
-				if(totalPrice.length<'1' )
-				{
-					$("#currency").attr("required", false);
-					/*$('#currency').attr("disabled",true);*/
-					$('#currencyDiv').hide();
+$(document).on("keyup", "#totalPrice", function(e) {
+	var totalPrice=$('#totalPrice').val();
+	if(totalPrice.length<'1' )
+	{
+		$("#currency").attr("required", false);
+		/*$('#currency').attr("disabled",true);*/
+		$('#currencyDiv').hide();
 
-					$("#currency")[0].selectedIndex = 0;
+		$("#currency")[0].selectedIndex = 0;
 
-				}
-				else
-				{
-					$('#currency').prop('required',true);
-					//$("#currency").attr("required", true);
-					/*$('#currency').attr("disabled",false);*/
-					$('#currencyDiv').show();
+	}
+	else
+	{
+		$('#currency').prop('required',true);
+		//$("#currency").attr("required", true);
+		/*$('#currency').attr("disabled",false);*/
+		$('#currencyDiv').show();
 
-				}
-			});
+	}
+});
 
-			function fileTypeValueChanges(dd, ddd) {
-				var uploadedFileName = $("#file").val();
-				uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-				var ext = uploadedFileName.split('.').pop();
+function fileTypeValueChanges(dd, ddd) {
+	var uploadedFileName = $("#file").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	var ext = uploadedFileName.split('.').pop();
 
-				var fileSize = ($("#file")[0].files[0].size);
-				fileSize = (Math.round((fileSize / 1024) * 100) / 100)
-				if (uploadedFileName.length > 30) {
-					$('#fileFormateModal').openModal();
+	var fileSize = ($("#file")[0].files[0].size);
+	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal({dismissible:false});
 
-				} 
-				else if(ext!='csv')
-				{
-					$('#fileFormateModal').openModal({
-						dismissible:false
-					});
+	} 
+	else if(ext!='csv')
+	{
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
 
-				}
-				else if(fileSize>='2000'){
-					$('#fileFormateModal').openModal({
-						dismissible:false
-					});
+	}
+	else if(fileSize>='2000'){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
 
-				}
-
-
-
-			}
+	}
 
 
-			function clearFileName() {
-				$('#fileName').val('');
-				$("#file").val('');
-				$('#fileFormateModal').closeModal();
-			}
+
+}
+
+
+function clearFileName() {
+	$('#fileName').val('');
+	$("#file").val('');
+	$('#fileFormateModal').closeModal();
+}
 

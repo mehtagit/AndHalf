@@ -235,15 +235,11 @@ section {
 									
 											</select>
 										</div>
-									</div>
-
-
-									<div class="row myRow">
-										<h6 class="file-upload-heading" style="margin-left: 15px;">
+											<div class="file-field col s12 m6"
+											style="margin-top: 5px;">
+					<h6 class="file-upload-heading" >
 											<spring:message code="input.bulkdevice" /> <span class="star">*</span>
 										</h6>
-										<div class="file-field input-field col s12 m6"
-											style="margin-top: 5px;">
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges(this,'fileType')"
 													 name="file" id="file" accept=".csv"  
@@ -254,12 +250,19 @@ section {
 													type="text">
 											</div>
 										</div>
-										<br> <br>
-										<p style="margin-left: 15px;">
+									</div>
+
+
+									<div class="row myRow">
+										
+										
+										<div class="col s12 m12">
+											<p>
 											<a href="./sampleFileDownload/3"><spring:message code="input.downlaod.sample" /></a>
 										</p>
-										<span><spring:message code="input.requiredfields" /> <span
-											class="star">*</span></span>
+										<p><spring:message code="input.requiredfields" /> <span
+											class="star">*</span></p>
+										</div>
 									</div>
 
 
