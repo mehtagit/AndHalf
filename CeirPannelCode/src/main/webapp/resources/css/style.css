@@ -2942,3 +2942,13 @@ color: white;
 	max-width: 85%;
 max-height: 50px;
 overflow-y: scroll;
+}
+
+.onEditModalTitle{
+	color: red;
+    font-size: 12px;
+    position: absolute;
+    margin: 0;
+    top: 37px;
+    right: 10px;
+}

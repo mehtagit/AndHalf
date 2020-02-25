@@ -307,7 +307,7 @@ var path="${context}";
 										<div id="mainDiv" class="col s12 m12 mainDiv">
 											<div id="filediv" class="fileDiv">
 												<div class="row">
-													<div class="col s12 m6 l6" style="margin-top: 8px;">
+													<div class="col s12 m6 l6">
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
 															class="browser-default" id="docTypetag1">
@@ -326,7 +326,7 @@ var path="${context}";
 													</div>
 
 													<div class="file-field col s12 m6">
-														<h6 style="color: #000;">
+														<h6 class="file-upload-heading">
 															<spring:message code="input.supportingdocument" />
 														</h6>
 														<div class="btn">

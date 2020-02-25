@@ -361,7 +361,7 @@ var featureId = 11;
 					"remark" : $('#remark').val(),
 					"userId" : $("body").attr("data-userID"),
 					"featureId" : featureId,
-					"adminApproveStatus" : 2
+					//"adminApproveStatus" : 2
 				}
 			
 			console.log("multirequest------------->" +JSON.stringify(multirequest))

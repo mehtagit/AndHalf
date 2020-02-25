@@ -24,10 +24,21 @@ function forgotPassword(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
 				$("#usernamedata").val(username);
-				$('#changePassword').openModal();
+				$('#changePassword').openModal({
+			        dismissible:false
+			    });
 			}      
 			else{
-				$("#forgotPassword #errorMsg").text(resp.response);
+				$.i18n().locale = $('#langlist').val();
+	
+			//	$("#forgotPassword #errorMsg").text(resp.response);
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#forgotPassword #errorMsg").text($.i18n(resp.tag));
+				});
+
 			}
 			$("#forgotPasswordBtn").prop('disabled', false);
 		},
@@ -59,11 +70,27 @@ function udapteNewPassword(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				$("#responseMsg").text(resp.response);
-				$("#submitBtnAction").openModal();	
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#responseMsg").text($.i18n(resp.tag));
+				});
+				
+				
+				$("#submitBtnAction").openModal({
+					dismissible:false
+				});	
 			}
 			else{
-				$("#changePassword #errorMsg").text(resp.response);
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#changePassword #errorMsg").text($.i18n(resp.tag));
+				});
 			}
 
 		}, 
@@ -101,10 +128,21 @@ function login(){
 			}
 			else if(resp.statusCode=='401'){
 				$("#userId").val(resp.userId);
-				$('#changePassword').openModal();
+				$('#changePassword').openModal({
+			        dismissible:false
+			    });
+
 			}
 			else{
-				$("#errorMsg").text(resp.response);
+				
+				$.i18n().locale = $('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#errorMsg").text($.i18n(resp.tag));
+				});
+				
 			}
 
 		},
@@ -166,7 +204,10 @@ function changeExpiryPassword(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
 				$("#changePasswordMessage #cPassSucessMsg").text(resp.response);
-				$("#changePasswordMessage").openModal();   
+				$("#changePasswordMessage").openModal({
+			        dismissible:false
+			    });
+   
 			}
 			else{
 				$("#changePassword #errorMsg").text(resp.response);

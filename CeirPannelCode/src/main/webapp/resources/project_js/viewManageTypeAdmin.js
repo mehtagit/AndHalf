@@ -17,7 +17,6 @@ $.i18n().locale = lang;
 				
 		});
 
-
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
 	typeApprovedDataTable(lang)

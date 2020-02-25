@@ -131,7 +131,7 @@ String name = (String) session.getAttribute("name");
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToLogout" class="modal-trigger"
+						<li><a   data-target="goToHome" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -292,10 +292,12 @@ String name = (String) session.getAttribute("name");
 					</p>
 				</div>
 				<%
-					String status = (String) session.getAttribute("userStatus");
+					//String status = (String) session.getAttribute("userStatus");
+				Integer statusValue=(Integer)session.getAttribute("userStatusValue");
 				%>
 				<%
-					if (status.equalsIgnoreCase("Approved")) {
+					if (statusValue==3) {
+	
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
@@ -309,7 +311,7 @@ String name = (String) session.getAttribute("name");
 					</p>
 				</div>
 				<%
-					} else if (status.equalsIgnoreCase("Disable")) {
+					} else if (statusValue==5) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>

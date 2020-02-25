@@ -64,5 +64,8 @@ public interface UserProfileFeignImpl {
 	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 	@RequestParam(value = "file", defaultValue = "0") Integer file
 	) ;
+	
+	@PostMapping("/userProfile/changeUserStatus")
+	public HttpResponse changeUserStatusFeign(UserStatus userStatus);
 } 
 
