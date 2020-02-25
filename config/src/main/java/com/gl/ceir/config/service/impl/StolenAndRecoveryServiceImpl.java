@@ -124,6 +124,12 @@ public class StolenAndRecoveryServiceImpl {
 
 			stolenandRecoveryMgmt.setFileStatus(StolenStatus.INIT.getCode());
 			if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
+				StolenIndividualUserDB stolenIndividualUserDB = stolenandRecoveryMgmt.getStolenIndividualUserDB();
+				stolenandRecoveryMgmt.setQty(countImeiForIndividual(stolenIndividualUserDB.getImeiEsnMeid1(), 
+						stolenIndividualUserDB.getImeiEsnMeid2(), 
+						stolenIndividualUserDB.getImeiEsnMeid3(), 
+						stolenIndividualUserDB.getImeiEsnMeid4()));
+				
 				stolenandRecoveryMgmt.getStolenIndividualUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
 			} else if (Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
 				stolenandRecoveryMgmt.getStolenOrganizationUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
@@ -559,9 +565,9 @@ public class StolenAndRecoveryServiceImpl {
 							stolenandRecoveryMgmtInfo.getStolenIndividualUserDB(),
 							stolenandRecoveryMgmt.getStolenIndividualUserDB()
 							);
-					
+
 					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(stolenIndividualUserDB);
-					
+
 					logger.info("After object update " + stolenIndividualUserDB);
 				}
 
@@ -571,9 +577,9 @@ public class StolenAndRecoveryServiceImpl {
 							stolenandRecoveryMgmtInfo.getStolenOrganizationUserDB(),
 							stolenandRecoveryMgmt.getStolenOrganizationUserDB()
 							);
-					
+
 					stolenandRecoveryMgmtInfo.setStolenOrganizationUserDB(stolenOrganizationUserDB);
-					
+
 					logger.info("After object update " + stolenOrganizationUserDB);
 				}
 
@@ -749,7 +755,7 @@ public class StolenAndRecoveryServiceImpl {
 	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDBOld, 
 			StolenIndividualUserDB stolenIndividualUserDBNew) {
 		stolenIndividualUserDBNew.setId(stolenIndividualUserDBOld.getId());
-		
+
 		return stolenIndividualUserDBNew;
 	}
 
@@ -786,5 +792,22 @@ public class StolenAndRecoveryServiceImpl {
 		default:
 			return null;
 		}
+	}
+
+	private int countImeiForIndividual(Long imei1, Long imei2, Long imei3, Long imei4) {
+		int count = 0;
+		if(Objects.nonNull(imei1))
+			count++;
+
+		if(Objects.nonNull(imei2))
+			count++;
+
+		if(Objects.nonNull(imei3))
+			count++;
+
+		if(Objects.nonNull(imei4))
+			count++;
+		
+		return count;
 	}
 }

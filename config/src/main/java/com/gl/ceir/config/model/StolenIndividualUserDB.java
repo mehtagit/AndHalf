@@ -75,7 +75,10 @@ public class StolenIndividualUserDB implements Serializable {
 	@Column(length = 50)
 	private String deviceBrandName;
 
-	private Long imeiEsnMeid;
+	private Long imeiEsnMeid1;
+	private Long imeiEsnMeid2;
+	private Long imeiEsnMeid3;
+	private Long imeiEsnMeid4;
 	private Integer deviceIdType;
 	private Integer deviceType;
 	@Column(length = 50)
@@ -252,13 +255,6 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setDeviceBrandName(String deviceBrandName) {
 		this.deviceBrandName = deviceBrandName;
 	}
-	
-	public Long getImeiEsnMeid() {
-		return imeiEsnMeid;
-	}
-	public void setImeiEsnMeid(Long imeiEsnMeid) {
-		this.imeiEsnMeid = imeiEsnMeid;
-	}
 	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -385,6 +381,31 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setStolenandRecoveryMgmt(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		this.stolenandRecoveryMgmt = stolenandRecoveryMgmt;
 	}
+	public Long getImeiEsnMeid1() {
+		return imeiEsnMeid1;
+	}
+	public void setImeiEsnMeid1(Long imeiEsnMeid1) {
+		this.imeiEsnMeid1 = imeiEsnMeid1;
+	}
+	public Long getImeiEsnMeid2() {
+		return imeiEsnMeid2;
+	}
+	public void setImeiEsnMeid2(Long imeiEsnMeid2) {
+		this.imeiEsnMeid2 = imeiEsnMeid2;
+	}
+	public Long getImeiEsnMeid3() {
+		return imeiEsnMeid3;
+	}
+	public void setImeiEsnMeid3(Long imeiEsnMeid3) {
+		this.imeiEsnMeid3 = imeiEsnMeid3;
+	}
+	public Long getImeiEsnMeid4() {
+		return imeiEsnMeid4;
+	}
+	public void setImeiEsnMeid4(Long imeiEsnMeid4) {
+		this.imeiEsnMeid4 = imeiEsnMeid4;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -434,8 +455,14 @@ public class StolenIndividualUserDB implements Serializable {
 		builder.append(alternateContactNumber);
 		builder.append(", deviceBrandName=");
 		builder.append(deviceBrandName);
-		builder.append(", imeiEsnMeid=");
-		builder.append(imeiEsnMeid);
+		builder.append(", imeiEsnMeid1=");
+		builder.append(imeiEsnMeid1);
+		builder.append(", imeiEsnMeid2=");
+		builder.append(imeiEsnMeid2);
+		builder.append(", imeiEsnMeid3=");
+		builder.append(imeiEsnMeid3);
+		builder.append(", imeiEsnMeid4=");
+		builder.append(imeiEsnMeid4);
 		builder.append(", deviceIdType=");
 		builder.append(deviceIdType);
 		builder.append(", deviceType=");
@@ -474,6 +501,7 @@ public class StolenIndividualUserDB implements Serializable {
 		builder.append(deviceSerialNumber);
 		builder.append(", remark=");
 		builder.append(remark);
+		
 		builder.append("]");
 		return builder.toString();
 	}
