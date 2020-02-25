@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/* session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);   */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -384,21 +393,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												class="fa fa-calendar" aria-hidden="true"></i></span>
 										</div>
 										
-										<div class="file-field col s12 m6 l6">
-														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
-														<spring:message code="input.UploadFIR" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" 
-															oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
-															oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-														 required  placeholder="<spring:message code="input.UploadFIR" />" id="uploadFirSingle">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" placeholder="<spring:message code="input.UploadFIR" />"
-																id="uploadFirSingleName" title="Please upload national ID image">
-														</div>
-													</div>
+
 										
                                                             <div class="input-field col s12 m12">
                                                                 <textarea id="sigleRecovery" 
@@ -430,31 +425,6 @@ onclick="_Services._selectstartDate()"></i></span>
                                                              required>
 														 <label for="bulkRecoveryquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
-                                                    
-                                                    <div class="file-field col s12 m6 l6">
-														<h6 class="form-label" style="margin:0; font-size: 0.9rem;">
-														<spring:message code="input.UploadFIR" />
-														</h6>
-														<div class="btn">
-															<span><spring:message code="input.selectfile" /></span> <input type="file" 
-															oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-															 oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-															 required  
-															placeholder="<spring:message code="input.UploadFIR" />" id="uploadFirBulk">
-														</div>
-														<div class="file-path-wrapper">
-															<input class="file-path validate" type="text" placeholder="<spring:message code="input.UploadFIR" />"
-																id="uploadFirBulkName" title="Please upload national ID image">
-														</div>
-													</div>
-
-                                                    <div class="input-field col s12 m12">
-                                                        <textarea id="bulkRecoveryRemark"  
-                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                                                          maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
-                                                    </div>
 
                                                     <div class="file-field col s12 m6">
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star"> *</span></h6>
@@ -469,6 +439,14 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName"
                                                                 placeholder="<spring:message code="registration.uploadfile" />" title="Please upload your photo">
                                                         </div>
+                                                    </div>
+                            
+                                                    <div class="input-field col s12 m12">
+                                                        <textarea id="bulkRecoveryRemark"  
+                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
                                                     
                                                     <div class="col s12 m6">
@@ -757,3 +735,16 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 
 </body>
 </html>
+<%
+	}else{
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

@@ -203,7 +203,7 @@ to {
 </style>
 
 </head>
-<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -340,7 +340,7 @@ to {
 					<div class="input-field col s12 center">
 						<a onclick="redirectToViewPage()" class="btn"><spring:message
 								code="modal.yes" /></a>
-						<button class="modal-close waves-effect waves-light btn"
+						<button class="modal-close btn"
 							style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -635,7 +635,9 @@ function uploadStock(){
 			
 			 console.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
-			  $('#submitStock').openModal();
+			   $('#submitStock').openModal({
+		    	   dismissible:false
+		       });
 			 if(data.errorCode=="0")
 				 {
 				 console.log("status code = 0");
@@ -714,23 +716,25 @@ function fileTypeValueChanges(dd, ddd) {
 	var fileSize = ($("#file")[0].files[0].size);
 	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
    if (uploadedFileName.length > 30) {
-       $('#fileFormateModal').openModal();
+	   $('#fileFormateModal').openModal({
+    	   dismissible:false
+       });
       
        
    } 
 	else if(ext!='csv')
 		{
-		$('#fileFormateModal').openModal();
-		 
+		
+		 $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		}
 	else if(fileSize>='2000'){
-		$('#fileFormateModal').openModal();
-		 
+		 $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 	}
-	else {
-		console.log("file formate is correct")
-		
-	}
+	
 	
 
 }
@@ -742,8 +746,11 @@ function clearFileName() {
 }
 
 function openModalForAssigneId(){
+	 $('#searchSupplierInformation').openModal({
+  	   dismissible:false
+     });
 	
-	$('#searchSupplierInformation').openModal();
+	//$('#searchSupplierInformation').openModal();
 }
 
 function viewAssigneeHistory() {
@@ -758,7 +765,8 @@ function assigneeTable(URL,dataUrl){
 
    var request={
 		   "field":assigneDetails,
-		   "type": parseInt($('input[name="group1"]:checked').val())
+		   "type": parseInt($('input[name="group1"]:checked').val()),
+		   "userTypeId" : $("body").attr("data-userTypeID")
 	}
 	
 	if(lang=='km'){

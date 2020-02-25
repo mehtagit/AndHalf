@@ -12,6 +12,7 @@ public class RegistrationUser {
 	private String modifiedOn;
 	private Integer currentStatus;
 	private Integer previousStatus;
+	private String stateInterp;
 	private RegistrationUserType usertype;
 	private RegistrationHandler hibernateLazyInitializer;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -19,9 +20,15 @@ public class RegistrationUser {
 	@Override
 	public String toString() {
 		return "RegistrationUser [id=" + id + ", username=" + username + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", currentStatus=" + currentStatus + ", previousStatus=" + previousStatus + ", usertype="
-				+ usertype + ", hibernateLazyInitializer=" + hibernateLazyInitializer + ", additionalProperties="
-				+ additionalProperties + "]";
+				+ modifiedOn + ", currentStatus=" + currentStatus + ", previousStatus=" + previousStatus
+				+ ", stateInterp=" + stateInterp + ", usertype=" + usertype + ", hibernateLazyInitializer="
+				+ hibernateLazyInitializer + ", additionalProperties=" + additionalProperties + "]";
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
 	}
 	public Integer getId() {
 		return id;

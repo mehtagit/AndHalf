@@ -110,7 +110,7 @@ class="form-control boxBorder boxHeight"/>
 </div>
 
 <div class=" col s12 m6 l6">
- <label for="category"><spring:message code="operator.category" /><span class="star">*</span></label> 
+ <label for="category"><spring:message code="operator.category" /> <span class="star">*</span></label> 
 <select class="browser-default" id="category" onchange="enableAddMore()"
 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -126,7 +126,7 @@ oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFiel
 oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
  required></textarea>
-<label for="Remark"><spring:message code="input.remarks" /><span class="star">*</span></label>
+<label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
 </div>
 </div>
 
@@ -373,7 +373,10 @@ function saveGrievance(){
 	if(filesameStatus==true)
 	{	
 	
-	$('#fileFormateModal').openModal();
+	
+	$('#fileFormateModal').openModal({
+ 	   dismissible:false
+    });
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('duplicateFileName'));
 	return false;
@@ -383,7 +386,9 @@ function saveGrievance(){
 	if(documenttype==true)
 	{	
 		
-	$('#fileFormateModal').openModal();
+		$('#fileFormateModal').openModal({
+		 	   dismissible:false
+		    });
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('documentTypeName'));
 	return false;
@@ -417,7 +422,10 @@ function saveGrievance(){
 			var x=data;
 			var y= JSON.parse(x);
 			
-			$('#submitGrievance').openModal();
+			//$('#submitGrievance').openModal();
+			$('#submitGrievance').openModal({
+			 	   dismissible:false
+			    });
 			$('#greivanceId').text(y.txnId);
 			/*alert(data.errorCode);
 			if(data.errorCode=="0")

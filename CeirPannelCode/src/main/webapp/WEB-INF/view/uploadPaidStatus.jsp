@@ -198,7 +198,7 @@ input[type='search'] {
 														class="center-align ml-10"><spring:message code="input.nidText" /></label>
 												</div>
 
-													<div class="col s12 m4">
+													<div class="col s12 m4" style="margin-top: -10px;">
 															<label for="deviceType"><spring:message code="input.documenttype" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																id="doc_type" 
@@ -210,9 +210,9 @@ input[type='search'] {
 															<!-- <input type="text" id="docTypeNymericValue" style="display: none" > -->
 														</div>	
 
-												<div class="file-field input-field col s12 m4"
+												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /><span class="star">*</span>
+													<h6 style="color: #000;"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
@@ -263,7 +263,7 @@ input[type='search'] {
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 														title= "<spring:message code="validation.200characters" />" maxlength="200" required
 														class="form-control boxBorder boxHeight" id="address">
-													<label for="address"><spring:message code="input.address" /><span
+													<label for="address"><spring:message code="input.address" /> <span
 														class="star">*</span></label>
 												</div>
 
@@ -347,7 +347,7 @@ input[type='search'] {
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-													<spring:message code="input.province" /><span class="star">*</span>
+													<spring:message code="input.province" /> <span class="star">*</span>
 													</p>
 													<select id="state" class="browser-default" class="mySelect"
 													oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
@@ -384,7 +384,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="deviceType1"><spring:message code="select.deviceType" /><span
+															<label for="deviceType1"><spring:message code="select.deviceType" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																id="deviceType1" 
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
@@ -407,7 +407,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-																			<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
+																			<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /> <span class="star"></span>
 															</label> <select class="browser-default" 
 															oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 																title= "<spring:message code="validation.selectFieldMsg" />" id="multipleSimStatus1">
@@ -416,7 +416,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="country1"><spring:message code="select.countryBoughtFrom" /><span
+															<label for="country1"><spring:message code="select.countryBoughtFrom" /> <span
 																class="star">*</span></label> <select id="country1"
 																class="browser-default" class="mySelect"
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
@@ -434,7 +434,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /><span
+															<label for="taxStatus1"><spring:message code="select.taxPaidStatus" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																required="required" id="taxStatus1">
 																<option value="" disabled selected><spring:message code="select.selectTaxPaidStatus" /></option>
@@ -446,7 +446,7 @@ input[type='search'] {
 												<div class="row">
 													<div class="col s12 m12">
 														<div class="col s12 m6" style="margin-top: -10px;">
-															<label for="deviceStatus1"><spring:message code="select.deviceStatus" /><span
+															<label for="deviceStatus1"><spring:message code="select.deviceStatus" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
 																title= "<spring:message code="validation.selectFieldMsg" />"required id="deviceStatus1">
@@ -464,7 +464,7 @@ input[type='search'] {
 														</div>
 
 														<div class="col s12 m6">
-															<label for="Currency1"><spring:message code="input.currency" /><span
+															<label for="Currency1"><spring:message code="input.currency" /> <span
 																class="star">*</span></label> <select class="browser-default"
 																id="Currency1" 
 																oninput="InvalidMsg(this,'select');" oninvalid="InvalidMsg(this,'select');"
@@ -486,7 +486,7 @@ input[type='search'] {
 																		oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 																		title= "<spring:message code="validation.1516digit" />" required 
 																		maxlength="16"> <label for="IMEIA1"><spring:message code="title.one" />
-																		<span class="star">*</span>
+																		 <span class="star">*</span>
 																	</label>
 																</div>
 
@@ -518,16 +518,16 @@ input[type='search'] {
 														</div>
 													</div>
 												</div>
-											</div>
-										</div>
 										<div class="col s12 m12">
 											<button class="btn right add_field_button"
 												style="margin-top: 5px;">
 												<span style="font-size: 20px;">+</span>  <spring:message code="button.addMoreDevice" />
 											</button>
 											<p>
-												 <spring:message code="input.requiredfields" /><span class="star">*</span>
+												 <spring:message code="input.requiredfields" /> <span class="star">*</span>
 											</p>
+										</div>
+											</div>
 										</div>
 
 										<div class="col s12 m12 center" style="margin-top: 30px;">

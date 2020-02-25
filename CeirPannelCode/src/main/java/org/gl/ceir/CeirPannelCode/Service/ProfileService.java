@@ -90,6 +90,17 @@ public class ProfileService {
 		Registration response=new Registration();             
 		response=userProfileFeignImpl.ViewAdminUser(id);
 		return response; 
+	}
+	
+	public HttpResponse changeUserStatusService(UserStatus userStatus,HttpSession session) {
+		log.info("inside changeUserStatus controller");
+		Integer userid= userStatus.getUserId();
+		log.info("userid from session:  "+userid);
+		userStatus.setUserId(userid); 
+		log.info("userStatus data is :  "+userStatus);
+		HttpResponse response=new HttpResponse();             
+		response=userProfileFeignImpl.changeUserStatusFeign(userStatus);
+		return response;  
 	} 
 	
 }
