@@ -32,8 +32,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+
 @RestController
-public class RegistrationReqDatatableController {
+public class PortDatatableController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
 	@Autowired
@@ -57,7 +58,7 @@ public class RegistrationReqDatatableController {
 	@Autowired
 	RegistrationUser registrationUser;
 	
-	@PostMapping("registrationData")
+	@PostMapping("PortData")
 	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",defaultValue = "registration",required = false) String role, HttpServletRequest request,HttpSession session) {
 	
 		String userType = (String) session.getAttribute("usertype");
@@ -103,7 +104,7 @@ public class RegistrationReqDatatableController {
 				   String id =  String.valueOf(dataInsideList.getId());
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
-				   String StatusName = dataInsideList.getUser().getStateInterp();
+				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
 				   String status =  String.valueOf(dataInsideList.getUser().getCurrentStatus());
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
@@ -132,7 +133,7 @@ public class RegistrationReqDatatableController {
 	
 
 
-	@PostMapping("registration/pageRendering")
+	@PostMapping("portManagement/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
@@ -199,4 +200,6 @@ public class RegistrationReqDatatableController {
 		
 		
 	}
+	
+	
 }

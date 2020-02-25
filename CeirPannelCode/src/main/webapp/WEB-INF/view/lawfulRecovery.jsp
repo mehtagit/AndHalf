@@ -425,14 +425,6 @@ onclick="_Services._selectstartDate()"></i></span>
                                                              required>
 														 <label for="bulkRecoveryquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
-                            
-                                                    <div class="input-field col s12 m12">
-                                                        <textarea id="bulkRecoveryRemark"  
-                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                                                          maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
-                                                    </div>
 
                                                     <div class="file-field col s12 m6">
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star"> *</span></h6>
@@ -447,6 +439,14 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName"
                                                                 placeholder="<spring:message code="registration.uploadfile" />" title="Please upload your photo">
                                                         </div>
+                                                    </div>
+                            
+                                                    <div class="input-field col s12 m12">
+                                                        <textarea id="bulkRecoveryRemark"  
+                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
                                                     
                                                     <div class="col s12 m6">

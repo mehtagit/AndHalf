@@ -147,6 +147,9 @@
  div#trackGrievanctableDiv {
     width: 70%;
 } 
+.backdrop {
+	display: none !important;
+}
     </style>
 <script>
 var contextpath = "${context}";

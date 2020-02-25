@@ -5,6 +5,7 @@ public class UserStatus {
 	private Integer userId;
 	private String remark;
 	private Integer featureId;
+	private Integer statusValue;
 	public String getStatus() {
 		return status;
 	}
@@ -29,12 +30,16 @@ public class UserStatus {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+	public Integer getStatusValue() {
+		return statusValue;
+	}
+	public void setStatusValue(Integer statusValue) {
+		this.statusValue = statusValue;
+	}
 	@Override
 	public String toString() {
 		return "UserStatus [status=" + status + ", userId=" + userId + ", remark=" + remark + ", featureId=" + featureId
-				+ "]";
+				+ ", statusValue=" + statusValue + "]";
 	}
 
-	
-	
 }
