@@ -297,7 +297,8 @@
 				"userId": parseInt(userid),
 				"status" : "Approved",
 				"remark": $("#Reason").val(),	
-				"featureId" : parseInt(featureId)
+				"featureId" : parseInt(featureId),
+				"statusValue" : 3
 		}
 		
 		$.ajax({
@@ -337,7 +338,8 @@
 				"userId": parseInt(userid),
 				"status" : "Rejected",
 				"remark": $("#Reason").val(),
-				"featureId" : parseInt(featureId)
+				"featureId" : parseInt(featureId),
+				"statusValue" : 4
 		}
 		
 		$.ajax({
@@ -369,14 +371,15 @@
 		var asType =  $('#asType').val();
 		var userRoleTypeId =  $("#role").val();
 		var status =  $('#recentStatus').val();
+		var featureId = 8;
 		
 		var table = $('#registrationLibraryTable').DataTable();
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
-		console.log("RegistrationS----------------------tartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status)
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
+		console.log("RegistrationStartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status+" featureId---->" +featureId)
+		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 	}
 
 
