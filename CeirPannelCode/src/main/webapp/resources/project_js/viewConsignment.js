@@ -657,7 +657,7 @@ function confirmantiondelete(){
 		{
 			var userType=$("body").attr("data-roleType");
 			displayName=displayName.replace("+20"," " );
-			$('#ApproveConsignment').openModal();
+			$('#ApproveConsignment').openModal({dismissible:false});
 			if(userType=='Custom'){
 				
 				$.ajax({

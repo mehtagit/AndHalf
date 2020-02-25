@@ -126,7 +126,7 @@ public class LoginResponse {
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
 				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
 				+ ", operatorTypeId=" + operatorTypeId + ", period=" + period + ", userLanguage=" + userLanguage
-				+ ", tag=" + tag + "]";
+				+ ", tag=" + tag + " , statusValue=" + statusValue+"]";
 	}
 	
 	

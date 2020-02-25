@@ -200,6 +200,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             </div>
         </div>
     </div>
+    
     		<div id="statusChangemodal" class="modal">
                <form action="" onsubmit="return chanegeUserStatus()" method="POST"
 								enctype="multipart/form-data" id="">
@@ -251,6 +252,8 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
             </div>
         </div>
     </div>
+    
+    
 
     
 	

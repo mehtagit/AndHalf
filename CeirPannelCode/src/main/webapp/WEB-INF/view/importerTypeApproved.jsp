@@ -153,7 +153,7 @@
 										<div id="mainDiv" class="mainDiv">
 											<div id="filediv" class="fileDiv">
 												<div class="row">
-													<div class="col s12 m6 l6" style="margin-top: 8px;">
+													<div class="col s12 m6 l6">
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
 															class="browser-default" id="docTypetag1">
@@ -170,7 +170,7 @@
 													</div>
 
 													<div class="file-field col s12 m6">
-														<h6 style="color: #000;">
+														<h6 class="file-upload-heading">
 															<spring:message code="input.supportingdocument" />
 														</h6>
 														<div class="btn">
@@ -239,6 +239,22 @@
 		</div>
 	</div>
 	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
  <!--  <div id="RegisterManageTypeDevice" class="modal">
      <h6 class="modal-header" style="margin:0px;">Update</h6>

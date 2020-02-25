@@ -575,6 +575,7 @@ function registrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
+					$('#content').addClass('lean-overlay');
 					$("#otpMsgModal").openModal({
 				        dismissible:false
 				    });

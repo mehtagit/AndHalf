@@ -119,7 +119,7 @@
 											<spring:message code="input.IDImage" />  <span class="star">*</span>
 											</h6>
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /> </span> <input type="file" 
+												<span><spring:message code="input.selectfile" /> </span> <input type="file" onchange="fileTypeValueChanges()"
 											oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"	
 												title="<spring:message code="validation.file" />" required  accept="image/*" id="uploadnationalID">
 											</div>
@@ -306,13 +306,13 @@
 													<spring:message code="input.UploadIDImage" /> <span class="star">*</span>
 												</h6>
 												<div class="btn">
-													<span><spring:message code="operator.file" /></span> <input type="file" accept="image/*"
+													<span><spring:message code="operator.file" /></span> <input type="file" accept="image/*" onchange="deptImageValidation()"
 								oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
 								title= "<spring:message code="validation.NoChosen" />" required  id="endUserDepartmentId"
 														placeholder="Upload Department ID Image">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="endUSerNidaPlaceholder"
 														placeholder="Upload Department ID Image">
 												</div>
 											</div>
@@ -388,11 +388,11 @@
 												</h6>
 												<div class="btn">
 													<span><spring:message code="operator.file" /></span> <input type="file" id="visaImage" accept="image/*"
-													oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+													oninput="InvalidMsg(this,'fileType');" onchange="visaImageValidation()" oninvalid="InvalidMsg(this,'fileType');"
 													title= "<spring:message code="validation.NoChosen" />" required   placeholder="Upload Visa Image">
 												</div>
 												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text"
+													<input class="file-path validate" type="text" id="ensUserVisaPlaceHolder"
 														placeholder="Upload Visa Image">
 												</div>
 											</div>
@@ -557,6 +557,55 @@
         </div>
     </div>
 	</section>
+	
+		<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div id="visafileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="visafileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearVisaName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+		<div id="DeptfileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="DeptfileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearDeptName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>

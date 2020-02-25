@@ -320,7 +320,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 				<div class="input-field col s12 center">
 					<button  
 						class=" btn" type="submit"><spring:message code="modal.yes" /></button>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
 			</form>

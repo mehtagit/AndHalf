@@ -3,11 +3,6 @@ var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
-/*window.parent.$('#langlist').on('change', function() {
-	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-	window.location.assign("./manageTypeDevices?lang="+lang);				
-}); */
-
 $.i18n().locale = lang;	
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
@@ -670,7 +665,7 @@ $(".add_field_button")
 										'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
 												+ $
 														.i18n('documenttype')
-												+ ' <span class="star">*</span></label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
+												+ ' <span class="star">*</span></label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'
 												+ $
 														.i18n('selectDocumentType')
 												+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
@@ -678,7 +673,7 @@ $(".add_field_button")
 														.i18n('selectDocumentType')
 												+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
 												+ $.i18n('selectfile')
-												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+												+ '</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
 					}
 
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE', function(

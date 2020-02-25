@@ -274,7 +274,7 @@
 					<div class="input-field col s12 center">
 						<button class="btn" type="submit"><spring:message
 								code="modal.yes" /></button>
-						<button class="modal-close btn" type="submit"
+						<button class="modal-close btn" type="button"
 							onclick="closeUpdateModal()" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -646,13 +646,15 @@
 
 					<div class="input-field col s12 m6">
 
-						<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
+						<input name="expectedDispatcheDateEdit" id="expectedDispatcheDateEdit"
 							placeholder="" type="text" class='form-control datepick'
 							autocomplete='off'
-							onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDate(expectedDispatcheDate,expectedArrivaldate);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
+							onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDateOnModal(expectedDispatcheDateEdit,expectedArrivaldateEdit);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
 							 required />
 						<label for="dispatchDate" class="center-align"><spring:message
-								code="input.dispatchdate" /><span class="star">*</span> </label> <span
+								code="input.dispatchdate" /><span class="star">*</span> </label>
+								<p id="errorMsgOnModal" class="onEditModalTitle"></p>
+								 <span
 							class="input-group-addon" style="color: #ff4081"><i
 							class="fa fa-calendar" aria-hidden="true"></i></span>
 					</div>
@@ -668,9 +670,9 @@
 					<div class="input-field col s12 m6">
 						<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
 						<!-- <label for="Name">Expected arrival Date</label> -->
-						<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
+						<input name="expectedArrivaldateEdit" id="expectedArrivaldateEdit"
 							placeholder="" type="text" class='form-control datepick'
-							autocomplete='off' onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDate(expectedDispatcheDate,expectedArrivaldate);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
+							autocomplete='off' onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDateOnModal(expectedDispatcheDateEdit,expectedArrivaldateEdit);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
 							 required />
 						<label for="dispatchDate" class="center-align"><spring:message
 								code="input.arrivaldate" /><span class="star">*</span> </label> <span
