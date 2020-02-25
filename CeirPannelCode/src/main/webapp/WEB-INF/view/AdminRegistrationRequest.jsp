@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -192,6 +201,57 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
         </div>
     </div>
     
+    		<div id="statusChangemodal" class="modal">
+               <form action="" onsubmit="return chanegeUserStatus()" method="POST"
+								enctype="multipart/form-data" id="">
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> <spring:message code="registration.changeUserStatus" /></h6>
+                                <div class="col s12 m12 l12">
+                                 
+								   
+                                   <div class="row">
+                                            <div class="input-field col s6 m5">
+                                                <label for="Category"> <spring:message code="select.changeUserStatus" /> <span class="star"> *</span></label>
+                                            </div>
+                                            <div class="col s6 m7 selectDropdwn">
+                                                <select class="browser-default" id = "userStatus" 
+	title="<spring:message code="validation.selectFieldMsg" />" required>
+                                                    <option value="" disabled selected><spring:message code="select.selectUserStatus" /></option>
+                                           	</select>
+                                            </div>
+                                   
+                                        </div>
+                                 
+                                        <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                                <a href="./registrationRequest" class="btn" style="margin-left: 10px;"><spring:message code="button.cancel" /></a>
+                                            </div>
+
+                                        </div>
+                                      
+									
+                                    </div>
+                                   </div></form>
+                    </div>           
+    
+    <div id="confirmUserStatus" class="modal">
+         <h6 class="modal-header"><spring:message code="registration.changeUserStatus" /></h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6><spring:message code="registration.changedStatus" /></h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./registrationRequest"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
     
     
 
@@ -275,3 +335,16 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
 		
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

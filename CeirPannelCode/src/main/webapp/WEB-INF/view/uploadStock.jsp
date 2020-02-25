@@ -203,7 +203,7 @@ to {
 </style>
 
 </head>
-<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -227,19 +227,17 @@ to {
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierId"
 											pattern="[A-Za-z0-9]{0,15}"
-											oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.15character" />"
-											maxlength="15" id="supplierId" maxlength="15" /> <label
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												maxlength="15" id="supplierId" maxlength="15" /> <label
 											for="supplierId" id="SupplierIdAssignie" class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
 
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
-											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.50character" />"
+											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
 												code="input.supllierName" /><span class="star">*</span></label>
@@ -253,9 +251,8 @@ to {
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
-											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.7digits" />"
+											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											maxlength="7" required /> <label for="Quantity"
 											class="center-align"><spring:message
 												code="input.quantity" /><span class="star">*</span></label>
@@ -265,9 +262,8 @@ to {
 										style="display: none">
 										<input type="text" name="invoiceNumber" id="invoiceNumber"
 											pattern="[A-Za-z0-9]{0,15}"
-											oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.15numbers" />"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
 											maxlength="15" /> <label for="InvoiceNumber"
 											class="center-align"><spring:message
 												code="input.invoiceNumber" /></label>
@@ -286,9 +282,8 @@ to {
 										<div class="btn">
 											<span><spring:message code="input.selectfile" /></span> <input
 												onchange="fileTypeValueChanges()" type="file" id="file"
-												oninput="InvalidMsg(this,'fileType');"
-												oninvalid="InvalidMsg(this,'fileType');"
-												title="<spring:message code="validation.NoChosen" />"
+												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+												oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 												required size=50 maxlength=50 accept=".csv">
 										</div>
 										<div class="file-path-wrapper">
@@ -345,7 +340,7 @@ to {
 					<div class="input-field col s12 center">
 						<a onclick="redirectToViewPage()" class="btn"><spring:message
 								code="modal.yes" /></a>
-						<button class="modal-close waves-effect waves-light btn"
+						<button class="modal-close btn"
 							style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -640,7 +635,9 @@ function uploadStock(){
 			
 			 console.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
-			  $('#submitStock').openModal();
+			   $('#submitStock').openModal({
+		    	   dismissible:false
+		       });
 			 if(data.errorCode=="0")
 				 {
 				 console.log("status code = 0");
@@ -719,23 +716,25 @@ function fileTypeValueChanges(dd, ddd) {
 	var fileSize = ($("#file")[0].files[0].size);
 	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
    if (uploadedFileName.length > 30) {
-       $('#fileFormateModal').openModal();
+	   $('#fileFormateModal').openModal({
+    	   dismissible:false
+       });
       
        
    } 
 	else if(ext!='csv')
 		{
-		$('#fileFormateModal').openModal();
-		 
+		
+		 $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		}
 	else if(fileSize>='2000'){
-		$('#fileFormateModal').openModal();
-		 
+		 $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 	}
-	else {
-		console.log("file formate is correct")
-		
-	}
+	
 	
 
 }
@@ -747,8 +746,11 @@ function clearFileName() {
 }
 
 function openModalForAssigneId(){
+	 $('#searchSupplierInformation').openModal({
+  	   dismissible:false
+     });
 	
-	$('#searchSupplierInformation').openModal();
+	//$('#searchSupplierInformation').openModal();
 }
 
 function viewAssigneeHistory() {
@@ -763,7 +765,8 @@ function assigneeTable(URL,dataUrl){
 
    var request={
 		   "field":assigneDetails,
-		   "type": parseInt($('input[name="group1"]:checked').val())
+		   "type": parseInt($('input[name="group1"]:checked').val()),
+		   "userTypeId" : $("body").attr("data-userTypeID")
 	}
 	
 	if(lang=='km'){

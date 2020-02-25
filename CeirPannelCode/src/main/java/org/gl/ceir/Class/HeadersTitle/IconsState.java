@@ -759,6 +759,8 @@ public class IconsState {
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
 		String rejectAction = "userRejectPopup("+userId+")";
+		String editAction="userChangeStatus('"+userId+"')";
+		
 
 		//log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus);
 
@@ -767,6 +769,9 @@ public class IconsState {
 
 		String view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
+		
+		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
 
 		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
@@ -803,7 +808,7 @@ public class IconsState {
 					+rejectIconTitle+" ></i></a>";
 
 		}
-		String action=view.concat(approve).concat(reject);		  
+		String action=view.concat(edit).concat(approve).concat(reject);		  
 		return action;
 
 	}
@@ -1140,7 +1145,7 @@ public class IconsState {
 	/********************************** Icons for Admin TRC Manage Type Datatable **********************************/ 
 
 
-	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus) {
+	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus,String userStatus) {
 		executePostConstruct();
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
 		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
@@ -1159,15 +1164,15 @@ public class IconsState {
 		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
-		if("0".equals(status)) {
+		if("6".equals(status)) {
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
-		}else if("1".equals(status)) {
+		}else if("7".equals(status)) {
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
 					+ " aria-hidden=\"true\" title=" + rejectIconTitle + " ></i></a>";
 			download = "<a href=" + downloadURL + " ><i class=" + downloadIcon
 					+ " aria-hidden=\"true\" title=" + downloadIconTitle + " ></i></a>";
-		}else if("8".equals(status)) {
+		}else if(("0".equals(status) || "1".equals(status) || "2".equals(status) || "4".equals(status) || "8".equals(status)) && "Approved".equals(userStatus)) {
 			approve = "<a onclick=" + approveAction + " class=\"eventNone\"><i class=" + disableApproveIcon
 					+ " aria-hidden=\"true\" title=" + approveIconTitle + " ></i></a>";
 			reject = "<a onclick=" + rejectAction + " class=\"eventNone\"><i class=" + disableRejectIcon
@@ -1497,11 +1502,11 @@ public class IconsState {
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
-		if(("8".equals(status)) && "Approved".equals(userStatus)) {
+		if(("7".equals(status) || "8".equals(status)) && "Approved".equals(userStatus)) {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\"  title="
 					+deleteIconTitle+"></i></a>";	
-		}else if(("0".equals(status)) && "Approved".equals(userStatus)) {
+		}else if(("1".equals(status) || "3".equals(status) || "4".equals(status) || "6".equals(status)) && "Approved".equals(userStatus)) {
 			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
 					+disableEditIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 

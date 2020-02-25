@@ -329,7 +329,7 @@ function updateProfile(){
 		success : function(data) {
 			var response=JSON.parse(data);
 			if(response.statusCode=='200'){
-				//if(response.userstatus=='Approved'){
+				if(response.userstatus=='Approved'){
 					    
 				var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$.i18n().locale = lang;	
@@ -344,15 +344,23 @@ function updateProfile(){
 
 					});
 					
-				/*} 
+				} 
 				else if(response.userstatus=='OTP Verification Pending'){
 					$("#userid").val(response.userId);
 					$("#passwordModal").closeModal();
 					$("#otpMsgModal").openModal();     
-					$("#otpMsg").text(response.response);
+					//$("#otpMsg").text(response.response);
+					$.i18n().locale = $('#langlist').val();
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$("#otpMsg").text($.i18n(response.tag));
+					});
+					
 				}
 				else{
-				}*/
+				}
 			}
 			else{
 				

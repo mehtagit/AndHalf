@@ -131,7 +131,7 @@ String name = (String) session.getAttribute("name");
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToLogout" class="modal-trigger"
+						<li><a   data-target="goToHome" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
