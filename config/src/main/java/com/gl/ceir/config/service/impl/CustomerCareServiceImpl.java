@@ -1,5 +1,6 @@
 package com.gl.ceir.config.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -7,7 +8,12 @@ import java.util.Objects;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
@@ -17,8 +23,12 @@ import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
+import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.Notification;
+import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
 import com.gl.ceir.config.util.Utility;
 
 @Service
@@ -40,6 +50,9 @@ public class CustomerCareServiceImpl {
 
 	@Autowired 
 	CustomerCareFactory customerCareFactory;
+	
+	@Autowired
+	PolicyBreachNotificationRepository policyBreachNotificationRepository;
 
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest) {
 		try {
@@ -115,6 +128,26 @@ public class CustomerCareServiceImpl {
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+	}
+	
+	public Page<PolicyBreachNotification> viewPolicyBreachNotification(FilterRequest filterRequest, 
+			Integer pageNo, Integer pageSize){
+		try {
+			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			
+			if(Objects.nonNull(filterRequest.getImei())) {
+				return policyBreachNotificationRepository.findByImei(filterRequest.getImei(), pageable);
+			}
+			else if(Objects.nonNull(filterRequest.getContactNumber())){
+				return policyBreachNotificationRepository.findByImei(filterRequest.getContactNumber(), pageable);
+			}else {
+				return new PageImpl<>(new ArrayList<PolicyBreachNotification>(1), pageable, 0L);
+			}
+			
+		} catch (Exception e) {
+			logger.error("Not Register Consignent="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}

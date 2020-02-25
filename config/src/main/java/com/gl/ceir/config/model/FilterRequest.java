@@ -35,7 +35,22 @@ public class FilterRequest {
 	private String tag;
 	private String childTag;
 	private Integer parentValue;
+	
+	private String imei;
+	private String contactNumber;
 
+	public String getImei() {
+		return imei;
+	}
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+	public String getContactNumber() {
+		return contactNumber;
+	}
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
 	public Long getId() {
 		return id;
 	}

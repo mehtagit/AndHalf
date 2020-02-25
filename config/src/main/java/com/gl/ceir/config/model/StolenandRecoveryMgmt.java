@@ -306,8 +306,6 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(", singleImeiDetails=");
 		builder.append(singleImeiDetails);
 		builder.append(", stolenIndividualUserDB=");
-		builder.append(stolenIndividualUserDB);
-		builder.append(", stolenOrganizationUserDB=");
 		builder.append(stolenOrganizationUserDB);
 		builder.append(", imei=");
 		builder.append(imei);
