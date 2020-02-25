@@ -5,6 +5,16 @@ $('#langlist').on('change', function() {
 	var type = url.searchParams.get("type");
 	window.location.assign("updateVisaValidaity?lang="+lang);			
 	});   
+
+	$.i18n().locale = data_lang_param;	
+		
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		} ).done( function() { 
+		});
+		
+		
 function hide() {
             var In = $('#nidForEndUser').val()
             if (In == "black") {
