@@ -203,7 +203,7 @@ to {
 </style>
 
 </head>
-<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"  data-userTypeID="${usertypeId}" 
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -760,10 +760,11 @@ function assigneeTable(URL,dataUrl){
 	var formData= new FormData()
 	//var requestType =	$('input[name="group1"]:checked').val();
    	var assigneDetails=$('#assigneDetails').val();
-
+   	 
    var request={
 		   "field":assigneDetails,
-		   "type": parseInt($('input[name="group1"]:checked').val())
+		   "type": parseInt($('input[name="group1"]:checked').val()),
+		   "userTypeId" : $("body").attr("data-userTypeID")
 	}
 	
 	if(lang=='km'){

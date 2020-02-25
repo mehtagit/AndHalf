@@ -328,6 +328,8 @@ function filterStolen(){
 		Datatable('./headers?type=stolen','stolenData')
 	}else if(sourceType =="viaExistingRecovery" ){
 		Datatable('./headers?type=stolenCheckHeaders', 'stolenData?sourceType=viaExistingRecovery')
+	}else if(userType =="CEIRAdmin" ){
+		
 	}
 	localStorage.removeItem('sourceType');
 }  
