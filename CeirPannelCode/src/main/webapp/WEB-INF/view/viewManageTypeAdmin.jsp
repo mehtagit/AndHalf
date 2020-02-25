@@ -486,25 +486,26 @@ var path="${context}";
 
 			
 			
-
+		<form action="" onsubmit="return confirmantiondelete()">
 		<div class="row">
 				<h6><spring:message code="modal.message.tac.widthdraw" /><span id="tacdeleteTxnId"></span></h6>
 			</div> 
 			<div class="row">
 				<div class="input-field col s12 m12">
-					<textarea id="deleteTacRemark" class="materialize-textarea"></textarea>
-					<label for="textarea1" class=""><spring:message code="input.remarks" /></label>
+					<textarea id="deleteTacRemark" required="required" class="materialize-textarea"></textarea>
+					<label for="textarea1" class=""><spring:message code="input.remarks" /> <span
+                                                class="star">*</span> </label>
 				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<input type="text" id="deleteTacId" hidden>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a onclick="confirmantiondelete()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+					<button type="submit" class="btn" type="submit"><spring:message code="modal.yes" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	
@@ -527,7 +528,22 @@ var path="${context}";
 	</div>
 	
 	
-	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!--materialize js-->
 	<script type="text/javascript"
@@ -599,6 +615,8 @@ var path="${context}";
 	<script type="text/javascript" src="${context}/resources/project_js/viewManageTypeAdmin.js"></script>	
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 
 </body>
 </html>

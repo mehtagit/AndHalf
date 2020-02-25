@@ -317,7 +317,10 @@ var featureId = 6;
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-						$('#replyModal').openModal();
+						//$('#replyModal').openModal();
+						$('#replyModal').openModal({
+						 	   dismissible:false
+						    });
 						//console.log(data.grievance.categoryId)
 						//alert("11"+data.categoryId)
 						setDocTypeValue(data[0].grievance.categoryId);
@@ -428,7 +431,10 @@ var featureId = 6;
 				if(filesameStatus==true)
 				{	
 				
-				$('#fileFormateModal').openModal();
+			///	$('#fileFormateModal').openModal();
+				$('#fileFormateModal').openModal({
+				 	   dismissible:false
+				    });
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
 				return false;
@@ -436,8 +442,9 @@ var featureId = 6;
 				}
 				if(documenttype==true)
 				{	
-					
-				$('#fileFormateModal').openModal();
+					$('#fileFormateModal').openModal({
+					 	   dismissible:false
+					    });
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('documentTypeName'));
 				return false;
@@ -474,7 +481,10 @@ var featureId = 6;
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						$('#replyMsg').openModal();
+					//	$('#replyMsg').openModal();
+						$('#replyMsg').openModal({
+						 	   dismissible:false
+						    });
 						if(data.errorCode=="0")
 						{
 							
@@ -508,7 +518,10 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						var grievanceID=	
 						$('#chatMsg').empty();
-						$('#manageAccount').openModal();
+						//$('#manageAccount').openModal();
+						$('#manageAccount').openModal({
+						 	   dismissible:false
+						    });
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
 							for(var i=0; i<data.length; i++)
@@ -611,13 +624,22 @@ var featureId = 6;
 						
 					}
 				});*/
-				var categoryParentValues= $('#existingGrievanceID').val()
+				
+				var grievanceUserTypeId=parseInt($("body").attr("data-userTypeID"));
+				var categoryParentValues= $('#existingGrievanceID').val();
+				if(isNaN(grievanceUserTypeId))
+					{
+					
+					grievanceUserTypeId=17;
+					categoryParentValues=$('#grievanceSelectedCategory').val();
+					}
+				
 				var request ={
 						 "childTag": "DOC_TYPE",
 						  "featureId": 6,
 						  "parentValue":  parseInt(categoryParentValues),	
 						  "tag": "GRIEVANCE_CATEGORY",
-						  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+						  "userTypeId":grievanceUserTypeId,
 					}
 			
 			console.log("request --->" +JSON.stringify(request));	

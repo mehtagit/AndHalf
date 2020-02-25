@@ -40,7 +40,11 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	//*******************************************View Pop up data *************************************************************************************************
 	function viewUploadedStockDetails(txnId){
 
-		$("#viewStockModal").openModal();
+		
+		 $('#viewStockModal').openModal({
+	    	   dismissible:false
+	       });
+		
 		var role = currentRoleType == null ? roleType : currentRoleType;
 
 		$.ajax({
@@ -121,7 +125,9 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 			}
 		});
 
-		$("#editStockModal").openModal();
+		 $('#editStockModal').openModal({
+	    	   dismissible:false
+	       });
 	}
 
 
@@ -198,7 +204,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 				console.log(data);
 				$('#editStockModal').closeModal();
-				$('#successUpdateStockModal').openModal();
+				 $('#successUpdateStockModal').openModal({
+			    	   dismissible:false
+			       });
 				if(data.errorCode==200){
 
 					$('#stockSucessMessage').text('');
@@ -231,7 +239,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	//**************************************************** Delete Stock Modal *************************************************************************
 
 	function DeleteStockRecord(txnId){
-		$("#DeleteStockconfirmationModal").openModal();
+		
+		$('#DeleteStockconfirmationModal').openModal({
+	    	   dismissible:false
+	       });
 		$("#stockdeleteTxnId").text(txnId);
 	}
 
@@ -259,7 +270,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				//$("#stockModalText").text(data.message);
 				$("#DeleteStockconfirmationModal").closeModal();
 
-				$("#closeDeleteModal").openModal();
+				$('#closeDeleteModal').openModal({
+			    	   dismissible:false
+			       });
 				if(data.errorCode == 0){
 					$("#stockModalText").text(stockDeleted);
 				}
@@ -412,7 +425,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					if(date[i].type === "date"){
 						$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 								"<div id='enddatepicker' class='input-group date'>"+
-								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+								"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
 								"<label for="+date[i].id+">"+date[i].title
 								+"</label>"+
 								"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -519,7 +532,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 
 	function markedstolen(){
-		$('#markAsMultipleStolen').openModal();
+		//$('#markAsMultipleStolen').openModal();
+		$('#markAsMultipleStolen').openModal({
+	    	   dismissible:false
+	       });
 
 	}
 
@@ -575,12 +591,19 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var userType=$("body").attr("data-roleType");
 		if(userType=='Custom')
 			{
-			$('#ApproveStock').openModal();
+			//$('#ApproveStock').openModal();
+			$('#ApproveStock').openModal({
+		    	   dismissible:false
+		       });
+
 			$('#approveStockTxnId').text(txnId);
 			
 			}
 		else {
-			$('#ApproveStock').openModal();
+			//$('#ApproveStock').openModal();
+			$('#ApproveStock').openModal({
+		    	   dismissible:false
+		       });
 			$('#stockApproveMessage').text('');
 			$('#stockApproveMessage').text(stockTxn+" "+txnId);
 			$('#stockAppapprove').text('');
@@ -608,7 +631,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			type : 'POST',
 			success : function(data) {
 				$('#ApproveStock').closeModal();
-				$('#confirmApproveStockModal').openModal();
+				//$('#confirmApproveStockModal').openModal();
+				$('#confirmApproveStockModal').openModal({
+			    	   dismissible:false
+			       });
 				console.log(data);
 				if(data.errorCode==0){
 
@@ -629,7 +655,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function disApproveStock(txnId)
 	{
 
-		$('#RejectStockModal').openModal();
+		//$('#RejectStockModal').openModal();
+		$('#RejectStockModal').openModal({
+	    	   dismissible:false
+	       });
 		$('#disaproveTxnId').text(txnId);
 		
 
@@ -656,7 +685,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				
 				//setTimeout(function(){ $('#confirmRejectStock').openModal()}, 200);
 				$('#RejectStockModal').closeModal();
-				$('#confirmRejectStock').openModal();
+				//$('#confirmRejectStock').openModal();
+				$('#confirmRejectStock').openModal({
+			    	   dismissible:false
+			       });
 				if(data.errorCode==0){
 
 					$('#stockDisapproveSucessMessage').text('');
@@ -719,20 +751,22 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var fileSize = ($("#editcsvUploadFile")[0].files[0].size);
 		fileSize = (Math.round((fileSize / 1024) * 100) / 100)
 	   if (uploadedFileName.length > 30) {
-	       $('#fileFormateModal').openModal();
-	       $('#fileErrormessage').text('');
-	       $('#fileErrormessage').text('file name length must be less then 30 characters.');
+	     //  $('#fileFormateModal').openModal();
+	       $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+	      
 	   } 
 		else if(ext!='csv')
 			{
-			$('#fileFormateModal').openModal();
-			 $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file extension must be in  CSV.');
+			  $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       }); 
 			}
-		else if(fileSize>='5000'){
-			$('#fileFormateModal').openModal();
-			 $('#fileErrormessage').text('');
-		       $('#fileErrormessage').text('file size must be less then 5 mb.');
+		else if(fileSize>='2000'){
+			  $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
 		}
 		else {
 			console.log("file formate is correct")

@@ -372,7 +372,10 @@ function saveGrievance(){
 	if(filesameStatus==true)
 	{	
 	
-	$('#fileFormateModal').openModal();
+	
+	$('#fileFormateModal').openModal({
+ 	   dismissible:false
+    });
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('duplicateFileName'));
 	return false;
@@ -382,7 +385,9 @@ function saveGrievance(){
 	if(documenttype==true)
 	{	
 		
-	$('#fileFormateModal').openModal();
+		$('#fileFormateModal').openModal({
+		 	   dismissible:false
+		    });
 		$('#fileErrormessage').text('')
 		$('#fileErrormessage').text($.i18n('documentTypeName'));
 	return false;
@@ -416,7 +421,10 @@ function saveGrievance(){
 			var x=data;
 			var y= JSON.parse(x);
 			
-			$('#submitGrievance').openModal();
+			//$('#submitGrievance').openModal();
+			$('#submitGrievance').openModal({
+			 	   dismissible:false
+			    });
 			$('#greivanceId').text(y.txnId);
 			/*alert(data.errorCode);
 			if(data.errorCode=="0")

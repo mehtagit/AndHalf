@@ -332,11 +332,11 @@
 													oninput="InvalidMsg(this,'fileType');"
 													oninvalid="InvalidMsg(this,'fileType');"
 													oninput="setCustomValidity('')"
-													required /  id="endUseruploadnationalID"
+													required   id="endUseruploadnationalID" onchange="visaImageValidation()"
 													placeholder="Upload Visa Image">
 											</div>
 											<div class="file-path-wrapper">
-												<input class="file-path validate" type="text"
+												<input class="file-path validate" type="text" id="endUseruploadnationalIDPlaceHolder"
 													placeholder="Upload Visa Image">
 											</div>
 										</div>
@@ -550,6 +550,22 @@
 		<!--end container-->
 	</section>
 
+	<div id="visafileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="visafileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close  btn" onclick="clearVisaName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 	<script type="text/javascript"

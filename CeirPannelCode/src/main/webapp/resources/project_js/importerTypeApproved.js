@@ -75,6 +75,10 @@ window.parent
 			var docTypeTagIdValue='';
 			var filename='';
 			
+			var filesameStatus=false;
+			var documenttype=false;
+			var docTypeTag='';
+			var documentFileNameArray=[];
 			
 			$('.fileDiv').each(function() {	
 			var x={
@@ -82,10 +86,53 @@ window.parent
 				"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 				}
 				formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
+			documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+			docTypeTag=$('#docTypetag'+fieldId).val();
+			var fileIsSame=	documentFileNameArray.includes(documentFileName);
+			
+			var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+		
+			if(filesameStatus!=true){
+				filesameStatus=	fileIsSame;
+			}
+			
+			 if(documenttype!=true)
+				{
+				documenttype=documentTypeTag;
+		
+				}
+			documentFileNameArray.push(documentFileName);
+			documentFileNameArray.push(docTypeTag);
+			
 				fileInfo.push(x);
 				fieldId++;
 				i++;
 			});
+			
+			if(filesameStatus==true)
+			{	
+			
+			//$('#fileFormateModal').openModal();
+			 $('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+				$('#fileErrormessage').text('')
+				$('#fileErrormessage').text($.i18n('duplicateFileName'));
+			return false;
+			
+			}
+			
+			if(documenttype==true)
+			{	
+				$('#fileFormateModal').openModal({
+			    	   dismissible:false
+			       });
+			//$('#fileFormateModal').openModal();
+				$('#fileErrormessage').text('')
+				$('#fileErrormessage').text($.i18n('documentTypeName'));
+			return false;
+			
+			}
 			
 			var multirequest={
 					"attachedFiles":fileInfo,
@@ -97,7 +144,7 @@ window.parent
 					"tac" : $('#tac').val(),
 			 		"userId" : $("body").attr("data-userID"),
 			 		"featureId" : featureId,
-			 		"approveStatus" : 2
+			 		"approveStatus" : 0
 				}
 			console.log("multirequest------------->" +JSON.stringify(multirequest))
 			formData.append('fileInfo[]',JSON.stringify(fileInfo));
@@ -115,7 +162,10 @@ window.parent
 						var result =  JSON.parse(data)
 						console.log("successdata-----" +result);
 						$("#trcSubmitButton").prop('disabled', true);
-						$('#RegisterManageTypeDevice').openModal();
+						//$('#RegisterManageTypeDevice').openModal();
+						$('#RegisterManageTypeDevice').openModal({
+					    	   dismissible:false
+					       });
 						$('#transactionId').text(result.txnId);
 				},
 				error : function(jqXHR, textStatus, errorThrown) {
@@ -126,6 +176,7 @@ window.parent
 			return false;
 
 		}
+
 
 		$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(data) {
 			console.log("@@@@@" + JSON.stringify(data));
