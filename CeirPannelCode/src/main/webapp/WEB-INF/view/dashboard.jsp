@@ -293,10 +293,11 @@ String name = (String) session.getAttribute("name");
 				</div>
 				<%
 					//String status = (String) session.getAttribute("userStatus");
-				Integer statusValue=(Integer)session.getAttribute("userStatus");
+				Integer statusValue=(Integer)session.getAttribute("userStatusValue");
 				%>
 				<%
 					if (statusValue==3) {
+	
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
