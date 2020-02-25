@@ -227,19 +227,17 @@ to {
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierId"
 											pattern="[A-Za-z0-9]{0,15}"
-											oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.15character" />"
-											maxlength="15" id="supplierId" maxlength="15" /> <label
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												maxlength="15" id="supplierId" maxlength="15" /> <label
 											for="supplierId" id="SupplierIdAssignie" class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
 
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
-											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.50character" />"
+											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
 												code="input.supllierName" /><span class="star">*</span></label>
@@ -253,9 +251,8 @@ to {
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
-											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.7digits" />"
+											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											maxlength="7" required /> <label for="Quantity"
 											class="center-align"><spring:message
 												code="input.quantity" /><span class="star">*</span></label>
@@ -265,9 +262,8 @@ to {
 										style="display: none">
 										<input type="text" name="invoiceNumber" id="invoiceNumber"
 											pattern="[A-Za-z0-9]{0,15}"
-											oninput="InvalidMsg(this,'input');"
-											oninvalid="InvalidMsg(this,'input');"
-											title="<spring:message code="validation.15numbers" />"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
 											maxlength="15" /> <label for="InvoiceNumber"
 											class="center-align"><spring:message
 												code="input.invoiceNumber" /></label>
@@ -286,9 +282,8 @@ to {
 										<div class="btn">
 											<span><spring:message code="input.selectfile" /></span> <input
 												onchange="fileTypeValueChanges()" type="file" id="file"
-												oninput="InvalidMsg(this,'fileType');"
-												oninvalid="InvalidMsg(this,'fileType');"
-												title="<spring:message code="validation.NoChosen" />"
+												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+												oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
 												required size=50 maxlength=50 accept=".csv">
 										</div>
 										<div class="file-path-wrapper">
