@@ -45,7 +45,8 @@
 				console.log('#blockdeviceIdType');
 			}
 		});
-		$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+	
+		$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 			
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
@@ -397,7 +398,7 @@ function viewDeviceDetails(txnId,popUpType,requestType){
 	});
 }
 
-$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 	$('#editBulkBlockCategory').empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -544,7 +545,7 @@ $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 	}
 });
 
-$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 	$("#editbulkBlockdeviceCategory").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)

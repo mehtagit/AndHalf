@@ -19,7 +19,7 @@ $('#langlist').on('change', function() {
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
+        	var url = new URL(window.location.href);
     		var langParameter = url.searchParams.get("lang");
             	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
         	$('.modal-trigger').leanModal({

@@ -228,7 +228,10 @@ public class BlockUnblock {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
-			int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
+			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
+			 Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+			    log.info("operaot type id=="+operatorTypeId);
+				//String roletype=session.getAttribute("usertype").toString();
 			log.info("Random transaction id number="+stlnTxnNumber);
 		  	try {
 				byte[] bytes = file.getBytes();
