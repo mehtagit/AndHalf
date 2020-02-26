@@ -778,6 +778,7 @@ public class StolenAndRecoveryServiceImpl {
 	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDBOld, 
 			StolenIndividualUserDB stolenIndividualUserDBNew) {
 		stolenIndividualUserDBNew.setId(stolenIndividualUserDBOld.getId());
+		
 
 		return stolenIndividualUserDBNew;
 	}
@@ -785,6 +786,7 @@ public class StolenAndRecoveryServiceImpl {
 	private StolenOrganizationUserDB updateStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDbOld,
 			StolenOrganizationUserDB stolenOrganizationUserDbNew) {
 		stolenOrganizationUserDbNew.setId(stolenOrganizationUserDbOld.getId());
+		
 		return stolenOrganizationUserDbNew;
 	}
 

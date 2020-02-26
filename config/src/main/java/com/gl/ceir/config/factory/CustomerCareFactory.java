@@ -6,12 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.gl.ceir.config.factory.impl.CustomerCareBlacklist;
 import com.gl.ceir.config.factory.impl.CustomerCareCustom;
 import com.gl.ceir.config.factory.impl.CustomerCareDistributor;
 import com.gl.ceir.config.factory.impl.CustomerCareEndUser;
+import com.gl.ceir.config.factory.impl.CustomerCareGreylist;
+import com.gl.ceir.config.factory.impl.CustomerCareGsmaBlacklist;
 import com.gl.ceir.config.factory.impl.CustomerCareImporter;
 import com.gl.ceir.config.factory.impl.CustomerCareManufacturer;
 import com.gl.ceir.config.factory.impl.CustomerCareRetailer;
+import com.gl.ceir.config.factory.impl.CustomerCareStolen;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
@@ -43,6 +47,18 @@ public class CustomerCareFactory {
 
 	@Autowired
 	CustomerCareEndUser customerCareEndUser;
+	
+	@Autowired
+	CustomerCareBlacklist customerCareBlacklist;
+	
+	@Autowired
+	CustomerCareGreylist customerCareGreylist;
+	
+	@Autowired
+	CustomerCareStolen customerCareStolen;
+	
+	@Autowired
+	CustomerCareGsmaBlacklist customerCareGsmaBlacklist;
 
 	// View By txn id repository.
 
@@ -70,6 +86,15 @@ public class CustomerCareFactory {
 			return customerCareManufacturer;
 		case "REGULARIZE":
 			return customerCareEndUser;
+		case "BLACKLIST":
+			return customerCareBlacklist;
+		case "GREYLIST":
+			return customerCareGreylist;
+		case "STOLEN":
+			return customerCareStolen; 
+		case "GLOBAL_BLACKIST":
+			return customerCareGsmaBlacklist;
+			
 		default:
 			break;
 		}

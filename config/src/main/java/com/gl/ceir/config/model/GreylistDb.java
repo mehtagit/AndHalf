@@ -138,8 +138,12 @@ public class GreylistDb implements Serializable {
 	public void setImei(Long imei) {
 		this.imei = imei;
 	}
-
-
-	
-	
+	@Override
+	public String toString() {
+		return "GreylistDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei=" + imei
+				+ ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
+				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
+				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
+				+ ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + "]";
+	}
 }
