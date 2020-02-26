@@ -37,7 +37,7 @@ public class FilterRequest {
 	private Integer parentValue;
 	
 	private String imei;
-	private String contactNumber;
+	private Long contactNumber;
 
 	public String getImei() {
 		return imei;
@@ -45,10 +45,10 @@ public class FilterRequest {
 	public void setImei(String imei) {
 		this.imei = imei;
 	}
-	public String getContactNumber() {
+	public Long getContactNumber() {
 		return contactNumber;
 	}
-	public void setContactNumber(String contactNumber) {
+	public void setContactNumber(Long contactNumber) {
 		this.contactNumber = contactNumber;
 	}
 	public Long getId() {

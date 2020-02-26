@@ -9,5 +9,7 @@ import com.gl.ceir.config.model.DeviceUsageDb;
 @Repository
 public interface DeviceUsageDbRepository extends JpaRepository<DeviceUsageDb, Long>, 
 JpaSpecificationExecutor<DeviceUsageDb> {
+	
+	public DeviceUsageDb getByImei(String imei);
 
 }

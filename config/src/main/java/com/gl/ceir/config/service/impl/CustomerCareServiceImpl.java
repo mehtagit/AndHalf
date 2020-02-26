@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
@@ -23,11 +22,12 @@ import com.gl.ceir.config.factory.CustomerCareRepo;
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.CustomerCareRequest;
+import com.gl.ceir.config.model.DeviceUsageDb;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.Notification;
 import com.gl.ceir.config.model.PolicyBreachNotification;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
+import com.gl.ceir.config.repository.DeviceUsageDbRepository;
 import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
 import com.gl.ceir.config.util.Utility;
 
@@ -50,40 +50,33 @@ public class CustomerCareServiceImpl {
 
 	@Autowired 
 	CustomerCareFactory customerCareFactory;
-	
+
 	@Autowired
 	PolicyBreachNotificationRepository policyBreachNotificationRepository;
 
+	@Autowired
+	DeviceUsageDbRepository deviceUsageDbRepository;
+
 	public GenricResponse getAll(CustomerCareRequest customerCareRequest) {
+		String imei = customerCareRequest.getImei();
+
 		try {
-			List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
-
-			if(Objects.nonNull(customerCareRequest.getImei()) 
+			if(Objects.nonNull(imei) 
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
-
-				customerCareFactory.dbsList.stream().forEach( o -> {
-					CustomerCareTarget customerCareTarget = customerCareFactory.getObject(o);
-					if(Objects.isNull(customerCareTarget)) {
-						logger.info("Corresponding object of Db [" + o + "] is not defined in the factory ");
-						return;
-					}
-
-					// To avoid 500, if only one or few DB's have issue for the imei.
-					try {
-						customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(customerCareRequest.getImei(), new CustomerCareDeviceState()));
-					}catch (Exception e) {
-						logger.error("Db [" + o + "] have some issue in fetching data for imei [" + customerCareRequest.getImei() + "]", e);
-					}
-				});
-
-				return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", customerCareDeviceStates);
+				return fetchDetailsOfImei(imei);
+				
 			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
-				// TODO
+				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
 
-				return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", null);
+				if(Objects.isNull(deviceUsageDb)) {
+					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
+				}else {
+					return fetchDetailsOfImei(Long.toString(deviceUsageDb.getImei()));
+				}
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
 			}
+
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -110,7 +103,7 @@ public class CustomerCareServiceImpl {
 				repository = customerCareFactory.getRepoByName(customerCareDeviceState.getName());
 			else
 				repository = customerCareFactory.getRepoByFeatureId(customerCareDeviceState.getFeatureId());
-			
+
 			// If factory has a valid repo.
 			if(Objects.isNull(repository)) {
 				logger.info(GenericMessageTags.FEATURE_NOT_SUPPORTED.getMessage() +" txnId [" + customerCareDeviceState.getTxnId() + "]");
@@ -131,24 +124,46 @@ public class CustomerCareServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public Page<PolicyBreachNotification> viewPolicyBreachNotification(FilterRequest filterRequest, 
 			Integer pageNo, Integer pageSize){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize);
-			
+
 			if(Objects.nonNull(filterRequest.getImei())) {
 				return policyBreachNotificationRepository.findByImei(filterRequest.getImei(), pageable);
 			}
 			else if(Objects.nonNull(filterRequest.getContactNumber())){
-				return policyBreachNotificationRepository.findByImei(filterRequest.getContactNumber(), pageable);
+				return policyBreachNotificationRepository.findByContactNumber(filterRequest.getContactNumber(), pageable);
 			}else {
 				return new PageImpl<>(new ArrayList<PolicyBreachNotification>(1), pageable, 0L);
 			}
-			
+
 		} catch (Exception e) {
 			logger.error("Not Register Consignent="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
+
+	private GenricResponse fetchDetailsOfImei(String imei) {
+		List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
+
+		customerCareFactory.dbsList.stream().forEach( o -> {
+			CustomerCareTarget customerCareTarget = customerCareFactory.getObject(o);
+			if(Objects.isNull(customerCareTarget)) {
+				logger.info("Corresponding object of Db [" + o + "] is not defined in the factory ");
+				return;
+			}
+
+			try {
+				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, new CustomerCareDeviceState()));
+			}catch (Exception e) {
+				logger.error("Db [" + o + "] have some issue in fetching data for imei [" + imei + "]", e);
+			}
+		});
+
+		return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", customerCareDeviceStates);
+
+	}
 }
+

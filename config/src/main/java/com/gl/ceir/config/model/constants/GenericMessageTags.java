@@ -21,7 +21,8 @@ public enum GenericMessageTags {
 	INVALID_STATE_TRANSTION("INVALID_STATE_TRANSTION", "Operation not allowed."),
 	INVALID_REQUEST("INVALID_REQUEST", "Invalid Request."),
 	INVALID_TXN_ID("INVALID_TXN_ID", "Txn id is not valid."),
-	FEATURE_NOT_SUPPORTED("FEATURE_NOT_SUPPORTED", "This feature is not supported.")
+	FEATURE_NOT_SUPPORTED("FEATURE_NOT_SUPPORTED", "This feature is not supported."),
+	NO_DATA("NO_DATA", "No Data")
 	;
 	
 	private String tag;
