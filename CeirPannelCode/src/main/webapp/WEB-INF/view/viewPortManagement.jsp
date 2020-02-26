@@ -107,7 +107,7 @@
 							</div>
 							<form action="${context}/fieldManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="FieldTableDiv"
+								<div class="col s12 m12 l12" id="PortTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
@@ -127,39 +127,27 @@
 		<!--end container-->
 	</section>
 	
- 	<div id="addTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Add Fields</h6>
+ 	<div id="addPort" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header"><spring:message code="button.addport" /></h6>
         <div class="modal-content">
-          	<form action="" onsubmit="return submitTag()" method="post" >
+          	<form action="" onsubmit="return submitPort()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
 					<div class="col s12 m6">
-					<label for="tag" class="active">Field <span class="star">*</span></label>
-                        <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
-                        <select class="browser-default" id="tag" disabled>
-                                <option value="" disabled="" selected="">Select field</option>
+					<label for="port" class="active">Port Type <span class="star">*</span></label>
+                     	 <select class="browser-default" id="port" >
+                                <option value=""  selected="">Select Port Type</option>
                           </select>
                         
-                         <input type="text" id="displayName" hidden>
-                        
+                         <input type="text" id="id" hidden>
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
-                        <label for="description" class="">Description</label>
+                        <input type="text" id="portAddress" name="value"  pattern="[A-Za-z ]{0,30}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="addInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="addInterp" class="">Interp <span class="star">*</span></label>
-                    </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="addFieldId" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="addFieldId" class="">Field ID <span class="star">*</span></label>
-                    </div>
-
-                    <div class="col s12 m12 center" style="margin-top: 20px;">
+					 <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Submit</button>
                         <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
                     </div>
@@ -169,40 +157,27 @@
     </div>
 		
 		
-		<div id="editTags" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Fields</h6>
+		<div id="editPortAddressModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Edit Port Address</h6>
         <div class="modal-content">
-          	<form action="" onsubmit="return updatedTag()">
+          	<form action="" onsubmit="return updatedPort()">
                 <div class="row" style="margin-top: 10px;">
 					
-					<div class="col s12 m6">
-					<label for="tag" class="active">Field <span class="star">*</span></label>
-                        <!-- <input type="text" id="tag" name="tag" pattern="[A-Za-z]{0,30}" Placeholder=""  maxlength="15" value="" required="required" disabled> -->
-                        <select class="browser-default" id="Edittag" disabled>
-                                <option value="" disabled="" selected="">Select field</option>
+				<div class="col s12 m6">
+					<label for="editport" class="active">Port Type <span class="star">*</span></label>
+                     	 <select class="browser-default" id="editport" >
+                                <option value=""  selected="">Select Port Type</option>
                           </select>
                         
-                         <input type="text" id="editdisplayName" hidden>
-                          <input type="text" id="editId" hidden>
+                         <input type="text" id="editId" hidden>
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
-                        <label for="editdescription" class="">Description</label>
+                        <input type="text" id="editportAddress" name="value"  pattern="[A-Za-z ]{0,30}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editInterp" class="">Interp <span class="star">*</span></label>
-                    </div>
-
-                    <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editFieldId" name="editField" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editFieldId" class="">Field ID <span class="star">*</span></label>
-                    </div>
-
-                    <div class="col s12 m12 center" style="margin-top: 20px;">
+					<div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Update</button>
                         <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
                     </div>
@@ -212,10 +187,10 @@
     </div>
 		
 	<div id="confirmField" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
+		<h6 class="modal-header"><spring:message code="button.addport" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Field Record Added Successfully</h6>
+				<h6 id="sucessMessage">Port Record Added Successfully</h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">
@@ -231,12 +206,12 @@
 
 
 	<div id="DeleteFieldModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deleteField" /></h6>
+		<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
 		<div class="modal-content">
 		<div class="row">
-				<h6><spring:message code="modal.message.field.delete" /></h6>
+				<h6><spring:message code="modal.message.Port.delete" /></h6>
 			</div> 
-			<input type="text" id="deleteFieldId" hidden>
+			<input type="text" id="deletePortId" hidden>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<a onclick="confirmantiondelete()"
@@ -248,13 +223,13 @@
 	</div>	
 	
 	<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.header.deleteField" /></h6>
+			<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
 			<div class="modal-content">
 		
 			
 			<div class="row">
 
-				<h6 id="tacModalText"><spring:message code="modal.message.fieldDeleted" /> </h6>
+				<h6 id="tacModalText"><spring:message code="modal.message.portDeleted" /> </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">

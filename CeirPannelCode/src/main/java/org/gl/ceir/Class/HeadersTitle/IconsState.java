@@ -1669,6 +1669,28 @@ public class IconsState {
 		return action;
 
 	}
+	
+	/********************************** Icons for Port Management**********************************/ 
+
+	public String portManagementIcons(String id) { 
+		executePostConstruct();
+		
+		String editAction= "PortViewByID('"+id+"')";
+		String deleteAction = "DeletePortRecord('"+id+"')";
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>";		
+
+		String action=edit.concat(delete);
+		return action;
+
+	}
 
 	@PostConstruct
 	public void executePostConstruct() {
