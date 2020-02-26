@@ -89,7 +89,7 @@
 
 </head>
 <body data-id="7" data-roleType="${usertype}" data-userID="${userid}"
-	data-selected-roleType="${selectedUserTypeId}">
+	data-selected-roleType="${selectedUserTypeId}" data-userTypeID="${usertypeId}">
 
 
             <section id="content">

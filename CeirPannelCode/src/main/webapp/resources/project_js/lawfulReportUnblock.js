@@ -7,7 +7,10 @@ var formData= new FormData();
 	
 
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
-	var sigleRecoveryimeiNumber=$('#sigleRecoveryimeiNumber').val();
+	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
+	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
+	var sigleRecoveryimeiNumber3=$('#sigleRecoveryimeiNumber3').val();
+	var sigleRecoveryimeiNumber4=$('#sigleRecoveryimeiNumber4').val();
 	var sigleRecoverydeviceIDType=$('#sigleRecoverydeviceIDType').val();
 	var sigleRecoverydeviceType=$('#sigleRecoverydeviceType').val();
 	var sigleRecoverydeviceSimStatus=$('#sigleRecoverydeviceSimStatus').val();
@@ -42,7 +45,10 @@ var formData= new FormData();
 			"deviceStolenStreet": sigleRecoverystreetNumber,
 			"deviceStolenVillage": sigleRecoveryvillage,
 			"deviceType":sigleRecoverydeviceType,
-			"imeiEsnMeid": sigleRecoveryimeiNumber,
+			"imeiEsnMeid1": parseInt(sigleRecoveryimeiNumber1),
+			"imeiEsnMeid2": parseInt(sigleRecoveryimeiNumber2),
+			"imeiEsnMeid3": parseInt(sigleRecoveryimeiNumber3),
+			"imeiEsnMeid4": parseInt(sigleRecoveryimeiNumber4),
 			"deviceStolenProvince": state1,
 			"remark": sigleRecovery,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,

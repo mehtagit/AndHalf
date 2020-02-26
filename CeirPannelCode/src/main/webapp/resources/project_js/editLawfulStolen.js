@@ -23,7 +23,7 @@ var txnid=$('#existingStolenTxnId').val();
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 		console.log(response)
-		console.log(response.stolenIndividualUserDB.firstName)
+		
 		$('#singleStolenfirstName').val(response.stolenIndividualUserDB.firstName);
 		$('#singleStolenmiddleName').val(response.stolenIndividualUserDB.middleName);
 		$('#singleStolenlastName').val(response.stolenIndividualUserDB.lastName);
@@ -40,11 +40,17 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#country').val(response.stolenIndividualUserDB.country).change();
 		$('#state').val(response.stolenIndividualUserDB.province);
 		$('#singleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
-		$('#singleStolenimeiNumber').val(response.stolenIndividualUserDB.imeiEsnMeid);
+		//alert(response.stolenIndividualUserDB.nidFileName);
+		$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
+		$('#updatesingleStolenimei1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
+		$('#updatesingleStolenimei2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
+		$('#updatesingleStolenimei3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
+		$('#updatesingleStolenimei4').val(response.stolenIndividualUserDB.imeiEsnMeid4);
+		
 		$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
 		$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 		$('#singleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
-		$('#singleStolenFileName').val(response.fileName);
+		/*$('#singleStolenFileName').val(response.fileName);*/
 
 		$('#singleStolenphone2').val(response.stolenIndividualUserDB.alternateContactNumber);
 		$('#singleStolenOperator').val(response.stolenIndividualUserDB.operator);
@@ -62,6 +68,10 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#singleDevicestate').val(response.stolenIndividualUserDB.deviceStolenProvince);
 		$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
 		
+		$("label[for='updatesingleStolenimei1']").addClass('active');
+		$("label[for='updatesingleStolenimei2']").addClass('active');
+		$("label[for='updatesingleStolenimei3']").addClass('active');
+		$("label[for='updatesingleStolenimei4']").addClass('active');
 		
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -101,7 +111,11 @@ var formData= new FormData();
 	var blockingType =$('.blocktypeRadio:checked').val();
 	
 	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
-	var singleStolenimeiNumber=$('#singleStolenimeiNumber').val();
+	var updatesingleStolenimei1=$('#updatesingleStolenimei1').val();
+	var updatesingleStolenimei2=$('#updatesingleStolenimei2').val();
+	var updatesingleStolenimei3=$('#updatesingleStolenimei3').val();
+	var updatesingleStolenimei4=$('#updatesingleStolenimei4').val();
+	
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
 	var singleStolenOperator=$('#singleStolenOperator').val();
@@ -145,7 +159,10 @@ var formData= new FormData();
 			"district": singleStolendistrict,
 			"email":singleStolenemail,
 			"firstName":singleStolenfirstName,
-			"imeiEsnMeid":parseInt(singleStolenimeiNumber),
+			"imeiEsnMeid1": parseInt(updatesingleStolenimei1),
+			"imeiEsnMeid2": parseInt(updatesingleStolenimei2),
+			"imeiEsnMeid3": parseInt(updatesingleStolenimei3),
+			"imeiEsnMeid4": parseInt(updatesingleStolenimei4),
 			"lastName": singleStolenlastName,
 			"locality": singleStolenlocality,
 			"multiSimStatus": singleStolenSimStatus,
