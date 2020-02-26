@@ -57,13 +57,13 @@ public class CustomerCareServiceImpl {
 	@Autowired
 	DeviceUsageDbRepository deviceUsageDbRepository;
 
-	public GenricResponse getAll(CustomerCareRequest customerCareRequest) {
+	public GenricResponse getAll(CustomerCareRequest customerCareRequest, String listType) {
 		String imei = customerCareRequest.getImei();
 
 		try {
 			if(Objects.nonNull(imei) 
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
-				return fetchDetailsOfImei(imei);
+				return fetchDetailsOfImei(imei, listType);
 				
 			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
@@ -71,7 +71,7 @@ public class CustomerCareServiceImpl {
 				if(Objects.isNull(deviceUsageDb)) {
 					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
 				}else {
-					return fetchDetailsOfImei(Long.toString(deviceUsageDb.getImei()));
+					return fetchDetailsOfImei(Long.toString(deviceUsageDb.getImei()), listType);
 				}
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
@@ -145,10 +145,17 @@ public class CustomerCareServiceImpl {
 		}
 	}
 
-	private GenricResponse fetchDetailsOfImei(String imei) {
+	private GenricResponse fetchDetailsOfImei(String imei, String listType) {
+		List<String> list = null;
 		List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
 
-		customerCareFactory.dbsList.stream().forEach( o -> {
+		if("device".equals(listType)) {
+			list = customerCareFactory.deviceList;
+		}else {
+			list = customerCareFactory.stateList;
+		}
+		
+		list.stream().forEach( o -> {
 			CustomerCareTarget customerCareTarget = customerCareFactory.getObject(o);
 			if(Objects.isNull(customerCareTarget)) {
 				logger.info("Corresponding object of Db [" + o + "] is not defined in the factory ");

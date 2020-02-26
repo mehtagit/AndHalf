@@ -20,8 +20,10 @@ import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
 @Component
 public class CustomerCareFactory {
 
-	public final List<String> dbsList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
-			"MANUFACTURER", "REGULARIZE", "VIP", "BLACKLIST", "GREYLIST", "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", 
+	public final List<String> deviceList = Arrays.asList("IMPORTER", "DISTRIBUTOR", "RETAILER", "CUSTOM", 
+			"MANUFACTURER", "REGULARIZE", "VIP");
+	
+	public final List<String> stateList = Arrays.asList("BLACKLIST", "GREYLIST", "DUPLICATE", "STOLEN", "GLOBAL_BLACKIST", 
 			"TYPE_APPROVED");
 
 	@Autowired

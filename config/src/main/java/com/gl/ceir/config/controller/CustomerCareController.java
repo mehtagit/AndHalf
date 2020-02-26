@@ -36,11 +36,12 @@ public class CustomerCareController {
 
 	@ApiOperation(value = "View all DB's state for the imei or msisdn.", response = GenricResponse.class)
 	@PostMapping("/customer-care/record")
-	public MappingJacksonValue getByImporterId(@RequestBody CustomerCareRequest customerCareRequest) {
+	public MappingJacksonValue getByImporterId(@RequestBody CustomerCareRequest customerCareRequest,
+			@RequestParam(name = "listType", defaultValue = "device") String listType) {
 
 		logger.info(String.format("Request TO view TO all record of user = %s", customerCareRequest));
 
-		GenricResponse response = customerCareServiceImpl.getAll(customerCareRequest);
+		GenricResponse response = customerCareServiceImpl.getAll(customerCareRequest, listType);
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
 		logger.info("Response of view Request = " + mapping);
 
