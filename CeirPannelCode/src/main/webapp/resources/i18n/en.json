@@ -107,6 +107,7 @@
 
 "imageMessage":"Image type should  be png extension.",
 "imageSize":"Image name size should be less than 100 kb.",
-"imageValidationName":"File name should not be more than 30 characters"
+"imageValidationName":"File name should not be more than 30 characters",
+"Otp_Sucess_For_UpdateUSer":"Your one time password is verified!"
 
 }

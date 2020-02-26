@@ -515,7 +515,7 @@ String name = (String) session.getAttribute("name");
 	<!-- Modal End -->
 
 	<!-- modal start -->
-	<div id="changePasswordMessage" class="modal" style="width: 40%;">
+	<div id="changePasswordMessage" class="modal " style="width: 40%;">
 		<h6 class="modal-header">
 			<spring:message code="registration.changepassword" />
 		</h6>
@@ -525,7 +525,7 @@ String name = (String) session.getAttribute("name");
 			</div>
 			<div class="row">
 				<div class="center">
-					<a href="" class="btn"><spring:message code="modal.ok" /></a>
+					<a href="javaScript:void(0)"  class="btn modal-close"><spring:message code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>

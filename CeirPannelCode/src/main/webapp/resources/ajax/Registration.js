@@ -133,21 +133,17 @@ function verifyOtp(){
 			console.log(data);	
 			var resp=JSON.parse(data);
 			if(resp.statusCode=="200"){
-				//window.location.href='#otpMessage';
-				
-				// $('#otpMessage').modal('open');
-				
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
+					$("#otpResponse").text($.i18n(resp.tag));
 					$("#otpVerification").closeModal();
 					$('#otpMessage').openModal({
 				        dismissible:false
 				    });
-   
-					$("#otpResponse").text($.i18n(resp.tag));
+ 
 				});
 				
 			}
