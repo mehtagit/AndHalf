@@ -15,7 +15,7 @@ import org.springframework.context.annotation.PropertySources;
 @SpringBootConfiguration 
 @ComponentScan(basePackages ="org.gl.ceir")
 /* @PropertySource("classpath:application_Production.properties") */ 
-@PropertySource("classpath:awsConfiguration.properties") 
+ @PropertySource("classpath:awsConfiguration.properties") 
 public class MainApplication extends SpringBootServletInitializer
 {
 	@Override

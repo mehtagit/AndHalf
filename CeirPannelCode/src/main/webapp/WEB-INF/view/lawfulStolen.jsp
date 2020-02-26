@@ -576,10 +576,10 @@
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input');"
-																oninvalid="InvalidMsg(this,'input');"
+																oninvalid="InvalidMsg(this,'input');" required="required"
 																title="<spring:message code=" validation.1516digit" />"
-															maxlength="16" id="singleStolenimeiNumber"> <label
-																for="imeiNumber">
+															maxlength="16" id="singleStolenimei1"> <label
+																for="singleStolenimei1">
 																<spring:message code="registration.one" /></label>
 														</div>
 
@@ -589,8 +589,8 @@
 																oninput="InvalidMsg(this,'input');"
 																oninvalid="InvalidMsg(this,'input');"
 																title="<spring:message code=" validation.1516digit" />"
-															maxlength="16" id="singleStolenimeiNumber" > <label
-																for="imeiNumber">
+															maxlength="16" id="singleStolenimei2" > <label
+																for="singleStolenimei12">
 																<spring:message code="registration.two" /></label>
 														</div>
 
@@ -600,8 +600,8 @@
 																oninput="InvalidMsg(this,'input');"
 																oninvalid="InvalidMsg(this,'input');"
 																title="<spring:message code=" validation.1516digit" />"
-															maxlength="16" id="singleStolenimeiNumber" > <label
-																for="imeiNumber">
+															maxlength="16" id="singleStolenimei3" > <label
+																for="singleStolenimei3">
 																<spring:message code="registration.three" /></label>
 														</div>
 
@@ -611,8 +611,8 @@
 																oninput="InvalidMsg(this,'input');"
 																oninvalid="InvalidMsg(this,'input');"
 																title="<spring:message code=" validation.1516digit" />"
-															maxlength="16" id="singleStolenimeiNumber" > <label
-																for="imeiNumber">
+															maxlength="16" id="singleStolenimei4" > <label
+																for="singleStolenimei4">
 																<spring:message code="registration.four" /></label>
 														</div>
 

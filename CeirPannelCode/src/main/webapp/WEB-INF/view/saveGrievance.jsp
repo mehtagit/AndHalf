@@ -499,7 +499,7 @@ $.ajax({
 
 
 
-		var max_fields = 15; //maximum input boxes allowed
+		var max_fields = 2; //maximum input boxes allowed
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
 		var x = 1; //initlal text box count
