@@ -6,6 +6,7 @@ $('#langlist').on('change', function() {
 	window.location.assign("selfRegisterDevice?lang="+window.lang);			
 }); 
 
+$('#langlist').val(data_lang_param);
 $.i18n().locale = data_lang_param;
 var successMsg;
 $.i18n().load( {
@@ -53,10 +54,10 @@ function showCambodianUserForm()
 	$("#askVisaDetails").css("display", "none"); 
 	$("#visaDetails").css("display", "none"); 
 	$("#nationalityDiv").css("display", "none"); 
-	$('#endUserLabelNID').text('National Id ');
-	$('#nidType').text('Upload nid Image ');
+	$('#endUserLabelNID').text($.i18n('National ID'));
+	$('#nidType').text($.i18n('Upload ID Image'));
 
-	$("#nidPlaceHolder").attr("placeholder", "Upload Nid Image").val("").focus().blur();
+	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload ID Image')).val("").focus().blur();
 	$('#visaDetails').find('input:text').val('');
 	$('#visaDetails').find('input:file').val('');
 	$('input[name="onVisa"]').prop('checked', false);
@@ -104,12 +105,12 @@ function  selectVip(){
 
 function showOtherUserForm()
 {
-	$('#endUserLabelNID').text('Passport Number ');
-	$('#nidType').text('Upload Passport Image ');
+	$('#endUserLabelNID').text($.i18n('Passport Number'));
+	$('#nidType').text($.i18n('Upload Passport Image'));
 	$("#askVisaDetails").css("display", "block");
 	$("#nationalityDiv").css("display", "block");
 	$("#onVisaNo").prop("checked", true);
-	$("#nidPlaceHolder").attr("placeholder", "Upload Passport Image").val("").focus().blur();
+	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image ')).val("").focus().blur();
 
 	$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
