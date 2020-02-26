@@ -31,6 +31,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	
 	@Column(length = 50)
 	private String fileName;
+	
+	@Column(length = 50)
+	private String firFileName;
+	
 	private Integer fileStatus;
 	@NotNull
 	private String txnId;
@@ -254,6 +258,13 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setDateOfRecovery(String dateOfRecovery) {
 		this.dateOfRecovery = dateOfRecovery;
 	}
+	public String getFirFileName() {
+		return firFileName;
+	}
+	public void setFirFileName(String firFileName) {
+		this.firFileName = firFileName;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -309,6 +320,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(stolenOrganizationUserDB);
 		builder.append(", imei=");
 		builder.append(imei);
+		builder.append(", firFileName=");
+		builder.append(firFileName);
 		builder.append("]");
 		return builder.toString();
 	}

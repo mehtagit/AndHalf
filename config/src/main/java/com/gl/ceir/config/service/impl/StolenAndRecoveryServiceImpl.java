@@ -64,6 +64,8 @@ import com.gl.ceir.config.repository.SingleImeiHistoryDbRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryRepository;
+import com.gl.ceir.config.repository.StolenIndividualUserRepository;
+import com.gl.ceir.config.repository.StolenOrganizationUserRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
@@ -115,6 +117,12 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	InterpSetter interpSetter;
+	
+	@Autowired
+	StolenIndividualUserRepository stolenIndividualUserRepository;
+	
+	@Autowired
+	StolenOrganizationUserRepository stolenOrganizationUserRepository;
 
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
@@ -559,14 +567,23 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
+				
 				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(
 							stolenandRecoveryMgmtInfo.getStolenIndividualUserDB(),
 							stolenandRecoveryMgmt.getStolenIndividualUserDB()
 							);
-
+					
+					stolenandRecoveryMgmtInfo.setQty(countImeiForIndividual(stolenIndividualUserDB.getImeiEsnMeid1(), 
+							stolenIndividualUserDB.getImeiEsnMeid2(), 
+							stolenIndividualUserDB.getImeiEsnMeid3(), 
+							stolenIndividualUserDB.getImeiEsnMeid4()));
+					
 					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(stolenIndividualUserDB);
+					stolenIndividualUserDB.setStolenandRecoveryMgmt(stolenandRecoveryMgmtInfo);
+					
+					// stolenIndividualUserRepository.save(stolenIndividualUserDB);
 
 					logger.info("After object update " + stolenIndividualUserDB);
 				}
@@ -580,10 +597,15 @@ public class StolenAndRecoveryServiceImpl {
 
 					stolenandRecoveryMgmtInfo.setStolenOrganizationUserDB(stolenOrganizationUserDB);
 
+					stolenOrganizationUserDB.setStolenandRecoveryMgmt(stolenandRecoveryMgmtInfo);
+					// stolenOrganizationUserRepository.save(stolenOrganizationUserDB);
+					
 					logger.info("After object update " + stolenOrganizationUserDB);
 				}
-
+				
 				logger.info("Final object StolenandRecoveryMgmt : " + stolenandRecoveryMgmtInfo);
+			
+				//	StolenandRecoveryMgmt stolenandRecoveryMgmtNew = 
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
