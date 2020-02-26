@@ -114,5 +114,6 @@
 	"validationESN11": "Please enter alphanumeric upto 11 characters only",
 	"IMEIMsg": "IMEI should be 15 to 16 digit number",
 	"MEIDMsg": "MEID should be alphanumeric upto 16 characters only",
-	"ESNMsg": "The length is either 8 or 11. If length is 11, then all value should be numeric else value can be alphanumeric."
+	"ESNMsg": "The length is either 8 or 11. If length is 11, then all value should be numeric else value can be alphanumeric.",
+    "Otp_Sucess_For_UpdateUSer":"Your one time password is verified!"
 }
