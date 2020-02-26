@@ -422,6 +422,7 @@ function saveIndivisualStolenRequest(){
 	console.log("**** file name"+uploadedFileName)
 	
 	var fileFileDetails=$('#uploadFirSingle').val();
+	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
 	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
@@ -467,14 +468,15 @@ function saveIndivisualStolenRequest(){
 	
 	
 	var request={
-			
 			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
+			"firFileName":fileFileDetails,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
+	formData.append('firFile', $('#uploadFirSingle')[0].files[0]);
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
