@@ -82,7 +82,7 @@ padding: 0 !important;
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 </head>
 <body data-roleType="${usertype}" data-userID="${userid}"
-	data-selected-roleType="${selectedUserTypeId}">
+	data-selected-roleType="${selectedUserTypeId}" data-userTypeID="${usertypeId}">
 
 
 
@@ -171,7 +171,7 @@ padding: 0 !important;
                                                            
                                                         <div class="row input_fields_wrap">
                                                         <div class="col s12 m12">
-                                                        <div class="col s12 m6">
+                                                   <%--      <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px;"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -194,7 +194,7 @@ style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
 </div>
-                                                        </div>
+                                                        </div> --%>
                                                             <div class="col s12 m12">
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /> </p>
                                                             </div>
@@ -470,7 +470,7 @@ src="${context}/resources/project_js/enterKey.js"></script>
 					}
 				});
 				
-				$.getJSON('./getDropdownList/BLOCK_CATEGORY', function(data) {
+				$.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeID"), function(data) {
 					
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)

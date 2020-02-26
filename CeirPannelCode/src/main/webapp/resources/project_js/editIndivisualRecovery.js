@@ -25,7 +25,7 @@ var txnid=$('#existingStolenTxnId').val();
 		console.log(response)
 		
 		$('#sigleRecoverydeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
-		$('#sigleRecoveryimeiNumber').val(response.stolenIndividualUserDB.imeiEsnMeid);
+		
 		$('#sigleRecoverydeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
 		$('#sigleRecoverydeviceType').val(response.stolenIndividualUserDB.deviceType);
 		$('#sigleRecoverydeviceSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
@@ -42,6 +42,15 @@ var txnid=$('#existingStolenTxnId').val();
 		//$('#sigleRecoverydeviceStatus').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#sigleRecovery').val(response.stolenIndividualUserDB.remark);
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
+		$('#sigleRecoveryimeiNumber1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
+		$('#sigleRecoveryimeiNumber2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
+		$('#sigleRecoveryimeiNumber3').val(response.stolenIndividualUserDB.imeiEsnMeid3);
+		$('#sigleRecoveryimeiNumber4').val(response.stolenIndividualUserDB.imeiEsnMeid4);
+		$("label[for='sigleRecoveryimeiNumber1']").addClass('active');
+		$("label[for='sigleRecoveryimeiNumber2']").addClass('active');
+		$("label[for='sigleRecoveryimeiNumber3']").addClass('active');
+		$("label[for='sigleRecoveryimeiNumber4']").addClass('active');
+		
 		
 		
 		},
@@ -62,7 +71,11 @@ function updateIndivisualRecovery()
   var formData= new FormData();
 	 
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
-	var sigleRecoveryimeiNumber=$('#sigleRecoveryimeiNumber').val();
+	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
+	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
+	var sigleRecoveryimeiNumber3=$('#sigleRecoveryimeiNumber3').val();
+	var sigleRecoveryimeiNumber4=$('#sigleRecoveryimeiNumber4').val();
+	
 	var sigleRecoverydeviceIDType=$('#sigleRecoverydeviceIDType').val();
 	var sigleRecoverydeviceType=$('#sigleRecoverydeviceType').val();
 	var sigleRecoverydeviceSimStatus=$('#sigleRecoverydeviceSimStatus').val();
@@ -96,7 +109,10 @@ function updateIndivisualRecovery()
 			"deviceStolenStreet": sigleRecoverystreetNumber,
 			"deviceStolenVillage": sigleRecoveryvillage,
 			"deviceType":sigleRecoverydeviceType,
-			"imeiEsnMeid": sigleRecoveryimeiNumber,
+			"imeiEsnMeid1": parseInt(sigleRecoveryimeiNumber1),
+			"imeiEsnMeid2": parseInt(sigleRecoveryimeiNumber2),
+			"imeiEsnMeid3": parseInt(sigleRecoveryimeiNumber3),
+			"imeiEsnMeid4": parseInt(sigleRecoveryimeiNumber4),
 			"deviceStolenProvince": state1,
 			"remark": sigleRecovery,
 			"multiSimStatus":sigleRecoverydeviceSimStatus,

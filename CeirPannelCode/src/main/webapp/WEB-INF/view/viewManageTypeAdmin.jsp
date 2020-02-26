@@ -311,16 +311,12 @@ var path="${context}";
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
 															class="browser-default" id="docTypetag1">
+															<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+															</select> 
 															
-															<option value="" disabled selected>Select Document Type
-															</option>
-															<%-- <option value="" disabled selected><spring:message
-																	code="select.documenttype" /></option> --%>
-
-														</select> <select class="browser-default" id="docTypetagValue1"
+															<select class="browser-default" id="docTypetagValue1"
 															style="display: none;">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" /></option>
+														<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 														</select>
 													</div>
@@ -335,7 +331,7 @@ var path="${context}";
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
-																placeholder="Upload one or more files">
+																placeholder="<spring:message code="grievanceFileMessage" />">
 															<div>
 																<p id="myFiles"></p>
 															</div>

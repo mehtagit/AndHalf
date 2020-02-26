@@ -51,7 +51,8 @@
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
+	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
     <!-- Country -->
     <!-- <script type="text/javascript" src="js/country.js"></script> -->
 
@@ -745,7 +746,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a target="_parent"  href="${context}/importerDashboard" class="btn"><spring:message code="modal.ok" /></a>
+                    <a target="_parent"   href="javascript:window.location.href=window.location.href"  class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -765,7 +766,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             <div class="row">
             
                 <div class="input-field col s12 center">
-                    <a target="_parent"  href="${context}/importerDashboard" class="btn"><spring:message code="modal.ok" /></a>
+                    <a target="_parent"  href="javascript:window.location.href=window.location.href" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -915,7 +916,14 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	 
     <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {
