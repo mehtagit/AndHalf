@@ -666,45 +666,7 @@
 		
 		<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>
-	<script type="text/javascript">
 
-	$('#langlist').on('change', function() {
-		window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-		var url_string = window.location.href;
-		var url = new URL(url_string);
-		var type = url.searchParams.get("type");
-		window.location.assign("selfRegisterDevice?lang="+window.lang);			
-		}); 
-		
-		//var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
-		
-		
-	        $(document).ready(function () {
-	    		$('#langlist').val(data_lang_param);
-	        	$.i18n().locale = data_lang_param;	
-	            				
-	            			
-	            			$.i18n().load( {
-	            				'en': './resources/i18n/en.json',
-	            				'km': './resources/i18n/km.json'
-	            			} ).done( function() { 
-	            			});
-	            			
-            
-        });   
-	
-	 var input = document.querySelector("#phone1");
-     window.intlTelInput(input, {
-         utilsScript: "js/utils.js",
-     });
-     
-     var input = document.querySelector("#phone");
-     window.intlTelInput(input, {
-         utilsScript: "js/utils.js",
-     });
-	</script>
 
 
 
