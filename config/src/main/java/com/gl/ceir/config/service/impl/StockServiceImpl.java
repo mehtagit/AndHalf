@@ -294,7 +294,8 @@ public class StockServiceImpl {
 					stockMgmt.getTxnId(),
 					MailSubject.ASSIGN_STOCK.replaceAll("<XXX>", stockMgmt.getTxnId()),
 					placeholderMap,
-					stockMgmt.getRoleType())) {
+					stockMgmt.getRoleType(),
+					null)) {
 				logger.info("Notification have been saved.");
 			}else {
 				logger.info("Notification have been not saved.");
@@ -324,7 +325,7 @@ public class StockServiceImpl {
 						SubFeatures.REGISTER, 
 						stockMgmt.getTxnId(), 
 						MailSubject.MAIL_TO_ANONYMOUS_ON_STOCK_UPLOAD.replaceAll("<XXX>", stockMgmt.getTxnId()),  
-						placeholderMapForAnonymousUser, ReferTable.USERS, stockMgmt.getRoleType()));
+						placeholderMapForAnonymousUser, ReferTable.USERS, stockMgmt.getRoleType(), "End User"));
 			}
 
 			if(emailUtil.saveNotification(rawMails)) {
@@ -838,10 +839,12 @@ public class StockServiceImpl {
 				String mailTag = null;
 				String action = null;
 				String mailSubject = null;
+				String receiverUserType = null;
 
 				if(consignmentUpdateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "STOCK_APPROVED_BY_CEIR_ADMIN"; 
+					receiverUserType = "Custom";
 					mailSubject = MailSubject.STOCK_APPROVED_BY_CEIR_ADMIN.replaceAll("<XXX>", stockMgmt.getTxnId());
 
 					placeholderMap.put("<Custom first name>", firstName);
@@ -851,6 +854,7 @@ public class StockServiceImpl {
 				}else {
 					action = SubFeatures.REJECT;
 					mailTag = "STOCK_REJECT_BY_CEIR_ADMIN";
+					receiverUserType = "Custom";
 					mailSubject = MailSubject.STOCK_REJECT_BY_CEIR_ADMIN.replaceAll("<XXX>", stockMgmt.getTxnId());
 
 					placeholderMap.put("<Custom first name>", firstName);
@@ -874,7 +878,8 @@ public class StockServiceImpl {
 							consignmentUpdateRequest.getTxnId(),
 							mailSubject,
 							placeholderMap,
-							stockMgmt.getRoleType());
+							stockMgmt.getRoleType(),
+							receiverUserType);
 					logger.info("Notfication have been saved.");
 				}
 

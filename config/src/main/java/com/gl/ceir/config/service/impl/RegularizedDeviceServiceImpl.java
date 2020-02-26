@@ -402,7 +402,8 @@ public class RegularizedDeviceServiceImpl {
 
 	public GenricResponse updateTaxStatus( RegularizeDeviceDb regularizeDeviceDb) {
 		try {
-			String tag = "";
+			String tag = null;
+			String receiverUserType = null;
 			String mailSubject = null;
 			List<RawMail> rawMails = new ArrayList<>();
 			Map<String, String> placeholders = new HashMap<>();
@@ -421,9 +422,11 @@ public class RegularizedDeviceServiceImpl {
 				if(regularizeDeviceDb.getTaxPaidStatus() == 0) {
 					// Mail to CEIR Admin on tax update status change.
 					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID";
+					receiverUserType = "CEIRAdmin";
 					mailSubject = MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_PAID.replace("<XXX>", userCustomDbDetails.getTxnId());
 				}else {
 					tag = "MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID";	
+					receiverUserType = "CEIRAdmin";
 					mailSubject = MailSubject.MAIL_TO_CEIR_ADMIN_ON_DEVICE_TAX_NOT_PAID.replace("<XXX>", userCustomDbDetails.getTxnId());
 				}
 				rawMails.add(new RawMail(tag, 
@@ -435,7 +438,8 @@ public class RegularizedDeviceServiceImpl {
 						mailSubject, 
 						placeholders,
 						ReferTable.USERS,
-						null));
+						null,
+						receiverUserType));
 
 
 				emailUtil.saveNotification(rawMails);
@@ -507,6 +511,7 @@ public class RegularizedDeviceServiceImpl {
 	public GenricResponse acceptReject(CeirActionRequest ceirActionRequest) {
 		try {
 			String tag = null;
+			String receiverUserType = null;
 			String mailSubject = null;
 			EndUserDB endUserDB = null;
 			List<RawMail> rawMails = new ArrayList<>();
@@ -525,10 +530,12 @@ public class RegularizedDeviceServiceImpl {
 				if(ceirActionRequest.getAction() == 0) {
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
+					receiverUserType = "End User";
 					mailSubject = MailSubject.MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL.replace("<XXX>", regularizeDeviceDb.getTxnId());
 				}else if(ceirActionRequest.getAction() == 1){
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
+					receiverUserType = "End User";
 					mailSubject = MailSubject.MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL.replace("<XXX>", regularizeDeviceDb.getTxnId());
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
@@ -549,7 +556,9 @@ public class RegularizedDeviceServiceImpl {
 					mailSubject, 
 					placeholders,
 					ReferTable.END_USER,
-					null));
+					null,
+					receiverUserType));
+			
 			return new GenricResponse(0, "Device Update SuccessFully.", ceirActionRequest.getTxnId());
 
 		} catch (Exception e) {

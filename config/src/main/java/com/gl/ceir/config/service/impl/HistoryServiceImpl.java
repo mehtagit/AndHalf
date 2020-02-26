@@ -81,7 +81,7 @@ public class HistoryServiceImpl {
 
 	@Autowired
 	NotificationRepository notificationRepository;
-	
+
 	@Autowired
 	PropertiesReader propertiesReader;
 
@@ -215,17 +215,21 @@ public class HistoryServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize, FilterRequest filterRequest){
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			NotificationSpecificationBuilder nsb = new NotificationSpecificationBuilder(propertiesReader.dialect);
-			
-			if(!"Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+
+			if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
+				nsb.with(new SearchCriteria("receiverUserType", "Custom", SearchOperation.EQUALITY, Datatype.STRING));
+			}else if("TRC".equalsIgnoreCase(filterRequest.getUserType())){
+				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
+				nsb.with(new SearchCriteria("receiverUserType", "TRC", SearchOperation.EQUALITY, Datatype.STRING));
+			}else {
 				if(Objects.nonNull(filterRequest.getUserId()))
 					nsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
-			}else {
-				logger.info("skipping userid in where clause for usertype : " + filterRequest.getUserType());
 			}
 
 			return notificationRepository.findAll(nsb.build(), pageable);

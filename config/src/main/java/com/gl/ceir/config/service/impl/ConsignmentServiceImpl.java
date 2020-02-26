@@ -78,6 +78,8 @@ public class ConsignmentServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(ConsignmentServiceImpl.class);
 
+	private final String CEIRSYSTEM = "CEIRSYSTEM";
+	
 	@Autowired
 	private ConsignmentRepository consignmentRepository;
 
@@ -475,7 +477,7 @@ public class ConsignmentServiceImpl {
 								SubFeatures.ACCEPT,
 								consignmentUpdateRequest.getTxnId(),
 								MailSubject.Consignment_Success_CEIRAuthority_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
-								placeholderMap, null);
+								placeholderMap, null, "Importer");
 
 					}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
@@ -509,12 +511,13 @@ public class ConsignmentServiceImpl {
 								consignmentUpdateRequest.getTxnId(),
 								MailSubject.Consignment_Approved_CustomImporter_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 								placeholderMap, 
-								null);
+								null, 
+								"Importer");
 
-					}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
+					}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 
 						List<RawMail> rawMails = new LinkedList<>();
-						if(!StateMachine.isConsignmentStatetransitionAllowed("CEIRSYSTEM", consignmentMgmt.getConsignmentStatus())) {
+						if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 							logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 							return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 						}
@@ -531,7 +534,8 @@ public class ConsignmentServiceImpl {
 								consignmentUpdateRequest.getTxnId(), 
 								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_IMPORTER_MAIL.replace("<XXX>", consignmentMgmt.getTxnId()), 
 								placeholderMap, ReferTable.USERS, 
-								consignmentUpdateRequest.getRoleType()));
+								consignmentUpdateRequest.getRoleType(),
+								"Importer"));
 						
 						rawMails.add(new RawMail("CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL", 
 								userStaticServiceImpl.getCeirAdmin().getId(), 
@@ -541,7 +545,8 @@ public class ConsignmentServiceImpl {
 								consignmentUpdateRequest.getTxnId(), 
 								MailSubject.CONSIGNMENT_PROCESS_SUCCESS_TO_CEIR_MAIL.replace("<XXX>", consignmentMgmt.getTxnId()), 
 								placeholderMap, ReferTable.USERS, 
-								consignmentUpdateRequest.getRoleType()));
+								consignmentUpdateRequest.getRoleType(),
+								"CEIRAdmin"));
 						
 						emailUtil.saveNotification(rawMails);
 
@@ -568,7 +573,8 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getTxnId(),
 							MailSubject.Consignment_Reject_CEIRAuthority_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
-							null);
+							null,
+							"Importer");
 
 				}else if("CUSTOM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					if(!StateMachine.isConsignmentStatetransitionAllowed("CUSTOM", consignmentMgmt.getConsignmentStatus())) {
@@ -590,11 +596,12 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getTxnId(),
 							MailSubject.Consignment_Rejected_Custom_Email_Message.replace("<XXX>", consignmentMgmt.getTxnId()),
 							placeholderMap, 
-							null);
+							null,
+							"Importer");
 					
-				}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
+				}else if(CEIRSYSTEM.equalsIgnoreCase(consignmentUpdateRequest.getRoleType())) {
 					List<RawMail> rawMails = new LinkedList<>();
-					if(!StateMachine.isConsignmentStatetransitionAllowed("CEIRSYSTEM", consignmentMgmt.getConsignmentStatus())) {
+					if(!StateMachine.isConsignmentStatetransitionAllowed(CEIRSYSTEM, consignmentMgmt.getConsignmentStatus())) {
 						logger.info("state transition is not allowed." + consignmentUpdateRequest.getTxnId());
 						return new GenricResponse(3, "state transition is not allowed.", consignmentUpdateRequest.getTxnId());
 					}
@@ -611,7 +618,8 @@ public class ConsignmentServiceImpl {
 							consignmentUpdateRequest.getTxnId(), 
 							MailSubject.CONSIGNMENT_PROCESS_FAILED_TO_IMPORTER_MAIL.replace("<XXX>", consignmentMgmt.getTxnId()), 
 							placeholderMap, ReferTable.USERS, 
-							consignmentUpdateRequest.getRoleType()));
+							consignmentUpdateRequest.getRoleType(),
+							"Importer"));
 					
 					emailUtil.saveNotification(rawMails);
 

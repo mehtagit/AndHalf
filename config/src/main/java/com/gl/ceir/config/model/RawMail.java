@@ -17,10 +17,11 @@ public class RawMail implements Serializable{
 	private String referTable;
 	private Map<String, String> placeholders;
 	private String roleType;
+	private String receiverUserType;
 	
 	public RawMail(String tag, UserProfile userProfile, long featureId, String featureName, String subFeature,
 			String featureTxnId, String subject, Map<String, String> placeholders, String referTable, 
-			String roleType) {
+			String roleType, String receiverUserType) {
 		super();
 		this.tag = tag;
 		this.userProfile = userProfile;
@@ -32,11 +33,12 @@ public class RawMail implements Serializable{
 		this.placeholders = placeholders;
 		this.referTable = referTable;
 		this.roleType = roleType;
+		this.receiverUserType = receiverUserType;
 	}
 	
 	public RawMail(String tag, long userId, long featureId, String featureName, String subFeature,
 			String featureTxnId, String subject, Map<String, String> placeholders, String referTable,
-			 String roleType) {
+			 String roleType, String receiverUserType) {
 		super();
 		this.tag = tag;
 		this.userProfile = new UserProfile().setId(userId);
@@ -48,8 +50,18 @@ public class RawMail implements Serializable{
 		this.placeholders = placeholders;
 		this.referTable = referTable;
 		this.roleType = roleType;
+		this.receiverUserType = receiverUserType;
 	}
+
 	
+	public String getReceiverUserType() {
+		return receiverUserType;
+	}
+
+	public void setReceiverUserType(String receiverUserType) {
+		this.receiverUserType = receiverUserType;
+	}
+
 	public String getTag() {
 		return tag;
 	}

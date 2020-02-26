@@ -390,11 +390,11 @@ public class ConfigurationManagementServiceImpl {
 	}
 
 	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, 
-			String subFeature, String featureTxnId, String subject, int retryCount, String referTable, String roleType) {
+			String subFeature, String featureTxnId, String subject, int retryCount, String referTable, String roleType, String receiverUserType) {
 		try {
 
 			notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, 
-					subFeature, featureTxnId, subject, retryCount, referTable, roleType));
+					subFeature, featureTxnId, subject, retryCount, referTable, roleType, receiverUserType));
 
 			return new GenricResponse(0, "Notification have been saved Sucessfully", "");
 		} catch (Exception e) {

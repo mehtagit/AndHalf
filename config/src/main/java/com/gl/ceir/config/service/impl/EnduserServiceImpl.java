@@ -518,6 +518,7 @@ public class EnduserServiceImpl {
 			if("CEIRADMIN".equalsIgnoreCase(updateRequest.getUserType())){
 				String mailTag = null;
 				String action = null;
+				String receiverUserType = null;
 
 				// If end user state is not pending approval on ceir admin, reject the request.
 				if(endUserDB.getStatus() != EndUserStatus.PENDING_APPROVAL_ON_CEIR_ADMIN.getCode()) {
@@ -529,10 +530,11 @@ public class EnduserServiceImpl {
 				if(updateRequest.getAction() == 0) {
 					action = SubFeatures.ACCEPT;
 					mailTag = "END_USER_APPROVED_BY_CEIR_ADMIN"; 
-
+					receiverUserType = "End User";
 					endUserDB.setStatus(EndUserStatus.APPROVED.getCode());
 				}else {
 					action = SubFeatures.REJECT;
+					receiverUserType = "End User";
 					mailTag = "END_USER_REJECT_BY_CEIR_ADMIN";
 
 					endUserDB.setStatus(EndUserStatus.REJECTED_BY_CEIR_ADMIN.getCode());
@@ -549,7 +551,7 @@ public class EnduserServiceImpl {
 					// Mail to End user.
 					rawMails.add(new RawMail(mailTag, endUserDB.getId(), Long.valueOf(updateRequest.getFeatureId()), 
 							Features.MANAGE_USER, SubFeatures.ACCEPT_REJECT, updateRequest.getTxnId(), 
-							"SUBJECT", placeholderMap, ReferTable.END_USER, null));
+							"SUBJECT", placeholderMap, ReferTable.END_USER, null, "END_USER_REJECT_BY_CEIR_ADMIN"));
 
 					emailUtil.saveNotification(rawMails);
 				}

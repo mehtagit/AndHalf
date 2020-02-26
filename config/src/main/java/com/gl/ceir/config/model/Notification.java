@@ -56,6 +56,9 @@ public class Notification  implements Serializable{
 	
 	@Column(length = 20)
 	private String roleType;
+	
+	@Column(length = 50)
+	private String receiverUserType;
 
 	public Notification() {
 
@@ -63,7 +66,7 @@ public class Notification  implements Serializable{
 
 	public Notification(String channelType, String message, Long userId, Long featureId, String featureName, 
 			String subFeature, String featureTxnId, String subject, Integer retryCount, String referTable,
-			String roleType) {
+			String roleType, String receiverUserType) {
 		this.channelType = channelType;
 		this.message = message;
 		this.userId = userId;
@@ -76,6 +79,16 @@ public class Notification  implements Serializable{
 		this.retryCount = retryCount;
 		this.referTable = referTable;
 		this.roleType = roleType;
+		this.receiverUserType = receiverUserType;
+	}
+
+
+	public String getReceiverUserType() {
+		return receiverUserType;
+	}
+
+	public void setReceiverUserType(String receiverUserType) {
+		this.receiverUserType = receiverUserType;
 	}
 
 	public Long getId() {
