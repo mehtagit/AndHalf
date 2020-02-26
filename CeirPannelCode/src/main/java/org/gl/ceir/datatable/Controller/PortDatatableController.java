@@ -19,6 +19,8 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
+import org.gl.ceir.pagination.model.PortContentModal;
+import org.gl.ceir.pagination.model.PortPaginationModal;
 import org.gl.ceir.pagination.model.RegistrationContentModel;
 import org.gl.ceir.pagination.model.RegistrationPaginationModel;
 import org.gl.ceir.pagination.model.RegistrationUser;
@@ -50,67 +52,51 @@ public class PortDatatableController {
 	@Autowired
 	IconsState iconState;
 	@Autowired
-	RegistrationContentModel registrationcontentmodel;
-	@Autowired
-	RegistrationPaginationModel registrationpaginationmodel;
-	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
 	RegistrationUser registrationUser;
+	@Autowired
+	PortContentModal portContentModal;
+	@Autowired
+	PortPaginationModal portPaginationModal;
 	
-	@PostMapping("PortData")
-	public ResponseEntity<?> viewUserProfileRecord(@RequestParam(name="type",defaultValue = "registration",required = false) String role, HttpServletRequest request,HttpSession session) {
-	
+	@PostMapping("portManagementData")
+	public ResponseEntity<?> viewPortRecord(@RequestParam(name="type",defaultValue = "portAddress",required = false) String role, HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
-		
-		log.info("session value user Type admin registration Controller=="+session.getAttribute("usertype"));
 		int file=0;
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
-		
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
-		
-		
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.registrationRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewPortRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
-			
 			String apiResponse = gson.toJson(response);
-		
-			registrationpaginationmodel = gson.fromJson(apiResponse, RegistrationPaginationModel.class);
-			
-			List<RegistrationContentModel> paginationContentList = registrationpaginationmodel.getContent();
-			
+			portPaginationModal = gson.fromJson(apiResponse, PortPaginationModal.class);
+			List<PortContentModal> paginationContentList = portPaginationModal.getContent();
 			if(paginationContentList.isEmpty()) {
-				
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else {
-			for(RegistrationContentModel dataInsideList : paginationContentList) 
+			for(PortContentModal dataInsideList : paginationContentList) 
 				{
-				   String createdOn = (String) dataInsideList.getUser().getCreatedOn();
-				   String modifiedOn = (String) dataInsideList.getUser().getModifiedOn();
-				   String Id =   String.valueOf(dataInsideList.getUser().getId());
-				   String username =  dataInsideList.getUser().getUsername();
-				   String id =  String.valueOf(dataInsideList.getId());
-				   String type = dataInsideList.getAsTypeName();
-				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
-				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
-				   String status =  String.valueOf(dataInsideList.getUser().getCurrentStatus());
+				   String id =  String.valueOf(dataInsideList.getId());	
+				   String createdOn = dataInsideList.getCreatedOn();
+				   String port = String.valueOf(dataInsideList.getPort());
+				   String address = dataInsideList.getAddress();
+				   String portInterp = dataInsideList.getPortInterp();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.adminRegistrationRequest(Id,userStatus,StatusName,createdOn,roles,type,id,username,status);			   
-				   Object[] finalData={createdOn,modifiedOn,username,type,roles,StatusName,action}; 
-
+				   String action=iconState.portManagementIcons(id);			   
+				   Object[] finalData={createdOn,portInterp,address,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -118,8 +104,8 @@ public class PortDatatableController {
 			}
 		}
 			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(registrationpaginationmodel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(registrationpaginationmodel.getTotalElements());
+			datatableResponseModel.setRecordsTotal(portPaginationModal.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(portPaginationModal.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 	}catch(Exception e) {
 		datatableResponseModel.setRecordsTotal(null);
@@ -134,7 +120,7 @@ public class PortDatatableController {
 
 
 	@PostMapping("portManagement/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "consignment",required = false) String role,HttpSession session){
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "portManagement",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -142,7 +128,7 @@ public class PortDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("table.RegistrationRequest"));
+		pageElement.setPageTitle(Translator.toLocale("table.portManagement"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -151,7 +137,8 @@ public class PortDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names= {"FilterButton", Translator.toLocale("button.filter"),"registrationDatatable("+ConfigParameters.languageParam+")","submitFilter"};
+			String[] names = { "HeaderButton", Translator.toLocale("button.addport"), "AddPortAddress()", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"),"filterFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -165,23 +152,25 @@ public class PortDatatableController {
 			}			
 			pageElement.setButtonList(buttonList);
 			
-			//Dropdown items			
-			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("table.Role"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
+		
+		  //Dropdown items 
+		  String[] selectParam={"select",Translator.toLocale("table.port"),"portType",""}; 
+		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
+		  inputFields.setType(selectParam[i]); 
+		  i++;
+		  inputFields.setTitle(selectParam[i]);
+		  i++; 
+		  inputFields.setId(selectParam[i]);
+		  i++; 
+		  inputFields.setClassName(selectParam[i]);
+		  dropdownList.add(inputFields);
+		  } 
+		pageElement.setDropdownList(dropdownList);
+		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","", "text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.grievID"),"grievanceID","" };
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

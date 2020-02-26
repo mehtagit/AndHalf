@@ -179,7 +179,7 @@
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
-																placeholder="Upload one or more files">
+																placeholder="<spring:message code="grievanceFileMessage" />">
 															<div>
 																<p id="myFiles"></p>
 															</div>

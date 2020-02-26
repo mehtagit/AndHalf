@@ -330,7 +330,7 @@ public class DatatableHeaders {
 //fieldManagement
 			
 			else if("fieldManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.port","table.address","table.action"};		
+				String[] headers = {"tabel.field","tabel.interp","tabel.fieldId","table.Description","table.action"};			
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -341,7 +341,7 @@ public class DatatableHeaders {
 			//Port Management
 			
 			else if("portManagement".equals(role)) {
-				String[] headers = {"tabel.field","tabel.interp","tabel.fieldId","table.Description","table.action"};		
+				String[] headers = {"table.creationDate","table.port","table.address","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

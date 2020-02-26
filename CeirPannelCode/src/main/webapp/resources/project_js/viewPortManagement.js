@@ -6,7 +6,7 @@
 		var consignmentStatus=$('#filterConsignmentStatus').val();
 		var userId = $("body").attr("data-userID");
 		var userType=$("body").attr("data-roleType");
-		var featureId="23";
+		var featureId="24";
 		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -56,7 +56,8 @@
 					"userId":parseInt(userId),
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType")
+					"userType":$("body").attr("data-roleType"),
+					"port" : parseInt($("#portType").val())
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -80,7 +81,7 @@
 							"sUrl": langFile  
 						},
 						ajax: {
-							url : 'fieldManagementData',
+							url : 'portManagementData',
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -116,7 +117,7 @@
 
 		function pageRendering(){
 			$.ajax({
-				url: 'fieldManagement/pageRendering',
+				url: 'portManagement/pageRendering',
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -128,7 +129,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#FieldTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#PortTableDiv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
@@ -137,15 +138,15 @@
 									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
 						}else if(date[i].type === "text"){
-							$("#FieldTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#PortTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 					} 
 				
-					// dynamic dropdown portion
+				// dynamic dropdown portion
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
-							$("#FieldTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+							$("#PortTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
 								
 									"<div class='select-wrapper select2  initialized'>"+
 									"<span class='caret'>"+"</span>"+
@@ -159,8 +160,8 @@
 							"</div>");
 					}
 
-						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#FieldTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#PortTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						//$("#PortTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -187,72 +188,36 @@
 	}
 
 
-		
-		//**********************************************************Export Field file************************************************************************
-		function exportConsignmentData()
-		{
-			var consignmentStartDate=$('#startDate').val();
-			var consignmentEndDate=$('#endDate').val();
-			var consignmentTxnId=$('#transactionID').val();
-			var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
-			var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
-			
-			var table = $('#portManagementLibraryTable').DataTable();
-			var info = table.page.info(); 
-			var pageNo=info.page;
-			var pageSize =info.length;
-			window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
-		}
 
 		
 	function setDropdown(){
-		var request ={
-				  "userId" : parseInt($("body").attr("data-userID"))
+		$.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#port,#portType,#editport');
 			}
-		$.ajax({
-			url: './getSystemTags',
-			type: 'POST',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			success: function (data, textStatus, jqXHR) {
-				var result = data.data;
-				for (i = 0; i < result.length; i++){
-					$('<option>').val(result[i].tag).text(result[i].displayName).appendTo('#tag,#filterTagId,#Edittag');
-				}
-				
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				console.log("error in ajax")
-			}
-		});	
+		});
 	}
 
-		function AddField(){
-			$('#addTags').openModal();
-			$('#tag').val(window.tag_val);	
-			var tagDropDown =  document.getElementById("tag");
-			var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
-			$('#displayName').val(displayName);	
+		function AddPortAddress(){
+			$('#addPort').openModal();
+			//var tagDropDown =  document.getElementById("tag");
+			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
 		}
 		
 	
 	/*----------------------------------- Save Field ----------------------------------------- */
 		
-	function submitTag(){
+	function submitPort(){
 		
 		var request={
-					  "displayName" : $('#displayName').val(),		
-					  "interp": $('#addInterp').val(), 
-					  "tag":   $('#tag').val(),
-					  "tagId": $('#tagId').val(),
-					  "value": $('#addValue').val(),
-					  "description" : $('#description').val(),
+					  "port":   $('#port').val(),
+					  "address": $('#portAddress').val(),
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
-			url : './add-Field',
+			url : './add-Port',
 			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
@@ -274,23 +239,19 @@
 	/*--------------------------------- Edit Model View -----------------------------------*/
 	
 	
-	function FieldViewByID(tag,id){
-			var Id = parseInt(id);
+	function PortViewByID(id){
+		$("#editId").val(id);
 		
-			var request ={
-					  "id" : parseInt(Id),
-					  "userId":parseInt(userId)
-				}
-			$.ajax({
-				url: './fieldViewByID',
+		$.ajax({
+				url: './portViewByID/'+id,
 				type: 'POST',
-				data : JSON.stringify(request),
+			//	data : JSON.stringify(request),
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
 						var result = data.data
-						$("#editTags").openModal();
-						FieldEditPopupData(result);
+						$("#editPortAddressModal").openModal();
+						PortEditPopupData(result);
 						console.log(result)
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -300,42 +261,36 @@
 		}
 	
 	
-	function FieldEditPopupData(result){
+	function PortEditPopupData(result){
+		$("#editport").val(result.port);
 		$("#editId").val(result.id);
-		$("#Edittag").val(result.tag);
-		$("#editdescription").val(result.description);
-		$("#editInterp").val(result.interp);
-		$("#editFieldId").val(result.tagId);
-		$("#editdisplayName").val(result.displayName);
+		$("#editportAddress").val(result.address);
+		
 	}
 	
 	
 	/*---------------------------------- Update Field-------------------------------------*/
 	
 	
-	function updatedTag(){
+	function updatedPort(){
 	
 		var request ={ 
-		  "description": $("#editdescription").val(),
-		  "displayName": $("#editdisplayName").val(),
-		  "id": parseInt($("#editId").val()),
-		  "interp": $("#editInterp").val(),
-		  "tag": $("#Edittag").val(),
-		  "tagId": $("#editFieldId").val()
-		  //"value":$("#editValue").val()
+				 "id" : parseInt($("#editId").val()),
+				 "port":   $('#editport').val(),
+				 "address": $('#editportAddress').val(),
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updateSystemTags',
-			type: 'PUT',
+			url: './updatePortAddress',
+			type: 'POST',
 			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
 			
 				console.log("Updated data---->" +data)
-				$("#editTags").closeModal();	
+				$("#editPortAddressModal").closeModal();	
 				$("#updateFieldsSuccess").openModal();
 				
 			},
@@ -352,26 +307,25 @@
   /*------------------------------------ Delete Field -----------------------------------*/
 	
 	
-	function DeleteFieldRecord(id){
+	function DeletePortRecord(id){
 		$("#DeleteFieldModal").openModal();
-		$("#deleteFieldId").val(id);
+		$("#deletePortId").val(id);
 		
 	}	
 	
 	
 	
 	function confirmantiondelete(){
-		var request ={
-				"userId" : $("body").attr("data-userID"),
-				"id"  : parseInt($("#deleteFieldId").val())
-		}
-		console.log(JSON.stringify(request));
+		
+		var id  = parseInt($("#deletePortId").val());
+		
+		console.log(JSON.stringify(id));
 		$.ajax({
-			url : './deleteField',
-			data : JSON.stringify(request),
+			url : './deletePort/'+id,
+//			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
-			type : 'DELETE',
+			type : 'POST',
 			success : function(data, textStatus, xhr) {
 				console.log(data);
 				$("#DeleteFieldModal").closeModal();
