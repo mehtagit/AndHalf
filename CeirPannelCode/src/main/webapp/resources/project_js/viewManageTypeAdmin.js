@@ -607,7 +607,7 @@ function approveSubmit(actiontype){
 	var txnId=$('#setApproveTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var adminApproveStatus=0;
+	var adminApproveStatus=6;
 	var approveRequest={
 			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
@@ -662,7 +662,7 @@ function rejectSubmit(actiontype){
 	var txnId=$('#setRejectTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var adminApproveStatus=1;
+	var adminApproveStatus=7;
 	var approveRequest={
 			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
