@@ -67,7 +67,12 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#singleDevicecountry').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
 		$('#singleDevicestate').val(response.stolenIndividualUserDB.deviceStolenProvince);
 		$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
+		$('#IndivisualStolenDate').val(response.dateOfStolen);
+		$('#uploadFirSingleName').val(response.firFileName);
+		//$('#singleStolenFileName').val(response.firFileName);
 		
+		$("label[for='IndivisualStolenDate']").addClass('active');
+		$("label[for='updatesingleStolenimei1']").addClass('active');
 		$("label[for='updatesingleStolenimei1']").addClass('active');
 		$("label[for='updatesingleStolenimei2']").addClass('active');
 		$("label[for='updatesingleStolenimei3']").addClass('active');
@@ -194,7 +199,7 @@ var formData= new FormData();
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
-	formData.append('uploadFirSingle', $('#uploadFirSingle')[0].files[0]);
+	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
 	$.ajax({

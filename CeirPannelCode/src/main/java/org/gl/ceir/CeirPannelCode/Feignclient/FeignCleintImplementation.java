@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
@@ -377,13 +378,11 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@RequestMapping(value="/tags/system-config-list" ,method=RequestMethod.DELETE) 
 				public @ResponseBody GenricResponse deleteFieldFeign(@RequestBody FilterRequest filterRequest);
+			
+				@PostMapping("/system/viewTag")
+				public @ResponseBody AddMoreFileModel addMoreBuutonCount(AddMoreFileModel addMoreCount);	
+				
 				
 
 		}
-		
-
-
-
-
-
 

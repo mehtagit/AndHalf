@@ -57,3 +57,21 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		}
 	});
 }
+
+
+
+
+
+
+$( document ).ready(function() {
+	
+	function addMoreFileCount(){
+		var tag="more_files_count";
+		$.getJSON('./addMoreFile/'+tag, function(data) {
+			console.log(data);
+			alert(data.value);
+			return data.value;
+			
+		});
+	}
+});
