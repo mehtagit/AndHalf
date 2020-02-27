@@ -476,7 +476,7 @@ function saveIndivisualStolenRequest(){
 			"firFileName":fileFileDetails,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
-	formData.append('firFile', $('#uploadFirSingle')[0].files[0]);
+	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
@@ -555,7 +555,8 @@ function saveCompanyStolenRequest(){
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
 	var bulkStolenDate=$('#bulkStolenDate').val();
 	
-
+	var uploadFirBulk=$('#uploadFirBulk').val();
+	uploadFirBulk=uploadFirBulk.replace(/^.*[\\\/]/, '');
 	
 	var stolenOrganizationUserDB= {
     "commune": bulkStolencommune,
@@ -591,9 +592,11 @@ function saveCompanyStolenRequest(){
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":6,
+			"firFileName":uploadFirBulk,
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 	formData.append('file', $('#deviceBulkStolenFile')[0].files[0]);
+	formData.append('firFileName', $('#uploadFirBulk')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
 	$.ajax({

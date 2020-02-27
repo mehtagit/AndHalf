@@ -219,9 +219,7 @@ var featureId = 6;
 								
 								$("#recentStatus").val(grievanceStatus).change();
 
-
-
-							}
+}
 						});
 
 						var grievanceId = $("body").attr("data-grievanceId");
@@ -309,7 +307,7 @@ var featureId = 6;
 
 			function grievanceReply(userId,grievanceId,txnId)
 			{
-
+   
 
 				$.ajax({
 					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
@@ -330,12 +328,35 @@ var featureId = 6;
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
+						var projectpath=path+"/Consignment/dowloadFiles/actual";
 						$("#viewPreviousMessage").empty();
 						for(var i=0; i<data.length; ++i)
 						{
 
 							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
-
+							for (var j=0 ; j<data[i].attachedFiles.length;j++)
+							{
+								if(data[i].attachedFiles[j].docType==null)
+									{
+									
+									$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+								//alert(data[i].attachedFiles[j].docType);
+								if(data[i].attachedFiles[j].docType=="")
+									{
+									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+									
+									
+									fileName=data[i].attachedFiles[j].fileName.split(' ').join('%20');
+									$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a onclick=fileDownload('"+fileName+"','actual','"+data[i].attachedFiles[j].grievanceId+"','"+data[i].attachedFiles[j].docType+"') >"+data[i].attachedFiles[j].fileName+"</a></div>");
+								}
+								}
+								
+								
+							}	
 
 						}
 						if(usertype=='CEIRAdmin')
@@ -538,8 +559,16 @@ var featureId = 6;
 										$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 										}
 									else{
-									
-										$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									//alert(data[i].attachedFiles[j].docType);
+									if(data[i].attachedFiles[j].docType=="")
+										{
+										//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+										}
+									else{
+										
+										fileName=data[i].attachedFiles[j].fileName.split(' ').join('%20');
+										$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a onclick=onclick=fileDownload('"+fileName+"','actual','"+data[i].attachedFiles[j].grievanceId+"','"+data[i].attachedFiles[j].docType+"')>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
 									}
 									
 									

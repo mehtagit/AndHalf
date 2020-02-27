@@ -51,7 +51,8 @@
     <link href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet"
         media="screen,projection">
     <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-
+	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
     <!-- Country -->
     <!-- <script type="text/javascript" src="js/country.js"></script> -->
 
@@ -667,7 +668,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn"  id="btnSave" type="submit" 
 									style="margin-left: 10px;"><spring:message code="button.update" /></button>
-								<a href="${context}/importerDashboard" target="_parent"  class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<a href="javascript:window.location.href=window.location.href" target="_parent"  class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
 							</div>
 						</div>
 						</div>
@@ -745,7 +746,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a target="_parent"  href="${context}/importerDashboard" class="btn"><spring:message code="modal.ok" /></a>
+                    <a target="_parent"   href="javascript:window.location.href=window.location.href"  class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -765,7 +766,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             <div class="row">
             
                 <div class="input-field col s12 center">
-                    <a target="_parent"  href="${context}/importerDashboard" class="btn"><spring:message code="modal.ok" /></a>
+                    <a target="_parent"  href="javascript:window.location.href=window.location.href" class="btn"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>
@@ -780,7 +781,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
             data-dismiss="modal">&times;</button> -->
                <h6 class="modal-header"><spring:message code="registration.otp" /></h6>
         <div class="modal-content">
-                 <form id="verifyOtpForm" onsubmit="return verifyOtp()">
+                 <form id="verifyOtpForm" onsubmit="return verifyOtp2()">
              <p class="center" id="verifyOtpResp"></p>
                                        <input type="hidden" id="userid"  name="userid" value="${userId}">
                         <div class="row">          
@@ -795,7 +796,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 										pattern="[0-9]{0,6}"
 										 oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 										title= "<spring:message code="validation.6digit" />" 
-                                   id="phoneOtp" placeholder=""/ required / >
+                                   id="phoneOtp" placeholder="" required >
                             </div>
                         </div>
                         <a href="javascript:void(0)" onclick="resendOtp(); document.getElementById('resendOtp').style.display ='block';" class="right"><spring:message code="registration.resendotp" /></a>
@@ -915,7 +916,14 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
-	
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/project_js/backbutton.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/dragableModal.js"></script>	
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
+	 
     <script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {
