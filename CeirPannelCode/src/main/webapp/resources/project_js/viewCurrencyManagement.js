@@ -57,7 +57,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"currency" : parseInt($("#currency").val())
+					"currency" : parseInt($("#currencyType").val())
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
@@ -191,12 +191,12 @@
 
 		
 	function setDropdown(){
-		$.getJSON('./getDropdownList/CUSTOMS_PORT', function(data) {
-			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp)
-				.appendTo('#port,#portType,#editport');
-			}
-		});
+		$.getJSON('./getDropdownList/CURRENCY', function(data) {
+				/ $("#expectedArrivalPort").empty(); /
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType');
+				}
+			});
 	}
 
 		function AddCurrencyAddress(){

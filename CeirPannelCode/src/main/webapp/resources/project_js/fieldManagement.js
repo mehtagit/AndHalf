@@ -308,6 +308,11 @@
 		$("#editInterp").val(result.interp);
 		$("#editFieldId").val(result.tagId);
 		$("#editdisplayName").val(result.displayName);
+		
+		$("label[for='editdescription']").addClass('active');
+		$("label[for='editInterp']").addClass('active');
+		$("label[for='editFieldId']").addClass('active');
+		
 	}
 	
 	
