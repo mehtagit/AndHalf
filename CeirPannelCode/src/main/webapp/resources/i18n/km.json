@@ -115,5 +115,7 @@
 	"Unblock Device Quantity": "មិនទប់ស្កាត់បរិមាណឧបករណ៍",
 	"Stolen Device Quantity": "បរិមាណឧបករណ៍ដែលត្រូវបានគេលួច",
 	"Recovery Device Quantity": "បរិមាណឧបករណ៍ស្តារឡើងវិញ",
-	"Type Approval": "ការអនុម័តប្រភេទ"
+	"Type Approval": "ការអនុម័តប្រភេទ",
+	"TYPE_APPROVE_REJECTED" : "ប្រភេទអនុម័តត្រូវបានបដិសេធដោយរដ្ឋបាល CEIR ។",
+	"TYPE_APPROVE_APPROVED" : "ប្រភេទអនុម័តត្រូវបានអនុម័តដោយរដ្ឋបាល CEIR ។"
 }

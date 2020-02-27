@@ -631,11 +631,11 @@ function approveSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text($.i18n('TYPE_APPROVE_APPROVED'));
 			}
 			else{
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text($.i18n('TYPE_APPROVE_APPROVED'));
 			}
 		},
 		error : function() {
@@ -682,11 +682,11 @@ function rejectSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#rejectSuccessMessage').text('');
-				$('#rejectSuccessMessage').text(data.message);
+				$('#rejectSuccessMessage').text($.i18n('TYPE_APPROVE_REJECTED'));
 			}
 			else{
 				$('#rejectSuccessMessage').text('');
-				$('#rejectSuccessMessage').text(data.message);
+				$('#rejectSuccessMessage').text($.i18n('TYPE_APPROVE_REJECTED'));
 			}
 		},
 		error : function() {
