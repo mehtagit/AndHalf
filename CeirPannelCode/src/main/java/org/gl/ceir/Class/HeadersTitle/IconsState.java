@@ -63,18 +63,19 @@ public class IconsState {
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link
 		executePostConstruct();
-		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-		String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
-		log.info("downloadURL::::::::::::::"+downloadURL);
+		/*String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";*/
+		//String errorURL = "./dowloadFiles/error/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String errorURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','error','"+txnId+"','"+defaultTagName+"')";
+		String downloadURL = "consignmentFileDownload('"+fileName.replace(" ", "%20")+"','actual','"+txnId+"','"+defaultTagName+"')";
 		String viewAction="viewConsignmentDetails('"+txnId+"')"; 
 		String editAction="EditConsignmentDetails('"+txnId+"')";
 		String deleteAction ="DeleteConsignmentRecord('"+txnId+"')";
-
+		log.info("downloadURL::::::::::::::"+downloadURL);
 
 		// state related Code 
-		String error="<a href="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String download="<a href="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="

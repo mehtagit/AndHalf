@@ -12,3 +12,36 @@ $('input').on('invalid', function(e) {
         $('html, body').animate({scrollTop: document.documentElement.scrollTop - 150 }, 0);
     }, 0);
 });
+
+function fileDownload(fileName,fileType,txnId,doc_TypeTag)
+{
+	fileName=fileName.split("%20").join(" ");
+console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+	$.ajax({
+		url : "Consignment/dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'GET',
+		success : function(data) {
+			console.log(data);
+			if(data.url=='Not Found')
+				{
+				
+				$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				$('#fileErrormessage').text('')
+				$('#fileErrormessage').text($.i18n('fileNotFound'));
+				}
+			else{
+				console.log("file is found");
+				 window.location.href=data.url;
+
+			}
+			
+		},
+		error : function() {
+		
+		}
+	});
+}
