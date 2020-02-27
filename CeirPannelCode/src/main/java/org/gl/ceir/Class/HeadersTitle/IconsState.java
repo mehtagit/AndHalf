@@ -1151,7 +1151,7 @@ public class IconsState {
 	public String trcAdminManageIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus,String userStatus) {
 		executePostConstruct();
 		String viewAction="ImporterviewByID("+id+",'view','"+projectPath+"')";
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
@@ -1615,7 +1615,7 @@ public class IconsState {
 	public String trcAdminIcons(String status,Integer id,String fileName,String txnId, String adminApproveStatus) {	
 		executePostConstruct();
 		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
-		String downloadURL = "./Consignment/dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
+		String downloadURL = "./dowloadFiles/actual/"+fileName.replace(" ", "%20")+"/"+txnId+"/"+defaultTagName+"";
 		String approveAction = "openApproveTACPopUp('"+txnId+"','')";
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
@@ -1673,6 +1673,28 @@ public class IconsState {
 	/********************************** Icons for Port Management**********************************/ 
 
 	public String portManagementIcons(String id) { 
+		executePostConstruct();
+		
+		String editAction= "PortViewByID('"+id+"')";
+		String deleteAction = "DeletePortRecord('"+id+"')";
+		// state related Code 
+
+
+		String edit="<a onclick="+editAction+"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>";		
+
+		String action=edit.concat(delete);
+		return action;
+
+	}
+	
+	/********************************** Icons for currency Management**********************************/ 
+
+	public String currencyManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
 		
 		String editAction= "PortViewByID('"+id+"')";
