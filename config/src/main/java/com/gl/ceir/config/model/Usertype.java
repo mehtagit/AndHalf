@@ -22,8 +22,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Usertype {  
 	
 	private static long serialVersionUID = 1L;
+	
 	@Id 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String usertypeName; 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

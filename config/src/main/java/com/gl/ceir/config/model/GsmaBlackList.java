@@ -2,13 +2,15 @@ package com.gl.ceir.config.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "gsma_blacklist_db")
 public class GsmaBlackList {
 
-private Integer id; 
+	@Id
+	private Integer id; 
     
     private Integer refcode;
     

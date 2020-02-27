@@ -189,7 +189,7 @@ public class HistoryController {
 	@ApiOperation(value = "View All Record of Audit  Db.", response = Notification.class)
 	@RequestMapping(path = "/history/Notification", method = RequestMethod.POST)
 	public MappingJacksonValue viewNotification(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+			@RequestParam(value = "pageSize", defaultValue = "15") Integer pageSize) {
 
 		logger.info("Request to view Notification historyDetails Page No="+pageNo+" Pagesize="+pageNo);
 
