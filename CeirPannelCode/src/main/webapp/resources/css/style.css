@@ -3037,3 +3037,6 @@ thead {
 	top: 37px;
 	right: 10px;
 }
+td.dateDiv {
+white-space: nowrap;
+}
