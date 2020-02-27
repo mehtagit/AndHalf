@@ -115,7 +115,7 @@ function isLengthValid(val){
 
 
 	if(val.match(/^[0-9a-z]+$/) && (deviceIDLength > 8)){
-		$("#DeviceID").attr("pattern","[A-F0-9]{0,9}");
+		$("#DeviceID").attr("pattern","[A-F0-9]{0,11}");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 
@@ -123,6 +123,6 @@ function isLengthValid(val){
 	else if(isNaN(val) && (deviceIDLength <= 8 )){
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
 		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
-		$("#DeviceID").attr("pattern","[0-9]{0,9}");
+		$("#DeviceID").attr("pattern","[0-9]{0,8}");
 	}
 }

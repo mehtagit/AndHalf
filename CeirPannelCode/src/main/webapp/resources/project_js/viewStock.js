@@ -354,7 +354,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"consignmentStatus":parseInt($('#StockStatus').val())
 		}
 		if(lang=='km'){
-			var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+			var langFile='./resources/i18n/khmer_datatable.json';
 		}
 
 		$.ajax({

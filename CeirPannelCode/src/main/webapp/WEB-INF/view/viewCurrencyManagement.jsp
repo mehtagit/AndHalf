@@ -105,14 +105,14 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/fieldManagement"
+							<form action="${context}/currencyManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="PortTableDiv"
+								<div class="col s12 m12 l12" id="CurrencyTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
-							<table id="portManagementLibraryTable"
+							<table id="currencyManagementLibraryTable"
 								class="responsive-table striped display"></table>
 
 						</div>
@@ -325,7 +325,7 @@
 	<%-- 		<script type="text/javascript"
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/viewPortManagement.js"></script>
+		src="${context}/resources/project_js/viewCurrencyManagement.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"

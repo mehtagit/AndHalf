@@ -8,10 +8,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -19,11 +18,10 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
+import org.gl.ceir.pagination.model.CurrencyContantModel;
+import org.gl.ceir.pagination.model.CurrencyPaginationModel;
 import org.gl.ceir.pagination.model.PortContentModal;
 import org.gl.ceir.pagination.model.PortPaginationModal;
-import org.gl.ceir.pagination.model.RegistrationContentModel;
-import org.gl.ceir.pagination.model.RegistrationPaginationModel;
-import org.gl.ceir.pagination.model.RegistrationUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 @RestController
-public class PortDatatableController {
+public class CurrencyDatatableController {
+		
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	String className = "emptyClass";
 	@Autowired
@@ -48,20 +47,16 @@ public class PortDatatableController {
 	@Autowired
 	Button button;
 	@Autowired
-	FeignCleintImplementation feignCleintImplementation;
-	@Autowired
 	IconsState iconState;
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
 	@Autowired
-	RegistrationUser registrationUser;
+	CurrencyContantModel currencyContantModel;
 	@Autowired
-	PortContentModal portContentModal;
-	@Autowired
-	PortPaginationModal portPaginationModal;
+	CurrencyPaginationModel currencyPaginationModel;
 	
-	@PostMapping("portManagementData")
-	public ResponseEntity<?> viewPortRecord(@RequestParam(name="type",defaultValue = "portAddress",required = false) String role, HttpServletRequest request,HttpSession session) {
+	@PostMapping("currencyManagementData")
+	public ResponseEntity<?> viewCurrencyRecord(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -80,23 +75,23 @@ public class PortDatatableController {
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			portPaginationModal = gson.fromJson(apiResponse, PortPaginationModal.class);
-			List<PortContentModal> paginationContentList = portPaginationModal.getContent();
+			currencyPaginationModel = gson.fromJson(apiResponse, CurrencyPaginationModel.class);
+			List<CurrencyContantModel> paginationContentList = currencyPaginationModel.getContent();
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else {
-			for(PortContentModal dataInsideList : paginationContentList) 
+			for(CurrencyContantModel dataInsideList : paginationContentList) 
 				{
-				   String id =  String.valueOf(dataInsideList.getId());	
-				   String createdOn = dataInsideList.getCreatedOn();
-				   String port = String.valueOf(dataInsideList.getPort());
-				   String address = dataInsideList.getAddress();
-				   String portInterp = dataInsideList.getPortInterp();
+				   String id= String.valueOf(dataInsideList.getId());	
+				   String createdOn= dataInsideList.getCreatedOn();
+				   String month= "";
+				   String currency= String.valueOf(dataInsideList.getCurrency());
+				   String riel= String.valueOf(dataInsideList.getRiel());
+				   String dollar = String.valueOf(dataInsideList.getDollar());
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.portManagementIcons(id);			   
-				   Object[] finalData={createdOn,portInterp,address,action}; 
+				   String action=iconState.currencyManagementIcons(id,userStatus);			   
+				   Object[] finalData={createdOn,month,currency,riel,dollar,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -104,8 +99,8 @@ public class PortDatatableController {
 			}
 		}
 			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(portPaginationModal.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(portPaginationModal.getTotalElements());
+			datatableResponseModel.setRecordsTotal(currencyPaginationModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(currencyPaginationModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 	}catch(Exception e) {
 		datatableResponseModel.setRecordsTotal(null);
@@ -119,8 +114,8 @@ public class PortDatatableController {
 	
 
 
-	@PostMapping("portManagement/pageRendering")
-	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "portManagement",required = false) String role,HttpSession session){
+	@PostMapping("currencyManagement/pageRendering")
+	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role,HttpSession session){
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -128,7 +123,7 @@ public class PortDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("table.portManagement"));
+		pageElement.setPageTitle(Translator.toLocale("table.currencyManagement"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -137,8 +132,8 @@ public class PortDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names = { "HeaderButton", Translator.toLocale("button.addport"), "AddPortAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"filterFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
+					"FilterButton", Translator.toLocale("button.filter"),"currencyFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -154,7 +149,7 @@ public class PortDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("table.port"),"portType",""}; 
+		  String[] selectParam={"select",Translator.toLocale("table.currency"),"currencyType",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 

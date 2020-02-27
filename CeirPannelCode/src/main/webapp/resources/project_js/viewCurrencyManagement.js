@@ -6,7 +6,7 @@
 		var consignmentStatus=$('#filterConsignmentStatus').val();
 		var userId = $("body").attr("data-userID");
 		var userType=$("body").attr("data-roleType");
-		var featureId="24";
+		var featureId="25";
 		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -30,7 +30,7 @@
 
          $(window).load(function(){
 			$('div#initialloader').fadeIn('fast');
-			filterFieldTable(lang);
+			currencyFieldTable(lang);
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 			
@@ -48,7 +48,7 @@
 		
 		//**************************************************filter table**********************************************
 		
-		function filterFieldTable(lang){
+		function currencyFieldTable(lang){
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -57,18 +57,18 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"port" : parseInt($("#portType").val())
+					"currency" : parseInt($("#currency").val())
 			}				
 			if(lang=='km'){
 				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
 			}
 			$.ajax({
-				url: 'headers?type=portManagement&lang='+lang,
+				url: 'headers?type=currencyHeaders&lang='+lang,
 				/*	headers: {"Accept-Language": "en"},*/
 				type: 'POST',
 				dataType: "json",
 				success: function(result){
-					var table=	$("#portManagementLibraryTable").DataTable({
+					var table=	$("#currencyManagementLibraryTable").DataTable({
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
@@ -81,7 +81,7 @@
 							"sUrl": langFile  
 						},
 						ajax: {
-							url : 'portManagementData',
+							url : 'currencyManagementData',
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -93,8 +93,8 @@
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
-						$('#portManagementLibraryTable input').unbind();
-						$('#portManagementLibraryTable input').bind('keyup', function (e) {
+						$('#currencyManagementLibraryTable input').unbind();
+						$('#currencyManagementLibraryTable input').bind('keyup', function (e) {
 							if (e.keyCode == 13) {
 								table.search(this.value).draw();
 							}
@@ -117,7 +117,7 @@
 
 		function pageRendering(){
 			$.ajax({
-				url: 'portManagement/pageRendering',
+				url: 'currencyManagement/pageRendering',
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -129,7 +129,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#PortTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#CurrencyTableDiv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
@@ -138,7 +138,7 @@
 									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 
 						}else if(date[i].type === "text"){
-							$("#PortTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#CurrencyTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 					} 
 				
@@ -146,7 +146,7 @@
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
-							$("#PortTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+							$("#CurrencyTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
 								
 									"<div class='select-wrapper select2  initialized'>"+
 									"<span class='caret'>"+"</span>"+
@@ -160,8 +160,8 @@
 							"</div>");
 					}
 
-						$("#PortTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#PortTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						//$("#CurrencyTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -199,7 +199,7 @@
 		});
 	}
 
-		function AddPortAddress(){
+		function AddCurrencyAddress(){
 			$('#addPort').openModal();
 			//var tagDropDown =  document.getElementById("tag");
 			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;

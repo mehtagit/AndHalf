@@ -12369,10 +12369,11 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 	padding-bottom: 20px;
 }
 
-::-webkit-scrollbar {
+
+/* ::-webkit-scrollbar {
 	display: none;
 }
-
+ */
 footer {
 	position: fixed;
 	bottom: 0;

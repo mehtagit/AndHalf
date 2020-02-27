@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.AssigneRequestType;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.UploadStockAssigneModal;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 @Component
 @Service
 @FeignClient(url="${apiUrl1}",value = "profileUrls")
@@ -67,5 +69,43 @@ public interface UserProfileFeignImpl {
 	
 	@PostMapping("/userProfile/changeUserStatus")
 	public HttpResponse changeUserStatusFeign(UserStatus userStatus);
+	
+	
+	/*-------------------------- view Port Feign ------------------------------*/
+	
+	@RequestMapping(value="/portAddress/view" ,method=RequestMethod.POST) 
+	public Object viewPortRequest(@RequestBody FilterRequest filterRequest,
+	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+	@RequestParam(value = "file", defaultValue = "0") Integer file);
+	
+	
+	
+	//***************************************************Add Port Address Feign********************************
+
+	@RequestMapping(value= "/portAddress/save" , method=RequestMethod.POST) 
+	public GenricResponse AddPortAddressFeign(@RequestBody FilterRequest filterRequest);
+	
+	
+	
+	//***************************************************View Port Management Feign********************************
+	
+	@RequestMapping(value="/portAddress/viewById/{id}" ,method=RequestMethod.POST) 
+	public @ResponseBody GenricResponse viewPortFeign(@PathVariable("id") Integer id);
+	
+	
+	
+	//***************************************************Update Port Address Feign********************************
+
+	@RequestMapping(value= "/portAddress/update" , method=RequestMethod.POST) 
+	public GenricResponse updatePortAddressFeign(@RequestBody FilterRequest filterRequest);
+	
+	//***************************************************Delete Port Management Feign********************************
+	
+	@RequestMapping(value="/portAddress/delete/{id}" ,method=RequestMethod.POST) 
+	public @ResponseBody GenricResponse deletePortFeign(@PathVariable("id") Integer id);
+	
+	
+	
 } 
 
