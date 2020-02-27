@@ -114,45 +114,43 @@
 
 			<div class="row">
 				<div class="row" style="margin-top: 10px;">
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="tag" id="viewTag"
-							placeholder="tag" disabled
-							style="height: 28px;"> <label for="tag"><spring:message code="registration.tag" /></label>
-					</div>
+					
+						<input type="text" name="tag" id="viewTag" placeholder="tag" disabled hidden="hidden" > 
+				
 
 					
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="viewpolicyOrder"
-							placeholder="Policy Order" disabled style="height: 28px;">
+							placeholder="Policy Order" disabled>
 						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
 					</div>	
 						
-					<div class="row" style="margin-top: 20px;">	
-					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
+				
+					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="viewPeriod"
-							placeholder="Period" disabled style="height: 28px;">
+							placeholder="Period" disabled>
 						<label for="period"><spring:message code="table.Period" /></label>
 					</div>
 
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
+					<div class="input-field col s12 m6">
 						<input type="text" id="viewstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status" disabled style="height: 28px;">
+							placeholder="" maxlength="20" placeholder="Status" disabled >
 						<label for="status"><spring:message code="table.status" /></label>
 					</div>
-					</div>	
+				
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
-					<textarea id="viewValue" class="materialize-textarea" style="height: 22px;" placeholder="value" readonly="readonly"></textarea>
+					<div class="input-field col s12 m6">
+					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly"></textarea>
 					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
 
 					</div>
 					
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px">
-					<textarea id="description" class="materialize-textarea" style="height: 22px;" placeholder="Description" readonly="readonly"></textarea>
+					<div class="input-field col s12 m6">
+					<textarea id="description" class="materialize-textarea" placeholder="Description" readonly="readonly"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -167,7 +165,7 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 				</div>
 
 				</div>
@@ -185,59 +183,50 @@
 			<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="editTag"
-							placeholder="tag" 
-							style="height: 28px;" hidden> 
+							placeholder="tag" hidden="hidden"> 
 					</div>
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="EditId"
-							placeholder="ID" 
-							style="height: 28px;" hidden> 
+							placeholder="ID" hidden="hidden"> 
 					</div>
 					
 					
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder="Policy Order"  style="height: 28px;" disabled>
+							placeholder="Policy Order" disabled>
 						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
 					</div>	
 						
-					<div class="row" style="margin-top: 20px;">	
-					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
+		
+					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="editPeriod"
-							placeholder="Period"  style="height: 28px;" disabled>
+							placeholder="Period" disabled>
 						<label for="period"><spring:message code="table.Period" /></label>
 					</div>
 
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
+					<div class="input-field col s12 m6" style="margin-top:22px">
 						<input type="text" id="editstatus" name="status"
-							placeholder="" maxlength="20" placeholder="Status"  style="height: 28px;" disabled>
+							placeholder="" maxlength="20" placeholder="Status" disabled>
 						<label for="status"><spring:message code="table.status" /></label>
 					</div>
-					</div>	
+				
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
-					<textarea id="editValue" class="materialize-textarea" style="height: 22px;" placeholder="value"></textarea>
+					<div class="input-field col s12 m6">
+					<textarea id="editValue" class="materialize-textarea" placeholder="value"></textarea>
 					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
 
 					</div>
 					
 					
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px">
-					<textarea id="editdescription" class="materialize-textarea" style="height: 22px;" placeholder="Description" disabled></textarea>
+					<div class="input-field col s12 m6">
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
 				
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder=""  style="height: 28px;" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>
-					
 					
 				</div>
 

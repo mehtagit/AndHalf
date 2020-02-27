@@ -52,6 +52,12 @@ var txnid=$('#existingStolenTxnId').val();
 		$('#deviceBulkStolenquantity').val(response.qty);
 		$('#deviceBulkStolenRemark').val();
 		$('#stolenFileName').val(response.fileName);
+		
+
+		$('#IndivisualStolenDate').val(response.dateOfStolen);
+		$('#uploadFirSingleName').val(response.firFileName);
+
+		$("label[for='IndivisualStolenDate']").addClass('active');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			console.log("error in ajax")
@@ -101,8 +107,8 @@ function updateCompanyStolenDetails(){
 	var deviceBulkStolenComplaint=$('#deviceBulkStolenComplaint').val();
 	var deviceBulkStolenquantity=$('#deviceBulkStolenquantity').val();
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
-	var bulkStolenDate=$('#bulkStolenDate').val();
-	
+	var bulkStolenDate=$('#IndivisualStolenDate').val();
+	var uploadFirSingle=$('#uploadFirSingle');
 
 	
 	var stolenOrganizationUserDB= {
@@ -134,7 +140,7 @@ function updateCompanyStolenDetails(){
 	
 	var request={
 			"txnId":txnid,
-			"fileName":fileName,
+			"fileName":uploadFirSingle,
 			"qty":deviceBulkStolenquantity,
 			"dateOfStolen":bulkStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
@@ -144,6 +150,7 @@ function updateCompanyStolenDetails(){
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 	formData.append('file', $('#deviceBulkStolenFile')[0].files[0]);
+	formData.append('firFileName',$('#uploadFirSingle')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
 	$.ajax({

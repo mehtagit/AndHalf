@@ -579,7 +579,7 @@
 																oninvalid="InvalidMsg(this,'input');" required="required"
 																title="<spring:message code=" validation.1516digit" />"
 															maxlength="16" id="singleStolenimei1"> <label
-																for="singleStolenimei1">
+																for="singleStolenimei1"><span class="star"> *</span>
 																<spring:message code="registration.one" /></label>
 														</div>
 

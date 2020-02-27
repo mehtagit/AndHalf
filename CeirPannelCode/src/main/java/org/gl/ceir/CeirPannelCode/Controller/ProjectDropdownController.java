@@ -2,8 +2,12 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
@@ -109,4 +113,14 @@ public class ProjectDropdownController {
 		}
 
 	
+	@GetMapping("/addMoreFile/{tag}") 
+	public @ResponseBody AddMoreFileModel addMoreFileControler (@PathVariable("tag") String tag)  {
+		log.info("request send to the addMore Count api="+tag);
+		AddMoreFileModel addmore = new AddMoreFileModel();
+		addmore.setTag(tag);
+		AddMoreFileModel response= feignCleintImplementation.addMoreBuutonCount(addmore);
+		log.info("response from addMore Count api "+response);
+		return response;
+
+		}
 }

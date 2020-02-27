@@ -265,6 +265,7 @@
 		$("#editport").val(result.port);
 		$("#editId").val(result.id);
 		$("#editportAddress").val(result.address);
+		$("label[for='editportAddress']").addClass('active');
 		
 	}
 	
