@@ -36,7 +36,7 @@ public class Dashboard {
 	ModelAndView mv = new ModelAndView();
 	
 	
-	  @GetMapping("/importerDashboard") 
+	  @GetMapping("*") 
 	  public ModelAndView openUserRegisterPage(HttpSession session) { 
 		  return loginService.dashBoard(session); 
 		  }

@@ -8,7 +8,7 @@ $('#langlist').on('change', function() {
 		changeLanguage(lang);
 		sessionStorage.setItem("a", currentPageLocation);
 	});    
-	window.location.replace("importerDashboard?lang="+lang);
+	window.location.replace("?lang="+lang);
 }); 
 
 

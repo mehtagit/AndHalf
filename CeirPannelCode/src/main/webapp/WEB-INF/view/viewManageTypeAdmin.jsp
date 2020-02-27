@@ -18,7 +18,7 @@
 <html class="no-js" lang="en" dir="ltr">
 <head> 
 <title>Consignment</title>
-<meta http-equiv='cache-control' content='no-cache'>
+<metas http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
 <meta name="fragment" content="!">

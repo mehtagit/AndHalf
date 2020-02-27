@@ -124,7 +124,7 @@ function login(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				window.location.href="./importerDashboard?lang="+resp.userLanguage;
+				window.location.href="./?lang="+resp.userLanguage;
 			}
 			else if(resp.statusCode=='401'){
 				$("#userId").val(resp.userId);
