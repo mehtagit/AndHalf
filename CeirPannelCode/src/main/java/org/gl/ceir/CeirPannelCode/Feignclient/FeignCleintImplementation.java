@@ -203,8 +203,8 @@ public interface FeignCleintImplementation {
 	//Dashboard/Datatable Feign
 		@RequestMapping(value="/v2/history/Notification" ,method=RequestMethod.GET) 
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
-		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;	
+		@RequestParam Integer pageNo,
+		@RequestParam Integer pageSize) ;	
 		
 		
 		
