@@ -2,10 +2,15 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.Console;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.file.Files;
@@ -57,6 +62,11 @@ public class Consignment {
 
 	@Value ("${filePathforMoveFile}")
 	String filePathforMoveFile;
+	
+
+	@Value ("${filePathforErrorFile}")
+	String filePathforErrorFile;
+	
 	
 @Autowired
 
@@ -437,18 +447,82 @@ return consignmentdetails;
 @RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}/{doc_TypeTag}",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
 //@RequestMapping(value="/dowloadFiles/{filetype}/{fileName}/{transactionNumber}",method={org.springframework.web.bind.annotation.RequestMethod.GET}, headers = {"content-Disposition=attachment"}) 
 
-public ModelAndView downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
+public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,@PathVariable("fileName") String fileName,@PathVariable("filetype") String filetype,@PathVariable(name="doc_TypeTag",required = false) String doc_TypeTag) throws IOException {
 
-	
-log.info("inside file download method");
+	FileExportResponse response = new FileExportResponse();	
+log.info("inside file download method"+doc_TypeTag);
+
+
+if (filetype.equalsIgnoreCase("actual"))
+{
+
+if (!doc_TypeTag.equals("DEFAULT"))
+{
+	log.info("doc_TypeTag_______"+doc_TypeTag);
+	String rootPath = filePathforUploadFile+txnid+"/"+doc_TypeTag+"/";
+	File tmpDir = new File(rootPath+fileName);
+	boolean exists = tmpDir.exists();
+	if(exists) {
+
+		log.info("file against document   is exist.");
+	}
+	else {
+		log.info(" file against documrnt type   is not exist.");
+		response.setUrl("Not Found");
+		return response;
+	}
+
+}
+else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
+	log.info("doc_TypeTag==="+doc_TypeTag);
+	String rootPath = filePathforUploadFile+txnid+"/";
+	File tmpDir = new File(rootPath+fileName);
+	boolean exists = tmpDir.exists();
+	if(exists) {
+
+		log.info("actual file is exist.");
+	}
+	else {
+		log.info(" actual file is not exist.");
+		response.setUrl("Not Found");
+		return response;
+	}
+
+}
+}
+else if(filetype.equalsIgnoreCase("error"))
+{
+	String rootPath = filePathforErrorFile+txnid+"/"+txnid+"_error.csv";
+	File tmpDir = new File(rootPath);
+	boolean exists = tmpDir.exists();
+	if(exists) {
+       log.info(" error file is exist.");
+	}
+	else {
+		log.info(" error file is not exist.");
+		response.setUrl("Not Found");
+		return response;
+	}
+
+}
+
+
+log.info(" everything is fine for hit to api for file downloading");
 log.info("request send to the download file api= txnid("+txnid+") fileName ("+fileName+") fileType ("+filetype+")"+doc_TypeTag);
-FileExportResponse response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
+ response=feignCleintImplementation.downloadFile(txnid,filetype,fileName.replace("%20", " "),doc_TypeTag);
 log.info("response of download api="+response+"------------------"+fileName.replace("%20", " "));
 log.info("redirect:"+response.getUrl());
 //ModelAndView mv= new ModelAndView(("redirect:"+ URLEncoder.encode(response.getUrl(), "UTF-8")));
-ModelAndView mv= new ModelAndView(("redirect:"+ new URL(response.getUrl())));
 
-return mv;
+
+
+
+		/*
+		 * File file = new File(response.getUrl()); if(file.exists()){
+		 * log.info("file is exist "); return response.getUrl(); } else {
+		 * log.info("file is Not exist "); return null; }
+		 */
+return response;
 }
 
 

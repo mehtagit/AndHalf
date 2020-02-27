@@ -120,16 +120,6 @@ oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFiel
 </div>
 </div>
 
-<div class="row" style="margin-top: 10px;">
-<div class="input-field col s12 m6 l6">
-<textarea id="Remark" class="materialize-textarea" maxlength="200" 
-oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
-oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
- required></textarea>
-<label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
-</div>
-</div>
-
 
 <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
@@ -173,6 +163,16 @@ style="display: none;">
 <div class="col s12 m6 right">
 <button class="btn right add_field_button" type="button" disabled="disabled"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
+</div>
+
+<div class="row" style="margin-top: 10px;">
+<div class="input-field col s12 m12">
+<textarea id="Remark" class="materialize-textarea" maxlength="200" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+ required></textarea>
+<label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
+</div>
 </div>
 </div>
 

@@ -115,5 +115,9 @@
 	"Unblock Device Quantity": "មិនទប់ស្កាត់បរិមាណឧបករណ៍",
 	"Stolen Device Quantity": "បរិមាណឧបករណ៍ដែលត្រូវបានគេលួច",
 	"Recovery Device Quantity": "បរិមាណឧបករណ៍ស្តារឡើងវិញ",
-	"Type Approval": "ការអនុម័តប្រភេទ"
+	"Type Approval": "ការអនុម័តប្រភេទ",
+	"Otp_Sucess_For_UpdateUSer":"ពាក្យសំងាត់មួយដងរបស់អ្នកត្រូវបានផ្ទៀងផ្ទាត់!",
+	"fileNotFound":"មានបញ្ហាខ្លះនៅក្នុងម៉ាស៊ីនមេសូមព្យាយាមបន្ទាប់ពីពេលក្រោយ"
+	
+	
 }

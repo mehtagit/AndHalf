@@ -13,7 +13,6 @@
 
 
 		$.i18n().locale = lang;	
-	
 		
 		$.i18n().load( {
 			'en': '../resources/i18n/en.json',
@@ -388,7 +387,12 @@ function confirmantiondelete(){
 			var quantity=$('#QuantityEdit').val();
 			var currency=$('#currency').val();
 			var totalPrice=$('#totalPrice').val();
-
+				currency=parseInt(currency);
+				if ( isNaN(currency))
+					{
+					currency='';
+					}
+				
 			var formData= new FormData();
 			formData.append('file', $('#csvUploadFile')[0].files[0]);
 			formData.append('supplierId',supplierId);
@@ -906,7 +910,7 @@ function fileTypeValueChanges() {
 				});
 				 
 				}
-			else if(fileSize>='5000'){
+			else if(fileSize>='2000'){
 				$('#fileFormateModal').openModal({
 					dismissible:false
 				});
@@ -996,3 +1000,38 @@ function fileTypeValueChanges() {
 		        $('#approveButton').attr('disabled', true); //disable input
 		    }
 		});
+		
+		
+		
+		function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
+		{
+			fileName=fileName.split("%20").join(" ");
+		console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+			$.ajax({
+				url : "./dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'GET',
+				success : function(data) {
+					console.log(data);
+					if(data.url=='Not Found')
+						{
+						
+						$('#fileFormateModal').openModal({
+							dismissible:false
+						});
+						$('#fileErrormessage').text('')
+						$('#fileErrormessage').text($.i18n('fileNotFound'));
+						}
+					else{
+						console.log("file is found");
+						 window.location.href=data.url;
+
+					}
+					
+				},
+				error : function() {
+				
+				}
+			});
+		}

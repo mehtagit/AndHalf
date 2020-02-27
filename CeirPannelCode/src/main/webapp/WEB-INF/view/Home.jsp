@@ -131,6 +131,8 @@ content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>  
+
+
 		
 	<!-- i18n library -->
 	<script type="text/javascript"

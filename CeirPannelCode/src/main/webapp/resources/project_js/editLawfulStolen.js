@@ -137,6 +137,7 @@ var formData= new FormData();
 	var IndivisualStolenDate=$('#IndivisualStolenDate').val();	
 	var txnid=$('#existingStolenTxnId').val();
 	var indivisualStolenfileName=$('#singleStolenFileName').val();
+	var uploadFirFile=$('#uploadFirSingleName').val();
 	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
@@ -189,9 +190,11 @@ var formData= new FormData();
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
+			"firFileName":uploadFirFile,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
+	formData.append('uploadFirSingle', $('#uploadFirSingle')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
 	$.ajax({

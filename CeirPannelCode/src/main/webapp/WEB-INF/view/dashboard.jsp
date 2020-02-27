@@ -525,7 +525,7 @@ String name = (String) session.getAttribute("name");
 			</div>
 			<div class="row">
 				<div class="center">
-					<a href="" class="btn"><spring:message code="modal.ok" /></a>
+					<a href="javaScript:void(0)"  class="btn modal-close"><spring:message code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>
@@ -645,6 +645,7 @@ data-dismiss="modal">&times;</button> -->
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
+	
 		
 	<!-- ajax js -->
 	
