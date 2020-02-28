@@ -303,7 +303,7 @@ src="${context}/resources/project_js/viewStock.js"></script>
 
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-
+<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 
 <script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
@@ -500,11 +500,20 @@ $.ajax({
 
 
 		var max_fields = 2; //maximum input boxes allowed
+		var dd='';
+		$.getJSON('./addMoreFile/'+tag, function(data) {
+			console.log(data);
+			alert(data.value);
+			dd=data.value();
+			
+		});
+		alert(dd);
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
 		var x = 1; //initlal text box count
 		var id=2;
-		 
+		
+		
 		$(".add_field_button").click(function (e) { //on add input button click
 			e.preventDefault();
 			var placeholderValue= $.i18n('selectFilePlaceHolder');
@@ -636,6 +645,12 @@ $('#category').on(
 function enableAddMore(){
 	$(".add_field_button").attr("disabled", false);
 }
+
+
+/* $( document ).ready(function() {
+	var ccc=addMoreFileCount();
+	alert(ccc);
+}); */
 
 </script>
 <script type="text/javascript"

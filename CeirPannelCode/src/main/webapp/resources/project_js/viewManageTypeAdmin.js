@@ -302,6 +302,7 @@ function ImporterviewByID(id,actionType,projectPath){
 }
 
 
+
 function setImporterViewPopupData(data,projectPath){
 
 	$("#viewtradmark").val(data.trademark);
@@ -325,7 +326,17 @@ function setImporterViewPopupData(data,projectPath){
 			if(importerViewResponse[i].attachedFiles[j].docType == null || importerViewResponse[i].attachedFiles[j].docType == undefined ){
 				importerViewResponse[i].attachedFiles[j].docType == "";
 			}else{
-				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+				if(importerViewResponse[i].attachedFiles[j].docType=="")
+				{
+					
+				//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+				}
+			else{
+			
+				fileName=importerViewResponse[i].attachedFiles[j].fileName.split(' ').join('%20');
+				$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span> <a onclick=onclick=fileDownload('"+fileName+"','actual','"+importerViewResponse[i].txnId+"','"+importerViewResponse[i].attachedFiles[j].docType+"')>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+			}
+				//$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
 			}
 		}
 	}
