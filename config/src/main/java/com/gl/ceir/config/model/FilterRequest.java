@@ -16,6 +16,8 @@ public class FilterRequest {
 	private String userType;
 	private Integer featureId;
 	private String featureName;
+	private String subFeatureName;
+	private String userName;
 	private Integer userTypeId;
 	private String searchString;
 
@@ -39,9 +41,19 @@ public class FilterRequest {
 	
 	private String imei;
 	private Long contactNumber;
-
 	
-	
+	public String getSubFeatureName() {
+		return subFeatureName;
+	}
+	public void setSubFeatureName(String subFeatureName) {
+		this.subFeatureName = subFeatureName;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public String getFeatureName() {
 		return featureName;
 	}
