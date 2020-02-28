@@ -235,6 +235,11 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 				setInterp(stolenandRecoveryMgmt);
+				
+				// Operator type id for stolen request of registered by Ceir Admin.
+				if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
+					stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
+				}
 
 			}
 

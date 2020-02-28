@@ -4,6 +4,7 @@ public interface ConfigTags {
 	// Message
 
 	// System
+	String page_size_for_Notification = "page_size_for_Notification";
 	String sample_file_link = "sample_file_link";
 	String manuals_link = "manuals_link";
 

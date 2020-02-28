@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
@@ -21,10 +22,13 @@ import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GreylistDbHistory;
 import com.gl.ceir.config.model.MessageConfigurationHistoryDb;
 import com.gl.ceir.config.model.Notification;
+import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.PolicyConfigurationHistoryDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StockMgmtHistoryDb;
 import com.gl.ceir.config.model.StolenAndRecoveryHistoryMgmt;
+import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.SystemConfigurationHistoryDb;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
@@ -38,6 +42,7 @@ import com.gl.ceir.config.repository.PolicyConfigurationHistoryDbRepository;
 import com.gl.ceir.config.repository.StockDetailsOperationRepository;
 import com.gl.ceir.config.repository.StockMgmtHistoryRepository;
 import com.gl.ceir.config.repository.StolenAndRecoveryHistoryMgmtRepository;
+import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.NotificationSpecificationBuilder;
 
@@ -47,7 +52,8 @@ public class HistoryServiceImpl {
 
 	private static final Logger logger = LogManager.getLogger(HistoryServiceImpl.class);
 
-
+	@Autowired
+	SystemConfigurationDbRepository systemConfigurationDbRepository;
 
 	@Autowired	
 	PolicyConfigurationHistoryDbRepository policyConfigurationHistoryDbRepository;
@@ -208,9 +214,16 @@ public class HistoryServiceImpl {
 
 	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize){
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize);
+			SystemConfigurationDb systemConfigurationDb = systemConfigurationDbRepository.getByTag(ConfigTags.page_size_for_Notification);
+			
+			int notiPageSize = Integer.parseInt(systemConfigurationDb.getValue());
+			Pageable pageable = PageRequest.of(pageNo, notiPageSize);
 			return notificationRepository.findAll(pageable);
-		} catch (Exception e) {
+			
+		} catch (NumberFormatException e) {
+			logger.error("Integer value is expected for tag [page_size_for_Notification] in system_configuration_db.");
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}catch (Exception e) {
 			logger.error("Not Register Consignent="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
