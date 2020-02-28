@@ -92,7 +92,13 @@ public class BlockUnblock {
 		log.info("entry point in  save  single imei block");
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
-		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId");
+		if(operatorTypeId==null)
+		{
+		log.info("operator type id is null="+operatorTypeId);
+		operatorTypeId=-1;
+		log.info("operator type value set to -1 ="+operatorTypeId);
+		}
 	    log.info("operaot type id=="+operatorTypeId);
 		String blockTxnNumber=utildownload.getTxnId();
 		blockTxnNumber = "B"+blockTxnNumber;
@@ -117,6 +123,12 @@ public class BlockUnblock {
 		String roletype=session.getAttribute("usertype").toString();
 		String blockTxnNumber=utildownload.getTxnId();
 		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		if(operatorTypeId==null)
+		{
+		log.info("operator type id is null="+operatorTypeId);
+		operatorTypeId=-1;
+		log.info("operator type value set to -1 ="+operatorTypeId);
+		}
 	    log.info("operaot type id=="+operatorTypeId);
 		blockTxnNumber = "B"+blockTxnNumber;
 		log.info("Random transaction id number="+blockTxnNumber);
@@ -142,6 +154,12 @@ public class BlockUnblock {
 		 * singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		 */
 		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		if(operatorTypeId==null)
+		{
+		log.info("operator type id is null="+operatorTypeId);
+		operatorTypeId=-1;
+		log.info("operator type value set to -1 ="+operatorTypeId);
+		}
 	    log.info("operaot type id=="+operatorTypeId);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
@@ -170,6 +188,12 @@ public class BlockUnblock {
 		    StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel(); 
 		    GenricResponse response= new GenricResponse();
 		    Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+		    if(operatorTypeId==null)
+		    {
+		    log.info("operator type id is null="+operatorTypeId);
+		    operatorTypeId=-1;
+		    log.info("operator type value set to -1 ="+operatorTypeId);
+		    }
 		    log.info("operaot type id=="+operatorTypeId);
 			String roletype=session.getAttribute("usertype").toString();
 			String stlnTxnNumber=utildownload.getTxnId();
@@ -240,6 +264,12 @@ public class BlockUnblock {
 			
 			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			 Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+			 if(operatorTypeId==null)
+			 {
+			 log.info("operator type id is null="+operatorTypeId);
+			 operatorTypeId=-1;
+			 log.info("operator type value set to -1 ="+operatorTypeId);
+			 }
 			    log.info("operaot type id=="+operatorTypeId);
 				//String roletype=session.getAttribute("usertype").toString();
 			log.info("Random transaction id number="+stlnTxnNumber);

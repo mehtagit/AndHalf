@@ -92,7 +92,9 @@
 
 						console.log(JSON.stringify(data));
 						$('#chatMsg').empty();
-						$('#manageAccount').openModal();
+						$('#manageAccount').openModal({
+			    	    	   dismissible:false
+			    	       });
 						console.log("****projectPath"+projectPath);
 						console.log("+++++path"+path);
 						
@@ -139,7 +141,9 @@
 					success: function (data, textStatus, jqXHR) {
 
 						console.log(JSON.stringify(data));
-						$('#replyModal').openModal();
+						$('#replyModal').openModal({
+			    	    	   dismissible:false
+			    	       });
 						setDocTypeValue(data[0].grievance.categoryId);
 						$('#grievanceSelectedCategory').val(data[0].grievance.categoryId);
 						$('#grievanceIdToSave').text(grievanceId);
@@ -175,7 +179,9 @@
 */
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						 $('#errorModal').openModal();
+						 $('#errorModal').openModal({
+			    	    	   dismissible:false
+			    	       });
 					}
 				});
 			}
@@ -252,7 +258,9 @@
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 					
-						$('#replyMsg').openModal();
+						$('#replyMsg').openModal({
+			    	    	   dismissible:false
+			    	       });
 						console.log(data.txnId);
 						if(data.errorCode=="0")
 						{
