@@ -10,6 +10,8 @@ import com.gl.ceir.config.model.DeviceDuplicateDb;
 public interface DeviceDuplicateDbRepository extends JpaRepository<DeviceDuplicateDb, Long>, 
 JpaSpecificationExecutor<DeviceDuplicateDb> {
 
-	public DeviceDuplicateDb getByImeiEsnMeid(String imei);
+	public DeviceDuplicateDb findByImeiMsisdnIdentityMsisdn(Long msisdn);
+
+	public DeviceDuplicateDb findByImeiMsisdnIdentityImei(Long imei);
 
 }

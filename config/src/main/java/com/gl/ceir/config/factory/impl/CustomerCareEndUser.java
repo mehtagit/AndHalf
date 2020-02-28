@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
+import com.gl.ceir.config.model.constants.Constants;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 
 @Component
@@ -20,19 +21,22 @@ public class CustomerCareEndUser implements CustomerCareTarget{
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 
 
-		/*
-		 * RegularizeDeviceDb deviceDb = regularizedDeviceDbRepository.getByImei(imei);
-		 * 
-		 * if(Objects.nonNull(deviceDb)) {
-		 * customerCareDeviceState.setTxnId(deviceDb.getTxnId());
-		 * customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
-		 * customerCareDeviceState.setStatus(Constants.available); }else {
-		 * customerCareDeviceState.setDate("");
-		 * customerCareDeviceState.setStatus(Constants.non_available); }
-		 */
+
+		RegularizeDeviceDb deviceDb = regularizedDeviceDbRepository.getByImei(imei);
+
+		if(Objects.nonNull(deviceDb)) {
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
+			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(0);
+		}
+		else {
+			customerCareDeviceState.setDate("");
+			customerCareDeviceState.setStatus(Constants.non_available); }
+
 		setName(customerCareDeviceState);
 
-		return null;
+		return customerCareDeviceState;
 	}
 
 	@Override

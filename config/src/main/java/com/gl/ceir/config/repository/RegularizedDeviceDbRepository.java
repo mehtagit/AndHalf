@@ -15,14 +15,16 @@ public interface RegularizedDeviceDbRepository extends JpaRepository<RegularizeD
 	public void deleteByDeviceSerialNumber(String serialNumber);
 
 	public List<RegularizeDeviceDb> getByNid(String nid);
-	
+
 	public RegularizeDeviceDb getByFirstImei(Long imei1);
-	
+
 	public Long countByNid(String nid);
-	
+
 	public RegularizeDeviceDb getByTxnId(String txnid);
-	
-	// @Query("SELECT r FROM RegularizeDeviceDb WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei")
-	// public RegularizeDeviceDb getByImei(String imei);
+
+
+	@Query("SELECT r FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei") 
+	public RegularizeDeviceDb getByImei(String imei);
+
 
 }

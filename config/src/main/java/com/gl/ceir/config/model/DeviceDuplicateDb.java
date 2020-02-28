@@ -3,6 +3,8 @@ package com.gl.ceir.config.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -10,10 +12,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
 public class DeviceDuplicateDb {
 	
-	private Long imei;
-	private Long msisdn;
+	@EmbeddedId
+	private ImeiMsisdnIdentity imeiMsisdnIdentity;
 	
 	@JsonIgnore
 	@CreationTimestamp
@@ -51,22 +54,6 @@ public class DeviceDuplicateDb {
 	
 	public DeviceDuplicateDb() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public Long getImei() {
-		return imei;
-	}
-
-	public void setImei(Long imei) {
-		this.imei = imei;
-	}
-
-	public Long getMsisdn() {
-		return msisdn;
-	}
-
-	public void setMsisdn(Long msisdn) {
-		this.msisdn = msisdn;
 	}
 
 	public Date getCreatedOn() {
@@ -206,13 +193,19 @@ public class DeviceDuplicateDb {
 		this.action = action;
 	}
 
+	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
+		return imeiMsisdnIdentity;
+	}
+
+	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("DeviceDuplicateDb [imei=");
-		builder.append(imei);
-		builder.append(", msisdn=");
-		builder.append(msisdn);
+		builder.append("DeviceDuplicateDb [imeiMsisdnIdentity=");
+		builder.append(imeiMsisdnIdentity);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
 		builder.append(", updatedOn=");
@@ -249,6 +242,6 @@ public class DeviceDuplicateDb {
 		builder.append(action);
 		builder.append("]");
 		return builder.toString();
-		
 	}
+	
 }
