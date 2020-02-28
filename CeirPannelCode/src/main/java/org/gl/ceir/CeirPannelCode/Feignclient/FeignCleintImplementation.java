@@ -204,8 +204,8 @@ public interface FeignCleintImplementation {
 	//Dashboard/Datatable Feign
 		@RequestMapping(value="/v2/history/Notification" ,method=RequestMethod.GET) 
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
-		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;	
+		@RequestParam Integer pageNo,
+		@RequestParam Integer pageSize) ;	
 		
 		
 		
@@ -378,11 +378,15 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 				@RequestMapping(value="/tags/system-config-list" ,method=RequestMethod.DELETE) 
 				public @ResponseBody GenricResponse deleteFieldFeign(@RequestBody FilterRequest filterRequest);
-			
+				
 				@PostMapping("/system/viewTag")
 				public @ResponseBody AddMoreFileModel addMoreBuutonCount(AddMoreFileModel addMoreCount);	
 				
 				
 
 		}
+
+
+
+
 

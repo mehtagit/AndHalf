@@ -92,6 +92,8 @@ public class BlockUnblock {
 		log.info("entry point in  save  single imei block");
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
+		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+	    log.info("operaot type id=="+operatorTypeId);
 		String blockTxnNumber=utildownload.getTxnId();
 		blockTxnNumber = "B"+blockTxnNumber;
 		log.info("Random transaction id number="+blockTxnNumber);
@@ -99,6 +101,7 @@ public class BlockUnblock {
 		singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from save signle Imei block devices="+response);
@@ -113,11 +116,14 @@ public class BlockUnblock {
 		int userId= (int) session.getAttribute("userid"); 
 		String roletype=session.getAttribute("usertype").toString();
 		String blockTxnNumber=utildownload.getTxnId();
+		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+	    log.info("operaot type id=="+operatorTypeId);
 		blockTxnNumber = "B"+blockTxnNumber;
 		log.info("Random transaction id number="+blockTxnNumber);
 		singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from save signle Imei block devices="+response);
@@ -135,8 +141,11 @@ public class BlockUnblock {
 		 * "B"+blockTxnNumber; log.info("Random transaction id number="+blockTxnNumber);
 		 * singleImeiDetailsModel.setTxnId(blockTxnNumber);
 		 */
+		Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
+	    log.info("operaot type id=="+operatorTypeId);
 		singleImeiDetailsModel.setUserId(userId);
 		singleImeiDetailsModel.setUserType(roletype);
+		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
 		log.info("request send to the upate signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.updateSingleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from update signle Imei block devices="+response);
@@ -228,6 +237,7 @@ public class BlockUnblock {
 		  GenricResponse response= new GenricResponse();
 			String stlnTxnNumber=utildownload.getTxnId();
 			stlnTxnNumber = "B"+stlnTxnNumber;
+			
 			//int operatorTypeId= (int) session.getAttribute("operatorTypeId"); 
 			 Integer operatorTypeId= (Integer) session.getAttribute("operatorTypeId"); 
 			    log.info("operaot type id=="+operatorTypeId);

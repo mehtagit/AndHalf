@@ -18,7 +18,7 @@
 <html class="no-js" lang="en" dir="ltr">
 <head> 
 <title>Consignment</title>
-<meta http-equiv='cache-control' content='no-cache'>
+<metas http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
 <meta name="fragment" content="!">
@@ -310,7 +310,7 @@ var path="${context}";
 													<div class="col s12 m6 l6">
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
-															class="browser-default" id="docTypetag1">
+															class="browser-default" id="docTypetag1" onchange="enableSelectFile()"> 
 															<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 															</select> 
 															
@@ -322,12 +322,12 @@ var path="${context}";
 													</div>
 
 													<div class="file-field col s12 m6">
-														<h6 class="file-upload-heading">
+														<h6 id="supportingdocumentFile" class="file-upload-heading">
 															<spring:message code="input.supportingdocument" />
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1">
+															<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableAddMore()">
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
@@ -347,7 +347,7 @@ var path="${context}";
 										<div class="col s12 m12 right">
 										<span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
                                                 class="star">*</span></span>
-											<button class="btn right add_field_button">
+											<button class="btn right add_field_button" disabled="disabled">
 												<span style="font-size: 20px;">+</span>
 												<spring:message code="input.addmorefile" />
 											</button>
