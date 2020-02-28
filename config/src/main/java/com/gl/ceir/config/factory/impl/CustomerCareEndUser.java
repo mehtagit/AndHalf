@@ -1,21 +1,25 @@
 package com.gl.ceir.config.factory.impl;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gl.ceir.config.factory.CustomerCareTarget;
 import com.gl.ceir.config.model.CustomerCareDeviceState;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.repository.RegularizedDeviceDbRepository;
 
 @Component
 public class CustomerCareEndUser implements CustomerCareTarget{
-	
+
 	@Autowired
 	RegularizedDeviceDbRepository regularizedDeviceDbRepository;
-	
+
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
-		
+
+
 		/*
 		 * RegularizeDeviceDb deviceDb = regularizedDeviceDbRepository.getByImei(imei);
 		 * 
@@ -25,15 +29,15 @@ public class CustomerCareEndUser implements CustomerCareTarget{
 		 * customerCareDeviceState.setStatus(Constants.available); }else {
 		 * customerCareDeviceState.setDate("");
 		 * customerCareDeviceState.setStatus(Constants.non_available); }
-		 * 
-		 * setName(customerCareDeviceState);
 		 */
+		setName(customerCareDeviceState);
+
 		return null;
 	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {
-		customerCareDeviceState.setName("Retailer");
+		customerCareDeviceState.setName("End User");
 	}
 
 }

@@ -27,7 +27,7 @@ public class DeviceDuplicateDb {
 	@Column(length = 20)
 	private String failedRuleId;
 	private String failedRuleName;
-	private Integer imei_status;
+	private Integer imeiStatus;
 	private Long imsi;
 	private String mobileOperator;
 	private Integer regulizedByUser;
@@ -43,7 +43,7 @@ public class DeviceDuplicateDb {
 	private Integer recordType;
 	
 	@Column(length = 100)
-	private String system_type;
+	private String systemType;
 	
 	private String tac;
 	private String period;
@@ -101,12 +101,12 @@ public class DeviceDuplicateDb {
 		this.failedRuleName = failedRuleName;
 	}
 
-	public Integer getImei_status() {
-		return imei_status;
+	public Integer getImeiStatus() {
+		return imeiStatus;
 	}
 
-	public void setImei_status(Integer imei_status) {
-		this.imei_status = imei_status;
+	public void setImeiStatus(Integer imeiStatus) {
+		this.imeiStatus = imeiStatus;
 	}
 
 	public Long getImsi() {
@@ -173,12 +173,13 @@ public class DeviceDuplicateDb {
 		this.recordType = recordType;
 	}
 
-	public String getSystem_type() {
-		return system_type;
+
+	public String getSystemType() {
+		return systemType;
 	}
 
-	public void setSystem_type(String system_type) {
-		this.system_type = system_type;
+	public void setSystemType(String systemType) {
+		this.systemType = systemType;
 	}
 
 	public String getTac() {
@@ -220,8 +221,8 @@ public class DeviceDuplicateDb {
 		builder.append(failedRuleId);
 		builder.append(", failedRuleName=");
 		builder.append(failedRuleName);
-		builder.append(", imei_status=");
-		builder.append(imei_status);
+		builder.append(", imeiStatus=");
+		builder.append(imeiStatus);
 		builder.append(", imsi=");
 		builder.append(imsi);
 		builder.append(", mobileOperator=");
@@ -238,8 +239,8 @@ public class DeviceDuplicateDb {
 		builder.append(updateFilename);
 		builder.append(", recordType=");
 		builder.append(recordType);
-		builder.append(", system_type=");
-		builder.append(system_type);
+		builder.append(", systemType=");
+		builder.append(systemType);
 		builder.append(", tac=");
 		builder.append(tac);
 		builder.append(", period=");
@@ -248,6 +249,6 @@ public class DeviceDuplicateDb {
 		builder.append(action);
 		builder.append("]");
 		return builder.toString();
+		
 	}
-
 }

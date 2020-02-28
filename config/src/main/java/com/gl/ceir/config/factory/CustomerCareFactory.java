@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.gl.ceir.config.factory.impl.CustomerCareBlacklist;
 import com.gl.ceir.config.factory.impl.CustomerCareCustom;
 import com.gl.ceir.config.factory.impl.CustomerCareDistributor;
+import com.gl.ceir.config.factory.impl.CustomerCareDuplicate;
 import com.gl.ceir.config.factory.impl.CustomerCareEndUser;
 import com.gl.ceir.config.factory.impl.CustomerCareGreylist;
 import com.gl.ceir.config.factory.impl.CustomerCareGsmaBlacklist;
@@ -16,6 +17,8 @@ import com.gl.ceir.config.factory.impl.CustomerCareImporter;
 import com.gl.ceir.config.factory.impl.CustomerCareManufacturer;
 import com.gl.ceir.config.factory.impl.CustomerCareRetailer;
 import com.gl.ceir.config.factory.impl.CustomerCareStolen;
+import com.gl.ceir.config.factory.impl.CustomerCareTypeApprove;
+import com.gl.ceir.config.factory.impl.CustomerCareVipList;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.StockManagementRepository;
@@ -59,6 +62,15 @@ public class CustomerCareFactory {
 	
 	@Autowired
 	CustomerCareGsmaBlacklist customerCareGsmaBlacklist;
+	
+	@Autowired
+	CustomerCareVipList customerCareVipList;
+	
+	@Autowired
+	CustomerCareDuplicate customerCareDuplicate;
+	
+	@Autowired
+	CustomerCareTypeApprove customerCareTypeApprove;
 
 	// View By txn id repository.
 
@@ -94,6 +106,12 @@ public class CustomerCareFactory {
 			return customerCareStolen; 
 		case "GLOBAL_BLACKIST":
 			return customerCareGsmaBlacklist;
+		case "VIP":
+			return customerCareVipList;
+		case "DUPLICATE":
+			return customerCareDuplicate;
+		case "TYPE_APPROVED":
+			return customerCareTypeApprove;
 			
 		default:
 			break;

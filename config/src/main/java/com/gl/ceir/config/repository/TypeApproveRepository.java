@@ -17,6 +17,8 @@ public interface TypeApproveRepository extends JpaRepository<TypeApprovedDb, Lon
 	public TypeApprovedDb findById(long id);
 	public TypeApprovedDb getByTxnId(String txnId);
 	
+	public TypeApprovedDb getByTac(String tac);
+	
 	@Query(value="select new com.gl.ceir.config.model.ResponseCountAndQuantity(count(t.id) as count) from TypeApprovedDb t "
 			+ "where t.approveStatus in (:approveStatus) and t.userId =:userId and t.featureId =:featureId")
 	public ResponseCountAndQuantity getTypeApproveCount( @Param("approveStatus")List<Integer> approveStatus, @Param("userId")Long userId,
