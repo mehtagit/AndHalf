@@ -14,8 +14,7 @@
     General Layout Style
   ------------------------------------------*/
 /* FIREFOX FIX OF UGLY SELECT BOXES */
-@
-supports (-moz-appearance:none ) {SELECT { -moz-appearance:none!important;
+@supports (-moz-appearance:none ) {SELECT { -moz-appearance:none!important;
 	background: transparent url('../images/dropdownIcon.png') right center
 		no-repeat !important;
 	background-position: calc(100% - 5px) center !important;
@@ -3037,4 +3036,7 @@ thead {
 	margin: 0;
 	top: 37px;
 	right: 10px;
+}
+td.dateDiv {
+white-space: nowrap;
 }

@@ -668,7 +668,7 @@ title="<spring:message code="validation.selectFieldMsg" />" onchange="setCustomV
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
 								<button class="btn"  id="btnSave" type="submit" 
 									style="margin-left: 10px;"><spring:message code="button.update" /></button>
-								<a href="javascript:window.location.href=window.location.href" target="_parent"  class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+								<a target="_parent" onclick="redirectToDashboard()" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
 							</div>
 						</div>
 						</div>
