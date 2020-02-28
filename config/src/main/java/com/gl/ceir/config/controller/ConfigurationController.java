@@ -38,7 +38,7 @@ public class ConfigurationController {
 
 
 	@ApiOperation(value = "System Config view All Data", response = SystemConfigurationDb.class)
-	@RequestMapping(path = "/system/viewAll", method = RequestMethod.POST)
+	@PostMapping("/system/viewAll")
 	public MappingJacksonValue findSystemDetails() {
 
 		logger.info("Request to get system all details");

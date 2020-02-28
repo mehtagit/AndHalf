@@ -205,9 +205,6 @@ public class StolenAndRecoveryServiceImpl {
 	}
 
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
-
-		List<SystemConfigListDb> sourceTypes = null;
-		List<SystemConfigListDb> requestTypes = null;
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
 
@@ -219,12 +216,6 @@ public class StolenAndRecoveryServiceImpl {
 			Page<StolenandRecoveryMgmt> stolenandRecoveryMgmtPage = stolenAndRecoveryRepository.findAll(buildSpecification(filterRequest, statusList).build(), pageable);
 			stateInterpList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info(stateInterpList);
-
-			sourceTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.SOURCE_TYPE); 
-			logger.info(sourceTypes);
-
-			requestTypes = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.REQ_TYPE); 
-			logger.info(requestTypes);
 
 			for(StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmtPage.getContent()) {				
 				for(StateMgmtDb stateMgmtDb : stateInterpList) {

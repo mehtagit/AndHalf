@@ -224,7 +224,10 @@ public class ConfigurationManagementServiceImpl {
 	public MessageConfigurationDb getMessageConfigDetailsByTag(MessageConfigurationDb messageConfigurationDb){
 		try {
 
-			return messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
+			MessageConfigurationDb messageConfigurationDb2 = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
+			messageConfigurationDb2.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb2.getChannel()));
+			
+			return messageConfigurationDb2;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -254,6 +257,7 @@ public class ConfigurationManagementServiceImpl {
 			messageConfigurationHistoryDbRepository.save(mshb);
 
 			mcd.setValue(messageConfigurationDb.getValue());
+			mcd.setDescription(messageConfigurationDb.getDescription());
 			logger.info("Persisted message data " + messageConfigurationDb);
 			messageConfigurationDbRepository.save(mcd);
 
