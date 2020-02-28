@@ -165,11 +165,20 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
  <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
+
+<div class="col s12 m6 l6" style="margin-top: 8px;">
+<label for="Category"><spring:message code="input.documenttype" /></label>
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
+<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+
+</select>
+
+</div>
 <div class="file-field col s12 m6">
-<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<h6 id="supportingdocumentFile" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  multiple>
+<input type="file" name="files[]" id="docTypeFile1" onchange="enableAddMore()" disabled="disabled">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -178,14 +187,6 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 <p id="myFiles"></p>
 </div>
 </div>
-</div>
-<div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableAddMore()" >
-<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
-
-</select>
-
 </div>
 </div>
 

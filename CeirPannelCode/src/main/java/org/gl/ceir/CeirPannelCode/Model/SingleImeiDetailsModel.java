@@ -2,21 +2,81 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class SingleImeiDetailsModel {
 	private String categoryInterp,createdOn,deviceIdTypeInterp,deviceTypeInterp,deviceSerialNumber,modifiedOn,multipleSimStatusInterp,remark,txnId,userType,blockingTimePeriod,blockingType;
-	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType;
+	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType,operatorTypeId;
 	private long  firstImei,fourthImei,secondImei,thirdImei,userId,id;
+	
+	
+	
 	@Override
 	public String toString() {
-		return "SingleImeiDetailsModel [categoryInterp=" + categoryInterp + ", createdOn=" + createdOn
-				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", deviceTypeInterp=" + deviceTypeInterp
-				+ ", deviceSerialNumber=" + deviceSerialNumber + ", modifiedOn=" + modifiedOn
-				+ ", multipleSimStatusInterp=" + multipleSimStatusInterp + ", remark=" + remark + ", txnId=" + txnId
-				+ ", userType=" + userType + ", blockingTimePeriod=" + blockingTimePeriod + ", blockingType="
-				+ blockingType + ", category=" + category + ", deviceIdType=" + deviceIdType + ", deviceType="
-				+ deviceType + ", multipleSimStatus=" + multipleSimStatus + ", processState=" + processState
-				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", firstImei=" + firstImei
-				+ ", fourthImei=" + fourthImei + ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + ", userId="
-				+ userId + ", id=" + id + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("SingleImeiDetailsModel [categoryInterp=");
+		builder.append(categoryInterp);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", deviceIdTypeInterp=");
+		builder.append(deviceIdTypeInterp);
+		builder.append(", deviceTypeInterp=");
+		builder.append(deviceTypeInterp);
+		builder.append(", deviceSerialNumber=");
+		builder.append(deviceSerialNumber);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", multipleSimStatusInterp=");
+		builder.append(multipleSimStatusInterp);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", blockingTimePeriod=");
+		builder.append(blockingTimePeriod);
+		builder.append(", blockingType=");
+		builder.append(blockingType);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", deviceIdType=");
+		builder.append(deviceIdType);
+		builder.append(", deviceType=");
+		builder.append(deviceType);
+		builder.append(", multipleSimStatus=");
+		builder.append(multipleSimStatus);
+		builder.append(", processState=");
+		builder.append(processState);
+		builder.append(", requestType=");
+		builder.append(requestType);
+		builder.append(", sourceType=");
+		builder.append(sourceType);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", firstImei=");
+		builder.append(firstImei);
+		builder.append(", fourthImei=");
+		builder.append(fourthImei);
+		builder.append(", secondImei=");
+		builder.append(secondImei);
+		builder.append(", thirdImei=");
+		builder.append(thirdImei);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append("]");
+		return builder.toString();
 	}
+	
+	
+	public Integer getOperatorTypeId() {
+		return operatorTypeId;
+	}
+
+
+	public void setOperatorTypeId(Integer operatorTypeId) {
+		this.operatorTypeId = operatorTypeId;
+	}
+
+
 	public String getCategoryInterp() {
 		return categoryInterp;
 	}

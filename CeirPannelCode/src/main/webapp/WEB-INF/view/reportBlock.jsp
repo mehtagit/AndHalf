@@ -1,3 +1,13 @@
+
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -295,13 +305,13 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star">*</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>
-                                                            <input type="file" id="blockBulkFile" accept=".csv" 
+                                                            <input type="file" id="blockBulkFile" accept=".csv"  onchange="fileTypeValueChanges()"
                                                             oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
                                                              oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
                                                             required>
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" placeholder="">
+                                                            <input class="file-path validate" type="text" placeholder="" id="unblockFileName">
                                                         </div>
                                                     </div>
 
@@ -361,6 +371,23 @@ onclick="_Services._selectstartDate()"></i></span>
             </div>
         </div>
     </div>
+    
+    	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <!--materialize js-->
 	<script type="text/javascript"
@@ -433,3 +460,16 @@ onclick="_Services._selectstartDate()"></i></span>
 
 </body>
 </html>
+
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>
