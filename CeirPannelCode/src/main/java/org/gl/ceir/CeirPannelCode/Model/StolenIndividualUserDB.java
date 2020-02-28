@@ -2,14 +2,6 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 public class StolenIndividualUserDB {
 	
-	public Long getImeiEsnMeid() {
-		return imeiEsnMeid;
-	}
-
-	public void setImeiEsnMeid(Long imeiEsnMeid) {
-		this.imeiEsnMeid = imeiEsnMeid;
-	}
-
 	private String alternateContactNumber;
 	private String commune;
 	private Integer complaintType;
@@ -32,7 +24,7 @@ public class StolenIndividualUserDB {
 	private String email;
 	private String firstName;
 	private Integer id;
-	private Long imeiEsnMeid;
+	private Long imeiEsnMeid1,imeiEsnMeid2,imeiEsnMeid3,imeiEsnMeid4;
 	private String lastName;
 	private String locality;
 	private String middleName;
@@ -382,6 +374,38 @@ public class StolenIndividualUserDB {
 		this.nidFileName = nidFileName;
 	}
 
+	public Long getImeiEsnMeid1() {
+		return imeiEsnMeid1;
+	}
+
+	public void setImeiEsnMeid1(Long imeiEsnMeid1) {
+		this.imeiEsnMeid1 = imeiEsnMeid1;
+	}
+
+	public Long getImeiEsnMeid2() {
+		return imeiEsnMeid2;
+	}
+
+	public void setImeiEsnMeid2(Long imeiEsnMeid2) {
+		this.imeiEsnMeid2 = imeiEsnMeid2;
+	}
+
+	public Long getImeiEsnMeid3() {
+		return imeiEsnMeid3;
+	}
+
+	public void setImeiEsnMeid3(Long imeiEsnMeid3) {
+		this.imeiEsnMeid3 = imeiEsnMeid3;
+	}
+
+	public Long getImeiEsnMeid4() {
+		return imeiEsnMeid4;
+	}
+
+	public void setImeiEsnMeid4(Long imeiEsnMeid4) {
+		this.imeiEsnMeid4 = imeiEsnMeid4;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -429,8 +453,14 @@ public class StolenIndividualUserDB {
 		builder.append(firstName);
 		builder.append(", id=");
 		builder.append(id);
-		builder.append(", imeiEsnMeid=");
-		builder.append(imeiEsnMeid);
+		builder.append(", imeiEsnMeid1=");
+		builder.append(imeiEsnMeid1);
+		builder.append(", imeiEsnMeid2=");
+		builder.append(imeiEsnMeid2);
+		builder.append(", imeiEsnMeid3=");
+		builder.append(imeiEsnMeid3);
+		builder.append(", imeiEsnMeid4=");
+		builder.append(imeiEsnMeid4);
 		builder.append(", lastName=");
 		builder.append(lastName);
 		builder.append(", locality=");
@@ -474,19 +504,7 @@ public class StolenIndividualUserDB {
 	}
 
 	
-
-
 	
-	
-	
-	
-
-	
-
-	
-	
-	
-
 	
 
 

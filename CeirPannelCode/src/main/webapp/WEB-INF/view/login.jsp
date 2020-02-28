@@ -155,20 +155,18 @@ a#newUserLink {
 										<div class="input-field col s12">
 											<input type="text" name="username"
 												id="username" class="" 
-												oninput="setCustomValidity('')" placeholder="" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+												oninput="setCustomValidity('')"  oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												title= "<spring:message code="validation.requiredMsg" />" required  maxlength="10" /> <label
-												for="username"><spring:message
-													code="registration.username" /></label>
+												for="username"><spring:message code="registration.username" /></label>
 										</div>
 
 										<div  class="input-field col s12" id="show_hide_password">
 											<input type="password"   class="password"
-												name="password" id="password" placeholder="" 
+												name="password" id="password" 
 												oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 												title= "<spring:message code="validation.requiredMsg" />" required maxlength="10"
 												oncopy="return false" onpaste="return false" /> <label
-												for="password"> <spring:message
-													code="registration.password" /></label>
+												for="password"> <spring:message code="registration.password" /></label>
 											<div class="input-field-addon">
 												<i   class="fa fa-eye-slash teal-text toggle-password" aria-hidden="true"></i>
 											</div>

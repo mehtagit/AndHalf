@@ -1047,10 +1047,10 @@
                                                                 <input type="text" id="viewsingleblockCategory" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockCategory"><spring:message code="operator.category" /></label>
                                                               </div> 
-                                                              <div class="input-field col s12 m6">
+                                                             <%--  <div class="input-field col s12 m6">
             													<input type="text" id="viewsingleblockingType" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockingType"><spring:message code="operator.blocking" /></label>		
-                                                              </div>
+                                                              </div> --%>
                                                             
                                                         </div>
                                                         <div class="row">
@@ -1167,7 +1167,7 @@ required="required"></textarea>
 </div>
 </div>
 <div class="row">
-<div class="col s12 m6">
+<%-- <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
 type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -1193,7 +1193,7 @@ name="stolenBlockPeriod">
 class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
-</div>
+</div> --%>
 
 <!-- 
 <div class="input-field col s6 m6 responsiveDiv" style="display: block;" id="calender">

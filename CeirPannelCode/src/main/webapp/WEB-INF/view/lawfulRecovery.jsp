@@ -210,35 +210,35 @@ select.browser-default {
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="sigleRecoveryimeiNumber" pattern="[0-9]{15,16}" 
+															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 														  maxlength="16" id="sigleRecoveryimeiNumber" required/> 
-															<label for="sigleRecoveryimeiNumber"><spring:message code="registration.one" /> <span class="star"> *</span></label>
+															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-													  maxlength="16" 	id="singleStolenimeiNumberTwo" > <label
-																for="singleStolenimeiNumberTwo"><spring:message code="registration.two" /></label>
+													  maxlength="16" 	id="sigleRecoveryimeiNumber2" > <label
+																for="sigleRecoveryimeiNumber2"><spring:message code="registration.two" /></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" 	id="singleStolenimeiNumberThree" > <label
-																for="singleStolenimeiNumberThree"><spring:message code="registration.three" /></label>
+														  maxlength="16" 	id="sigleRecoveryimeiNumber3" > <label
+																for="sigleRecoveryimeiNumber3"><spring:message code="registration.three" /></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															  maxlength="16" 	id="singleStolenimeiNumberFour" > <label
-																for="singleStolenimeiNumberFour"><spring:message code="registration.four" /></label>
+															  maxlength="16" 	id="sigleRecoveryimeiNumber4" > <label
+																for="sigleRecoveryimeiNumber4"><spring:message code="registration.four" /></label>
 														</div>
 
                                                             <div class="col s12 m12" style="margin-top: 30px;">
@@ -425,14 +425,6 @@ onclick="_Services._selectstartDate()"></i></span>
                                                              required>
 														 <label for="bulkRecoveryquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
-                            
-                                                    <div class="input-field col s12 m12">
-                                                        <textarea id="bulkRecoveryRemark"  
-                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                                                          maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
-                                                    </div>
 
                                                     <div class="file-field col s12 m6">
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star"> *</span></h6>
@@ -447,6 +439,14 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName"
                                                                 placeholder="<spring:message code="registration.uploadfile" />" title="Please upload your photo">
                                                         </div>
+                                                    </div>
+                            
+                                                    <div class="input-field col s12 m12">
+                                                        <textarea id="bulkRecoveryRemark"  
+                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                                                          maxlength="10000" class="materialize-textarea" style="height: auto; max-height:300px;"></textarea>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
                                                     </div>
                                                     
                                                     <div class="col s12 m6">

@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
+import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
@@ -203,8 +204,8 @@ public interface FeignCleintImplementation {
 	//Dashboard/Datatable Feign
 		@RequestMapping(value="/v2/history/Notification" ,method=RequestMethod.GET) 
 		public Object dashBoardNotification(@RequestBody FilterRequest filterRequest,
-		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) ;	
+		@RequestParam Integer pageNo,
+		@RequestParam Integer pageSize) ;	
 		
 		
 		
@@ -345,7 +346,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				public @ResponseBody GenricResponse getAllTagsDropdowntFeign(FilterRequest filterRequest);	
 				
 				
-				//***************************************************Field Management Feign********************************
+				//***************************************************Field Management Feign**********************************
 
 				@RequestMapping(value= "/filter/system-config-list" , method=RequestMethod.POST) 
 				public Object fieldManagementFeign(@RequestBody FilterRequest filterRequest,
@@ -378,10 +379,12 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				@RequestMapping(value="/tags/system-config-list" ,method=RequestMethod.DELETE) 
 				public @ResponseBody GenricResponse deleteFieldFeign(@RequestBody FilterRequest filterRequest);
 				
+				@PostMapping("/system/viewTag")
+				public @ResponseBody AddMoreFileModel addMoreBuutonCount(AddMoreFileModel addMoreCount);	
+				
+				
 
 		}
-		
-
 
 
 

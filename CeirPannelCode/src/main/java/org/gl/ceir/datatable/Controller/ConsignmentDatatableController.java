@@ -301,7 +301,7 @@ public class ConsignmentDatatableController {
 				UserProfileModel userprofileModel = userModel.getUserProfile();
 				String createdOn= dataInsideList.getCreatedOn();
 				String txnId = dataInsideList.getTxnId(); 
-				String displayName = userprofileModel.getCompanyName();		
+				String displayName = userprofileModel.getDisplayName();
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatusName = dataInsideList.getStateInterp();
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
@@ -310,6 +310,8 @@ public class ConsignmentDatatableController {
 				String quantity = String.valueOf(dataInsideList.getQuantity());
 				String action=iconState.customState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
+				
+			
 				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
@@ -322,17 +324,17 @@ public class ConsignmentDatatableController {
 				UserProfileModel userprofileModel = userModel.getUserProfile();
 				String createdOn= dataInsideList.getCreatedOn();
 				String txnId = dataInsideList.getTxnId(); 
-				String companyName = userprofileModel.getCompanyName();		
+				String displayName = userprofileModel.getDisplayName();;		
 				String statusOfConsignment = String.valueOf(dataInsideList.getConsignmentStatus());
 				String consignmentStatusName = dataInsideList.getStateInterp();
 				String taxPaidStatus= String.valueOf(dataInsideList.getTaxPaidStatus());
 				String taxPaidStatusName=dataInsideList.getTaxInterp();
 				String userStatus = (String) session.getAttribute("userStatus");
 				String quantity = String.valueOf(dataInsideList.getQuantity());
-				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,companyName);
+				String action=iconState.adminState(dataInsideList.getFileName(), txnId, statusOfConsignment,userStatus,displayName);
 				
 				
-				String[] finalData={createdOn,txnId,companyName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
+				String[] finalData={createdOn,txnId,displayName,consignmentStatusName,taxPaidStatusName,quantity,action}; 
 					List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);

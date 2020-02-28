@@ -90,6 +90,7 @@ public class AdminRegistrationRequest {
 			@RequestParam(name="RegistrationEndDate",required = false) String RegistrationEndDate,
 			@RequestParam(name="asType",required = false) Integer asType,
 			@RequestParam(name="userRoleTypeId", required = false) Integer userRoleTypeId,
+			@RequestParam(name="featureId", required = false) Integer featureId,
 			@RequestParam(name="status",required = false) Integer status,
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
@@ -111,6 +112,7 @@ public class AdminRegistrationRequest {
 		filterRequest.setStatus(status);
 		filterRequest.setUserId(userId);
 		filterRequest.setUserType(userType);
+		filterRequest.setFeatureId(featureId);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file);
 		Gson gson= new Gson(); 

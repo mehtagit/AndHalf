@@ -274,7 +274,7 @@
 					<div class="input-field col s12 center">
 						<button class="btn" type="submit"><spring:message
 								code="modal.yes" /></button>
-						<button class="modal-close btn" type="submit"
+						<button class="modal-close btn" type="button"
 							onclick="closeUpdateModal()" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -646,13 +646,15 @@
 
 					<div class="input-field col s12 m6">
 
-						<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
+						<input name="expectedDispatcheDateEdit" id="expectedDispatcheDateEdit"
 							placeholder="" type="text" class='form-control datepick'
 							autocomplete='off'
-							onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDate(expectedDispatcheDate,expectedArrivaldate);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
+							onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDateOnModal(expectedDispatcheDateEdit,expectedArrivaldateEdit);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
 							 required />
 						<label for="dispatchDate" class="center-align"><spring:message
-								code="input.dispatchdate" /><span class="star">*</span> </label> <span
+								code="input.dispatchdate" /><span class="star">*</span> </label>
+								<p id="errorMsgOnModal" class="onEditModalTitle"></p>
+								 <span
 							class="input-group-addon" style="color: #ff4081"><i
 							class="fa fa-calendar" aria-hidden="true"></i></span>
 					</div>
@@ -668,9 +670,9 @@
 					<div class="input-field col s12 m6">
 						<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
 						<!-- <label for="Name">Expected arrival Date</label> -->
-						<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
+						<input name="expectedArrivaldateEdit" id="expectedArrivaldateEdit"
 							placeholder="" type="text" class='form-control datepick'
-							autocomplete='off' onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDate(expectedDispatcheDate,expectedArrivaldate);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
+							autocomplete='off' onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDateOnModal(expectedDispatcheDateEdit,expectedArrivaldateEdit);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
 							 required />
 						<label for="dispatchDate" class="center-align"><spring:message
 								code="input.arrivaldate" /><span class="star">*</span> </label> <span
@@ -855,36 +857,37 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"

@@ -302,6 +302,7 @@ function ImporterviewByID(id,actionType,projectPath){
 }
 
 
+
 function setImporterViewPopupData(data,projectPath){
 
 	$("#viewtradmark").val(data.trademark);
@@ -325,7 +326,17 @@ function setImporterViewPopupData(data,projectPath){
 			if(importerViewResponse[i].attachedFiles[j].docType == null || importerViewResponse[i].attachedFiles[j].docType == undefined ){
 				importerViewResponse[i].attachedFiles[j].docType == "";
 			}else{
-				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+				if(importerViewResponse[i].attachedFiles[j].docType=="")
+				{
+					
+				//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+				}
+			else{
+			
+				fileName=importerViewResponse[i].attachedFiles[j].fileName.split(' ').join('%20');
+				$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span> <a onclick=onclick=fileDownload('"+fileName+"','actual','"+importerViewResponse[i].txnId+"','"+importerViewResponse[i].attachedFiles[j].docType+"')>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+			}
+				//$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
 			}
 		}
 	}
@@ -362,6 +373,7 @@ function setImporterEditPopupData(data){
 	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function( //same values to be configure for featureId 21
 			data) {
 		$("#docTypetag1").empty();
+		$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
 		for (i = 0; i < data.length; i++) {
 			console.log(data[i].interp);
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
@@ -552,24 +564,13 @@ $(".add_field_button")
 		.click(
 				function(e) { //on add input button click
 					e.preventDefault();
+					var placeholderValue= $.i18n('selectFilePlaceHolder');
 					if (x < max_fields) { //max input box allowed
 						x++; //text box increment
-						$(wrapper)
-								.append(
-										'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
-												+ $
-														.i18n('documenttype')
-												+ ' </label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
-												+ $
-														.i18n('selectDocumentType')
-												+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
-												+ $
-														.i18n('selectDocumentType')
-												+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
-												+ $.i18n('selectfile')
-												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+						$(wrapper).append(
+					        '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+						); 
 					}
-
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
 
@@ -617,7 +618,7 @@ function approveSubmit(actiontype){
 	var txnId=$('#setApproveTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var adminApproveStatus=0;
+	var adminApproveStatus=6;
 	var approveRequest={
 			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
@@ -641,11 +642,11 @@ function approveSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text($.i18n('TYPE_APPROVE_APPROVED'));
 			}
 			else{
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text($.i18n('TYPE_APPROVE_APPROVED'));
 			}
 		},
 		error : function() {
@@ -672,7 +673,7 @@ function rejectSubmit(actiontype){
 	var txnId=$('#setRejectTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var adminApproveStatus=1;
+	var adminApproveStatus=7;
 	var approveRequest={
 			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
@@ -692,11 +693,11 @@ function rejectSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#rejectSuccessMessage').text('');
-				$('#rejectSuccessMessage').text(data.message);
+				$('#rejectSuccessMessage').text($.i18n('TYPE_APPROVE_REJECTED'));
 			}
 			else{
 				$('#rejectSuccessMessage').text('');
-				$('#rejectSuccessMessage').text(data.message);
+				$('#rejectSuccessMessage').text($.i18n('TYPE_APPROVE_REJECTED'));
 			}
 		},
 		error : function() {

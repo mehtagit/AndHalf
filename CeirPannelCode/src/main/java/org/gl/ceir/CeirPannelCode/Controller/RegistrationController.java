@@ -42,30 +42,30 @@ public class RegistrationController {
 	RegistrationService registrationService;
 	@Autowired
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
-    @Autowired
-    FeignClientImplementation feignImplementation;
+	@Autowired
+	FeignClientImplementation feignImplementation;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-	
+
 	@Autowired
 	PortAddressFeign portAddressFeign;
-	
+
 	private final Logger log = LoggerFactory.getLogger(getClass());	
-	@RequestMapping(value = {"/","/index"},method = RequestMethod.GET)
+	@RequestMapping("DMC")
 	public ModelAndView index(HttpServletRequest request){
 		log.info("inside index controller ");
 		ModelAndView mv=new ModelAndView();
 		mv.setViewName("index");
 		return mv;      
 	}         
-	
+
 	@ResponseBody
 	@GetMapping("asTypeData/{tagId}")
 	public List<Dropdown> asTypeDropdown(@PathVariable("tagId") String tag ) {
 		List<Dropdown> dropdown = feignCleintImplementation.taxPaidStatusList(tag);
 		return dropdown;
 	}
-	
+
 	@ResponseBody
 	@GetMapping("/byArrivalPort/{arrivalPort}")
 	public List<PortAddress> portAddByPort(@PathVariable("arrivalPort") Integer arrivalPort ) {
@@ -75,34 +75,34 @@ public class RegistrationController {
 		log.info("exit from byArrivalPort controller");
 		return address;
 	}
-	
-	
-	
-	
+
+
+
+
 	@RequestMapping(value = "/usertypeList",method = {RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> usertypeList(){ 
 		List<Usertype> response =userRegistrationFeignImpl.userypeList();
 		return response;          
 	} 
-	
+
 	@RequestMapping(value = "/operatorList/{tag}",method = {RequestMethod.GET})
 	@ResponseBody  
 	public List<Operator> operatorList(@PathVariable String tag){ 
 		List<Operator> response =feignImplementation.operatorList(tag);
 		return response;            
 	} 
-	
-	
-    @RequestMapping(value = "/registration")
+
+
+	@RequestMapping(value = "/registration")
 	public String registration(@RequestParam(name = "type",required =false) String usertype,Model model) {
-    	return registrationService.registrationView(usertype,model);
-    }
-    
+		return registrationService.registrationView(usertype,model);
+	}
+
 	@RequestMapping(value = "/importorRegistration",method = {RequestMethod.GET})
 	public ModelAndView importorRegistration(@RequestParam(name = "usertypeId",required =false,defaultValue="0") Integer usertypeId	) throws IOException{
 		ModelAndView mv=registrationService.ImporterRegistrationView(usertypeId);
-		
+
 		return mv; 
 	} 
 	@RequestMapping(value = "/customRegistration",method = {RequestMethod.GET})
@@ -116,7 +116,7 @@ public class RegistrationController {
 		ModelAndView mv=registrationService.operatorRegistrationView(usertypeId);
 		return mv; 
 	} 
-	
+
 	@RequestMapping(value = "/saveRegistration",method = {RequestMethod.POST})
 	@ResponseBody     
 	public OtpResponse saveRegistration(@RequestParam(name = "data",required = true) String data,
@@ -126,7 +126,7 @@ public class RegistrationController {
 		OtpResponse response =registrationService.saveRegistration(data, file,vatFile,session,request);  
 		return response;             
 	}
-	
+
 	@RequestMapping(value = "/saveOtherRegistration",method = {RequestMethod.POST})
 	@ResponseBody     
 	public OtpResponse saveOtherRegistration(@RequestParam(name = "data",required = true) String data,
@@ -188,7 +188,7 @@ public class RegistrationController {
 
 		registrationService.captcha(request, response, session);
 	} 
-	
+
 	@RequestMapping(value = "/registrationUserType",method = {RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody  
 	public List<Usertype> userTypeDropdown(){ 

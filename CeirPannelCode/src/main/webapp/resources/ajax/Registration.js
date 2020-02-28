@@ -19,7 +19,7 @@ $('#langlist').on('change', function() {
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
+        	var url = new URL(window.location.href);
     		var langParameter = url.searchParams.get("lang");
             	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
         	$('.modal-trigger').leanModal({
@@ -133,17 +133,21 @@ function verifyOtp(){
 			console.log(data);	
 			var resp=JSON.parse(data);
 			if(resp.statusCode=="200"){
+				//window.location.href='#otpMessage';
+				
+				// $('#otpMessage').modal('open');
+				
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#otpResponse").text($.i18n(resp.tag));
 					$("#otpVerification").closeModal();
 					$('#otpMessage').openModal({
 				        dismissible:false
 				    });
- 
+   
+					$("#otpResponse").text($.i18n(resp.tag));
 				});
 				
 			}
@@ -571,6 +575,7 @@ function registrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
+					$('#content').addClass('lean-overlay');
 					$("#otpMsgModal").openModal({
 				        dismissible:false
 				    });

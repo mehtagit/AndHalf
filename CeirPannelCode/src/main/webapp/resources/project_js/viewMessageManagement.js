@@ -97,7 +97,6 @@ function pageRendering(){
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#messageTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
@@ -165,6 +164,13 @@ function setViewPopupData(data){
 	$("#viewTag").val(data.tag);
 	$("#viewValue").val(data.value);
 	$("#description").val(data.description);
+	$("viewChannel").val(data.channelInterp);
+	
+	$("label[for='viewTag']").addClass('active');
+	$("label[for='viewValue']").addClass('active');
+	$("label[for='description']").addClass('active');
+	$("label[for='viewChannel']").addClass('active');
+	
 
 }
 

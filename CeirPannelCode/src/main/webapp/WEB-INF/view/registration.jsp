@@ -53,6 +53,8 @@
 <link
 	href="${context}/resources/js/plugins/chartist-js/chartist.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+	<link href="${context}/resources/project_css/leanOverlay.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <!-- Country -->
 <!-- <script type="text/javascript" src="js/country.js"></script> -->
 <style>
@@ -222,6 +224,8 @@ width: 90%;
 margin: auto;
 /* border: solid 2px #444; */
 }
+
+
 </style>
 <script>
 var contextpath = "${context}";
@@ -840,11 +844,6 @@ String usertypeId="${usertypeId}";
  	var type = url.searchParams.get("type");
  	window.location.assign("registration?type="+type+"&lang="+window.lang);			
  	}); 
- 	
- 	//var langParam=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
- 	
  	
          $(document).ready(function () {
          	$('#langlist').val(data_lang_param);

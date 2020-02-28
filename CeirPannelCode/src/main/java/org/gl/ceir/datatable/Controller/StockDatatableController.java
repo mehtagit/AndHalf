@@ -19,6 +19,8 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.StockContent;
 import org.gl.ceir.pagination.model.StockPaginationModel;
+import org.gl.ceir.pagination.model.UserModel;
+import org.gl.ceir.pagination.model.UserProfileModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,7 +146,9 @@ public class StockDatatableController {
 					{
 						String date= dataInsideList.getCreatedOn(); 
 						String txnId= dataInsideList.getTxnId();
-						String displayName = "";
+						UserModel userModel = dataInsideList.getUser();
+						UserProfileModel userprofileModel = userModel.getUserProfile();
+						String displayName = userprofileModel.getDisplayName();
 						String roll = dataInsideList.getRoleType();
 						String file= dataInsideList.getFileName();
 						// if API provide me consignmentStatusName

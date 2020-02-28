@@ -120,16 +120,6 @@ oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFiel
 </div>
 </div>
 
-<div class="row" style="margin-top: 10px;">
-<div class="input-field col s12 m6 l6">
-<textarea id="Remark" class="materialize-textarea" maxlength="200" 
-oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
-oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
- required></textarea>
-<label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
-</div>
-</div>
-
 
 <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
@@ -173,6 +163,16 @@ style="display: none;">
 <div class="col s12 m6 right">
 <button class="btn right add_field_button" type="button" disabled="disabled"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
+</div>
+
+<div class="row" style="margin-top: 10px;">
+<div class="input-field col s12 m12">
+<textarea id="Remark" class="materialize-textarea" maxlength="200" 
+oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
+oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+ required></textarea>
+<label for="Remark"><spring:message code="input.remarks" /> <span class="star">*</span></label>
+</div>
 </div>
 </div>
 
@@ -303,7 +303,7 @@ src="${context}/resources/project_js/viewStock.js"></script>
 
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-
+<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 
 <script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
@@ -499,12 +499,21 @@ $.ajax({
 
 
 
-		var max_fields = 15; //maximum input boxes allowed
+		var max_fields = 2; //maximum input boxes allowed
+		var dd='';
+		$.getJSON('./addMoreFile/'+tag, function(data) {
+			console.log(data);
+			alert(data.value);
+			dd=data.value();
+			
+		});
+		alert(dd);
 		var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
 		var x = 1; //initlal text box count
 		var id=2;
-		 
+		
+		
 		$(".add_field_button").click(function (e) { //on add input button click
 			e.preventDefault();
 			var placeholderValue= $.i18n('selectFilePlaceHolder');
@@ -636,6 +645,12 @@ $('#category').on(
 function enableAddMore(){
 	$(".add_field_button").attr("disabled", false);
 }
+
+
+/* $( document ).ready(function() {
+	var ccc=addMoreFileCount();
+	alert(ccc);
+}); */
 
 </script>
 <script type="text/javascript"

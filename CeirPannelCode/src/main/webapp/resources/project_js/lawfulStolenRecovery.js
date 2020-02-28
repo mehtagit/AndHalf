@@ -389,7 +389,13 @@ function saveIndivisualStolenRequest(){
 	var blockingType =$('.blocktypeRadio:checked').val();
 	
 	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
-	var singleStolenimeiNumber=$('#singleStolenimeiNumber').val();
+	
+	var singleStolenimei1=$('#singleStolenimei1').val();
+	var singleStolenimei2=$('#singleStolenimei2').val();
+	var singleStolenimei3=$('#singleStolenimei3').val();
+	var singleStolenimei4=$('#singleStolenimei4').val();
+	
+	
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
 	var singleStolenOperator=$('#singleStolenOperator').val();
@@ -415,6 +421,9 @@ function saveIndivisualStolenRequest(){
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	console.log("**** file name"+uploadedFileName)
 	
+	var fileFileDetails=$('#uploadFirSingle').val();
+	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
@@ -436,7 +445,10 @@ function saveIndivisualStolenRequest(){
 			"district": singleStolendistrict,
 			"email":singleStolenemail,
 			"firstName":singleStolenfirstName,
-			"imeiEsnMeid": parseInt(singleStolenimeiNumber),
+			"imeiEsnMeid1": parseInt(singleStolenimei1),
+			"imeiEsnMeid2": parseInt(singleStolenimei2),
+			"imeiEsnMeid3": parseInt(singleStolenimei3),
+			"imeiEsnMeid4": parseInt(singleStolenimei4),
 			"lastName": singleStolenlastName,
 			"locality": singleStolenlocality,
 			"multiSimStatus": singleStolenSimStatus,
@@ -456,14 +468,15 @@ function saveIndivisualStolenRequest(){
 	
 	
 	var request={
-			
 			"dateOfStolen":IndivisualStolenDate,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
+			"firFileName":fileFileDetails,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
+	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
@@ -526,7 +539,7 @@ function saveCompanyStolenRequest(){
 	var bulkStolenlastName=$('#bulkStolenlastName').val();
 	var bulkStolenofficeEmail=$('#bulkStolenofficeEmail').val();
 	var bulkStolenContact=$('#bulkStolenContact').val();
-
+	var uploadFirBulk=$('#uploadFirBulk').val();
 	
 	var deviceBulkStolenaddress=$('#deviceBulkStolenaddress').val();
 	var deviceBulkStolenstreetNumber=$('#deviceBulkStolenstreetNumber').val();
@@ -542,7 +555,8 @@ function saveCompanyStolenRequest(){
 	var deviceBulkStolenRemark=$('#deviceBulkStolenRemark').val();
 	var bulkStolenDate=$('#bulkStolenDate').val();
 	
-
+	var uploadFirBulk=$('#uploadFirBulk').val();
+	uploadFirBulk=uploadFirBulk.replace(/^.*[\\\/]/, '');
 	
 	var stolenOrganizationUserDB= {
     "commune": bulkStolencommune,
@@ -578,9 +592,11 @@ function saveCompanyStolenRequest(){
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":6,
+			"firFileName":uploadFirBulk,
 			"stolenOrganizationUserDB":stolenOrganizationUserDB
 	}
 	formData.append('file', $('#deviceBulkStolenFile')[0].files[0]);
+	formData.append('firFileName', $('#uploadFirBulk')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 
 	$.ajax({

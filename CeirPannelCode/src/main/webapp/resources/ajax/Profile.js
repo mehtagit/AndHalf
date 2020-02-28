@@ -463,4 +463,9 @@ function verifyOtp2(){
 
 	});
 	return false;
-} 
+}
+
+
+function redirectToDashboard(){
+	window.location.href="Home?lang="+window.parent.$('#langlist').val();
+}

@@ -3,21 +3,30 @@ $('#langlist').on('change', function() {
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
-	window.location.assign("updateVisaValidaity?lang="+lang);			
-	});   
+	window.location.assign("checkDeviceslogin?lang="+lang);			
+});   
 $(document).ready(function () {
-$('#langlist').val(data_lang_param);
+	$('#langlist').val(data_lang_param);
+	var lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	$.i18n().locale = lang;		
+	$.i18n().load( {
+		'en': './resources/i18n/en.json',
+		'km': './resources/i18n/km.json'
+	} ).done( function() { 
+
+	});
+
 });
 
 function DeviceDetails(){
-	
+
 	var RequestData={
 			"deviceIdType":parseInt($("#deviceIdType").val()),
 			"deviceId":$("#DeviceID").val()
 	}
 
 	$.ajax({
-		
+
 		url : "./checkDevice",
 		data :	JSON.stringify(RequestData),
 		dataType : 'json',
@@ -25,18 +34,18 @@ function DeviceDetails(){
 		type : 'POST',
 		success : function(response) {
 			console.log(response);
-			
+
 			if (response.errorCode == 200) {
 				$("#singleInput").css("display", "none");
 				$("#validDetails").css("display", "block");
 				setvalidData(response)
 			}else{
-				
+
 				$("#singleInput").css("display", "none");
 				$("#invalidDetails").css("display", "block");
 				setInvalidData(response)
 			}
-			
+
 		},
 		error : function() {
 			$('#errorModal').openModal();
@@ -47,21 +56,21 @@ function DeviceDetails(){
 
 
 function setvalidData(response){
-	
+
 	$("#validTac").val(response.data.tacNumber);
 	$("#validbrandName").val(response.data.brandName);
 	$("#validModelName").val(response.data.modelName);
-	
+
 }
 
 
 function setInvalidData(data){
-	
+
 	$("#InvalidImeiNumber").text(response.data.imei)
 	$("#invalidTac").val(response.data.tacNumber);
 	$("#invalidRemark").val(response.data.brandName);
-	
-	
+
+
 }
 
 $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
@@ -71,3 +80,49 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 	}
 });
 
+
+$('#deviceIdType').on('change', function() {
+	var value=parseInt($(this).val());
+
+	switch (value) {
+	case 0:
+		$("#DeviceID").attr("pattern","[0-9]{15,16}");
+		$("#DeviceID").attr("maxlength","16");
+		$("#DeviceID").removeAttr("onkeyup");
+		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		$('#errorMsgOnModal').text($.i18n('IMEIMsg'));
+		break;
+	case 1:
+		$("#DeviceID").attr("pattern","[A-F0-9]{15,16}");
+		$("#DeviceID").attr("maxlength","16");
+		$("#DeviceID").removeAttr("onkeyup");
+		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationMEID')+"')");
+		$('#errorMsgOnModal').text($.i18n('MEIDMsg'));
+		break;
+	case 2:
+		$("#DeviceID").attr("onkeyup","isLengthValid(this.value)");
+		$("#DeviceID").attr("maxlength","11");
+		$('#errorMsgOnModal').text($.i18n('ESNMsg'));
+		break;
+	}
+
+}); 
+
+function isLengthValid(val){
+	var deviceIDLength=val.length;
+
+
+	if(val.match(/^[0-9a-z]+$/) && (deviceIDLength > 8)){
+		$("#DeviceID").attr("pattern","[A-F0-9]{0,11}");
+		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
+
+	}
+	else if(isNaN(val) && (deviceIDLength <= 8 )){
+		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationESN8')+"')");
+		$("#DeviceID").attr("pattern","[0-9]{0,8}");
+	}
+}

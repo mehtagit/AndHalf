@@ -87,6 +87,15 @@
 	margin-bottom: 0;
 	font-size: 0.8rem;
 }
+
+select {
+			margin-bottom: 5px;
+			height: 2.2rem;
+		}
+		
+		.iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
+			margin-bottom: 5px !important;
+		}
 </style>
 
 
@@ -156,7 +165,7 @@
 														required="required" pattern="[a-zA-Z]{1,20}"
 														 title="Please enter alphabets  upto 20 characters only" maxlength="20"
 															id="singleStolenlastName"> <label for="lastName">
-															<spring:message code="input.lastName" /><span class="star">*</span>
+															<spring:message code="input.lastName" /> <span class="star">*</span>
 														</label>
 													</div>
 
@@ -194,7 +203,7 @@
 														required="required" pattern="[A-Za-z0-9]{1,15}"
 														 title="Please enter alphabets and numbers upto 15 characters only" maxlength="15"
 															id="singleStolennIDPassportNumber"> <label
-															for="nIDPassportNumber"> <spring:message code="registration.nid/passportnumber" /><span
+															for="nIDPassportNumber"> <spring:message code="registration.nid/passportnumber" /> <span
 															class="star">*</span></label>
 													</div>
 
@@ -293,23 +302,22 @@
 													</div>
 
 													<div>
-														<div class="input-field col s12 m6"
-															style="margin-top: 22px;">
+														<div class="input-field col s12 m6"">
 															<input type="text" name="deviceBrandName" placeholder=""
 																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}" required="required" title="Please enter alphabets and numbers upto 20 characters only" 
 																maxlength="20">
 															<label for="deviceBrandName"><spring:message code="registration.devicebrandname" /></label>
 														</div>
 
-														<div class="input-field col s12 m6"
+														<%-- <div class="input-field col s12 m6"
 															style="margin-top: 22px;">
 															<input type="text" name="imeiNumber" placeholder=""
 																id="singleStolenimeiNumber" pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only" 
 															maxlength="16"> <label
 																for="imeiNumber"><spring:message code="registration.imei/meid/esnnumber" /></label>
-														</div>
+														</div> --%>
 
-														<div class="col s6 m6 selectDropdwn">
+														<div class="col s6 m6 ">
 															<label for="deviceIDType"><spring:message code="select.deviceIDType" /></label> <select
 																id="singleStolendeviceIDType" class="browser-default">
 																<option value="" disabled selected>
@@ -317,7 +325,7 @@
 															</select>
 														</div>
 
-														<div class="col s6 m6 selectDropdwn">
+														<div class="col s6 m6 ">
 															<label for="deviceType"><spring:message code="select.deviceType" /></label> <select
 																class="browser-default" id="singleStolendeviceType">
 																<option value="" disabled selected><spring:message code="select.deviceType" /></option>
@@ -341,7 +349,7 @@
 																for="modalNumber"><spring:message code="table.ModelNumber" /></label>
 														</div>
 
-														<div class="input-field col s12 m6">
+														<div class="col s12 m6">
 															<p class="contact-label">
 																<spring:message code="input.contactNum" /> <span class="star">*</span>
 															</p>
@@ -365,6 +373,8 @@
 														</div>
 														
 														
+														
+														
 														<div class="col s12 m6 l6">
 															<label> <spring:message code="select.multiSimStatus" /> <span class="star"> *</span></label> <select
 																class="browser-default" id="singleStolenSimStatus">
@@ -382,6 +392,53 @@
 																	<spring:message code="registration.selectcomplainttype" /></option>
 
 															</select>
+														</div>
+														
+														<div class="col s12 m12" style="margin-top: 30px; font-weight: bold;">
+															<h6><spring:message code="registration.imei/meid/esnnumber" /></h6>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}"
+																oninput="InvalidMsg(this,'input');"
+																oninvalid="InvalidMsg(this,'input');" required="required"
+																title="<spring:message code=" validation.1516digit" />"
+															maxlength="16" id="updatesingleStolenimei1"> <label
+																for="updatesingleStolenimei1">
+																<spring:message code="registration.one" /></label>
+														</div>
+
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberTwo"
+																pattern="[0-9]{15,16}"
+																oninput="InvalidMsg(this,'input');"
+																oninvalid="InvalidMsg(this,'input');"
+																title="<spring:message code=" validation.1516digit" />"
+															maxlength="16" id="updatesingleStolenimei2" > <label
+																for="updatesingleStolenimei2">
+																<spring:message code="registration.two" /></label>
+														</div>
+
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberThree"
+																pattern="[0-9]{15,16}"
+																oninput="InvalidMsg(this,'input');"
+																oninvalid="InvalidMsg(this,'input');"
+																title="<spring:message code=" validation.1516digit" />"
+															maxlength="16" id="updatesingleStolenimei3" > <label
+																for="updatesingleStolenimei3">
+																<spring:message code="registration.three" /></label>
+														</div>
+
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberFour"
+																pattern="[0-9]{15,16}"
+																oninput="InvalidMsg(this,'input');"
+																oninvalid="InvalidMsg(this,'input');"
+																title="<spring:message code=" validation.1516digit" />"
+															maxlength="16" id="updatesingleStolenimei4" > <label
+																for="updatesingleStolenimei4">
+																<spring:message code="registration.four" /></label>
 														</div>
 
 														<div class="col s12 m12" style="margin-top: 30px;">
@@ -457,8 +514,33 @@
 																id="singleDevicestate" class="browser-default"
 																class="mySelect" style="padding-left: 0;" required></select>
 														</div>
+														<div class="input-field col s12 m6" data-original-title="" title="">
+															<input type="text" name="IndivisualStolenDate" id="IndivisualStolenDate" class="form-control datepick" autocomplete="off" title="" required="" data-original-title="
+																validation.requiredMsg">
+															<label for="IndivisualStolenDate" class="center-align" data-original-title="" title="">
+																Device Stolen Date <span class="star" data-original-title="" title="">*</span>
+															</label> <span class="input-group-addon" style="color: #ff4081" data-original-title="" title=""><i class="fa fa-calendar" aria-hidden="true" data-original-title="" title=""></i></span>
+														</div>
+														
+														<div class="file-field col s12 m6" data-original-title="" title="">
+															<h6 class="form-label" style="margin:0; font-size: 0.9rem;" data-original-title="" title="">
+																Upload FIR
+															</h6>
+															<div class="btn" data-original-title="" title="">
+																<span data-original-title="" title="">
+																	Select File</span>
+																<input type="file" oninput="InvalidMsg(this,'fileType','
+																	validation.NoChosen');" oninvalid="InvalidMsg(this,'fileType','
+																No file Chosen ');" placeholder="Upload FIR" id="uploadFirSingle" data-original-title="" title="">
+															</div>
+															<div class="file-path-wrapper" data-original-title="" title="">
+																<input class="file-path validate" type="text" placeholder="
+																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="Please upload national
+																ID image">
+															</div>
+														</div>
 
-														<div class="input-field col s12 m6">
+														<div class="input-field col s12 m12">
 															<textarea id="singleDeviceRemark" maxlength="20000" placeholder=""
 																class="materialize-textarea"></textarea>
 															<label for="textarea1"><spring:message code="input.remarks" /> </label>
@@ -881,7 +963,10 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             }
           
       }
-      
+        $('.datepick').datepicker({
+			dateFormat: "yy-mm-dd"
+		});
+
 	
     </script>
 

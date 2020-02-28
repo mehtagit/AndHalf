@@ -319,8 +319,9 @@ function confirmantiondelete(){
 					"userType":$("body").attr("data-roleType")
 			}
 			if(lang=='km'){
-				var langFile="//cdn.datatables.net/plug-ins/1.10.20/i18n/Khmer.json";
+				var langFile='../resources/i18n/khmer_datatable.json';
 			}
+
 			$.ajax({
 				url: url,
 				/*	headers: {"Accept-Language": "en"},*/
@@ -386,7 +387,12 @@ function confirmantiondelete(){
 			var quantity=$('#QuantityEdit').val();
 			var currency=$('#currency').val();
 			var totalPrice=$('#totalPrice').val();
-
+				currency=parseInt(currency);
+				if ( isNaN(currency))
+					{
+					currency='';
+					}
+				
 			var formData= new FormData();
 			formData.append('file', $('#csvUploadFile')[0].files[0]);
 			formData.append('supplierId',supplierId);
@@ -657,7 +663,7 @@ function confirmantiondelete(){
 		{
 			var userType=$("body").attr("data-roleType");
 			displayName=displayName.replace("+20"," " );
-			$('#ApproveConsignment').openModal();
+			$('#ApproveConsignment').openModal({dismissible:false});
 			if(userType=='Custom'){
 				
 				$.ajax({
@@ -904,7 +910,7 @@ function fileTypeValueChanges() {
 				});
 				 
 				}
-			else if(fileSize>='5000'){
+			else if(fileSize>='2000'){
 				$('#fileFormateModal').openModal({
 					dismissible:false
 				});
@@ -994,3 +1000,38 @@ function fileTypeValueChanges() {
 		        $('#approveButton').attr('disabled', true); //disable input
 		    }
 		});
+		
+		
+		
+		function consignmentFileDownload(fileName,fileType,txnId,doc_TypeTag)
+		{
+			fileName=fileName.split("%20").join(" ");
+		console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_TypeTag "+doc_TypeTag)
+			$.ajax({
+				url : "./dowloadFiles/"+fileType+'/'+fileName+'/'+txnId+'/'+doc_TypeTag,
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'GET',
+				success : function(data) {
+					console.log(data);
+					if(data.url=='Not Found')
+						{
+						
+						$('#fileFormateModal').openModal({
+							dismissible:false
+						});
+						$('#fileErrormessage').text('')
+						$('#fileErrormessage').text($.i18n('fileNotFound'));
+						}
+					else{
+						console.log("file is found");
+						 window.location.href=data.url;
+
+					}
+					
+				},
+				error : function() {
+				
+				}
+			});
+		}
