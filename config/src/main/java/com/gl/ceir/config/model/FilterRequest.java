@@ -15,6 +15,7 @@ public class FilterRequest {
 	private Integer sourceType;
 	private String userType;
 	private Integer featureId;
+	private String featureName;
 	private Integer userTypeId;
 	private String searchString;
 
@@ -39,6 +40,14 @@ public class FilterRequest {
 	private String imei;
 	private Long contactNumber;
 
+	
+	
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
 	public String getImei() {
 		return imei;
 	}

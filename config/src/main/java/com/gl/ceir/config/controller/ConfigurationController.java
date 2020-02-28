@@ -10,6 +10,7 @@ import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -133,7 +134,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Message Config view  Data by Tag", response = MessageConfigurationDb.class)
-	@RequestMapping(path = "/message/viewTag", method = RequestMethod.POST)
+	@PostMapping("/message/viewTag")
 	public MappingJacksonValue findMessageDetailsByTag(@RequestBody MessageConfigurationDb messageConfigurationDb) {
 
 		logger.info("Details Get by Message config="+messageConfigurationDb);
@@ -148,7 +149,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Message Config update Data using id", response = GenricResponse.class)
-	@RequestMapping(path = "/message/update", method = RequestMethod.PUT)
+	@PutMapping("/message/update")
 	public GenricResponse updateMessage(@RequestBody MessageConfigurationDb messageConfigurationDb) {
 
 		logger.info("Update message config request="+messageConfigurationDb);
@@ -161,7 +162,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Policy Config view  Data by Tag", response = PolicyConfigurationDb.class)
-	@RequestMapping(path = "/policy/viewTag", method = RequestMethod.POST)
+	@PostMapping("/policy/viewTag")
 	public MappingJacksonValue findPolicyDetailsByTag(@RequestBody PolicyConfigurationDb messageConfigurationDb) {
 
 		logger.info("Details Get by Message config="+messageConfigurationDb);
@@ -192,7 +193,7 @@ public class ConfigurationController {
 	}
 
 	@ApiOperation(value = "Policy Config view All Data ", response = PolicyConfigurationDb.class)
-	@RequestMapping(path = "/policy/viewAll", method = RequestMethod.POST)
+	@PostMapping("/policy/viewAll")
 	public MappingJacksonValue findPolicyDetails() {
 
 		logger.info("Details Get by Message config");

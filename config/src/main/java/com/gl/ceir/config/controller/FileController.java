@@ -159,10 +159,10 @@ public class FileController {
 	
 	@ApiOperation(value = "Download manuals.", response = String.class)
 	@GetMapping("/Download/manuals")
-	public FileDetails downloadSampleFile() {		
+	public FileDetails downloadManuals(@RequestParam("userTypeId") int userTypeId) {		
 		
 		logger.info("Request manuals");
-		FileDetails fileDetails = fileServiceImpl.getManuals();
+		FileDetails fileDetails = fileServiceImpl.getManuals(userTypeId);
 		logger.info("Response for manuals " + fileDetails);
 		
 		return fileDetails;

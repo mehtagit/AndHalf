@@ -40,6 +40,7 @@ import com.gl.ceir.config.model.StateMgmtDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.UserDepartment;
 import com.gl.ceir.config.model.UserProfile;
+import com.gl.ceir.config.model.VipList;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.VisaHistoryDb;
 import com.gl.ceir.config.model.WebActionDb;
@@ -56,6 +57,7 @@ import com.gl.ceir.config.model.file.EndUserFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.EndUserDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
+import com.gl.ceir.config.repository.VipListRepository;
 import com.gl.ceir.config.repository.VisaHistoryDBRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
@@ -87,9 +89,12 @@ public class EnduserServiceImpl {
 
 	@Autowired
 	VisaHistoryDBRepository visaHistoryDBRepository;
-	
+
 	@Autowired
 	WebActionDbRepository webActionDbRepository;
+
+	@Autowired
+	VipListRepository vipListRepository;
 
 	@Autowired
 	EmailUtil emailUtil;
@@ -155,11 +160,11 @@ public class EnduserServiceImpl {
 					if(Objects.isNull(regularizeDeviceDb.getStatus())) {
 						regularizeDeviceDb.setStatus(RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode());
 					}
-					
+
 					if(Objects.isNull(endUserDB.getOrigin())) {
 						endUserDB.setOrigin(regularizeDeviceDb.getOrigin());
 					}
-					
+
 					// Add in web action list.
 					webActionDbs.add(new WebActionDb(Features.REGISTER_DEVICE, SubFeatures.REGISTER, 0, 
 							regularizeDeviceDb.getTxnId()));
@@ -173,7 +178,7 @@ public class EnduserServiceImpl {
 
 			webActionDbRepository.saveAll(webActionDbs);
 			logger.info("Batch update in web_action_db. " + webActionDbs );
-			
+
 			auditTrailRepository.save(new AuditTrail(endUserDB.getId(), "", 17L,
 					"End User", 0L,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId()));
 			logger.info("AUDIT : Saved request in audit.");
@@ -495,7 +500,6 @@ public class EnduserServiceImpl {
 
 	}
 
-
 	public GenricResponse acceptReject(ConsignmentUpdateRequest updateRequest) {
 		try {
 			UserProfile userProfile = null;
@@ -532,6 +536,10 @@ public class EnduserServiceImpl {
 					mailTag = "END_USER_APPROVED_BY_CEIR_ADMIN"; 
 					receiverUserType = "End User";
 					endUserDB.setStatus(EndUserStatus.APPROVED.getCode());
+
+					// if user is VIP, add imei's of user in vip_list table.
+					updateImeiInVipList(endUserDB);
+
 				}else {
 					action = SubFeatures.REJECT;
 					receiverUserType = "End User";
@@ -588,6 +596,33 @@ public class EnduserServiceImpl {
 		status = Boolean.TRUE;
 
 		return status;
+	}
+	
+	private void updateImeiInVipList(EndUserDB endUserDB) {
+		if("Y".equals(endUserDB.getIsVip())) {
+			if(endUserDB.getRegularizeDeviceDbs().isEmpty()) {
+				logger.info("End User is VIP but no device is registered for him/her with NID/Passport. ["+endUserDB.getNid()+"]");
+			}else {
+				RegularizeDeviceDb regularizeDeviceDb = endUserDB.getRegularizeDeviceDbs().get(0);
+
+				List<VipList> vipsImeiList = new ArrayList<>(4);
+				if(Objects.nonNull(regularizeDeviceDb.getFirstImei())) 
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getFirstImei(), Long.parseLong(endUserDB.getPhoneNo())));
+
+				if(Objects.nonNull(regularizeDeviceDb.getSecondImei()))
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getSecondImei(), Long.parseLong(endUserDB.getPhoneNo())));
+
+				if(Objects.nonNull(regularizeDeviceDb.getThirdImei()))
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getThirdImei(), Long.parseLong(endUserDB.getPhoneNo())));
+
+				if(Objects.nonNull(regularizeDeviceDb.getFourthImei()))
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getFourthImei(), Long.parseLong(endUserDB.getPhoneNo())));
+
+				vipListRepository.saveAll(vipsImeiList);
+			}
+		}else {
+			// user is not VIP, so nothing to do with table vip_list table.
+		}
 	}
 
 }

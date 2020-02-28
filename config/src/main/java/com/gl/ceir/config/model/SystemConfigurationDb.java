@@ -55,6 +55,29 @@ public class SystemConfigurationDb implements Serializable {
 	@NotNull
 	private Integer active;
 	
+	private String featureName;
+	private String userType;
+	
+	
+	public Integer getActive() {
+		return active;
+	}
+	public void setActive(Integer active) {
+		this.active = active;
+	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
+	
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -112,6 +135,7 @@ public class SystemConfigurationDb implements Serializable {
 	public void setTypeInterp(String typeInterp) {
 		this.typeInterp = typeInterp;
 	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -133,8 +157,13 @@ public class SystemConfigurationDb implements Serializable {
 		builder.append(typeInterp);
 		builder.append(", remark=");
 		builder.append(remark);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", userType=");
+		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
 	}
-
 }

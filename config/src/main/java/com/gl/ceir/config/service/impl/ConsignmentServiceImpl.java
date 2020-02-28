@@ -169,7 +169,8 @@ public class ConsignmentServiceImpl {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.REGISTER, ""));
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, 
+				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -257,7 +258,7 @@ public class ConsignmentServiceImpl {
 
 			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), "", 
 					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, ""));
+					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
 
@@ -360,7 +361,8 @@ public class ConsignmentServiceImpl {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.UPDATE, ""));
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
+				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -432,7 +434,8 @@ public class ConsignmentServiceImpl {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.DELETE, ""));
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
+				Features.CONSIGNMENT, SubFeatures.DELETE, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -646,7 +649,8 @@ public class ConsignmentServiceImpl {
 		consignmentRepository.save(consignmentMgmt);
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in consigment_mgmt_db.");
 
-		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, Features.CONSIGNMENT, SubFeatures.UPDATE, ""));
+		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), "", 0L, "", 0L, 
+				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -703,7 +707,7 @@ public class ConsignmentServiceImpl {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
 					Long.valueOf(filterRequest.getFeatureId()),
-					Features.CONSIGNMENT, SubFeatures.VIEW, ""));
+					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
 			logger.info("AUDIT : Saved file export request in audit.");
 			
 			return new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );

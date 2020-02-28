@@ -61,11 +61,60 @@ public class FileServiceImpl {
 		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
 	}
 
-	public FileDetails getManuals() {
+	public FileDetails getManuals(int userTypeId) {
 
 		String fileName = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link);
-		fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+		switch (userTypeId) {
+		case 1:
+			fileName = "";
+			break;
+		case 4:
+			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+			break;
+		case 5:
+			fileName = "";
+			break;
+		case 6:
+			fileName = "";
+			break;
+		case 7:
+			fileName = "";
+			break;
+		case 8:
+			fileName = "";
+			break;
+		case 9:
+			fileName = "";
+			break;
+		case 10:
+			fileName = "";
+			break;
+		case 12:
+			fileName = "";
+			break;
+		case 13:
+			fileName = "";
+			break;
+		case 14:
+			fileName = "";
+			break;
+		case 17:
+			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+			break;
+		case 18:
+			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+			break;
+		case 19:
+			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+			break;
+		case 20:
+			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
+			break;
+		default:
+			break;
+		}
+
 
 		return new FileDetails("", "", systemConfigurationDb.getValue() + fileName);
 	}

@@ -35,6 +35,12 @@ public class VipList implements Serializable {
 	
 	@JsonIgnore
 	private String approvedBy;
+	
+	public VipList() {}
+	
+	public VipList(Long imei, Long msisdn) {
+		this.imeiMsisdnIdentity = new ImeiMsisdnIdentity(imei, msisdn);
+	}
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;

@@ -14,7 +14,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
 
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -45,7 +44,6 @@ import com.gl.ceir.config.repository.SystemConfigUserwiseRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.SystemConfigurationHistoryDbRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
-import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.util.InterpSetter;
 
 @Service
@@ -110,8 +108,13 @@ public class ConfigurationManagementServiceImpl {
 			if(Objects.nonNull(filterRequest.getType()))
 				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
 			
+			if(Objects.nonNull(filterRequest.getFeatureName()))
+				sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
+			
+			if(Objects.nonNull(filterRequest.getUserType()))
+				sb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				// sb.orSearch(new SearchCriteria("type", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			}
