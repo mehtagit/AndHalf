@@ -73,7 +73,7 @@
 	"Wrong_captcha": "You have entered the wrong Captcha. Please enter the correct value",
 	"secu_ques_match": "security question and answer match",
 	"secu_ques_not_match": "Security question and answer did not match",
-	"wrong_userId:": "Please enter correct User Id",
+	"wrong_userId": "Please enter correct User Id",
 	"Pending Registration": "Pending Registration",
 	"new_pass_sucess": "User new password has been added",
 	"new_pass_fail": "User new password fail to update",

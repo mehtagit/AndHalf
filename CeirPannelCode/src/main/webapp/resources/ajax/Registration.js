@@ -714,3 +714,17 @@ function getByPort(port){
 		}
 	});
 }
+
+function checkBoxClick(){
+$('#disclamer').click(function () {
+    //check if checkbox is checked
+    if ($(this).is(':checked')) {
+      
+        $('#btnSave').removeAttr('disabled'); //enable input
+        
+    }
+    else {
+        $('#btnSave').attr('disabled', true); //disable input
+    }
+});
+}
