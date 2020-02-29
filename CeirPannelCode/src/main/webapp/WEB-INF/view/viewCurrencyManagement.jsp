@@ -127,24 +127,39 @@
 		<!--end container-->
 	</section>
 	
- 	<div id="addPort" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header"><spring:message code="button.addport" /></h6>
+ 	<div id="addCurrency" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Add Currency</h6>
         <div class="modal-content">
           	<form action="" onsubmit="return submitPort()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+						<input type="text" name="month"
+						id='month' class='form-control datepick'
+						autocomplete='off'  required /> 
+						<label for="month" class="center-align">Month <span class="star">*</span>
+						</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+					
+					</div>
+					
 					<div class="col s12 m6">
-					<label for="port" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="port" >
-                                <option value=""  selected="">Select Port Type</option>
+					<label for="port" class="active">Currency<span class="star">*</span></label>
+                     	 <select class="browser-default" id="currency" style="margin-bottom: 5px;">
+                                <option value=""  selected="" disabled>Select Currency</option>
                           </select>
                         
                          <input type="text" id="id" hidden>
                     </div>
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="portAddress" name="value"  pattern="[A-Za-z ]{0,30}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
+					<div class="input-field col s12 m6">
+                        <input type="number" id="cambodianRiel" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
+                    </div>
+                    
+                    <div class="input-field col s12 m6">
+                        <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <label for="number" class="">Dollar <span class="star"> *</span></label>
                     </div>
 
 					 <div class="col s12 m12 center" style="margin-top: 20px;">
@@ -157,28 +172,43 @@
     </div>
 		
 		
-		<div id="editPortAddressModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Port Address</h6>
+		 	<div id="editCurrencyModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Edit Currency</h6>
         <div class="modal-content">
-          	<form action="" onsubmit="return updatedPort()">
+          	<form action="" onsubmit="return updateCurrency()" method="post" >
                 <div class="row" style="margin-top: 10px;">
 					
-				<div class="col s12 m6">
-					<label for="editport" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="editport" >
-                                <option value=""  selected="">Select Port Type</option>
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+						<input type="text" name="month"
+						id='editMonth' class='form-control datepick'
+						autocomplete='off'  required /> 
+						<label for="editMonth" class="center-align">Month <span class="star">*</span>
+						</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+					
+					</div>
+					
+					<div class="col s12 m6">
+					<label for="port" class="active">Currency<span class="star">*</span></label>
+                     	 <select class="browser-default" id="editCurrency" style="margin-bottom: 5px;">
+                                <option value=""  selected="" disabled>Select Currency</option>
                           </select>
                         
                          <input type="text" id="editId" hidden>
                     </div>
 					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editportAddress" name="value"  pattern="[A-Za-z ]{0,30}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
+					<div class="input-field col s12 m6">
+                        <input type="number" id="editCambodianRiel" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <label for="editCambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
+                    </div>
+                    
+                    <div class="input-field col s12 m6">
+                        <input type="number" id="editDollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <label for="editDollar" class="">Dollar <span class="star"> *</span></label>
                     </div>
 
-					<div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Update</button>
+					 <div class="col s12 m12 center" style="margin-top: 20px;">
+                        <button class="btn" type="submit">Submit</button>
                         <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
                     </div>
                 </div>
@@ -190,7 +220,7 @@
 		<h6 class="modal-header"><spring:message code="button.addport" /></h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="sucessMessage">Port Record Added Successfully</h6>
+				<h6 id="sucessMessage">Currency Added Successfully</h6>
 			</div>
 			 <div class="row">
 				<div class="input-field col s12 center">

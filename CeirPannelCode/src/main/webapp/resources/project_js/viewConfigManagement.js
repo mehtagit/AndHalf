@@ -149,7 +149,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewAdminSystemModel").openModal();
+	$("#viewAdminSystemModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -179,7 +181,9 @@ function setViewPopupData(data){
 
 
 function updateDetails(tag){
-	$("#editAdminSystemModel").openModal();
+	$("#editAdminSystemModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -240,5 +244,7 @@ $.ajax({
 
 function confirmModel(){
 $("#editAdminSystemModel").closeModal();
-setTimeout(function(){$('#confirmedUpdatedSystem').openModal();},200);
+setTimeout(function(){$('#confirmedUpdatedSystem').openModal({
+    dismissible:false
+});},200);
 }

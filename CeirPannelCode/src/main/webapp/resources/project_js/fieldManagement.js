@@ -230,7 +230,9 @@
 	}
 
 		function AddField(){
-			$('#addTags').openModal();
+			$('#addTags').openModal({
+		        dismissible:false
+		    });
 			$('#tag').val(window.tag_val);	
 			var tagDropDown =  document.getElementById("tag");
 			var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
@@ -260,7 +262,9 @@
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
 					console.log(JSON.stringify(data));
-					$("#confirmField").openModal();
+					$("#confirmField").openModal({
+				        dismissible:false
+				    });
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -290,7 +294,9 @@
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
 						var result = data.data
-						$("#editTags").openModal();
+						$("#editTags").openModal({
+					        dismissible:false
+					    });
 						FieldEditPopupData(result);
 						console.log(result)
 				},
@@ -342,7 +348,9 @@
 			
 				console.log("Updated data---->" +data)
 				$("#editTags").closeModal();	
-				$("#updateFieldsSuccess").openModal();
+				$("#updateFieldsSuccess").openModal({
+			        dismissible:false
+			    });
 				
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -359,7 +367,9 @@
 	
 	
 	function DeleteFieldRecord(id){
-		$("#DeleteFieldModal").openModal();
+		$("#DeleteFieldModal").openModal({
+	        dismissible:false
+	    });
 		$("#deleteFieldId").val(id);
 		
 	}	
@@ -381,7 +391,9 @@
 			success : function(data, textStatus, xhr) {
 				console.log(data);
 				$("#DeleteFieldModal").closeModal();
-				$("#closeDeleteModal").openModal();
+				$("#closeDeleteModal").openModal({
+			        dismissible:false
+			    });
 				
 				$("#materialize-lean-overlay-3").css("display","none");
 			},

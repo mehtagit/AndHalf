@@ -697,6 +697,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 		<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"

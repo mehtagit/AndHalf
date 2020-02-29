@@ -3,9 +3,8 @@ var userId = $("body").attr("data-userID");
 var currentRoleType = $("body").attr("data-stolenselected-roleType");  
 var role = currentRoleType == null ? roleType : currentRoleType;
 var userType = $("body").attr("data-roleType");
-var featureId="5"; 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
+var featureId = window.parent.$('.navData li.active a').attr('data-featureid');
 $.i18n().locale = lang;	
 
 $.i18n().load( {
@@ -39,6 +38,19 @@ var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
 function filterStolen(){
+	
+	if(userType=="Lawful Agency"){
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
+	}else if(userType =="CEIRAdmin"){
+		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
+	}
+	localStorage.removeItem('sourceType');
+}  
+
+
+
+
+function Datatable(url,DataUrl){
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -54,7 +66,7 @@ function filterStolen(){
 	}
 
 	$.ajax({
-		url: './headers?type=lawfulStolenHeaders',
+		url: url,
 		type: 'POST',
 		dataType: "json",
 		success: function(result){
@@ -70,7 +82,7 @@ function filterStolen(){
 				"bSearchable" : true,
 				scrollCollapse: true,	
 				ajax: {
-					url: 'stolenData',
+					url: DataUrl,
 					type: 'POST',
 					data : function(d) {
 						d.filter =JSON.stringify(filterRequest); 
@@ -80,7 +92,7 @@ function filterStolen(){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 180, targets: result.length - 1 }
+		            { width: 245, targets: result.length - 1 }
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
@@ -90,7 +102,7 @@ function filterStolen(){
 
 function pageRendering(){
 	$.ajax({
-		url: './stolen/pageRendering',
+		url: './stolen/pageRendering?featureId='+featureId,
 		type: 'POST',
 		dataType: "json",
 		success: function(data){

@@ -58,9 +58,9 @@ public class StolenRecovery {
 	
 	@RequestMapping(value={"/stolenRecovery"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 			public ModelAndView  viewStolenRecovery( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId 
-					,@RequestParam(name="txnID",required = false) String txnID) {
+					,@RequestParam(name="txnID",required = false) String txnID, @RequestParam(name="FeatureId",required = false) String featureId) {
 		ModelAndView mv = new ModelAndView();
-		log.info("entry point in stolen recovery  page");
+		log.info("entry point in stolen recovery  page with featureId-->  " +featureId);
 		String roletype=session.getAttribute("usertype").toString();
 		if(selectedUserTypeId==null)
 		{
@@ -72,13 +72,13 @@ public class StolenRecovery {
 		}
 		else if(userTypelist.size()==1)
 		{
-			if(roletype.equals("Lawful Agency"))
+			if((roletype.equals("Lawful Agency") || roletype.equals("CEIRAdmin")) && "5".equals(featureId))
 			{
-				log.info("*******"+roletype);
+				log.info("return Lawful Stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
 				mv.setViewName("lawfulStolenRecovery");
 			}
 			else {
-				log.info("role type is"+roletype);
+				log.info("return stolen Recovery**roletype****"+roletype+" featureId******" +featureId);
 				session.setAttribute("stolenselectedUserTypeId", roletype);
 				mv.setViewName("stolenRecovery");
 			}

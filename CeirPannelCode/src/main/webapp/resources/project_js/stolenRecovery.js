@@ -5,11 +5,8 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 var userType = $("body").attr("data-roleType");
-if(userType == "Operator" || userType == "CEIRAdmin" ){
-	var featureId="7";
-}else{
-	var featureId="5"; //this check is for stolen & recovery
-}
+
+
 
 /*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -29,6 +26,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
+	console.log("featureId is---->" +featureId);
 	filterStolen();
 	pageRendering();
 });

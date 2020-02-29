@@ -194,13 +194,15 @@
 		$.getJSON('./getDropdownList/CURRENCY', function(data) {
 				/ $("#expectedArrivalPort").empty(); /
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType');
+					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency');
 				}
 			});
 	}
 
 		function AddCurrencyAddress(){
-			$('#addPort').openModal();
+			$('#addCurrency').openModal({
+		        dismissible:false
+		    });
 			//var tagDropDown =  document.getElementById("tag");
 			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
 		}
@@ -224,7 +226,9 @@
 			type : 'POST',
 			success : function(data, textStatus, jqXHR) {
 					console.log(JSON.stringify(data));
-					$("#confirmField").openModal();
+					$("#confirmField").openModal({
+				        dismissible:false
+				    });
 			},
 			error : function(jqXHR, textStatus, errorThrown) {
 				console.log("error in ajax")
@@ -239,20 +243,22 @@
 	/*--------------------------------- Edit Model View -----------------------------------*/
 	
 	
-	function PortViewByID(id){
+	function currencyViewByID(id){
 		$("#editId").val(id);
 		
 		$.ajax({
-				url: './portViewByID/'+id,
+				url: './currencyViewByID/'+id,
 				type: 'POST',
-			//	data : JSON.stringify(request),
+			//data : JSON.stringify(request),
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success: function (data, textStatus, jqXHR) {
 						var result = data.data
-						$("#editPortAddressModal").openModal();
-						PortEditPopupData(result);
-						console.log(result)
+						$("#editCurrencyModal").openModal({
+					        dismissible:false
+					    });
+						currencyEditPopupData(result);
+						console.log(JSON.stringify(result));
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
 					console.log("error in ajax")
@@ -261,10 +267,11 @@
 		}
 	
 	
-	function PortEditPopupData(result){
-		$("#editport").val(result.port);
-		$("#editId").val(result.id);
-		$("#editportAddress").val(result.address);
+	function currencyEditPopupData(result){
+		$("#editMonth").val(result.date);
+		$("#editCurrency").val(result.currency);
+		$("#editCambodianRiel").val(result.riel);
+		$("#editDollar").val(result.dollar);
 		
 	}
 	
@@ -272,7 +279,7 @@
 	/*---------------------------------- Update Field-------------------------------------*/
 	
 	
-	function updatedPort(){
+	function updateCurrency(){
 	
 		var request ={ 
 				 "id" : parseInt($("#editId").val()),
@@ -291,7 +298,9 @@
 			
 				console.log("Updated data---->" +data)
 				$("#editPortAddressModal").closeModal();	
-				$("#updateFieldsSuccess").openModal();
+				$("#updateFieldsSuccess").openModal({
+			        dismissible:false
+			    });
 				
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
@@ -307,8 +316,10 @@
   /*------------------------------------ Delete Field -----------------------------------*/
 	
 	
-	function DeletePortRecord(id){
-		$("#DeleteFieldModal").openModal();
+	function DeleteCurrency(id){
+		$("#DeleteFieldModal").openModal({
+	        dismissible:false
+	    });
 		$("#deletePortId").val(id);
 		
 	}	
@@ -329,7 +340,9 @@
 			success : function(data, textStatus, xhr) {
 				console.log(data);
 				$("#DeleteFieldModal").closeModal();
-				$("#closeDeleteModal").openModal();
+				$("#closeDeleteModal").openModal({
+			        dismissible:false
+			    });
 				
 				$("#materialize-lean-overlay-3").css("display","none");
 			},

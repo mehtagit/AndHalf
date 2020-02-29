@@ -57,3 +57,5 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		}
 	});
 }
+
+var featureId = window.parent.$('.navData li.active a').attr('data-featureid')

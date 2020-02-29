@@ -56,12 +56,11 @@ public class StolenDatatableController {
 	public ResponseEntity<?> viewStolenList(
 			@RequestParam(name = "type", defaultValue = "stolen", required = false) String role,
 			@RequestParam(name="sourceType",required = false) String sourceType,
-			@RequestParam(name="featureId",required = false) Integer featureId,
-			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
+			@RequestParam(name="featureId",required = false) String featureId,
 			HttpServletRequest request, HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		
-		log.info("featureId------->"+featureId+"---userTypeId------>"+userTypeId);
+		log.info("featureId------->"+featureId);
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
@@ -142,7 +141,7 @@ public class StolenDatatableController {
 						datatableResponseModel.setData(finalList);
 					}
 			
-				}else if("CEIRAdmin".equals(userType)) {
+				}else if(("CEIRAdmin".equals(userType)) && !"5".equals(featureId)) {
 					log.info("in CEIRAdmin Controler-----" +userType);
 					for (StolenContent dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
@@ -191,6 +190,33 @@ public class StolenDatatableController {
 						} 
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.StolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
+								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
+						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,quantity,action};
+						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+						finalList.add(finalDataList);
+						datatableResponseModel.setData(finalList);
+					}
+				}else if(("5".equals(featureId)) && "CEIRAdmin".equals(userType)) {
+					log.info("in CEIR Lawful Agency featureId---"+featureId+"--" +userType);
+					for (StolenContent dataInsideList : paginationContentList) {
+						String createdOn = dataInsideList.getCreatedOn();
+						String txnId = dataInsideList.getTxnId();
+						String BlockType = dataInsideList.getBlockingType();
+						String requestType = dataInsideList.getRequestTypeInterp();
+						String requestTypeValue = dataInsideList.getRequestType();
+						String mode= dataInsideList.getSourceTypeInterp();
+						String stolenStatusName = dataInsideList.getStateInterp();
+						String statusOfStolen = String.valueOf(dataInsideList.getFileStatus());
+						int id = dataInsideList.getId();
+						if(dataInsideList.getQty()==null) {
+							quantity = "";
+							log.info("inside if");
+						}else {
+							quantity = String.valueOf(dataInsideList.getQty());
+							log.info("inside else");
+						} 
+						String userStatus = (String) session.getAttribute("userStatus");
+						String action = iconState.AdminStolenlawfulAgency(dataInsideList.getFileName(), dataInsideList.getTxnId(),
 								statusOfStolen, userStatus,requestType,id,dataInsideList.getQty(),dataInsideList.getSourceType(),requestTypeValue);
 						Object[] finalData = {createdOn,txnId,BlockType,requestType,mode,stolenStatusName,quantity,action};
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
@@ -247,7 +273,7 @@ public class StolenDatatableController {
 	@PostMapping("stolen/pageRendering")
 	public ResponseEntity<?> pageRendering(
 			@RequestParam(name = "type", defaultValue = "consignment", required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,
-			HttpSession session) {
+			@RequestParam(name="featureId",required = false) String featureId,HttpSession session) {
 		String userStatus = (String) session.getAttribute("userStatus");
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
@@ -256,9 +282,9 @@ public class StolenDatatableController {
 		String userType = (String) session.getAttribute("usertype");
 		
 		
-		if("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) {
+		if(("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) && !"5".equals(featureId)) {
 			pageElement.setPageTitle(Translator.toLocale("view.Block/UnblockDevices"));
-		}else {
+		}else if(("CEIRAdmin".equals(userType)) && "5".equals(featureId))  {
 			pageElement.setPageTitle("Stolen/Recovery");
 		}
 		List<Button> buttonList = new ArrayList<>();
@@ -267,7 +293,7 @@ public class StolenDatatableController {
 		
 		//This Block is for Operator & Admin Upper Filter/Button Forms------------------------------------------------
 		
-		if("Operator".equals(userType) || "CEIRAdmin".equals(userType)) {
+		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) && !"5".equals(featureId)) {
 			String[] names = { "HeaderButton", Translator.toLocale("button.ReportBlock/Unblock"), "./selectblockUnblockPage",
 					"btnLink", "FilterButton",Translator.toLocale("button.filter"), "filterStolen("+ConfigParameters.languageParam+")", "submitFilter" };
 			for (int i = 0; i < names.length; i++) {

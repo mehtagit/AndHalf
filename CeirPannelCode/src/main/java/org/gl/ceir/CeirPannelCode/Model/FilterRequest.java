@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address;
+	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeature,userName;
 	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port;
 	public String getStartDate() {
 		return startDate;
@@ -119,6 +119,24 @@ public class FilterRequest {
 	}
 	public void setAddress(String address) {
 		this.address = address;
+	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
+	public String getSubFeature() {
+		return subFeature;
+	}
+	public void setSubFeature(String subFeature) {
+		this.subFeature = subFeature;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -259,7 +277,8 @@ public class FilterRequest {
 				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid
 				+ ", childTag=" + childTag + ", field=" + field + ", interp=" + interp + ", tagId=" + tagId + ", value="
 				+ value + ", displayName=" + displayName + ", description=" + description + ", address=" + address
-				+ ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus
+				+ ", featureName=" + featureName + ", subFeature=" + subFeature + ", userName=" + userName + ", userId="
+				+ userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus=" + consignmentStatus
 				+ ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus
 				+ ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus
 				+ ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump="
@@ -267,7 +286,7 @@ public class FilterRequest {
 				+ ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue="
 				+ parentValue + ", id=" + id + ", port=" + port + "]";
 	}
-	
+
 	
 	
 }
