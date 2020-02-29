@@ -534,7 +534,7 @@ var contextpath = "${context}";
 						</div>
 						<p>
 					      <label style="color: black!important;">
-					        <input name="disclamer" type="checkbox" required="required" />
+					        <input name="disclamer" id="disclamer" type="checkbox" required="required" />
 					        <span> <span class="star">*</span> <spring:message code="registration.certifyMsg" /></span>
 					      </label>
 					    </p>
@@ -542,7 +542,7 @@ var contextpath = "${context}";
 						<div class="row">
 							<span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
 							<div class="input-field col s12 center">
-								<button class="btn" id="btnSave" type="submit" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
+								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
 							</div>
 						</div>
@@ -830,6 +830,7 @@ return true;
 	
 	
         $(document).ready(function () {
+        	checkBoxClick();
         	$('#langlist').val(data_lang_param);
             $('.modal').modal();
             questionDataByCategory();

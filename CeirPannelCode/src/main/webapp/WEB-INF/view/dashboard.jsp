@@ -67,7 +67,12 @@ String name = (String) session.getAttribute("name");
 }
 
 </style>
-<body data-lang="${language}" data-usertype="${usertype}">
+<body data-lang="${language}" data-usertype="${usertype}"
+data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 	<div id="initialloader"></div>
@@ -113,20 +118,20 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  href="./Consignment/ManualFileDownload/" download="download"
+						<li><a  id="manualDownload" download="download"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
-							 title="Download Manual"  style="color: #fff;"></i></a></li>
+							 title="Download Manual"  style="color: #fff; line-height: 3;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
 								<div id="iconLable" class="darken-1">
-									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+									<i class="fa fa-globe fa-6" aria-hidden="true" style="line-height:4"></i>
 								</div>
 								<div style="width: 80px !important;">
 									<select class="darken-1" id="langlist"
-										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
-										<option value="en">English</option>
-										<option value="km"><spring:message code="lang.khmer" /></option>
+										style="border-bottom: none; height: 42px; background: #00bcd4; line-height:1; border: 1px solid #00bcd4 !important;">
+										<option value="en" style="color:#444;">English</option>
+										<option value="km" style="color:#444;"><spring:message code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>

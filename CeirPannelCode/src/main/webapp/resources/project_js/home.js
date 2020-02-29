@@ -86,7 +86,7 @@
 					"bFilter" : true,
 					"bInfo" : true,
 					"bSearchable" : true,
-					 "pageLength": 15,
+					 "pageLength": 20,
 					ajax: {
 						url : './NotificationData',
 						type: 'POST',

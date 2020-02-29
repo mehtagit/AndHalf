@@ -57,3 +57,16 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 		}
 	});
 }
+
+
+
+
+
+
+
+
+$("input[type=file]").keypress(function(ev) {
+	return false;
+	//ev.preventDefault(); //works as well
+
+	});

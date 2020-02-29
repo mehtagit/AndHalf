@@ -338,7 +338,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 		
 				//download file(Error or Uploaded file) feign  controller
 				@RequestMapping(value="/Download/manuals" ,method=RequestMethod.GET) 
-				public @ResponseBody FileExportResponse manualDownloadSampleFile();
+				public @ResponseBody FileExportResponse manualDownloadSampleFile(@RequestParam("userTypeId") int userTypeId);
 				
 //******************************* Tag Updated DropDown in Field ****************************************
 				

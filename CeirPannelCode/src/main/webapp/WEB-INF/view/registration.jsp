@@ -599,7 +599,7 @@ String usertypeId="${usertypeId}";
 							<span> <spring:message code="input.requiredfields" /><span class="star">*</span></span>
 							<div class="input-field col s12 center">
 								<%-- <a href="${context}/verifyOtp" class="btn" id="btnSave"> Submit</a> --%>
-								<button class="btn" id="btnSave" type="submit" style="margin-left: 10px;">
+								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;">
 									<spring:message code="button.submit" />
 								</button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
@@ -846,6 +846,7 @@ String usertypeId="${usertypeId}";
  	}); 
  	
          $(document).ready(function () {
+        	 checkBoxClick();
          	$('#langlist').val(data_lang_param);
              	$.i18n().locale = data_lang_param;	
              			

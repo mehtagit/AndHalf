@@ -13192,3 +13192,13 @@ form {
 	top: 0;
 	width: 100%;
 }
+
+::-webkit-scrollbar {
+width: 0;
+background: transparent;
+}
+
+.textarea.materialize-textarea::-webkit-scrollbar {
+width: 2pxpx;
+background: #444;
+}

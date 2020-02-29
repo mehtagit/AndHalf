@@ -533,12 +533,7 @@ function fileTypeValueChanges(dd, ddd) {
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#fileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
+	
 
 
 }
@@ -565,7 +560,7 @@ function visaImageValidation() {
 
 
 	if (uploadedFileName.length > 30) {
-		$('#visafileFormateModal').openModal();
+		$('#visafileFormateModal').openModal({dismissible:false});
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 	} 
@@ -585,12 +580,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#visafileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
+	
 
 
 }
@@ -618,7 +608,7 @@ function deptImageValidation() {
 
 
 	if (uploadedFileName.length > 30) {
-		$('#DeptfileFormateModal').openModal();
+		$('#DeptfileFormateModal').openModal({dismissible:false});
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 	} 
@@ -638,12 +628,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#DeptfileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
+	
 
 
 }
