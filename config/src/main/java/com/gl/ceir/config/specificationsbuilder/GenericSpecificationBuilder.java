@@ -86,11 +86,10 @@ public class GenericSpecificationBuilder<T> {
 	}
 
 	private List<Specification<T>> createSpecifications( List<SearchCriteria> criterias){
-		List<Specification<T>> specifications = new ArrayList<Specification<T>>();
+		List<Specification<T>> specifications = new ArrayList<>();
 		try {
 			for(SearchCriteria searchCriteria : criterias) {
 				specifications.add((root, query, cb)-> {
-					// Path<Tuple> tuple = root.<Tuple>get(searchCriteria);
 					if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.greaterThan(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
@@ -146,17 +145,11 @@ public class GenericSpecificationBuilder<T> {
 	}
 
 	public Specification<T> in(String key, List<Integer> status){
-		return (root, query, cb) -> {
-			logger.info("In query save ");
-			return cb.in(root.get(key)).value(status);
-		};
+		return (root, query, cb) ->  cb.in(root.get(key)).value(status);
 	}
 
 	public Specification<T> notIn(String key, List<String> status){
-		return (root, query, cb) -> {
-			logger.info("In query save ");
-			return cb.in(root.get(key)).value(status)
-					.not();
-		};
+		return (root, query, cb) -> cb.in(root.get(key)).value(status).not();
 	}
+	
 }

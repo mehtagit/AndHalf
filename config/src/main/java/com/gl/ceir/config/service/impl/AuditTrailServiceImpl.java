@@ -139,7 +139,7 @@ public class AuditTrailServiceImpl {
 			}
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<AuditTrailFileModel>(writer);
+			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
 			if( !auditTrails.isEmpty() ) {
@@ -148,7 +148,9 @@ public class AuditTrailServiceImpl {
 				for(AuditTrail auditTrail : auditTrails ) {
 					atfm = new AuditTrailFileModel();
 
-					atfm.setUserId(auditTrail.getUserId());
+					atfm.setCreatedOn(auditTrail.getCreatedOn().toString());
+					atfm.setTxnId(auditTrail.getTxnId());
+					atfm.setRoleType("");
 					atfm.setFeatureName(auditTrail.getFeatureName());
 					atfm.setSubFeatureName(auditTrail.getSubFeature());
 
