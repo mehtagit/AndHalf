@@ -1,7 +1,7 @@
 var featureId = 20;
 var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
-
+var passportNo = $("body").attr("data-passportNo");
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
 	filter();
@@ -20,6 +20,7 @@ var userType = $("body").attr("data-roleType");
 //**************************************************Device Activation table**********************************************
 
 function filter(){
+	window.passportNo = $('#nId').val() == undefined ? passportNo : $('#nId').val();
 var userId = parseInt($("body").attr("data-userID"))
 			var filterRequest={
 				"origin": "IMMIGRATION",
@@ -31,9 +32,9 @@ var userId = parseInt($("body").attr("data-userID"))
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
 				"status" : parseInt($('#Status').val()),
-				"nid": $('#nId').val() 
+				"nid": window.passportNo 
 				}
-	
+	console.log("filterRequest" +filterRequest)
 	
 	$.ajax({
 		url: './headers?type=deviceActivation',

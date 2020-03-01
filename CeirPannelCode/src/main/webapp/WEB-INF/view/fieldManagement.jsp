@@ -145,7 +145,7 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <input type="text" id="description" name="value"  pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
                         <label for="description" class="">Description</label>
                     </div>
 
@@ -156,7 +156,7 @@
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="text" id="tagId" name="addFieldId" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="addFieldId" class="">Field ID <span class="star">*</span></label>
+                        <label for="addFieldId" class="">Display Name <span class="star">*</span></label>
                     </div>
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">
@@ -187,14 +187,14 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <input type="text" id="editdescription" name="value" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
                         <label for="editdescription" class="">Description</label>
                     </div>
 
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
-                        <label for="editInterp" class="">Interp <span class="star">*</span></label>
+                        <input type="text" id="editInterp" name="interp" pattern="[A-Za-z0-9 ]{0,200}" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <label for="editInterp" class="">Display Name <span class="star">*</span></label>
                     </div>
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">

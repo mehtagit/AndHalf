@@ -70,3 +70,5 @@ $("input[type=file]").keypress(function(ev) {
 	//ev.preventDefault(); //works as well
 
 	});
+	var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+	

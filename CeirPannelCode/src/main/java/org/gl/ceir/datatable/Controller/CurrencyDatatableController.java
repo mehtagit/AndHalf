@@ -71,7 +71,7 @@ public class CurrencyDatatableController {
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewPortRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewCurrencyRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);

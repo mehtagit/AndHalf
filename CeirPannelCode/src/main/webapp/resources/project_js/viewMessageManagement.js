@@ -140,7 +140,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewMessageModel").openModal();
+	$("#viewMessageModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -164,7 +166,7 @@ function setViewPopupData(data){
 	$("#viewTag").val(data.tag);
 	$("#viewValue").val(data.value);
 	$("#description").val(data.description);
-	$("viewChannel").val(data.channelInterp);
+	$('#viewChannel').val(data.channelInterp);
 	
 	$("label[for='viewTag']").addClass('active');
 	$("label[for='viewValue']").addClass('active');
@@ -175,7 +177,9 @@ function setViewPopupData(data){
 }
 
 function updateDetails(tag){
-	$("#editMessageModel").openModal();
+	$("#editMessageModel").openModal({
+        dismissible:false
+    });
 	
 	var RequestData = {
 			"tag" : tag
@@ -233,6 +237,8 @@ function updateMessage(){
 
 function confirmModel(){
 	$("#editMessageModel").closeModal();
-	setTimeout(function(){$('#confirmedUpdatedMessage').openModal();},200);
+	setTimeout(function(){$('#confirmedUpdatedMessage').openModal({
+        dismissible:false
+    });},200);
 }
 

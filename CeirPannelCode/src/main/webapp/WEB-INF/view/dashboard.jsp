@@ -203,7 +203,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
-								<li class="bold"><a href="${feature.link}"
+								<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
 									target="mainArea" class="waves-effect waves-cyan"
 									data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 										<spring:message
@@ -585,10 +585,28 @@ data-dismiss="modal">&times;</button> -->
 	</div>
 
 	<!-- Modal End -->
+	
 	<!-- Modal End -->
 	<!-- Modal End -->
 
-
+	<!-- File Related Modal  -->
+<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 	<!-- ================================================
     Scripts
     ================================================ -->

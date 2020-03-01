@@ -106,6 +106,36 @@ public interface UserProfileFeignImpl {
 	public @ResponseBody GenricResponse deletePortFeign(@PathVariable("id") Integer id);
 	
 	
+	/*-------------------------- view all Currency Feign ------------------------------*/
+	
+	@RequestMapping(value="/currency/view" ,method=RequestMethod.POST) 
+	public Object viewCurrencyRequest(@RequestBody FilterRequest filterRequest,
+	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+	@RequestParam(value = "file", defaultValue = "0") Integer file);
+	
+	
+	
+	//***************************************************Add Currency Feign********************************
+
+		@RequestMapping(value= "/currency/save" , method=RequestMethod.POST) 
+		public GenricResponse AddCurrencyFeign(@RequestBody FilterRequest filterRequest);
+		
+		
+		
+		//***************************************************View Currency Feign********************************
+		
+		@RequestMapping(value="/currency/view" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewCurrencyFeign(@PathVariable ("id") Integer id);
+		
+		
+		
+		//***************************************************Update Currency Feign********************************
+
+		@RequestMapping(value= "/portAddress/update" , method=RequestMethod.POST) 
+		public GenricResponse updateCurrencyFeign(@RequestBody FilterRequest filterRequest);
+		
+	
 	
 } 
 
