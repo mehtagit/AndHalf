@@ -213,13 +213,15 @@
 	function submitPort(){
 		
 		var request={
-					  "port":   $('#port').val(),
-					  "address": $('#portAddress').val(),
+					  "date":   $('#month').val(),
+					  "currency": $('#currency').val(),
+					  "riel":   $('#cambodianRiel').val(),
+					  "doller": $('#doller').val(),
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
 		$.ajax({
-			url : './add-Port',
+			url : './add-currency',
 			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',

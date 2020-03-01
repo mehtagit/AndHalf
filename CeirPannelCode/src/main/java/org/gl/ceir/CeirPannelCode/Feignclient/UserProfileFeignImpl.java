@@ -105,6 +105,7 @@ public interface UserProfileFeignImpl {
 	@RequestMapping(value="/portAddress/delete/{id}" ,method=RequestMethod.POST) 
 	public @ResponseBody GenricResponse deletePortFeign(@PathVariable("id") Integer id);
 	
+	
 	/*-------------------------- view all Currency Feign ------------------------------*/
 	
 	@RequestMapping(value="/currency/view" ,method=RequestMethod.POST) 
@@ -117,7 +118,7 @@ public interface UserProfileFeignImpl {
 	
 	//***************************************************Add Currency Feign********************************
 
-		@RequestMapping(value= "/portAddress/save" , method=RequestMethod.POST) 
+		@RequestMapping(value= "/currency/save" , method=RequestMethod.POST) 
 		public GenricResponse AddCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
 		
@@ -134,6 +135,7 @@ public interface UserProfileFeignImpl {
 		@RequestMapping(value= "/portAddress/update" , method=RequestMethod.POST) 
 		public GenricResponse updateCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
+	
 	
 } 
 

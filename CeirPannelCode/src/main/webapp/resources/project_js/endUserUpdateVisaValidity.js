@@ -314,7 +314,9 @@ function hide() {
                       
          
         if (uploadedFileName.length > 30) {
-           $('#visafileFormateModal').openModal();
+           $('#visafileFormateModal').openModal({
+	    	   dismissible:false
+	       });
            $('#visafileErrormessage').text('');
     		  $('#visafileErrormessage').text($.i18n('imageMessage'));
        } 
@@ -334,12 +336,7 @@ function hide() {
     		  $('#visafileErrormessage').text('');
     		  $('#visafileErrormessage').text($.i18n('imageSize'));	
     	}
-    	else {
-    		  $('#visafileFormateModal').openModal({
-    	    	   dismissible:false
-    	       });
-    		
-    	}
+    	
     	
 
     }

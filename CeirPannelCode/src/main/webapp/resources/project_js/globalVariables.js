@@ -58,4 +58,17 @@ console.log(" fileName "+fileName+" fileType  "+fileType+" txnId "+txnId+"  doc_
 	});
 }
 
-var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+
+
+
+
+
+
+
+$("input[type=file]").keypress(function(ev) {
+	return false;
+	//ev.preventDefault(); //works as well
+
+	});
+	var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+	

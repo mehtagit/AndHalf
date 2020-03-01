@@ -229,3 +229,8 @@ function clearFileName() {
 	$('#fileFormateModal').closeModal();
 }
 
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});

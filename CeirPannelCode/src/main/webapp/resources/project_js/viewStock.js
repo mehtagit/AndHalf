@@ -782,3 +782,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		$("#editcsvUploadFileName").val(existingfile);
 	}
+
+	$("input[type=file]").keypress(function(ev) {
+	    return false;
+	    //ev.preventDefault(); //works as well
+
+	});

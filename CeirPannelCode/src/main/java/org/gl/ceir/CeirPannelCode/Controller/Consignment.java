@@ -586,11 +586,11 @@ public String exportToExcel(@RequestParam(name="consignmentStartDate",required =
 
 
 @RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String ManualSampleFile() throws IOException {
+public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
 log.info("request send to the manual sample file download api=");
 
 
-FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile();
+FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
 log.info("response from manual sample file download file "+response);
 
 return "redirect:"+response.getUrl();

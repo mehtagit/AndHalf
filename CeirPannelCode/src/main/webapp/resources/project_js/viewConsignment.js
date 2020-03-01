@@ -1035,3 +1035,9 @@ function fileTypeValueChanges() {
 				}
 			});
 		}
+		
+		$("input[type=file]").keypress(function(ev) {
+		    return false;
+		    //ev.preventDefault(); //works as well
+
+		});

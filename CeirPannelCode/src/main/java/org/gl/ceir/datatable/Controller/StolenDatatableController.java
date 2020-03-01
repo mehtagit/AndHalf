@@ -57,10 +57,11 @@ public class StolenDatatableController {
 			@RequestParam(name = "type", defaultValue = "stolen", required = false) String role,
 			@RequestParam(name="sourceType",required = false) String sourceType,
 			@RequestParam(name="featureId",required = false) String featureId,
+			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
 			HttpServletRequest request, HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		
-		log.info("featureId------->"+featureId);
+		log.info("featureId------->"+featureId+"---userTypeId------>"+userTypeId);
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");

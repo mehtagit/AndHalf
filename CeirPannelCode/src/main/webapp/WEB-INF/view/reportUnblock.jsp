@@ -1,3 +1,13 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null); */
+	if (session.getAttribute("usertype") != null) {
+%>
+
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -81,7 +91,7 @@ padding: 0 !important;
 
 <script src="http://malsup.github.io/jquery.blockUI.js"></script>
 </head>
-<body data-roleType="${usertype}" data-userID="${userid}"
+<body data-roleType="${usertype}" data-userID="${userid}" data-id="7"
 	data-selected-roleType="${selectedUserTypeId}" data-userTypeID="${usertypeId}">
 
 
@@ -272,13 +282,13 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>
-                                                            <input type="file" id="unblockBulkFile" 
+                                                            <input type="file" id="unblockBulkFile"  onchange="blockfileTypeValueChanges()"
                                                            oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
                                                            oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
                                                             required >
                                                         </div>
                                                         <div class="file-path-wrapper">
-                                                            <input class="file-path validate" type="text" placeholder="Please select the file">
+                                                            <input class="file-path validate" type="text" id="unblockFileName" placeholder="">
                                                         </div>
                                                     </div>
 
@@ -339,6 +349,24 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
             </div>
         </div>
     </div>
+    
+    <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="blockfileClearName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 <!--materialize js-->
 	<script type="text/javascript"
@@ -488,7 +516,65 @@ src="${context}/resources/project_js/enterKey.js"></script>
 		 $('#stolenDatePeriodUnblock').datepicker({
 	        	dateFormat: "yy-mm-dd"
 	        	});
+		 
+		 
+		 function blockfileTypeValueChanges() {
+				var uploadedFileName = $("#unblockBulkFile").val();
+				uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+				var ext = uploadedFileName.split('.').pop();
+
+				var fileSize = ($("#unblockBulkFile")[0].files[0].size);
+				fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+				if (uploadedFileName.length > 30) {
+					$('#fileFormateModal').openModal({dismissible:false});
+
+				} 
+				else if(ext!='csv')
+				{
+					$('#fileFormateModal').openModal({
+						dismissible:false
+					});
+
+				}
+				else if(fileSize>='2000'){
+					$('#fileFormateModal').openModal({
+						dismissible:false
+					});
+
+				}
+
+
+
+			}
+
+
+			function blockfileClearName() {
+				$('#unblockFileName').val('');
+				$("#blockBulkFile").val('');
+				$("#unblockBulkFile").val('');
+				$('#fileFormateModal').closeModal();
+			}
+			
+			$("input[type=file]").keypress(function(ev) {
+			    return false;
+			    //ev.preventDefault(); //works as well
+
+			});
 		</script>
 
 </body>
 </html>
+
+
+<%
+} else {
+
+%>
+<script language="JavaScript">
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
+</script>
+<%
+}
+%>

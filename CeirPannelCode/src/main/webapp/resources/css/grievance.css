@@ -47,9 +47,13 @@ input {
     margin: 0;
 }
 
-p#messageHistory{
+p#messageHistory {
     margin: 0;
     font-size: 15px;
+    max-height: 85px;
+    overflow: auto;
+    line-height: 20px;
+    overflow-wrap: break-word;
 }
 
 .clearfix {
