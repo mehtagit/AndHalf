@@ -702,11 +702,100 @@ function confirmantiondelete(){
 		dismissible:false
 	});
 }
+	
+//------------------------------------------- Admin Approve------------------------------------------ 
+
+function deviceApprovalPopup(transactionId,requestType){
+	$('#approveInformation').openModal({dismissible:false});
+	$('#blockApproveTxnId').text(transactionId);
+	window.transactionId=transactionId;
+	window.requestType=requestType;
+}
+
+function aprroveDevice(){
+	var approveRequest={
+			"action" : 0,
+			"featureId":parseInt(featureId),
+			"requestType":parseInt(window.requestType),
+			"roleType": roleType,
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": window.transactionId,
+			"userId":parseInt(userId)
+	}
+
+	$.ajax({
+		url : './blockUnblockApproveReject',
+		data : JSON.stringify(approveRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(approveRequest));
+			if(data.errorCode==0){
+				confirmApproveInformation();
+				console.log("inside Approve Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function confirmApproveInformation(){
+	$('#approveInformation').closeModal(); 
+	setTimeout(function(){ $('#confirmApproveInformation').openModal({dismissible:false});}, 200);
+}
 
 
+//------------------------------------------- Admin Reject------------------------------------------
 
+function userRejectPopup(transactionId,requestType){
+	$('#rejectInformation').openModal({dismissible:false});
+	$('#rejectTxnId').text(transactionId);
+	window.transactionId=transactionId;
+	window.requestType=requestType;
+}
 
+function rejectUser(){
+	var rejectRequest={
+			"action" : 1,
+			"featureId":parseInt(featureId),
+			"remarks": $("#Reason").val(),
+			"requestType":parseInt(window.requestType),
+			"roleType": roleType,
+			"roleTypeUserId": parseInt($("body").attr("data-userTypeID")),
+			"txnId": window.transactionId,
+			"userId":parseInt(userId)
+	}
 
+	$.ajax({
+		url : './blockUnblockApproveReject',
+		data : JSON.stringify(rejectRequest),
+		dataType : 'json',
+		'async' : false,
+		contentType : 'application/json; charset=utf-8',
+		type : 'PUT',
+		success : function(data) {
+			console.log("approveRequest----->"+JSON.stringify(rejectRequest));
+			if(data.errorCode==0){
+				confirmRejectInformation();
+				console.log("inside Reject Success")
+			}
+
+		},
+		error : function() {
+			alert("Failed");
+		}
+	});
+}
+
+function confirmRejectInformation(){
+	$('#rejectInformation').closeModal();
+	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
+}
 
 
 

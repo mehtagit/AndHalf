@@ -269,7 +269,7 @@ public class DatatableHeaders {
 //auditManagement Headers 
 			
 			else if("auditManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.RoleType","table.feature","table.SubFeature","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.userType","table.feature","table.SubFeature","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

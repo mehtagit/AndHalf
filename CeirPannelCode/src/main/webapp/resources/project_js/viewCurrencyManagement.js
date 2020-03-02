@@ -194,7 +194,7 @@
 		$.getJSON('./getDropdownList/CURRENCY', function(data) {
 				/ $("#expectedArrivalPort").empty(); /
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency');
+					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#currencyType,#currency,#editCurrency');
 				}
 			});
 	}
@@ -216,7 +216,7 @@
 					  "date":   $('#month').val(),
 					  "currency": $('#currency').val(),
 					  "riel":   $('#cambodianRiel').val(),
-					  "doller": $('#doller').val(),
+					  "doller": $('#dollar').val(),
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
@@ -275,6 +275,10 @@
 		$("#editCambodianRiel").val(result.riel);
 		$("#editDollar").val(result.dollar);
 		
+		$("label[for='editMonth']").addClass('active');
+		$("label[for='editCurrency']").addClass('active');
+		$("label[for='editCambodianRiel']").addClass('active');
+		$("label[for='editDollar']").addClass('active');
 	}
 	
 	
@@ -285,13 +289,15 @@
 	
 		var request ={ 
 				 "id" : parseInt($("#editId").val()),
-				 "port":   $('#editport').val(),
-				 "address": $('#editportAddress').val(),
+				 "date":   $('#editMonth').val(),
+				 "currency": $('#editCurrency').val(),
+				 "riel":   $('#editCambodianRiel').val(),
+				 "doller": $('#editDollar').val(),
 		}
 		
 		console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updatePortAddress',
+			url: './updateCurrency',
 			type: 'POST',
 			data : JSON.stringify(request),
 			dataType : 'json',
@@ -299,7 +305,7 @@
 			success: function (data, textStatus, jqXHR) {
 			
 				console.log("Updated data---->" +data)
-				$("#editPortAddressModal").closeModal();	
+				$("#editCurrencyModal").closeModal();	
 				$("#updateFieldsSuccess").openModal({
 			        dismissible:false
 			    });

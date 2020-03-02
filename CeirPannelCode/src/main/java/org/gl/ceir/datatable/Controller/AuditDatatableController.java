@@ -146,7 +146,7 @@ public class AuditDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select","Role Type","roleType",""}; 
+		  String[] selectParam={"select","User Type","roleType",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 

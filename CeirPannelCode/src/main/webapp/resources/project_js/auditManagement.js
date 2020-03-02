@@ -6,8 +6,9 @@ var startdate=$('#startDate').val();
 var endDate=$('#endDate').val();
 
 $(document).ready(function(){
-	auditManagementDatatable();
 	pageRendering();
+	setTimeout(function(){ auditManagementDatatable(); }, 200);
+	
 	
 });
 
@@ -18,21 +19,24 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function auditManagementDatatable(){
 	
+	var roleDropDown =  document.getElementById("roleType");
+	var userTypeInterp = roleDropDown.options[roleDropDown.selectedIndex].text;
+	
+	var userType = $('#roleType').val()=='' ? null : userTypeInterp;
 	var filterRequest={
 			
-			"userId":parseInt(userId),
-			"featureId":parseInt(featureId),
-			"userTypeId": parseInt($("body").attr("data-userTypeID")),
-			"userType":$("body").attr("data-roleType"),
+			//"userId":parseInt(userId),
+			//"featureId":parseInt(featureId),
+			//"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType": userType,
 			"featureId": parseInt(featureId),
-			
 			"startDate" : $("#startDate").val(),
 			"endDate" : $("#endDate").val(),
 			"txnId" : $("#transactionID").val(),
 			"featureName" : $("#feature").val(),
-			"subFeature" : $("#subFeature").val(),
-			"userName" : $("#userName").val(),
-			"userType" : $("#roleType").val()
+			"subFeatureName" : $("#subFeature").val(),
+			"userName" : $("#userName").val()
+			
 			
 	}
 	$.ajax({
@@ -116,7 +120,7 @@ function pageRendering(){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-							"<option value='' disabled>"+dropdown[i].title+
+							"<option value=''>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+

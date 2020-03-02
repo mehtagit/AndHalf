@@ -19,6 +19,7 @@ public class PolicyConfigContent {
 	private String remark;
 	private Integer type;
 	private Integer policyOrder;
+	private String statusInterp;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -86,6 +87,12 @@ public class PolicyConfigContent {
 	public void setPolicyOrder(Integer policyOrder) {
 		this.policyOrder = policyOrder;
 	}
+	public String getStatusInterp() {
+		return statusInterp;
+	}
+	public void setStatusInterp(String statusInterp) {
+		this.statusInterp = statusInterp;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -94,33 +101,12 @@ public class PolicyConfigContent {
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("PolicyConfigContent [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", value=");
-		builder.append(value);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", period=");
-		builder.append(period);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", policyOrder=");
-		builder.append(policyOrder);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
-		builder.append("]");
-		return builder.toString();
+		return "PolicyConfigContent [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
+				+ tag + ", value=" + value + ", description=" + description + ", period=" + period + ", status="
+				+ status + ", remark=" + remark + ", type=" + type + ", policyOrder=" + policyOrder + ", statusInterp="
+				+ statusInterp + ", additionalProperties=" + additionalProperties + "]";
 	}
+	
+	
 	
 }
