@@ -200,6 +200,9 @@ public class AuditTrailServiceImpl {
 		if(Objects.nonNull(filterRequest.getSubFeatureName()) && !filterRequest.getSubFeatureName().isEmpty())
 			cmsb.with(new SearchCriteria("subFeature", filterRequest.getSubFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
+		if(Objects.nonNull(filterRequest.getUserName()) && !filterRequest.getUserName().isEmpty())
+			cmsb.with(new SearchCriteria("userName", filterRequest.getUserName(), SearchOperation.EQUALITY, Datatype.STRING));
+
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

@@ -272,7 +272,8 @@ public class StockServiceImpl {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), userProfile.getUser().getUsername(), 
+		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), 
+				userProfile.getUser().getUsername(), 
 				userProfile.getUser().getUsertype().getId(),
 				userProfile.getUser().getUsertype().getUsertypeName(), 
 				4, Features.STOCK, 
@@ -352,8 +353,16 @@ public class StockServiceImpl {
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 
-		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), "", 0L, "", 0L, Features.STOCK, 
+		User user = userRepository.getById(stockMgmt.getUserId());
+		
+		auditTrailRepository.save(new AuditTrail(stockMgmt.getUser().getId(), 
+				user.getUsername(), 
+				user.getUsertype().getId(),
+				user.getUsertype().getUsertypeName(), 
+				4, 
+				Features.STOCK, 
 				SubFeatures.REGISTER, "", stockMgmt.getTxnId()));
+
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -392,6 +401,13 @@ public class StockServiceImpl {
 				}
 			}
 
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "", 
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), 
+					Long.valueOf(filterRequest.getFeatureId()),
+					Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA"));
+			
+			logger.info("AUDIT : Saved view request in audit.");
+			
 			return page;
 
 		} catch (Exception e) {
@@ -493,29 +509,30 @@ public class StockServiceImpl {
 		return specificationBuilder;
 	}
 
-	public StockMgmt view(StockMgmt stockMgmt) {
+	public StockMgmt view(FilterRequest filterRequest) {
 		try {
-			logger.info("Going to get Stock Record Info for txnId : " + stockMgmt.getTxnId());
+			logger.info("Going to get Stock Record Info for txnId : " + filterRequest.getTxnId());
 
-			if(Objects.isNull(stockMgmt.getTxnId())) {
+			if(Objects.isNull(filterRequest.getTxnId())) {
 				throw new IllegalArgumentException();
 			}
 
-			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(stockMgmt.getTxnId()); 
+			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(filterRequest.getTxnId()); 
 
-			if("End User".equalsIgnoreCase(stockMgmt.getUserType())) {
+			if("End User".equalsIgnoreCase(filterRequest.getUserType())) {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
 			}
 
-			// User user = userRepository.getById(stockMgmt.getUserId());
-
-			auditTrailRepository.save(new AuditTrail(stockMgmt.getUserId(), "", 
-					0L,
-					"", 
+			User user = userRepository.getById(filterRequest.getUserId());
+			
+			auditTrailRepository.save(new AuditTrail(user.getId(), 
+					user.getUsername(), 
+					user.getUsertype().getId(),
+					user.getUsertype().getUsertypeName(), 
 					4, Features.STOCK, 
-					SubFeatures.VIEW, "", stockMgmt.getTxnId()));
-			logger.info("Stock [ View ][" + stockMgmt.getTxnId() + "] saved in audit_trail.");
+					SubFeatures.VIEW, "", filterRequest.getTxnId()));
+			logger.info("Stock [ View ][" + filterRequest.getTxnId() + "] saved in audit_trail.");
 
 
 

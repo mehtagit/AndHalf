@@ -97,15 +97,15 @@ public class StockController {
 
 	@ApiOperation(value = "View Retailer And Distributer Record of TxnId.", response = StockMgmt.class)
 	@RequestMapping(path = "/stock/view", method = RequestMethod.POST)
-	public MappingJacksonValue view(@RequestBody StockMgmt stockMgmt) {
+	public MappingJacksonValue view(@RequestBody FilterRequest filterRequest) {
 
-		logger.info("Stock View Request = " + stockMgmt.toString());
+		logger.info("Stock View Request = " + filterRequest);
 
-		StockMgmt response	= stackholderServiceImpl.view(stockMgmt);
+		StockMgmt response	= stackholderServiceImpl.view(filterRequest);
 
 		MappingJacksonValue mapping = new MappingJacksonValue(response);
 
-		logger.info("Resposne view for txnId [ " +stockMgmt.getTxnId() + " ]" + response);
+		logger.info("Resposne view for txnId [ " + filterRequest.getTxnId() + " ]" + response);
 
 		return mapping;
 
