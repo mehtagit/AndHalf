@@ -22,6 +22,8 @@ public class DeviceUsageDb  implements Serializable{
 
 	@Id
 	private Long imei;
+	
+	private Long msisdn;
 
 	@JsonIgnore
 	@CreationTimestamp
@@ -48,7 +50,6 @@ public class DeviceUsageDb  implements Serializable{
 	private Integer imeiStatus;      
 	private Long imsi;   
 	private Integer mobileOperatorId;   
-	private Long msisdn;   
 	
 	@JsonIgnore
 	@UpdateTimestamp

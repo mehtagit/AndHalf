@@ -107,13 +107,13 @@ public class ConfigurationManagementServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getType()))
 				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(filterRequest.getFeatureName()))
 				sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(filterRequest.getUserType()))
 				sb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -140,7 +140,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public SystemConfigurationDb findByTag(String tag){
 		try {
 			return systemConfigurationDbRepository.getByTag(tag);
@@ -204,12 +204,12 @@ public class ConfigurationManagementServiceImpl {
 
 			if(Objects.nonNull(filterRequest.getChannel()))
 				sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
-			
+
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			}
-			
+
 			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(sb.build(), pageable);
 
 			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
@@ -229,7 +229,7 @@ public class ConfigurationManagementServiceImpl {
 
 			MessageConfigurationDb messageConfigurationDb2 = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 			messageConfigurationDb2.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb2.getChannel()));
-			
+
 			return messageConfigurationDb2;
 
 		} catch (Exception e) {
@@ -276,8 +276,10 @@ public class ConfigurationManagementServiceImpl {
 	public PolicyConfigurationDb getPolicyConfigDetailsByTag(PolicyConfigurationDb messageConfigurationDb){
 		try {
 
-			return policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
-
+			PolicyConfigurationDb policyConfigurationDb = policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
+			policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
+			return policyConfigurationDb;
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -311,7 +313,7 @@ public class ConfigurationManagementServiceImpl {
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			}
-			
+
 			Page<PolicyConfigurationDb> page = policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
 			for(PolicyConfigurationDb policyConfigurationDb : page.getContent()) {
@@ -409,7 +411,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public GenricResponse saveAllNotifications(List<Notification> notifications) {
 		try {
 
@@ -491,7 +493,7 @@ public class ConfigurationManagementServiceImpl {
 
 		return new GenricResponse(0, "","");
 	}
-	
+
 	public SystemConfigurationDb saveSystemConfiguration(SystemConfigurationDb systemConfigurationDb){
 		try {
 			return systemConfigurationDbRepository.save(systemConfigurationDb);
@@ -500,7 +502,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public MessageConfigurationDb saveMessageConfiguration(MessageConfigurationDb messageConfigurationDb){
 		try {
 			return messageConfigurationDbRepository.save(messageConfigurationDb);
@@ -509,7 +511,7 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public PolicyConfigurationDb savePolicyConfiguration(PolicyConfigurationDb policyConfigurationDb){
 		try {
 			return policyConfigurationDbRepository.save(policyConfigurationDb);

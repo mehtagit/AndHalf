@@ -23,37 +23,57 @@ public class DeviceDuplicateDb {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date createdOn;
 
+	private Integer duplicateCount;
+	private Integer foreginRule;
+	private Integer globalBlacklist;
+	private Integer lastpPolicyBreached;
+	private Date lastpPolicyBreachedDate;
+	
+	private String mobileOperator;
+	private Integer pending; 
+	
+	@Column(length = 30)
+	private String period;  
+	private String remarks; 
+	private Integer taxPaid;       
+	private Integer validImport;       
+	private String action; 
+	private String failedRuleId; 
+	private String failedRuleName; 
+	private Integer imeiStatus;      
+	private Long imsi;   
+	private Integer mobileOperatorId;   
+	
 	@JsonIgnore
 	@UpdateTimestamp
-	private Date updatedOn;
+	private Date modifiedOn;    
 	
-	@Column(length = 20)
-	private String failedRuleId;
-	private String failedRuleName;
-	private Integer imeiStatus;
-	private Long imsi;
-	private String mobileOperator;
-	private Integer regulizedByUser;
-	private Long deviceSnapShotImei;
-	private Long mobileOperatorId;
-	
-	@Column(length = 50)
-	private String createFilename;
-	
-	@Column(length = 50)
-	private String updateFilename;
-	
-	private Integer recordType;
+	private Integer recordType; 
 	
 	@Column(length = 100)
 	private String systemType;
 	
+	@Column(length = 50)
+	private String createFilename; 
+	
+	@Column(length = 50)
+	private String updateFilename; 
+	
+	private Date failedRuleDate; 
+	
+	@Column(length = 10)
 	private String tac;
-	private String period;
-	private String action;
 	
 	public DeviceDuplicateDb() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
+		return imeiMsisdnIdentity;
+	}
+
+	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
 	}
 
 	public Date getCreatedOn() {
@@ -64,12 +84,100 @@ public class DeviceDuplicateDb {
 		this.createdOn = createdOn;
 	}
 
-	public Date getUpdatedOn() {
-		return updatedOn;
+	public Integer getDuplicateCount() {
+		return duplicateCount;
 	}
 
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
+	public void setDuplicateCount(Integer duplicateCount) {
+		this.duplicateCount = duplicateCount;
+	}
+
+	public Integer getForeginRule() {
+		return foreginRule;
+	}
+
+	public void setForeginRule(Integer foreginRule) {
+		this.foreginRule = foreginRule;
+	}
+
+	public Integer getGlobalBlacklist() {
+		return globalBlacklist;
+	}
+
+	public void setGlobalBlacklist(Integer globalBlacklist) {
+		this.globalBlacklist = globalBlacklist;
+	}
+
+	public Integer getLastpPolicyBreached() {
+		return lastpPolicyBreached;
+	}
+
+	public void setLastpPolicyBreached(Integer lastpPolicyBreached) {
+		this.lastpPolicyBreached = lastpPolicyBreached;
+	}
+
+	public Date getLastpPolicyBreachedDate() {
+		return lastpPolicyBreachedDate;
+	}
+
+	public void setLastpPolicyBreachedDate(Date lastpPolicyBreachedDate) {
+		this.lastpPolicyBreachedDate = lastpPolicyBreachedDate;
+	}
+
+	public String getMobileOperator() {
+		return mobileOperator;
+	}
+
+	public void setMobileOperator(String mobileOperator) {
+		this.mobileOperator = mobileOperator;
+	}
+
+	public Integer getPending() {
+		return pending;
+	}
+
+	public void setPending(Integer pending) {
+		this.pending = pending;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public Integer getTaxPaid() {
+		return taxPaid;
+	}
+
+	public void setTaxPaid(Integer taxPaid) {
+		this.taxPaid = taxPaid;
+	}
+
+	public Integer getValidImport() {
+		return validImport;
+	}
+
+	public void setValidImport(Integer validImport) {
+		this.validImport = validImport;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
 	}
 
 	public String getFailedRuleId() {
@@ -104,36 +212,36 @@ public class DeviceDuplicateDb {
 		this.imsi = imsi;
 	}
 
-	public String getMobileOperator() {
-		return mobileOperator;
-	}
-
-	public void setMobileOperator(String mobileOperator) {
-		this.mobileOperator = mobileOperator;
-	}
-
-	public Integer getRegulizedByUser() {
-		return regulizedByUser;
-	}
-
-	public void setRegulizedByUser(Integer regulizedByUser) {
-		this.regulizedByUser = regulizedByUser;
-	}
-
-	public Long getDeviceSnapShotImei() {
-		return deviceSnapShotImei;
-	}
-
-	public void setDeviceSnapShotImei(Long deviceSnapShotImei) {
-		this.deviceSnapShotImei = deviceSnapShotImei;
-	}
-
-	public Long getMobileOperatorId() {
+	public Integer getMobileOperatorId() {
 		return mobileOperatorId;
 	}
 
-	public void setMobileOperatorId(Long mobileOperatorId) {
+	public void setMobileOperatorId(Integer mobileOperatorId) {
 		this.mobileOperatorId = mobileOperatorId;
+	}
+
+	public Date getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(Date modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public Integer getRecordType() {
+		return recordType;
+	}
+
+	public void setRecordType(Integer recordType) {
+		this.recordType = recordType;
+	}
+
+	public String getSystemType() {
+		return systemType;
+	}
+
+	public void setSystemType(String systemType) {
+		this.systemType = systemType;
 	}
 
 	public String getCreateFilename() {
@@ -152,21 +260,12 @@ public class DeviceDuplicateDb {
 		this.updateFilename = updateFilename;
 	}
 
-	public Integer getRecordType() {
-		return recordType;
+	public Date getFailedRuleDate() {
+		return failedRuleDate;
 	}
 
-	public void setRecordType(Integer recordType) {
-		this.recordType = recordType;
-	}
-
-
-	public String getSystemType() {
-		return systemType;
-	}
-
-	public void setSystemType(String systemType) {
-		this.systemType = systemType;
+	public void setFailedRuleDate(Date failedRuleDate) {
+		this.failedRuleDate = failedRuleDate;
 	}
 
 	public String getTac() {
@@ -177,30 +276,6 @@ public class DeviceDuplicateDb {
 		this.tac = tac;
 	}
 
-	public String getPeriod() {
-		return period;
-	}
-
-	public void setPeriod(String period) {
-		this.period = period;
-	}
-
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
-	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
-		return imeiMsisdnIdentity;
-	}
-
-	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -208,8 +283,30 @@ public class DeviceDuplicateDb {
 		builder.append(imeiMsisdnIdentity);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
-		builder.append(", updatedOn=");
-		builder.append(updatedOn);
+		builder.append(", duplicateCount=");
+		builder.append(duplicateCount);
+		builder.append(", foreginRule=");
+		builder.append(foreginRule);
+		builder.append(", globalBlacklist=");
+		builder.append(globalBlacklist);
+		builder.append(", lastpPolicyBreached=");
+		builder.append(lastpPolicyBreached);
+		builder.append(", lastpPolicyBreachedDate=");
+		builder.append(lastpPolicyBreachedDate);
+		builder.append(", mobileOperator=");
+		builder.append(mobileOperator);
+		builder.append(", pending=");
+		builder.append(pending);
+		builder.append(", period=");
+		builder.append(period);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", taxPaid=");
+		builder.append(taxPaid);
+		builder.append(", validImport=");
+		builder.append(validImport);
+		builder.append(", action=");
+		builder.append(action);
 		builder.append(", failedRuleId=");
 		builder.append(failedRuleId);
 		builder.append(", failedRuleName=");
@@ -218,30 +315,24 @@ public class DeviceDuplicateDb {
 		builder.append(imeiStatus);
 		builder.append(", imsi=");
 		builder.append(imsi);
-		builder.append(", mobileOperator=");
-		builder.append(mobileOperator);
-		builder.append(", regulizedByUser=");
-		builder.append(regulizedByUser);
-		builder.append(", deviceSnapShotImei=");
-		builder.append(deviceSnapShotImei);
 		builder.append(", mobileOperatorId=");
 		builder.append(mobileOperatorId);
-		builder.append(", createFilename=");
-		builder.append(createFilename);
-		builder.append(", updateFilename=");
-		builder.append(updateFilename);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
 		builder.append(", recordType=");
 		builder.append(recordType);
 		builder.append(", systemType=");
 		builder.append(systemType);
+		builder.append(", createFilename=");
+		builder.append(createFilename);
+		builder.append(", updateFilename=");
+		builder.append(updateFilename);
+		builder.append(", failedRuleDate=");
+		builder.append(failedRuleDate);
 		builder.append(", tac=");
 		builder.append(tac);
-		builder.append(", period=");
-		builder.append(period);
-		builder.append(", action=");
-		builder.append(action);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 }
