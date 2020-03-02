@@ -193,34 +193,6 @@ $(document).on("keyup", "#totalPrice", function(e) {
 	}
 });
 
-function fileTypeValueChanges(dd, ddd) {
-	var uploadedFileName = $("#file").val();
-	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
-	var ext = uploadedFileName.split('.').pop();
-
-	var fileSize = ($("#file")[0].files[0].size);
-	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
-	if (uploadedFileName.length > 30) {
-		$('#fileFormateModal').openModal({dismissible:false});
-
-	} 
-	else if(ext!='csv')
-	{
-		$('#fileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
-	else if(fileSize>='2000'){
-		$('#fileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
-
-
-
-}
 
 
 function clearFileName() {

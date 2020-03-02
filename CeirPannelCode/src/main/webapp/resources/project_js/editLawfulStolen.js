@@ -213,10 +213,10 @@ var formData= new FormData();
 			
 			if(response.errorCode==0){
 				$("#IndivisualUpdateStolen").prop('disabled', true);
-				$('#stolenSucessPopUp').openModal();
+				$('#stolenSucessPopUp').openModal({dismissible:false});
 				}
 			else{
-				$('#stolenSucessPopUp').openModal();
+				$('#stolenSucessPopUp').openModal({dismissible:false});
 				$('#dynamicMessage').text('');
 				$('#dynamicMessage').text(response.message);
 			}

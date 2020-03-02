@@ -144,12 +144,12 @@ function updateIndivisualRecovery()
 		
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
-				$('#stolenSucessPopUp').openModal();
+				$('#stolenSucessPopUp').openModal({dismissible:false});
 			
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#indivisualStolenButton').openModal();
+				$('#indivisualStolenButton').openModal({dismissible:false});
 				$('#dynamicMessage').text('');
 				$('#dynamicMessage').text(response.message);
 			}

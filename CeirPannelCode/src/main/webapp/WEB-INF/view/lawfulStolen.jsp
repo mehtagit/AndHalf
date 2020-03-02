@@ -19,7 +19,7 @@
 <html lang="en" class="no-js">
 
 <head>
-<title>Dashboard</title>
+<title>Lawful</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -808,7 +808,7 @@ select {
 																	validation.NoChosen" />');"
 																	oninvalid="InvalidMsg(this,'fileType','
 																<spring:message code="validation.NoChosen" />');"
-																	placeholder="Upload FIR" id="uploadFirSingle">
+																	placeholder="Upload FIR" id="uploadFirSingle" onchange="isFileValid('uploadFirSingle')"> 
 															</div>
 															<div class="file-path-wrapper">
 																<input class="file-path validate" type="text"
@@ -1236,7 +1236,7 @@ select {
 														validation.NoChosen" />');"
 														oninvalid="InvalidMsg(this,'fileType','
 													<spring:message code="validation.NoChosen" />');"
-														required id="deviceBulkStolenFile" accept=".csv">
+														required id="deviceBulkStolenFile" onchange="isFileValid('deviceBulkStolenFile')" accept=".csv">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text"
@@ -1458,7 +1458,8 @@ select {
 
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"

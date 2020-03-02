@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Lawful</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -430,10 +430,10 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <h6 style="margin: 2px;"><spring:message code="registration.uploadfile" /> <span class="star"> *</span></h6>
                                                         <div class="btn">
                                                             <span><spring:message code="input.selectfile" /></span>
-                                                            <input type="file" id="bulkRecoveryFile" 
+                                                            <input type="file" id="bulkRecoveryFile"  onchange="isFileValid('bulkRecoveryFile')"
                                                             oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
                                                             oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
-                                                             required  accept=".csv" placeholder="Upload Photo">
+                                                             required  accept=".csv" placeholder="">
                                                         </div>
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName"
@@ -685,7 +685,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitte
 <script type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
 
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>	
 
 		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
@@ -696,7 +697,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 			<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>		
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
+	
 		<script>
 		$('.datepick').datepicker({
 			dateFormat : "yy-mm-dd"
