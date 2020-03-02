@@ -322,7 +322,7 @@ public class GrievanceDatatableController {
 
 		// input type date list
 		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
-				Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("input.grievID"), "grievanceID", "" };
+				Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "" };
 		for (int i = 0; i < dateParam.length; i++) {
 			dateRelatedFields = new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

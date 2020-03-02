@@ -258,7 +258,8 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 <script type="text/javascript"
