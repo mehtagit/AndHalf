@@ -117,10 +117,10 @@ public class StolenAndRecoveryServiceImpl {
 
 	@Autowired
 	InterpSetter interpSetter;
-	
+
 	@Autowired
 	StolenIndividualUserRepository stolenIndividualUserRepository;
-	
+
 	@Autowired
 	StolenOrganizationUserRepository stolenOrganizationUserRepository;
 
@@ -137,7 +137,7 @@ public class StolenAndRecoveryServiceImpl {
 						stolenIndividualUserDB.getImeiEsnMeid2(), 
 						stolenIndividualUserDB.getImeiEsnMeid3(), 
 						stolenIndividualUserDB.getImeiEsnMeid4()));
-				
+
 				stolenandRecoveryMgmt.getStolenIndividualUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
 			} else if (Objects.nonNull(stolenandRecoveryMgmt.getStolenOrganizationUserDB())) {
 				stolenandRecoveryMgmt.getStolenOrganizationUserDB().setStolenandRecoveryMgmt(stolenandRecoveryMgmt);
@@ -226,10 +226,14 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 				setInterp(stolenandRecoveryMgmt);
-				
+
 				// Operator type id for stolen request of registered by Ceir Admin.
-				if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
-					stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
+				if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
+					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) 
+						stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
+				}else {
+					stolenandRecoveryMgmt.setOperatorTypeIdInterp("");
+					logger.info("WARN : OperatorTypeId is null for [" + stolenandRecoveryMgmt + "]");
 				}
 
 			}
@@ -277,9 +281,15 @@ public class StolenAndRecoveryServiceImpl {
 
 	private GenericSpecificationBuilder<StolenandRecoveryMgmt> buildSpecification(FilterRequest filterRequest, List<StateMgmtDb> statusList) {
 		GenericSpecificationBuilder<StolenandRecoveryMgmt> srsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		String CEIRADMIN = "CEIRADMIN";
+		String fileStatus = "fileStatus";
 
-		if(!"CEIRADMIN".equalsIgnoreCase(filterRequest.getUserType())
-				&& !"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
+		if(CEIRADMIN.equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.nonNull(filterRequest.getUserId()))
+				srsb.orSearch(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+			else
+				logger.info("Usertype in request is must when ceir admin is logged in to the system.");
+		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId()))
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
@@ -327,8 +337,10 @@ public class StolenAndRecoveryServiceImpl {
 			}
 		}
 
-		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
-			srsb.with(new SearchCriteria("fileStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		if(CEIRADMIN.equalsIgnoreCase(filterRequest.getUserType())) {
+			srsb.with(new SearchCriteria(fileStatus, 2, SearchOperation.EQUALITY, Datatype.STRING));
+		}else if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
+			srsb.with(new SearchCriteria(fileStatus, filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
@@ -375,30 +387,20 @@ public class StolenAndRecoveryServiceImpl {
 		StatefulBeanToCsv<StolenAndRecoveryFileModel> csvWriter = null;
 		List< StolenAndRecoveryFileModel > fileRecords = null;
 
-		// HeaderColumnNameTranslateMappingStrategy<GrievanceFileModel> mapStrategy = null;
 		try {
 			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest);
 
-			/*if( !stolenandRecoveryMgmts.isEmpty() ) {
-				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-			 */
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
-			/*
-			 * }else { fileName = LocalDateTime.now().format(dtf).replace(" ", "_") +
-			 * "_StolenAndRecovery.csv"; } }else { fileName =
-			 * LocalDateTime.now().format(dtf).replace(" ", "_") + "_StolenAndRecovery.csv";
-			 * }
-			 */
 
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<StolenAndRecoveryFileModel>(writer);
 			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
-			if( !stolenandRecoveryMgmts.isEmpty() ) {
+			if( stolenandRecoveryMgmts.isEmpty() ) {
+				csvWriter.write(new StolenAndRecoveryFileModel());
+			}else {
 
 				fileRecords = new ArrayList<>();
-				// List<SystemConfigListDb> customTagStatusList = configurationManagementServiceImpl.getSystemConfigListByTag(Tags.CUSTOMS_TAX_STATUS);
-
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new StolenAndRecoveryFileModel();
 
@@ -563,22 +565,22 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 
-				
+
 				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(
 							stolenandRecoveryMgmtInfo.getStolenIndividualUserDB(),
 							stolenandRecoveryMgmt.getStolenIndividualUserDB()
 							);
-					
+
 					stolenandRecoveryMgmtInfo.setQty(countImeiForIndividual(stolenIndividualUserDB.getImeiEsnMeid1(), 
 							stolenIndividualUserDB.getImeiEsnMeid2(), 
 							stolenIndividualUserDB.getImeiEsnMeid3(), 
 							stolenIndividualUserDB.getImeiEsnMeid4()));
-					
+
 					stolenandRecoveryMgmtInfo.setStolenIndividualUserDB(stolenIndividualUserDB);
 					stolenIndividualUserDB.setStolenandRecoveryMgmt(stolenandRecoveryMgmtInfo);
-					
+
 					// stolenIndividualUserRepository.save(stolenIndividualUserDB);
 
 					logger.info("After object update " + stolenIndividualUserDB);
@@ -595,12 +597,12 @@ public class StolenAndRecoveryServiceImpl {
 
 					stolenOrganizationUserDB.setStolenandRecoveryMgmt(stolenandRecoveryMgmtInfo);
 					// stolenOrganizationUserRepository.save(stolenOrganizationUserDB);
-					
+
 					logger.info("After object update " + stolenOrganizationUserDB);
 				}
-				
+
 				logger.info("Final object StolenandRecoveryMgmt : " + stolenandRecoveryMgmtInfo);
-			
+
 				//	StolenandRecoveryMgmt stolenandRecoveryMgmtNew = 
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
 
@@ -611,7 +613,6 @@ public class StolenAndRecoveryServiceImpl {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
-
 	}
 
 	public StolenandRecoveryMgmt viewRecord(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
@@ -774,7 +775,7 @@ public class StolenAndRecoveryServiceImpl {
 	private StolenIndividualUserDB updateStolenIndividualUserDB(StolenIndividualUserDB stolenIndividualUserDBOld, 
 			StolenIndividualUserDB stolenIndividualUserDBNew) {
 		stolenIndividualUserDBNew.setId(stolenIndividualUserDBOld.getId());
-		
+
 
 		return stolenIndividualUserDBNew;
 	}
@@ -782,7 +783,7 @@ public class StolenAndRecoveryServiceImpl {
 	private StolenOrganizationUserDB updateStolenOrganizationUserDB(StolenOrganizationUserDB stolenOrganizationUserDbOld,
 			StolenOrganizationUserDB stolenOrganizationUserDbNew) {
 		stolenOrganizationUserDbNew.setId(stolenOrganizationUserDbOld.getId());
-		
+
 		return stolenOrganizationUserDbNew;
 	}
 
@@ -828,7 +829,7 @@ public class StolenAndRecoveryServiceImpl {
 
 		if(Objects.nonNull(imei4))
 			count++;
-		
+
 		return count;
 	}
 }
