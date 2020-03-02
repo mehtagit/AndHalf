@@ -247,14 +247,15 @@
 	<!-- Modal End -->
 
 
-	<!--Delete Modal start   -->
+<!--Delete Modal start   -->
 
 	<div id="DeleteConsignment" class="modal">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.deleteConsignment" />
 		</h6>
+		<form action="" onsubmit=" return confirmantiondelete()" method="POST">
 		<div class="modal-content">
-			<div class="row">
+		
 				<h6>
 					<spring:message code="modal.withdraw.message" />
 					(<span id="transID"></span>)
@@ -263,24 +264,27 @@
 
 			<div class="row">
 				<div class="input-field col s12 m12">
-					<textarea id="textarea1" class="materialize-textarea"></textarea>
-					<label for="textarea1"><spring:message code="input.remarks" /></label>
+					<textarea id="textarea1" required="required" maxlength="200"  class="materialize-textarea"></textarea>
+					<label for="textarea1"><spring:message code="input.remarks" /><span class="star">*</span></label>
 				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<a class="btn" onclick="confirmantiondelete()"><spring:message
-								code="modal.yes" /></a>
+						<button class="btn" type="submit"><spring:message
+								code="modal.yes" /></button>
 						<button class="modal-close btn" type="button"
 							onclick="closeUpdateModal()" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
 				</div>
+		
 			</div>
+		</form>
 		</div>
+		
 	</div>
 	<!-- Modal End -->
 	<!-- END CONTENT -->
@@ -356,7 +360,7 @@
 		<div class="modal-content">
 
 
-			<div class="row">
+						<div class="row">
 				<h6 id="approveConsignmnetHeading">
 					<spring:message code="modal.message.clearConsignment" />
 					<span id="displayname"></span>
@@ -368,9 +372,16 @@
 					<h6>
 						<spring:message code="modal.message.doApprove" />
 					</h6>
+					<form action=""  >
+          <p id="tacSatusForCustom" style="display: none">
+            <label>
+              <input type="checkbox" id="tacStatusChecKbox" >
+              <span id="tacStatucMessage"></span>
+            </label>
+          </p>
+        </form>
 				</div>
-
-			</div>
+</div>
 			<div class="row">
 				<%-- <h6 id="confirmationMessage">
 					<spring:message code="modal.message.clearConsignment" />
@@ -378,19 +389,20 @@
 				<input type="text" id="setApproveConsignmentTxnId"
 					style="display: none">
 			</div>
-			<div class="row button-div">
+						<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
+						<button class="modal-close modal-trigger btn" id="approveButton" disabled="disabled"
 							onclick="approveSubmit(0)">
 							<spring:message code="modal.yes" />
 						</button>
-						<button class="modal-close btn" style="margin-left: 10px;">
+						<button class="modal-close btn"   style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 
@@ -606,11 +618,10 @@
 		<div class="modal-content">
 			<form action="" onsubmit="return editRegisterConsignment()"
 				method="POST" enctype="multipart/form-data">
-				<div class="row myRow" style="margin-top: 5px;">
+				<div class="row myRow" style="margin-top: 5px;" >
 					<div class="input-field col s12 m6">
 						<input type="text" name="supplierId" id="supplierIdEdit"
 							pattern="[A-Za-z0-9]{0,15}"
-							title="<spring:message code="validation.15character" />"
 							placeholder="" maxlength="15" /> <label for="Name"
 							class="center-align"><spring:message
 								code="input.supplier" /></label>
@@ -619,9 +630,8 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="supplierName" id="supplierNameEdit"
 							placeholder="" pattern="[A-Za-z  ]{0,50}"
-							oninput="setCustomValidity('')"
-							oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-							title="<spring:message code="validation.50character" />"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+
 							maxlength="50" required /> <label for="Name"
 							class="center-align"><spring:message
 								code="input.suppliername" /><span class="star">*</span> </label>
@@ -629,7 +639,6 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="consignmentNumber"
 							id="consignmentNumberEdit" pattern="[A-Za-z0-9]{0,15}"
-							title="<spring:message code="validation.15character" />"
 							placeholder="" maxlength="15" /> <label for="Name"
 							class="center-align"><spring:message
 								code="input.consignmentnumber" /></label>
@@ -637,13 +646,15 @@
 
 					<div class="input-field col s12 m6">
 
-						<input name="expectedDispatcheDate" id="expectedDispatcheDateEdit"
+						<input name="expectedDispatcheDateEdit" id="expectedDispatcheDateEdit"
 							placeholder="" type="text" class='form-control datepick'
-							autocomplete='off' onclick="setCustomValidity('')"
-							oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-							title="<spring:message code="validation.requiredMsg" />" required />
+							autocomplete='off'
+							onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDateOnModal(expectedDispatcheDateEdit,expectedArrivaldateEdit);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
+							 required />
 						<label for="dispatchDate" class="center-align"><spring:message
-								code="input.dispatchdate" /><span class="star">*</span> </label> <span
+								code="input.dispatchdate" /><span class="star">*</span> </label>
+								<p id="errorMsgOnModal" class="onEditModalTitle"></p>
+								 <span
 							class="input-group-addon" style="color: #ff4081"><i
 							class="fa fa-calendar" aria-hidden="true"></i></span>
 					</div>
@@ -651,9 +662,7 @@
 						<!-- <p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">Device Origination Country <span class="star">*</span></p> -->
 						<select id="country" name="organisationcountry"
 							class="browser-default" class="mySelect"
-							title="<spring:message code="validation.selectFieldMsg" />"
-							onchange="setCustomValidity('')"
-							oninvalid="this.setCustomValidity('<spring:message code="validation.selectFieldMsg" />')"
+							onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 							required></select> <label for="country" class="center-align"></label>
 					</div>
 
@@ -661,11 +670,10 @@
 					<div class="input-field col s12 m6">
 						<!-- <p class="input-text-date">Expected Dispatch Date <span class="star">*</span></p> -->
 						<!-- <label for="Name">Expected arrival Date</label> -->
-						<input name="expectedArrivalDate" id="expectedArrivaldateEdit"
+						<input name="expectedArrivaldateEdit" id="expectedArrivaldateEdit"
 							placeholder="" type="text" class='form-control datepick'
-							autocomplete='off' onclick="setCustomValidity('')"
-							oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
-							title="<spring:message code="validation.requiredMsg" />" required />
+							autocomplete='off' onchange="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');checkDateOnModal(expectedDispatcheDateEdit,expectedArrivaldateEdit);" oninvalid="InvalidMsg(this,'date','<spring:message code="validation.requiredMsg" />');"
+							 required />
 						<label for="dispatchDate" class="center-align"><spring:message
 								code="input.arrivaldate" /><span class="star">*</span> </label> <span
 							class="input-group-addon" style="color: #ff4081"><i
@@ -674,7 +682,7 @@
 					<div class="input-field col s12 m6">
 						<select name="expectedArrivalPort" id="expectedArrivalPortEdit"
 							class="browser-default"
-							title="<spring:message code="validation.selectFieldMsg" />">
+						>
 							<option value="" disabled selected><spring:message
 									code="input.arrivalport" />*
 							</option>
@@ -685,9 +693,8 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="quantity" id="QuantityEdit"
 							pattern="[0-9]{0,7}" placeholder=""
-							title="<spring:message code="validation.7character" />"
-							maxlength="7" oninput="setCustomValidity('')"
-							oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+							
+							maxlength="7" oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" 
 							required /> <label for="Quantity" class="center-align"><spring:message
 								code="input.quantity" /><span class="star">*</span></label>
 					</div>
@@ -703,7 +710,6 @@
 					<div class="input-field col s12 m6">
 						<input type="text" name="totalPrice" id="totalPrice" maxlength="7"
 							pattern="[0-9]{0,7}"
-							title="<spring:message code="validation.7character" />"
 							placeholder="" /> <label for="totalPrice" class="center-align"><spring:message
 								code="input.totalprice" /></label>
 					</div>
@@ -716,8 +722,8 @@
 						</h6>
 						<div class="btn">
 							<span><spring:message code="input.selectfile" /></span> <input
-								type="file" name="file" id="csvUploadFile" accept=".csv" onchange="fileTypeValueChanges()"
-								title="<spring:message code="validation.file" />">
+								type="file" name="file" id="csvUploadFile" accept=".csv" onchange="isFileValid('csvUploadFile')"
+								>
 						</div>
 						<div class="file-path-wrapper">
 							<input class="file-path validate responsive-file-div"
@@ -728,8 +734,7 @@
 					<div class="col s12 m6" id="currencyDiv">
 						<label for="Currency"><spring:message
 								code="input.currency" /></label> <select id="currency"
-							class="browser-default"
-							title="<spring:message code="validation.selectFieldMsg" />">
+							class="browser-default">
 							<option value="" disabled selected><spring:message
 									code="input.currency" /></option>
 
@@ -808,22 +813,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -852,36 +842,37 @@
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+	
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
@@ -894,6 +885,8 @@
 		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewConsignment.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js" async></script>
 			<script type="text/javascript"

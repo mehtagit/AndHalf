@@ -92,7 +92,9 @@
 
 						console.log(JSON.stringify(data));
 						$('#chatMsg').empty();
-						$('#manageAccount').openModal();
+						$('#manageAccount').openModal({
+			    	    	   dismissible:false
+			    	       });
 						console.log("****projectPath"+projectPath);
 						console.log("+++++path"+path);
 						
@@ -139,7 +141,11 @@
 					success: function (data, textStatus, jqXHR) {
 
 						console.log(JSON.stringify(data));
-						$('#replyModal').openModal();
+						$('#replyModal').openModal({
+			    	    	   dismissible:false
+			    	       });
+						setDocTypeValue(data[0].grievance.categoryId);
+						$('#grievanceSelectedCategory').val(data[0].grievance.categoryId);
 						$('#grievanceIdToSave').text(grievanceId);
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
@@ -162,7 +168,7 @@
 							$("#closeTicketCheckbox").css("display","none");	
 							console.log("none");
 						}
-						$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
+						/*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
 							for (i = 0; i < data.length; i++) {
 								console.log(data[i].interp);
 								$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
@@ -170,10 +176,12 @@
 							}
 						});
 
-
+*/
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						 $('#errorModal').openModal();
+						 $('#errorModal').openModal({
+			    	    	   dismissible:false
+			    	       });
 					}
 				});
 			}
@@ -250,7 +258,9 @@
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 					
-						$('#replyMsg').openModal();
+						$('#replyMsg').openModal({
+			    	    	   dismissible:false
+			    	       });
 						console.log(data.txnId);
 						if(data.errorCode=="0")
 						{
@@ -299,3 +309,79 @@
 
 				//alert("current date="+today+" dispatche date="+dispatcDate)
 			}
+			
+	$('#endUsercategory').on('change',function() {
+	          var request ={
+				 "childTag": "DOC_TYPE",
+				  "featureId": 6,
+				  "parentValue":  parseInt($('#endUsercategory').val()),	
+				  "tag": "GRIEVANCE_CATEGORY",
+				  "userTypeId":17,
+			}
+	
+	console.log("request --->" +JSON.stringify(request));	
+	 $.ajax({
+			url: './get/tags-mapping',
+			type: 'POST',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			success: function (data, textStatus, jqXHR) {
+				$("#endUserdocTypetag1").empty();
+				$('#endUserdocTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
+				console.log(data);
+				for (i = 0; i < data.length; i++){
+						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+						//$('#docTypetag1').append(html);	
+					$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#endUserdocTypetag1');
+				
+				}
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log("error in ajax")
+			}
+		});
+	 
+	}); 
+	
+	function setDocTypeValue(categoryParentValue){
+		
+		
+		var request ={
+					 "childTag": "DOC_TYPE",
+					  "featureId": 6,
+					  "parentValue":  parseInt(categoryParentValue),	
+					  "tag": "GRIEVANCE_CATEGORY",
+					  "userTypeId": 17,
+				}
+		
+		console.log("request --->" +JSON.stringify(request));	
+		 $.ajax({
+				url: './get/tags-mapping',
+				type: 'POST',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+					$("#docTypetag1").empty();
+					$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
+					console.log(data);
+					for (i = 0; i < data.length; i++){
+							//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
+							//$('#docTypetag1').append(html);	
+							
+						$('<option>').val(data[i].tagId).text(data[i].interp).appendTo('#docTypetag1');
+					
+					}
+					
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log("error in ajax")
+				}
+			});
+		}
+	
+	
+	
+	

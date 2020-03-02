@@ -20,6 +20,7 @@ public class LoginResponse {
     private String period;
     private String userLanguage;
     private String tag;
+	private Integer statusValue;
     
     
 	public String getOperatorTypeName() {
@@ -112,13 +113,20 @@ public class LoginResponse {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+	
+	public Integer getStatusValue() {
+		return statusValue;
+	}
+	public void setStatusValue(Integer statusValue) {
+		this.statusValue = statusValue;
+	}
 	@Override
 	public String toString() {
 		return "LoginResponse [response=" + response + ", statusCode=" + statusCode + ", userRoles=" + userRoles
 				+ ", username=" + username + ", userId=" + userId + ", name=" + name + ", primaryRole=" + primaryRole
 				+ ", primaryRoleId=" + primaryRoleId + ", status=" + status + ", operatorTypeName=" + operatorTypeName
 				+ ", operatorTypeId=" + operatorTypeId + ", period=" + period + ", userLanguage=" + userLanguage
-				+ ", tag=" + tag + "]";
+				+ ", tag=" + tag + " , statusValue=" + statusValue+"]";
 	}
 	
 	

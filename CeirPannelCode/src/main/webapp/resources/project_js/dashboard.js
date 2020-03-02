@@ -1,3 +1,4 @@
+var userTypeID=$("body").attr("data-userTypeID");
 $('#langlist').on('change', function() {
 	var lang=$('#langlist').val(); 
 	sessionStorage.setItem("sessionLang", lang);
@@ -8,7 +9,7 @@ $('#langlist').on('change', function() {
 		changeLanguage(lang);
 		sessionStorage.setItem("a", currentPageLocation);
 	});    
-	window.location.replace("importerDashboard?lang="+lang);
+	window.location.replace("?lang="+lang);
 }); 
 
 
@@ -29,6 +30,8 @@ $(document).ready(function () {
 	$('div#initialloader').delay(300).fadeOut('slow'); 
 	isActive(featurID);
 	sessionStorage.removeItem("data-feature");
+	 $("#manualDownload").attr("href", "./Consignment/ManualFileDownload?userTypeId="+userTypeID);
+	
 });   
 
 

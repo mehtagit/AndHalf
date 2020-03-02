@@ -50,7 +50,9 @@ function uploadEndUserStock()
 			success: function (data, textStatus, jqXHR) {
 				console.log("in suucess method");
 				console.log(data);
-				$('#endUserStockModal').openModal();
+				$('#endUserStockModal').openModal({
+	    	    	   dismissible:false
+	    	       });
 				$("#endUserStock").prop('disabled', true);
 				if(data.errorCode==0){
 					$('#endUsertXnId').text(data.txnId);
@@ -82,7 +84,9 @@ function validateTxnId()
 			setViewPopupData(data);
 		},
 		error : function() {
-		$('#errorModal').openModal();
+		$('#errorModal').openModal({
+	    	   dismissible:false
+	       });
 		}
 	});
     return false;
@@ -161,7 +165,9 @@ function updateFile()
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
-			$('#fileUpdateSucessModal').openModal();
+			$('#fileUpdateSucessModal').openModal({
+ 	    	   dismissible:false
+ 	       });
 			if(data.errorCode=='0')
 				{
 			$('#endUserStockSuceesMessage').text('');
@@ -200,10 +206,53 @@ return false;
 
 function  openCancelPopUp()
 {
-	 $('#cancelStock').openModal(); 
+	 $('#cancelStock').openModal({
+  	   dismissible:false
+     });
 }
 
 function  closeCancelPopUp()
 {
 	 $('#cancelStock').closeModal();
+}
+
+
+
+function fileTypeValueChanges(dd, ddd) {
+	var uploadedFileName = $("#endUsercsvUploadFile").val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	var ext = uploadedFileName.split('.').pop();
+	
+	var fileSize = ($("#endUsercsvUploadFile")[0].files[0].size);
+	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+   if (uploadedFileName.length > 30) {
+       $('#fileFormateModal').openModal({
+    	   dismissible:false
+       });
+      
+   } 
+	else if(ext!='csv')
+		{
+	
+		  $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+		 
+		}
+	else if(fileSize>='2000'){
+		alert("2222");		$('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+		
+	}
+	
+	
+
+}
+
+
+function clearFileName() {
+	$('#endUsersaveFileName').val('');
+	$("#endUsercsvUploadFile").val('');
+	$('#fileFormateModal').closeModal();
 }

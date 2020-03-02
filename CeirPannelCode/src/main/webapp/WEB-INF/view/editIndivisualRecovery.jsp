@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/* session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);   */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -7,7 +16,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Lawful</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -87,6 +96,15 @@
             margin-bottom: 0;
             font-size: 0.8rem;
         }
+        
+        select {
+			margin-bottom: 5px;
+			height: 2.2rem;
+		}
+		
+		.iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
+			margin-bottom: 5px !important;
+		}
     </style>
 
 
@@ -127,28 +145,28 @@
                                                <form action="" id="SingleImeiBlockform" onsubmit="return updateIndivisualRecovery()" method="POST" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-s12 m12">
-                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
                                                                 pattern="[a-zA-Z]{0,20}" required="required"
                                                                  title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
                                                             </div>
-<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
-<input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
-                                                            <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                                                <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" placeholder=""
+																<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
+																<input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
+                                                            <%-- <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                                <input type="text" name="sigleRecoveryimeiNumber1" id="sigleRecoveryimeiNumber" placeholder=""
                                                                 required  pattern="[0-9]{15,16}" title="Please enter minimum 15 and maximum 16 digit only" maxlength="16">
                                                                 <label for="sigleRecoveryimeiNumber"><spring:message code="registration.imei/meid/esnnumber" /> <span class="star">*</span></label>
-                                                            </div>
+                                                            </div> --%>
 
-                                                            <div class="col s6 m6 selectDropdwn">
+                                                            <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceIDType"><spring:message code="select.deviceIDType" /> <span class="star">*</span></label>
                                                                 <select id="sigleRecoverydeviceIDType" class="browser-default" required="required">
                                                                   <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                 </select>
                                                               </div>
 
-                                                              <div class="col s6 m6 selectDropdwn">
+                                                              <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceType"> <spring:message code="select.deviceType" /></label>
                                                                 <select class="browser-default" id="sigleRecoverydeviceType">
                                                                     <option value="" disabled selected><spring:message code="select.deviceType" /></option>
@@ -162,11 +180,47 @@
                                                                 </select>
                                                               </div>
 
-                                                              <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                              <div class="input-field col s12 m6">
                                                                 <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,20}" required="required"
                                                                  title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
+                                                            
+                                                            <div class="col s12 m12" style="margin-top: 10px; font-weight: bold;">
+															<h6><spring:message code="registration.imei/meid/esnnumber" /></h6>
+														</div>
+
+														<div class="input-field col s12 m6">
+															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+														  maxlength="16" id="sigleRecoveryimeiNumber1" required/> 
+															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+													  maxlength="16" 	id="sigleRecoveryimeiNumber2" > <label
+																for="sigleRecoveryimeiNumber2"><spring:message code="registration.two" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+														  maxlength="16" 	id="sigleRecoveryimeiNumber3" > <label
+																for="sigleRecoveryimeiNumber3"><spring:message code="registration.three" /></label>
+														</div>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+															  maxlength="16" 	id="sigleRecoveryimeiNumber4" > <label
+																for="sigleRecoveryimeiNumber4"><spring:message code="registration.four" /></label>
+														</div>
 
                                                             <div class="col s12 m12" style="margin-top: 30px;">
                                                                 <h5><spring:message code="registration.placeofdevicerecovery" /></h5>
@@ -551,3 +605,16 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 
 </body>
 </html>
+<%
+	}else{
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

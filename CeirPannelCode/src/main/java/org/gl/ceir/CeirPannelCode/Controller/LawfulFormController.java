@@ -102,7 +102,7 @@ public class LawfulFormController
 	
 
 	@PostMapping("lawfulIndivisualStolen")
-	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName",required = false) MultipartFile firFileName,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
@@ -137,6 +137,31 @@ public class LawfulFormController
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
+		 if(firFileName==null) {
+	        	log.info("fir file is empty");	
+	        }
+	        else {
+			try {
+				
+				byte[] bytes = firFileName.getBytes();
+			String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+			File dir = new File(rootPath + File.separator);
+
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+firFileName.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
+			lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			}
 		log.info("request passed to the save regularizeDeviceDbs api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
@@ -155,7 +180,7 @@ public class LawfulFormController
 	
 	
 	@PostMapping("lawfulOraganisationStolen")
-	public @ResponseBody GenricResponse lawfulOraganisationStolen(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse lawfulOraganisationStolen(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName",required = false) MultipartFile firFileName,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
@@ -191,6 +216,31 @@ public class LawfulFormController
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		log.info("fir file detaissssssssss"+firFileName);
+		 if(firFileName==null) {
+	        	log.info(" bulk fir file is empty");	
+	        }
+	        else {
+			try {
+				
+				byte[] bytes = firFileName.getBytes();
+			String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+			File dir = new File(rootPath + File.separator);
+
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+firFileName.getOriginalFilename());
+			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
+			lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+			} 
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+			}
 		log.info("request passed to the report Indivisual and comapny  api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
@@ -288,7 +338,7 @@ public class LawfulFormController
 	
 	
 	@PostMapping("lawfulIndivisualStolenUpdate")
-	public @ResponseBody GenricResponse updateStolenRequest(@RequestParam(name="file",required = false) MultipartFile file,HttpServletRequest request,HttpSession session) {
+	public @ResponseBody GenricResponse updateStolenRequest(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName",required = false) MultipartFile firFileName,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller lawfulIndivisualStolen update-------request---------");
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
@@ -316,6 +366,32 @@ public class LawfulFormController
 		if (!dir.exists()) dir.mkdirs();
 		// Create the file on server 
 		File serverFile = new File(rootPath+file.getOriginalFilename());
+		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		stream.write(bytes); 
+		stream.close();
+		lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
+		} 
+		
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		}
+       
+        if(firFileName==null) {
+        	log.info("fir file is empty");	
+        }
+        else {
+		try {
+			
+			byte[] bytes = firFileName.getBytes();
+		String rootPath =filePathforUploadFile+lawfulIndivisualStolen.getTxnId()+"/"; 
+		File dir = new File(rootPath + File.separator);
+
+		if (!dir.exists()) dir.mkdirs();
+		// Create the file on server 
+		File serverFile = new File(rootPath+firFileName.getOriginalFilename());
 		log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 		stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 		stream.write(bytes); 

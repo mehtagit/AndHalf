@@ -8,6 +8,14 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./manageTypeDevices?lang="+lang);				
 }); */
 
+$.i18n().locale = lang;
+		var documenttype,selectfile,selectDocumentType;
+		$.i18n().load( {
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
+		} ).done( function() { 
+				
+		});
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
@@ -145,7 +153,7 @@ function pageRendering(){
 					$("#typeAprroveTableDiv")
 					.append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' type='text'  id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -156,9 +164,7 @@ function pageRendering(){
 				}
 			} 
 			
-			if(userType=="Importer"){
-				console.log("userType is----->"+userType)
-			}else{
+			
 				// dynamic drop down portion
 				var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
@@ -177,7 +183,7 @@ function pageRendering(){
 						"</div>");
 				
 				}
-			}
+			
 	
 			$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 			$("#typeAprroveTableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
@@ -270,13 +276,19 @@ function ImporterviewByID(id,actionType,projectPath){
 			console.log(+data);
 			if(actionType=='view')
 				{
-				$("#viewImporterModal").openModal();
+				//$("#viewImporterModal").openModal();
+				$('#viewImporterModal').openModal({
+			    	   dismissible:false
+			       });
 				setImporterViewPopupData(data,projectPath);
 			
 				}
 			else if(actionType=='edit')
 				{
-				$("#importereditModal").openModal();
+				//$("#importereditModal").openModal();
+				$('#importereditModal').openModal({
+			    	   dismissible:false
+			       });
 				setImporterEditPopupData(data)
 				
 				}
@@ -288,6 +300,7 @@ function ImporterviewByID(id,actionType,projectPath){
 	});
 	
 }
+
 
 
 function setImporterViewPopupData(data,projectPath){
@@ -313,7 +326,17 @@ function setImporterViewPopupData(data,projectPath){
 			if(importerViewResponse[i].attachedFiles[j].docType == null || importerViewResponse[i].attachedFiles[j].docType == undefined ){
 				importerViewResponse[i].attachedFiles[j].docType == "";
 			}else{
-				$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+				if(importerViewResponse[i].attachedFiles[j].docType=="")
+				{
+					
+				//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+				}
+			else{
+			
+				fileName=importerViewResponse[i].attachedFiles[j].fileName.split(' ').join('%20');
+				$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span> <a onclick=onclick=fileDownload('"+fileName+"','actual','"+importerViewResponse[i].txnId+"','"+importerViewResponse[i].attachedFiles[j].docType+"')>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
+			}
+				//$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+importerViewResponse[i].attachedFiles[j].docType+"</span>  <a href='"+projectpath+"/"+importerViewResponse[i].attachedFiles[j].fileName+"/"+importerViewResponse[i].txnId+"/"+importerViewResponse[i].attachedFiles[j].docType+"'>"+importerViewResponse[i].attachedFiles[j].fileName+"</a></div>");
 			}
 		}
 	}
@@ -350,6 +373,7 @@ function setImporterEditPopupData(data){
 	$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function( //same values to be configure for featureId 21
 			data) {
 		$("#docTypetag1").empty();
+		$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
 		for (i = 0; i < data.length; i++) {
 			console.log(data[i].interp);
 			$('<option>').val(data[i].tagId).text(data[i].interp).appendTo(
@@ -383,7 +407,10 @@ function updateImporterTypeDevice()
 		var formData= new FormData();
 		var docTypeTagIdValue='';
 		var filename='';
-		
+		var filesameStatus=false;
+		var documenttype=false;
+		var docTypeTag='';
+		var documentFileNameArray=[];
 		
 		$('.fileDiv').each(function() {	
 		var x={
@@ -391,10 +418,53 @@ function updateImporterTypeDevice()
 			"fileName":$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
 			}
 			formData.append('files[]',$('#docTypeFile'+fieldId)[0].files[0]);
-			fileInfo.push(x);
+			
+		documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+		docTypeTag=$('#docTypetag'+fieldId).val();
+		
+		var fileIsSame=	documentFileNameArray.includes(documentFileName);
+		var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+		
+		if(filesameStatus!=true){
+			filesameStatus=	fileIsSame;
+		}
+		
+		if(documenttype!=true)
+		{
+		documenttype=documentTypeTag;
+         }
+		documentFileNameArray.push(documentFileName);
+		documentFileNameArray.push(docTypeTag);
+		
+		
+		fileInfo.push(x);
 			fieldId++;
 			i++;
 		});
+		
+		if(filesameStatus==true)
+		{	
+		
+		//$('#fileFormateModal').openModal();
+		$('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
+			$('#fileErrormessage').text('')
+			$('#fileErrormessage').text($.i18n('duplicateFileName'));
+		return false;
+		
+		}
+		if(documenttype==true)
+		{	
+			
+			$('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+			$('#fileErrormessage').text('')
+			$('#fileErrormessage').text($.i18n('documentTypeName'));
+		return false;
+		
+		}
 		
 		var multirequest={
 					"attachedFiles":fileInfo,
@@ -429,11 +499,17 @@ function updateImporterTypeDevice()
 			
 					
 					 if (data.errorCode==0){
-						$('#updateManageTypeDevice').openModal();
+						//$('#updateManageTypeDevice').openModal();
+						$('#updateManageTypeDevice').openModal({
+					    	   dismissible:false
+					       });
 					}
 					 else {
 
-							$('#updateManageTypeDevice').openModal();
+							//$('#updateManageTypeDevice').openModal();
+							$('#updateManageTypeDevice').openModal({
+						    	   dismissible:false
+						       });
 							$('#updateTacMessage').text('');
 							$('#updateTacMessage').text(data.message);
 						}
@@ -479,7 +555,14 @@ function setAllDropdown() {
 
 }
 
-var max_fields = 15; //maximum input boxes allowed
+$.getJSON('./addMoreFile/more_files_count', function(data) {
+	console.log(data);
+	localStorage.setItem("maxCount", data.value);
+});
+
+	//var max_fields = 2; //maximum input boxes allowed
+var max_fields =localStorage.getItem("maxCount");
+	
 var wrapper = $(".mainDiv"); //Fields wrapper
 var add_button = $(".add_field_button"); //Add button ID
 var x = 1; //initlal text box count
@@ -488,24 +571,13 @@ $(".add_field_button")
 		.click(
 				function(e) { //on add input button click
 					e.preventDefault();
+					var placeholderValue= $.i18n('selectFilePlaceHolder');
 					if (x < max_fields) { //max input box allowed
 						x++; //text box increment
-						$(wrapper)
-								.append(
-										'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
-												+ $
-														.i18n('documenttype')
-												+ ' </label><select id="docTypetag'+id+'" required class="browser-default"> <option value="" disabled selected>'
-												+ $
-														.i18n('selectDocumentType')
-												+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
-												+ $
-														.i18n('selectDocumentType')
-												+ ' </option></select></div> <div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
-												+ $.i18n('selectfile')
-												+ '</span><input id="docTypeFile'+id+'" type="file" required name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'); //add input box
+						$(wrapper).append(
+					        '<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div>  <div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+						); 
 					}
-
 					$.getJSON('./getSourceTypeDropdown/DOC_TYPE/21', function(
 							data) {
 
@@ -540,7 +612,10 @@ $(wrapper).on("click", ".remove_field", function(e) { // user click on remove  t
 function openApproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
-	$('#ApproveTAC').openModal();
+	//$('#ApproveTAC').openModal();
+	$('#ApproveTAC').openModal({
+ 	   dismissible:false
+    });
 	$('#ApproveTacTxnId').text(txnId);
 	$('#setApproveTacTxnId').val(txnId);
 
@@ -550,7 +625,7 @@ function approveSubmit(actiontype){
 	var txnId=$('#setApproveTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var adminApproveStatus=0;
+	var adminApproveStatus=6;
 	var approveRequest={
 			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
@@ -566,15 +641,19 @@ function approveSubmit(actiontype){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success : function(data) {
-			$('#confirmApproveTAC').openModal();
+			//$('#confirmApproveTAC').openModal();
+			
+			$('#confirmApproveTAC').openModal({
+			 	   dismissible:false
+			    });
 			if(data.errorCode==0){
 
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text($.i18n('TYPE_APPROVE_APPROVED'));
 			}
 			else{
 				$('#approveSuccessMessage').text('');
-				$('#approveSuccessMessage').text(data.message);
+				$('#approveSuccessMessage').text($.i18n('TYPE_APPROVE_APPROVED'));
 			}
 		},
 		error : function() {
@@ -586,7 +665,11 @@ function approveSubmit(actiontype){
 function openDisapproveTACPopUp(txnId,	manufacturerName)
 {
 	manufacturerName=manufacturerName.replace("+20"," " );
-	$('#RejectTAC').openModal();
+	//$('#RejectTAC').openModal();
+	
+	$('#RejectTAC').openModal({
+	 	   dismissible:false
+	    });
 	
 	$('#RejectTacTxnId').text(txnId);
 	$('#setRejectTacTxnId').val(txnId);
@@ -597,7 +680,7 @@ function rejectSubmit(actiontype){
 	var txnId=$('#setRejectTacTxnId').val();
 	var userId = $("body").attr("data-userID");
 	var userType=$("body").attr("data-roleType");
-	var adminApproveStatus=1;
+	var adminApproveStatus=7;
 	var approveRequest={
 			"adminApproveStatus":adminApproveStatus,
 			"txnId":txnId,
@@ -617,11 +700,11 @@ function rejectSubmit(actiontype){
 			if(data.errorCode==0){
 
 				$('#rejectSuccessMessage').text('');
-				$('#rejectSuccessMessage').text(data.message);
+				$('#rejectSuccessMessage').text($.i18n('TYPE_APPROVE_REJECTED'));
 			}
 			else{
 				$('#rejectSuccessMessage').text('');
-				$('#rejectSuccessMessage').text(data.message);
+				$('#rejectSuccessMessage').text($.i18n('TYPE_APPROVE_REJECTED'));
 			}
 		},
 		error : function() {
@@ -633,7 +716,10 @@ function rejectSubmit(actiontype){
 
 
 function DeleteTacRecord(txnId, id){
-	$("#DeleteTacConfirmationModal").openModal();
+	//$("#DeleteTacConfirmationModal").openModal();
+	$('#DeleteTacConfirmationModal').openModal({
+	 	   dismissible:false
+	    });
 	$("#tacdeleteTxnId").text(txnId);
 	$("#deleteTacId").val(id);
 }
@@ -663,7 +749,10 @@ function confirmantiondelete(){
 			//$("#stockModalText").text(data.message);
 			$("#DeleteTacConfirmationModal").closeModal();
 
-			$("#closeDeleteModal").openModal();
+			//$("#closeDeleteModal").openModal();
+			$('#closeDeleteModal').openModal({
+			 	   dismissible:false
+			    });
 			if(data.errorCode == 0){
 				$("#tacModalText").text(stockDeleted);
 			}
@@ -675,7 +764,29 @@ function confirmantiondelete(){
 		}
 	});
 	
+	return false;
 	/* 
 $(".lean-overlay").remove(); */ 
 
 }
+
+function clearFileName() {
+	$('#fileName').val('');
+	$("#file").val('');
+	$('#fileFormateModal').closeModal();
+}
+
+function enableAddMore(){
+	$(".add_field_button").attr("disabled", false);
+}
+function enableSelectFile(){
+	$("#docTypeFile1").attr("disabled", false);
+	$("#docTypeFile1").attr("required", true);
+	$("#supportingdocumentFile").append('<span class="star">*</span>');
+}
+
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});

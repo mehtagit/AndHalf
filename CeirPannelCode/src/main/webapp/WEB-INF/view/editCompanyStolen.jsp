@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/* session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);   */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -7,7 +16,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Lawful</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -694,6 +703,32 @@
 												</div>
 											</div>
 
+
+											<div class="input-field col s12 m6" data-original-title="" title="">
+															<input type="text" name="IndivisualStolenDate" id="IndivisualStolenDate" class="form-control datepick" autocomplete="off" title="" required="" data-original-title="
+																validation.requiredMsg">
+															<label for="IndivisualStolenDate" class="center-align" data-original-title="" title="">
+																Device Stolen Date <span class="star" data-original-title="" title="">*</span>
+															</label> <span class="input-group-addon" style="color: #ff4081" data-original-title="" title=""><i class="fa fa-calendar" aria-hidden="true" data-original-title="" title=""></i></span>
+														</div>
+														
+														<div class="file-field col s12 m6" data-original-title="" title="">
+															<h6 class="form-label" style="margin:0; font-size: 0.9rem;" data-original-title="" title="">
+																Upload FIR
+															</h6>
+															<div class="btn" data-original-title="" title="">
+																<span data-original-title="" title="">
+																	Select File</span>
+																<input type="file" oninput="InvalidMsg(this,'fileType','
+																	validation.NoChosen');" oninvalid="InvalidMsg(this,'fileType','
+																No file Chosen ');" placeholder="Upload FIR" id="uploadFirSingle" data-original-title="" title="">
+															</div>
+															<div class="file-path-wrapper" data-original-title="" title="">
+																<input class="file-path validate" type="text" placeholder="
+																	input.UploadFIR" id="uploadFirSingleName" title="" data-original-title="Please upload national
+																ID image">
+															</div>
+														</div>
 											<div class="input-field col s12 m6" style="margin-top: 22px;">
 												<textarea id="deviceBulkStolenRemark" placeholder=""
 													class="materialize-textarea"></textarea>
@@ -867,13 +902,31 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
             	}
             else{
             	$('#headingType').text('');
-            	$('#headingType').text(' Update Report Stolen');
+            	$('#headingType').text('Update Report Stolen');
             	  $("#Bulkform").find("input,select,textarea,button").prop("disabled",false);
             }
           
       }    
+        $('.datepick').datepicker({
+			dateFormat: "yy-mm-dd"
+		});
+
+	
         
     </script>
 
 </body>
 </html>
+<%
+	}else{
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

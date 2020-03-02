@@ -114,30 +114,30 @@
 		<div class="modal-content">
 
 			<div class="row">
-				<div class="row" style="margin-top: 10px;">
+				<div class="row" style="margin-top:10px">
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="policyOrder" id="viewUserName"
-							placeholder="" disabled style="height: 28px;">
+							placeholder="" disabled>
 						<label for="viewUserName"><spring:message code="table.UserName" /></label>
 					</div>	
 						
-					<div class="row" style="margin-top: 20px;">	
-					<div class="input-field col s12 m6 l6" style="margin-top: 20px;">
+				
+					<div class="input-field col s12 m6 l6" >
 						<input type="text" name="period" id="viewRoleType"
-							placeholder="" disabled style="height: 28px;">
+							placeholder="" disabled >
 						<label for="viewRoleType"><spring:message code="table.roleType" /></label>
 					</div>
 
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
+					<div class="input-field col s12 m6">
 						<input type="text" id="viewFeature" name="status"
-							placeholder="" maxlength="20" disabled style="height: 28px;">
+							placeholder="" maxlength="20" disabled>
 						<label for="viewFeature"><spring:message code="table.feature" /></label>
 					</div>
-					</div>	
+			
 					
-					<div class="input-field col s12 m6" style="margin-top: 20px;">
+					<div class="input-field col s12 m6">
 						<input type="text" id="viewSubFeature" name="status"
-							placeholder="" maxlength="20" disabled style="height: 28px;">
+							placeholder="" maxlength="20" disabled >
 						<label for="viewSubFeature"><spring:message code="table.SubFeature" /></label>
 					</div>
 					
@@ -146,7 +146,7 @@
 				
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
 				</div>
 
 				</div>

@@ -24,10 +24,11 @@ function forgotPassword(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
 				$("#usernamedata").val(username);
-				$('#changePassword').openModal();
+				$('#changePassword').openModal({
+			        dismissible:false
+			    });
 			}      
 			else{
-				alert($('#langlist').val())
 				$.i18n().locale = $('#langlist').val();
 	
 			//	$("#forgotPassword #errorMsg").text(resp.response);
@@ -78,7 +79,9 @@ function udapteNewPassword(){
 				});
 				
 				
-				$("#submitBtnAction").openModal();	
+				$("#submitBtnAction").openModal({
+					dismissible:false
+				});	
 			}
 			else{
 				$.i18n().locale = $('#langlist').val();
@@ -121,11 +124,14 @@ function login(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
-				window.location.href="./importerDashboard?lang="+resp.userLanguage;
+				window.location.href="./?lang="+resp.userLanguage;
 			}
 			else if(resp.statusCode=='401'){
 				$("#userId").val(resp.userId);
-				$('#changePassword').openModal();
+				$('#changePassword').openModal({
+			        dismissible:false
+			    });
+
 			}
 			else{
 				
@@ -198,7 +204,10 @@ function changeExpiryPassword(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
 				$("#changePasswordMessage #cPassSucessMsg").text(resp.response);
-				$("#changePasswordMessage").openModal();   
+				$("#changePasswordMessage").openModal({
+			        dismissible:false
+			    });
+   
 			}
 			else{
 				$("#changePassword #errorMsg").text(resp.response);

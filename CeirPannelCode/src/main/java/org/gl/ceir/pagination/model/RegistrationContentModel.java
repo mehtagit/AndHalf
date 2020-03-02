@@ -42,6 +42,14 @@ public class RegistrationContentModel {
 	private RegistrationUser user;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	private String stateInterp;
+	private String displayName;
+	
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -272,7 +280,7 @@ public class RegistrationContentModel {
 		builder.append(", questionList=");
 		builder.append(questionList);
 		builder.append(", roles=");
-		builder.append(Arrays.toString(roles));
+		builder.append(roles);
 		builder.append(", usertypeId=");
 		builder.append(usertypeId);
 		builder.append(", password=");
@@ -285,6 +293,8 @@ public class RegistrationContentModel {
 		builder.append(additionalProperties);
 		builder.append(", stateInterp=");
 		builder.append(stateInterp);
+		builder.append(", displayName=");
+		builder.append(displayName);
 		builder.append("]");
 		return builder.toString();
 	}

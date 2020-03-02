@@ -14,29 +14,45 @@
     General Layout Style
   ------------------------------------------*/
 /* FIREFOX FIX OF UGLY SELECT BOXES */
-@supports (-moz-appearance:none) {
-
-  SELECT
-  {
-  -moz-appearance:none !important;
-  background: transparent url('../images/dropdownIcon.png') right center no-repeat !important;
-  background-position: calc(100% - 5px) center !important;
-  line-height:1;
-  
-  }
-
+/* @supports (-moz-appearance:none ) {SELECT { -moz-appearance:none!important;
+	background: transparent url('../images/dropdownIcon.png') right center
+		no-repeat !important;
+	background-position: calc(100% - 5px) center !important;
+	line-height: 1;
 }
-  
+
+select.browser-default {
+    display: block;
+    outline: 
+transparent;
+outline: 3px solid
+    #fff;
+}
+} */
+
+@supports (-moz-appearance:none ) {select.browser-default {
+    display: block;
+    outline: transparent;
+}
+}
+
+@media (-webkit-min-device-pixel-ratio: 0) {
+select {
+-webkit-appearance: none;
+background-image: $url('../images/dropdownIcon.png') !important;
+background: transparent url('../images/dropdownIcon.png') right center no-repeat !important;
+background-position: calc(100% - 5px) center !important;
+background-repeat: no-repeat;
+}
+}
+
+
 body {
 	background-color: #f9f9f9;
 }
 
 #main {
 	padding-left: 240px;
-}
-
-footer {
-	/* padding-left: 240px; */
 }
 
 footer.page-footer {
@@ -319,26 +335,56 @@ li.home:before {
 100%
 {
 -webkit-transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
       
+
 -ms-transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
       
+
 transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
     
+
 }
 }
 @
@@ -351,26 +397,56 @@ keyframes spin { 0% {
 100%
 {
 -webkit-transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
       
+
 -ms-transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
       
+
 transform
+
+
 :
+
  
+
 rotate
-(360deg);
+
+
+(360
+deg
+);
+
 
     
+
 }
 }
 .loaded #loader-wrapper {
@@ -423,12 +499,11 @@ h1.logo-wrapper {
 	margin: 0;
 }
 
-@media only screen and(max-width: 768px){
-	
-h1.logo-wrapper {
-	margin: 0;
-	font-size: 18px;
-}
+@media only screen and(max-width: 768px) {
+	h1.logo-wrapper {
+		margin: 0;
+		font-size: 18px;
+	}
 }
 
 h1 span.logo-text {
@@ -448,19 +523,17 @@ header .brand-logo {
 	padding: 8px 20px;
 }
 
-@media only screen and(max-width: 768px){
-header .brand-logo {
-    margin: 0;
-    padding: 12px 0 !important;
-    font-size: 18px !important;
-    /* margin-left: -40px; */
+@media only screen and(max-width: 768px) {
+	header .brand-logo {
+		margin: 0;
+		padding: 12px 0 !important;
+		font-size: 18px !important;
+		/* margin-left: -40px; */
+	}
+	.text-right.px-0.ml-3.my-auto a img.darken-1 {
+		margin-left: 50px !important;
+	}
 }
-
-.text-right.px-0.ml-3.my-auto a img.darken-1 {
-    margin-left: 50px !important;
-}
-}
-
 
 header .brand-logo img {
 	width: 172px;
@@ -489,18 +562,16 @@ header .brand-logo img {
 		top: 120px !important;
 	}
 } */
-
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
 	ul#chat-out.right {
-    right: 0;
-    position: absolute;
-    top: 64px;
-    height: 64px;
-}
-
-i.mdi-action-account-circle {
-    margin-top: -14px;
-}
+		right: 0;
+		position: absolute;
+		top: 64px;
+		height: 64px;
+	}
+	i.mdi-action-account-circle {
+		margin-top: -14px;
+	}
 }
 
 @media only screen and(max-width: 768px)and(min-width:480px) {
@@ -623,11 +694,47 @@ input.header-search-input:focus {
 	display: none;
 }
 
-.search-out input[type=text]:focus:not ([readonly] ) {
-	border-bottom: 1px solid #fff !important;
-	box-shadow: none;
-}
+.search-out
+ 
+input
+[
+type
+=
+text
+]
+:focus
+:not
+ 
+(
+[
+readonly
+]
+ 
+)
+{
+border-bottom
+:
+ 
+1
+px
+ 
+solid
+ 
+#fff
+ 
+!
+important
+;
 
+	
+box-shadow
+:
+ 
+none
+;
+
+
+}
 .search-out-text {
 	border-bottom: 1px solid #fff !important;
 }
@@ -761,6 +868,8 @@ ul.side-nav.leftside-navigation li.active {
 ul.side-nav.leftside-navigation li a {
 	font-size: 14px;
 	font-weight: 400;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 ul.side-nav.leftside-navigation li.user-details {
@@ -770,7 +879,7 @@ ul.side-nav.leftside-navigation li.user-details {
 	-o-background-size: cover;
 	background-size: cover;
 	margin-bottom: 15px;
-	padding: 10px 0 0 15px;
+	padding: 5.5px 0 0 15px;
 }
 
 ul.side-nav.leftside-navigation li.user-details #profile-dropdown a {
@@ -2712,11 +2821,11 @@ div#initialloader {
 	text-align: center;
 	letter-spacing: .5px;
 	transition: 0.2s ease-out;
-    cursor: pointer;
+	cursor: pointer;
 }
 
 i.fa.fa-file-excel-o {
-    margin-left: 4px;
+	margin-left: 4px;
 }
 
 @media only screen and (max-width: 425px) {
@@ -2878,12 +2987,10 @@ div#viewuplodedModel {
 	padding-right: 10px;
 }
 
-
-
-@media only screen and (max-width: 992px) and(min-width: 786px){
+@media only screen and (max-width: 992px) and(min-width: 786px) {
 	img.darken-1.my-2 {
-	margin-left:50px;
-}
+		margin-left: 50px;
+	}
 }
 
 .full-screen-modal {
@@ -2908,30 +3015,54 @@ div#viewuplodedModel {
 .button-div {
 	padding: 20px 0;
 }
- a.modal-close.waves-effect.waves-green.btn-flat {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: #80cbf7;
-    border-radius: 100px;
+
+a.modal-close.waves-effect.waves-green.btn-flat {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	background-color: #80cbf7;
+	border-radius: 100px;
 }
 
-
-.document-Type{
-    margin-right: 50px;
-    text-transform: uppercase;
-        font-size: 12px;
-	}
-	
-	
-	.upload-file-label{
-       color: #000;
-    margin-top: 0;
-    font-size: 0.9rem;
+.document-Type {
+	margin-right: 50px;
+	text-transform: uppercase;
+	font-size: 12px;
 }
+
+.upload-file-label {
+	color: #000;
+	margin-top: 0;
+	font-size: 0.9rem;
+}
+
 .endUser_remove_field.btn.right.btn-info {
-cursor: pointer;
-background-color: red;
-margin-right: 1.1%;
-margin-bottom: 5px;
+	cursor: pointer;
+	background-color: red;
+	margin-right: 1.1%;
+	margin-bottom: 5px;
+}
+
+thead {
+	background: #529dba !important;
+	color: white;
+}
+
+.grievance-reply-msg {
+	max-width: 85%;
+	max-height: 50px;
+	overflow-y: auto;
+	min-height: 1.2rem;
+}
+
+.onEditModalTitle {
+	color: red;
+	font-size: 12px;
+	position: absolute;
+	margin: 0;
+	top: 37px;
+	right: 10px;
+}
+td.dateDiv {
+white-space: nowrap;
 }

@@ -103,7 +103,7 @@ public class RegistrationReqDatatableController {
 				   String id =  String.valueOf(dataInsideList.getId());
 				   String type = dataInsideList.getAsTypeName();
 				   String roles =  (String) dataInsideList.getUser().getUsertype().getUsertypeName();
-				   String StatusName =  UserStatus.getUserStatusByCode(dataInsideList.getUser().getCurrentStatus()).getDescription();
+				   String StatusName = dataInsideList.getUser().getStateInterp();
 				   String status =  String.valueOf(dataInsideList.getUser().getCurrentStatus());
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);

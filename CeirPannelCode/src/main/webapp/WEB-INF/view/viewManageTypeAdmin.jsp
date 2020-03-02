@@ -18,7 +18,7 @@
 <html class="no-js" lang="en" dir="ltr">
 <head> 
 <title>Consignment</title>
-<meta http-equiv='cache-control' content='no-cache'>
+<metas http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
 <meta name="fragment" content="!">
@@ -82,7 +82,7 @@
 var path="${context}";
 </script>
 </head>
-<body data-id="11" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="21" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
@@ -310,32 +310,28 @@ var path="${context}";
 													<div class="col s12 m6 l6">
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
-															class="browser-default" id="docTypetag1">
+															class="browser-default" id="docTypetag1" onchange="enableSelectFile()"> 
+															<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+															</select> 
 															
-															<option value="" disabled selected>Select Document Type
-															</option>
-															<%-- <option value="" disabled selected><spring:message
-																	code="select.documenttype" /></option> --%>
-
-														</select> <select class="browser-default" id="docTypetagValue1"
+															<select class="browser-default" id="docTypetagValue1"
 															style="display: none;">
-															<option value="" disabled selected><spring:message
-																	code="select.documenttype" /></option>
+														<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 														</select>
 													</div>
 
 													<div class="file-field col s12 m6">
-														<h6 class="file-upload-heading">
+														<h6 id="supportingdocumentFile" class="file-upload-heading">
 															<spring:message code="input.supportingdocument" />
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1">
+															<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableAddMore()">
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
-																placeholder="Upload one or more files">
+																placeholder="<spring:message code="grievanceFileMessage" />">
 															<div>
 																<p id="myFiles"></p>
 															</div>
@@ -351,7 +347,7 @@ var path="${context}";
 										<div class="col s12 m12 right">
 										<span style="margin-left: 5px;"><spring:message code="input.requiredfields" /><span
                                                 class="star">*</span></span>
-											<button class="btn right add_field_button">
+											<button class="btn right add_field_button" disabled="disabled">
 												<span style="font-size: 20px;">+</span>
 												<spring:message code="input.addmorefile" />
 											</button>
@@ -486,25 +482,26 @@ var path="${context}";
 
 			
 			
-
+		<form action="" onsubmit="return confirmantiondelete()">
 		<div class="row">
 				<h6><spring:message code="modal.message.tac.widthdraw" /><span id="tacdeleteTxnId"></span></h6>
 			</div> 
 			<div class="row">
 				<div class="input-field col s12 m12">
-					<textarea id="deleteTacRemark" class="materialize-textarea"></textarea>
-					<label for="textarea1" class=""><spring:message code="input.remarks" /></label>
+					<textarea id="deleteTacRemark" required="required" class="materialize-textarea"></textarea>
+					<label for="textarea1" class=""><spring:message code="input.remarks" /> <span
+                                                class="star">*</span> </label>
 				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<input type="text" id="deleteTacId" hidden>
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a onclick="confirmantiondelete()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+					<button type="submit" class="btn" type="submit"><spring:message code="modal.yes" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	
@@ -527,7 +524,22 @@ var path="${context}";
 	</div>
 	
 	
-	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!--materialize js-->
 	<script type="text/javascript"
@@ -597,6 +609,10 @@ var path="${context}";
 		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript" src="${context}/resources/project_js/viewManageTypeAdmin.js"></script>	
+<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 
 </body>
 </html>

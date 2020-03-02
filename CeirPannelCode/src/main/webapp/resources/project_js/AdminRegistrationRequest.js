@@ -178,11 +178,18 @@
 			}
 
 		}); 
+	
+		setAllDropdown();
+	};
+
+	
+	function setAllDropdown(){
+		
 		
 		$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].state).text(data[i].interp)
-				.appendTo('#recentStatus');
+				.appendTo('#recentStatus,#userStatus');
 			}
 		});
 		
@@ -202,9 +209,7 @@
 			}
 			});
 		
-	};
-
-
+	}
 
 
 	function myFunction(message) {
@@ -292,7 +297,8 @@
 				"userId": parseInt(userid),
 				"status" : "Approved",
 				"remark": $("#Reason").val(),	
-				"featureId" : parseInt(featureId)
+				"featureId" : parseInt(featureId),
+				"statusValue" : 3
 		}
 		
 		$.ajax({
@@ -332,7 +338,8 @@
 				"userId": parseInt(userid),
 				"status" : "Rejected",
 				"remark": $("#Reason").val(),
-				"featureId" : parseInt(featureId)
+				"featureId" : parseInt(featureId),
+				"statusValue" : 4
 		}
 		
 		$.ajax({
@@ -364,14 +371,15 @@
 		var asType =  $('#asType').val();
 		var userRoleTypeId =  $("#role").val();
 		var status =  $('#recentStatus').val();
+		var featureId = 8;
 		
 		var table = $('#registrationLibraryTable').DataTable();
 		var info = table.page.info(); 
 		var pageNo=info.page;
 		var pageSize =info.length;
 		console.log("--------"+pageSize+"---------"+pageNo);
-		console.log("RegistrationS----------------------tartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status)
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
+		console.log("RegistrationStartDate  ="+startdate+"  RegistrationEndDate=="+endDate+"  asType="+asType+" userRoleTypeId ="+userRoleTypeId+"status  "+status+" featureId---->" +featureId)
+		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&pageSize="+pageSize+"&pageNo="+pageNo;
 	}
 
 
@@ -390,3 +398,37 @@
 			window.open(FinalLink);
 		}
 	}
+	
+	
+ function userChangeStatus(userId){
+	 window.userId = userId
+	 $("#statusChangemodal").openModal();
+	 
+	 
+ }
+	
+ function chanegeUserStatus(){
+		var status= $("#userStatus").val();
+		
+		var Request={
+				"status" : parseInt(status),
+				"userId": parseInt(window.userId)
+		}
+		
+		$.ajax({
+			url : './adminChangeRequest',
+			data : JSON.stringify(Request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				console.log("Request----->"+JSON.stringify(Request));
+				$("#confirmUserStatus").openModal();
+			},
+			error : function() {
+				alert("Failed");
+			}
+		});
+	 return false
+ }	
+	

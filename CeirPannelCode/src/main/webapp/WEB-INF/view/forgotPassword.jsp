@@ -290,11 +290,24 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
     
 
 
-    <!-- ================================================
+	<!-- ================================================
     Scripts
     ================================================ -->
-<!-- i18n library -->
-    <script type="text/javascript" src="${context}/resources/ajax/Registration.js"></script>
+	<!-- jQuery Library -->
+	<%-- <script type="text/javascript"
+		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script> --%>
+
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+		
+		
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js"></script>
+		<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
@@ -325,31 +338,33 @@ oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:messa
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 		
-	
-  <!-- jQuery Library -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
-       <!-- ajax js -->
-
-    <!--materialize js-->
-    <script type="text/javascript" src="${context}/resources/js/materialize.js"></script>
-    <!--prism
+	<script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>
+	<script type="text/javascript" src="${context}/resources/ajax/Password.js"></script>
+	<!--materialize js-->
+	<script type="text/javascript"
+		src="${context}/resources/js/materialize.js"></script>
+	<!--prism
     <script type="text/javascript" src="js/prism/prism.js"></script>-->
-    <!--scrollbar-->
-    <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <!-- chartist -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+	<!--scrollbar-->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<!-- chartist -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
+	<!-- data-tables -->
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
 
-    <!-- data-tables -->
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
-
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-    <!--custom-script.js - Add your own theme custom JS-->
-    <script type="text/javascript" src="${context}/resources/js/custom-script.js"></script>
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<!--custom-script.js - Add your own theme custom JS-->
+	<script type="text/javascript"
+		src="${context}/resources/js/custom-script.js"></script>
+    
+    
+    
 	<script type="text/javascript" src="${context}/resources/project_js/forgotPassword.js"></script>
     
     <script type="text/javascript" src="${context}/resources/ajax/Login.js"></script>

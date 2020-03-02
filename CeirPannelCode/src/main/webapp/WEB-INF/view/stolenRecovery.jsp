@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);  */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -84,7 +93,7 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/stakeholder/record" method="post">
+							<form action="${context}/stakeholder/record" method="post" id="stolenRecoveryFormDiv">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
@@ -1038,10 +1047,10 @@
                                                                 <input type="text" id="viewsingleblockCategory" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockCategory"><spring:message code="operator.category" /></label>
                                                               </div> 
-                                                              <div class="input-field col s12 m6">
+                                                             <%--  <div class="input-field col s12 m6">
             													<input type="text" id="viewsingleblockingType" name="" placeholder="" disabled="disabled">
                                                                 <label for="viewsingleblockingType"><spring:message code="operator.blocking" /></label>		
-                                                              </div>
+                                                              </div> --%>
                                                             
                                                         </div>
                                                         <div class="row">
@@ -1158,7 +1167,7 @@ required="required"></textarea>
 </div>
 </div>
 <div class="row">
-<div class="col s12 m6">
+<%-- <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
 type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" id=""
 value="Immediate"
@@ -1184,7 +1193,7 @@ name="stolenBlockPeriod">
 class="input-group-addon" style="color: #ff4081"><i class="fa fa-calendar"
 aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
-</div>
+</div> --%>
 
 <!-- 
 <div class="input-field col s6 m6 responsiveDiv" style="display: block;" id="calender">
@@ -1305,7 +1314,7 @@ title="Please enter numbers upto 9 characters only" maxlength="9" value="" place
 <p style="color: #000; margin: 5px 0;"><spring:message code="input.UploadBulk" /> <span class="star">*</span></p>
 <div class="btn">
 <span><spring:message code="operator.file" /></span>
-<input type="file" id="editselectBulkBlockuploadFile">
+<input type="file" id="editselectBulkBlockuploadFile" onchange="fileTypeValueChanges(2)">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" required="required" type="text" id="editBulkBlockuploadFile" placeholder="">
@@ -1441,6 +1450,22 @@ type="submit" ><spring:message code="button.update" /></button>
         </div>
     </div>
 
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -1514,5 +1539,22 @@ type="submit" ><spring:message code="button.update" /></button>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js"></script>			
 
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

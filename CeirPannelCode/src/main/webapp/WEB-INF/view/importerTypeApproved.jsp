@@ -156,7 +156,7 @@
 													<div class="col s12 m6 l6">
 														<label for="Category"><spring:message
 																code="input.documenttype" /></label> <select
-															class="browser-default" id="docTypetag1">
+															class="browser-default" id="docTypetag1" onchange="enableSelectFile()">
 															<option value="" disabled selected><spring:message
 																	code="select.documenttype" />
 															</option>
@@ -170,16 +170,16 @@
 													</div>
 
 													<div class="file-field col s12 m6">
-														<h6 class="file-upload-heading">
+														<h6 id="supportingdocumentFile" class="file-upload-heading">
 															<spring:message code="input.supportingdocument" />
 														</h6>
 														<div class="btn">
 															<span><spring:message code="input.selectfile" /></span>
-															<input type="file" name="files[]" id="docTypeFile1">
+															<input type="file" name="files[]" id="docTypeFile1" disabled="disabled" onchange="enableAddMore()">
 														</div>
 														<div class="file-path-wrapper">
 															<input class="file-path validate" type="text"
-																placeholder="Upload one or more files">
+																placeholder="<spring:message code="grievanceFileMessage" />">
 															<div>
 																<p id="myFiles"></p>
 															</div>
@@ -192,7 +192,7 @@
 
 										</div>
 										<div class="col s12 m6 right">
-											<button class="btn right add_field_button">
+											<button class="btn right add_field_button" disabled="disabled">
 												<span style="font-size: 20px;">+</span>
 												<spring:message code="input.addmorefile" />
 											</button>
@@ -239,6 +239,22 @@
 		</div>
 	</div>
 	
+	<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
  <!--  <div id="RegisterManageTypeDevice" class="modal">
      <h6 class="modal-header" style="margin:0px;">Update</h6>

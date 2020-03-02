@@ -86,6 +86,7 @@
 					"bFilter" : true,
 					"bInfo" : true,
 					"bSearchable" : true,
+					 "pageLength": 20,
 					ajax: {
 						url : './NotificationData',
 						type: 'POST',
@@ -107,7 +108,7 @@
 
 
 	
-	function isActive(feature){
+	function isActive(feature){	
 		window.parent.$('.navData li:nth-child(1)').removeClass("active");
 	    window.parent.$('.navData li a').each(function(){
 	      if($(this).attr('data-featureid') == feature){    	 

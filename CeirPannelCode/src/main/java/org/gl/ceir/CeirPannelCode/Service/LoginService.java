@@ -77,6 +77,7 @@ public class LoginService {
 				session.setAttribute("usertype", response.getPrimaryRole());
 				session.setAttribute("name", response.getName());   
 				session.setAttribute("userStatus", response.getStatus());
+				session.setAttribute("userStatusValue", response.getStatusValue());
 				session.setAttribute("usertypeId", response.getPrimaryRoleId());
 				session.setAttribute("operatorTypeId", response.getOperatorTypeId());
 				session.setAttribute("operatorTypeName", response.getOperatorTypeName());
@@ -131,6 +132,9 @@ public class LoginService {
 	public ModelAndView logout(HttpSession session){
 		log.info("inside logout controller");
 		Integer userid=(Integer)session.getAttribute("userid");
+		if(userid!=null) {
+			userLoginFeignImpl.sessionTracking(userid);
+		}
 		sessionRemoveCode( userid, session);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg","you have been logged out successfully");

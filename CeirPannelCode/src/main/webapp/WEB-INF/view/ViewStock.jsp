@@ -15,7 +15,9 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+
+
+<title>Stock</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -158,26 +160,26 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 			
 			<form action="" onsubmit="return editUploadStock()" method="POST" enctype="multipart/form-data"  style="margin-top: 10px;">
 				<div class="row myRow">
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" id="editSupplierIdDiv">
 						<input type="text" name="SupplierId" id="editSupplierId"
 
 							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only" maxlength="15" /> <label
-							for="editSupplierId" class="center-align"><spring:message code="input.supplierID" /></label>
+							for="editSupplierId" id="editSupplierIdLabel" class="center-align"><spring:message code="input.supplierID" /></label>
 					</div>
 
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" id="editSupplierNameDiv">
 						<input type="text" name="SupplierName" id="editSupplierName" required="required"
 							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="editSupplierName"
-							class="center-align"><spring:message code="input.supllierName" /><span class="star">*</span></label></label>
+							id="editSupplierNameLabel" class="center-align"><spring:message code="input.supllierName" /> <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
 							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
-							for="Quantity" class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label></label>
+							for="Quantity" class="center-align"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 					</div>
 
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
 							placeholder="" pattern="[A-Za-z0-9]{0,15}" title="Please enter alphabets and numbers upto 15 characters only"  maxlength="15"/> <label
 							for="InvoiceNumber" class="center-align"><spring:message code="input.invoiceNumber" /></label>
@@ -190,7 +192,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 					</div>
 					
 					<div class="file-field col s12 m6">
-					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /><span class="star">*</span></p>
+					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /> <span class="star">*</span></p>
 						<div class="btn">
 							<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges()"
 								id="editcsvUploadFile" accept=".csv">
@@ -239,15 +241,15 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 			<form action="" style="margin-top: 10px;">
 
 				<div class="row myRow">
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" id="supplierIdDiv">
 						<input type="text" name="SupplierId" id="SupplierId"
-							placeholder="" disabled /> <label for="SupplierId"
+							placeholder="" disabled /> <label for="SupplierId" id="SupplierIdLabel"
 							class="center-align"><spring:message code="input.supplierID" /></label>
 					</div>
 
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" id="supplierNameDiv">
 						<input type="text" name="SupplierName" id="SupplierName"
-							placeholder="" disabled /> <label for="SupplierName"
+							placeholder="" disabled /> <label for="SupplierName" id="SupplierNameLabel"
 							class="center-align"><spring:message code="input.supllierName" /></label>
 					</div>
 
@@ -256,7 +258,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 							disabled /> <label for="Quantity" class="center-align"><spring:message code="input.quantity" /></label>
 					</div>
 
-					<div class="input-field col s12 m6">
+					<div class="input-field col s12 m6" id="invoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="InvoiceNumber"
 							placeholder="" disabled /> <label for="InvoiceNumber"
 							class="center-align"><spring:message code="input.invoiceNumber" /></label>
@@ -274,6 +276,15 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 								placeholder="" id="csvUploadFileName" type="text"
 								disabled>
 					</div>
+					<div class="input-field col s12 m6">
+					<textarea id="withdrawnRemark" class="materialize-textarea"
+						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
+					<label for="remark" class=""><spring:message
+							code="input.remarks" /></label>
+
+					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Remark</label> -->
+				</div>
 				</div>
 
 				<div class="row center" style="margin-top: 20px;">
@@ -295,25 +306,26 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		<div class="modal-content">
 
 			
-			
+			<form action="" onsubmit="return confirmantiondelete()" method="POST">
 
 			<div class="row">
 				<h6><spring:message code="modal.message.stock.widthdraw" /><span id="stockdeleteTxnId"></span></h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 m12">
-					<textarea id="deleteStockremark" class="materialize-textarea"></textarea>
-					<label for="textarea1" class=""><spring:message code="input.remarks" /></label>
+					<textarea id="deleteStockremark" required="required" maxlength="200" class="materialize-textarea"></textarea>
+					<label for="textarea1" class=""><spring:message code="input.remarks" /> <span class="star">*</span></label>
 				</div>
 			</div>
 			<input type="text" id="popupTransactionId" maxlength="15" hidden />
 			<div class="row">
 				<div class="input-field col s12 center">
-					<a onclick="confirmantiondelete()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+					<button  
+						class=" btn" type="submit"><spring:message code="modal.yes" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 
@@ -497,36 +509,38 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
-		<!-- i18n library -->
+
+	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+
 
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
 	

@@ -67,7 +67,12 @@ String name = (String) session.getAttribute("name");
 }
 
 </style>
-<body data-lang="${language}" data-usertype="${usertype}">
+<body data-lang="${language}" data-usertype="${usertype}"
+data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
+	data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentStatus="${consignmentStatus}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 	<div id="initialloader"></div>
@@ -113,25 +118,25 @@ String name = (String) session.getAttribute("name");
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a  href="./Consignment/ManualFileDownload/"
+						<li><a  id="manualDownload" download="download"
 							 style="color: white; cursor: pointer;"><i class="fa fa-download download-icon" aria-hidden="true" 
-							 title="Download Manual" download="download" style="color: #fff;"></i></a></li>
+							 title="Download Manual"  style="color: #fff; line-height: 3;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
 								<div id="iconLable" class="darken-1">
-									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+									<i class="fa fa-globe fa-6" aria-hidden="true" style="line-height:4"></i>
 								</div>
 								<div style="width: 80px !important;">
 									<select class="darken-1" id="langlist"
-										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
-										<option value="en">English</option>
-										<option value="km"><spring:message code="lang.khmer" /></option>
+										style="border-bottom: none; height: 42px; background: #00bcd4; line-height:1; border: 1px solid #00bcd4 !important;">
+										<option value="en" style="color:#444;">English</option>
+										<option value="km" style="color:#444;"><spring:message code="lang.khmer" /></option>
 									</select>
 								</div>
 							</div>
 						</li>
-						<li><a   data-target="goToLogout" class="modal-trigger"
+						<li><a   data-target="goToHome" class="modal-trigger"
 							 style="color: white; cursor: pointer;"><spring:message
 									code="registration.home" /></a></li>
 						<li class="profileInfo"><a
@@ -198,7 +203,7 @@ String name = (String) session.getAttribute("name");
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
-								<li class="bold"><a href="${feature.link}"
+								<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
 									target="mainArea" class="waves-effect waves-cyan"
 									data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 										<spring:message
@@ -292,10 +297,12 @@ String name = (String) session.getAttribute("name");
 					</p>
 				</div>
 				<%
-					String status = (String) session.getAttribute("userStatus");
+					//String status = (String) session.getAttribute("userStatus");
+				Integer statusValue=(Integer)session.getAttribute("userStatusValue");
 				%>
 				<%
-					if (status.equalsIgnoreCase("Approved")) {
+					if (statusValue==3) {
+	
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
@@ -309,7 +316,7 @@ String name = (String) session.getAttribute("name");
 					</p>
 				</div>
 				<%
-					} else if (status.equalsIgnoreCase("Disable")) {
+					} else if (statusValue==5) {
 				%>
 				<div class="row" style="height: 30px;">
 					<p>
@@ -523,7 +530,7 @@ String name = (String) session.getAttribute("name");
 			</div>
 			<div class="row">
 				<div class="center">
-					<a href="" class="btn"><spring:message code="modal.ok" /></a>
+					<a href="javaScript:void(0)"  class="btn modal-close"><spring:message code="modal.ok" /></a>
 				</div>
 			</div>
 		</div>
@@ -578,10 +585,28 @@ data-dismiss="modal">&times;</button> -->
 	</div>
 
 	<!-- Modal End -->
+	
 	<!-- Modal End -->
 	<!-- Modal End -->
 
-
+	<!-- File Related Modal  -->
+<div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class="modal-close waves-effect waves-light btn" onclick="document.getElementById('mainArea').contentWindow.clearFileName();"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End -->
 	<!-- ================================================
     Scripts
     ================================================ -->
@@ -610,38 +635,40 @@ data-dismiss="modal">&times;</button> -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.js"></script>
+		src="${context}/resources/i18n_library/i18n.js"></script>
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.messagestore.js"></script>
+		src="${context}/resources/i18n_library/messagestore.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.fallbacks.js"></script>
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.language.js"></script>
+		src="${context}/resources/i18n_library/language.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.js"></script>
+		src="${context}/resources/i18n_library/parser.js"></script>
 
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitter.bidi.js"></script>
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+		src="${context}/resources/i18n_library/bidi.js"></script>
 
 	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
 
 	<!------------------------------------------- Dragable Model---------------------------------->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
+	
 		
 	<!-- ajax js -->
 	

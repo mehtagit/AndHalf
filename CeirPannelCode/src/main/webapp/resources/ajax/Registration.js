@@ -19,7 +19,7 @@ $('#langlist').on('change', function() {
 	
 	
         $(document).ready(function () {
-        	var url = new URL( window.location.href);
+        	var url = new URL(window.location.href);
     		var langParameter = url.searchParams.get("lang");
             	$('#langlist').val(langParameter == 'km' ? 'km' : 'en');
         	$('.modal-trigger').leanModal({
@@ -143,7 +143,10 @@ function verifyOtp(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#otpVerification").closeModal();
-					$('#otpMessage').openModal();   
+					$('#otpMessage').openModal({
+				        dismissible:false
+				    });
+   
 					$("#otpResponse").text($.i18n(resp.tag));
 				});
 				
@@ -261,6 +264,8 @@ function usertypeData2(id){
 					usertypeDropdown.append(data2);
 				
 			}    
+			usertypeDropdown.val(id);
+			$('#usertypes option[value="'+id+'"]').attr('disabled', true);
 			setTimeout(function(){ 
 				$('.dropdown-trigger').dropdown();
 				$('select').formSelect();
@@ -383,7 +388,7 @@ function saveRegistration(){
 					country:val.find('#country').val(),
 					vatStatus:val.find("input[name='vatStatus']:checked").val(),
 					vatNo:val.find('#vatNo').val(),
-					roles:val.find('#usertypes').val(),  
+					roles:val.find('#usertypes:selected').val(),  
 					password:val.find('#password').val(),  
 					rePassword:val.find('#confirm_password').val(),
 					captcha:val.find('#captcha').val(),
@@ -570,7 +575,11 @@ function registrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal();
+					$('#content').addClass('lean-overlay');
+					$("#otpMsgModal").openModal({
+				        dismissible:false
+				    });
+
 				});
 			}
 			else{
@@ -609,7 +618,10 @@ function otherRegistrationAjax(obj){
 				}).done( function() {
 					$("#otpMsg").text($.i18n(respData.tag));
 					$("#userid").val(respData.userId);
-					$("#otpMsgModal").openModal();
+					$("#otpMsgModal").openModal({
+				        dismissible:false
+				    });
+
 				});
 				
 				
@@ -701,4 +713,18 @@ function getByPort(port){
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
 	});
+}
+
+function checkBoxClick(){
+$('#disclamer').click(function () {
+    //check if checkbox is checked
+    if ($(this).is(':checked')) {
+      
+        $('#btnSave').removeAttr('disabled'); //enable input
+        
+    }
+    else {
+        $('#btnSave').attr('disabled', true); //disable input
+    }
+});
 }

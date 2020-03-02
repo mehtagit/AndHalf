@@ -87,7 +87,7 @@ var path="${context}";
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
+<body data-id="6" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
  data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
@@ -165,11 +165,20 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
  <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
+
+<div class="col s12 m6 l6" style="margin-top: 8px;">
+<label for="Category"><spring:message code="input.documenttype" /></label>
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
+<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
+
+</select>
+
+</div>
 <div class="file-field col s12 m6">
-<h6 style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
+<h6 id="supportingdocumentFile" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1"  multiple>
+<input type="file" name="files[]" id="docTypeFile1" onchange="enableAddMore()" disabled="disabled">
 </div>
 <div class="file-path-wrapper">
 <input class="file-path validate" type="text" 
@@ -178,14 +187,6 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 <p id="myFiles"></p>
 </div>
 </div>
-</div>
-<div class="col s12 m6 l6" style="margin-top: 8px;">
-<label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableAddMore()" >
-<option value="" disabled selected><spring:message code="select.documenttype" /> </option>
-
-</select>
-
 </div>
 </div>
 
@@ -198,18 +199,12 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></button>
 </div>
               <div class="col s12 m12">
-              <p id="closeTicketCheckbox" display: none;">
-                        <label>
-                            <input type="checkbox" id="closeTicketCheck" />
-                            <span><spring:message code="modal.message.griev.closeticket" /></span>
-                        </label>
-                    </p> 
+              	<p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
+	              <p id="closeTicketCheckbox" style="display: none;">
+	               <label><span><spring:message code="modal.message.griev.closeticket" /></span><input type="checkbox" id="closeTicketCheck" /></label>
+	               </p>
 				<!-- <a href="./Consignment/sampleFileDownload/filetype=sample">Download Sample Format</a><br> -->
-			
-
-			<p> <spring:message code="input.requiredfields" /> <span class="star">*</span></p>
-			
-                </div>
+				</div>
                 <div class="col s12 m12 center">
                  <p id="closeTicketCheckbox" style="float: left; display: none;">
                         <label>

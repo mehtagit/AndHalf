@@ -170,7 +170,7 @@ section {
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
 					<div id="submitbtn">
-						<div class="input-field col s12 m2">
+						<div class="input-field col s12 m1">
 							<label for="Search" class="center-align ml-10"><spring:message code="input.field" /></label>
 						</div>
 						<div class="input-field col s7 m4">

@@ -107,13 +107,13 @@ function pageRendering(){
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#configTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
+					
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='null'>"+dropdown[i].title+
+							"<option value='null' disabled>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -160,7 +160,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewPolicyConfigModel").openModal();
+	$("#viewPolicyConfigModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -191,7 +193,9 @@ function setViewPopupData(data){
 }
 
 function updateDetails(tag){
-	$("#editPolicyConfigModel").openModal();
+	$("#editPolicyConfigModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -256,5 +260,7 @@ function updatePolicy(){
 
 function confirmModel(){
 	$("#editPolicyConfigModel").closeModal();
-	setTimeout(function(){$('#confirmedUpdatedPolicy').openModal();},200);
+	setTimeout(function(){$('#confirmedUpdatedPolicy').openModal({
+        dismissible:false
+    });},200);
 }

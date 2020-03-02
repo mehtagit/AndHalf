@@ -198,12 +198,12 @@ to {
 }
 
 .selectDropdwn {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 </style>
 
 </head>
-<body data-id="4" data-roleType="${usertype}" data-userID="${userid}"
+<body data-id="4" data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}"
 	data-selected-roleType="${selectedUserTypeId}">
 
 
@@ -215,82 +215,91 @@ to {
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader">
-								<p class="PageHeading">
+								<p class="PageHeading" id="uploaDStockHeader">
 									<spring:message code="button.uploadStock" />
 								</p>
 							</div>
 							<form action="" onsubmit="return uploadStock()" method="POST"
 								enctype="multipart/form-data" id="uploadStock">
 
-								<div class="row myRow" id="supplierNameOrIdDiv" style="display: none;">
+								<div class="row myRow" id="supplierNameOrIdDiv"
+									style="display: none;">
 									<div class="input-field col s12 m6">
-										<input type="text" name="supplierId" 
+										<input type="text" name="supplierId"
 											pattern="[A-Za-z0-9]{0,15}"
-											title="<spring:message code="validation.15character" />"
-											maxlength="15" id="supplierId"
-											maxlength="15" /> <label for="supplierId" id="SupplierIdAssignie"
-											class="center-align"><spring:message
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												maxlength="15" id="supplierId" maxlength="15" /> <label
+											for="supplierId" id="SupplierIdAssignie" class="center-align"><spring:message
 												code="input.supplierID" /> </label>
 									</div>
 
 									<div class="input-field col s12 m6">
 										<input type="text" name="supplierName" id="supplierName"
-											pattern="[A-Za-z ]{0,50}"
-											title="<spring:message code="validation.50character" />"
-											maxlength="50" required /> <label for="supplierName" id="SupplierIdAssignieName"
-											class="center-align"><spring:message
+											pattern="[A-Za-z ]{0,50}" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											maxlength="50" required /> <label for="supplierName"
+											id="SupplierIdAssignieName" class="center-align"><spring:message
 												code="input.supllierName" /> <span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
-                                                <a onclick="openModalForAssigneId()" id="assigneDetailslink" class="supplierInformation" style="display: none;">
-                                                 <spring:message code="AssigneSearchLink" /></a>
-                                            </div>
+									<a onclick="openModalForAssigneId()" id="assigneDetailslink"
+										class="supplierInformation" style="display: none;"> <spring:message
+											code="AssigneSearchLink" /></a>
+								</div>
 								<div class="row myRow">
 									<div class="input-field col s12 m6">
 										<input type="text" name="quantity" id="Quantity"
-											pattern="[0-9]{0,7}"
-											title="<spring:message code="validation.7character" />"
-											maxlength="7" required />
-										<label for="Quantity" class="center-align"><spring:message
+											pattern="[0-9]{0,7}" oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
+											maxlength="7" required /> <label for="Quantity"
+											class="center-align"><spring:message
 												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
 
-									<div class="input-field col s12 m6" id="invoiceNumberDiv" style="display: none">
-										<input type="text" name="invoiceNumber" id="invoiceNumber" 
+									<div class="input-field col s12 m6" id="invoiceNumberDiv"
+										style="display: none">
+										<input type="text" name="invoiceNumber" id="invoiceNumber"
 											pattern="[A-Za-z0-9]{0,15}"
-											title="<spring:message code="validation.15numbers" />"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
 											maxlength="15" /> <label for="InvoiceNumber"
 											class="center-align"><spring:message
 												code="input.invoiceNumber" /></label>
 									</div>
-									
-									<div class="file-field col s12 m6">
-									<h6 class="file-upload-heading">
+								</div>
+
+
+
+								<div class="row myRow">
+									<h6 style="color: #000; margin-left: 10px;">
 										<spring:message code="input.uploadBulkStock" />
 										<span class="star">*</span>
 									</h6>
+									<div class="file-field input-field col s12 m6"
+										style="margin-top: 5px;">
 										<div class="btn">
-											<span><spring:message code="input.selectfile" /></span> <input onchange="fileTypeValueChanges()"
-												type="file" id="file" required="required" size=50
-												maxlength=50 accept=".csv">
+											<span><spring:message code="input.selectfile" /></span> <input
+												onchange="fileTypeValueChanges()" type="file" id="file"
+												oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+												oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');"
+												required size=50 maxlength=50 accept=".csv">
 										</div>
 										<div class="file-path-wrapper">
-											<input class="file-path validate responsive-file-div" id="fileName"
-												type="text">
+											<input class="file-path validate responsive-file-div"
+												id="fileName" type="text">
 										</div>
 									</div>
-									<div class="col s12 m12">
-										<p>
+									<br> <br>
+									<p style="margin-left: 10px;">
 										<a href="./Consignment/sampleFileDownload/4"><spring:message
 												code="input.downlaod.sample" /></a>
 									</p>
-									<p><spring:message code="input.requiredfields" /> <span
-									class="star">*</span></p>
-									</div>
 								</div>
 
-								
+								<span><spring:message code="input.requiredfields" /></span> <span
+									class="star">*</span>
 
 								<div class="row" style="padding-bottom: 100px;">
 									<div class="input-field col s12 center">
@@ -312,7 +321,7 @@ to {
 
 			</div>
 		</div>
-	
+
 		<!--end container-->
 	</section>
 
@@ -331,7 +340,7 @@ to {
 					<div class="input-field col s12 center">
 						<a onclick="redirectToViewPage()" class="btn"><spring:message
 								code="modal.yes" /></a>
-						<button class="modal-close waves-effect waves-light btn"
+						<button class="modal-close btn"
 							style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -360,79 +369,102 @@ to {
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="fileFormateModal" class="modal">
-		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<h6 class="modal-header">
+			<spring:message code="fileValidationModalHeader" />
+		</h6>
 		<div class="modal-content">
 			<div class="row">
-				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+				<h6 id="fileErrormessage">
+					<spring:message code="fileValidationName" />
+					<br> <br>
+					<spring:message code="fileValidationFormate" />
+					<br>
+					<br>
+					<spring:message code="fileValidationSize" />
+				</h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
-							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+						<button class="modal-close waves-effect waves-light btn"
+							onclick="clearFileName()" style="margin-left: 10px;">
+							<spring:message code="modal.ok" />
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
+
+
 	<div id="searchSupplierInformation" class="modal">
-        <!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
-         <a  class="modal-close btn-flat right">&times;</a>
-         <h6 class="modal-header"><spring:message code="searchAssigneMessage" /></h6>
-       <div class="modal-content">
+		<!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
+		<a class="btn-flat right" onclick="closeAssigneTable()">&times;</a>
+		<h6 class="modal-header">
+			<spring:message code="searchAssigneMessage" />
+		</h6>
+		<div class="modal-content">
 
-	<form action="" <%-- onsubmit="return serchAssigneDetaiils()" --%>
-									method="POST" enctype="multipart/form-data"
-									id="registerConsignment">
-            <div class="row">
-                
-                    <h5 class="center">
-                        <label>
-                            <input name="group1" type="radio"
-                               value="1" onclick="document.getElementById('submitbtn').style.display ='block';" />
-                            <span class="checkboxFont"> <spring:message code="AssigneeName" /></span>
-                             <input name="group1" type="radio"
-                               value="2" onclick="document.getElementById('submitbtn').style.display ='block';" />
-                            <span class="checkboxFont"> <spring:message code="AssigneContactNumber" /></span>
-                             <input name="group1" type="radio"
-                                value="3" onclick="document.getElementById('submitbtn').style.display ='block';    " />
-                            <span class="checkboxFont"><spring:message code="AssigneEmailID" /> </span>
-                        </label>
-                      </h5>
-                
-            </div>
+			<form action=""
+				<%-- onsubmit="return serchAssigneDetaiils()" --%>
+									method="POST"
+				enctype="multipart/form-data" id="registerConsignment">
+				<div class="row">
 
-            <div class="row" id="submitbtn" style="display: none;" >
-                    <div class="input-field col s12 m2">
-                        <label for="Search" class="center-align ml-10"> <spring:message code="AssigneSearch" /></label>
-                    </div>
-                    <div class="input-field col s12 m5">
-                        <input type="text" id="assigneDetails" name="assigneDetails" placeholder="<spring:message code="AssigneSearch" />" />
-                    </div>
-                    <div class="input-field col s12 m2">
-                  	 <a onclick="viewAssigneeHistory()" class="btn"><spring:message code="button.submit" /></a>
-                    </div>
-            </div>
-           </form>
-<!-- 
+					<h5 class="center">
+						<label> <input name="group1" type="radio" value="1"
+							onclick="document.getElementById('submitbtn').style.display ='block';" />
+							<span class="checkboxFont"> <spring:message
+									code="AssigneeName" /></span></label>
+							<label>
+							 <input name="group1" type="radio"
+							value="2"
+							onclick="document.getElementById('submitbtn').style.display ='block';" />
+							<span class="checkboxFont"> <spring:message
+									code="AssigneContactNumber" /></span> </label>
+									
+								<label>	<input name="group1"
+							type="radio" value="3"
+							onclick="document.getElementById('submitbtn').style.display ='block';    " />
+							<span class="checkboxFont"><spring:message
+									code="AssigneEmailID" /> </span>
+						</label>
+					</h5>
+
+				</div>
+
+				<div class="row" id="submitbtn" style="display: none;">
+					<div class="input-field col s12 m2">
+						<label for="Search" class="center-align ml-10"> <spring:message
+								code="searchField" /></label>
+					</div>
+					<div class="input-field col s12 m5">
+						<input type="text" id="assigneDetails" name="assigneDetails"
+							placeholder="<spring:message code="AssigneSearch" />" />
+					</div>
+					<div class="input-field col s12 m2">
+						<a onclick="viewAssigneeHistory()" class="btn"><spring:message
+								code="button.submit" /></a>
+					</div>
+				</div>
+			</form>
+			<!-- 
             <div class="row myRow" style="margin-top: 10px; display: none;" id="user123">
                 
                 <p class="center" style="color: red;">No data found</p>
 
             </div> -->
-            <div class="row">
+			<div class="row" id="assigneDetailsDiv" style="display:none">
 				<table class="responsive-table striped display"
 					id="assignee-data-table" cellspacing="0">
 				</table>
 			</div>
 		</div>
-    </div>
-    
+	</div>
+
 	<!-- END CONTENT -->
 
 	<script type="text/javascript"
@@ -502,9 +534,10 @@ to {
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
 	<script>
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -529,7 +562,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$("#assigneDetailslink").css("display", "none"); 
 				$("#supplierNameOrIdDiv").css("display", "block"); 
 				$("#invoiceNumberDiv").css("display", "block"); 
-				console.log("----importer");
+			
 			}
 			
 			
@@ -543,10 +576,9 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				 $("#supplierId").attr("required", false);
 				 $("#supplierName").attr("required", false);
 				 $("#invoiceNumber").attr("required", false);
+					$('#assigneDetailslink').text($.i18n('AssigneSearchLink'))
 				}
-			else{
-				
-				
+			else if(currentRoleTypeAssignei == 'Custom'){
 				
 				$("#supplierNameOrIdDiv").css("display", "block"); 
 				$("#invoiceNumberDiv").css("display", "block")
@@ -558,6 +590,26 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$('#SupplierIdAssignieName').text(assigneNameLabel);
 
 				$("#SupplierIdAssignieName").append('<span class="star">*</span>');
+				$('#uploaDStockHeader').text($.i18n('assignStock'));
+				
+				
+			}
+			else{
+				
+				
+				
+				$("#supplierNameOrIdDiv").css("display", "block"); 
+				$("#invoiceNumberDiv").css("display", "block")
+				$("#assigneDetailslink").css("display", "block"); 
+				
+				$('#assigneDetailslink').text($.i18n('AssigneSearchLink'));
+				/* $('#SupplierIdAssignie').text('');
+				$('#SupplierIdAssignie').text(assigneIdLabel);
+			
+				$('#SupplierIdAssignieName').text('');
+				$('#SupplierIdAssignieName').text(assigneNameLabel);
+
+				$("#SupplierIdAssignieName").append('<span class="star">*</span>'); */
 			}
 	});
 
@@ -587,7 +639,9 @@ function uploadStock(){
 			
 			 console.log(data);
 			 $("#stockSubmitButton").prop('disabled', true);
-			  $('#submitStock').openModal();
+			   $('#submitStock').openModal({
+		    	   dismissible:false
+		       });
 			 if(data.errorCode=="0")
 				 {
 				 console.log("status code = 0");
@@ -607,10 +661,17 @@ function uploadStock(){
 				    $('#stockSuccessMessage').text('');
 					$('#stockSuccessMessage').text(data.message);
 			 }
+			 else if(data.errorCode=="5")
+				 {
+				 $('#stockSuccessMessage').text('');
+					$('#stockSuccessMessage').text($.i18n('stockResponseMessage'));
+				 }
+			 
 			 else{
 				 $('#stockSuccessMessage').text('');
 					$('#stockSuccessMessage').text(data.message);
 			 }
+			
 			 
 		   // $('#updateConsignment').modal('open'); 
 			//alert("success");
@@ -659,23 +720,25 @@ function fileTypeValueChanges(dd, ddd) {
 	var fileSize = ($("#file")[0].files[0].size);
 	fileSize = (Math.round((fileSize / 1024) * 100) / 100)
    if (uploadedFileName.length > 30) {
-       $('#fileFormateModal').openModal();
+	   $('#fileFormateModal').openModal({
+    	   dismissible:false
+       });
       
        
    } 
 	else if(ext!='csv')
 		{
-		$('#fileFormateModal').openModal();
-		 
+		
+		 $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 		}
 	else if(fileSize>='2000'){
-		$('#fileFormateModal').openModal();
-		 
+		 $('#fileFormateModal').openModal({
+	    	   dismissible:false
+	       });
 	}
-	else {
-		console.log("file formate is correct")
-		
-	}
+	
 	
 
 }
@@ -687,8 +750,11 @@ function clearFileName() {
 }
 
 function openModalForAssigneId(){
+	 $('#searchSupplierInformation').openModal({
+  	   dismissible:false
+     });
 	
-	$('#searchSupplierInformation').openModal();
+	//$('#searchSupplierInformation').openModal();
 }
 
 function viewAssigneeHistory() {
@@ -700,10 +766,11 @@ function assigneeTable(URL,dataUrl){
 	var formData= new FormData()
 	//var requestType =	$('input[name="group1"]:checked').val();
    	var assigneDetails=$('#assigneDetails').val();
-
+   $("#assigneDetailsDiv").css("display", "block"); 
    var request={
 		   "field":assigneDetails,
-		   "type": parseInt($('input[name="group1"]:checked').val())
+		   "type": parseInt($('input[name="group1"]:checked').val()),
+		   "userTypeId" : $("body").attr("data-userTypeID")
 	}
 	
 	if(lang=='km'){
@@ -720,9 +787,9 @@ function assigneeTable(URL,dataUrl){
 				orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
-				"bSearchable" : true,
+				
 				"oLanguage": {  
 					"sUrl": langFile  
 				},
@@ -751,6 +818,7 @@ function assigneeTable(URL,dataUrl){
 $('input:radio[name="group1"]').change(
 	    function(){
 	        if ($(this).is(':checked')) {
+	        	$('#assigneDetails').val('')
 	        	//$("input[name='group1']").attr("disabled","disabled");
 	        }
 	    });
@@ -758,6 +826,11 @@ $('input:radio[name="group1"]').change(
 
 function saveAssigneDetails(assigneId,assigneName)
 {
+	 //assigneName=assigneName.replace(/%20/g," " );
+	 
+	 assigneName=assigneName.split("+20").join(" ");
+	// alert(assigneName);
+	
 	$('#searchSupplierInformation').closeModal();
 	$("#supplierId").attr("placeholder","");
 	$("#supplierName").attr("placeholder","");
@@ -768,6 +841,19 @@ function saveAssigneDetails(assigneId,assigneName)
 	
 }
 
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});
+
+
+function closeAssigneTable()
+{
+	$('#searchSupplierInformation').closeModal();
+	 $("#assigneDetailsDiv").css("display", "none");
+	
+}
 </script>
 
 </body>
@@ -775,8 +861,7 @@ function saveAssigneDetails(assigneId,assigneName)
 
 
 <%
-} else {
-
+	} else {
 %>
 <script language="JavaScript">
 sessionStorage.setItem("loginMsg",
@@ -784,5 +869,5 @@ sessionStorage.setItem("loginMsg",
 window.top.location.href = "./login";
 </script>
 <%
-}
+	}
 %>

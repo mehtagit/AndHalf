@@ -31,7 +31,11 @@ function changePassword(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#changePasswordMessage #cPassSucessMsg").text($.i18n(resp.tag));
-					$("#changePasswordMessage").openModal();   
+					$("#changePasswordMessage").openModal({
+				        dismissible:false
+				    });
+					$("#changePassword").closeModal();
+					
 				});
 				
 			}
@@ -82,7 +86,10 @@ function updateUSerStatus(){
 					'km': './resources/i18n/km.json'
 				}).done( function() {
 					$("#manageAccountSubmit #mgAccount").text($.i18n(resp.tag));
-					$("#manageAccountSubmit").openModal(); 
+					$("#manageAccountSubmit").openModal({
+				        dismissible:false
+				    });
+ 
 				});
 			}
 			else{  
@@ -322,28 +329,46 @@ function updateProfile(){
 
 		success : function(data) {
 			var response=JSON.parse(data);
+			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+
 			if(response.statusCode=='200'){
-				//if(response.userstatus=='Approved'){
+				if(response.userstatus=='Approved'){
 					    
-				var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$.i18n().locale = lang;	
 					$.i18n().load( {
 						'en': './resources/i18n/en.json',
 						'km': './resources/i18n/km.json'
 					}).done( function() {
 						$("#profileResponse #updateInfoMsg").text($.i18n(response.tag)); 
-						$('#profileResponse').openModal();
+						$('#profileResponse').openModal({
+					        dismissible:false
+					    });
+
 					});
 					
-				/*} 
+				} 
 				else if(response.userstatus=='OTP Verification Pending'){
-					$("#userid").val(response.userId);
-					$("#passwordModal").closeModal();
-					$("#otpMsgModal").openModal();     
-					$("#otpMsg").text(response.response);
+					$.i18n().locale = $('#langlist').val();
+					$.i18n().locale = lang;	
+					$.i18n().load( {
+						'en': './resources/i18n/en.json',
+						'km': './resources/i18n/km.json'
+					}).done( function() {
+						$("#userid").val(response.userId);
+						$("#passwordModal").closeModal();
+						$("#otpMsg").text($.i18n(response.tag));
+						$("#otpMsgModal").openModal({
+					        dismissible:false
+					    });
+					});
+					
+					
+					//$("#otpMsg").text(response.response);
+
+					
 				}
 				else{
-				}*/
+				}
 			}
 			else{
 				
@@ -370,6 +395,77 @@ function updateProfile(){
 
 function passwordPopup(){
 	$("#btnSave").prop('disabled', true);
-	$("#passwordModal").openModal();
+	$("#passwordModal").openModal({
+        dismissible:false
+    });
+
 	return false;
+}
+
+
+
+
+
+function verifyOtp2(){
+	$("#otpVerifyBtn").prop('disabled', true);
+	var obj="";
+	$("#verifyOtpForm").each(function(key, val){
+		val = $(this);
+		if(val.html() !== "") {
+			obj =  
+			{ 
+					phoneOtp:val.find('#phoneOtp').val(),
+					emailOtp:val.find('#emailOtp').val(),
+					userid: val.find('#userid').val()
+			} 
+		}
+	});
+	$.ajax({     
+		type : 'POST',
+		url : contextpath + '/verifyOtp',
+		contentType : "application/json",
+		dataType : 'html',  
+		data : JSON.stringify(obj),
+		success : function(data) {
+			console.log(data);	
+			var resp=JSON.parse(data);
+			$.i18n().locale =window.parent.$('#langlist').val();
+			if(resp.statusCode=="200"){
+	
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+				
+					$("#otpVerification").closeModal();
+					$("#otpMessage #otpResponse").text($.i18n(resp.tag));
+					$('#otpMessage').openModal({
+				        dismissible:false
+				    });
+				});
+				
+			}
+			else{
+			
+//				$.i18n().locale =window.parent.$('#langlist').val();
+				$.i18n().load( {
+					'en': './resources/i18n/en.json',
+					'km': './resources/i18n/km.json'
+				}).done( function() {
+					$("#otpVerification #verifyOtpResp").text($.i18n(resp.tag));
+				});
+			}
+			$("#otpVerifyBtn").prop('disabled', false);
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			$("#otpVerifyBtn").prop('disabled', false);
+		}
+
+	});
+	return false;
+}
+
+
+function redirectToDashboard(){
+	window.location.href="Home?lang="+window.parent.$('#langlist').val();
 }

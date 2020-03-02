@@ -334,7 +334,7 @@ var contextpath = "${context}";
 							</div>
 
 							<div class="row">
-								<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6" style="margin-top: 22px">
 									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{8,12}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.12Character" />" required />
@@ -366,7 +366,7 @@ var contextpath = "${context}";
 									</div>
 								</div>
 
-								<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
+								<div class="input-field col s12 m6 l6" style="margin-top: 24px;">
 									<input type="text" name="employeeID" required="required" id="employeeId" maxlength="30" 
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.address30characters" />" required /> 
@@ -419,7 +419,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="20" pattern="[0-9]{7,15}"
+									<input type="tel" name="authorityPhoneNo" id="authorityPhoneNo" maxlength="15" pattern="[0-9]{7,15}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" title="<spring:message code="validation.contact" />"	>
 									<label for="authorityPhoneNo"> <spring:message code="registration.reportingauthoritycontactnumber" /></label>
 								</div>
@@ -534,7 +534,7 @@ var contextpath = "${context}";
 						</div>
 						<p>
 					      <label style="color: black!important;">
-					        <input name="disclamer" type="checkbox" required="required" />
+					        <input name="disclamer" id="disclamer" type="checkbox" required="required" />
 					        <span> <span class="star">*</span> <spring:message code="registration.certifyMsg" /></span>
 					      </label>
 					    </p>
@@ -542,7 +542,7 @@ var contextpath = "${context}";
 						<div class="row">
 							<span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
 							<div class="input-field col s12 center">
-								<button class="btn" id="btnSave" type="submit" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
+								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
 							</div>
 						</div>
@@ -830,6 +830,7 @@ return true;
 	
 	
         $(document).ready(function () {
+        	checkBoxClick();
         	$('#langlist').val(data_lang_param);
             $('.modal').modal();
             questionDataByCategory();

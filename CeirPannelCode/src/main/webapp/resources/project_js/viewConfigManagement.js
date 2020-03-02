@@ -104,7 +104,7 @@ function pageRendering(){
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#configTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-							"<br>"+
+							
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
@@ -149,7 +149,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewAdminSystemModel").openModal();
+	$("#viewAdminSystemModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -179,7 +181,9 @@ function setViewPopupData(data){
 
 
 function updateDetails(tag){
-	$("#editAdminSystemModel").openModal();
+	$("#editAdminSystemModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -240,5 +244,7 @@ $.ajax({
 
 function confirmModel(){
 $("#editAdminSystemModel").closeModal();
-setTimeout(function(){$('#confirmedUpdatedSystem').openModal();},200);
+setTimeout(function(){$('#confirmedUpdatedSystem').openModal({
+    dismissible:false
+});},200);
 }

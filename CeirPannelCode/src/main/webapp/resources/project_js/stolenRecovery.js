@@ -5,11 +5,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 var userType = $("body").attr("data-roleType");
-if(userType == "Operator" || userType == "CEIRAdmin" ){
-	var featureId="7";
-}else{
-	var featureId="5"; //this check is for stolen & recovery
-}
+
 
 /*window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -29,6 +25,7 @@ $.i18n().load( {
 
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
+	console.log("featureId is---->" +featureId);
 	filterStolen();
 	pageRendering();
 });
@@ -36,7 +33,7 @@ $(document).ready(function(){
 
 
 function DeleteConsignmentRecord(txnId,id){
-	$("#DeleteConsignment").openModal();
+	$("#DeleteConsignment").openModal({dismissible:false});
 	$("#transID").text(txnId);
 	$("#setStolenRecoveyRowId").text(id);
 }
@@ -76,20 +73,20 @@ function confirmantiondelete(){
 		}
 	});
 	$("#DeleteConsignment").closeModal();
-	$("#confirmDeleteConsignment").openModal();
+	$("#confirmDeleteConsignment").openModal({dismissible:false});
 }
 
 
 function EditConsignmentDetails(txnId){ 	
 
 
-	$("#fileStolenModal").openModal();
+	$("#fileStolenModal").openModal({dismissible:false});
 }
 
 
 function viewConsignmentDetails(txnId){
 
-	$("#viewModal").openModal();
+	$("#viewModal").openModal({dismissible:false});
 	$.ajax({
 		url : "./openRegisterConsignmentPopup?reqType=editPage&txnId="+txnId,
 		dataType : 'json',
@@ -215,7 +212,7 @@ function openDeleteModal(transactionId)
 {
 	/*   $('#deletemodal').modal('open');
         	  backdrop: 'static' */
-	$('#deletemodal').openModal();
+	$('#deletemodal').openModal({dismissible:false});
 	console.log("transactionId value="+transactionId);
 	$('#deleteTransactionId').val(transactionId);
 }
@@ -384,7 +381,7 @@ function Datatable(url,dataUrl){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 240, targets: result.length - 1 }
+		            { width: 246, targets: result.length - 1 }
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
@@ -421,7 +418,7 @@ function pageElements(url){
 				if(date[i].type === "date"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)'  type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -542,7 +539,7 @@ function fileStolenReport(){
 
 			console.log(data);
 			$('#fileStolenModal').closeModal();
-			$('#markAsStolen').openModal();
+			$('#markAsStolen').openModal({dismissible:false});
 			//if(data.errorCode==200){
 			/* 
    						 $('#stockSucessMessage').text('');
@@ -598,7 +595,7 @@ function fileRecoveryReport(){
 		success: function (data, textStatus, jqXHR) {
 			console.log(data);
 			$('#recoveryFileModal').closeModal();
-			$('#markAsRecoverDone').openModal();
+			$('#markAsRecoverDone').openModal({dismissible:false});
 			/*  $('#editStockModal').closeModal();
    						 $('#successUpdateStockModal').modal();
    						  if(data.errorCode==200){
@@ -627,7 +624,7 @@ function fileRecoveryReport(){
 
 function openStolenRecoveryModal(){
 	console.log("openStolenRecoveryModal===");
-	$('#stoleRecoveryModal').openModal();
+	$('#stoleRecoveryModal').openModal({dismissible:false});
 }
 
 function openFileStolenModal(){
@@ -637,7 +634,7 @@ function openFileStolenModal(){
 	$('#stoleRecoveryModal').closeModal();
 	setTimeout(function(){
 
-		$('#fileStolenModal').openModal();
+		$('#fileStolenModal').openModal({dismissible:false});
 	}, 200);
 	//$("#materialize-lean-overlay-3").css("display","none");
 
@@ -651,7 +648,7 @@ function openRecoveryModal(){
 	$('#editRecoveryFileModal').closeModal();
 	setTimeout(function(){
 
-		$('#recoveryFileModal').openModal();
+		$('#recoveryFileModal').openModal({dismissible:false});
 	}, 200);
 	//$("#materialize-lean-overlay-3").css("display","none");
 
@@ -672,14 +669,14 @@ function openFileStolenUpdate(txnId,requestType,id,qty)
 {
 	console.log("requestType="+requestType+" txnId="+txnId+" id= "+id);
 	if(requestType=='1'){
-		$('#editRecoveryFileModal').openModal(); 
+		$('#editRecoveryFileModal').openModal({dismissible:false}); 
 		$('#editFileRecoveryTxnId').text(txnId)
 		$('#editFileRecoveryId').val(id);
 		$('#editRecoveryQuantity').val(qty);
 		
 	}
 	else{
-		$('#editFileStolenModal').openModal(); 
+		$('#editFileStolenModal').openModal({dismissible:false}); 
 		$('#editFileStolenTxnId').text(txnId)
 		$('#editFileStolenId').val(id);
 		$('#editStolenQuantity').val(qty);
@@ -745,7 +742,7 @@ function updatefileStolenReport(){
 				console.log("close stolen model.");
 				$('#editRecoveryFileModal').closeModal();
 			}
-			$('#updateMarkAsStolen').openModal();
+			$('#updateMarkAsStolen').openModal({dismissible:false});
 			if(data.errorCode==0){
 
 				$('#editMessageTextStoleRecovery').text('');
@@ -845,7 +842,7 @@ function valuesPush(){
 
 
 function markedRecovered(){
-	$('#markAsMultipleRecovery').openModal();
+	$('#markAsMultipleRecovery').openModal({dismissible:false});
 
 }
 
@@ -863,7 +860,7 @@ function openMulipleStolenPopUp()
 		success: function (data, textStatus, jqXHR) {
 
 			console.log(data);
-			$('#markAsRecoveryDone').openModal();
+			$('#markAsRecoveryDone').openModal({dismissible:false});
 			/*  $('#editStockModal').closeModal();
 					 $('#successUpdateStockModal').modal();
 					  if(data.errorCode==200){
@@ -1012,7 +1009,7 @@ function exportStolenRecoveryData()
 
 
 function deviceApprovalPopup(transactionId,requestType){
-	$('#approveInformation').openModal();
+	$('#approveInformation').openModal({dismissible:false});
 	$('#blockApproveTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
@@ -1052,11 +1049,11 @@ function aprroveDevice(){
 
 function confirmApproveInformation(){
 	$('#approveInformation').closeModal(); 
-	setTimeout(function(){ $('#confirmApproveInformation').openModal();}, 200);
+	setTimeout(function(){ $('#confirmApproveInformation').openModal({dismissible:false});}, 200);
 }
 
 function userRejectPopup(transactionId,requestType){
-	$('#rejectInformation').openModal();
+	$('#rejectInformation').openModal({dismissible:false});
 	$('#rejectTxnId').text(transactionId);
 	window.transactionId=transactionId;
 	window.requestType=requestType;
@@ -1098,9 +1095,14 @@ function rejectUser(){
 
 function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
-	setTimeout(function(){$('#confirmRejectInformation').openModal();},200);
+	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
 }
 
 
 
-	
+
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});	

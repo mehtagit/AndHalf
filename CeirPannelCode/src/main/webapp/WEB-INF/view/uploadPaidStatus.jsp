@@ -151,10 +151,10 @@ input[type='search'] {
 }
 </style>
 </head>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}"
+<body data-id="12" data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
-	data-selected-consignmentTxnId="${consignmentTxnId}"
+	data-selected-consignmentTxnId="${consignmentTxnIdv}"
 	data-selected-consignmentStatus="${consignmentStatus}" 
 	session-value="${not empty param.NID ? param.NID : 'null'}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
@@ -335,7 +335,7 @@ input[type='search'] {
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-														<spring:message code="table.country" /><span class="star">*</span>
+														<spring:message code="table.country" /> <span class="star">*</span>
 													</p>
 													<select id="country" class="browser-default"
 														class="mySelect"
@@ -360,16 +360,16 @@ input[type='search'] {
 												<div class="input-field col s12 m6 l6">
 														<input type="email" name="email" id="email" 
 														oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" 
-														title= "<spring:message code="validation.emial" />" maxlength="280"> <label for="email"><spring:message code="input.email" /> <span
+														title= "<spring:message code="validation.emial" />" maxlength="30"> <label for="email"><spring:message code="input.email" /><span
 														class="star"></span></label>
 												</div>
 
-												<div class="input-field col s12 m6 l6">
+												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
 													<input type="text" name="phone" 
-														pattern="[0-9]{7,15}"
+														pattern="[0-9]{10,10}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-														title= "<spring:message code="validation.15digits" />" required id="phone"
-														maxlength="15"> <label for="phone"><spring:message code="input.contactNum" /> <span class="star">*</span>
+														title= "<spring:message code="validation.10digits" />" required  class="form-control boxBorder boxHeight" id="phone"
+														maxlength="10"> <label for="phone"><spring:message code="input.contactNum" /><span class="star">*</span>
 													</label>
 												</div>
 											</div>

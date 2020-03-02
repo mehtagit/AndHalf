@@ -219,9 +219,7 @@ var featureId = 6;
 								
 								$("#recentStatus").val(grievanceStatus).change();
 
-
-
-							}
+}
 						});
 
 						var grievanceId = $("body").attr("data-grievanceId");
@@ -309,7 +307,7 @@ var featureId = 6;
 
 			function grievanceReply(userId,grievanceId,txnId)
 			{
-
+   
 
 				$.ajax({
 					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
@@ -317,7 +315,10 @@ var featureId = 6;
 					processData: false,
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
-						$('#replyModal').openModal();
+						//$('#replyModal').openModal();
+						$('#replyModal').openModal({
+						 	   dismissible:false
+						    });
 						//console.log(data.grievance.categoryId)
 						//alert("11"+data.categoryId)
 						setDocTypeValue(data[0].grievance.categoryId);
@@ -327,12 +328,35 @@ var featureId = 6;
 						$('#grievanceTxnId').text(txnId);
 						$('#grievanceUserid').val(userId);
 						var usertype = $("body").attr("data-roleType");
+						var projectpath=path+"/Consignment/dowloadFiles/actual";
 						$("#viewPreviousMessage").empty();
 						for(var i=0; i<data.length; ++i)
 						{
 
-							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
-
+							$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><h6 style='float: left; font-weight: bold;' class='grievance-reply-msg' id='mesageUserType'>" +data[i].userDisplayName+" : </h6><span style='float:right;'>" + data[i].modifiedOn + "</span><h6>" + data[i].reply + "</h6></div>");
+							for (var j=0 ; j<data[i].attachedFiles.length;j++)
+							{
+								if(data[i].attachedFiles[j].docType==null)
+									{
+									
+									$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+								//alert(data[i].attachedFiles[j].docType);
+								if(data[i].attachedFiles[j].docType=="")
+									{
+									//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
+								else{
+									
+									
+									fileName=data[i].attachedFiles[j].fileName.split(' ').join('%20');
+									$("#viewPreviousMessage").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a onclick=fileDownload('"+fileName+"','actual','"+data[i].attachedFiles[j].grievanceId+"','"+data[i].attachedFiles[j].docType+"') >"+data[i].attachedFiles[j].fileName+"</a></div>");
+								}
+								}
+								
+								
+							}	
 
 						}
 						if(usertype=='CEIRAdmin')
@@ -394,6 +418,8 @@ var featureId = 6;
 				var docTypeTagIdValue='';
 				var filename='';
 				var filesameStatus=false;
+				var documenttype=false;
+				var docTypeTag='';
 				$('.fileDiv').each(function() {	
 					var x={
 					"docType":$('#docTypetag'+fieldId).val(),
@@ -404,21 +430,44 @@ var featureId = 6;
 					fileInfo.push(x);
 					
 					documentFileName=$('#docTypeFile'+fieldId).val().replace('C:\\fakepath\\','')
+					docTypeTag=$('#docTypetag'+fieldId).val();
 					
 					var fileIsSame=	documentFileNameArray.includes(documentFileName);
+					var documentTypeTag=documentFileNameArray.includes(docTypeTag);
+					
 					if(filesameStatus!=true){
 						filesameStatus=	fileIsSame;
 					}
+					
+					if(documenttype!=true)
+					{
+					documenttype=documentTypeTag;
+			         }
 					documentFileNameArray.push(documentFileName);
+					documentFileNameArray.push(docTypeTag);
+					
 					fieldId++;
 					i++;
 				});
 				if(filesameStatus==true)
 				{	
 				
-				$('#fileFormateModal').openModal();
+			///	$('#fileFormateModal').openModal();
+				$('#fileFormateModal').openModal({
+				 	   dismissible:false
+				    });
 					$('#fileErrormessage').text('')
 					$('#fileErrormessage').text($.i18n('duplicateFileName'));
+				return false;
+				
+				}
+				if(documenttype==true)
+				{	
+					$('#fileFormateModal').openModal({
+					 	   dismissible:false
+					    });
+					$('#fileErrormessage').text('')
+					$('#fileErrormessage').text($.i18n('documentTypeName'));
 				return false;
 				
 				}
@@ -453,7 +502,10 @@ var featureId = 6;
 					contentType: false,
 					success: function (data, textStatus, jqXHR) {
 
-						$('#replyMsg').openModal();
+					//	$('#replyMsg').openModal();
+						$('#replyMsg').openModal({
+						 	   dismissible:false
+						    });
 						if(data.errorCode=="0")
 						{
 							
@@ -487,7 +539,10 @@ var featureId = 6;
 					success: function (data, textStatus, jqXHR) {
 						var grievanceID=	
 						$('#chatMsg').empty();
-						$('#manageAccount').openModal();
+						//$('#manageAccount').openModal();
+						$('#manageAccount').openModal({
+						 	   dismissible:false
+						    });
 						
 						var projectpath=path+"/Consignment/dowloadFiles/actual";
 							for(var i=0; i<data.length; i++)
@@ -504,8 +559,16 @@ var featureId = 6;
 										$("#chatMsg").append("<div class='chat-message-content clearfix'><a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
 										}
 									else{
-									
-										$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									//alert(data[i].attachedFiles[j].docType);
+									if(data[i].attachedFiles[j].docType=="")
+										{
+										//$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a href='"+projectpath+"/"+data[i].attachedFiles[j].fileName+"/"+data[i].attachedFiles[j].grievanceId+"/"+data[i].attachedFiles[j].docType+"'>"+data[i].attachedFiles[j].fileName+"</a></div>");
+										}
+									else{
+										
+										fileName=data[i].attachedFiles[j].fileName.split(' ').join('%20');
+										$("#chatMsg").append("<div class='chat-message-content clearfix'> <span class='document-Type' ><b>Document Type : </b>"+data[i].attachedFiles[j].docType+"</span> <a onclick=fileDownload('"+fileName+"','actual','"+data[i].attachedFiles[j].grievanceId+"','"+data[i].attachedFiles[j].docType+"')>"+data[i].attachedFiles[j].fileName+"</a></div>");
+									}
 									}
 									
 									
@@ -564,20 +627,29 @@ var featureId = 6;
 
 
 
+			$.getJSON('./addMoreFile/more_files_count', function(data) {
+				console.log(data);
+				
+				localStorage.setItem("maxCount", data.value);
+				
+			});
+		 
+				//var max_fields = 2; //maximum input boxes allowed
+				var max_fields =localStorage.getItem("maxCount");
+				
 
-
-			var max_fields = 15; //maximum input boxes allowed
+			//var max_fields = 15; //maximum input boxes allowed
 			var wrapper = $(".mainDiv"); //Fields wrapper
 			var add_button = $(".add_field_button"); //Add button ID
 			var x = 1; //initlal text box count
 			var id=2;
 			$(".add_field_button").click(function (e) { //on add input button click
 				e.preventDefault();
-            
+						
 				if (x < max_fields) { //max input box allowed
 					x++; //text box increment
 					$(wrapper).append(
-							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+							'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+documenttype+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+selectDocumentType+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+selectfile+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+$.i18n('selectFilePlaceHolder')+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 					); //add input box
 				}
 	               /*$.getJSON('./getDropdownList/DOC_TYPE', function(data) {
@@ -590,13 +662,22 @@ var featureId = 6;
 						
 					}
 				});*/
-				var categoryParentValues= $('#existingGrievanceID').val()
+				
+				var grievanceUserTypeId=parseInt($("body").attr("data-userTypeID"));
+				var categoryParentValues= $('#existingGrievanceID').val();
+				if(isNaN(grievanceUserTypeId))
+					{
+					
+					grievanceUserTypeId=17;
+					categoryParentValues=$('#grievanceSelectedCategory').val();
+					}
+				
 				var request ={
 						 "childTag": "DOC_TYPE",
 						  "featureId": 6,
 						  "parentValue":  parseInt(categoryParentValues),	
 						  "tag": "GRIEVANCE_CATEGORY",
-						  "userTypeId": parseInt($("body").attr("data-userTypeID")),
+						  "userTypeId":grievanceUserTypeId,
 					}
 			
 			console.log("request --->" +JSON.stringify(request));	
@@ -690,3 +771,13 @@ var featureId = 6;
 			function enableAddMore(){
 				$(".add_field_button").attr("disabled", false);
 			}
+			function enableSelectFile(){
+				$("#docTypeFile1").attr("disabled", false);
+				$("#docTypeFile1").attr("required", true);
+				$("#supportingdocumentFile").append('<span class="star">*</span>');
+			}
+			$("input[type=file]").keypress(function(ev) {
+			    return false;
+			    //ev.preventDefault(); //works as well
+
+			});

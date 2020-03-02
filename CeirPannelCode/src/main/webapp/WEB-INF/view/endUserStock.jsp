@@ -170,24 +170,24 @@ var contextpath = "${context}";
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
                                                 <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-												oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');" 
+												oninput="InvalidMsg(this,'email');" oninvalid="InvalidMsg(this,'email');"  
 												 title= "<spring:message code="validation.Matchformat" />"  maxlength="30" name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
-                                                <input type="text" id="endUserquantity" name="endUserquantity" pattern=[0-9]{0,7}
+                                                <input type="text" id="endUserquantity" maxlength="7" name="endUserquantity" pattern=[0-9]{0,7}
 												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.10characters" />" required  / > </div>
+												 title= "<spring:message code="validation.7digits" />" required> </div>
 
                                             <div class="file-field col s12 m6">
                                                 <h6 style="margin-top: 15px;"><spring:message code="registration.uploadfile" /> <span
                                                         class="star">*</span></h6>
                                                 <div class="btn">
                                                     <span><spring:message code="input.selectfile" /></span>
-                                                    <input type="file" id="endUsercsvUploadFile" accept=".csv" 
-                                                    title="<spring:message code="validation.NoChosen" />" 
-							 oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"  required />                                                    
+                                                    <input type="file" id="endUsercsvUploadFile" accept=".csv"  onchange="fileTypeValueChanges(this,'fileType')"
+                                                    oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"
+                                                    title="<spring:message code="validation.NoChosen" />" required />                                                    
 
                                                 </div>
                                                 <div class="file-path-wrapper">
@@ -245,7 +245,7 @@ var contextpath = "${context}";
                                                 <input type="text" id="checktransactionID" name="checktransactionID"
                                                     pattern=[A-Z0-9]{18,18}  maxlength="18"
  												oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
-												 title= "<spring:message code="validation.maximum18" />" required />
+												 title= "<spring:message code="validation.T18characters" />" required />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -468,6 +468,23 @@ var contextpath = "${context}";
             </div>
         </div>
     </div>
+    
+    <div id="fileFormateModal" class="modal">
+		<h6 class="modal-header"><spring:message code="fileValidationModalHeader" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<div class="input-field col s12 center">
+						<button class=" btn" onclick="clearFileName()"
+							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <!-- ================================================
     Scripts
     ================================================ -->
@@ -484,7 +501,8 @@ var contextpath = "${context}";
     <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <!-- chartist -->
     <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
     <!-- data-tables -->
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="${context}/resources/js/plugins/data-tables/data-tables-script.js"></script>
