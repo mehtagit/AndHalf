@@ -16,9 +16,9 @@ public interface PendingActionsRepositoy extends JpaRepository<PendingActions, S
 
 	public PendingActions findByMsisdn(Long msisdn);
 
-	public PendingActions findByImei(Long imei);
+	public PendingActions findByImei(String imei);
 
-	public PendingActions findByMsisdnAndImei(Long msisdn, Long imei);
+	public PendingActions findByMsisdnAndImei(Long msisdn, String imei);
 
 	@Transactional
 	@Modifying

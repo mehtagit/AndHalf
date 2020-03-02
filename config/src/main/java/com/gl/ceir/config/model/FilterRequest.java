@@ -236,7 +236,6 @@ public class FilterRequest {
 	public void setImporterId(Long importerId) {
 		this.importerId = importerId;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -266,6 +265,12 @@ public class FilterRequest {
 		builder.append(userType);
 		builder.append(", featureId=");
 		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeatureName=");
+		builder.append(subFeatureName);
+		builder.append(", userName=");
+		builder.append(userName);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
 		builder.append(", searchString=");
@@ -294,6 +299,10 @@ public class FilterRequest {
 		builder.append(childTag);
 		builder.append(", parentValue=");
 		builder.append(parentValue);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", contactNumber=");
+		builder.append(contactNumber);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -451,7 +451,7 @@ public class RegularizedDeviceServiceImpl {
 				auditTrailRepository.save(auditTrail);
 				logger.info("AUDIT : update in audit_trail. " + auditTrail);
 
-				return new GenricResponse(0, "Update Successfully.", Long.toString(userCustomDbDetails.getFirstImei()));
+				return new GenricResponse(0, "Update Successfully.", userCustomDbDetails.getFirstImei());
 
 			}else {
 				return  new GenricResponse(4,"TxnId Does Not exist.", "");
@@ -461,7 +461,7 @@ public class RegularizedDeviceServiceImpl {
 			throw new ResourceServicesException("Custom Service", e.getMessage());}
 	}
 
-	public RegularizeDeviceDb viewDeviceInfoByImei1(long imei) {
+	public RegularizeDeviceDb viewDeviceInfoByImei1(String imei) {
 		try {
 			logger.info("Going to get deviceInfo Info for imei : " + imei);
 
@@ -482,7 +482,7 @@ public class RegularizedDeviceServiceImpl {
 	}
 
 	@Transactional
-	public GenricResponse deleteCustomInfo(Long imei) {
+	public GenricResponse deleteCustomInfo(String imei) {
 		try {
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(imei);
 
@@ -495,10 +495,10 @@ public class RegularizedDeviceServiceImpl {
 						regularizeDeviceDb.getDeviceType(), regularizeDeviceDb.getDeviceIdType(), regularizeDeviceDb.getMultiSimStatus(), regularizeDeviceDb.getCountry(),
 						regularizeDeviceDb.getDeviceSerialNumber()));
 
-				return new GenricResponse(0, "Device have been deleted sucessfully.", Long.toString(regularizeDeviceDb.getFirstImei()));
+				return new GenricResponse(0, "Device have been deleted sucessfully.", regularizeDeviceDb.getFirstImei());
 			}else {
 
-				return new GenricResponse(4, "This IMEI does not exist.", Long.toString(regularizeDeviceDb.getFirstImei()));	
+				return new GenricResponse(4, "This IMEI does not exist.", "");	
 			}
 
 		} catch (Exception e) {

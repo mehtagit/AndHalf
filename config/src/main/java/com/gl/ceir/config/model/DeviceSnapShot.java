@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.model.constants.Period;
 
 import io.swagger.annotations.ApiModel;
@@ -26,7 +25,7 @@ public class DeviceSnapShot implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Long imei;
+	private String imei;
 
 	// @ManyToOne
 	private String mobileOperator;
@@ -48,12 +47,16 @@ public class DeviceSnapShot implements Serializable {
 	@OneToMany(mappedBy = "deviceSnapShot", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<DuplicateImeiMsisdn> duplicateImeiMsisdns;
 
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
 
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public String getMobileOperator() {

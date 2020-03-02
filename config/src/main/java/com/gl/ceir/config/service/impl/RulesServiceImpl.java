@@ -81,4 +81,10 @@ public class RulesServiceImpl implements RulesService {
 
 	}
 
+	@Override
+	public Rules get(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

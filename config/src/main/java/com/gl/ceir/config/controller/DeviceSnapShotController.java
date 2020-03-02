@@ -27,7 +27,7 @@ public class DeviceSnapShotController {
 
 	@ApiOperation(value = "View available DeviceSnapShot ", response = BlackList.class)
 	@RequestMapping(path = "/DeviceSnapShot/{imei}", method = RequestMethod.GET)
-	public MappingJacksonValue getByMsisdnAndImei(@PathVariable("imei") Long imei) {
+	public MappingJacksonValue getByMsisdnAndImei(@PathVariable("imei") String imei) {
 		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 		imeiMsisdnIdentity.setMsisdn(0L);
 		imeiMsisdnIdentity.setImei(imei);

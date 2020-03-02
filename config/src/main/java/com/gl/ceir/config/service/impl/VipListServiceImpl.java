@@ -86,7 +86,7 @@ public class VipListServiceImpl implements VipListService {
 	}
 
 	@Override
-	public VipList getByImei(Long imei) {
+	public VipList getByImei(String imei) {
 
 		try {
 			return vipListRepository.findByImeiMsisdnIdentityImei(imei);
@@ -128,6 +128,12 @@ public class VipListServiceImpl implements VipListService {
 			logger.info("Not Deleted " + imeiMsisdnIdentity);
 			return;
 		}
+	}
+
+	@Override
+	public VipList get(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

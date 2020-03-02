@@ -36,7 +36,7 @@ public class RegularizedDeviceController {
 	
 	@ApiOperation(value = "View End User Device by IMEI1", response = GenricResponse.class)
 	@GetMapping("/end-user-device-info/{imei}")
-	public MappingJacksonValue viewDeviceInfoByImei1(@PathVariable("imei") long imei) {
+	public MappingJacksonValue viewDeviceInfoByImei1(@PathVariable("imei") String imei) {
 
 		logger.info("View Regularized device of IMEI= " + imei);
 
@@ -94,11 +94,11 @@ public class RegularizedDeviceController {
 
 	@ApiOperation(value = "Delete taxPaid Status", response = GenricResponse.class)
 	@DeleteMapping("/end-user-device-info/{imei}")
-	public GenricResponse deleteCustominfo( @PathVariable("imei") long imei) {
+	public GenricResponse deleteCustominfo( @PathVariable("imei") String imei) {
 
 		logger.info("Request to delete regularized device = " + imei);
 		
-		GenricResponse  response = regularizedDeviceServiceImpl.deleteCustomInfo(imei);
+		GenricResponse response = regularizedDeviceServiceImpl.deleteCustomInfo(imei);
 		
 		logger.info("Response send to user="+response);
 		return response;

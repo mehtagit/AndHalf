@@ -85,7 +85,7 @@ public class BlackListServiceImpl implements BlackListService {
 	}
 
 	@Override
-	public BlackList getByImei(Long imei) {
+	public BlackList getByImei(String imei) {
 
 		try {
 			return blackListRepository.findByImeiMsisdnIdentityImei(imei);
@@ -127,6 +127,12 @@ public class BlackListServiceImpl implements BlackListService {
 			logger.info("Not Deleted " + imeiMsisdnIdentity);
 			return;
 		}
+	}
+
+	@Override
+	public BlackList get(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

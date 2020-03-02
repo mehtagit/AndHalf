@@ -51,13 +51,13 @@ public class SingleImeiDetails implements Serializable {
 	
 	private Integer category;
 	
-	private Long firstImei;
+	private String firstImei;
 	
-	private Long secondImei;
+	private String secondImei;
 	
-	private Long thirdImei;
+	private String thirdImei;
 	
-	private Long fourthImei;
+	private String fourthImei;
 	
 	private long userId;
 	
@@ -194,29 +194,33 @@ public class SingleImeiDetails implements Serializable {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	public Long getFirstImei() {
+	
+	public String getFirstImei() {
 		return firstImei;
 	}
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
 	}
-	public Long getSecondImei() {
+	public String getSecondImei() {
 		return secondImei;
 	}
-	public void setSecondImei(Long secondImei) {
+	public void setSecondImei(String secondImei) {
 		this.secondImei = secondImei;
 	}
-	public Long getThirdImei() {
+	public String getThirdImei() {
 		return thirdImei;
 	}
-	public void setThirdImei(Long thirdImei) {
+	public void setThirdImei(String thirdImei) {
 		this.thirdImei = thirdImei;
 	}
-	public Long getFourthImei() {
+	public String getFourthImei() {
 		return fourthImei;
 	}
-	public void setFourthImei(Long fourthImei) {
+	public void setFourthImei(String fourthImei) {
 		this.fourthImei = fourthImei;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	public String getTxnId() {
 		return txnId;

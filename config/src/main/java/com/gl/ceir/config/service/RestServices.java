@@ -8,6 +8,8 @@ public interface RestServices<T> {
 	public T save(T t);
 
 	public T get(Long id);
+	
+	public T get(String id);
 
 	public void delete(Long t);
 

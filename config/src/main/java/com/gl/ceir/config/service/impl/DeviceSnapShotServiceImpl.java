@@ -101,4 +101,10 @@ public class DeviceSnapShotServiceImpl implements DeviceSnapShotService {
 		return deviceSnapShotRepository.saveAll(deviceSnapShots);
 	}
 
+	@Override
+	public DeviceSnapShot get(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

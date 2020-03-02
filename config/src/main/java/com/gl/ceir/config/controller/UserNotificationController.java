@@ -36,7 +36,7 @@ public class UserNotificationController {
 	@ApiOperation(value = "View UserNotification by Msisdn or/and IMEI / Ticket id", response = UserNotification.class)
 	@RequestMapping(path = "/UserNotification/", method = RequestMethod.GET)
 	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
-			@RequestParam(required = false) Long imei, @RequestParam(required = false) String ticketId) {
+			@RequestParam(required = false) String imei, @RequestParam(required = false) String ticketId) {
 		if (ticketId == null || "".equals(ticketId)) {
 			ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 			imeiMsisdnIdentity.setMsisdn(msisdn);

@@ -49,4 +49,10 @@ public class ImsieSeriesServiceImpl implements ImsieSeriesService {
 
 	}
 
+	@Override
+	public ImsieSeries get(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

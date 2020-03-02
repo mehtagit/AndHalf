@@ -27,10 +27,10 @@ public class RegularizeDeviceHistoryDb implements  Serializable {
 	private LocalDateTime modifiedOn;
 	private String nid;
 	private int deviceStatus;
-	private Long firstImei;
-	private Long secondImei;
-	private Long thirdImei;
-	private Long fourthImei;
+	private String firstImei;
+	private String secondImei;
+	private String thirdImei;
+	private String fourthImei;
 	private int taxPaidStatus;
 	private Integer deviceType;
 	private Integer deviceIdType;
@@ -44,8 +44,8 @@ public class RegularizeDeviceHistoryDb implements  Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public RegularizeDeviceHistoryDb(String nid, int deviceStatus, Long firstImei, Long secondImei, Long thirdimei, 
-			Long fourthImei, int taxPaidStatus, Integer deviceType, Integer deviceIdType, String multiSimStatus,
+	public RegularizeDeviceHistoryDb(String nid, int deviceStatus, String firstImei, String secondImei, String thirdimei, 
+			String fourthImei, int taxPaidStatus, Integer deviceType, Integer deviceIdType, String multiSimStatus,
 			String country, String deviceSerialNumber) {
 		this.nid = nid;
 		this.deviceStatus = deviceStatus;
@@ -97,40 +97,45 @@ public class RegularizeDeviceHistoryDb implements  Serializable {
 		return deviceStatus;
 	}
 
-	public void setDeviceStatus(int status) {
-		this.deviceStatus = deviceStatus;
-	}
+	public void setDeviceStatus(Integer status) {
+		this.deviceStatus = status;
+	}	
 
-	public Long getFirstImei() {
+	
+	public String getFirstImei() {
 		return firstImei;
 	}
 
-	public void setFirstImei(Long firstImei) {
+	public void setFirstImei(String firstImei) {
 		this.firstImei = firstImei;
 	}
 
-	public Long getSecondImei() {
+	public String getSecondImei() {
 		return secondImei;
 	}
 
-	public void setSecondImei(Long secondImei) {
+	public void setSecondImei(String secondImei) {
 		this.secondImei = secondImei;
 	}
 
-	public Long getThirdImei() {
+	public String getThirdImei() {
 		return thirdImei;
 	}
 
-	public void setThirdImei(Long thirdImei) {
+	public void setThirdImei(String thirdImei) {
 		this.thirdImei = thirdImei;
 	}
 
-	public Long getFourthImei() {
+	public String getFourthImei() {
 		return fourthImei;
 	}
 
-	public void setFourthImei(Long fourthImei) {
+	public void setFourthImei(String fourthImei) {
 		this.fourthImei = fourthImei;
+	}
+
+	public void setDeviceStatus(int deviceStatus) {
+		this.deviceStatus = deviceStatus;
 	}
 
 	public int getTaxPaidStatus() {

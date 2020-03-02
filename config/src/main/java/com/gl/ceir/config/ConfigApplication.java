@@ -44,7 +44,7 @@ public class ConfigApplication {
 
 	private static DeviceSnapShot convertRequestToDeviceSnapShot() {
 		DeviceSnapShot deviceSnapShot = new DeviceSnapShot();
-		deviceSnapShot.setImei(898989L);
+		deviceSnapShot.setImei("898989");
 		// deviceSnapShot.setFailedRuleId(request.getFailRule().getId().toString());
 		// deviceSnapShot.setFailedRuleName(request.getFailRule().getName());
 		deviceSnapShot.setDuplicateImeiMsisdns(new ArrayList<>());
@@ -55,7 +55,7 @@ public class ConfigApplication {
 
 	private static DuplicateImeiMsisdn convertToDuplicateImeiMsisdn() {
 		DuplicateImeiMsisdn duplicateImeiMsisdn = new DuplicateImeiMsisdn();
-		duplicateImeiMsisdn.setImeiMsisdnIdentity(new ImeiMsisdnIdentity(898989L, 9090909L));
+		duplicateImeiMsisdn.setImeiMsisdnIdentity(new ImeiMsisdnIdentity("898989", 9090909L));
 		duplicateImeiMsisdn.setFileName("file");
 
 		duplicateImeiMsisdn.setImeiStatus(ImeiStatus.AUTO_REGULARIZED);

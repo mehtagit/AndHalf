@@ -8,7 +8,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.gl.ceir.config.model.constants.TransactionState;
 
@@ -28,7 +27,7 @@ public class PendingActions implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private TransactionState transactionState;
 	private Long msisdn;
-	private Long imei;
+	private String imei;
 	private Long imsi;
 
 	private String mobileOperator;
@@ -120,13 +119,17 @@ public class PendingActions implements Serializable {
 	public void setMsisdn(Long msisdn) {
 		this.msisdn = msisdn;
 	}
-
-	public Long getImei() {
+	
+	public String getImei() {
 		return imei;
 	}
 
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	public Long getImsi() {

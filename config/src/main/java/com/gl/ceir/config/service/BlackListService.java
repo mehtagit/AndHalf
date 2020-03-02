@@ -6,7 +6,7 @@ import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 public interface BlackListService extends RestServices<BlackList> {
 	public BlackList getByMsisdn(Long msisdn);
 
-	public BlackList getByImei(Long imei);
+	public BlackList getByImei(String imei);
 
 	public BlackList getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity);
 

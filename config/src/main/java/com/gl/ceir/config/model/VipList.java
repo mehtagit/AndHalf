@@ -11,8 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-// CR(imei,msisdn)UD 
+ 
 @Entity
 public class VipList implements Serializable {
 	/**
@@ -38,7 +37,7 @@ public class VipList implements Serializable {
 	
 	public VipList() {}
 	
-	public VipList(Long imei, Long msisdn) {
+	public VipList(String imei, Long msisdn) {
 		this.imeiMsisdnIdentity = new ImeiMsisdnIdentity(imei, msisdn);
 	}
 

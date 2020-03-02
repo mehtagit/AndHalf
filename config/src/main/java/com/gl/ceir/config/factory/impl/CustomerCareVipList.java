@@ -20,7 +20,7 @@ public class CustomerCareVipList implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		VipList vipList = vipListRepository.findByImeiMsisdnIdentityImei(Long.parseLong(imei));
+		VipList vipList = vipListRepository.findByImeiMsisdnIdentityImei(imei);
 		
 		if(Objects.nonNull(vipList)) {
 			customerCareDeviceState.setTxnId("");

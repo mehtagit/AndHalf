@@ -2,8 +2,6 @@ package com.gl.ceir.config.service;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.Query;
-
 import com.gl.ceir.config.exceptions.OperationNotAllowedException;
 import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.PendingActions;
@@ -14,7 +12,7 @@ public interface PendingActionsService extends RestServices<PendingActions> {
 
 	public PendingActions getByMsisdn(Long msisdn);
 
-	public PendingActions getByImei(Long imei);
+	public PendingActions getByImei(String imei);
 
 	public PendingActions getByMsisdnAndImei(ImeiMsisdnIdentity imeiMsisdnIdentity);
 

@@ -89,7 +89,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	StolenOrganizationUserDB stolenOrganizationUserDB; 
 	
 	@Transient
-	private Long imei;
+	private String imei;
 
 	public Long getId() {
 		return id;
@@ -169,10 +169,10 @@ public class StolenandRecoveryMgmt implements Serializable {
 	public void setSingleImeiDetails(SingleImeiDetails singleImeiDetails) {
 		this.singleImeiDetails = singleImeiDetails;
 	}
-	public Long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(Long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
 	public String getRequestTypeInterp() {

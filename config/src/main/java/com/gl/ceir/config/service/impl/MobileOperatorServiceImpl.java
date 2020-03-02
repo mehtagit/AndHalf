@@ -86,4 +86,10 @@ public class MobileOperatorServiceImpl implements MobileOperatorService {
 		}
 	}
 
+	@Override
+	public MobileOperator get(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
