@@ -95,7 +95,7 @@
 								</div>
 								<div>
 									<select class="darken-1" id="langlist"
-										style="border-bottom: none; height: 42px; background: #00bcd4; border: 1px solid #00bcd4 !important;">
+										style="border-bottom: none; height: 42px; width: 75px; line-height:1; background: #00bcd4; border: 1px solid #00bcd4 !important;">
 										<option value="en">English</option>
 										<option value="km"><spring:message code="lang.khmer" /></option>
 									</select>

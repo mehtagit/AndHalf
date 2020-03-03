@@ -127,7 +127,7 @@ select {
 
 </head>
 
-<body  data-roleType="${usertype}"
+<body  data-id="5" data-roleType="${usertype}"
 	data-userTypeID="${usertypeId}" data-userID="${userid}"
 	data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
@@ -1370,7 +1370,7 @@ select {
 								<spring:message code="input.StolenSucessMessage2" />
 							</h6>
 							<div class="input-field col s12 center" style="margin: 20px 0;">
-								<a href="./stolenRecovery" class="btn" style="margin: 20px 0;">
+								<a href="./stolenRecovery?FeatureId=5" class="btn" style="margin: 20px 0;">
 									<spring:message code="modal.ok" />
 								</a>
 							</div>

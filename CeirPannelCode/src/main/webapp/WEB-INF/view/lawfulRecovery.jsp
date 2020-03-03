@@ -615,7 +615,7 @@ onclick="_Services._selectstartDate()"></i></span>
                <div class=" col s12 m12">
                	 <h6 id="sucessMessage"> <spring:message code="input.StolenSucessMessage1"/> <span id="IndivisualStolenTxnId"></span> <spring:message code="input.StolenSucessMessage2"/></h6>
                 <div class="input-field col s12 center" style="margin:20px 0;">
-                    <a href="./stolenRecovery" class="btn" style="margin:20px 0;"><spring:message code="modal.ok"/></a>
+                    <a href="./stolenRecovery?FeatureId=5" class="btn" style="margin:20px 0;"><spring:message code="modal.ok"/></a>
                 </div>
                </div>
             </div>
