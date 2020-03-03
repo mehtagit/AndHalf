@@ -36,6 +36,18 @@ public class RunningAlertDb implements Serializable {
 	private String alertId;
 	private String description;
 	private Integer status;
+	
+	public RunningAlertDb() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public RunningAlertDb(Integer userId, String alertId, String description, Integer status) {
+		this.userId = userId;
+		this.alertId = alertId;
+		this.description = description;
+		this.status = status;
+	}
+	
 	public Long getId() {
 		return id;
 	}

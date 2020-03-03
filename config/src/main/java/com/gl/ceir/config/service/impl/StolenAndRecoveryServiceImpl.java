@@ -46,6 +46,7 @@ import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.WebActionDb;
+import com.gl.ceir.config.model.constants.Alerts;
 import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
@@ -124,6 +125,9 @@ public class StolenAndRecoveryServiceImpl {
 	@Autowired
 	StolenOrganizationUserRepository stolenOrganizationUserRepository;
 
+	@Autowired
+	AlertServiceImpl alertServiceImpl;
+
 	public GenricResponse uploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 
 		try {
@@ -157,9 +161,12 @@ public class StolenAndRecoveryServiceImpl {
 		}
 	}
 
-	@Transactional
+	@Transactional(rollbackOn = Exception.class)
 	private boolean executeUploadDetails(StolenandRecoveryMgmt stolenandRecoveryMgmt, WebActionDb webActionDb) {
 		boolean status = Boolean.FALSE;
+
+		if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId()))
+			alertServiceImpl.raiseAnAlert(Alerts.alert002, stolenandRecoveryMgmt.getUserId().intValue());
 
 		stolenAndRecoveryRepository.save(stolenandRecoveryMgmt);
 		logger.info("Saved in stolen_individual_user_db" + stolenandRecoveryMgmt);
