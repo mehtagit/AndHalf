@@ -14,11 +14,25 @@
     General Layout Style
   ------------------------------------------*/
 /* FIREFOX FIX OF UGLY SELECT BOXES */
-@supports (-moz-appearance:none ) {SELECT { -moz-appearance:none!important;
+/* @supports (-moz-appearance:none ) {SELECT { -moz-appearance:none!important;
 	background: transparent url('../images/dropdownIcon.png') right center
 		no-repeat !important;
 	background-position: calc(100% - 5px) center !important;
 	line-height: 1;
+}
+
+select.browser-default {
+    display: block;
+    outline: 
+transparent;
+outline: 3px solid
+    #fff;
+}
+} */
+
+@supports (-moz-appearance:none ) {select.browser-default {
+    display: block;
+    outline: transparent;
 }
 }
 
@@ -27,7 +41,6 @@ select {
 -webkit-appearance: none;
 background-image: $url('../images/dropdownIcon.png') !important;
 background: transparent url('../images/dropdownIcon.png') right center no-repeat !important;
-/ background-position: right 8px center; /
 background-position: calc(100% - 5px) center !important;
 background-repeat: no-repeat;
 }

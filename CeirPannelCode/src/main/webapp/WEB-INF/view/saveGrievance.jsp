@@ -305,13 +305,18 @@ src="${context}/resources/project_js/viewStock.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-
-<script type="text/javascript">
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
 }); 
-$.i18n().locale = lang;
+$.i18n().locale = data_lang_param;
 var documenttype,selectfile,selectDocumentType;
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
@@ -453,9 +458,10 @@ function saveGrievance(){
 return false;
 
 }
-var grievanceCategory="GRIEVANCE_CATEGORY";
+//var grievanceCategory="GRIEVANCE_CATEGORY";
+var featureId = 6
 $.ajax({
-	url: './Consignment/consignmentCurency?CURRENCY='+grievanceCategory,
+	url: './getSourceTypeDropdown/DOC_TYPE/'+featureId+'',
 	type: 'GET',
 	processData: false,
 	contentType: false,
@@ -626,7 +632,7 @@ $('#category').on(
 			success: function (data, textStatus, jqXHR) {
 				$("#docTypetag1").empty();
 				$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
-				console.log(data);
+			
 				for (i = 0; i < data.length; i++){
 						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 						//$('#docTypetag1').append(html);	
@@ -662,15 +668,6 @@ $("input[type=file]").keypress(function(ev) {
 	alert(ccc);
 }); */
 
-</script>
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
-		
 </script>
 </body>
 </html>

@@ -165,10 +165,10 @@ var formData= new FormData();
 			"district": singleStolendistrict,
 			"email":singleStolenemail,
 			"firstName":singleStolenfirstName,
-			"imeiEsnMeid1": parseInt(updatesingleStolenimei1),
-			"imeiEsnMeid2": parseInt(updatesingleStolenimei2),
-			"imeiEsnMeid3": parseInt(updatesingleStolenimei3),
-			"imeiEsnMeid4": parseInt(updatesingleStolenimei4),
+			"imeiEsnMeid1": updatesingleStolenimei1,
+			"imeiEsnMeid2": updatesingleStolenimei2,
+			"imeiEsnMeid3": updatesingleStolenimei3,
+			"imeiEsnMeid4": updatesingleStolenimei4,
 			"lastName": singleStolenlastName,
 			"locality": singleStolenlocality,
 			"multiSimStatus": singleStolenSimStatus,
@@ -213,10 +213,10 @@ var formData= new FormData();
 			
 			if(response.errorCode==0){
 				$("#IndivisualUpdateStolen").prop('disabled', true);
-				$('#stolenSucessPopUp').openModal();
+				$('#stolenSucessPopUp').openModal({dismissible:false});
 				}
 			else{
-				$('#stolenSucessPopUp').openModal();
+				$('#stolenSucessPopUp').openModal({dismissible:false});
 				$('#dynamicMessage').text('');
 				$('#dynamicMessage').text(response.message);
 			}

@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/* session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);   */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -7,7 +16,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Lawful</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -480,7 +489,7 @@ onclick="_Services._selectstartDate()"></i></span>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -596,3 +605,16 @@ src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/j
 
 </body>
 </html>
+<%
+	}else{
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

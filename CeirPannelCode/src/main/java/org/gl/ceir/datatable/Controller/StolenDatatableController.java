@@ -281,17 +281,17 @@ public class StolenDatatableController {
 		
 		log.info("session value user Type=="+session.getAttribute("usertype"));
 		String userType = (String) session.getAttribute("usertype");
-		
-		
-		if(("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) && !"5".equals(featureId)) {
-			pageElement.setPageTitle(Translator.toLocale("view.Block/UnblockDevices"));
-		}else if(("CEIRAdmin".equals(userType)) && "5".equals(featureId))  {
-			pageElement.setPageTitle("Stolen/Recovery");
-		}
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
 		List<InputFields> inputTypeDateList = new ArrayList<>();
-		
+		if(("Operator".equals(userType) ||"CEIRAdmin".equals(userType)) && !"5".equals(featureId)) {
+			pageElement.setPageTitle(Translator.toLocale("view.BlockUnblockDevices"));
+		}else if(("CEIRAdmin".equals(userType)) && "5".equals(featureId))  {
+			pageElement.setPageTitle(Translator.toLocale("view.StolenRecovery"));
+		}
+		else {
+			pageElement.setPageTitle("");
+		}
 		//This Block is for Operator & Admin Upper Filter/Button Forms------------------------------------------------
 		
 		if("Operator".equals(userType) || "CEIRAdmin".equals(userType) && !"5".equals(featureId)) {

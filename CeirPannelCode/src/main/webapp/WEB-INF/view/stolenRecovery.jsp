@@ -1357,7 +1357,7 @@ type="submit" ><spring:message code="button.update" /></button>
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -1399,7 +1399,7 @@ type="submit" ><spring:message code="button.update" /></button>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                     <a class="btn modal-close" href="./stolenRecovery"><spring:message code="modal.ok" /></a>
+                     <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
                    
                 </div>
             </div>
@@ -1444,7 +1444,7 @@ type="submit" ><spring:message code="button.update" /></button>
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" href="./stolenRecovery"><spring:message code="modal.ok" /></a>
+                    <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
                 </div>
             </div>
         </div>

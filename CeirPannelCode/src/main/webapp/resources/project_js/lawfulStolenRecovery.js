@@ -39,7 +39,7 @@ var userType = $("body").attr("data-roleType");
 var sourceType = localStorage.getItem("sourceType");
 
 function filterStolen(){
-	
+
 	if(userType=="Lawful Agency"){
 		Datatable('./headers?type=lawfulStolenHeaders','./stolenData?featureId='+featureId)
 	}else if(userType =="CEIRAdmin"){
@@ -116,7 +116,7 @@ function pageRendering(){
 				if(date[i].type === "date"){	
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -415,7 +415,7 @@ function saveIndivisualStolenRequest(){
 
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
-	var singleStolenOperator=$('#singleStolenOperator').val();
+	var singleStolenOperator=parseInt($('#singleStolenOperator').val());
 	var singleStolenSimStatus=$('#singleStolenSimStatus').val();
 	var singleStolenComplaintType=$('#singleStolenComplaintType').val();
 	var singleStolenphone2 = $('#singleStolenphone2').val();
@@ -472,6 +472,7 @@ function saveIndivisualStolenRequest(){
 			"middleName": singleStolenmiddleName,
 			"modelNumber":singleStolenmodalNumber,
 			"nid": singleStolennIDPassportNumber,
+
 			"operator": singleStolenOperator,
 			"phoneNo": singleStolenphone2,
 			"postalCode": singleDevicepin,
@@ -491,6 +492,7 @@ function saveIndivisualStolenRequest(){
 			"requestType":0,
 			"sourceType":5,
 			"firFileName":fileFileDetails,
+			"operatorTypeId":singleStolenOperator,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
 	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
@@ -702,7 +704,7 @@ function confirmantiondelete(){
 		dismissible:false
 	});
 }
-	
+
 //------------------------------------------- Admin Approve------------------------------------------ 
 
 function deviceApprovalPopup(transactionId,requestType){
@@ -796,6 +798,14 @@ function confirmRejectInformation(){
 	$('#rejectInformation').closeModal();
 	setTimeout(function(){$('#confirmRejectInformation').openModal({dismissible:false});},200);
 }
+
+
+
+
+
+
+
+
 
 
 

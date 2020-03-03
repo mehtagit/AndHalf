@@ -16,7 +16,45 @@ $.i18n().load( {
 });
 
 
-var input = document.querySelector("#phone1");
+$.getJSON('./getDropdownList/VISA_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#visaType');
+
+	}
+});
+$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#deviceType1');
+
+	}
+});
+$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#deviceIdType1');
+
+	}
+});
+$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#multipleSimStatus1');
+
+	}
+});
+$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#deviceStatus1');
+
+	}
+});
+
+
+
+/*var input = document.querySelector("#phone1");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
 });
@@ -25,7 +63,7 @@ var input = document.querySelector("#phone");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
 });
-
+*/
 
 $('#datepicker,#datepicker1').datepicker({
 	dateFormat: "yy-mm-dd"
@@ -77,8 +115,8 @@ function showCambodianUserForm()
 	$("#datepicker1").attr("required", false);
 	$("#visaImage").attr("required", false);
 
-
-
+	$("#nationality").attr("required", false);
+	$("#uploadnationalID").attr("required", false);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
 }
@@ -112,7 +150,7 @@ function showOtherUserForm()
 	$("#onVisaNo").prop("checked", true);
 	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image ')).val("").focus().blur();
 
-	$("#nationality").attr("required", true);
+	//$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
 
@@ -150,41 +188,6 @@ function hideVisaDetails(){
 
 
 
-$.getJSON('./getDropdownList/VISA_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#visaType');
-
-	}
-});
-$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#deviceType1');
-
-	}
-});
-$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#deviceIdType1');
-
-	}
-});
-$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#multipleSimStatus1');
-
-	}
-});
-$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#deviceStatus1');
-
-	}
-});
 
 
 
@@ -218,52 +221,7 @@ $(document).ready(function () {
 
 
 
-			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#deviceType'+dropdownid);
 
-				}
-			});
-
-
-
-			$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#deviceIdType'+dropdownid);
-
-				}
-			});
-
-			$.getJSON('./getDropdownList/CURRENCY', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#Currency'+dropdownid);
-
-				}
-			});
-
-			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#multipleSimStatus'+dropdownid);
-
-				}
-			});
-
-			$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#deviceStatus'+dropdownid);
-
-				}
-			});
 
 
 			id++;
@@ -401,10 +359,10 @@ function submitEndUserDeviceInfo(){
 				"deviceSerialNumber": serialNumber1,
 				"deviceStatus": parseInt(deviceStatus1),
 				"deviceType": parseInt(deviceType1),
-				"firstImei": parseInt(IMEI1),
-				"secondImei": parseInt(IMEI2),
-				"thirdImei": parseInt(IMEI3),
-				"fourthImei": parseInt(IMEI4),
+				"firstImei": IMEI1,
+				"secondImei": IMEI2,
+				"thirdImei": IMEI3,
+				"fourthImei": IMEI4,
 				"multiSimStatus": deviceStatus1,
 				"nid":nationalID,
 				"origin":"SELF"
@@ -499,25 +457,26 @@ $(document).on("keyup", "#visaNumber", function(e) {
 });
 
 
-function fileTypeValueChanges(dd, ddd) {
-	var uploadedFileName = $("#uploadnationalID").val();
+function fileTypeValueChanges(id) {
+	
+	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
-	var fileSize = ($("#uploadnationalID")[0].files[0].size);
+	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
-
+	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext !='png')
 	{
 		$('#fileFormateModal').openModal({
 			dismissible:false
@@ -526,7 +485,7 @@ function fileTypeValueChanges(dd, ddd) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>='100'){
+	else if(fileSize>=100){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});

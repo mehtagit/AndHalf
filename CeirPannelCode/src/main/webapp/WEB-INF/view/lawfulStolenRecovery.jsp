@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Lawful</title>
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -200,8 +200,8 @@
 			</div>
 		</div>
 	</div>
-	
-	    <div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
+
+<div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
         <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
         <div class="modal-content">
             <div class="row">
@@ -282,7 +282,7 @@
             </div>
         </div>
     </div>
-	
+
 <script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
@@ -340,7 +340,8 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/js-url/2.5.3/url.min.js"></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 <script type="text/javascript"

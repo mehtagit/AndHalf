@@ -24,7 +24,7 @@ public class StolenIndividualUserDB {
 	private String email;
 	private String firstName;
 	private Integer id;
-	private Long imeiEsnMeid1,imeiEsnMeid2,imeiEsnMeid3,imeiEsnMeid4;
+	private String imeiEsnMeid1,imeiEsnMeid2,imeiEsnMeid3,imeiEsnMeid4;
 	private String lastName;
 	private String locality;
 	private String middleName;
@@ -39,473 +39,295 @@ public class StolenIndividualUserDB {
 	private String remark;
 	private String street;
 	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince,nidFileName;
-	
 	public String getAlternateContactNumber() {
-	return alternateContactNumber;
+		return alternateContactNumber;
 	}
-
 	public void setAlternateContactNumber(String alternateContactNumber) {
-	this.alternateContactNumber = alternateContactNumber;
+		this.alternateContactNumber = alternateContactNumber;
 	}
-
 	public String getCommune() {
-	return commune;
+		return commune;
 	}
-
 	public void setCommune(String commune) {
-	this.commune = commune;
+		this.commune = commune;
 	}
-
 	public Integer getComplaintType() {
-	return complaintType;
+		return complaintType;
 	}
-
 	public void setComplaintType(Integer complaintType) {
-	this.complaintType = complaintType;
+		this.complaintType = complaintType;
 	}
-
 	public String getContactNumber() {
-	return contactNumber;
+		return contactNumber;
 	}
-
 	public void setContactNumber(String contactNumber) {
-	this.contactNumber = contactNumber;
+		this.contactNumber = contactNumber;
 	}
-
 	public String getCountry() {
-	return country;
+		return country;
 	}
-
 	public void setCountry(String country) {
-	this.country = country;
+		this.country = country;
 	}
-
 	public String getCreatedOn() {
-	return createdOn;
+		return createdOn;
 	}
-
 	public void setCreatedOn(String createdOn) {
-	this.createdOn = createdOn;
+		this.createdOn = createdOn;
 	}
-
 	public String getDeviceBrandName() {
-	return deviceBrandName;
+		return deviceBrandName;
 	}
-
 	public void setDeviceBrandName(String deviceBrandName) {
-	this.deviceBrandName = deviceBrandName;
+		this.deviceBrandName = deviceBrandName;
 	}
-
 	public Integer getDeviceIdType() {
-	return deviceIdType;
+		return deviceIdType;
 	}
-
 	public void setDeviceIdType(Integer deviceIdType) {
-	this.deviceIdType = deviceIdType;
+		this.deviceIdType = deviceIdType;
 	}
-
 	public String getDeviceStolenCommune() {
-	return deviceStolenCommune;
+		return deviceStolenCommune;
 	}
-
 	public void setDeviceStolenCommune(String deviceStolenCommune) {
-	this.deviceStolenCommune = deviceStolenCommune;
+		this.deviceStolenCommune = deviceStolenCommune;
 	}
-
 	public String getDeviceStolenDistrict() {
-	return deviceStolenDistrict;
+		return deviceStolenDistrict;
 	}
-
 	public void setDeviceStolenDistrict(String deviceStolenDistrict) {
-	this.deviceStolenDistrict = deviceStolenDistrict;
+		this.deviceStolenDistrict = deviceStolenDistrict;
 	}
-
 	public String getDeviceStolenLocality() {
-	return deviceStolenLocality;
+		return deviceStolenLocality;
 	}
-
 	public void setDeviceStolenLocality(String deviceStolenLocality) {
-	this.deviceStolenLocality = deviceStolenLocality;
+		this.deviceStolenLocality = deviceStolenLocality;
 	}
-
 	public Integer getDeviceStolenPostalCode() {
-	return deviceStolenPostalCode;
+		return deviceStolenPostalCode;
 	}
-
 	public void setDeviceStolenPostalCode(Integer deviceStolenPostalCode) {
-	this.deviceStolenPostalCode = deviceStolenPostalCode;
+		this.deviceStolenPostalCode = deviceStolenPostalCode;
 	}
-
 	public String getDeviceStolenPropertyLocation() {
-	return deviceStolenPropertyLocation;
+		return deviceStolenPropertyLocation;
 	}
-
 	public void setDeviceStolenPropertyLocation(String deviceStolenPropertyLocation) {
-	this.deviceStolenPropertyLocation = deviceStolenPropertyLocation;
+		this.deviceStolenPropertyLocation = deviceStolenPropertyLocation;
 	}
-
 	public String getDeviceStolenStreet() {
-	return deviceStolenStreet;
+		return deviceStolenStreet;
 	}
-
 	public void setDeviceStolenStreet(String deviceStolenStreet) {
-	this.deviceStolenStreet = deviceStolenStreet;
+		this.deviceStolenStreet = deviceStolenStreet;
 	}
-
 	public String getDeviceStolenVillage() {
-	return deviceStolenVillage;
+		return deviceStolenVillage;
 	}
-
 	public void setDeviceStolenVillage(String deviceStolenVillage) {
-	this.deviceStolenVillage = deviceStolenVillage;
+		this.deviceStolenVillage = deviceStolenVillage;
 	}
-
 	public Integer getDeviceType() {
-	return deviceType;
+		return deviceType;
 	}
-
 	public void setDeviceType(Integer deviceType) {
-	this.deviceType = deviceType;
+		this.deviceType = deviceType;
 	}
-
 	public String getDistrict() {
-	return district;
+		return district;
 	}
-
 	public void setDistrict(String district) {
-	this.district = district;
+		this.district = district;
 	}
-
 	public Integer getDocType() {
-	return docType;
+		return docType;
 	}
-
 	public void setDocType(Integer docType) {
-	this.docType = docType;
+		this.docType = docType;
 	}
-
 	public Integer getDocTypeInterp() {
-	return docTypeInterp;
+		return docTypeInterp;
 	}
-
 	public void setDocTypeInterp(Integer docTypeInterp) {
-	this.docTypeInterp = docTypeInterp;
+		this.docTypeInterp = docTypeInterp;
 	}
-
 	public String getEmail() {
-	return email;
+		return email;
 	}
-
 	public void setEmail(String email) {
-	this.email = email;
+		this.email = email;
 	}
-
 	public String getFirstName() {
-	return firstName;
+		return firstName;
 	}
-
 	public void setFirstName(String firstName) {
-	this.firstName = firstName;
+		this.firstName = firstName;
 	}
-
 	public Integer getId() {
-	return id;
+		return id;
 	}
-
 	public void setId(Integer id) {
-	this.id = id;
+		this.id = id;
 	}
-
-
-
+	public String getImeiEsnMeid1() {
+		return imeiEsnMeid1;
+	}
+	public void setImeiEsnMeid1(String imeiEsnMeid1) {
+		this.imeiEsnMeid1 = imeiEsnMeid1;
+	}
+	public String getImeiEsnMeid2() {
+		return imeiEsnMeid2;
+	}
+	public void setImeiEsnMeid2(String imeiEsnMeid2) {
+		this.imeiEsnMeid2 = imeiEsnMeid2;
+	}
+	public String getImeiEsnMeid3() {
+		return imeiEsnMeid3;
+	}
+	public void setImeiEsnMeid3(String imeiEsnMeid3) {
+		this.imeiEsnMeid3 = imeiEsnMeid3;
+	}
+	public String getImeiEsnMeid4() {
+		return imeiEsnMeid4;
+	}
+	public void setImeiEsnMeid4(String imeiEsnMeid4) {
+		this.imeiEsnMeid4 = imeiEsnMeid4;
+	}
 	public String getLastName() {
-	return lastName;
+		return lastName;
 	}
-
 	public void setLastName(String lastName) {
-	this.lastName = lastName;
+		this.lastName = lastName;
 	}
-
 	public String getLocality() {
-	return locality;
+		return locality;
 	}
-
 	public void setLocality(String locality) {
-	this.locality = locality;
+		this.locality = locality;
 	}
-
 	public String getMiddleName() {
-	return middleName;
+		return middleName;
 	}
-
 	public void setMiddleName(String middleName) {
-	this.middleName = middleName;
+		this.middleName = middleName;
 	}
-
 	public String getModelNumber() {
-	return modelNumber;
+		return modelNumber;
 	}
-
 	public void setModelNumber(String modelNumber) {
-	this.modelNumber = modelNumber;
+		this.modelNumber = modelNumber;
 	}
-
 	public String getModifiedOn() {
-	return modifiedOn;
+		return modifiedOn;
 	}
-
 	public void setModifiedOn(String modifiedOn) {
-	this.modifiedOn = modifiedOn;
+		this.modifiedOn = modifiedOn;
 	}
-
 	public String getNid() {
-	return nid;
+		return nid;
 	}
-
 	public void setNid(String nid) {
-	this.nid = nid;
+		this.nid = nid;
 	}
-
 	public Integer getOperator() {
-	return operator;
+		return operator;
 	}
-
 	public void setOperator(Integer operator) {
-	this.operator = operator;
+		this.operator = operator;
 	}
-
 	public String getPhoneNo() {
-	return phoneNo;
+		return phoneNo;
 	}
-
 	public void setPhoneNo(String phoneNo) {
-	this.phoneNo = phoneNo;
+		this.phoneNo = phoneNo;
 	}
-
 	public Integer getPostalCode() {
-	return postalCode;
+		return postalCode;
 	}
-
 	public void setPostalCode(Integer postalCode) {
-	this.postalCode = postalCode;
+		this.postalCode = postalCode;
 	}
-
 	public String getPropertyLocation() {
-	return propertyLocation;
+		return propertyLocation;
 	}
-
 	public void setPropertyLocation(String propertyLocation) {
-	this.propertyLocation = propertyLocation;
+		this.propertyLocation = propertyLocation;
 	}
-
 	public String getProvince() {
-	return province;
+		return province;
 	}
-
 	public void setProvince(String province) {
-	this.province = province;
+		this.province = province;
 	}
-
 	public String getRemark() {
-	return remark;
+		return remark;
 	}
-
 	public void setRemark(String remark) {
-	this.remark = remark;
+		this.remark = remark;
 	}
-
 	public String getStreet() {
-	return street;
+		return street;
 	}
-
 	public void setStreet(String street) {
-	this.street = street;
+		this.street = street;
 	}
-
 	public String getVillage() {
-	return village;
+		return village;
 	}
-
 	public void setVillage(String village) {
-	this.village = village;
+		this.village = village;
 	}
-
-	
-	
 	public String getMultiSimStatus() {
 		return multiSimStatus;
 	}
-
 	public void setMultiSimStatus(String multiSimStatus) {
 		this.multiSimStatus = multiSimStatus;
 	}
-
 	public String getDeviceSerialNumber() {
 		return deviceSerialNumber;
 	}
-
 	public void setDeviceSerialNumber(String deviceSerialNumber) {
 		this.deviceSerialNumber = deviceSerialNumber;
 	}
-
-	
-	
 	public String getDeviceStolenCountry() {
 		return deviceStolenCountry;
 	}
-
 	public void setDeviceStolenCountry(String deviceStolenCountry) {
 		this.deviceStolenCountry = deviceStolenCountry;
 	}
-
 	public String getDeviceStolenProvince() {
 		return deviceStolenProvince;
 	}
-
 	public void setDeviceStolenProvince(String deviceStolenProvince) {
 		this.deviceStolenProvince = deviceStolenProvince;
 	}
-
 	public String getNidFileName() {
 		return nidFileName;
 	}
-
 	public void setNidFileName(String nidFileName) {
 		this.nidFileName = nidFileName;
 	}
-
-	public Long getImeiEsnMeid1() {
-		return imeiEsnMeid1;
-	}
-
-	public void setImeiEsnMeid1(Long imeiEsnMeid1) {
-		this.imeiEsnMeid1 = imeiEsnMeid1;
-	}
-
-	public Long getImeiEsnMeid2() {
-		return imeiEsnMeid2;
-	}
-
-	public void setImeiEsnMeid2(Long imeiEsnMeid2) {
-		this.imeiEsnMeid2 = imeiEsnMeid2;
-	}
-
-	public Long getImeiEsnMeid3() {
-		return imeiEsnMeid3;
-	}
-
-	public void setImeiEsnMeid3(Long imeiEsnMeid3) {
-		this.imeiEsnMeid3 = imeiEsnMeid3;
-	}
-
-	public Long getImeiEsnMeid4() {
-		return imeiEsnMeid4;
-	}
-
-	public void setImeiEsnMeid4(Long imeiEsnMeid4) {
-		this.imeiEsnMeid4 = imeiEsnMeid4;
-	}
-
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("StolenIndividualUserDB [alternateContactNumber=");
-		builder.append(alternateContactNumber);
-		builder.append(", commune=");
-		builder.append(commune);
-		builder.append(", complaintType=");
-		builder.append(complaintType);
-		builder.append(", contactNumber=");
-		builder.append(contactNumber);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", deviceBrandName=");
-		builder.append(deviceBrandName);
-		builder.append(", deviceIdType=");
-		builder.append(deviceIdType);
-		builder.append(", deviceStolenCommune=");
-		builder.append(deviceStolenCommune);
-		builder.append(", deviceStolenDistrict=");
-		builder.append(deviceStolenDistrict);
-		builder.append(", deviceStolenLocality=");
-		builder.append(deviceStolenLocality);
-		builder.append(", deviceStolenPostalCode=");
-		builder.append(deviceStolenPostalCode);
-		builder.append(", deviceStolenPropertyLocation=");
-		builder.append(deviceStolenPropertyLocation);
-		builder.append(", deviceStolenStreet=");
-		builder.append(deviceStolenStreet);
-		builder.append(", deviceStolenVillage=");
-		builder.append(deviceStolenVillage);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", district=");
-		builder.append(district);
-		builder.append(", docType=");
-		builder.append(docType);
-		builder.append(", docTypeInterp=");
-		builder.append(docTypeInterp);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", id=");
-		builder.append(id);
-		builder.append(", imeiEsnMeid1=");
-		builder.append(imeiEsnMeid1);
-		builder.append(", imeiEsnMeid2=");
-		builder.append(imeiEsnMeid2);
-		builder.append(", imeiEsnMeid3=");
-		builder.append(imeiEsnMeid3);
-		builder.append(", imeiEsnMeid4=");
-		builder.append(imeiEsnMeid4);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", middleName=");
-		builder.append(middleName);
-		builder.append(", modelNumber=");
-		builder.append(modelNumber);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", operator=");
-		builder.append(operator);
-		builder.append(", phoneNo=");
-		builder.append(phoneNo);
-		builder.append(", postalCode=");
-		builder.append(postalCode);
-		builder.append(", propertyLocation=");
-		builder.append(propertyLocation);
-		builder.append(", province=");
-		builder.append(province);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", village=");
-		builder.append(village);
-		builder.append(", multiSimStatus=");
-		builder.append(multiSimStatus);
-		builder.append(", deviceSerialNumber=");
-		builder.append(deviceSerialNumber);
-		builder.append(", deviceStolenCountry=");
-		builder.append(deviceStolenCountry);
-		builder.append(", deviceStolenProvince=");
-		builder.append(deviceStolenProvince);
-		builder.append(", nidFileName=");
-		builder.append(nidFileName);
-		builder.append("]");
-		return builder.toString();
+		return "StolenIndividualUserDB [alternateContactNumber=" + alternateContactNumber + ", commune=" + commune
+				+ ", complaintType=" + complaintType + ", contactNumber=" + contactNumber + ", country=" + country
+				+ ", createdOn=" + createdOn + ", deviceBrandName=" + deviceBrandName + ", deviceIdType=" + deviceIdType
+				+ ", deviceStolenCommune=" + deviceStolenCommune + ", deviceStolenDistrict=" + deviceStolenDistrict
+				+ ", deviceStolenLocality=" + deviceStolenLocality + ", deviceStolenPostalCode="
+				+ deviceStolenPostalCode + ", deviceStolenPropertyLocation=" + deviceStolenPropertyLocation
+				+ ", deviceStolenStreet=" + deviceStolenStreet + ", deviceStolenVillage=" + deviceStolenVillage
+				+ ", deviceType=" + deviceType + ", district=" + district + ", docType=" + docType + ", docTypeInterp="
+				+ docTypeInterp + ", email=" + email + ", firstName=" + firstName + ", id=" + id + ", imeiEsnMeid1="
+				+ imeiEsnMeid1 + ", imeiEsnMeid2=" + imeiEsnMeid2 + ", imeiEsnMeid3=" + imeiEsnMeid3 + ", imeiEsnMeid4="
+				+ imeiEsnMeid4 + ", lastName=" + lastName + ", locality=" + locality + ", middleName=" + middleName
+				+ ", modelNumber=" + modelNumber + ", modifiedOn=" + modifiedOn + ", nid=" + nid + ", operator="
+				+ operator + ", phoneNo=" + phoneNo + ", postalCode=" + postalCode + ", propertyLocation="
+				+ propertyLocation + ", province=" + province + ", remark=" + remark + ", street=" + street
+				+ ", village=" + village + ", multiSimStatus=" + multiSimStatus + ", deviceSerialNumber="
+				+ deviceSerialNumber + ", deviceStolenCountry=" + deviceStolenCountry + ", deviceStolenProvince="
+				+ deviceStolenProvince + ", nidFileName=" + nidFileName + "]";
 	}
-
 	
-	
-	
-
-
 }

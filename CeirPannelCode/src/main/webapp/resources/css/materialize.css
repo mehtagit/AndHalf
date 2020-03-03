@@ -10125,6 +10125,7 @@ textarea.materialize-textarea {
 	resize: none;
 	min-height: 3rem;
 	overflow-y: scroll;
+	cursor: auto;
 }
 
 .hiddendiv {
@@ -10624,10 +10625,13 @@ select {
 
 select.browser-default {
 	display: block;
+    /* outline: 3px solid  #fff; */
 }
 
 select:disabled {
 	color: rgba(0, 0, 0, 0.3);
+	border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
+	padding-left: 5px;
 }
 
 .select-wrapper input.select-dropdown:disabled {
@@ -13198,7 +13202,24 @@ width: 0;
 background: transparent;
 }
 
-.textarea.materialize-textarea::-webkit-scrollbar {
-width: 2pxpx;
-background: #444;
+textarea::-webkit-scrollbar {
+width: 10px;
+cursor: auto;
+}
+
+textarea::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+  cursor: auto;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #444; 
+  border-radius: 10px;
+  cursor: auto;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+  cursor: auto;
 }

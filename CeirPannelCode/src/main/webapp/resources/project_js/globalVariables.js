@@ -71,4 +71,60 @@ $("input[type=file]").keypress(function(ev) {
 
 	});
 	var featureId = window.parent.$('.navData li.active a').attr('data-featureid')
+
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	function isFileValid(id,hiddenVal,editInputID) {
+
+			var uploadedFileName = $("#"+id).val();
+			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+			var ext = uploadedFileName.split('.').pop();
+		
+			var fileSize = ($("#"+id)[0].files[0].size);
+			fileSize = (Math.round((fileSize / 1024) * 100) / 100)
+		   if (uploadedFileName.length > 30) {
+		       window.parent.$('#fileFormateModal').openModal({
+		    	   dismissible:false
+		       });
+		   } 
+			else if(ext!='csv')
+				{
+				window.parent.$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+				}
+			else if(fileSize>='2000'){
+				window.parent.$('#fileFormateModal').openModal({
+					dismissible:false
+				});
+			}
+			else {
+				console.log("file formate is correct")
+				
+			}
+			
+
+		}
+/*	function clearFileName(id) {
+		$('#'+id).val('');
+		$("#"+id).val('');
+		$('#fileFormateModal').closeModal();
+	}*/
+/*	function clearFileName(id,hiddenVal,editInputID) {
+		//$('#mainArea').contents().find('#fileNameEdit').val()
+		var existingfile=$('#mainArea').contents().find("#"+hiddenVal).val();
+		//$('#fileNameEdit').val('');
+		$('#mainArea').contents().find("#"+id).val('');
+		$('#fileFormateModal').closeModal();
+		
+		$('#mainArea').contents().find("#"+editInputID).val(existingfile);
+	}
+
+	*/

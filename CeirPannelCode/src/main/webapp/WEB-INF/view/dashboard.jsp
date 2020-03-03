@@ -599,7 +599,7 @@ data-dismiss="modal">&times;</button> -->
 			<div class="row">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close waves-effect waves-light btn" onclick="clearFileName()"
+						<button class="modal-close waves-effect waves-light btn" onclick="document.getElementById('mainArea').contentWindow.clearFileName();"
 							style="margin-left: 10px;"><spring:message code="modal.ok" /></button>
 					</div>
 				</div>
