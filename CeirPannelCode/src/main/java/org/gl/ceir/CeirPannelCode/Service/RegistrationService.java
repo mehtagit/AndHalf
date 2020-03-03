@@ -49,7 +49,7 @@ public class RegistrationService {
 	GenerateRandomDigits randomDigits;
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	public String registrationView(String usertype,Model model) {
+	public String registrationView(String usertype,Model model,HttpSession session) {
 		log.info("inside registration view controller");
 		log.info("usertype given: "+usertype);
 		HashMap<String, String> map=new HashMap<String,String>();
@@ -72,7 +72,13 @@ public class RegistrationService {
 				Usertype usertypeData=userRegistrationFeignImpl.userypeDataByName(usertype);
 				log.info("usertypeData by usertypeName"+usertypeData);
 				model.addAttribute("usertypeId", usertypeData.getId());
-
+				log.info("now check registration available or not");;
+                HttpResponse response=userRegistrationFeignImpl.checkRegistration(usertypeData.getId());
+                log.info("response got: "+response);
+                session.removeAttribute("response");
+                session.removeAttribute("statusCode");
+                session.setAttribute("tag",response.getTag());
+                session.setAttribute("statusCode",response.getStatusCode());
 			}
 			return output;
 

@@ -1,3 +1,9 @@
+<%
+Integer statusCode=(Integer)session.getAttribute("statusCode");
+%>
+<%
+if(statusCode==200){
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -894,10 +900,10 @@ return true;
             }
         }
     </script>
-
-
-
-
 </body>
-
 </html>
+<%}
+else{
+%>
+<%@include file="registrationPopup.jsp" %>
+<%}%>

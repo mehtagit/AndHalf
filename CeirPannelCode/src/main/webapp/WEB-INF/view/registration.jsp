@@ -1,3 +1,9 @@
+<%
+Integer statusCode=(Integer)session.getAttribute("statusCode");
+%>
+<%
+if(statusCode==200){
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -236,7 +242,6 @@ var contextpath = "${context}";
 	<%String userType=request.getParameter("type");
 String usertypeId="${usertypeId}";
 %>
-
 	<!-- Modal End -->
 	<!-- ================================================
     Scripts
@@ -792,6 +797,8 @@ String usertypeId="${usertypeId}";
 			</form>
 		</div>
 	</div>
+	
+	
 
 	<!-- Modal End -->
 
@@ -950,3 +957,8 @@ String usertypeId="${usertypeId}";
          </script>
 </body>
 </html>
+<%}
+else{
+%>
+<%@include file="registrationPopup.jsp" %>
+<%}%>
