@@ -6,6 +6,7 @@ public class UserStatus {
 	private String remark;
 	private Integer featureId;
 	private Integer statusValue;
+	private String username;
 	public String getStatus() {
 		return status;
 	}
@@ -36,10 +37,30 @@ public class UserStatus {
 	public void setStatusValue(Integer statusValue) {
 		this.statusValue = statusValue;
 	}
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	@Override
 	public String toString() {
-		return "UserStatus [status=" + status + ", userId=" + userId + ", remark=" + remark + ", featureId=" + featureId
-				+ ", statusValue=" + statusValue + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserStatus [status=");
+		builder.append(status);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", statusValue=");
+		builder.append(statusValue);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
