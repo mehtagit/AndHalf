@@ -408,7 +408,7 @@ select {
 
 													<div class="col s12 m6 l6">
 														<label> <spring:message code="input.province" />
-															<span class="star"> *</span></label> <select id="state"
+															 <span class="star"> *</span></label> <select id="state"
 															class="browser-default" class="mySelect"
 															style="padding-left: 0;"
 															oninput="InvalidMsg(this,'select','<spring:message code="
@@ -608,15 +608,11 @@ select {
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumber"
-																pattern="[0-9]{15,16}"
-																oninput="InvalidMsg(this,'input');"
-																oninvalid="InvalidMsg(this,'input');"
-																required="required"
-																title="<spring:message code=" validation.1516digit" />"
-																maxlength="16" id="singleStolenimei1"> <label
-																for="singleStolenimei1"><span class="star">
-																	*</span> <spring:message code="registration.one" /></label>
+															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input');"
+																oninvalid="InvalidMsg(this,'input');" required="required" title="<spring:message code=" validation.1516digit" />"
+																maxlength="16" id="singleStolenimei1"> 
+																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> *</span> 
+																</label>
 														</div>
 
 														<div class="input-field col s12 m6">
@@ -771,7 +767,7 @@ select {
 														</div>
 
 														<div class="col s12 m6 l6">
-															<label> <spring:message code="input.province" /><span
+															<label> <spring:message code="input.province" /> <span
 																class="star">*</span></label> <select id="singleDevicestate"
 																class="browser-default" class="mySelect"
 																style="padding-left: 0;"

@@ -334,7 +334,7 @@ var contextpath = "${context}";
 							</div>
 
 							<div class="row">
-								<div class="input-field col s12 m6 l6">
+								<div class="input-field col s12 m6 l6" style="margin-top: 22px">
 									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{8,12}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.12Character" />" required />
@@ -366,7 +366,7 @@ var contextpath = "${context}";
 									</div>
 								</div>
 
-								<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
+								<div class="input-field col s12 m6 l6" style="margin-top: 24px;">
 									<input type="text" name="employeeID" required="required" id="employeeId" maxlength="30" 
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.address30characters" />" required /> 

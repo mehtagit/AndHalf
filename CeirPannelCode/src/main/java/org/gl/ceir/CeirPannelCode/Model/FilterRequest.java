@@ -4,8 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FilterRequest {
-	public String startDate,endDate,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeature,userName,date;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,dollar,riel,currency;
+	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,riel,currency,quantity,stockStatus;
+	private Double dollar;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -17,6 +18,18 @@ public class FilterRequest {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public String getRoleType() {
 		return roleType;
@@ -126,11 +139,11 @@ public class FilterRequest {
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
 	}
-	public String getSubFeature() {
-		return subFeature;
+	public String getSubFeatureName() {
+		return subFeatureName;
 	}
-	public void setSubFeature(String subFeature) {
-		this.subFeature = subFeature;
+	public void setSubFeatureName(String subFeatureName) {
+		this.subFeatureName = subFeatureName;
 	}
 	public String getUserName() {
 		return userName;
@@ -143,6 +156,36 @@ public class FilterRequest {
 	}
 	public void setDate(String date) {
 		this.date = date;
+	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+	public String getSuplierName() {
+		return suplierName;
+	}
+	public void setSuplierName(String suplierName) {
+		this.suplierName = suplierName;
+	}
+	public String getSupplierId() {
+		return supplierId;
+	}
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
+	public String getStateInterp() {
+		return stateInterp;
+	}
+	public void setStateInterp(String stateInterp) {
+		this.stateInterp = stateInterp;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -276,12 +319,6 @@ public class FilterRequest {
 	public void setPort(Integer port) {
 		this.port = port;
 	}
-	public Integer getDollar() {
-		return dollar;
-	}
-	public void setDollar(Integer dollar) {
-		this.dollar = dollar;
-	}
 	public Integer getRiel() {
 		return riel;
 	}
@@ -294,22 +331,45 @@ public class FilterRequest {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
+	public Integer getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+	public Integer getStockStatus() {
+		return stockStatus;
+	}
+	public void setStockStatus(Integer stockStatus) {
+		this.stockStatus = stockStatus;
+	}
+	public Double getDollar() {
+		return dollar;
+	}
+	public void setDollar(Double dollar) {
+		this.dollar = dollar;
+	}
 	@Override
 	public String toString() {
-		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", roleType=" + roleType
-				+ ", userType=" + userType + ", txnId=" + txnId + ", searchString=" + searchString + ", grievanceId="
-				+ grievanceId + ", tag=" + tag + ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid
-				+ ", childTag=" + childTag + ", field=" + field + ", interp=" + interp + ", tagId=" + tagId + ", value="
-				+ value + ", displayName=" + displayName + ", description=" + description + ", address=" + address
-				+ ", featureName=" + featureName + ", subFeature=" + subFeature + ", userName=" + userName + ", date="
-				+ date + ", userId=" + userId + ", taxPaidStatus=" + taxPaidStatus + ", consignmentStatus="
-				+ consignmentStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", fileStatus="
-				+ fileStatus + ", requestType=" + requestType + ", sourceType=" + sourceType + ", grievanceStatus="
-				+ grievanceStatus + ", userRoleTypeId=" + userRoleTypeId + ", status=" + status + ", asType=" + asType
-				+ ", serviceDump=" + serviceDump + ", fileType=" + fileType + ", action=" + action + ", operatorTypeId="
-				+ operatorTypeId + ", channel=" + channel + ", type=" + type + ", deviceIdType=" + deviceIdType
-				+ ", parentValue=" + parentValue + ", id=" + id + ", port=" + port + ", dollar=" + dollar + ", riel="
-				+ riel + ", currency=" + currency + "]";
+		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", roleType=" + roleType + ", userType=" + userType + ", txnId="
+				+ txnId + ", searchString=" + searchString + ", grievanceId=" + grievanceId + ", tag=" + tag
+				+ ", remarks=" + remarks + ", deviceId=" + deviceId + ", nid=" + nid + ", childTag=" + childTag
+				+ ", field=" + field + ", interp=" + interp + ", tagId=" + tagId + ", value=" + value + ", displayName="
+				+ displayName + ", description=" + description + ", address=" + address + ", featureName=" + featureName
+				+ ", subFeatureName=" + subFeatureName + ", userName=" + userName + ", date=" + date + ", fileName="
+				+ fileName + ", invoiceNumber=" + invoiceNumber + ", suplierName=" + suplierName + ", supplierId="
+				+ supplierId + ", stateInterp=" + stateInterp + ", userId=" + userId + ", taxPaidStatus="
+				+ taxPaidStatus + ", consignmentStatus=" + consignmentStatus + ", featureId=" + featureId
+				+ ", userTypeId=" + userTypeId + ", fileStatus=" + fileStatus + ", requestType=" + requestType
+				+ ", sourceType=" + sourceType + ", grievanceStatus=" + grievanceStatus + ", userRoleTypeId="
+				+ userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump=" + serviceDump
+				+ ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId + ", channel="
+				+ channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue
+				+ ", id=" + id + ", port=" + port + ", riel=" + riel + ", currency=" + currency + ", quantity="
+				+ quantity + ", stockStatus=" + stockStatus + ", dollar=" + dollar + "]";
 	}
+	
+	
 		
 }

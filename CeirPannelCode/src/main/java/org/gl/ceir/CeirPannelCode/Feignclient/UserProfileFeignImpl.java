@@ -125,14 +125,14 @@ public interface UserProfileFeignImpl {
 		
 		//***************************************************View Currency Feign********************************
 		
-		@RequestMapping(value="/currency/view" ,method=RequestMethod.POST) 
+		@RequestMapping(value="/currency/viewById/{id}" ,method=RequestMethod.POST) 
 		public @ResponseBody GenricResponse viewCurrencyFeign(@PathVariable ("id") Integer id);
 		
 		
 		
 		//***************************************************Update Currency Feign********************************
 
-		@RequestMapping(value= "/portAddress/update" , method=RequestMethod.POST) 
+		@RequestMapping(value= "/currency/update" , method=RequestMethod.POST) 
 		public GenricResponse updateCurrencyFeign(@RequestBody FilterRequest filterRequest);
 		
 	

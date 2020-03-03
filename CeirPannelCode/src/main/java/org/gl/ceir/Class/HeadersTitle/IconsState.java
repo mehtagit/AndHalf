@@ -1776,13 +1776,13 @@ public class IconsState {
 		// URL link 
 		String file = fileName == null ? null : fileName.replace(" ", "%20");
 
-		log.info("@@@@  "+source+"&&"+requestTypeValue);
+		log.info("source  "+source+"  requestTypeValue-->"+requestTypeValue+"  requestType-->"+requestType);
 
 		String viewAction="";
 		String editAction="";
 		String emptyURL="JavaScript:void(0);"; 
-		String approveAction = "deviceApprovalPopup('" + txnId + "','" + requestType + "')";
-		String rejectAction = "userRejectPopup('" + txnId + "','" + requestType + "')";
+		String approveAction = "deviceApprovalPopup('" + txnId + "','"+requestTypeValue+"')";
+		String rejectAction = "userRejectPopup('" + txnId + "','" + requestTypeValue + "')";
 	//	String errorURL = "./Consignment/dowloadFiles/error/"+file+"/"+txnId+"/"+defaultTagName+"";	
 		String errorURL = "fileDownload('"+file+"','error','"+txnId+"','"+defaultTagName+"')";
 		//String downloadURL = "./Consignment/dowloadFiles/actual/"+file+"/"+txnId+"/"+defaultTagName+"";

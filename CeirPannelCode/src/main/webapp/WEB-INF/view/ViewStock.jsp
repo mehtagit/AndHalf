@@ -170,13 +170,13 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 					<div class="input-field col s12 m6" id="editSupplierNameDiv">
 						<input type="text" name="SupplierName" id="editSupplierName" required="required"
 							placeholder="" pattern="[A-Za-z ]{0,50}" title="Please enter alphabets  upto 50 characters only" maxlength="50" /> <label for="editSupplierName"
-							id="editSupplierNameLabel" class="center-align"><spring:message code="input.supllierName" /><span class="star">*</span></label></label>
+							id="editSupplierNameLabel" class="center-align"><spring:message code="input.supllierName" /> <span class="star">*</span></label></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
 							placeholder="" pattern="[0-9]{0,7}" title="Please enter numbers upto 7 characters only" maxlength="7" required /> <label
-							for="Quantity" class="center-align"><spring:message code="input.quantity" /><span class="star">*</span></label>
+							for="Quantity" class="center-align"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
@@ -192,7 +192,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 					</div>
 					
 					<div class="file-field col s12 m6">
-					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /><span class="star">*</span></p>
+					<p class="upload-file-label" style="margin-bottom: 0;"><spring:message code="modal.header.uploadBlockStock" /> <span class="star">*</span></p>
 						<div class="btn">
 							<span><spring:message code="input.selectfile" /></span> <input type="file" onchange="fileTypeValueChanges()"
 								id="editcsvUploadFile" accept=".csv">

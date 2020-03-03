@@ -113,7 +113,7 @@ function pageRendering(){
 							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 							"<select id="+dropdown[i].id+" class='select2 form-control boxBorder boxHeight initialized'>"+
-							"<option value='null' disabled>"+dropdown[i].title+
+							"<option value='null'>"+dropdown[i].title+
 							"</option>"+
 							"</select>"+
 							"</div>"+
@@ -187,7 +187,7 @@ function setViewPopupData(data){
 	$("#viewValue").val(data.value);
 	$("#viewPeriod").val(data.period);
 	$("#description").val(data.description);
-	$("#viewstatus").val(data.status);
+	$("#viewstatus").val(data.statusInterp);
 	$("#remarks").val(data.remark);
 	$("#viewpolicyOrder").val(data.policyOrder);
 }
@@ -221,7 +221,7 @@ function setEditPopupData(data){
 	$("#editValue").val(data.value);
 	$("#editPeriod").val(data.period);
 	$("#editdescription").val(data.description);
-	$("#editstatus").val(data.status);
+	$("#editstatus").val(data.statusInterp);
 	$("#editremarks").val(data.remark);
 	$("#editpolicyOrder").val(data.policyOrder);
 }

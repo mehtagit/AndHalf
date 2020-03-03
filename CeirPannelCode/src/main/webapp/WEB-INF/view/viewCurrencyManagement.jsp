@@ -145,7 +145,7 @@
 					
 					<div class="col s12 m6">
 					<label for="port" class="active">Currency<span class="star">*</span></label>
-                     	 <select class="browser-default" id="currency" style="margin-bottom: 5px;">
+                     	 <select class="browser-default" id="currency" style="margin-bottom: 5px;" required="required">
                                 <option value=""  selected="" disabled>Select Currency</option>
                           </select>
                         
@@ -190,7 +190,7 @@
 					
 					<div class="col s12 m6">
 					<label for="port" class="active">Currency<span class="star">*</span></label>
-                     	 <select class="browser-default" id="editCurrency" style="margin-bottom: 5px;">
+                     	 <select class="browser-default" id="editCurrency" style="margin-bottom: 5px;" required="required">
                                 <option value=""  selected="" disabled>Select Currency</option>
                           </select>
                         
@@ -217,7 +217,7 @@
     </div>
 		
 	<div id="confirmField" class="modal">
-		<h6 class="modal-header"><spring:message code="button.addport" /></h6>
+		<h6 class="modal-header">Add Currency</h6>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage">Currency Added Successfully</h6>

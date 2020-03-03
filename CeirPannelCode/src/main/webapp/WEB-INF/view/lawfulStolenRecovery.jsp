@@ -201,6 +201,88 @@
 		</div>
 	</div>
 
+<div id="approveInformation" class="modal" style="width: 40%; z-index: 1003; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                   
+                    <h6><spring:message code="modal.approveRequest" /><span id="blockApproveTxnId"></span>?</h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="aprroveDevice()" class="btn modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                      <span id="userId" hidden></span>
+                       <span id="adminCurrentStatus" hidden></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div id="confirmApproveInformation" class="modal" style="width: 40%; z-index: 1005; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header"><spring:message code="modal.header.approve" /></h6>
+        <div class="modal-content">
+            <div class="row">
+                <form action="">
+                    
+                    <h6><spring:message code="modal.deviceApproved" /></h6>
+                   
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                     <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+	    <!--------------------------------------------------- Reject Model--------------------------------------------->
+    
+        <div id="rejectInformation" class="modal">
+           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
+            <div class="modal-content">
+            <div class="row">
+             <h6><spring:message code="modal.rejectRequest" /><span id="rejectTxnId"></span> ?</h6>
+                <form action="">
+                
+                    <div class="input-field" style="margin-top: 30px;">
+                        <textarea id="Reason" class="materialize-textarea"></textarea>
+                        <label for="textarea1" style="margin-left: -10px;"><spring:message code="lable.reason" /></label>
+                    </div>
+                   
+                    
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a onclick="rejectUser()" class="btn modal-close modal-trigger"><spring:message code="modal.yes" /></a>
+                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    	<div id="confirmRejectInformation" class="modal">
+         <h6 class="modal-header"><spring:message code="registration.reject" /></h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6><spring:message code="modal.deviceRejected" /></h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a class="btn modal-close" href="./stolenRecovery?FeatureId=5"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 

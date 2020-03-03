@@ -232,7 +232,7 @@ input[type='search'] {
 														pattern="[A-Za-z]{0,20}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 														title= "<spring:message code="validation.20Character" />" required>
-													<label for="firstName" class="center-align"><spring:message code="input.firstName" /><span class="star">*</span>
+													<label for="firstName" class="center-align"><spring:message code="input.firstName" /> <span class="star">*</span>
 													</label>
 												</div>
 
@@ -249,7 +249,7 @@ input[type='search'] {
 														 pattern="[A-Za-z]{0,20}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 														title= "<spring:message code="validation.20Character" />" required
-														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /><span class="star">*</span>
+														maxlength="20"> <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span>
 													</label>
 												</div>
 											</div>
@@ -274,7 +274,7 @@ input[type='search'] {
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="streetNumber"
 														maxlength="20" required/> <label
-														for="streetNumber"> <spring:message code="input.streetNumber" /><span
+														for="streetNumber"> <spring:message code="input.streetNumber" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -284,7 +284,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="village"
 														maxlength="30" required/> <label
-														for="village"> <spring:message code="input.village" /><span
+														for="village"> <spring:message code="input.village" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -297,7 +297,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />"
 														class="form-control boxBorder boxHeight" id="locality"
 														maxlength="30" required/> <label
-														for="locality"> <spring:message code="input.locality" /><span class="star">*</span>
+														for="locality"> <spring:message code="input.locality" /> <span class="star">*</span>
 													</label>
 												</div>
 
@@ -307,7 +307,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="district"
 														maxlength="30" required> <label
-														for="district"> <spring:message code="input.district" /><span
+														for="district"> <spring:message code="input.district" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -317,7 +317,7 @@ input[type='search'] {
 														title= "<spring:message code="validation.30characters" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="commune"
 														maxlength="30" required/> <label
-														for="commune"> <spring:message code="input.commune" /><span
+														for="commune"> <spring:message code="input.commune" /> <span
 														class="star">*</span>
 													</label>
 												</div>
@@ -328,14 +328,14 @@ input[type='search'] {
 														title= "<spring:message code="validation.postalcode" />" name="streetNumber"
 														class="form-control boxBorder boxHeight" id="postalcode"
 														maxlength="6" required/> <label
-														for="postalcode"> <spring:message code="input.postalCode" /><span
+														for="postalcode"> <spring:message code="input.postalCode" /> <span
 														class="star">*</span>
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6">
 													<p
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-														<spring:message code="table.country" /><span class="star">*</span>
+														<spring:message code="table.country" /> <span class="star">*</span>
 													</p>
 													<select id="country" class="browser-default"
 														class="mySelect"
@@ -364,7 +364,7 @@ input[type='search'] {
 														class="star"></span></label>
 												</div>
 
-												<div class="input-field col s12 m6 l6">
+												<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
 													<input type="text" name="phone" 
 														pattern="[0-9]{10,10}"
 														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
@@ -429,7 +429,7 @@ input[type='search'] {
 																pattern="[A-Za-z0-9]{0,15}"
 																oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 																title= "<spring:message code="validation.15serialNo" />"required
-																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /><span class="star">*</span>
+																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star">*</span>
 															</label>
 														</div>
 

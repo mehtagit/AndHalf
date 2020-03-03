@@ -55,7 +55,7 @@ public class CurrencyController {
 		public @ResponseBody GenricResponse viewCurrency (@PathVariable ("id") Integer id )  {
 			log.info("request send to the View currency api="+id);
 			GenricResponse response= userProfileFeignImpl.viewCurrencyFeign(id);
-			log.info("response from add View api "+response);
+			log.info("response from Currency api "+response);
 			return response;
 	}
 		
@@ -64,8 +64,8 @@ public class CurrencyController {
 		
 		@PostMapping("updateCurrency") 
 		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest)  {
-			log.info("request send to the Update Port api="+filterRequest);
-			GenricResponse response= userProfileFeignImpl.updatePortAddressFeign(filterRequest);
+			log.info("request send to the Update Currency api="+filterRequest);
+			GenricResponse response= userProfileFeignImpl.updateCurrencyFeign(filterRequest);
 			log.info("response from update api "+response);
 			return response;
 	}	

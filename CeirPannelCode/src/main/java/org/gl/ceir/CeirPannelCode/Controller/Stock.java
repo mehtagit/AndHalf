@@ -229,21 +229,34 @@ else {
 	
 	// *********************************************** open register page or edit popup ******************************
 	@RequestMapping(value="/openStockPopup",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="role",required = false) String role,HttpSession session)
+	public @ResponseBody StockUploadModel openRegisterConsignmentPopup(
+			@RequestParam(name="reqType") String reqType,@RequestParam(name="txnId",required = false) String txnId,
+			@RequestParam(name="role",required = false) String role,
+			@RequestParam(name="userType",required = false) String userType,
+			@RequestParam(name ="userId", required= false) Integer userId,
+			HttpSession session)
 	{
-		log.info("entry point of  fetch stock in the bases of transaction id .");
-		StockUploadModel stockUploadModel= new StockUploadModel();
+		log.info("entry point of  fetch stock in the bases of transaction id ." +userType+" userId-->" +userId+" txnId-->" +txnId);
+		//StockUploadModel stockUploadModel= new StockUploadModel();
 		StockUploadModel stockUploadModelResponse;
-		stockUploadModel.setTxnId(txnId);
-		stockUploadModel.setRoleType(role);
-		log.info("request passed to the fetch stock api="+stockUploadModel);
+		//stockUploadModel.setTxnId(txnId);
+		//stockUploadModel.setRoleType(role);
+	
+		FilterRequest filterRequest = new FilterRequest();
+		filterRequest.setTxnId(txnId);
+		filterRequest.setRoleType(role);
+		filterRequest.setUserType(userType);
+		filterRequest.setUserId(userId);		
+		
+		
+		log.info("request passed to the fetch stock api="+filterRequest);
 		if(reqType.equals("editPage")) {
-			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);
 			log.info("response from fetch stock api="+stockUploadModelResponse);
 			return stockUploadModelResponse;
 		}
 		else {
-			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+			stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);
 			log.info("response from fetch stock api="+stockUploadModelResponse);
 			log.info("exit point of  fetch stock api.");
 			return stockUploadModelResponse;
@@ -471,12 +484,13 @@ else {
 		public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId)
 		{
 			log.info("entry point of  fetch end user stock in the bases of transaction id .");
-			StockUploadModel stockUploadModel= new StockUploadModel();
+			//StockUploadModel stockUploadModel= new StockUploadModel();
+			FilterRequest filterRequest = new FilterRequest();
 			StockUploadModel stockUploadModelResponse;
-			stockUploadModel.setTxnId(txnId);
-			log.info("response from fetch stock api="+stockUploadModel);
-			stockUploadModel.setUserType("End User");
-				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(stockUploadModel);
+			filterRequest.setTxnId(txnId);
+			log.info("response from fetch stock api="+filterRequest);
+			filterRequest.setUserType("End User");
+				stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);
 				log.info("response from fetch stock api="+stockUploadModelResponse);
 				log.info("exit point of  fetch stock api.");
 				return stockUploadModelResponse;

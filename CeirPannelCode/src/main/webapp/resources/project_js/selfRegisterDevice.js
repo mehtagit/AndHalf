@@ -150,7 +150,7 @@ function showOtherUserForm()
 	$("#onVisaNo").prop("checked", true);
 	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image ')).val("").focus().blur();
 
-	$("#nationality").attr("required", true);
+	//$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
 

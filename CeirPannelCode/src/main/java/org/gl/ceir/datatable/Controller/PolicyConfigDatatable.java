@@ -84,7 +84,7 @@ public class PolicyConfigDatatable {
 					   String value = dataInsideList.getValue();
 					   String tag = dataInsideList.getTag();
 					   Object period = dataInsideList.getPeriod();
-					   Object status = dataInsideList.getStatus();
+					   Object status = dataInsideList.getStatusInterp();
 					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   String action=iconState.policyConfigIcons(userStatus,tag);			   

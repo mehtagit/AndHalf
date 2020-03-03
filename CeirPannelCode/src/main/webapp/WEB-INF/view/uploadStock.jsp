@@ -240,7 +240,7 @@ to {
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
-												code="input.supllierName" /><span class="star">*</span></label>
+												code="input.supllierName" /> <span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
@@ -255,7 +255,7 @@ to {
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											maxlength="7" required /> <label for="Quantity"
 											class="center-align"><spring:message
-												code="input.quantity" /><span class="star">*</span></label>
+												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
 
 									<div class="input-field col s12 m6" id="invoiceNumberDiv"
@@ -298,7 +298,7 @@ to {
 									</p>
 								</div>
 
-								<span><spring:message code="input.requiredfields" /></span><span
+								<span><spring:message code="input.requiredfields" /></span> <span
 									class="star">*</span>
 
 								<div class="row" style="padding-bottom: 100px;">
