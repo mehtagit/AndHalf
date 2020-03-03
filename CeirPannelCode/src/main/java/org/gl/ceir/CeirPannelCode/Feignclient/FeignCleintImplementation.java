@@ -114,7 +114,7 @@ public interface FeignCleintImplementation {
 
 	//edit stock feign  controller
 	@RequestMapping(value="/stock/view" ,method=RequestMethod.POST) 
-	public @ResponseBody StockUploadModel fetchUploadedStockByTxnId(StockUploadModel stockUploadModel) ;
+	public @ResponseBody StockUploadModel fetchUploadedStockByTxnId(FilterRequest filterRequest) ;
 
 
 
