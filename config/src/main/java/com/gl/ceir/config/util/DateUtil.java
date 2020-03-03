@@ -52,6 +52,7 @@ public class DateUtil {
 	public static void main(String[] args) {
 		String testdate = "04-01";
 		
+		System.out.println("DateUtil.nextDate(27, \"yyyy-MM-dd\") " + DateUtil.nextDate(-27, "yyyy-MM-dd"));
 		String currentYear = DateUtil.nextDate(0, "yyyy-MM-dd").split("-")[0];
 		String finalDate = currentYear + "-" + testdate;
 		System.out.println("finalDate :" + finalDate);
