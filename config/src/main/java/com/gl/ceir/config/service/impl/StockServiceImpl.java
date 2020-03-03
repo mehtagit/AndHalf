@@ -525,6 +525,7 @@ public class StockServiceImpl {
 			}
 
 			User user = userRepository.getById(filterRequest.getUserId());
+			logger.info(user);
 			
 			auditTrailRepository.save(new AuditTrail(user.getId(), 
 					user.getUsername(), 
@@ -533,8 +534,6 @@ public class StockServiceImpl {
 					4, Features.STOCK, 
 					SubFeatures.VIEW, "", filterRequest.getTxnId()));
 			logger.info("Stock [ View ][" + filterRequest.getTxnId() + "] saved in audit_trail.");
-
-
 
 			return stockMgmt2;
 
