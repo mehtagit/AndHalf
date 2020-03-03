@@ -864,7 +864,7 @@ public class IconsState {
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 0) {
 			view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
@@ -972,7 +972,7 @@ public class IconsState {
 		executePostConstruct();
 		String downloadURL = "./dowloadFiles/"+fileName.replace(" ", "%20")+"/";
 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 
@@ -980,7 +980,7 @@ public class IconsState {
 		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 
-			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" ></i></a>"; 
 		}

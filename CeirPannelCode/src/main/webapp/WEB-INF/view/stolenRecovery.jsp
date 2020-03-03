@@ -309,7 +309,6 @@
 				<div class="input-field col s12 m6">
 					<input type="text" name="supplierName" id="supplierNameEdit"
 						pattern="[A-Za-z]{0,50}"
-						title="Please enter alphabets  upto 50 characters only"
 						maxlength="50" placeholder="" required />
 					<label for="supplierNameEdit" class="center-align"><spring:message code="input.suppliername" /> <span class="star">*</span>
 					</label>

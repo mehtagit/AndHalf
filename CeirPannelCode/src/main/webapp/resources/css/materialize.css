@@ -8729,7 +8729,7 @@ uppercase
 	will-change: top, left;
 }
 
-.backdrop {
+/* .backdrop {
 	position: absolute;
 	opacity: 0;
 	display: none;
@@ -8744,7 +8744,7 @@ uppercase
 	-o-transform-origin: 50% 10%;
 	transform-origin: 50% 10%;
 	will-change: transform, opacity;
-}
+} */
 
 .btn, .btn-large, .btn-flat {
 	border: none;
@@ -13167,6 +13167,14 @@ form {
 .col.s3.m2.l1 {
 	padding: 0;
 }
+
+/* @media screen and (min-device-width: 1230px) and  (max-device-width: 1320px) {
+	.col.s3.m2.l1 {
+	padding: 0;
+	margin: 1px;
+	float: right;
+}
+} */
 
 .deviceErrorTitle {
 	color: red;

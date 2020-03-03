@@ -121,6 +121,7 @@
 "TYPE_APPROVE_REJECTED" : "ប្រភេទអនុម័តត្រូវបានបដិសេធដោយរដ្ឋបាល CEIR ។",
 	"TYPE_APPROVE_APPROVED" : "ប្រភេទអនុម័តត្រូវបានអនុម័តដោយរដ្ឋបាល CEIR ។",
 	"Stolen/Recovery Device Count":"ចំនួនចោរលួច / ឧបករណ៍ស្តារឡើងវិញ",
-	"Stolen/Recovery Device Quantity":"បរិមាណចោរលួច / ស្តារឧបករណ៍ឡើងវិញ"	
+	"Stolen/Recovery Device Quantity":"បរិមាណចោរលួច / ស្តារឧបករណ៍ឡើងវិញ"	,
+		"Block/Unblock Device Count":"រារាំង / មិនរាប់ចំនួនឧបករណ៍"
 	
 }

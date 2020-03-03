@@ -523,7 +523,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#visafileFormateModal').openModal({
 			dismissible:false
@@ -571,7 +571,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false

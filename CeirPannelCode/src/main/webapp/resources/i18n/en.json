@@ -120,5 +120,6 @@
     "TYPE_APPROVE_REJECTED" : "Type Approved has been rejected by CEIR Admin.",
 	"TYPE_APPROVE_APPROVED" : "Type Approved has been approved by CEIR Admin.",
 	"Stolen/Recovery Device Count":"Stolen/Recovery Device Count",
-	"Stolen/Recovery Device Quantity":"Stolen/Recovery Device Quantity"
+	"Stolen/Recovery Device Quantity":"Stolen/Recovery Device Quantity",
+	"Block/Unblock Device Count":"Block/Unblock Device Count"
 }
