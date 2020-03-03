@@ -111,9 +111,12 @@ public class ConfigurationManagementServiceImpl {
 			if(Objects.nonNull(filterRequest.getFeatureName()))
 				sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getUserType()))
-				sb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-
+			/*
+			 * if(Objects.nonNull(filterRequest.getUserType())) sb.with(new
+			 * SearchCriteria("userType", filterRequest.getUserType(),
+			 * SearchOperation.EQUALITY, Datatype.STRING));
+			 */
+			
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
