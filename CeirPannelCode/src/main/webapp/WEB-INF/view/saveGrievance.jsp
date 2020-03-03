@@ -458,10 +458,10 @@ function saveGrievance(){
 return false;
 
 }
-//var grievanceCategory="GRIEVANCE_CATEGORY";
-var featureId = 6
+
+
 $.ajax({
-	url: './getSourceTypeDropdown/DOC_TYPE/'+featureId+'',
+	url: './getTypeDropdownList/GRIEVANCE_CATEGORY/'+$("body").attr("data-userTypeID"),
 	type: 'GET',
 	processData: false,
 	contentType: false,

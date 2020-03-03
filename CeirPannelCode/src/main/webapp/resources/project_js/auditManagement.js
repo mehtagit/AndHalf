@@ -97,8 +97,8 @@ function pageRendering(){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
 					$("#auditTableDiv").append("<div class='input-field col s6 m2'>"+
-							"<div id='enddatepicker' class='input-group'>"+
-							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+							"<div id='enddatepicker' class='input-group date'>"+
+							"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
 							"<label for="+date[i].id+">"+date[i].title
 							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -144,9 +144,10 @@ function pageRendering(){
 
 		
 			
-		$('.datepicker').datepicker({
-				dateFormat: "yy-mm-dd"
-			});
+			$('.datepicker').datepicker({
+					dateFormat: "yy-mm-dd"
+					});
+
 		}
 	});
 	

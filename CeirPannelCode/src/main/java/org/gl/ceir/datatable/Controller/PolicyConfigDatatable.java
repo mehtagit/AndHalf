@@ -88,7 +88,7 @@ public class PolicyConfigDatatable {
 					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
 					   String userStatus = (String) session.getAttribute("userStatus");
 					   String action=iconState.policyConfigIcons(userStatus,tag);			   
-					   Object[] finalData={createdOn,modifiedOn,description,value,period,status,policyOrder,action}; 
+					   Object[] finalData={createdOn,modifiedOn,description,value,period,status,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	

@@ -229,7 +229,7 @@ public class DatatableHeaders {
 			//adminPolicyManagement Headers 
 			
 			else if("adminPolicyManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Period","table.status","table.PolicyOrder","table.action"};		
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Period","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

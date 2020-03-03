@@ -126,16 +126,6 @@
 					
 						<input type="text" name="tag" id="viewTag" placeholder="tag" disabled hidden="hidden" > 
 				
-
-					
-					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="viewpolicyOrder"
-							placeholder="Policy Order" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>	
-						
-				
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="viewPeriod"
 							placeholder="Period" disabled>
@@ -188,6 +178,7 @@
 	<div id="editPolicyConfigModel" class="modal">
 		<h6 class="modal-header"><spring:message code="registration.editpolicyconfiguration" /></h6>
 		<div class="modal-content">
+		<form action="" onsubmit="return updatePolicy()">
 		<div class="row">
 			<div class="row" style="margin-top: 10px;">
 					<div class="input-field col s12 m6 l6">
@@ -201,13 +192,6 @@
 					</div>
 					
 					
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="editpolicyOrder"
-							placeholder="Policy Order" disabled>
-						<label for="policyOrder"><spring:message code="table.PolicyOrder" /></label>
-					</div>	
-						
-		
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="editPeriod"
 							placeholder="Period" disabled>
@@ -223,7 +207,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="value"></textarea>
+					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 30 characters only" maxlength="100"></textarea>
 					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
 
 					</div>
@@ -231,7 +215,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder="Description"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 30 characters only" maxlength="200"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -243,12 +227,13 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updatePolicy()"><spring:message code="button.update" /></button>
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn " type="submit"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal End -->

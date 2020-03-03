@@ -255,7 +255,7 @@ function updatePolicy(){
 			alert("Failed");
 		}
 	});
-	
+	return false;
 }
 
 function confirmModel(){
