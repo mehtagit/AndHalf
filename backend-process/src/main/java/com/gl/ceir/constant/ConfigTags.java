@@ -8,7 +8,9 @@ public interface ConfigTags {
 	
 	String NEW_YEAR_DATE_REGISTER_DEVICE = "new_year_date_register_device";
 	
-	String GRACE_PERIOD_FOR_RGISTERDEVICE = "grace_period_for_rgister_device";
+	String GRACE_PERIOD_FOR_RGISTER_DEVICE = "grace_period_for_rgister_device";
+	
+	String SEND_NOTI_ON_DEVICE_TAX_NOT_PAID = "send_noti_on_device_tax_not_paid";
 	
 	String REMINDER_DAYS = "reminder_days_before";
 
