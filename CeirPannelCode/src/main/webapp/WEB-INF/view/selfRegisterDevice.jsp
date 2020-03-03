@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>Dashboard</title>
+<title>Register</title>
 
 
 <meta charset="utf-8" />
@@ -125,7 +125,8 @@
 											</div>
 											<div class="file-path-wrapper">
 												<input class="file-path validate" type="text"
-													id="nidPlaceHolder" placeholder="Upload NID Image" value="">
+													id="nidPlaceHolder" placeholder="<spring:message code="placeholder.uploadNIDImage" />" value="">
+													
 											</div>
 										</div>
 
