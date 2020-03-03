@@ -20,10 +20,10 @@ import com.gl.ceir.config.model.constants.ImeiStatus;
 import com.gl.ceir.config.service.DeviceSnapShotService;
 
 @SpringBootApplication
-@EnableJpaAuditing
 @EnableAutoConfiguration
 @EnableCaching
 @EnableFeignClients
+@EnableJpaAuditing
 @EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class) 
 public class ConfigApplication {
 
