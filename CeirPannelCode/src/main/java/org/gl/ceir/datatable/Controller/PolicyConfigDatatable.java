@@ -84,11 +84,12 @@ public class PolicyConfigDatatable {
 					   String value = dataInsideList.getValue();
 					   String tag = dataInsideList.getTag();
 					   Object period = dataInsideList.getPeriod();
-					   Object status = dataInsideList.getStatusInterp();
+					   Object statusInterp = dataInsideList.getStatusInterp();
+					   String Status = String.valueOf(dataInsideList.getStatus());
 					   String policyOrder =String.valueOf(dataInsideList.getPolicyOrder());
 					   String userStatus = (String) session.getAttribute("userStatus");
-					   String action=iconState.policyConfigIcons(userStatus,tag);			   
-					   Object[] finalData={createdOn,modifiedOn,description,value,period,status,action}; 
+					   String action=iconState.policyConfigIcons(userStatus,tag,Status);			   
+					   Object[] finalData={createdOn,modifiedOn,description,value,period,statusInterp,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	

@@ -1163,9 +1163,12 @@ public class IconsState {
 
 	/********************************** Icons for Policy Config Management**********************************/ 
 
-	public String policyConfigIcons(String userStatus, String tag) { 
+	public String policyConfigIcons(String userStatus, String tag, String Status) { 
 		executePostConstruct();
-		String editAction="updateDetails('"+tag+"')";
+		
+		log.info("Status is-->" +Status);
+		
+		String editAction="updateDetails('"+tag+"','"+Status+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 

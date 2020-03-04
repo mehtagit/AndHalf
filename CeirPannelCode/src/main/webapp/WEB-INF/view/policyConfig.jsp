@@ -189,6 +189,8 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="tag" id="EditId"
 							placeholder="ID" hidden="hidden"> 
+						<input type="text" name="status" id="EditStatusValue"
+							placeholder="" hidden="hidden"> 	
 					</div>
 					
 					
@@ -207,7 +209,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 30 characters only" maxlength="100"></textarea>
+					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100"></textarea>
 					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
 
 					</div>
@@ -215,7 +217,7 @@
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 30 characters only" maxlength="200"></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="Description" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
 					<label for="description" class=""><spring:message code="registration.description" /></label>
 
 					</div>
