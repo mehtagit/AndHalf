@@ -57,11 +57,15 @@ public class VisaDb implements Serializable {
 	EndUserDB endUserDB;
 	
 	public VisaDb() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	public VisaDb(Integer visaType, String visaNumber, String visaFileName, String entryDateInCountry, String visaExpiryDate) {
-		// TODO Auto-generated constructor stub
+		this.visaType = visaType;
+		this.visaNumber = visaNumber;
+		this.visaFileName = visaFileName;
+		this.entryDateInCountry = entryDateInCountry;
+		this.visaExpiryDate = visaExpiryDate;
 	}
 
 	public LocalDateTime getCreatedOn() {

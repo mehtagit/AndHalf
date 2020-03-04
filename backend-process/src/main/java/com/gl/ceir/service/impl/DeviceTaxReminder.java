@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.gl.ceir.configuration.PropertiesReader;
 import com.gl.ceir.constant.Alerts;
 import com.gl.ceir.constant.ConfigTags;
 import com.gl.ceir.constant.Datatype;
@@ -35,9 +34,6 @@ import com.gl.ceir.util.DateUtil;
 public class DeviceTaxReminder extends BaseService{
 
 	private static final Logger logger = LogManager.getLogger(DeviceTaxReminder.class);
-
-	@Autowired
-	PropertiesReader propertiesReader;
 
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
