@@ -30,6 +30,7 @@ public class CustomerCareBlacklist implements CustomerCareTarget{
 		}else {
 			customerCareDeviceState.setDate("");
 			customerCareDeviceState.setStatus(Constants.non_available);
+			customerCareDeviceState.setFeatureId(0);
 		}
 		
 		setName(customerCareDeviceState);
