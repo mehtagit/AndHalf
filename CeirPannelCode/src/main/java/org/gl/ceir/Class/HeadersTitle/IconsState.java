@@ -985,7 +985,7 @@ public class IconsState {
 		executePostConstruct();
 		String downloadURL = "./dowloadFiles/"+fileName.replace(" ", "%20")+"/";
 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a href="+downloadURL+" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 
@@ -993,7 +993,7 @@ public class IconsState {
 		if("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
 
-			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
+			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" ></i></a>"; 
 		}
@@ -1165,9 +1165,6 @@ public class IconsState {
 
 	public String policyConfigIcons(String userStatus, String tag, String Status) { 
 		executePostConstruct();
-		
-		log.info("Status is-->" +Status);
-		
 		String editAction="updateDetails('"+tag+"','"+Status+"')";
 		String viewAction="viewDetails('"+tag+"')";
 

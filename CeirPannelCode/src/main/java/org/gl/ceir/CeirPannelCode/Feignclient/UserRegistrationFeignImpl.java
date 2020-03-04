@@ -39,5 +39,9 @@ public interface UserRegistrationFeignImpl {
 	
 	@PostMapping("/userRegistration/getUsertypes")                                                                                         
 	public List<Usertype> userRegistrationDropdown(); 
+	
+	                              
+	@PostMapping("/userRegistration/checkAvailability/{usertypeId}")                                                                                         
+	public HttpResponse checkRegistration(@PathVariable("usertypeId")Integer usertypeId); 
                                                                           	
 }

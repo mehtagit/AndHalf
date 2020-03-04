@@ -2,7 +2,9 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		$.i18n().locale = lang;		
 		$.i18n().load( {
 			'en': '../resources/i18n/en.json',
-			'km': '../resources/i18n/km.json'
+			'km': '../resources/i18n/km.json',
+			'en': './resources/i18n/en.json',
+			'km': './resources/i18n/km.json'
 		} ).done( function() { 
 		});
 		
@@ -16,7 +18,6 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		
 		function InvalidMsg(textbox,type,msg) {
 			var element = document.getElementById(textbox.id);
-
 			if(element.validity.valueMissing){
 				 if(type=="input" ){
 				        element.setCustomValidity($.i18n('requiredMsg_input'));

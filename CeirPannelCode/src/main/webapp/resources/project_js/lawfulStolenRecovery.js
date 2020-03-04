@@ -284,7 +284,6 @@ function openStolenRecoveryModal()
 
 function openStolenRecoveryPage(pageType,pageView,txnId)
 {
-	console.log("###");
 	window.location.href = "./openlawfulStolenRecoveryPage?pageType="+pageType+"&pageView="+pageView+"&txnId="+txnId;
 }
 

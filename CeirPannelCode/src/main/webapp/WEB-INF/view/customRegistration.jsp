@@ -1,3 +1,9 @@
+<%
+Integer statusCode=(Integer)session.getAttribute("statusCode");
+%>
+<%
+if(statusCode==200){
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -334,7 +340,7 @@ var contextpath = "${context}";
 							</div>
 
 							<div class="row">
-								<div class="input-field col s12 m6 l6" style="margin-top: 22px">
+								<div class="input-field col s12 m6 l6">
 									<input type="text" name="passportNo" id="passportNo" maxlength="12" pattern="[A-Za-z0-9\s]{8,12}"
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
 										title="<spring:message code="validation.12Character" />" required />
@@ -366,7 +372,7 @@ var contextpath = "${context}";
 									</div>
 								</div>
 
-								<div class="input-field col s12 m6 l6" style="margin-top: 24px;">
+								<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
 									<input type="text" name="employeeID" required="required" id="employeeId" maxlength="30" 
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.address30characters" />" required /> 
@@ -894,10 +900,10 @@ return true;
             }
         }
     </script>
-
-
-
-
 </body>
-
 </html>
+<%}
+else{
+%>
+<%@include file="registrationPopup.jsp" %>
+<%}%>

@@ -147,7 +147,7 @@
                                                         <div class="col-s12 m12">
                                                              <div class="input-field col s12 m6">
                                                                 <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
-                                                                pattern="[a-zA-Z]{0,20}" required="required"
+                                                                pattern="[a-zA-Z]{0,20}" 
                                                                  title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
                                                             </div>
@@ -181,7 +181,7 @@
                                                               </div>
 
                                                               <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,20}" required="required"
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,20}" 
                                                                  title="Please enter alphabets and numbers upto 20 characters only" maxlength="20">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
@@ -553,7 +553,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitte
 
 <script type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>	
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js"></script>
 		<script type="text/javascript"

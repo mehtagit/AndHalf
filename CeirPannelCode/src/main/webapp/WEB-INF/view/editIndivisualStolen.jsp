@@ -304,7 +304,7 @@ select {
 													<div>
 														<div class="input-field col s12 m6"">
 															<input type="text" name="deviceBrandName" placeholder=""
-																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}" required="required" title="Please enter alphabets and numbers upto 20 characters only" 
+																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}"  title="Please enter alphabets and numbers upto 20 characters only" 
 																maxlength="20">
 															<label for="deviceBrandName"><spring:message code="registration.devicebrandname" /></label>
 														</div>
@@ -344,7 +344,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="modalNumber" placeholder=""
-																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9 ]{0,20}" required="required" 
+																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9 ]{0,20}" 
 																title="Please enter alphabets and numbers upto 20 characters only" maxlength="20"> <label
 																for="modalNumber"><spring:message code="table.ModelNumber" /></label>
 														</div>
@@ -890,6 +890,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitte
 
 <script type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"

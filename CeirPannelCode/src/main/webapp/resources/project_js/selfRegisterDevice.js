@@ -16,44 +16,6 @@ $.i18n().load( {
 });
 
 
-$.getJSON('./getDropdownList/VISA_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#visaType');
-
-	}
-});
-$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#deviceType1');
-
-	}
-});
-$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#deviceIdType1');
-
-	}
-});
-$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#multipleSimStatus1');
-
-	}
-});
-$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].value).text(data[i].interp)
-		.appendTo('#deviceStatus1');
-
-	}
-});
-
-
-
 /*var input = document.querySelector("#phone1");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
@@ -62,8 +24,8 @@ window.intlTelInput(input, {
 var input = document.querySelector("#phone");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
-});
-*/
+});*/
+
 
 $('#datepicker,#datepicker1').datepicker({
 	dateFormat: "yy-mm-dd"
@@ -115,8 +77,8 @@ function showCambodianUserForm()
 	$("#datepicker1").attr("required", false);
 	$("#visaImage").attr("required", false);
 
-	$("#nationality").attr("required", false);
-	$("#uploadnationalID").attr("required", false);
+
+
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
 }
@@ -150,7 +112,7 @@ function showOtherUserForm()
 	$("#onVisaNo").prop("checked", true);
 	$("#nidPlaceHolder").attr("placeholder", $.i18n('Upload Passport Image ')).val("").focus().blur();
 
-	//$("#nationality").attr("required", true);
+	$("#nationality").attr("required", true);
 	$("#endUserLabelNID").append('<span class="star">*</span>');
 	$("#nidType").append('<span class="star">*</span>');
 
@@ -185,6 +147,45 @@ function hideVisaDetails(){
 	$("#datepicker1").attr("required", false);
 	$("#visaType").attr("required", false);
 }
+
+$.getJSON('./getDropdownList/VISA_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#visaType');
+
+	}
+});
+$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#deviceType1');
+
+	}
+});
+$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#deviceIdType1');
+
+	}
+});
+$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#multipleSimStatus1');
+
+	}
+});
+$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#deviceStatus1');
+
+	}
+});
+
+
+
 
 
 
@@ -523,7 +524,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#visafileFormateModal').openModal({
 			dismissible:false
@@ -571,7 +572,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false

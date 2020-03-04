@@ -239,6 +239,7 @@ $.ajax({
 	}
 });
 
+return false;
 	
 }
 

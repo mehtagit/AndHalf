@@ -119,7 +119,7 @@
 											<spring:message code="input.IDImage" />  <span class="star">*</span>
 											</h6>
 											<div class="btn">
-												<span><spring:message code="input.selectfile" /> </span> <input type="file" onchange="fileTypeValueChanges('uploadnationalID')"
+												<span><spring:message code="input.selectfile" /> </span> <input type="file" onchange="fileTypeValueChanges()"
 											oninput="InvalidMsg(this,'fileType');" oninvalid="InvalidMsg(this,'fileType');"	
 												title="<spring:message code="validation.file" />"   accept="image/*" id="uploadnationalID">
 											</div>
@@ -661,8 +661,8 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/js/intlTelInput.js"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/js/intlTelInput.js"></script> --%>
 		
 		<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js"></script>

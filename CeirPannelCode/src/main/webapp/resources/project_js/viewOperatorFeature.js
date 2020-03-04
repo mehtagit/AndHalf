@@ -120,7 +120,6 @@ function pageRendering(URL){
 		success: function(data){
 			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
 
-
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
@@ -130,7 +129,7 @@ function pageRendering(URL){
 				if(date[i].type === "date"){
 				$("#operatorTableDiv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
-									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+									"<input class='form-control datepicker' type='text' onchange='checkDate(startDate,endDate)' id="+date[i].id+" autocomplete='off'>"+
 									"<label for="+date[i].id+">"+date[i].title
 									+"</label>"+
 									"<span	class='input-group-addon' style='color: #ff4081'>"+

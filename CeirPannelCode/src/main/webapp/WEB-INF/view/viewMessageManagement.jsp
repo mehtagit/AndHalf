@@ -194,7 +194,7 @@
 				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 30 characters only" maxlength="100"></textarea>
+					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100"></textarea>
 					<label for="editValue" class=""><spring:message code="registration.value" /></label>
 
 					</div>

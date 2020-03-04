@@ -118,5 +118,9 @@
     "Otp_Sucess_For_UpdateUSer":"Your one time password is verified!",
     "fileNotFound":"There is  some problem in server please try after some time",
     "TYPE_APPROVE_REJECTED" : "Type Approved has been rejected by CEIR Admin.",
-	"TYPE_APPROVE_APPROVED" : "Type Approved has been approved by CEIR Admin."
+	"TYPE_APPROVE_APPROVED" : "Type Approved has been approved by CEIR Admin.",
+	"Stolen/Recovery Device Count":"Stolen/Recovery Device Count",
+	"Stolen/Recovery Device Quantity":"Stolen/Recovery Device Quantity",
+	"Block/Unblock Device Count":"Block/Unblock Device Count",
+	"Block/Unblock Device Quantity":"Block/Unblock Device Quantity"
 }

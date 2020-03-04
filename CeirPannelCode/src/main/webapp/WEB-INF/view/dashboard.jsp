@@ -203,7 +203,7 @@ data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
-								<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
+							<li class="bold"><a href="${feature.link}?FeatureId=${feature.id}"
 									target="mainArea" class="waves-effect waves-cyan"
 									data-featureID="${feature.id}"><i class="${feature.logo}"></i>
 										<spring:message
