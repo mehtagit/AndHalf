@@ -2,6 +2,7 @@ package com.gl.ceir;
 
 public interface ProcessName {
 	
-	String Registerd_Device_Tax_Not_paid_Reminder = "Reg_Device_Tax_Rem";
+	String REGISTERED_DEVICE_TAX_NOT_PAID_REMINDER = "REGISTERED_DEVICE_TAX_NOT_PAID_REMINDER";
+	String VISA_EXPIRE = "VISA_EXPIRE";
 
 }

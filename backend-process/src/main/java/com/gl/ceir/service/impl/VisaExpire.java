@@ -75,7 +75,7 @@ public class VisaExpire extends BaseService{
 				logger.info("No end user is found associated with visa of id [" + visaDb.getId() + "]");
 			}else {
 				endUserDbRepository.deleteByNid(endUserDB.getNid());
-				logger.info("End user is deleted successfully [" + endUserDB + "]");
+				logger.info("End user is deleted successfully [" + endUserDB.getNid() + "]");
 			}
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
