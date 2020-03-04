@@ -153,7 +153,7 @@
                     </div>
 					
 					<div class="input-field col s12 m6">
-                        <input type="number" id="cambodianRiel" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
+                        <input type="number" id="cambodianRiel" name=""  pattern="[0-9]" title="Please enter numeric numbers"  maxlength="" required="required">
                         <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
                     </div>
                     
@@ -181,7 +181,7 @@
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
 						<input type="text" name="month"
 						id='editMonth' class='form-control datepick'
-						autocomplete='off'  required /> 
+						autocomplete='off'  required disabled="disabled" /> 
 						<label for="editMonth" class="center-align">Month <span class="star">*</span>
 						</label> <span class="input-group-addon" style="color: #ff4081"><i
 												class="fa fa-calendar" aria-hidden="true"></i></span>

@@ -101,14 +101,15 @@ function pageRendering(){
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-					$("#deviceActivationTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+					$("#deviceActivationTableDiv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group date'>"+
-							"<label for='TotalPrice'>"+date[i].title
-							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<input class='form-control datepicker' onchange='checkDate(startDate,endDate)' type='text' id="+date[i].id+" autocomplete='off'>"+
+							"<label for="+date[i].id+">"+date[i].title
+							+"</label>"+
 							"<span	class='input-group-addon' style='color: #ff4081'>"+
 							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
 				}else if(date[i].type === "text"){
-					$("#deviceActivationTableDiv").append("<div class='input-field col s6 m2 filterfield' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for='tac' class='center-align'>"+date[i].title+"</label></div>");
+					$("#deviceActivationTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 			} 
 
@@ -142,10 +143,9 @@ function pageRendering(){
 				}
 			}
 	
-			$('.dateClass').datepicker({
-			    dateFormat: "yy-mm-dd"
-			    });
-			
+			$('.datepicker').datepicker({
+				dateFormat: "yy-mm-dd"
+				});
 
 		
 		}

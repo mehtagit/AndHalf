@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp;
-	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,riel,currency,quantity,stockStatus;
-	private Double dollar;
+	private Integer userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus;
+	private Double dollar,riel;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -319,12 +319,6 @@ public class FilterRequest {
 	public void setPort(Integer port) {
 		this.port = port;
 	}
-	public Integer getRiel() {
-		return riel;
-	}
-	public void setRiel(Integer riel) {
-		this.riel = riel;
-	}
 	public Integer getCurrency() {
 		return currency;
 	}
@@ -349,6 +343,12 @@ public class FilterRequest {
 	public void setDollar(Double dollar) {
 		this.dollar = dollar;
 	}
+	public Double getRiel() {
+		return riel;
+	}
+	public void setRiel(Double riel) {
+		this.riel = riel;
+	}
 	@Override
 	public String toString() {
 		return "FilterRequest [startDate=" + startDate + ", endDate=" + endDate + ", createdOn=" + createdOn
@@ -366,8 +366,8 @@ public class FilterRequest {
 				+ userRoleTypeId + ", status=" + status + ", asType=" + asType + ", serviceDump=" + serviceDump
 				+ ", fileType=" + fileType + ", action=" + action + ", operatorTypeId=" + operatorTypeId + ", channel="
 				+ channel + ", type=" + type + ", deviceIdType=" + deviceIdType + ", parentValue=" + parentValue
-				+ ", id=" + id + ", port=" + port + ", riel=" + riel + ", currency=" + currency + ", quantity="
-				+ quantity + ", stockStatus=" + stockStatus + ", dollar=" + dollar + "]";
+				+ ", id=" + id + ", port=" + port + ", currency=" + currency + ", quantity=" + quantity
+				+ ", stockStatus=" + stockStatus + ", dollar=" + dollar + ", riel=" + riel + "]";
 	}
 	
 	

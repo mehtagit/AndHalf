@@ -19,8 +19,6 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 function configManagementDatatable(){
 	
 	var filterRequest={
-			"endDate":$('#endDate').val(),
-			"startDate":$('#startDate').val(),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -192,10 +190,13 @@ function setViewPopupData(data){
 	$("#viewpolicyOrder").val(data.policyOrder);
 }
 
-function updateDetails(tag){
+function updateDetails(tag,status){
 	$("#editPolicyConfigModel").openModal({
         dismissible:false
     });
+	
+	$("#EditStatusValue").val(status)
+	
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -224,22 +225,25 @@ function setEditPopupData(data){
 	$("#editstatus").val(data.statusInterp);
 	$("#editremarks").val(data.remark);
 	$("#editpolicyOrder").val(data.policyOrder);
+	$("#EditStatusValue").val(data.status)
+	
 }
 
 
 function updatePolicy(){
+	
 	 var updateRequest = {
 			 "id" : parseInt($("#EditId").val()),
 			 "tag" : $("#editTag").val(),
 			 "value" : $("#editValue").val(),
 			 "period" : $("#editPeriod").val(),
 			 "description" : $("#editdescription").val(),
-			 "status" : $("#editstatus").val(),
+			 "status" : parseInt($("#EditStatusValue").val()),
 			 "remark" : $("#editremarks").val(),
-			 "policyOrder": $ ("#editviewpolicyOrder").val()
+			 "policyOrder": $("#editviewpolicyOrder").val()
 	}
 	
-	
+	console.log("updateRequest-->" +updateRequest);
 	$.ajax({
 		url : "./policy/update",
 		data :	JSON.stringify(updateRequest),
@@ -256,6 +260,7 @@ function updatePolicy(){
 		}
 	});
 	
+	return false;
 }
 
 function confirmModel(){

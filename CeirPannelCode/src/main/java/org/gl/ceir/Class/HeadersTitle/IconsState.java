@@ -123,6 +123,9 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>";
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
 
 		}
 		else if("Disable".equals(userStatus)) {
@@ -214,6 +217,9 @@ public class IconsState {
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\"  title="
 					+downloadIconTitle+" ></i></a>"; 
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
 		}
 
 		else if("Disable".equals(userStatus)) {
@@ -282,16 +288,14 @@ public class IconsState {
 					+editIconTitle+"></i></a>"; 
 
 		}
-		else if("3".equals(status) && "Approved".equals(userStatus)) {
+		else if("7".equals(status) && "Approved".equals(userStatus)) {
 			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
 					+disableErrorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+"  ></i></a>"; 
-			edit="<a onclick="+editAction+" class="+disableIconClass+"><i class="
-					+disableEditIcon+" aria-hidden=\"true\" title="
-					+editIconTitle+"></i></a>"; 
-			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\"  title="
-					+deleteIconTitle+"></i></a>"; 	
+			delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger eventNone\" ><i class="
+					+disableDeletionIcon+" aria-hidden=\"true\" title="
+					+deleteIconTitle+"></i></a>"; 
+			
 		}
 
 		else if("Disable".equals(userStatus)) {
@@ -506,6 +510,8 @@ public class IconsState {
 		else if(("4".equals(status))  && "Approved".equals(userStatus)) {
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
+			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
 		}else if(("6".equals(status))   && "Approved".equals(userStatus)) {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
@@ -530,6 +536,8 @@ public class IconsState {
 			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="
 					+disableDeletionIcon+" aria-hidden=\"true\" title="
 					+deleteIconTitle+"></i></a>"; 
+			error="<a onclick="+errorURL+" class=\"eventNone\"><i class="+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+" ></i></a>";
 		}
 
 
@@ -718,6 +726,7 @@ public class IconsState {
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
+			
 		}
 
 		if("7".equals(status)) {
@@ -729,6 +738,9 @@ public class IconsState {
 			download="<a onclick="+downloadURL+"  class="+disableIconClass+"><i class="
 					+disableDownloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" ></i></a>"; 
+			error="<a onclick="+errorURL+" class="+disableIconClass+"><i  class="
+					+disableErrorIcon+" aria-hidden=\"true\" title="
+					+errorIconTitle+"  ></i></a>"; 
 
 		}
 
@@ -779,15 +791,16 @@ public class IconsState {
 
 	/********************************** Icons for AdminRegistrationRequest **********************************/ 
 
-	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status) {
+	public String adminRegistrationRequest(String userId ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName) {
 		executePostConstruct();
+		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
-		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"')";
+		String approveAction = "userApprovalPopup("+userId+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
 
 		String viewAction="trcInformation?id="+id+"&roles="+roles.replace(" ", "=")+"&type="+type;
-		String rejectAction = "userRejectPopup("+userId+")";
-		String editAction="userChangeStatus('"+userId+"')";
+		String rejectAction = "userRejectPopup("+userId+",'"+sessionUserName+"')";
+		String editAction="userChangeStatus('"+userId+"','"+sessionUserName+"')";
 		
 
 		log.info("status---->"+status+"---------AdminCurrentStatus------>"+AdminCurrentStatus+" userStatus----------->" +userStatus);
@@ -864,7 +877,7 @@ public class IconsState {
 		//System.out.println("featureID::::::::::"+featureID);
 		// state related Code
 		String view=null;
-		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7 || featureID == 0) {
+		if(featureID == 3 || featureID == 4 || featureID == 6 || featureID == 7) {
 			view="<a href="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 		}
@@ -1150,9 +1163,9 @@ public class IconsState {
 
 	/********************************** Icons for Policy Config Management**********************************/ 
 
-	public String policyConfigIcons(String userStatus, String tag) { 
+	public String policyConfigIcons(String userStatus, String tag, String Status) { 
 		executePostConstruct();
-		String editAction="updateDetails('"+tag+"')";
+		String editAction="updateDetails('"+tag+"','"+Status+"')";
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 

@@ -215,8 +215,8 @@
 		var request={
 					  "date":   $('#month').val(),
 					  "currency": $('#currency').val(),
-					  "riel":   $('#cambodianRiel').val(),
-					  "doller": $('#dollar').val(),
+					  "riel":   parseFloat($('#cambodianRiel').val()),
+					  "dollar": parseFloat($('#dollar').val()),
 				}
 		
 		console.log("request------------->" +JSON.stringify(request))
@@ -291,8 +291,8 @@
 				 "id" : parseInt($("#editId").val()),
 				 "date":   $('#editMonth').val(),
 				 "currency": $('#editCurrency').val(),
-				 "riel":   $('#editCambodianRiel').val(),
-				 "doller": $('#editDollar').val(),
+				 "riel":   parseFloat($('#editCambodianRiel').val()),
+				 "dollar": parseFloat($('#editDollar').val()),
 		}
 		
 		console.log("request--->" +JSON.stringify(request))

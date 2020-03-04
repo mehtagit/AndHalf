@@ -458,8 +458,8 @@ function saveGrievance(){
 return false;
 
 }
-//var grievanceCategory="GRIEVANCE_CATEGORY";
-var featureId = 6
+
+
 $.ajax({
 	url: './getTypeDropdownList/GRIEVANCE_CATEGORY/'+$("body").attr("data-userTypeID"),
 	type: 'GET',

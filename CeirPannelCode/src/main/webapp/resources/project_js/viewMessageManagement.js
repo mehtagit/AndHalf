@@ -232,6 +232,7 @@ function updateMessage(){
 				alert("Failed");
 			}
 		});
+	 return false;
 }
 
 

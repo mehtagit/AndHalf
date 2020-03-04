@@ -10625,6 +10625,7 @@ select {
 
 select.browser-default {
 	display: block;
+	 box-shadow: none;
     /* outline: 3px solid  #fff; */
 }
 
