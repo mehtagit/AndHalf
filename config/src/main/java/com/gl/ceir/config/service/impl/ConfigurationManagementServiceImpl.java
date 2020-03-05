@@ -116,7 +116,7 @@ public class ConfigurationManagementServiceImpl {
 			 * SearchCriteria("userType", filterRequest.getUserType(),
 			 * SearchOperation.EQUALITY, Datatype.STRING));
 			 */
-			
+
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -137,7 +137,9 @@ public class ConfigurationManagementServiceImpl {
 
 	public SystemConfigurationDb findByTag(SystemConfigurationDb systemConfigurationDb){
 		try {
-			return systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
+			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
+			systemConfigurationDb2.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb2.getType()));
+			return systemConfigurationDb2;
 		} catch (Exception e) {
 			logger.info("Exception found="+e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -282,7 +284,7 @@ public class ConfigurationManagementServiceImpl {
 			PolicyConfigurationDb policyConfigurationDb = policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 			policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
 			return policyConfigurationDb;
-			
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
@@ -312,6 +314,9 @@ public class ConfigurationManagementServiceImpl {
 			if(Objects.nonNull(filterRequest.getStatus()))
 				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
+			if(Objects.nonNull(filterRequest.getType()))
+				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
+			
 			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
