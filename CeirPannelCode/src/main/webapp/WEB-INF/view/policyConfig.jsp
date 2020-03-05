@@ -129,20 +129,20 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="viewPeriod"
 							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /></label>
+						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 						<input type="text" id="viewstatus" name="status"
 							placeholder="" maxlength="20" placeholder="Status" disabled >
-						<label for="status"><spring:message code="table.status" /></label>
+						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
 					</div>
 				
 					
 					
 					<div class="input-field col s12 m6">
 					<textarea id="viewValue" class="materialize-textarea" placeholder="value" readonly="readonly"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
+					<label for="viewValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
 					
@@ -197,20 +197,20 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="editPeriod"
 							placeholder="Period" disabled>
-						<label for="period"><spring:message code="table.Period" /></label>
+						<label for="period"><spring:message code="table.Period" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top:22px">
 						<input type="text" id="editstatus" name="status"
 							placeholder="" maxlength="20" placeholder="Status" disabled>
-						<label for="status"><spring:message code="table.status" /></label>
+						<label for="status"><spring:message code="table.status" /> <span class="star">*</span></label>
 					</div>
 				
 					
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100"></textarea>
-					<label for="viewValue" class=""><spring:message code="table.Value" /></label>
+					<textarea id="editValue" class="materialize-textarea" placeholder="value" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<label for="editValue" class=""><spring:message code="table.Value" /> <span class="star">*</span></label>
 
 					</div>
 					

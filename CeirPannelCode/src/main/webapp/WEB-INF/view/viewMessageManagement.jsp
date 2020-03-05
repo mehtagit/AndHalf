@@ -128,14 +128,14 @@
 					
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id= "viewChannel" placeholder="" disabled>
-					<label for="viewChannel" class=""><spring:message code="registration.channel" /></label>
+					<label for="viewChannel" class=""><spring:message code="registration.channel" /> <span class="star">*</span></label>
 
 					</div>
 					
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="viewValue" class="materialize-textarea" readonly="readonly"></textarea>
-					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
+					<label for="viewValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
@@ -186,7 +186,7 @@
 					
 					<div class="input-field col s12 m6">
 					<input type="text" id= "editChannel"  placeholder="" disabled>
-					<label for="editChannel" class=""><spring:message code="registration.channel" /></label>
+					<label for="editChannel" class=""><spring:message code="registration.channel" /><span class="star">*</span></label>
 
 					</div>
 					
@@ -194,8 +194,8 @@
 				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100"></textarea>
-					<label for="editValue" class=""><spring:message code="registration.value" /></label>
+					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
