@@ -71,7 +71,7 @@ public class CurrencyDatatableController {
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewPortRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewCurrencyRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -85,8 +85,8 @@ public class CurrencyDatatableController {
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn= dataInsideList.getCreatedOn();
-				   String month= "";
-				   String currency= String.valueOf(dataInsideList.getCurrency());
+				   String month= dataInsideList.getMonth();
+				   String currency= String.valueOf(dataInsideList.getCurrencyInterp());
 				   String riel= String.valueOf(dataInsideList.getRiel());
 				   String dollar = String.valueOf(dataInsideList.getDollar());
 				   String userStatus = (String) session.getAttribute("userStatus");	  

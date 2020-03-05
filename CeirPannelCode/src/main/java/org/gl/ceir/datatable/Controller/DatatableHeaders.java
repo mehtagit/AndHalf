@@ -229,7 +229,7 @@ public class DatatableHeaders {
 			//adminPolicyManagement Headers 
 			
 			else if("adminPolicyManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Period","table.status","table.PolicyOrder","table.action"};		
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Period","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -269,7 +269,7 @@ public class DatatableHeaders {
 //auditManagement Headers 
 			
 			else if("auditManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.RoleType","table.feature","table.SubFeature","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.UserName","table.userType","table.feature","table.SubFeature","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -330,7 +330,7 @@ public class DatatableHeaders {
 //fieldManagement
 			
 			else if("fieldManagement".equals(role)) {
-				String[] headers = {"tabel.field","tabel.interp","tabel.fieldId","table.Description","table.action"};			
+				String[] headers = {"tabel.field","table.displayName","tabel.fieldId","table.Description","table.action"};			
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

@@ -13,8 +13,10 @@ public class CurrencyContantModel {
 	private String modifiedOn;
 	private String date;
 	private Integer currency;
-	private Integer riel;
-	private Integer dollar;
+	private Double riel;
+	private Double dollar;
+	private String currencyInterp;
+	private String month;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -46,17 +48,29 @@ public class CurrencyContantModel {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
-	public Integer getRiel() {
+	public Double getRiel() {
 		return riel;
 	}
-	public void setRiel(Integer riel) {
+	public void setRiel(Double riel) {
 		this.riel = riel;
 	}
-	public Integer getDollar() {
+	public Double getDollar() {
 		return dollar;
 	}
-	public void setDollar(Integer dollar) {
+	public void setDollar(Double dollar) {
 		this.dollar = dollar;
+	}
+	public String getCurrencyInterp() {
+		return currencyInterp;
+	}
+	public void setCurrencyInterp(String currencyInterp) {
+		this.currencyInterp = currencyInterp;
+	}
+	public String getMonth() {
+		return month;
+	}
+	public void setMonth(String month) {
+		this.month = month;
 	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
@@ -66,8 +80,9 @@ public class CurrencyContantModel {
 	}
 	@Override
 	public String toString() {
-		return "CurrencyContant [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", date="
-				+ date + ", currency=" + currency + ", riel=" + riel + ", dollar=" + dollar + ", additionalProperties="
-				+ additionalProperties + "]";
+		return "CurrencyContantModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", date="
+				+ date + ", currency=" + currency + ", riel=" + riel + ", dollar=" + dollar + ", currencyInterp="
+				+ currencyInterp + ", month=" + month + ", additionalProperties=" + additionalProperties + "]";
 	}
+	
 }

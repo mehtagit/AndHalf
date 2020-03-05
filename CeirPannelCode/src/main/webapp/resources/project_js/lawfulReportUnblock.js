@@ -79,12 +79,16 @@ var formData= new FormData();
 		
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(response.message);
 			}
@@ -160,12 +164,16 @@ function saveCompanyRecoveryRequest(){
 		console.log(response.errorCode);
 		if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#IndivisualStolenTxnId').text(response.txnId)
 			}
 			else{
 //				$('#sucessMessage').text('');
-				$('#IndivisualStolenSucessPopup').openModal();
+				$('#IndivisualStolenSucessPopup').openModal({
+					dismissible:false
+				});
 				$('#sucessMessage').text('');
 				$('#sucessMessage').text(response.message);
 			}

@@ -111,7 +111,7 @@ class="form-control boxBorder boxHeight"/>
 
 <div class=" col s12 m6 l6">
  <label for="category"><spring:message code="operator.category" /> <span class="star">*</span></label> 
-<select class="browser-default" id="category" onchange="enableAddMore()"
+<select class="browser-default" id="category" 
 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
  required>
@@ -124,25 +124,10 @@ oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFiel
 <div id="mainDiv" class="mainDiv">
 <div id="filediv" class="fileDiv">
 <div class="row">
-<div class="file-field col s12 m6">
-<h6 style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
-<div class="btn">
-<span><spring:message code="input.selectfile" /></span>
-<input type="file" name="files[]" id="docTypeFile1" 
-oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
-oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
-</div>
-<div class="file-path-wrapper">
-<input class="file-path validate" type="text" 
-placeholder="<spring:message code="grievanceFileMessage" />">
-<div>
-<p id="myFiles"></p>
-</div>
-</div>
-</div>
+
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" >
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
 <option value="" disabled selected><spring:message code="select.documenttype" /> </option>
 
 </select>
@@ -153,6 +138,22 @@ style="display: none;">
 <option value="" disabled selected><spring:message code="select.documenttype" /></option>
 
 </select>
+</div>
+<div class="file-field col s12 m6">
+<h6 id="supportingdocumentFile" style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
+<div class="btn">
+<span><spring:message code="input.selectfile" /></span>
+<input type="file" name="files[]" id="docTypeFile1"  disabled="disabled" onchange="enableAddMore()"
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text"  
+placeholder="<spring:message code="grievanceFileMessage" />">
+<div>
+<p id="myFiles"></p>
+</div>
+</div>
 </div>
 </div>
 
@@ -304,13 +305,18 @@ src="${context}/resources/project_js/viewStock.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/profileInfoTab.js" async></script>
 <script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
-
-<script type="text/javascript">
+<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js" async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		<script type="text/javascript">
 window.parent.$('#langlist').on('change', function() {
 	var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.location.assign("./openGrievanceForm?reqType=formPage&lang="+lang);
 }); 
-$.i18n().locale = lang;
+$.i18n().locale = data_lang_param;
 var documenttype,selectfile,selectDocumentType;
 $.i18n().load( {
 	'en': './resources/i18n/en.json',
@@ -452,9 +458,10 @@ function saveGrievance(){
 return false;
 
 }
-var grievanceCategory="GRIEVANCE_CATEGORY";
+
+
 $.ajax({
-	url: './Consignment/consignmentCurency?CURRENCY='+grievanceCategory,
+	url: './getTypeDropdownList/GRIEVANCE_CATEGORY/'+$("body").attr("data-userTypeID"),
 	type: 'GET',
 	processData: false,
 	contentType: false,
@@ -496,19 +503,19 @@ $.ajax({
 
 
 
+// Integreation with add more field api
 
-
-
-		var max_fields = 2; //maximum input boxes allowed
-		var dd='';
-		$.getJSON('./addMoreFile/'+tag, function(data) {
-			console.log(data);
-			alert(data.value);
-			dd=data.value();
-			
-		});
-		alert(dd);
-		var wrapper = $(".mainDiv"); //Fields wrapper
+ $.getJSON('./addMoreFile/more_files_count', function(data) {
+		console.log(data);
+		
+		localStorage.setItem("maxCount", data.value);
+		
+	});
+ 
+		//var max_fields = 2; //maximum input boxes allowed
+		var max_fields =localStorage.getItem("maxCount");
+		
+	    var wrapper = $(".mainDiv"); //Fields wrapper
 		var add_button = $(".add_field_button"); //Add button ID
 		var x = 1; //initlal text box count
 		var id=2;
@@ -517,11 +524,10 @@ $.ajax({
 		$(".add_field_button").click(function (e) { //on add input button click
 			e.preventDefault();
 			var placeholderValue= $.i18n('selectFilePlaceHolder');
-		
-			if (x < max_fields) { //max input box allowed
+		if (x < max_fields) { //max input box allowed
 				x++; //text box increment
 				$(wrapper).append(
-						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
+						'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'+$.i18n('documenttype')+'</label><select id="docTypetag'+id+'"  class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'+$.i18n('selectDocumentType')+' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'+$.i18n('selectfile')+'</span><input id="docTypeFile'+id+'" type="file"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" class="remove_field btn right btn-info">-</div></div></div>'
 				); //add input box
 			}
 			
@@ -626,7 +632,7 @@ $('#category').on(
 			success: function (data, textStatus, jqXHR) {
 				$("#docTypetag1").empty();
 				$('#docTypetag1').append('<option value="">'+$.i18n('selectDocumentType')+'</option>');
-				console.log(data);
+			
 				for (i = 0; i < data.length; i++){
 						//var html='<option value="'+data[i].value+'">'+data[i].interp+'</option>';
 						//$('#docTypetag1').append(html);	
@@ -645,22 +651,23 @@ $('#category').on(
 function enableAddMore(){
 	$(".add_field_button").attr("disabled", false);
 }
+function enableSelectFile(){
+	$("#docTypeFile1").attr("disabled", false);
+	$("#docTypeFile1").attr("required", true);
 
+	$("#supportingdocumentFile").append('<span class="star">*</span>');
+}
 
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});
 /* $( document ).ready(function() {
 	var ccc=addMoreFileCount();
 	alert(ccc);
 }); */
 
-</script>
-<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
-		<script>
-		
 </script>
 </body>
 </html>

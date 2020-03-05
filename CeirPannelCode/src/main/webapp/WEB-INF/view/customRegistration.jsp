@@ -1,3 +1,9 @@
+<%
+Integer statusCode=(Integer)session.getAttribute("statusCode");
+%>
+<%
+if(statusCode==200){
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -366,7 +372,7 @@ var contextpath = "${context}";
 									</div>
 								</div>
 
-								<div class="input-field col s12 m6 l6" style="margin-top: 18px;">
+								<div class="input-field col s12 m6 l6" style="margin-top: 24px;">
 									<input type="text" name="employeeID" required="required" id="employeeId" maxlength="30" 
 									oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
 										title="<spring:message code="validation.address30characters" />" required /> 
@@ -534,7 +540,7 @@ var contextpath = "${context}";
 						</div>
 						<p>
 					      <label style="color: black!important;">
-					        <input name="disclamer" type="checkbox" required="required" />
+					        <input name="disclamer" id="disclamer" type="checkbox" required="required" />
 					        <span> <span class="star">*</span> <spring:message code="registration.certifyMsg" /></span>
 					      </label>
 					    </p>
@@ -542,7 +548,7 @@ var contextpath = "${context}";
 						<div class="row">
 							<span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
 							<div class="input-field col s12 center">
-								<button class="btn" id="btnSave" type="submit" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
+								<button disabled="disabled" class="btn" id="btnSave" type="submit" style="margin-left: 10px;"><spring:message code="button.submit" /></button>
 								<a href="${context}/" class="btn" style="margin-left: 10px;"><spring:message code="registration.cancel" /></a>
 							</div>
 						</div>
@@ -830,6 +836,7 @@ return true;
 	
 	
         $(document).ready(function () {
+        	checkBoxClick();
         	$('#langlist').val(data_lang_param);
             $('.modal').modal();
             questionDataByCategory();
@@ -893,10 +900,10 @@ return true;
             }
         }
     </script>
-
-
-
-
 </body>
-
 </html>
+<%}
+else{
+%>
+<%@include file="registrationPopup.jsp" %>
+<%}%>

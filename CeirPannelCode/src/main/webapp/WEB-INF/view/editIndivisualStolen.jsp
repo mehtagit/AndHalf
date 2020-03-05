@@ -218,7 +218,7 @@ select {
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" /> <span class="star">*</span>
 														</p>
-														<input type="tel" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
+														<input type="text" name="phone" id="singleStolenphone1" pattern="[0-9 + ]{1,15}" placeholder=""
 															maxlength="15">
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
@@ -304,7 +304,7 @@ select {
 													<div>
 														<div class="input-field col s12 m6"">
 															<input type="text" name="deviceBrandName" placeholder=""
-																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}" required="required" title="Please enter alphabets and numbers upto 20 characters only" 
+																id="singleStolendeviceBrandName" pattern="[a-zA-Z]{0,20}"  title="Please enter alphabets and numbers upto 20 characters only" 
 																maxlength="20">
 															<label for="deviceBrandName"><spring:message code="registration.devicebrandname" /></label>
 														</div>
@@ -344,7 +344,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="modalNumber" placeholder=""
-																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9 ]{0,20}" required="required" 
+																id="singleStolenmodalNumber" pattern="[a-zA-Z0-9 ]{0,20}" 
 																title="Please enter alphabets and numbers upto 20 characters only" maxlength="20"> <label
 																for="modalNumber"><spring:message code="table.ModelNumber" /></label>
 														</div>
@@ -353,7 +353,7 @@ select {
 															<p class="contact-label">
 																<spring:message code="input.contactNum" /> <span class="star">*</span>
 															</p>
-															<input type="tel" name="phone" id="singleStolenphone2" placeholder=""
+															<input type="text" name="phone" id="singleStolenphone2" placeholder=""
 																required pattern="[0-9 + ]{1,14}" title="Please enter 14 digits contact number" maxlength="14">
 															<!--  <label for="phone2">Contact Number <span class="star">*</span></label> -->
 														</div>
@@ -672,7 +672,7 @@ select {
 
 											<div class="input-field col s12 m6">
 												<!-- <p class="contact-label">Alternate Contact Number <span class="star">*</span></p> -->
-												<input type="tel" name="phone" id="bulkStolenContact"
+												<input type="text" name="phone" id="bulkStolenContact"
 													maxlength="15"> <label for="phone2">
 													<spring:message code="input.contactNum" /></label>
 											</div>
@@ -822,7 +822,7 @@ select {
             <div class="row">
                 <div class="input-field col s12 center">
                     <div class="input-field col s12 center">
-                        <a  href ="./stolenRecovery" class=" btn"><spring:message code="modal.ok" /></a>
+                        <a  href ="./stolenRecovery?FeatureId=5" class=" btn"><spring:message code="modal.ok" /></a>
                     </div>
                 </div>
             </div>
@@ -890,6 +890,8 @@ src="https://cdnjs.cloudflare.com/ajax/libs/jquery.i18n/1.0.7/jquery.i18n.emitte
 
 <script type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/history.js/1.8/bundled/html4+html5/jquery.history.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js"></script>
 	<script type="text/javascript"

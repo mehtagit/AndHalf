@@ -240,7 +240,7 @@ to {
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required /> <label for="supplierName"
 											id="SupplierIdAssignieName" class="center-align"><spring:message
-												code="input.supllierName" /><span class="star">*</span></label>
+												code="input.supllierName" /> <span class="star">*</span></label>
 									</div>
 								</div>
 								<div class="col s12 m12">
@@ -255,7 +255,7 @@ to {
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											maxlength="7" required /> <label for="Quantity"
 											class="center-align"><spring:message
-												code="input.quantity" /><span class="star">*</span></label>
+												code="input.quantity" /> <span class="star">*</span></label>
 									</div>
 
 									<div class="input-field col s12 m6" id="invoiceNumberDiv"
@@ -298,7 +298,7 @@ to {
 									</p>
 								</div>
 
-								<span><spring:message code="input.requiredfields" /></span><span
+								<span><spring:message code="input.requiredfields" /></span> <span
 									class="star">*</span>
 
 								<div class="row" style="padding-bottom: 100px;">
@@ -402,7 +402,7 @@ to {
 
 	<div id="searchSupplierInformation" class="modal">
 		<!-- <button class="modal-close btn-flat right" data-dismiss="modal">&times;</button> -->
-		<a class="modal-close btn-flat right">&times;</a>
+		<a class="btn-flat right" onclick="closeAssigneTable()">&times;</a>
 		<h6 class="modal-header">
 			<spring:message code="searchAssigneMessage" />
 		</h6>
@@ -418,11 +418,15 @@ to {
 						<label> <input name="group1" type="radio" value="1"
 							onclick="document.getElementById('submitbtn').style.display ='block';" />
 							<span class="checkboxFont"> <spring:message
-									code="AssigneeName" /></span> <input name="group1" type="radio"
+									code="AssigneeName" /></span></label>
+							<label>
+							 <input name="group1" type="radio"
 							value="2"
 							onclick="document.getElementById('submitbtn').style.display ='block';" />
 							<span class="checkboxFont"> <spring:message
-									code="AssigneContactNumber" /></span> <input name="group1"
+									code="AssigneContactNumber" /></span> </label>
+									
+								<label>	<input name="group1"
 							type="radio" value="3"
 							onclick="document.getElementById('submitbtn').style.display ='block';    " />
 							<span class="checkboxFont"><spring:message
@@ -453,7 +457,7 @@ to {
                 <p class="center" style="color: red;">No data found</p>
 
             </div> -->
-			<div class="row">
+			<div class="row" id="assigneDetailsDiv" style="display:none">
 				<table class="responsive-table striped display"
 					id="assignee-data-table" cellspacing="0">
 				</table>
@@ -762,7 +766,7 @@ function assigneeTable(URL,dataUrl){
 	var formData= new FormData()
 	//var requestType =	$('input[name="group1"]:checked').val();
    	var assigneDetails=$('#assigneDetails').val();
-
+   $("#assigneDetailsDiv").css("display", "block"); 
    var request={
 		   "field":assigneDetails,
 		   "type": parseInt($('input[name="group1"]:checked').val()),
@@ -837,6 +841,19 @@ function saveAssigneDetails(assigneId,assigneName)
 	
 }
 
+$("input[type=file]").keypress(function(ev) {
+    return false;
+    //ev.preventDefault(); //works as well
+
+});
+
+
+function closeAssigneTable()
+{
+	$('#searchSupplierInformation').closeModal();
+	 $("#assigneDetailsDiv").css("display", "none");
+	
+}
 </script>
 
 </body>

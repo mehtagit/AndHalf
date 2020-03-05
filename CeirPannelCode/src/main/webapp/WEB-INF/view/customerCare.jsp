@@ -17,7 +17,7 @@
 <head>
 
 
-<title>Stock</title>
+<title>Customer care</title>
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -76,41 +76,144 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 
-	
 
-
+<style type="text/css">
+ #starColor {
+            color: red;
+        }
+</style>
 
 </head>
-<%-- <body data-roleType="${usertype}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"> --%>
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}">
+<body data-id="26"
+data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeId}" data-selectedRoleTypeId="${selectedRoleTypeId}"
+	data-selected-roleType="${selectedUserTypeId}"
+	 data-stolenselected-roleType="${stolenselectedUserTypeId}"
+	 session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}" 
+	 data-period="${period}" data-msisdn="${msisdn}" data-imei="${imei}" data-deviceIdType="${deviceIdType}">
 
 
-	<!-- START CONTENT -->
 	<!-- START CONTENT -->
 	<section id="content">
+<!-- 	<div id="initialloader"></div> -->
 		<!--start container-->
 		<div class="container">
 			<div class="section">
 				<div class="row">
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
-							<div class="container-fluid pageHeader" id="pageHeader">
+							<div class="container" id="CustomerDetail">
+                  <div id="profile-page" class="section">
 
-								<a href="" class="boton right" id="btnLink" hidden></a>
-							</div>
-							<form action="${context}/auditTrail"
-								method="post">
-								<div class="col s12 m12 l12" id="auditTableDiv"
-									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv">
-										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
-		 -->
-									</div>
-								</div>
-							</form>
-							<table id="auditLibraryTable"
-								class="responsive-table striped display"></table>
+                    <div class="row">
+                      <form action="">
+                        <div class="col s12 m12 l12">
+                          <h4 class="header2 device-info">
+                            Device Information</h4>
+                          <div class="row">
+                            <div class="input-field col s12 m4 l4">
+                              <input type="text" id="MSISDN" name="MSISDN" value="">
+                              <label for="MSISDN" >MSISDN</label>
+                            </div>
 
+                            <div class="input-field col s12 m4 l4">
+                              <input type="text" id="IMEI" name="IMEI" value="">
+                              <label for="IMEI" >IMEI</label>
+                            </div>
+
+                            <div class="input-field col s12 m4 l4">
+                              <input type="text" id="IMSI" name="IMSI" value="">
+                              <label for="IMSI" >IMSI</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col s12 m12 l12">
+                          <h4 class="header2 tac-info">
+                            TAC Information</h4>
+                          <div class="row">
+                            <div class="input-field col s12 m3 l3">
+                              <input type="text" id="handsetType" name="handsetType" value="">
+                              <label for="handsetType" >Handset Type</label>
+                            </div>
+
+                            <div class="input-field col s12 m3 l3">
+                              <input type="text" id="osType" name="osType" value="">
+                              <label for="osType" >OS Type</label>
+                            </div>
+
+                            <div class="input-field col s12 m3 l3">
+                              <input type="text" id="brand" name="brand" value="">
+                              <label for="brand" >Brand</label>
+                            </div>
+
+                            <div class="input-field col s12 m3 l3">
+                              <input type="text" id="modal" name="modal" value="">
+                              <label for="modal" >Model</label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col s12 m12" >
+                          <h4 class="header2 device-state">
+                            DEVICE STATE</h4>
+                          <div class="col s12 m6">
+                            <table class="responsive-table striped datatable" id="BlackListTable">
+                              <thead>
+                                <tr>
+                                  <th>State</th>
+                                  <th>Date</th>
+                                  <th>Status</th>
+                                  <th>View</th>
+                                </tr>
+                              </thead>
+  							  <tbody style="background-color: #fff;">
+                             
+                              </tbody>
+                            </table>
+                          </div>
+
+                          <div class="col s12 m6">
+                            <table class="responsive-table striped datatable" id="BlackListTable">
+                              <thead>
+                                <tr>
+                                  <th>Device Found In</th>
+                                  <th>Date</th>
+                                  <th>Status</th>
+                                  <th>View</th>
+                                </tr>
+                              </thead>
+  
+                              <tbody style="background-color: #fff;">
+                                
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        
+
+                        <div class="col s12 m12">
+                          <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
+                            Notification Information</h4>
+                            <table class="responsive-table striped display" id="data-table-simple" cellspacing="0">
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Transaction ID</th>
+                                <th>Feature</th>
+                                <th>Message</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+
+                            <tbody>
+                             
+                            </tbody>
+                          </table>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
 						</div>
 
 					</div>
@@ -121,66 +224,30 @@
 		<!--end container-->
 	</section>
 
-   <!-- Modal 2 start   -->
 
-	<div id="viewAuditModel" class="modal">
-		<h6 class="modal-header"><spring:message code="registration.viewauditmanagement" /></h6>
-		<div class="modal-content">
 
-			<div class="row">
-				<div class="row" style="margin-top:10px">
-					<div class="input-field col s12 m6 l6">
-						<input type="text" name="policyOrder" id="viewUserName"
-							placeholder="" disabled>
-						<label for="viewUserName"><spring:message code="table.UserName" /></label>
-					</div>	
-						
-				
-					<div class="input-field col s12 m6 l6" >
-						<input type="text" name="period" id="viewRoleType"
-							placeholder="" disabled >
-						<label for="viewRoleType"><spring:message code="table.userType" /></label>
-					</div>
 
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewFeature" name="status"
-							placeholder="" maxlength="20" disabled>
-						<label for="viewFeature"><spring:message code="table.feature" /></label>
-					</div>
-			
-					
-					<div class="input-field col s12 m6">
-						<input type="text" id="viewSubFeature" name="status"
-							placeholder="" maxlength="20" disabled >
-						<label for="viewSubFeature"><spring:message code="table.SubFeature" /></label>
-					</div>
-					
-				</div>
 
-				
-				<div class="row input_fields_wrap">
-					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
-				</div>
 
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End -->
 
 	
-	
-	
-<!--materialize js-->
-	<script type="text/javascript"
+
+ 
+
+
+
+	<!-- END MAIN -->
+
+<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
+
+
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-
+	
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
 	<script
@@ -190,7 +257,6 @@
     <script type="text/javascript" src="${context}/resources/js/materialize-plugins/date_picker/picker.js"></script> --%>
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
-
 	<!--prism
     <script type="text/javascript" src="${context}/resources/resources/js/prism/prism.js"></script>-->
 	<!--scrollbar-->
@@ -198,9 +264,7 @@
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	<!-- chartist -->
 	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
-	<script type="text/javascript"
-		src="${context}/resources/js/countries.js"></script>
-	
+
 	<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
@@ -231,36 +295,32 @@
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
+
+
+	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+	
 	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/backbutton.js"></script>
+		src="${context}/resources/project_js/customerCare.js"></script>  
+			<script type="text/javascript"
+		src="${context}/resources/project_js/enterKey.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
-	<%-- 		<script type="text/javascript"
-		src="${context}/resources/project_js/disable_inspectElement.js"></script> --%>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/auditManagement.js"></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js" async></script>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/profileInfoTab.js" async></script>
+		src="${context}/resources/project_js/profileInfoTab.js" async></script>	
+	
+
 </body>
 </html>
+
 <%
-	} else {
-		/*  request.setAttribute("msg", "  *Please login first");
-		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+} else {
+
 %>
 <script language="JavaScript">
-	sessionStorage.setItem("loginMsg",
-			"*Session has been expired");
-	window.top.location.href = "./login";
+sessionStorage.setItem("loginMsg",
+"*Session has been expired");
+window.top.location.href = "./login";
 </script>
 <%
-	}
+}
 %>

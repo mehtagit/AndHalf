@@ -8729,7 +8729,7 @@ uppercase
 	will-change: top, left;
 }
 
-.backdrop {
+/* .backdrop {
 	position: absolute;
 	opacity: 0;
 	display: none;
@@ -8744,7 +8744,7 @@ uppercase
 	-o-transform-origin: 50% 10%;
 	transform-origin: 50% 10%;
 	will-change: transform, opacity;
-}
+} */
 
 .btn, .btn-large, .btn-flat {
 	border: none;
@@ -10125,6 +10125,7 @@ textarea.materialize-textarea {
 	resize: none;
 	min-height: 3rem;
 	overflow-y: scroll;
+	cursor: auto;
 }
 
 .hiddendiv {
@@ -10624,10 +10625,14 @@ select {
 
 select.browser-default {
 	display: block;
+	 box-shadow: none;
+    /* outline: 3px solid  #fff; */
 }
 
 select:disabled {
 	color: rgba(0, 0, 0, 0.3);
+	border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
+	padding-left: 5px;
 }
 
 .select-wrapper input.select-dropdown:disabled {
@@ -13164,6 +13169,14 @@ form {
 	padding: 0;
 }
 
+/* @media screen and (min-device-width: 1230px) and  (max-device-width: 1320px) {
+	.col.s3.m2.l1 {
+	padding: 0;
+	margin: 1px;
+	float: right;
+}
+} */
+
 .deviceErrorTitle {
 	color: red;
 	font-size: 12px;
@@ -13191,4 +13204,31 @@ form {
 	position: absolute;
 	top: 0;
 	width: 100%;
+}
+
+::-webkit-scrollbar {
+width: 0;
+background: transparent;
+}
+
+textarea::-webkit-scrollbar {
+width: 10px;
+cursor: auto;
+}
+
+textarea::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+  cursor: auto;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #b4b1b1; 
+  border-radius: 10px;
+  cursor: auto;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #999; 
+  cursor: auto;
 }

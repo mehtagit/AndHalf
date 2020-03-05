@@ -19,8 +19,6 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 function configManagementDatatable(){
 	
 	var filterRequest={
-			"endDate":$('#endDate').val(),
-			"startDate":$('#startDate').val(),
 			"userId":parseInt(userId),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -160,7 +158,9 @@ $('.datepicker').on('mousedown',function(event){
 
 
 function viewDetails(tag){
-	$("#viewPolicyConfigModel").openModal();
+	$("#viewPolicyConfigModel").openModal({
+        dismissible:false
+    });
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -185,13 +185,18 @@ function setViewPopupData(data){
 	$("#viewValue").val(data.value);
 	$("#viewPeriod").val(data.period);
 	$("#description").val(data.description);
-	$("#viewstatus").val(data.status);
+	$("#viewstatus").val(data.statusInterp);
 	$("#remarks").val(data.remark);
 	$("#viewpolicyOrder").val(data.policyOrder);
 }
 
-function updateDetails(tag){
-	$("#editPolicyConfigModel").openModal();
+function updateDetails(tag,status){
+	$("#editPolicyConfigModel").openModal({
+        dismissible:false
+    });
+	
+	$("#EditStatusValue").val(status)
+	
 	var RequestData = {
 			"tag" : tag
 	} 
@@ -217,25 +222,28 @@ function setEditPopupData(data){
 	$("#editValue").val(data.value);
 	$("#editPeriod").val(data.period);
 	$("#editdescription").val(data.description);
-	$("#editstatus").val(data.status);
+	$("#editstatus").val(data.statusInterp);
 	$("#editremarks").val(data.remark);
 	$("#editpolicyOrder").val(data.policyOrder);
+	$("#EditStatusValue").val(data.status)
+	
 }
 
 
 function updatePolicy(){
+	
 	 var updateRequest = {
 			 "id" : parseInt($("#EditId").val()),
 			 "tag" : $("#editTag").val(),
 			 "value" : $("#editValue").val(),
 			 "period" : $("#editPeriod").val(),
 			 "description" : $("#editdescription").val(),
-			 "status" : $("#editstatus").val(),
+			 "status" : parseInt($("#EditStatusValue").val()),
 			 "remark" : $("#editremarks").val(),
-			 "policyOrder": $ ("#editviewpolicyOrder").val()
+			 "policyOrder": $("#editviewpolicyOrder").val()
 	}
 	
-	
+	console.log("updateRequest-->" +updateRequest);
 	$.ajax({
 		url : "./policy/update",
 		data :	JSON.stringify(updateRequest),
@@ -252,9 +260,12 @@ function updatePolicy(){
 		}
 	});
 	
+	return false;
 }
 
 function confirmModel(){
 	$("#editPolicyConfigModel").closeModal();
-	setTimeout(function(){$('#confirmedUpdatedPolicy').openModal();},200);
+	setTimeout(function(){$('#confirmedUpdatedPolicy').openModal({
+        dismissible:false
+    });},200);
 }

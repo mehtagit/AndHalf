@@ -1,3 +1,12 @@
+<%
+	response.setHeader("Cache-Control", "no-cache");
+	response.setHeader("Cache-Control", "no-store");
+	response.setDateHeader("Expires", 0);
+	response.setHeader("Pragma", "no-cache");
+	/*  session.setMaxInactiveInterval(200); //200 secs
+	 session.setAttribute("usertype", null);  */
+	if (session.getAttribute("usertype") != null) {
+%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -119,14 +128,14 @@
 					
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id= "viewChannel" placeholder="" disabled>
-					<label for="viewChannel" class=""><spring:message code="registration.channel" /></label>
+					<label for="viewChannel" class=""><spring:message code="registration.channel" /> <span class="star">*</span></label>
 
 					</div>
 					
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="viewValue" class="materialize-textarea" readonly="readonly"></textarea>
-					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
+					<label for="viewValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
@@ -160,7 +169,7 @@
 	<div id="editMessageModel" class="modal">
 		<h6 class="modal-header"><spring:message code="registration.editmessagemanagement" /></h6>
 		<div class="modal-content">
-
+		<form action="" onsubmit="return updateMessage()">
 			<div class="row">
 				<div class="row">
 					
@@ -177,7 +186,7 @@
 					
 					<div class="input-field col s12 m6">
 					<input type="text" id= "editChannel"  placeholder="" disabled>
-					<label for="editChannel" class=""><spring:message code="registration.channel" /></label>
+					<label for="editChannel" class=""><spring:message code="registration.channel" /><span class="star">*</span></label>
 
 					</div>
 					
@@ -185,14 +194,14 @@
 				
 					
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" placeholder="" ></textarea>
-					<label for="editValue" class=""><spring:message code="registration.value" /></label>
+					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
-					<textarea id="editdescription" class="materialize-textarea" placeholder=""></textarea>
+					<textarea id="editdescription" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200"></textarea>
 					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
 
 					</div>
@@ -206,12 +215,13 @@
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
-					<button class="btn modal-close" style="margin-left: 10px;" onclick ="updateMessage()"><spring:message code="button.update" /></button>
-					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+					<button class="btn " type="submit"><spring:message code="button.update" /></button>
+					<button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 				</div>
 
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 	<!-- Modal End -->
@@ -273,3 +283,16 @@
 		
 </body>
 </html>
+<%
+	} else {
+		/*  request.setAttribute("msg", "  *Please login first");
+		request.getRequestDispatcher("./index.jsp").forward(request, response); */
+%>
+<script language="JavaScript">
+	sessionStorage.setItem("loginMsg",
+			"*Session has been expired");
+	window.top.location.href = "./login";
+</script>
+<%
+	}
+%>

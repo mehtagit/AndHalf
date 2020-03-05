@@ -6,6 +6,7 @@ $('#langlist').on('change', function() {
 	window.location.assign("selfRegisterDevice?lang="+window.lang);			
 }); 
 
+
 $('#langlist').val(data_lang_param);
 $.i18n().locale = data_lang_param;
 var successMsg;
@@ -16,7 +17,7 @@ $.i18n().load( {
 });
 
 
-var input = document.querySelector("#phone1");
+/*var input = document.querySelector("#phone1");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
 });
@@ -24,7 +25,7 @@ window.intlTelInput(input, {
 var input = document.querySelector("#phone");
 window.intlTelInput(input, {
 	utilsScript: "js/utils.js",
-});
+});*/
 
 
 $('#datepicker,#datepicker1').datepicker({
@@ -148,8 +149,6 @@ function hideVisaDetails(){
 	$("#visaType").attr("required", false);
 }
 
-
-
 $.getJSON('./getDropdownList/VISA_TYPE', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -191,6 +190,12 @@ $.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
 
 
 
+
+
+
+
+
+
 $(document).ready(function () {
 
 	$('#langlist').val(data_lang_param);
@@ -218,52 +223,7 @@ $(document).ready(function () {
 
 
 
-			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#deviceType'+dropdownid);
 
-				}
-			});
-
-
-
-			$.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#deviceIdType'+dropdownid);
-
-				}
-			});
-
-			$.getJSON('./getDropdownList/CURRENCY', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#Currency'+dropdownid);
-
-				}
-			});
-
-			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#multipleSimStatus'+dropdownid);
-
-				}
-			});
-
-			$.getJSON('./getDropdownList/DEVICE_STATUS', function(data) {
-				var dropdownid=id-1;
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].value).text(data[i].interp)
-					.appendTo('#deviceStatus'+dropdownid);
-
-				}
-			});
 
 
 			id++;
@@ -401,10 +361,10 @@ function submitEndUserDeviceInfo(){
 				"deviceSerialNumber": serialNumber1,
 				"deviceStatus": parseInt(deviceStatus1),
 				"deviceType": parseInt(deviceType1),
-				"firstImei": parseInt(IMEI1),
-				"secondImei": parseInt(IMEI2),
-				"thirdImei": parseInt(IMEI3),
-				"fourthImei": parseInt(IMEI4),
+				"firstImei": IMEI1,
+				"secondImei": IMEI2,
+				"thirdImei": IMEI3,
+				"fourthImei": IMEI4,
 				"multiSimStatus": deviceStatus1,
 				"nid":nationalID,
 				"origin":"SELF"
@@ -499,25 +459,26 @@ $(document).on("keyup", "#visaNumber", function(e) {
 });
 
 
-function fileTypeValueChanges(dd, ddd) {
-	var uploadedFileName = $("#uploadnationalID").val();
+function fileTypeValueChanges(id) {
+	
+	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
 
-	var fileSize = ($("#uploadnationalID")[0].files[0].size);
+	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000) + 'KB';
 
-
+	//alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 
 	if (uploadedFileName.length > 30) {
 		$('#fileFormateModal').openModal();
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext !='png')
 	{
 		$('#fileFormateModal').openModal({
 			dismissible:false
@@ -526,19 +487,14 @@ function fileTypeValueChanges(dd, ddd) {
 		$('#fileErrormessage').text($.i18n('imageMessage'));
 
 	}
-	else if(fileSize>='100'){
+	else if(fileSize>=100){
 		$('#fileFormateModal').openModal({
 			dismissible:false
 		});
 		$('#fileErrormessage').text('');
 		$('#fileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#fileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
+	
 
 
 }
@@ -565,11 +521,11 @@ function visaImageValidation() {
 
 
 	if (uploadedFileName.length > 30) {
-		$('#visafileFormateModal').openModal();
+		$('#visafileFormateModal').openModal({dismissible:false});
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#visafileFormateModal').openModal({
 			dismissible:false
@@ -585,12 +541,7 @@ function visaImageValidation() {
 		$('#visafileErrormessage').text('');
 		$('#visafileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#visafileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
+	
 
 
 }
@@ -618,11 +569,11 @@ function deptImageValidation() {
 
 
 	if (uploadedFileName.length > 30) {
-		$('#DeptfileFormateModal').openModal();
+		$('#DeptfileFormateModal').openModal({dismissible:false});
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageMessage'));
 	} 
-	else if(ext!='PNG')
+	else if(ext!='png')
 	{
 		$('#DeptfileFormateModal').openModal({
 			dismissible:false
@@ -638,12 +589,7 @@ function deptImageValidation() {
 		$('#DeptfileErrormessage').text('');
 		$('#DeptfileErrormessage').text($.i18n('imageSize'));	
 	}
-	else {
-		$('#DeptfileFormateModal').openModal({
-			dismissible:false
-		});
-
-	}
+	
 
 
 }
