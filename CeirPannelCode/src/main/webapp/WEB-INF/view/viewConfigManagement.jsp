@@ -129,7 +129,7 @@
 				
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id="viewValue" class="materialize-textarea" placeholder="Value" readonly="readonly">
-					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
+					<label for="viewValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 					
@@ -143,12 +143,12 @@
 					<div class="input-field col s12 m6"  style="margin-top:22px">
 						<input type="text" id="viewtype" name="type"
 							placeholder="Type" maxlength="20" disabled>
-						<label for="type"><spring:message code="table.Type" /></label>
+						<label for="type"><spring:message code="table.Type" /> <span class="star">*</span></label>
 					</div>	
 					
 					<div class="input-field col s12 m6">
 					<textarea id="remarks" class="materialize-textarea" placeholder="Remarks" readonly="readonly"></textarea>
-					<label for="remarks" class=""><spring:message code="input.remarks" /></label>
+					<label for="remarks" class=""><spring:message code="input.remarks" /> <span class="star">*</span></label>
 
 					</div>
 				
@@ -185,8 +185,8 @@
 					</div>
 				
 					<div class="input-field col s12 m6">
-					<textarea id="editValue" class="materialize-textarea" Placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100"></textarea>
-					<label for="editValue" class=""><spring:message code="registration.value" /></label>
+					<textarea id="editValue" class="materialize-textarea" Placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required"></textarea>
+					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
@@ -198,14 +198,13 @@
 					</div>
 
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-						<input type="text" id="edittype" name="type"
-							placeholder="" maxlength="20" disabled>
-						<label for="type"><spring:message code="table.Type" /></label>
+						<input type="text" id="edittype" name="type" placeholder="" maxlength="20" disabled>
+						<label for="type"><spring:message code="table.Type" /> <span class="star">*</span></label>
 					</div>
 
 					<div class="input-field col s12 m6">
 					<textarea id="editremarks" class="materialize-textarea" disabled></textarea>
-					<label for="editremarks" class=""><spring:message code="input.remarks" /></label>
+					<label for="editremarks" class=""><spring:message code="input.remarks" /> <span class="star">*</span></label>
 
 					</div>
 				</div>

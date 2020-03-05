@@ -88,7 +88,6 @@ table.dataTable.row-border tbody tr:first-child th, table.dataTable.row-border t
 	{
 	border-top: none;
 	width: fit-content;
-	/* white-space: pre; */
 }
 
 table.dataTable.cell-border tbody th, table.dataTable.cell-border tbody td
