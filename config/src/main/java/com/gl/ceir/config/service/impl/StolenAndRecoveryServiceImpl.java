@@ -325,7 +325,7 @@ public class StolenAndRecoveryServiceImpl {
 			srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId())) {
-				List<Integer> configuredRequestTypeOfFeature = new LinkedList<Integer>();
+				List<Integer> configuredRequestTypeOfFeature = new LinkedList<>();
 				List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTagAndFeatureId(Tags.REQ_TYPE, filterRequest.getFeatureId());
 				logger.debug(systemConfigListDbs);
 

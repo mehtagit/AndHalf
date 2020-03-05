@@ -3,7 +3,6 @@ package com.gl.ceir.service.impl;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,27 +72,23 @@ public class ConsignmnetRevenueService extends BaseService{
 				logger.info("No valid consignment of having total price greater than zero today is found.");
 			}else {
 				for(ConsignmentMgmt consignmentMgmt : consignmentMgmts) {
-					// Convert Revenue and sum up.
+					// Convert Revenue in Dollar and Riel and sum up.
 					consignmentRevenueDailyDb.setTotalAmountInDollar(
-							consignmentRevenueDailyDb.getTotalAmountInDollar() 
-							+ currencyConverter.exchangeRate(
-									1.0, 
+							consignmentRevenueDailyDb.getTotalAmountInDollar() + currencyConverter.exchangeRate( 
 									exchangeRateMap.get(consignmentMgmt.getCurrency()).getDollarRate(), 
-									consignmentMgmt.getTotalPrice()));
+									consignmentMgmt.getTotalPrice())
+							);
 					
 					consignmentRevenueDailyDb.setTotalAmountInRiel(
-							consignmentRevenueDailyDb.getTotalAmountInRiel() 
-							+ currencyConverter.exchangeRate(
-									1.0, 
+							consignmentRevenueDailyDb.getTotalAmountInRiel() + currencyConverter.exchangeRate( 
 									exchangeRateMap.get(consignmentMgmt.getCurrency()).getReilRate(), 
-									consignmentMgmt.getTotalPrice()));
+									consignmentMgmt.getTotalPrice())
+							);
 				}
 				
 				process(consignmentRevenueDailyDb);
 			}
 
-		}catch (NumberFormatException e) {
-			
 		}catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}

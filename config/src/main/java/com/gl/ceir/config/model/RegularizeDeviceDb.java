@@ -77,16 +77,16 @@ public class RegularizeDeviceDb implements Serializable {
 	private String currencyInterp;
 	
 	@NotNull
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String firstImei;
 	
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String secondImei;
 	
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String thirdImei;
 	
-	@Column(unique = true)
+	@Column(unique = true, length = 18)
 	private String fourthImei;
 	
 	private String remark;
